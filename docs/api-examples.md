@@ -1,8 +1,9 @@
 ---
-outline: deep
+title: Runtime API Examples
+description: Runtime API Examples
 ---
 
-# Runtime API Examples
+## {{ $frontmatter.title }}
 
 This page demonstrates usage of some of the runtime APIs provided by VitePress.
 
