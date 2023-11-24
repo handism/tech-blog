@@ -46,21 +46,21 @@ Finderで作業用のフォルダを作成する
 
 GitHubでリポジトリを作成する
 個人ページ＞Repositories＞New
-Repository name：<username>.github.io
+Repository name：[username].github.io
 Description：handism’s tech blog
 Public
 Add a README file：ON
 
 VSCodeでgitフォルダを開き、ターミナルでGitHubからリポジトリをクローンする
 cd git
-git clone https://github.com/handism/<username>.github.io.git
+git clone https://github.com/[username]/[username].github.io.git
 
 ターミナルで以下を入力してVue.jsのインストール
 npm create vue@latest
-Project nane: <username>.github.io
+Project nane: [username].github.io
 他は全部Yes
 Testing SolutionはCypress
-cd <username>.github.io
+cd [username].github.io
 npm install
 
 開発中にローカルで動作確認したい場合
@@ -148,7 +148,7 @@ jobs:
 
 ※Vueの設定は今回は不要
 vite.config.jsを修正する
-https://<USERNAME>.github.io/ にデプロイする場合はbaseは/のままでOK。デフォルトは/。
+https://[username].github.io/ にデプロイする場合はbaseは/のままでOK。デフォルトは/。
 
 
 ### ④動作確認
