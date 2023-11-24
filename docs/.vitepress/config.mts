@@ -2,8 +2,9 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "handism-tech-blog",
+  title: "handism's tech blog",
   description: "handism's tech blog",
+  ignoreDeadLinks: "localhostLinks",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
