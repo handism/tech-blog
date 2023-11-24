@@ -15,12 +15,11 @@ ITエンジニアとして働いていて、毎日が勉強だと感じている
 * 技術メモはMarkdownで記載したい
 * 技術ブログの見た目もできれば出来合いのものではなく、CSSを自作したい
 * ビルド＆デプロイはGitHub Actionsで自動で行いたい
-* GitHub Pagesのサイトの種類は3つあって、プロジェクト、ユーザ、Organization。今回はhttp(s)://<username>.github.ioでアクセスしたいのでユーザーサイトを使う
+* GitHub Pagesのサイトの種類は3つあって、プロジェクト、ユーザ、Organization。今回はhttp(s)://[username].github.ioでアクセスしたいのでユーザーサイトを使う
 
 
 ### 前提
 * Macを使用
-
 
 
 ### ①VSCodeの準備
