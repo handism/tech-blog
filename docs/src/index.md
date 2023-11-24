@@ -3,6 +3,7 @@ title: トップページ
 description: トップページ
 next: false
 prev: false
+lastUpdated: false
 ---
 
 # {{ $frontmatter.title }}

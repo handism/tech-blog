@@ -28,10 +28,17 @@ export default defineConfig({
 
     sidebar: [
       {
-        text: ' おすすめ記事',
+        text: '技術ブログ関連',
         items: [
           { text: 'Vue.jsのインストール', link: '/frontend/vue-js' },
           { text: 'ブログサービスの比較', link: '/frontend/blog-service-compare' }
+        ]
+      },
+      {
+        text: 'チートシート',
+        items: [
+          { text: 'Markdown Sample', link: '/sample/huga' },
+          { text: 'Runtime API Examples', link: '/sample/api-examples' }
         ]
       }
     ],

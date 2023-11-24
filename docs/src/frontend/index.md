@@ -3,6 +3,7 @@ title: frontendカテゴリ
 description: frontendカテゴリ
 next: false
 prev: false
+lastUpdated: false
 ---
 
 # {{ $frontmatter.title }}

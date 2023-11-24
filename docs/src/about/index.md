@@ -3,6 +3,7 @@ title: aboutカテゴリ
 description: aboutカテゴリ
 next: false
 prev: false
+lastUpdated: false
 ---
 
 # {{ $frontmatter.title }}
