@@ -3,11 +3,11 @@ title: Markdown Sample
 description: Markdown Sample
 ---
 
-## {{ $frontmatter.title }}
+# {{ $frontmatter.title }}
 
 [[toc]]
 
-### H2見出し
+## H2見出し
 - 箇条書き1
 - 箇条書き2
 - 箇条書き3

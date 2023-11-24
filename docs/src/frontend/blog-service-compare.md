@@ -3,19 +3,19 @@ title: ブログサービスの比較
 description: ブログサービスの比較
 ---
 
-## {{ $frontmatter.title }}
+# {{ $frontmatter.title }}
 
 [[toc]]
 
-### ブログサービス
+## ブログサービス
 - はてなブログ
 - Blogger
 - アメーバブログ
 
-### CMS
+## CMS
 - WordPress
 
-### 静的サイト
+## 静的サイト
 ジェネレータ
 - Gatsby
 - Hugo

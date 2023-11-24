@@ -3,38 +3,38 @@ title: Vue.js + GitHub Actions + GitHub Pagesで技術ブログを自作する
 description: Vue.js + GitHub Actions + GitHub Pagesで技術ブログを自作する
 ---
 
-## {{ $frontmatter.title }}
+# {{ $frontmatter.title }}
 
 [[toc]]
 
-### 何故やるのか
+## 何故やるのか
 ITエンジニアとして働いていて、毎日が勉強だと感じている。
 学んだことは技術メモとして残しておきたいと考えているが、あまりお金をかけずに済む方法はないものか…と考えていた。
 他には無料ブログ（Blogger、はてなブログ、Qiita、Zennなど）があるが、せっかくなので自分にない技術の勉強も兼ねて自作したい。
 
 
-### 要件
+## 要件
 * 技術メモはMarkdownで記載したい
 * 技術ブログの見た目もできれば出来合いのものではなく、CSSを自作したい
 * ビルド＆デプロイはGitHub Actionsで自動で行いたい
-* GitHub Pagesのサイトの種類は3つあって、プロジェクト、ユーザ、Organization。今回はhttp(s)://[username].github.ioでアクセスしたいのでユーザーサイトを使う
+* GitHub Pagesのサイトの種類は3つあって、プロジェクト、ユーザ、Organization。今回は https://[username].github.io でアクセスしたいのでユーザーサイトを使う
 
 
-### 前提
+## 前提
 * Macを使用
 
 
-### ①VSCodeの準備
+## ①VSCodeの準備
 入っていない場合はVSCodeをインストール
 https://code.visualstudio.com/download
 
 拡張機能を入れる
 日本語化
-Vue Language Features (Volar）
+Vue Language Features (Volar)
 
 
 
-### ②Vue.jsのインストール
+## ②Vue.jsのインストール
 公式ページを参考にさせていただく。
 https://ja.vuejs.org/guide/quick-start.html
 
@@ -80,7 +80,7 @@ git config user.name [ユーザー名]
 git config user.email [メルアド]
 
 
-### ③GitHub Pages＆Actionsの設定
+## ③GitHub Pages＆Actionsの設定
 https://docs.github.com/ja/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#カスタム-github-actions-ワークフローによる公開
 まずは、distフォルダをWebサイトとしてインターネットに公開（ホスティング）するような設定を行う。
 
@@ -153,7 +153,7 @@ vite.config.jsを修正する
 https://[username].github.io/ にデプロイする場合はbaseは/のままでOK。デフォルトは/。
 
 
-### ④動作確認
+## ④動作確認
 ファイルを変更してコミットしてみる
 ビルドとデプロイが自動で走って、https://handism.github.io でサイトが見られれば成功！
 
@@ -164,5 +164,5 @@ Deployment branches and tagsのところに上で指定した「main」などの
 昔のデフォルトブランチ名は「master」だったので、最近「main」変更したなどの場合は注意が必要。
 
 
-### ⑤技術ブログの作成
+## ⑤技術ブログの作成
 ここからVue.jsのコーディングを開始する

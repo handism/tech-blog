@@ -1,0 +1,18 @@
+---
+title: トップページ
+description: トップページ
+next: false
+prev: false
+---
+
+# {{ $frontmatter.title }}
+
+<script setup>
+import { data as posts } from '../.vitepress/theme/posts.data.mjs'
+</script>
+
+<ul>
+    <li v-for="post of posts">
+        <a :href="post.url">{{ post.frontmatter.title }}</a>
+    </li>
+</ul>

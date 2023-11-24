@@ -3,7 +3,7 @@ title: Markdown Extension Examples
 description: Markdown Extension Examples
 ---
 
-## {{ $frontmatter.title }}
+# {{ $frontmatter.title }}
 
 [[toc]]
 
