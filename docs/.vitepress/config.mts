@@ -4,7 +4,16 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "handism's tech blog",
   description: "handism's tech blog",
+
+  // 新規追加
   ignoreDeadLinks: "localhostLinks",
+  lang: "ja-JP",
+  cleanUrls: true,
+  srcDir: "./src",
+  srcExclude: ["**/README.md", "**/TODO.md"],
+  head: [["link", {rel: "icon", href: "/favicon.ico"}]],
+  lastUpdated: true,
+
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [

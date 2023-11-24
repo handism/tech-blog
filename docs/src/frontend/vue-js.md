@@ -5,6 +5,8 @@ description: Vue.js + GitHub Actions + GitHub Pagesで技術ブログを自作�
 
 ## {{ $frontmatter.title }}
 
+[[toc]]
+
 ### 何故やるのか
 ITエンジニアとして働いていて、毎日が勉強だと感じている。
 学んだことは技術メモとして残しておきたいと考えているが、あまりお金をかけずに済む方法はないものか…と考えていた。
@@ -92,6 +94,7 @@ staticをクリック
 
 ファイルの内容を以下に変更してコミット。
 
+```yaml
 # 静的コンテンツを GitHub Pages にデプロイするためのシンプルなワークフロー
 name: Deploy static content to Pages
 
@@ -143,7 +146,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
-
+```
 
 ※Vueの設定は今回は不要
 vite.config.jsを修正する
