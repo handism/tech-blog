@@ -94,13 +94,15 @@ prev: false
 
 いったん持たせたい要素はこれだけとする。  
 `thumbnail:`を持たせようかと思ったけど技術ブログにサムネイルなんて要るかな？ってことで不要とした。  
-`category:`を持たせてもいいんだけど、公式が「ファイルベースのルーティング」を謳っているのでそれに沿う形で。 
-`tag:`はあると便利なんだけど扱いが大変そうなので一旦はなしの方向で…。  
+`category:`を持たせてもいいんだけど、公式が「ファイルベースのルーティング」を謳っているのでそれに沿う形で。  
+`tag:`はあると便利なんだけど1:nで扱いが大変そうなので一旦はなしの方向で…。  
 
 ::: warning
-(!) Found dead link http://localhost:5173 in file vue-js.md と出てビルドがエラーとなってしまう。
-config.mtsに以下を追加すると解決。
+(!) Found dead link http://localhost:5173 in file vue-js.md と出てビルドがエラーとなってしまう場合。
+`config.mts`に以下を追加すると解決。
+```ts
   ignoreDeadLinks: "localhostLinks",
+```
 :::
 
 
