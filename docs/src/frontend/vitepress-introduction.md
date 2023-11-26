@@ -95,11 +95,11 @@ prev: false
 いったん持たせたい要素はこれだけとする。  
 thumbnail:を持たせようかと思ったけど技術ブログにサムネイルなんて要るかな？ってことで不要とした。  
 category:を持たせてもいいんだけど、公式が「ファイルベースのルーティング」を謳っているのでそれに沿う形で。 
-tag:はあると便利なんだけど扱いが大変そうなので一旦はなしの方向で…  
+tag:はあると便利なんだけど扱いが大変そうなので一旦はなしの方向で…。  
 
 ::: warning
-(!) Found dead link http://localhost:5173 in file vue-js.md と出てビルドがエラーとなってしまう
-config.mtsに以下を追加すると解決
+(!) Found dead link http://localhost:5173 in file vue-js.md と出てビルドがエラーとなってしまう。
+config.mtsに以下を追加すると解決。
   ignoreDeadLinks: "localhostLinks",
 :::
 
@@ -109,7 +109,7 @@ docsフォルダ以下にmdファイルをベタ置きしていくのもあれ�
 
 docs/srcフォルダとdocs/src/publicフォルダを作成。  
 srcの下にカテゴリ別にフォルダ分けしていく。  
-カテゴリごとにindex.mdを置いていく  
+カテゴリごとにindex.mdを置いていく。  
 
 ## ④ブログの設定
 ### config.mtsファイルの修正（サイトの設定）
@@ -125,15 +125,16 @@ srcの下にカテゴリ別にフォルダ分けしていく。
 ```
 
 ### config.mtsファイルの修正（レイアウトの設定）
-themeConfig:の中に以下を追加＆修正。
+themeConfig:の中に以下を追加＆修正。  
+上から、タイトル横のロゴマーク、ナビゲーションバー、フッタ、最終更新日時、検索バー、ページャーの設定。
 
 ::: warning
 ※2023/11/25現在、サイドバーが表示されている場合はフッタが表示されないらしい。
 :::
 
 ```ts
- logo: "/sample.jpg",
-  nav: [
+    logo: "/sample.jpg",
+    nav: [
       { text: 'Home', link: '/' },
       { text: 'about', link: '/about' },
       { text: 'frontend', link: '/frontend' },
@@ -152,7 +153,6 @@ themeConfig:の中に以下を追加＆修正。
     search: {
       provider: "local"
     },
-
     docFooter: {
       prev: "前の記事",
       next: "次の記事"
@@ -191,7 +191,7 @@ export default createContentLoader('**/*.md', {
 })
 ```
 
-index.mdはこんな感じ。
+ブログトップページのindex.mdはこんな感じのスクリプトを追加する。
 
 ```md
 <script setup>
