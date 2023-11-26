@@ -8,9 +8,9 @@ description: Vue.js + GitHub Actions + GitHub Pagesで技術ブログを自作�
 [[toc]]
 
 ## 何故やるのか
-* ITエンジニアとして働いていて、毎日が勉強だと感じている。
-* 学んだことは技術メモとして残しておきたいと考えているが、あまりお金をかけずに済む方法はないものか…と考えていた。
-* 他には無料ブログサービス（Blogger、はてなブログ、Qiita、Zenn等）を利用するなどの選択肢があるが、せっかくなので自分にない技術の勉強も兼ねて自作したい。
+ITエンジニアとして働いていて、毎日が勉強だと感じている。  
+学んだことは技術メモとして残しておきたいと考えているが、あまりお金をかけずに済む方法はないものか…と考えていた。  
+他には無料ブログサービス（Blogger、はてなブログ、Qiita、Zenn等）を利用するなどの選択肢があるが、せっかくなので自分にない技術の勉強も兼ねて自作したい。
 
 
 ## 要件
@@ -28,8 +28,8 @@ description: Vue.js + GitHub Actions + GitHub Pagesで技術ブログを自作�
 
 
 ## ①VSCodeの準備
-* 入っていない場合はVSCodeをインストール
-* https://code.visualstudio.com/download
+入っていない場合はVSCodeをインストール  
+https://code.visualstudio.com/download
 
 ### 拡張機能を入れる
 * 日本語化
@@ -37,15 +37,15 @@ description: Vue.js + GitHub Actions + GitHub Pagesで技術ブログを自作�
 
 
 ## ②Vue.jsのインストール
-* 公式ページを参考にさせていただく。
-  * https://ja.vuejs.org/guide/quick-start.html
+公式ページを参考にさせていただく。  
+https://ja.vuejs.org/guide/quick-start.html
 
 ### まずはNode.jsをインストールする
-* https://nodejs.org/en
-* 20.10.0 LTSをインストール
+https://nodejs.org/en  
+20.10.0 LTSをインストール
 
 ### Finderで作業用のフォルダを作成する
-* 例：git
+例：git
 
 ### GitHubでリポジトリを作成する
 * 個人ページ＞Repositories＞New
@@ -79,15 +79,15 @@ npm install
 npm run dev
 ```
 
-* http://localhost:5173 でアプリにアクセスできる。めちゃくちゃお手軽！
-* サーバーを止めるにはCtrl + C
+http://localhost:5173 でアプリにアクセスできる。めちゃくちゃお手軽！  
+サーバーを止めるにはCtrl + C
 
 ### 本番デプロイする場合
 ```zsh
 npm run build
 ```
 
-* distフォルダ内に静的ファイルが生成されるので、中身をホスティングサーバにアップロードするだけ。
+distフォルダ内に静的ファイルが生成されるので、中身をホスティングサーバにアップロードするだけ。
 
 ::: warning
 ローカルの file:// では動かないので注意
@@ -97,10 +97,10 @@ npm run build
 npm run preview
 ```
 
-* http://localhost:4173 で動作確認も可能
+http://localhost:4173 で動作確認も可能
 
 ### Gitにコミットする
-* 設定していない場合は以下を入力
+設定していない場合は以下を入力
 
 ```zsh
 git config user.name [ユーザー名]
@@ -108,17 +108,18 @@ git config user.email [メルアド]
 ```
 
 ## ③GitHub Pages＆Actionsの設定
-* https://docs.github.com/ja/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#カスタム-github-actions-ワークフローによる公開
-* まずは、distフォルダをWebサイトとしてインターネットに公開（ホスティング）するような設定を行う。
-* https://ja.vitejs.dev/guide/static-deploy.html
-* Vite公式に情報がある。
+参考：https://docs.github.com/ja/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#カスタム-github-actions-ワークフローによる公開
+まずは、distフォルダをWebサイトとしてインターネットに公開（ホスティング）するような設定を行う。  
+
+参考：https://ja.vitejs.dev/guide/static-deploy.html  
+↑Vite公式に情報がある。
 
 ### GitHub上のリポジトリのページにアクセス
 * Settings＞Pages
 * SourceをGitHub Actionsに変更
 * staticをクリック
 
-* ファイルの内容を以下に変更してコミット。
+ファイルの内容を以下に変更してコミット。
 
 ```yaml
 # 静的コンテンツを GitHub Pages にデプロイするためのシンプルなワークフロー
@@ -181,8 +182,8 @@ https://[username].github.io/ にデプロイする場合はbaseは/のままで
 
 
 ## ④動作確認
-* ファイルを変更してコミットしてみる
-* ビルドとデプロイが自動で走って、https://[username].github.io でサイトが見られれば成功！
+ファイルを変更してコミットしてみる。  
+ビルドとデプロイが自動で走って、https://[username].github.io でサイトが見られれば成功！
 
 ::: tip
 デプロイに失敗する場合  
@@ -193,4 +194,4 @@ Deployment branches and tagsのところに上で指定した「main」などの
 
 
 ## ⑤技術ブログの作成
-* ここからVue.jsのコーディングを開始する
+ここからVue.jsのコーディングを開始する

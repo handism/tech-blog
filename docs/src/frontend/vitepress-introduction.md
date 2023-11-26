@@ -15,8 +15,9 @@ description: VitePress + GitHub Actions + GitHub Pagesで技術ブログを自�
 * 既にVueプロジェクトができていることが前提
 * Macを使用
 
+
 ## ①VitePressの構築
-既存のVueにcdしてから以下コマンドを入力。
+既存のVueプロジェクトにcdしてから以下コマンドを入力。
 
 ```zsh
 npm add -D vitepress
@@ -37,7 +38,6 @@ npx vitepress init
 docs/.vitepress/dist
 docs/.vitepress/cache
 ```
-
 
 ### 動作確認の手順
 
