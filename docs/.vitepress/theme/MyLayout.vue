@@ -7,7 +7,7 @@ const { Layout } = DefaultTheme
 
 <template>
   <Layout>
-    <template #aside-outline-before>
+    <template #doc-top>
       My custom sidebar top content
     </template>
   </Layout>
