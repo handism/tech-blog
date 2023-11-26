@@ -34,10 +34,10 @@ description: Vue.js + GitHub Actions + GitHub Pagesで技術ブログを自作�
 
 
 ## ②Vue.jsのインストール
-公式ページを参考にさせていただく。
-https://ja.vuejs.org/guide/quick-start.html
+* 公式ページを参考にさせていただく。
+  * https://ja.vuejs.org/guide/quick-start.html
 
-### まずはNode.jsをインストールする。
+### まずはNode.jsをインストールする
 * https://nodejs.org/en
 * 20.10.0 LTSをインストール
 
@@ -62,9 +62,9 @@ git clone https://github.com/[username]/[username].github.io.git
 npm create vue@latest
 ```
 
-Project nane: [username].github.io
-他は全部Yes
-Testing SolutionはCypress
+* Project nane: [username].github.io
+* 他は全部Yes
+* Testing SolutionはCypress
 
 ```zsh
 cd [username].github.io
@@ -76,25 +76,28 @@ npm install
 npm run dev
 ```
 
-http://localhost:5173 でアプリにアクセスできる。めちゃくちゃお手軽！
-辞めるにはCtrl + C
+* http://localhost:5173 でアプリにアクセスできる。めちゃくちゃお手軽！
+* 辞めるにはCtrl + C
 
 ### 本番デプロイする場合
 ```zsh
 npm run build
 ```
 
-distフォルダ内に静的ファイルが生成されるので、中身をホスティングサーバにアップロードするだけ。
-ローカルのfile://では動かないので注意
+* distフォルダ内に静的ファイルが生成されるので、中身をホスティングサーバにアップロードするだけ。
+
+::: warning
+ローカルの file:// では動かないので注意
+:::
 
 ```zsh
 npm run preview
 ```
 
-でhttp://localhost:4173 で動作確認も可能
+* http://localhost:4173 で動作確認も可能
 
 ### Gitにコミットする
-設定していない場合は以下を入力
+* 設定していない場合は以下を入力
 
 ```zsh
 git config user.name [ユーザー名]
@@ -102,18 +105,17 @@ git config user.email [メルアド]
 ```
 
 ## ③GitHub Pages＆Actionsの設定
-https://docs.github.com/ja/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#カスタム-github-actions-ワークフローによる公開
-まずは、distフォルダをWebサイトとしてインターネットに公開（ホスティング）するような設定を行う。
-
-https://ja.vitejs.dev/guide/static-deploy.html
-Vite公式に情報がある。
+* https://docs.github.com/ja/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#カスタム-github-actions-ワークフローによる公開
+* まずは、distフォルダをWebサイトとしてインターネットに公開（ホスティング）するような設定を行う。
+* https://ja.vitejs.dev/guide/static-deploy.html
+* Vite公式に情報がある。
 
 ### GitHub上のリポジトリのページにアクセス
-Settings＞Pages
-SourceをGitHub Actionsに変更
-staticをクリック
+* Settings＞Pages
+* SourceをGitHub Actionsに変更
+* staticをクリック
 
-ファイルの内容を以下に変更してコミット。
+* ファイルの内容を以下に変更してコミット。
 
 ```yaml
 # 静的コンテンツを GitHub Pages にデプロイするためのシンプルなワークフロー
@@ -169,24 +171,24 @@ jobs:
         uses: actions/deploy-pages@v2
 ```
 ::: tip
-Vueの設定は今回は不要
-必要ならばvite.config.jsを修正する
-https://[username].github.io/ にデプロイする場合はbaseは/のままでOK。デフォルトは/。
+* Vueの設定は今回は不要
+  * 必要ならばvite.config.jsを修正する
+  * https://[username].github.io/ にデプロイする場合はbaseは/のままでOK。デフォルトは/。
 :::
 
 
 ## ④動作確認
-ファイルを変更してコミットしてみる
-ビルドとデプロイが自動で走って、https://handism.github.io でサイトが見られれば成功！
+* ファイルを変更してコミットしてみる
+* ビルドとデプロイが自動で走って、https://handism.github.io でサイトが見られれば成功！
 
 ::: tip
-デプロイに失敗する場合
-Settings>Environmentsの「github-pages」っていう保護ルールを確認。
-Deployment branches and tagsのところに上で指定した「main」などのブランチ名が記載されているかどうかを確認。
-ない場合は追加する。
-昔のデフォルトブランチ名は「master」だったので、最近「main」変更したなどの場合は注意が必要。
+* デプロイに失敗する場合
+  * Settings>Environmentsの「github-pages」っていう保護ルールを確認。
+  * Deployment branches and tagsのところに上で指定した「main」などのブランチ名が記載されているかどうかを確認。
+  * ない場合は追加する。
+  * 昔のデフォルトブランチ名は「master」だったので、最近「main」変更したなどの場合は注意が必要。
 :::
 
 
 ## ⑤技術ブログの作成
-ここからVue.jsのコーディングを開始する
+* ここからVue.jsのコーディングを開始する
