@@ -17,7 +17,7 @@ description: VitePress + GitHub Actions + GitHub Pagesで技術ブログを自�
 
 
 ## ①VitePressの構築
-既存のVueプロジェクトにcdしてから以下コマンドを入力。
+既存のVueプロジェクトに`cd`してから以下コマンドを入力。
 
 ```zsh
 npm add -D vitepress
@@ -32,7 +32,7 @@ npx vitepress init
 * Yes
 * Yes
 
-.gitignoreに以下を追加
+`.gitignore`に以下を追加
 
 ```
 docs/.vitepress/dist
@@ -52,7 +52,7 @@ http://localhost:5173/
 npm run docs:build
 ```
 
-* 出力ディレクトリ：docs/.vitepress/dist
+* 出力ディレクトリ：`docs/.vitepress/dist`
 
 ```zsh
 npm run docs:preview
@@ -63,13 +63,13 @@ http://localhost:4173
 
 ## ② GitHub Pagesにデプロイする
 参考：https://vitepress.dev/guide/deploy#github-pages  
-static.ymlをそのまま貼り付けるだけ。コミットすれば自動でデプロイが開始される。  
+`static.yml`を作成して`.github/workflows`に入れるだけ。コミットすれば自動でデプロイが開始される。  
 これでブログが完成！簡単すぎる。
 
 
 ## ③ 記事の作成
 まずはブログが寂しいので記事を増やす。  
-VitePressの記事の管理は、docsフォルダ内にマークダウン形式（*.md）のファイルを作成/更新/削除していくことで実施可能。  
+VitePressの記事の管理は、`docs`フォルダ内にマークダウン形式（*.md）のファイルを作成/更新/削除していくことで実施可能。  
 gatsby.js時代にも技術ブログを作っていたので、その時に作ったmdファイル3つを流用。
 
 ### mdファイルの作り方
@@ -93,9 +93,9 @@ prev: false
 ```
 
 いったん持たせたい要素はこれだけとする。  
-thumbnail:を持たせようかと思ったけど技術ブログにサムネイルなんて要るかな？ってことで不要とした。  
-category:を持たせてもいいんだけど、公式が「ファイルベースのルーティング」を謳っているのでそれに沿う形で。 
-tag:はあると便利なんだけど扱いが大変そうなので一旦はなしの方向で…。  
+`thumbnail:`を持たせようかと思ったけど技術ブログにサムネイルなんて要るかな？ってことで不要とした。  
+`category:`を持たせてもいいんだけど、公式が「ファイルベースのルーティング」を謳っているのでそれに沿う形で。 
+`tag:`はあると便利なんだけど扱いが大変そうなので一旦はなしの方向で…。  
 
 ::: warning
 (!) Found dead link http://localhost:5173 in file vue-js.md と出てビルドがエラーとなってしまう。
@@ -105,15 +105,15 @@ config.mtsに以下を追加すると解決。
 
 
 ### フォルダ整理
-docsフォルダ以下にmdファイルをベタ置きしていくのもあれなので、フォルダを整理する。
+`docs`フォルダ以下にmdファイルをベタ置きしていくのもあれなので、フォルダを整理する。
 
-docs/srcフォルダとdocs/src/publicフォルダを作成。  
-srcの下にカテゴリ別にフォルダ分けしていく。  
-カテゴリごとにindex.mdを置いていく。  
+`docs/src`フォルダと`docs/src/public`フォルダを作成。  
+`src`の下にカテゴリ別にフォルダ分けしていく。  
+カテゴリごとに`index.md`を置いていく。  
 
 ## ④ブログの設定
 ### config.mtsファイルの修正（サイトの設定）
-以下を追加する。
+`defineConfig`の中に以下を追加する。
 
 ```ts
   srcDir: "./src",
@@ -125,7 +125,7 @@ srcの下にカテゴリ別にフォルダ分けしていく。
 ```
 
 ### config.mtsファイルの修正（レイアウトの設定）
-themeConfig:の中に以下を追加＆修正。  
+`themeConfig:`の中に以下を追加＆修正。  
 上から、タイトル横のロゴマーク、ナビゲーションバー、フッタ、最終更新日時、検索バー、ページャーの設定。
 
 ::: warning
@@ -173,7 +173,7 @@ md内に書いたソースコードがビルドエラーとなってしまう場
 今のところVitePressには、デフォルトで記事一覧の機能がないので自作する。  
 参考：https://vitepress.dev/guide/data-loading#createcontentloader
 
-/docs/.vitepress/themeに「posts.data.mjs」を作成。
+`/docs/.vitepress/theme`に`posts.data.mjs`を作成。
 
 ```js
 // posts.data.js
@@ -191,7 +191,7 @@ export default createContentLoader('**/*.md', {
 })
 ```
 
-ブログトップページのindex.mdはこんな感じのスクリプトを追加する。
+ブログトップページの`index.md`はこんな感じのスクリプトを追加する。
 
 ```md
 <script setup>
@@ -205,7 +205,7 @@ import { data as posts } from '../.vitepress/theme/posts.data.mjs'
 </ul>
 ```
 
-他のカテゴリページのindex.mdはこんな感じにしてみた。  
+他のカテゴリページの`index.md`はこんな感じにしてみた。  
 URLがカテゴリ名で始まった場合のみリスト化。
 
 ```md
