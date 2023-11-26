@@ -3,8 +3,6 @@ title: VitePressのカスタムテーマで記事上のコンポーネントを�
 description: VitePressのカスタムテーマで記事上のコンポーネントを自作する
 ---
 
-# {{ $frontmatter.title }}
-
 [[toc]]
 
 ## 前提

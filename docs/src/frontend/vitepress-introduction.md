@@ -3,8 +3,6 @@ title: VitePress + GitHub Actions + GitHub Pagesで技術ブログを自作す�
 description: VitePress + GitHub Actions + GitHub Pagesで技術ブログを自作する
 ---
 
-# {{ $frontmatter.title }}
-
 [[toc]]
 
 ## 前提

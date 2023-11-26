@@ -3,8 +3,6 @@ title: Vue.js + GitHub Actions + GitHub Pagesで技術ブログを自作する
 description: Vue.js + GitHub Actions + GitHub Pagesで技術ブログを自作する
 ---
 
-# {{ $frontmatter.title }}
-
 [[toc]]
 
 ## 何故やるのか
