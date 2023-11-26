@@ -31,6 +31,7 @@ export default defineConfig({
         text: '技術ブログ関連',
         items: [
           { text: 'Vue.jsのインストール', link: '/frontend/vue-js-introduction' },
+          { text: 'VitePressのインストール', link: '/frontend/vitepress-introduction' },
           { text: 'ブログサービスの比較', link: '/frontend/blog-service-compare' }
         ]
       },

@@ -183,7 +183,6 @@ export default createContentLoader('**/*.md', {
 })
 ```
 
-
 index.mdはこんな感じ。
 
 ```md
@@ -198,8 +197,7 @@ import { data as posts } from '../.vitepress/theme/posts.data.mjs'
 </ul>
 ```
 
-
-他のカテゴリページのindex.mdはこんな感じにしてみた。
+他のカテゴリページのindex.mdはこんな感じにしてみた。  
 URLがカテゴリ名で始まった場合のみリスト化。
 
 ```md
