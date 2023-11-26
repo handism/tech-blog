@@ -8,10 +8,14 @@ description: VitePress + GitHub Actions + GitHub Pagesで技術ブログを自�
 [[toc]]
 
 ## 前提
-* vitepressのバージョン：v1.0.0-rc.30
+* npmのバージョン：10.2.3
+* node.jsのバージョン：v20.10.0
+* Vue.jsのバージョン：3.3.4
+* VitePressのバージョン：v1.0.0-rc.30
 * 既にVueプロジェクトができていることが前提
+* Macを使用
 
-## VitePressの構築
+## ①VitePressの構築
 * 既存のVueにcdしてから以下コマンドを入力。
 
 ```zsh
@@ -31,14 +35,14 @@ npx vitepress init
 docs/.vitepress/dist
 docs/.vitepress/cache
 ```
-## 動作確認の手順
-### 開発時
+### 動作確認の手順
+* 開発時
 ```zsh
 npm run docs:dev
 ```
 http://localhost:5173/
 
-### リリース時
+* リリース時
 ```zsh
 npm run docs:build
 ```
@@ -52,13 +56,13 @@ npm run docs:preview
 http://localhost:4173
 
 
-## GitHub Pagesにデプロイする
+## ② GitHub Pagesにデプロイする
 * 参考：https://vitepress.dev/guide/deploy#github-pages
 * static.ymlをそのまま貼り付けるだけ。コミットすれば自動でデプロイが開始される。
 * これでブログが完成！簡単すぎる。
 
 
-## まずは寂しいので記事を増やす
+## ③ まずはブログが寂しいので記事を増やす
 * gatsby.js時代にも技術ブログを作っていたので、その時に作ったmdファイル3つを流用。
 
 ### mdファイルの作り方
@@ -104,6 +108,7 @@ docsフォルダ以下にmdファイルをベタ置きしていくのもあれ�
     * srcの下にカテゴリ別にフォルダ分けしていく
     * カテゴリごとにindex.mdを置いていく
 
+## ④ブログの設定
 ### config.mtsファイルの修正（サイトの設定）
 以下を追加する
 
@@ -153,19 +158,19 @@ themeConfig:の中に以下を追加＆修正
 
 ::: tip
 md内に書いたソースコードがビルドエラーとなってしまう場合は、コードを以下のように囲んでエスケープする
-```
-```js
+````md
+```md
 
 ```
-```
+````
 :::
 
 
-## 記事一覧の作成
-* 今のところVitePressには、デフォルトで記事一覧の機能がないので自作する。
-* 参考：https://vitepress.dev/guide/data-loading#createcontentloader
+## ⑤記事一覧の作成
+今のところVitePressには、デフォルトで記事一覧の機能がないので自作する。  
+参考：https://vitepress.dev/guide/data-loading#createcontentloader
 
-* /docs/.vitepress/themeに「posts.data.mjs」を作成。
+/docs/.vitepress/themeに「posts.data.mjs」を作成。
 
 ```js
 // posts.data.js
