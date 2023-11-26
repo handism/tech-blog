@@ -16,26 +16,31 @@ description: VitePress + GitHub Actions + GitHub Pagesで技術ブログを自�
 * Macを使用
 
 ## ①VitePressの構築
-* 既存のVueにcdしてから以下コマンドを入力。
+既存のVueにcdしてから以下コマンドを入力。
 
 ```zsh
 npm add -D vitepress
 npx vitepress init
 ```
-* 選択肢では以下を入力した。
-    * ./docs
-    * handism-tech-blog
-    * handism’s tech blog
-    * Default Theme + Customization
-    * Yes
-    * Yes
+選択肢では以下を入力した。
 
-* .gitignoreに以下を追加
+* ./docs
+* handism-tech-blog
+* handism’s tech blog
+* Default Theme + Customization
+* Yes
+* Yes
+
+.gitignoreに以下を追加
+
 ```
 docs/.vitepress/dist
 docs/.vitepress/cache
 ```
+
+
 ### 動作確認の手順
+
 * 開発時
 ```zsh
 npm run docs:dev
@@ -57,16 +62,16 @@ http://localhost:4173
 
 
 ## ② GitHub Pagesにデプロイする
-* 参考：https://vitepress.dev/guide/deploy#github-pages
-* static.ymlをそのまま貼り付けるだけ。コミットすれば自動でデプロイが開始される。
-* これでブログが完成！簡単すぎる。
+参考：https://vitepress.dev/guide/deploy#github-pages  
+static.ymlをそのまま貼り付けるだけ。コミットすれば自動でデプロイが開始される。  
+これでブログが完成！簡単すぎる。
 
 
 ## ③ まずはブログが寂しいので記事を増やす
-* gatsby.js時代にも技術ブログを作っていたので、その時に作ったmdファイル3つを流用。
+gatsby.js時代にも技術ブログを作っていたので、その時に作ったmdファイル3つを流用。
 
 ### mdファイルの作り方
-* mdファイルのフォーマットはなるべく統一したいので、一旦以下で作成。
+mdファイルのフォーマットはなるべく統一したいので、一旦以下で作成。
 
 ::: tip
 上の部分はFrontmatterという。
@@ -85,13 +90,10 @@ prev: false
 [[toc]]
 ```
 
-いったん持たせたい要素はこれだけとする。
-
-thumbnail:を持たせようかと思ったけど技術ブログにサムネイルなんて要るかな？ってことで不要とした。
-
-category:を持たせてもいいんだけど、公式が「ファイルベースのルーティング」を謳っているのでそれに沿う形で。
-
-tag:はあると便利なんだけど扱いが大変そうなので一旦はなしの方向で…
+いったん持たせたい要素はこれだけとする。  
+thumbnail:を持たせようかと思ったけど技術ブログにサムネイルなんて要るかな？ってことで不要とした。  
+category:を持たせてもいいんだけど、公式が「ファイルベースのルーティング」を謳っているのでそれに沿う形で。 
+tag:はあると便利なんだけど扱いが大変そうなので一旦はなしの方向で…  
 
 ::: warning
 (!) Found dead link http://localhost:5173 in file vue-js.md と出てビルドがエラーとなってしまう
@@ -100,17 +102,16 @@ config.mtsに以下を追加すると解決
 :::
 
 
-
 ### フォルダ整理
 docsフォルダ以下にmdファイルをベタ置きしていくのもあれなので、フォルダを整理する。
 
-* docs/srcフォルダとdocs/src/publicフォルダを作成。
-    * srcの下にカテゴリ別にフォルダ分けしていく
-    * カテゴリごとにindex.mdを置いていく
+docs/srcフォルダとdocs/src/publicフォルダを作成。  
+srcの下にカテゴリ別にフォルダ分けしていく。  
+カテゴリごとにindex.mdを置いていく  
 
 ## ④ブログの設定
 ### config.mtsファイルの修正（サイトの設定）
-以下を追加する
+以下を追加する。
 
 ```ts
   srcDir: "./src",
@@ -122,7 +123,7 @@ docsフォルダ以下にmdファイルをベタ置きしていくのもあれ�
 ```
 
 ### config.mtsファイルの修正（レイアウトの設定）
-themeConfig:の中に以下を追加＆修正
+themeConfig:の中に以下を追加＆修正。
 
 ::: warning
 ※2023/11/25現在、サイドバーが表示されている場合はフッタが表示されないらしい。
@@ -157,7 +158,7 @@ themeConfig:の中に以下を追加＆修正
 ```
 
 ::: tip
-md内に書いたソースコードがビルドエラーとなってしまう場合は、コードを以下のように囲んでエスケープする
+md内に書いたソースコードがビルドエラーとなってしまう場合は、コードを以下のように囲んでエスケープする。
 ````md
 ```md
 
