@@ -171,9 +171,9 @@ jobs:
         uses: actions/deploy-pages@v2
 ```
 ::: tip
-* Vueの設定は今回は不要
-  * 必要ならばvite.config.jsを修正する
-  * https://[username].github.io/ にデプロイする場合はbaseは/のままでOK。デフォルトは/。
+Vueの設定は今回は不要  
+必要ならばvite.config.jsを修正する  
+https://[username].github.io/ にデプロイする場合はbaseは/のままでOK。デフォルトは/。
 :::
 
 
@@ -182,11 +182,10 @@ jobs:
 * ビルドとデプロイが自動で走って、https://[username].github.io でサイトが見られれば成功！
 
 ::: tip
-* デプロイに失敗する場合
-  * Settings>Environmentsの「github-pages」っていう保護ルールを確認。
-  * Deployment branches and tagsのところに上で指定した「main」などのブランチ名が記載されているかどうかを確認。
-  * ない場合は追加する。
-  * 昔のデフォルトブランチ名は「master」だったので、最近「main」変更したなどの場合は注意が必要。
+デプロイに失敗する場合  
+Settings>Environmentsの「github-pages」っていう保護ルールを確認。  
+Deployment branches and tagsのところに上で指定した「main」などのブランチ名が記載されているかどうかを確認し、ない場合は追加する。  
+昔のデフォルトブランチ名は「master」だったので、最近「main」変更したなどの場合は注意が必要。
 :::
 
 
