@@ -28,13 +28,12 @@ export default defineConfig({
 
     sidebar: [
       {
-        text: '技術ブログ関連',
+        text: 'フロントエンド',
         items: [
           { text: 'Vue.jsのインストール', link: '/frontend/vue-js-introduction' },
           { text: 'VitePressのインストール', link: '/frontend/vitepress-introduction' },
           { text: 'VitePressのカスタムテーマ', link: '/frontend/vitepress-custom-theme' },
-          { text: 'Vuetify', link: '/frontend/vitepress-vuetify-customize' },
-          { text: 'ブログサービスの比較', link: '/frontend/blog-service-compare' }
+          { text: 'Vuetify', link: '/frontend/vitepress-vuetify-customize' }
         ]
       },
       {
