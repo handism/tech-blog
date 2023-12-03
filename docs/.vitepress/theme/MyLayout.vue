@@ -4,6 +4,7 @@ import DefaultTheme from 'vitepress/theme'
 import { useData } from 'vitepress'
 const { Layout } = DefaultTheme
 const { page, frontmatter } = useData()
+const props = defineProps(['title'])
 </script>
 
 <template>
@@ -15,3 +16,7 @@ const { page, frontmatter } = useData()
     </template>
   </Layout>
 </template>
+
+<style scoped>
+
+</style>
