@@ -32,14 +32,15 @@ export default defineConfig({
         items: [
           { text: 'Vue.jsのインストール', link: '/frontend/vue-js-introduction' },
           { text: 'VitePressのインストール', link: '/frontend/vitepress-introduction' },
+          { text: 'VitePressのカスタムテーマ', link: '/frontend/vitepress-custom-theme' },
+          { text: 'Vuetify', link: '/frontend/vitepress-vuetify-customize' },
           { text: 'ブログサービスの比較', link: '/frontend/blog-service-compare' }
         ]
       },
       {
-        text: 'チートシート',
+        text: 'バックエンド',
         items: [
-          { text: 'Markdown Sample', link: '/sample/markdown-samples' },
-          { text: 'Runtime API Examples', link: '/sample/api-examples' }
+          { text: 'Spring BootでAPIサーバー', link: '/backend/spring-boot-api-server' }
         ]
       }
     ],
