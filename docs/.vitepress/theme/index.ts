@@ -13,7 +13,6 @@ import * as directives from 'vuetify/directives'
 
 import './style.css'
 
-
 const vuetify = createVuetify({
   components,
   directives,

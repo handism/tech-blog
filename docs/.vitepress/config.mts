@@ -5,7 +5,7 @@ export default defineConfig({
   title: "handism's tech blog",
   description: "handism's tech blog",
 
-  vite: {     // <=== insert this section 
+  vite: {
     ssr: {
       noExternal: ["vuetify"]
     }
@@ -38,8 +38,7 @@ export default defineConfig({
         items: [
           { text: 'Vue.jsのインストール', link: '/frontend/vue-js-introduction' },
           { text: 'VitePressのインストール', link: '/frontend/vitepress-introduction' },
-          { text: 'VitePressのカスタムテーマ', link: '/frontend/vitepress-custom-theme' },
-          { text: 'Vuetify', link: '/frontend/vitepress-vuetify-customize' }
+          { text: 'Vuetifyでカスタマイズ', link: '/frontend/vitepress-vuetify-customize' }
         ]
       },
       {
