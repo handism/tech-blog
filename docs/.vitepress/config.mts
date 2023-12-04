@@ -28,8 +28,7 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'about', link: '/about' },
-      { text: 'frontend', link: '/frontend' },
-      { text: 'sample', link: '/sample' }
+      { text: 'frontend', link: '/frontend' }
     ],
 
     sidebar: [
