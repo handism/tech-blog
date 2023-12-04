@@ -5,6 +5,12 @@ export default defineConfig({
   title: "handism's tech blog",
   description: "handism's tech blog",
 
+  vite: {     // <=== insert this section 
+    ssr: {
+      noExternal: ["vuetify"]
+    }
+  },
+
   // 新規追加
   ignoreDeadLinks: "localhostLinks",
   lang: "ja-JP",
