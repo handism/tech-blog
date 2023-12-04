@@ -17,7 +17,7 @@ description: VitePressで作った技術ブログをVuetifyでカスタマイズ
 ## やりたいこと
 前回、VitePressで技術ブログを自作したものの、まだまだ足りていない部分があるので追加していく。  
 
-まずは、記事上部のタイトル表示をかっこよくし、カテゴリのリンクと更新日を表示するようにしたい。  
+まずは、記事上部のタイトル表示をかっこよくし、カテゴリのリンクを表示するようにしたい。  
     
 VitePressにはデフォルトテーマを拡張する機能があるとのこと。  
 今回はこれを利用する。  
@@ -59,17 +59,11 @@ const vuetify = createVuetify({
   
 また、`export default`内にも`app.use(vuetify)`を追加する。  
   
-```ts{12}
+```ts{4}
 export default {
   extends: DefaultTheme,
-  // Layout: () => {
-  //   return h(DefaultTheme.Layout, null, {
-  //     // https://vitepress.dev/guide/extending-default-theme#layout-slots
-  //   })
-  // },
   Layout: MyLayout,
   enhanceApp({ app, router, siteData }) {
-    // ...
     app.use(vuetify) // ←追加
   }
 } satisfies Theme
