@@ -6,8 +6,6 @@ prev: false
 lastUpdated: false
 ---
 
-# {{ $frontmatter.title }}
-
 <script setup>
 import { data as posts } from '../.vitepress/theme/posts.data.mjs'
 </script>

@@ -11,18 +11,8 @@ const props = defineProps(['title'])
 <template>
   <Layout>
     <template #doc-top>
-        <p>
-          <p>
-            <h1 class="text-h5">{{frontmatter.title}}</h1>
-          </p>
-    
-        <p>
-          <v-col cols="auto">
-            <v-btn size="small" rounded="xl">{{page.filePath.split("/")[0]}}</v-btn>
-          </v-col>
-        </p>
-
-      </p>
+      <h1 class="text-h5 ma-5">{{frontmatter.title}}</h1>
+      <v-btn size="small" rounded="xl" class="ml-5 mb-8">{{page.filePath.split("/")[0]}}</v-btn>
     </template>
   </Layout>
 </template>
