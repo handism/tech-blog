@@ -33,3 +33,25 @@ description: VitePressで作った技術ブログをVuetifyでカスタマイズ
 
 ## デフォルトテーマを拡張する
 参考：https://vitepress.dev/guide/extending-default-theme
+
+
+## Vuetifyのインストール
+https://vuetifyjs.com/en/getting-started/installation/#installation  
+↑公式ページを参考に。  
+  
+今回はnpmでインストールする。  
+Vueのプロジェクトにcdし、ターミナルから以下を叩く。  
+  
+```zsh
+npm install vuetify
+```
+  
+これでインストールが完了。  
+
+
+
+## エラー
+```zsh
+build error:
+TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".css" for /xxx/node_modules/vuetify/lib/components/VCode/VCode.css
+```
