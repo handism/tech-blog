@@ -52,6 +52,15 @@ https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
 ## APIサーバー構築
 開発の準備が整ったので、APIサーバーを構築すべく、実際にコーディングを実施していく。
 
+
+### 開発環境について
+Spring BootのIDE（統合開発環境）については、「IntelliJ IDEA」を使うのが楽。  
+  
+ただ、Vue.jsなどのフロントエンドの技術も扱うので切り替えが面倒なため、「VSCode」で開発を行っている。  
+  
+VSCode用の拡張機能としては「Spring Boot Dashboard」あたりを入れておけばGUIでビルドができたり、自動でクラスの分類を「APPS/BEANS/ENDPOINT MAPPINGS」に分けてくれたりと何かと便利。  
+
+
 ### ダミーのAPIを送信するクラスを作成
 `src/main/java/com/example/demo`フォルダ内に、「DummyController.java」というファイルを作成し、中身は以下のようにしてみた。  
   
