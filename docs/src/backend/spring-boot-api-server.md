@@ -49,16 +49,70 @@ https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
 `java -version`でバージョンが表示されれば成功。
 
 
+## APIサーバー構築
+開発の準備が整ったので、APIサーバーを構築すべく、実際にコーディングを実施していく。
+
+### ダミーのAPIを送信するクラスを作成
+`src/main/java/com/example/demo`フォルダ内に、「DummyController.java」というファイルを作成し、中身は以下のようにしてみた。  
+  
+```java
+package com.example.demo;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+@RestController
+public class DummyController {
+
+    @GetMapping("/dummy-get")
+    public String handleDummyGet() {
+        // ダミーのGETリクエストを処理するロジック
+        String response = "This is a dummy GET response";
+        System.out.println("GET Request: " + response);
+        return response;
+    }
+
+    @PostMapping("/dummy-post")
+    public String handleDummyPost(@RequestBody String requestBody) {
+        // ダミーのPOSTリクエストを処理するロジック
+        String response = "This is a dummy POST response";
+        System.out.println("POST Request Body: " + requestBody);
+        System.out.println("POST Response: " + response);
+        return response;
+    }
+}
+```
+
+
 ### プロジェクトの動作確認
 ローカル上で、プロジェクトを実行したい場合は、ターミナルで以下を叩く。  
-
+  
 ```zsh
 ./gradlew bootRun
 ```
 
+エラーがなけれローカル上でTomcatが立ち上がり、http://localhost:8080/ でアプリを起動可能。  
+  
+上のクラスファイルの例では、http://localhost:8080/dummy-get のようなURLをCurlで叩くなりブラウザでアクセスするなりで動作確認が可能。  
+  
+実際にブラウザでアクセスしてみると、ブラウザ上に以下の文言が表示されたのでうまく動いているようだ。
+
+```
+This is a dummy GET response
+```
+
+::: tip
+ちなみに、実行をやめたい場合は`Ctrl + C`。
+:::
+
 
 ### プロジェクトのビルド
-早速プロジェクトをビルドして、Dockerイメージを作成してみる。  
+開発が完了し、リリースを行う際はDockerのイメージとしてビルドするのが昨今の流行りとなっている。  
+なのでプロジェクトをビルドして、Dockerイメージを作成してみる。  
+  
 ビルドには`gradle`を利用する。  
 ターミナルで以下のコマンドを叩くだけ。  
   
@@ -70,13 +124,16 @@ https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
 初期設定であればイメージ名は`docker.io/library/demo:0.0.1-SNAPSHOT`。  
 
 
-
-  
-
-
-
 ### Dockerイメージのrun
 イメージが無事に作成されたら、`Docker Desktop`を起動。  
   
-左のメニューのImagesから`demo`を選んでrunすればアプリケーションがローカル上で起動される。  
+デスクトップアプリケーションでも左のメニューのImagesから`demo`を選んでrunすればアプリケーションがローカル上で起動されるが、ターミナルからでもrunできる。    
+例えば以下のようなコマンドを叩く。  
+
+```zsh
+docker run -d -p 1234:8080 demo:0.0.1-SNAPSHOT
+```
+
+この例であれば、http://localhost:1234/dummy-get みたいな感じでAPIを叩くことが可能。
+  
 すごく簡単にJavaアプリケーションが作成できた。  
