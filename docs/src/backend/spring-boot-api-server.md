@@ -3,7 +3,7 @@ title: Spring BootでDocker上にAPIサーバーを構築する
 description: Spring BootでDocker上にAPIサーバーを構築する
 ---
 
-[TOC]
+[[TOC]]
 
 ## やりたいこと
 ダミーでAPIを送信するサーバーが必要になったので、導入が楽でサクッとできるという噂のSpring BootでAPIサーバーを構築してみる。  
@@ -32,11 +32,7 @@ https://start.spring.io
 * Spring Boot：3.2.0
 * Project Metadata：初期状態のまま
 * Dependencies
- * Lombok
- * Docker Compose Support
- * Spring Web
- * Thymeleaf
- * Spring Boot DevTools
+    * Spring Web
 
 設定を入力して「GENERATE」ボタンを押すとzipファイルがダウンロードされるので解凍すればそのままプロジェクトとして使える。  
 
@@ -53,6 +49,14 @@ https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
 `java -version`でバージョンが表示されれば成功。
 
 
+### プロジェクトの動作確認
+ローカル上で、プロジェクトを実行したい場合は、ターミナルで以下を叩く。  
+
+```zsh
+./gradlew bootRun
+```
+
+
 ### プロジェクトのビルド
 早速プロジェクトをビルドして、Dockerイメージを作成してみる。  
 ビルドには`gradle`を利用する。  
@@ -66,26 +70,8 @@ https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
 初期設定であればイメージ名は`docker.io/library/demo:0.0.1-SNAPSHOT`。  
 
 
-### プロジェクトの実行
-プロジェクトを実行したい場合は、ターミナルで以下を叩く。  
 
-```zsh
-./gradlew bootRun
-```
   
-以下のエラーが出たため修正する。  
-  
-```zsh
-Stderr:
-validating /Users/mac/git/backend-api-server/compose.yaml: services must be a mapping
-```
-  
-どうやら、Docker Compose用の`compose.yaml`ファイルの中身が空っぽのためエラーとなっている様子。  
-中身を以下に修正。  
-
-```
-
-
 
 
 
