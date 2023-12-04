@@ -26,9 +26,9 @@ export default defineConfig({
     logo: "/symbol-mark.webp",
 
     nav: [
-      { text: 'Home', link: '/' },
       { text: 'about', link: '/about' },
-      { text: 'frontend', link: '/frontend' }
+      { text: 'frontend', link: '/frontend' },
+      { text: 'backend', link: '/backend' }
     ],
 
     sidebar: [
@@ -37,7 +37,8 @@ export default defineConfig({
         items: [
           { text: 'Vue.jsのインストール', link: '/frontend/vue-js-introduction' },
           { text: 'VitePressのインストール', link: '/frontend/vitepress-introduction' },
-          { text: 'Vuetifyでカスタマイズ', link: '/frontend/vitepress-vuetify-customize' }
+          { text: 'Vuetifyでカスタマイズ', link: '/frontend/vitepress-vuetify-customize' },
+          { text: 'ブログサービスの比較', link: '/frontend/blog-service-compare' }
         ]
       },
       {

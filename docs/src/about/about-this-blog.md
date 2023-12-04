@@ -3,8 +3,6 @@ title: このブログについて
 description: このブログについての説明記事
 ---
 
-# {{ $frontmatter.title }}
-
 [[toc]]
 
 ## 特徴
