@@ -59,7 +59,7 @@ const vuetify = createVuetify({
   
 また、`export default`内にも`app.use(vuetify)`を追加する。  
   
-```ts{4}
+```ts{5}
 export default {
   extends: DefaultTheme,
   Layout: MyLayout,
