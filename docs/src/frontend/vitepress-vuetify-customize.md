@@ -71,7 +71,7 @@ export default {
   
 これだけだと`npm run docs:build`時に以下のようなエラーが出てしまう…
   
-```zsh
+```
 build error:
 TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".css" for /xxx/node_modules/vuetify/lib/components/VCode/VCode.css
 ```
