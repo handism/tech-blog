@@ -28,7 +28,8 @@ export default defineConfig({
     nav: [
       { text: 'about', link: '/about' },
       { text: 'frontend', link: '/frontend' },
-      { text: 'backend', link: '/backend' }
+      { text: 'backend', link: '/backend' },
+      { text: 'tech', link: '/tech' }
     ],
 
     sidebar: [
