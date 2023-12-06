@@ -13,7 +13,7 @@ const { page, frontmatter } = useData()
       <h1 class="text-h5 ma-5">{{frontmatter.title}}</h1>
       <span v-if="!page.filePath.includes('index.md')">
         <a :href="`/${page.filePath.split('/')[0]}`">
-          <v-btn size="small" rounded="xl" class="text-capitalize ml-5 mb-8">{{page.filePath.split("/")[0]}}</v-btn>
+          <v-btn size="small" rounded="xl" class="text-lowercase ml-5 mb-8">{{page.filePath.split("/")[0]}}</v-btn>
         </a>
         </span>
     </template>
