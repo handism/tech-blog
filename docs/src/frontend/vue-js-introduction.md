@@ -52,11 +52,8 @@ https://nodejs.org/en
   * Public
   * Add a README file：ON
 
-### VSCodeでgitフォルダを開き、ターミナルでGitHubからリポジトリをクローンする
-```zsh
-cd git
-git clone https://github.com/[username]/[username].github.io.git
-```
+作成後は、VSCodeでgitフォルダを開き、ターミナルでGitHubからリポジトリをクローンしておく。  
+
 
 ### ターミナルで以下を入力してVue.jsのインストール
 ```zsh
@@ -88,22 +85,17 @@ npm run build
 `dist`フォルダ内に静的ファイルが生成されるので、中身をホスティングサーバにアップロードするだけ。
 
 ::: warning
-ローカルの`file://`では動かないので注意
+ローカルの`file://`では動かないので注意。
 :::
 
 ```zsh
 npm run preview
 ```
 
-`http://localhost:4173`で動作確認も可能
+`http://localhost:4173`で動作確認も可能。  
+  
+作業が終わったらGitにコミットする。  
 
-### Gitにコミットする
-設定していない場合は以下を入力
-
-```zsh
-git config user.name [ユーザー名]
-git config user.email [メルアド]
-```
 
 ## ③GitHub Pages＆Actionsの設定
 参考：https://docs.github.com/ja/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#カスタム-github-actions-ワークフローによる公開
