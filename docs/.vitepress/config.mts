@@ -46,6 +46,12 @@ export default defineConfig({
         items: [
           { text: 'Spring BootでAPIサーバー', link: '/backend/spring-boot-api-server' }
         ]
+      },
+      {
+        text: 'その他',
+        items: [
+          { text: 'Gitの使い方', link: '/tech/how-to-use-git' }
+        ]
       }
     ],
 
