@@ -122,39 +122,5 @@ const { page, frontmatter } = useData()
 `<template #doc-top>`の部分はVitePressのデフォルトテーマに備わっている「レイアウトスロット」という機能。  
 ページ内の特定の場所にコンポーネントを注入できる。  
   
-* レイアウト：'doc'(デフォルト)がfrontmatterで有効になっている場合:
-    * doc-top
-    * doc-bottom
-    * doc-footer-before
-    * doc-before
-    * doc-after
-    * sidebar-nav-before
-    * sidebar-nav-after
-    * aside-top
-    * aside-bottom
-    * aside-outline-before
-    * aside-outline-after
-    * aside-ads-before
-    * aside-ads-after
-* レイアウト：'home'がfrontmatterで有効になっている場合:
-    * home-hero-before
-    * home-hero-info
-    * home-hero-image
-    * home-hero-after
-    * home-features-before
-    * home-features-after
-* レイアウト：'page'がfrontmatterで有効になっている場合:
-    * page-top
-    * page-bottom
-* 見つかりません (404) ページ:
-    * not-found
-* 常に:
-    * layout-top
-    * layout-bottom
-    * nav-bar-title-before
-    * nav-bar-title-after
-    * nav-bar-content-before
-    * nav-bar-content-after
-    * nav-screen-content-before
-    * nav-screen-content-after
+https://vitepress.dev/guide/extending-default-theme#layout-slots
 :::
