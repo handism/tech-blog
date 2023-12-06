@@ -97,13 +97,13 @@ public class DummyController {
 
 
 ### プロジェクトの動作確認
-ローカル上で、プロジェクトを実行したい場合は、ターミナルで以下を叩く。  
+ローカル上でプロジェクトを実行したい場合は、ターミナルで以下を叩く。  
   
 ```zsh
 ./gradlew bootRun
 ```
 
-エラーがなけれローカル上でTomcatが立ち上がり、http://localhost:8080/ でアプリを起動可能。  
+エラーがなければローカル上でTomcatが立ち上がり、http://localhost:8080/ でアプリを起動可能。  
   
 上のクラスファイルの例では、http://localhost:8080/dummy-get のようなURLをCurlで叩くなりブラウザでアクセスするなりで動作確認が可能。  
   
