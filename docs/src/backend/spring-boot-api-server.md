@@ -15,8 +15,19 @@ description: Spring BootでDocker上にAPIサーバーを構築する
 特にXMLの設定が簡略化されている。  
   
 アノテーション機能を使ってコード量を少なく記載が可能。  
+
+* @Controller：コントローラとして動作
+* @RequestMapping(“/xxx”)：リクエストを受けるメソッドを指定
+* @ModelAttribute：リクエストパラメータの割り当て
+* @Getter：ゲッターを自動生成
+* @Setter：セッターを自動生成
+
 また、導入が簡単でセキュリティや入力値のチェックも簡単に書けるので開発・保守の効率がアップしている。  
 デザインパターンはMVCモデルが採用されている。
+
+* Model（Java）：DBとやりとり
+* View（HTML）：画面表示
+* Controller（Java）：リクエストを受けてモデルとビューを呼び出す
 
 
 ## Dockerの導入
