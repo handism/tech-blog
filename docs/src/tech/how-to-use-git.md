@@ -27,8 +27,8 @@ description: Gitをうまく使いこなす方法
     - Gitのログを確認：`git log —oneline`（抜けるには`q`）
 - コミット関連
     - 設定していない場合は以下を設定
-        - `git config user.name [ユーザー名]`
-        - `git config user.email [メルアド]`
+        - `git config --global user.name [ユーザー名]`
+        - `git config --global user.email [メルアド]`
     - ステージエリアにファイル追加：`git add .`
     - ローカルリポジトリにコミット：`git commit -m “コメント”`
     - リモートリポジトリに反映：`git push origin [ブランチ名]`
