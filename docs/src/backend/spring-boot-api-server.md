@@ -43,7 +43,7 @@ https://spring.pleiades.io/spring-boot/docs/current/reference/html/getting-start
 ↑の公式サイトを参考に、Spring Bootを導入する。  
 
 ### Spring Initializrでプロジェクトを作成
-まず最初は、「spring initializr」というスターターでプロジェクトを作成する。  
+まず最初は、「`spring initializr`」というスターターでプロジェクトを作成する。  
 https://start.spring.io  
   
 設定は以下としてみた。  
@@ -56,16 +56,16 @@ https://start.spring.io
 
 設定を入力して「GENERATE」ボタンを押すとzipファイルがダウンロードされるので解凍すればそのままプロジェクトとして使える。  
 
-src/mainがアプリのメインで、src/testの方はテストコード？  
-src/resources/staticにはおそらくcss,js,font,img,htmlなどを入れるっぽい。
+`src/main`がアプリのメインで、`src/test`の方はテストコード？  
+`src/resources/static`にはおそらく`css`,`js`,`font`,`img`,`html`などを入れるっぽい。
 
 
 ### Javaの導入
 Javaを入れていない場合は導入する。  
-スターターでJava17を選んだので、Java SE Development Kit 17.0.9をダウンロードする。  
+スターターで`Java17`を選んだので、`Java SE Development Kit 17.0.9`をダウンロードする。  
 https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html  
 
-「macOS Arm 64 Compressed Archive」をダウンロードしてインストール。  
+「`macOS Arm 64 Compressed Archive`」をダウンロードしてインストール。  
 `java -version`でバージョンが表示されれば成功。
 
 
@@ -74,11 +74,11 @@ https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
 
 
 ### 開発環境について
-Spring BootのIDE（統合開発環境）については、「IntelliJ IDEA」を使うのが楽。  
+Spring BootのIDE（統合開発環境）については、「`IntelliJ IDEA`」を使うのが楽。  
   
-ただ、Vue.jsなどのフロントエンドの技術も扱うので切り替えが面倒なため、「VSCode」で開発を行っている。  
+ただ、Vue.jsなどのフロントエンドの技術も扱うので切り替えが面倒なため、「`VSCode`」で開発を行っている。  
   
-VSCode用の拡張機能としては「Spring Boot Dashboard」あたりを入れておけばGUIでビルドができたり、自動でクラスの分類を「APPS/BEANS/ENDPOINT MAPPINGS」に分けてくれたりと何かと便利。  
+VSCode用の拡張機能としては「`Spring Boot Dashboard`」あたりを入れておけばGUIでビルドができたり、自動でクラスの分類を「APPS/BEANS/ENDPOINT MAPPINGS」に分けてくれたりと何かと便利。  
 
 
 ### ダミーのAPIを送信するクラスを作成
