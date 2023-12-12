@@ -36,8 +36,8 @@ export default defineConfig({
       {
         text: 'フロントエンド',
         items: [
-          { text: 'Vue.jsのインストール', link: '/frontend/vue-js-introduction' },
-          { text: 'VitePressのインストール', link: '/frontend/vitepress-introduction' },
+          { text: 'Vue.jsのTips', link: '/frontend/vue-js-introduction' },
+          { text: 'VitePressのTips', link: '/frontend/vitepress-introduction' },
           { text: 'Vuetifyでカスタマイズ', link: '/frontend/vitepress-vuetify-customize' },
           { text: 'ブログサービスの比較', link: '/frontend/blog-service-compare' }
         ]
@@ -52,7 +52,8 @@ export default defineConfig({
         text: 'その他',
         items: [
           { text: 'Gitの使い方', link: '/tech/how-to-use-git' },
-          { text: 'インフラ管理のコツ', link: '/tech/infrastructure-tips' }
+          { text: 'インフラ管理のコツ', link: '/tech/infrastructure-tips' },
+          { text: '生成AIのコツ', link: '/tech/generative-ai-tips' }
         ]
       }
     ],

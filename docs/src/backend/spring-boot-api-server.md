@@ -16,11 +16,11 @@ description: Spring BootでDocker上にAPIサーバーを構築する
   
 アノテーション機能を使ってコード量を少なく記載が可能。  
 
-* @Controller：コントローラとして動作
-* @RequestMapping(“/xxx”)：リクエストを受けるメソッドを指定
-* @ModelAttribute：リクエストパラメータの割り当て
-* @Getter：ゲッターを自動生成
-* @Setter：セッターを自動生成
+* `@Controller`：コントローラとして動作
+* `@RequestMapping(“/xxx”)`：リクエストを受けるメソッドを指定
+* `@ModelAttribute`：リクエストパラメータの割り当て
+* `@Getter`：ゲッターを自動生成
+* `@Setter`：セッターを自動生成
 
 また、導入が簡単でセキュリティや入力値のチェックも簡単に書けるので開発・保守の効率がアップしている。  
 デザインパターンはMVCモデルが採用されている。

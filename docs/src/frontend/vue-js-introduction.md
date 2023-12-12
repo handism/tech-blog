@@ -1,22 +1,9 @@
 ---
-title: Vue.js + GitHub Actions + GitHub Pagesで技術ブログを自作する
-description: Vue.js + GitHub Actions + GitHub Pagesで技術ブログを自作する
+title: Vue.jsをあれこれ試してみる
+description: Vue.jsをあれこれ試してみる
 ---
 
 [[toc]]
-
-## 何故やるのか
-ITエンジニアとして働いていて、毎日が勉強だと感じている。  
-学んだことは技術メモとして残しておきたいと考えているが、あまりお金をかけずに済む方法はないものか…と考えていた。  
-他には無料ブログサービス（Blogger、はてなブログ、Qiita、Zenn等）を利用するなどの選択肢があるが、せっかくなので自分にない技術の勉強も兼ねて自作したい。
-
-
-## 要件
-* 技術メモはMarkdownで記載したい
-* 技術ブログの見た目もできれば出来合いのものではなく、CSSを自作したい
-* ビルド＆デプロイはGitHub Actionsで自動で行いたい
-* GitHub Pagesのサイトの種類は3つあって、プロジェクト、ユーザ、Organization。今回は`https://[username].github.io`でアクセスしたいのでユーザーサイトを使う
-
 
 ## 前提
 * npmのバージョン：10.2.3
