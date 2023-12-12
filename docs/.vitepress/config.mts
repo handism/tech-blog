@@ -51,7 +51,8 @@ export default defineConfig({
       {
         text: 'その他',
         items: [
-          { text: 'Gitの使い方', link: '/tech/how-to-use-git' }
+          { text: 'Gitの使い方', link: '/tech/how-to-use-git' },
+          { text: 'インフラ管理のコツ', link: '/tech/infrastructure-tips' }
         ]
       }
     ],
