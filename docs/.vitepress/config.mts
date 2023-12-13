@@ -45,7 +45,8 @@ export default defineConfig({
       {
         text: 'バックエンド',
         items: [
-          { text: 'Spring BootでAPIサーバー', link: '/backend/spring-boot-api-server' }
+          { text: 'Spring BootでAPIサーバー', link: '/backend/spring-boot-api-server' },
+          { text: 'Swagger Editorを試す', link: '/backend/swagger-introduction' }
         ]
       },
       {
