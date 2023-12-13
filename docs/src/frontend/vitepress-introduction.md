@@ -74,7 +74,84 @@ http://localhost:4173
 
 ## ② GitHub Pagesにデプロイする
 参考：https://vitepress.dev/guide/deploy#github-pages  
-`static.yml`を作成して`.github/workflows`に入れるだけ。コミットすれば自動でデプロイが開始される。  
+
+### GitHub上のリポジトリのページにアクセス
+* Settings＞Pages
+* SourceをGitHub Actionsに変更
+* staticをクリック
+
+`.github/workflows`にある`static.yml`の内容を以下に変更する。  
+コミットすれば自動でデプロイが開始される。  
+
+```yml
+# Sample workflow for building and deploying a VitePress site to GitHub Pages
+#
+name: Deploy VitePress site to Pages
+
+on:
+  # Runs on pushes targeting the `main` branch. Change this to `master` if you're
+  # using the `master` branch as the default branch.
+  push:
+    branches: [main]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Not needed if lastUpdated is not enabled
+      # - uses: pnpm/action-setup@v2 # Uncomment this if you're using pnpm
+      # - uses: oven-sh/setup-bun@v1 # Uncomment this if you're using Bun
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm # or pnpm / yarn
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Install dependencies
+        run: npm ci # or pnpm install / yarn install / bun install
+      - name: Build with VitePress
+        run: |
+          npm run docs:build # or pnpm docs:build / yarn docs:build / bun run docs:build
+          touch docs/.vitepress/dist/.nojekyll
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: docs/.vitepress/dist
+
+  # Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+```
+
 これでブログが完成！簡単すぎる。
 
 
@@ -84,7 +161,7 @@ VitePressの記事の管理は、`docs`フォルダ内にマークダウン形�
 gatsby.js時代にも技術ブログを作っていたので、その時に作ったmdファイル3つを流用。
 
 ### mdファイルの作り方
-mdファイルのフォーマットはなるべく統一したいので、一旦以下で作成。
+普通の記事ファイルについては、mdファイルのフォーマットはなるべく統一したいので一旦以下フォーマットで作成。
 
 ::: tip
 上の`---`で挟まれた部分はFrontmatterという。
@@ -94,13 +171,11 @@ mdファイルのフォーマットはなるべく統一したいので、一旦
 ---
 title: 記事タイトル
 description: 記事の概要
-next: false
-prev: false
 ---
 
-## {{ $frontmatter.title }}
-
 [[toc]]
+
+<<記事内容>>
 ```
 
 いったん持たせたい要素はこれだけとする。  
@@ -207,6 +282,14 @@ export default createContentLoader('**/*.md', {
 ブログトップページの`index.md`はこんな感じのスクリプトを追加する。
 
 ```md
+---
+title: トップページ
+description: トップページ
+next: false
+prev: false
+lastUpdated: false
+---
+
 <script setup>
 import { data as posts } from '../.vitepress/theme/posts.data.mjs'
 </script>
@@ -222,6 +305,14 @@ import { data as posts } from '../.vitepress/theme/posts.data.mjs'
 URLがカテゴリ名で始まった場合のみリスト化。
 
 ```md
+---
+title: frontendカテゴリ
+description: frontendカテゴリ
+next: false
+prev: false
+lastUpdated: false
+---
+
 <script setup>
 import { data as posts } from '../../.vitepress/theme/posts.data.mjs'
 </script>

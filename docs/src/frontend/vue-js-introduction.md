@@ -25,14 +25,14 @@ https://code.visualstudio.com/download
 公式ページを参考にさせていただく。  
 https://ja.vuejs.org/guide/quick-start.html
 
-### まずはNode.jsをインストールする
+### Node.jsのインストール
 https://nodejs.org/en  
 `20.10.0 LTS`をインストール
 
-### Finderで作業用のフォルダを作成する
+### 作業用のフォルダの作成
 例：`git`
 
-### GitHubでリポジトリを作成する
+### GitHubでリポジトリの作成
 * 個人ページ＞Repositories＞New
   * Repository name：[username].github.io
   * Description：handism’s tech blog
@@ -42,7 +42,8 @@ https://nodejs.org/en
 作成後は、VSCodeでgitフォルダを開き、ターミナルでGitHubからリポジトリをクローンしておく。  
 
 
-### ターミナルで以下を入力してVue.jsのインストール
+### Vue.jsのインストール
+ターミナルで以下を入力してVue.jsのインストールする。
 ```zsh
 npm create vue@latest
 ```
@@ -56,7 +57,9 @@ cd [username].github.io
 npm install
 ```
 
-### 開発中にローカルで動作確認したい場合
+### ローカルで動作確認
+開発中にローカルで動作確認したい場合は以下コマンドで。  
+  
 ```zsh
 npm run dev
 ```
@@ -64,7 +67,9 @@ npm run dev
 `http://localhost:5173`でアプリにアクセスできる。めちゃくちゃお手軽！  
 サーバーを止めるには`Ctrl + C`
 
-### 本番デプロイする場合
+### 本番デプロイ
+本番デプロイする場合は以下コマンド。  
+
 ```zsh
 npm run build
 ```
@@ -85,7 +90,7 @@ npm run preview
 
 
 ## ③GitHub Pages＆Actionsの設定
-参考：https://docs.github.com/ja/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#カスタム-github-actions-ワークフローによる公開
+参考：https://docs.github.com/ja/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#カスタム-github-actions-ワークフローによる公開  
 まずは、`dist`フォルダをWebサイトとしてインターネットに公開（ホスティング）するような設定を行う。  
 
 参考：https://ja.vitejs.dev/guide/static-deploy.html  
@@ -170,5 +175,5 @@ Settings>Environmentsの「`github-pages`」っていう保護ルールを確認
 :::
 
 
-## ⑤技術ブログの作成
+## ⑤コーディングする
 ここからVue.jsのコーディングを開始する
