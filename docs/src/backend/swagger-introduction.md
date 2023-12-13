@@ -75,3 +75,45 @@ Zipファイルで生成される。
 
 ## クライアントを生成する
 `Generate Client > html2`
+
+## サンプル
+```yml
+openapi: 3.0.0
+info:
+  title: Your API
+  version: 1.0.0
+  description: Description of your API
+
+servers:
+  - url: http://localhost:3000
+    description: Development Server
+
+paths:
+  /example:
+    get:
+      summary: Get example data
+      description: Retrieve example data from the server
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              example:
+                message: 'Success!'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              example:
+                message: 'Not Found'
+
+components:
+  schemas:
+    ExampleResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: 'Example response message'
+```
