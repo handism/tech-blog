@@ -39,7 +39,7 @@ https://nodejs.org/en
   * Public
   * Add a README file：ON
 
-作成後は、VSCodeでgitフォルダを開き、ターミナルでGitHubからリポジトリをクローンしておく。  
+作成後は、VSCodeで`git`フォルダを開き、ターミナルでGitHubからリポジトリをクローンしておく。  
 
 
 ### Vue.jsのインストール
@@ -177,3 +177,8 @@ Settings>Environmentsの「`github-pages`」っていう保護ルールを確認
 
 ## ⑤コーディングする
 ここからVue.jsのコーディングを開始する
+
+::: tip
+Vue.jsのスタイルガイドは以下。  
+https://ja.vuejs.org/style-guide/
+:::

@@ -15,7 +15,9 @@ ITエンジニアとして働いていて、毎日が勉強だと感じている
 * 技術メモはMarkdownで記載したい
 * 技術ブログの見た目もできれば出来合いのものではなく、CSSを自作したい
 * ビルド＆デプロイはGitHub Actionsで自動で行いたい
-* GitHub Pagesのサイトの種類は3つあって、プロジェクト、ユーザ、Organization。今回は`https://[username].github.io`でアクセスしたいのでユーザーサイトを使う
+* ホスティングは無料なのでGitHub Pagesで行いたい
+  * サイトの種類は3つあって、プロジェクト、ユーザ、Organization
+  * 今回は`https://[username].github.io`でアクセスしたいのでユーザーサイトを使う
 
 
 ## 前提
@@ -72,7 +74,7 @@ npm run docs:preview
 http://localhost:4173
 
 
-## ② GitHub Pagesにデプロイする
+## ② GitHub Pagesへのデプロイ
 参考：https://vitepress.dev/guide/deploy#github-pages  
 
 ### GitHub上のリポジトリのページにアクセス
