@@ -57,14 +57,14 @@ paths:
 ```
 
 必須なのは以下の3点。
-* openapi：バージョン
-* info：API情報
-* paths：APIの個々のエンドポイントとHTTPメソッド
+* `openapi`：バージョン
+* `info`：API情報
+* `paths`：APIの個々のエンドポイントとHTTPメソッド
 
 必須でないものについては以下。
-* servers：APIサーバーとベースURL
-* externalDocs：外部のドキュメントを参照する場合
-* tags：APIをタグごとに分けて表示できるっぽい
+* `servers`：APIサーバーとベースURL
+* `externalDocs`：外部のドキュメントを参照する場合
+* `tags`：APIをタグごとに分けて表示できるっぽい
 
 
 ## YAMLファイルを保存する
