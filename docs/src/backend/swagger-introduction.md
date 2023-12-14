@@ -24,7 +24,7 @@ YAMLの方にはサンプルコードが記載されているが、802行もあ�
 https://swagger.io/docs/specification/basic-structure/
 ↑こちらに最小構成があった。
 
-YAMLまたはJSONなのでYAMLを選択。
+今回作成することになる`OpenAPI定義`はYAMLまたはJSON形式で書けるので、馴染みのあるYAMLを選択。
 サンプルがこちら。
 
 ```yml
@@ -56,25 +56,38 @@ paths:
                   type: string
 ```
 
+必須なのは以下の3点。
 * openapi：バージョン
 * info：API情報
-* servers：APIサーバーとベースURL
 * paths：APIの個々のエンドポイントとHTTPメソッド
+
+必須でないものについては以下。
+* servers：APIサーバーとベースURL
+* externalDocs：外部のドキュメントを参照する場合
+* tags：APIをタグごとに分けて表示できるっぽい
 
 
 ## YAMLファイルを保存する
 `File > Save as YAML`
 
 ## サーバを生成する
-`Generate Server > Spring`
-
-Zipファイルで生成される。
+Spring Bootで起動したかったので、`Generate Server > Spring`を選択。  
+Zipファイルで生成される。  
 `src/main/java/io/swagger/api`内にjavaファイルが6ファイル生成された。
-既存のSpring Bootプロジェクトに入れてビルドしたら色々不足していてエラーでこけた。
+既存のSpring Bootプロジェクトに入れてビルドしたら色々不足していてエラーでこけた。  
+  
+次は、元々`npm`がインストール済みなので`Generate Client > nodejs-server`を選択。  
+できたzipを展開して`cd`して`npm start`してhttp://localhost:8080/docs/ にアクセスできればOK。  
+ローカルのモックAPIサーバーがすごく簡単に構築できた。
 
 
 ## クライアントを生成する
-`Generate Client > html2`
+`Generate Client > html2`でいい感じのドキュメントが生成されて便利。  
+単一HTMLファイルが生成されるので扱いも楽ちん。  
+  
+APIを送るのは`Postman`が扱いやすくて良い。  
+`curl`でも良いし、Vue.jsに`axios`を組み込んでも良いし。
+
 
 ## サンプル
 ```yml

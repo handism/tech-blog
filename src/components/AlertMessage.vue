@@ -2,9 +2,9 @@
     <div v-if="isVisible" class="custom-alert">
       {{ message }}
     </div>
-  </template>
+</template>
   
-  <script>
+<script>
   export default {
     props: {
       message: {
@@ -17,11 +17,11 @@
       }
     }
   };
-  </script>
+</script>
   
-  <style scoped>
+<style scoped>
   .custom-alert {
     /* スタイルを追加 */
   }
-  </style>
+</style>
   
