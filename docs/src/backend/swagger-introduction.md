@@ -15,7 +15,7 @@ description: Swagger Editorを試してみる
 まずはお手軽にブラウザで扱える`Swagger Editor`を試す。  
   
 以下にアクセス。 
-https://editor.swagger.io  
+https://editor-next.swagger.io  
   
 左側のカラムがYAMLになっていて、右側にその内容がリアルタイムにドキュメント化されているっぽい。  
   
