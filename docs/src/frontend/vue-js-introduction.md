@@ -199,7 +199,7 @@ https://ja.vuejs.org/style-guide/
 
 ### 用途別ライブラリ
 
-* ルーティング：Vue Router
+* ルーティング、SPA：Vue Router
 * データ集中管理：Vuex
 * UI：Vuetify
 * API送受信：axios
