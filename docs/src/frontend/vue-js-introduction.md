@@ -182,3 +182,16 @@ Settings>Environmentsの「`github-pages`」っていう保護ルールを確認
 Vue.jsのスタイルガイドは以下。  
 https://ja.vuejs.org/style-guide/
 :::
+
+
+### 組み込みコンポーネント
+
+```vue
+<component>
+<keep-alive>
+<transition>
+<transition-group>
+<slot>
+<teleport>
+<suspense>
+```

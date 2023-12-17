@@ -105,5 +105,8 @@
   </script>
   
   <style scoped>
+  canvas {
+    background-color: black;
+  }
   </style>
   

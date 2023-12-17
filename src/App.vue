@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
 import CanvasComponent from './components/CanvasComponent.vue'
+import ToggleSwitch from './components/ToggleSwitch.vue'
+import InputField from './components/InputField.vue'
+import ChartComponent from './components/ChartComponent.vue'
+import Chart2 from './components/Chart2.vue'
+import LineChartComponent from './components/LineChartComponent.vue'
 </script>
 
 <template>
@@ -21,6 +25,11 @@ import CanvasComponent from './components/CanvasComponent.vue'
   <RouterView /> -->
 
   <CanvasComponent />
+  <ToggleSwitch />
+  <InputField />
+  <ChartComponent />
+  <Chart2 />
+  <LineChartComponent />
 
 </template>
 
