@@ -201,3 +201,4 @@ https://ja.vuejs.org/style-guide/
 * データ集中管理：Vuex
 * UI：Vuetify
 * API送受信：axios
+* SSG（静的サイトジェネレーション）：VitePress
