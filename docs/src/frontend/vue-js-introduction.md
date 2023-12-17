@@ -186,15 +186,13 @@ https://ja.vuejs.org/style-guide/
 
 ### 組み込みコンポーネント
 
-```vue
-<component>
-<keep-alive>
-<transition>
-<transition-group>
-<slot>
-<teleport>
-<suspense>
-```
+* <component>
+* <keep-alive>
+* <transition>
+* <transition-group>
+* <slot>
+* <teleport>
+* <suspense>
 
 
 ### 用途別ライブラリ
