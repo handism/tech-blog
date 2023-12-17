@@ -195,3 +195,11 @@ https://ja.vuejs.org/style-guide/
 <teleport>
 <suspense>
 ```
+
+
+### 用途別ライブラリ
+
+* ルーティング：Vue Router
+* データ集中管理：Vuex
+* UI：Vuetify
+* API送受信：axios
