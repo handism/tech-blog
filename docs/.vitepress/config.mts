@@ -19,6 +19,9 @@ export default defineConfig({
   srcExclude: ["**/README.md", "**/TODO.md"],
   head: [["link", {rel: "icon", href: "/favicon.ico"}]],
   lastUpdated: true,
+  sitemap: {
+    hostname: 'https://handism.github.io'
+  },
 
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
