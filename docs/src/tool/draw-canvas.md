@@ -12,7 +12,7 @@ description: 画像生成ツール
     </div>
   </template>
   
-  <script>
+  <script setup>　
   export default {
     data() {
       return {

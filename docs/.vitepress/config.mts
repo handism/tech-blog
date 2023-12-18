@@ -19,6 +19,7 @@ export default defineConfig({
   srcExclude: ["**/README.md", "**/TODO.md"],
   head: [["link", {rel: "icon", href: "/favicon.ico"}]],
   lastUpdated: true,
+  // 生成先：https://handism.github.io/sitemap.xml
   sitemap: {
     hostname: 'https://handism.github.io'
   },
