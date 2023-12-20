@@ -161,6 +161,17 @@ jobs:
 
 これでブログが完成！簡単すぎる。
 
+### 動作確認
+ここまでの作業が終わったらGitにコミットしてみる。  
+ビルドとデプロイが自動で走って、`https://[username].github.io`でサイトが見られれば成功！
+
+::: tip
+デプロイに失敗する場合  
+Settings>Environmentsの「`github-pages`」っていう保護ルールを確認。  
+`Deployment branches and tags`のところに上で指定した「`main`」などのブランチ名が記載されているかどうかを確認し、ない場合は追加する。  
+昔のデフォルトブランチ名は「`master`」だったので、最近「`main`」に変更したなどの場合は注意が必要。
+:::
+
 
 ## ③ 記事の作成
 まずはブログが寂しいので記事を増やす。  
@@ -343,5 +354,14 @@ import DrawCanvas from "../../components/DrawCanvas.vue"
 </script>
 
 <DrawCanvas />
+```
+:::
+
+
+::: tip
+mdファイル内で画像を表示したい場合は以下。  
+  
+```md
+![An image](../../public/image.png)
 ```
 :::
