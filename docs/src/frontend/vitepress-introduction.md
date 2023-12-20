@@ -219,20 +219,24 @@ description: 記事の概要
 
 ## ④ブログの設定
 ### config.mtsファイルの修正（サイトの設定）
-`defineConfig`の中に以下を追加する。
+`defineConfig`の中に以下のような設定を追加する。
 
 ```ts
-  srcDir: "./src",
+  ignoreDeadLinks: "localhostLinks",
   lang: "ja-JP",
   cleanUrls: true,
+  srcDir: "./src",
   srcExclude: ["**/README.md", "**/TODO.md"],
   head: [["link", {rel: "icon", href: "/favicon.ico"}]],
   lastUpdated: true,
+  sitemap: {
+    hostname: 'https://handism.github.io'
+  },
 ```
 
 ### config.mtsファイルの修正（レイアウトの設定）
 `themeConfig:`の中に以下を追加＆修正。  
-上から、タイトル横のロゴマーク、ナビゲーションバー、フッタ、最終更新日時、検索バー、ページャーの設定。
+上から、タイトル横のロゴマーク、ナビゲーションバー、サイドバー、フッタ、最終更新日時、検索バー、ページャー、GitHubリンクの設定。
 
 ::: warning
 ※2023/11/25現在、サイドバーが表示されている場合はフッタが表示されないらしい。
@@ -245,6 +249,32 @@ description: 記事の概要
       { text: 'about', link: '/about' },
       { text: 'frontend', link: '/frontend' },
       { text: 'sample', link: '/sample' }
+    ],
+    sidebar: [
+      {
+        text: 'フロントエンド',
+        items: [
+          { text: 'Vue.jsのTips', link: '/frontend/vue-js-introduction' },
+          { text: 'VitePressのTips', link: '/frontend/vitepress-introduction' },
+          { text: 'Vuetifyでカスタマイズ', link: '/frontend/vitepress-vuetify-customize' },
+          { text: 'ブログサービスの比較', link: '/frontend/blog-service-compare' }
+        ]
+      },
+      {
+        text: 'バックエンド',
+        items: [
+          { text: 'Spring BootでAPIサーバー', link: '/backend/spring-boot-api-server' },
+          { text: 'Swagger Editorを試す', link: '/backend/swagger-introduction' }
+        ]
+      },
+      {
+        text: 'その他',
+        items: [
+          { text: 'Gitの使い方', link: '/tech/how-to-use-git' },
+          { text: 'インフラ管理のコツ', link: '/tech/infrastructure-tips' },
+          { text: '生成AIのコツ', link: '/tech/generative-ai-tips' }
+        ]
+      }
     ],
     footer: {
       copyright: "©︎ 2023"
@@ -263,6 +293,9 @@ description: 記事の概要
       prev: "前の記事",
       next: "次の記事"
     },
+    socialLinks: [
+      { icon: 'github', link: 'https://github.com/handism' }
+    ]
 ```
 
 ::: tip
