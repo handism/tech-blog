@@ -101,8 +101,17 @@ https://ja.vuejs.org/style-guide/
 
 ### 用途別ライブラリ
 
+* ビルドツール：Vite（ヴィート）
 * ルーティング、SPA：Vue Router
-* データ集中管理：Vuex
+* データ集中管理：Pinia（ピーニャ）
 * UI：Vuetify
 * API送受信：axios
 * SSG（静的サイトジェネレーション）：VitePress
+* IDE：Volar
+
+
+### その他勉強したいこと
+
+* Composition API
+* TypeScript
+* ECMAScript
