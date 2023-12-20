@@ -332,3 +332,16 @@ import { data as posts } from '../../.vitepress/theme/posts.data.mjs'
     </template>
 </ul>
 ```
+
+::: tip
+mdファイル内からVueコンポーネントを呼びたい場合は以下のようにする。  
+docs/componentsフォルダにコンポーネントを入れることを想定。  
+  
+```md
+<script setup>
+import DrawCanvas from "../../components/DrawCanvas.vue"
+</script>
+
+<DrawCanvas />
+```
+:::
