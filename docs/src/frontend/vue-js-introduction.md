@@ -29,13 +29,11 @@ https://ja.vuejs.org/guide/quick-start.html
 https://nodejs.org/en  
 `20.10.0 LTS`をインストール
 
-### 作業用のフォルダの作成
-例：`git`
-
-
 ### Vue.jsのインストール
-ターミナルで以下を入力してVue.jsのインストールする。
+ターミナルで以下のような感じで入力してVue.jsをインストールする。
+  
 ```zsh
+mkdir git
 cd git
 npm create vue@latest
 ```
