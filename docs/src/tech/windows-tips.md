@@ -92,18 +92,26 @@ description: Windowsセットアップ
     * Microsoft Edge
 * ダウンロード＆インストール
     * VScode
+        * Japanese Language Pack for Visual Studio Code
+        * Vue Language Features (Volar)
     * サクラエディタ
     * Notion
-    * 
-
+    * Git
+    * Node.js
+    * Docker Desktop
+    * Java JDK
+    * Postman
 
 
 ## ショートカット
 
-* Windowsキー + 左右キーでウィンドウを整列させる
 - Win + Shift + S：範囲スクショ
 - Shift + 右クリック：パスのコピー
 - Ctrl + tab ：ブラウザなどのタブ切り替え
 - Shift + Win + →←：別モニタにウィンドウ移動
 - Win + E：デスクトップ表示
 - Win + →←：ウィンドウ整列
+- Alt + F4：閉じる
+- Win + R：ファイル名を指定して実行
+- Ctrl + Alt + Del：アカウントパスワード変更
+- Ctrl + Shift + Esc：タスクマネージャー起動

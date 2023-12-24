@@ -122,7 +122,8 @@ public class DummyController {
 ```zsh
 ./gradlew bootRun
 ```
-
+  
+初回実行の場合は、必要なものが自動でインストールされる。  
 エラーがなければローカル上でTomcatが立ち上がり、http://localhost:8080/ でアプリを起動可能。  
   
 上のクラスファイルの例では、http://localhost:8080/dummy-get のようなURLをCurlで叩くなりブラウザでアクセスするなりで動作確認が可能。  

@@ -29,8 +29,7 @@ https://ja.vuejs.org/guide/quick-start.html
 https://nodejs.org/en  
 `20.10.0 LTS`をインストール
 
-### Vue.jsのインストール
-ターミナルで以下のような感じで入力してVue.jsをインストールする。
+### Vue.jsプロジェクトの作成
   
 ```zsh
 mkdir git
@@ -41,6 +40,9 @@ npm create vue@latest
 * Project nane: `[プロジェクト名]`
 * 他は全部`Yes`
 * `Testing Solution`は`Cypress`
+
+### Vue.jsのインストール
+ターミナルで以下のような感じで入力してVue.jsをインストールする。
 
 ```zsh
 cd [プロジェクト名]
