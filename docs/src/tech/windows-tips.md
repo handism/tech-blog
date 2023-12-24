@@ -94,6 +94,7 @@ description: Windowsセットアップ
     * VScode
         * Japanese Language Pack for Visual Studio Code
         * Vue Language Features (Volar)
+        * Kotlin Language
     * サクラエディタ
     * Notion
     * Git
