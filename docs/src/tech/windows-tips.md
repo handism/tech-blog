@@ -3,8 +3,6 @@ title: Windowsセットアップ
 description: Windowsセットアップ
 ---
 
-[[toc]]
-
 ## Windows11初期セットアップ
 
 * 言語選択：日本語
@@ -96,6 +94,7 @@ description: Windowsセットアップ
         * Vue Language Features (Volar)
         * Kotlin Language
         * Python
+        * C/C++ Extension Pack
     * サクラエディタ
     * Notion
     * Git
