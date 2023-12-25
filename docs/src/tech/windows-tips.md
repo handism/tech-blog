@@ -95,6 +95,7 @@ description: Windowsセットアップ
         * Japanese Language Pack for Visual Studio Code
         * Vue Language Features (Volar)
         * Kotlin Language
+        * Python
     * サクラエディタ
     * Notion
     * Git
@@ -102,6 +103,8 @@ description: Windowsセットアップ
     * Docker Desktop
     * Java JDK
     * Postman
+    * DBeaver Community
+
 
 
 ## ショートカット
