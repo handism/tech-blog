@@ -3,8 +3,6 @@ title: Vue.jsをあれこれ試してみる
 description: Vue.jsをあれこれ試してみる
 ---
 
-[[toc]]
-
 ## 前提
 * npmのバージョン：10.2.3
 * node.jsのバージョン：v20.10.0

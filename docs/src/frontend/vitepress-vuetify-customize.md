@@ -3,8 +3,6 @@ title: VitePressで作った技術ブログをVuetifyでカスタマイズする
 description: VitePressで作った技術ブログをVuetifyでカスタマイズする
 ---
 
-[[toc]]
-
 ## 前提
 * npmのバージョン：10.2.3
 * node.jsのバージョン：v20.10.0

@@ -3,8 +3,6 @@ title: Swagger Editorを試してみる
 description: Swagger Editorを試してみる
 ---
 
-[[TOC]]
-
 ## 経緯
 今まではAPIを送信する機能をゴリゴリにプログラミングしていたが、いとも簡単にAPIを生成できるSwagger（OpenAPI）なる仕組みがあると知って驚愕した。  
 
