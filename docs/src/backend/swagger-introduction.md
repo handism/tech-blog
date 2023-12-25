@@ -17,11 +17,11 @@ https://editor-next.swagger.io
   
 左側のカラムがYAMLになっていて、右側にその内容がリアルタイムにドキュメント化されているっぽい。  
   
-YAMLの方にはサンプルコードが記載されているが、802行もあって何がなんだかわかりにくい…
-
-https://swagger.io/docs/specification/basic-structure/
-↑こちらに最小構成があった。
-
+YAMLの方にはサンプルコードが記載されているが、802行もあって何がなんだかわかりにくい…  
+  
+https://swagger.io/docs/specification/basic-structure/  
+↑こちらに最小構成があった。  
+  
 今回作成することになる`OpenAPI定義`はYAMLまたはJSON形式で書けるので、馴染みのあるYAMLを選択。
 サンプルがこちら。
 
