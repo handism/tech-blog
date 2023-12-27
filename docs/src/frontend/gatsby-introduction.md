@@ -78,7 +78,7 @@ cd gatsby-blogsite
 gatsby develop
 ```
 
-ビルドに無事成功すれば、以下URLでウェブサイトを確認可能。  
+ビルドに無事成功すれば、以下URLでウェブサイトを確認可能。ホットリロードにも対応している。  
 http://localhost:8000/
   
 停止する場合は`Ctrl + C`。
@@ -92,3 +92,7 @@ cd gatsby-blogsite
 npm run develop
 ```
 :::
+
+
+## ⑤コーディングを実施
+トップページに変更を加えたいなら、`src/pages/index.js`を修正していく。
