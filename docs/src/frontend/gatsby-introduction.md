@@ -83,6 +83,10 @@ http://localhost:8000/
   
 停止する場合は`Ctrl + C`。
 
+以下でGraphiQLを起動可能。  
+http://localhost:8000/___graphql  
+
+
 ::: tip
 Gatsby CLIを入れずにクイックに始めることも可能。
 
