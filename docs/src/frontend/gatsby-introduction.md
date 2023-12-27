@@ -83,3 +83,12 @@ http://localhost:8000/
   
 停止する場合は`Ctrl + C`。
 
+::: tip
+Gatsby CLIを入れずにクイックに始めることも可能。
+
+```zsh
+npm init gatsby
+cd gatsby-blogsite
+npm run develop
+```
+:::
