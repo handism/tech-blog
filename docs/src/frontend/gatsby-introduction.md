@@ -100,3 +100,78 @@ npm run develop
 
 ## ⑤コーディングを実施
 トップページに変更を加えたいなら、`src/pages/index.js`を修正していく。
+
+
+### プラグインの追加
+Gatsbyは機能をプラグインとして追加していくことが可能で、Node.jsのパッケージとして提供されている。
+
+サイトにプラグインを追加するには以下を実施する。
+
+```zsh
+npm install [プラグイン名]
+```
+
+また、`gatsby-config.js`にもプラグイン名およびプラグイン設定の追加が必要。以下はサイトにマークダウンファイルからデータを読み込む機能を追加するプラグインの例。
+
+```js
+  plugins: [
+        {
+            resolve: `gatsby-source-filesystem`,
+            options: {
+                name: `markdown`,
+                path: `${__dirname}/contents/markdowns`,
+            },
+        },
+    ],
+```
+
+自分の使用しているプラグインは以下。
+
+* gatsby-plugin-typography
+* gatsby-transformer-sharp
+* gatsby-plugin-sharp
+* gatsby-source-filesystem
+* gatsby-transformer-remark
+* gatsby-remark-autolink-headers
+* typography-theme-github
+* @fortawesome/fontawesome-svg-core
+* @fortawesome/free-solid-svg-icons
+* @fortawesome/react-fontawesome
+* react-share
+* gatsby-plugin-image
+
+
+### Reactについて
+すでに入門済みの`Vue.js`との違いについて。
+
+コンポーネントが基本的にHTML、CSS、JavaScriptを.vueファイルにまとめて記載するVue.jsに対して、.jsファイルにJavaScriptとして記載してHTMLとCSSはJavaScriptで返すようにするのがReact。
+
+
+### GraphQLについて
+Gatsbyには「データレイヤー」と呼ばれる機能があり、これを使用するとどこからでもサイトにデータを取り込むことが可能。
+
+データ層には特別な構文を備えたクエリ言語であるGraphQLが使用されている。
+
+データは1つ以上のソースに保存されるが、そのソースの種類はファイルシステム上のフォルダやWordPressなどのCMS、DBなど多岐に渡る。
+
+データをソースからデータ層に取り込むにはソースプラグインをサイトに追加する。各ソースプラグインは特定のソースからデータを取得し、サイトのGraphQLデータレイヤーに追加される。
+
+GraphQLの例はこんな感じ。
+
+```
+    query = { graphql`
+      query {
+        images: allFile {
+          edges {
+            node {
+              relativePath
+              name
+              childImageSharp {
+                gatsbyImageData(layout: FULL_WIDTH)
+              }
+            }
+          }
+        }
+      }
+    `}
+```
