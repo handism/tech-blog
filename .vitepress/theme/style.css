@@ -70,26 +70,13 @@ blockquote {
   border: solid 1px;
 }
 
-blockquote:before {
-  display: inline-block;
-  position: absolute;
-  top: 20px;
-  left: 15px;
-  content: "\f122";
-  font-family: dashicons;
-  color: #77c0c9;
-  font-size: 25px;
-  line-height: 1;
-  font-weight: 900;
-}
-
 pre {
   overflow: auto;
   background-color: #f5f5f5;
-  padding: 1.5rem;
+  padding: 1rem;
+  font-size: 90%;
 }
 
 code {
-  color: #2f4f4f;
   font-family: Consolas, "Courier New", Courier, Monaco, monospace;
 }
