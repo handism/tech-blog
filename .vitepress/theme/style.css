@@ -28,6 +28,10 @@ li {
   line-height: 1.8rem;
 }
 
+ol, ul {
+  padding-left: 2rem;
+}
+
 textarea {
   width: 90%;
 }

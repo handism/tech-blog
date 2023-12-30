@@ -28,12 +28,12 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  max-width: 100%;
 }
   
 @media (max-width: 768px) {
   .blog-layout {
     flex-direction: column;
-    max-width: 100%;
   }
 }
 </style>
