@@ -27,14 +27,19 @@ export default {
 .blog-layout {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  max-width: 100%;
 }
-  
-@media (max-width: 768px) {
+
+/***** メディアクエリ *****/
+@media screen and (max-width: 768px) {
   .blog-layout {
     flex-direction: column;
   }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+}
+
+@media screen and (min-width: 1024px) {
 }
 </style>
   

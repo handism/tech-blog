@@ -17,8 +17,10 @@ import ArticleHeader from "./ArticleHeader.vue"
   flex-grow: 1;
   padding: 20px;
   box-sizing: border-box;
-  max-width: 800px;
+  width: 100%;
   margin: 0 auto;
+  justify-content: center;
+  max-width: 800px;
 }
 </style>
   
