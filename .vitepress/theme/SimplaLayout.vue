@@ -34,6 +34,10 @@ export default {
   .blog-layout {
     flex-direction: column;
   }
+
+  ol, ul {
+    padding-left: 1rem;
+  }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
