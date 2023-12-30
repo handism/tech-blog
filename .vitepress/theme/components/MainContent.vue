@@ -15,7 +15,7 @@ import ArticleHeader from "./ArticleHeader.vue"
 <style scoped>
 .main-content {
   flex-grow: 1;
-  padding: 20px;
+  padding: 0.2rem;
   box-sizing: border-box;
   width: 100%;
   margin: 0 auto;
