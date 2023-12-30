@@ -20,14 +20,13 @@ VitePressで技術ブログを作ってみたのだが、デフォルトのテ�
 * 1カラムのレスポンシブレイアウト
 
 
-
 ## 前提
 * npmのバージョン：10.2.3
 * node.jsのバージョン：v20.10.0
 * Vue.jsのバージョン：3.3.4
 * VitePressのバージョン：v1.0.0-rc.30
 * 既にVitePressプロジェクトができていることが前提
-* Windowsを使用
+* 開発にはWindowsを使用
 
 
 ## ① index.jsの修正
@@ -120,18 +119,21 @@ import ArticleHeader from "./ArticleHeader.vue"
 
 
 ### メインコンテンツの横幅修正
-1カラムのデザインなのでメインコンテンツ部分はパソコンでは`800px`の幅でセンタリングしたい。一方、スマホで見たときは画面の横幅に合わせるようにする。
+1カラムのデザインなのでメインコンテンツ部分はパソコンでは`800px`の幅でセンタリングしたい。一方、スマホで見たときは画面の横幅に合わせるようにする。以下のように`width`と`max-width`を組み合わせることで解決した。
 
-以下のように`width`と`max-width`を組み合わせることで解決した。
+また、`box-sizing: border-box;`の設定はborderやpaddingをwidthの範囲内で計算してくれるようになるのでほぼ必須な設定。これがないと色々面倒くさい…
 
 ```css
 .main-content {
   padding: 0.8rem;
+  box-sizing: border-box;
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
 }
 ```
+
+ちなみに、CSSを設定する際には単位を`%`や`rem`を使うことを意識すると良い。これらは相対的な単位なので自然とレスポンシブ対応になる。
 
 
 ### 画像が枠をはみ出すのを修正
@@ -159,3 +161,15 @@ import ArticleHeader from "./ArticleHeader.vue"
 
 
 ## ⑥ CSS変数を導入
+`:root`疑似クラスに対してカスタムプロパティを定義することでHTML全体に適用される。
+
+
+```css
+:root {
+  --main-bg-color: brown;
+}
+
+element {
+  background-color: var(--main-bg-color);
+}
+```
