@@ -33,6 +33,7 @@ export default {
 @media (max-width: 768px) {
   .blog-layout {
     flex-direction: column;
+    max-width: 100%;
   }
 }
 </style>
