@@ -1,6 +1,6 @@
 <template>
     <div>
-      <canvas ref="canvas"></canvas>
+      <canvas ref="canvas" :width="canvasWidth" :height="canvasHeight"></canvas>
       <button @click="addObject">Add Object</button>
       <button @click="resetCanvas">Reset Canvas</button>
       <button @click="downloadImage">Download Image</button>
@@ -11,7 +11,9 @@
   export default {
     data() {
       return {
-        objects: []
+        canvasWidth: 800,
+        canvasHeight: 600,
+        objects: [],
       };
     },
     methods: {
@@ -105,10 +107,8 @@
   <style scoped>
   canvas {
     background-color: black;
-    max-width: 800px;
-    width: 95%;
-    height: 600px;
     border: 1px solid #000;
+    max-width: 95%;
   }
   </style>
   
