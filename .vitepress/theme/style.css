@@ -83,7 +83,7 @@ pre {
   overflow: auto;
   padding: 1rem;
   font-size: 90%;
-  border: solid;
+  border: solid 1px;
 }
 
 code {
@@ -153,5 +153,5 @@ html:not(.dark) .vp-code span {
 .custom-block {
   padding: 1rem;
   font-size: 90%;
-  border: solid;
+  border: dashed 1px;
 }
