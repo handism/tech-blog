@@ -10,8 +10,8 @@ tags: [vue, frontend]
 * Macを使用
 
 
-## ①VSCodeの準備
-入っていない場合はVSCodeをインストール  
+## ① VSCodeの準備
+入っていない場合はVSCodeをインストール。  
 https://code.visualstudio.com/download
 
 ### 拡張機能を入れる
@@ -19,13 +19,13 @@ https://code.visualstudio.com/download
 * Vue Language Features (Volar)
 
 
-## ②Vue.jsのインストール
+## ② Vue.jsのインストール
 公式ページを参考にさせていただく。  
 https://ja.vuejs.org/guide/quick-start.html
 
 ### Node.jsのインストール
 https://nodejs.org/en  
-`20.10.0 LTS`をインストール
+`20.10.0 LTS`をインストール。
 
 ### Vue.jsプロジェクトの作成
   
@@ -48,14 +48,13 @@ npm install
 ```
 
 ### ローカルで動作確認
-開発中にローカルで動作確認したい場合は以下コマンドで。  
+開発中にローカルで動作確認したい場合は以下コマンドで。
   
 ```zsh
 npm run dev
 ```
 
-`http://localhost:5173`でアプリにアクセスできる。めちゃくちゃお手軽！  
-サーバーを止めるには`Ctrl + C`
+`http://localhost:5173`でアプリにアクセスできる。めちゃくちゃお手軽！ちなみにサーバーを止めるには`Ctrl + C`。
 
 コンソールにログを出したい場合は以下のような感じで。変数の値を確認したいときなどに便利。
 
@@ -85,8 +84,8 @@ npm run preview
 `http://localhost:4173`で動作確認も可能。  
   
 
-## ③コーディングする
-ここからVue.jsのコーディングを開始する
+## ③ コーディングする
+ここからVue.jsのコーディングを開始する。
 
 ::: tip
 Vue.jsのスタイルガイドは以下。  

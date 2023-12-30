@@ -1,6 +1,6 @@
 ---
 title: VitePress + GitHub Actions + GitHub Pagesで技術ブログを自作する
-tags: [frontend, vue, vitepress]
+tags: [frontend, vue, vitepress, blog]
 image: symbol-mark.webp
 ---
 
@@ -33,7 +33,7 @@ VitePressの名前に含まれている「`Vite`」とは、Vue.jsのコマン�
 * Macを使用
 
 
-## ①VitePressの構築
+## ① VitePressの構築
 既存のVueプロジェクトに`cd`してから以下コマンドを入力。
 
 ```zsh
@@ -214,7 +214,7 @@ description: 記事の概要
 `docs/src`フォルダと`docs/src/public`フォルダを作成。`src`の下にカテゴリ別にフォルダ分けしていき、カテゴリごとに`index.md`を置いていく。
 
 
-## ④ブログの設定
+## ④ ブログの設定
 
 ### config.mtsファイルの修正（サイトの設定）
 `defineConfig`の中に以下のような設定を追加する。
@@ -307,7 +307,7 @@ md内に書いたソースコードがビルドエラーとなってしまう場
 :::
 
 
-## ⑤記事一覧の作成
+## ⑤ 記事一覧の作成
 今のところVitePressには、デフォルトで記事一覧の機能がないので自作する。  
 参考：https://vitepress.dev/guide/data-loading#createcontentloader
 
