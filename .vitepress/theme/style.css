@@ -3,6 +3,8 @@
 /***** 全体の設定 *****/
 :root {
   --main-bg-color: #1176d4;
+  font-size: 16px;
+  line-height: 1.7;
 }
 
 body {
@@ -21,15 +23,6 @@ a:hover {
 
 a:visited {
   color: #789dae;
-}
-
-p {
-  font-size: 1.1rem;
-  line-height: 1.7;
-}
-
-li {
-  line-height: 1.7;
 }
 
 ol, ul {
