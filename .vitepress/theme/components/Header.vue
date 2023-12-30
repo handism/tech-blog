@@ -6,24 +6,12 @@ const { theme } = useData()
 
 <template>
   <header class="header">
-    <a :href="`/`">
-      <h1 class="site-title">{{ theme.siteTitle }}</h1>
-    </a>
+    <h1 class="site-title"><a href="/">{{ theme.siteTitle }}</a></h1>
     <!-- Add more header content as needed -->
   </header>
 </template>
   
 <style scoped>
-.header {
-  background-color: #333;
-  color: #fff;
-  padding: 20px;
-  text-align: center;
-  text-decoration: none;
-}
 
-.site-title {
-  color: #fff;
-}
 </style>
   

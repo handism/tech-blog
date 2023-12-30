@@ -9,6 +9,7 @@ const { params } = useData()
 const tag = params.value.tag
 </script>
 
+<h2># {{ tag }} タグの記事一覧</h2>
 <ul>
     <template v-for="post of posts">
         <li v-if="post.frontmatter.tags && post.frontmatter.tags.includes(tag)">

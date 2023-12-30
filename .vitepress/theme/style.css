@@ -2,7 +2,9 @@
 
 /***** 全体の設定 *****/
 :root {
-  --main-bg-color: #1176d4;
+  --main-color: #202124;
+  --base-color: #e8eaed;
+  --accent-color: #006bb3;
   font-size: 16px;
   line-height: 1.7;
 }
@@ -13,16 +15,18 @@ body {
 }
 
 a {
-  color: #1487bd;
-  text-decoration: none;
+  color: var(--accent-color);
 }
 
-a:hover {
-  color: #0f5373;
+a,
+a:visited,
+a:hover,
+a:active {
+  color: var(--accent-color);
 }
 
-a:visited {
-  color: #1176d4;
+li {
+  line-height: 2;
 }
 
 ol, ul {
@@ -79,4 +83,52 @@ pre {
 
 code {
   font-family: Consolas, "Courier New", Courier, Monaco, monospace;
+}
+
+.tag {
+  font-size: 85%;
+  margin: 0 0.5rem 0 0;
+  padding: 0.3rem;
+  background: #0f5373;
+  border-radius: 3px;
+}
+
+.tags a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.thumbnail {
+  max-width: 95%;
+  padding: 1.5rem 0 1.5rem 0;
+  margin: auto;
+  display: block;
+}
+
+.main-content {
+  padding: 0.8rem;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  justify-content: center;
+  overflow-wrap: break-word;
+}
+
+.header {
+  background-color: #333;
+  padding: 20px;
+  text-align: center;
+}
+
+.site-title a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
 }
