@@ -1,11 +1,12 @@
 ---
 title: VitePress + GitHub Actions + GitHub Pagesで技術ブログを自作する
 tags: [frontend, vue, vitepress]
+image: symbol-mark.webp
 ---
 
 ## 何故やるのか
-ITエンジニアとして働いていて、毎日が勉強だと感じている。  
-学んだことは技術メモとして残しておきたいと考えているが、あまりお金をかけずに済む方法はないものか…と考えていた。  
+ITエンジニアとして働いていて、毎日が勉強だと感じている。学んだことは技術メモとして残しておきたいと考えているが、あまりお金をかけずに済む方法はないものか…と考えていた。
+
 他には無料ブログサービス（Blogger、はてなブログ、Qiita、Zenn等）を利用するなどの選択肢があるが、せっかくなので自分にない技術の勉強も兼ねて自作したい。
 
 ::: tip
@@ -39,6 +40,7 @@ VitePressの名前に含まれている「`Vite`」とは、Vue.jsのコマン�
 npm add -D vitepress
 npx vitepress init
 ```
+
 選択肢では以下を入力した。
 
 * ./docs
@@ -85,8 +87,7 @@ http://localhost:4173
 * SourceをGitHub Actionsに変更
 * staticをクリック
 
-`.github/workflows`にある`static.yml`の内容を以下に変更する。  
-コミットすれば自動でデプロイが開始される。  
+`.github/workflows`にある`static.yml`の内容を以下に変更する。コミットすれば自動でデプロイが開始される。  
 
 ```yml
 # Sample workflow for building and deploying a VitePress site to GitHub Pages
@@ -160,8 +161,7 @@ jobs:
 これでブログが完成！簡単すぎる。
 
 ### 動作確認
-ここまでの作業が終わったらGitにコミットしてみる。  
-ビルドとデプロイが自動で走って、`https://[username].github.io`でサイトが見られれば成功！
+ここまでの作業が終わったらGitにコミットしてみる。ビルドとデプロイが自動で走って、`https://[username].github.io`でサイトが見られれば成功！
 
 ::: tip
 デプロイに失敗する場合  
@@ -172,9 +172,9 @@ Settings>Environmentsの「`github-pages`」っていう保護ルールを確認
 
 
 ## ③ 記事の作成
-まずはブログが寂しいので記事を増やす。  
-VitePressの記事の管理は、`docs`フォルダ内にマークダウン形式（*.md）のファイルを作成/更新/削除していくことで実施可能。  
-gatsby.js時代にも技術ブログを作っていたので、その時に作ったmdファイル3つを流用。
+まずはブログが寂しいので記事を増やす。
+
+VitePressの記事の管理は、`docs`フォルダ内にマークダウン形式（*.md）のファイルを作成/更新/削除していくことで実施可能。gatsby.js時代にも技術ブログを作っていたので、その時に作ったmdファイル3つを流用。
 
 ### mdファイルの作り方
 普通の記事ファイルについては、mdファイルのフォーマットはなるべく統一したいので一旦以下フォーマットで作成。
@@ -211,11 +211,11 @@ description: 記事の概要
 ### フォルダ整理
 `docs`フォルダ以下にmdファイルをベタ置きしていくのもあれなので、フォルダを整理する。
 
-`docs/src`フォルダと`docs/src/public`フォルダを作成。  
-`src`の下にカテゴリ別にフォルダ分けしていく。  
-カテゴリごとに`index.md`を置いていく。  
+`docs/src`フォルダと`docs/src/public`フォルダを作成。`src`の下にカテゴリ別にフォルダ分けしていき、カテゴリごとに`index.md`を置いていく。
+
 
 ## ④ブログの設定
+
 ### config.mtsファイルの修正（サイトの設定）
 `defineConfig`の中に以下のような設定を追加する。
 
@@ -233,7 +233,8 @@ description: 記事の概要
 ```
 
 ### config.mtsファイルの修正（レイアウトの設定）
-`themeConfig:`の中に以下を追加＆修正。  
+`themeConfig:`の中に以下を追加＆修正。
+
 上から、タイトル横のロゴマーク、ナビゲーションバー、サイドバー、フッタ、最終更新日時、検索バー、ページャー、GitHubリンクの設定。
 
 ::: warning
@@ -350,8 +351,7 @@ import { data as posts } from '../.vitepress/theme/posts.data.mjs'
 </ul>
 ```
 
-他のカテゴリページの`index.md`はこんな感じにしてみた。  
-URLがカテゴリ名で始まった場合のみリスト化。
+他のカテゴリページの`index.md`はこんな感じにしてみた。URLがカテゴリ名で始まった場合のみリスト化。
 
 ```md
 ---
