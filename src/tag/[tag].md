@@ -1,8 +1,5 @@
 ---
-title: タグページ
-next: false
-prev: false
-lastUpdated: false
+
 ---
 
 <script setup>

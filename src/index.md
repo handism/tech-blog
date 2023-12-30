@@ -1,5 +1,5 @@
 ---
-title: トップページ
+
 ---
 
 <script setup>

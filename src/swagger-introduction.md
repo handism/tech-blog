@@ -12,7 +12,7 @@ tags: [swagger, backend]
 ## Swagger Editorをいじる
 まずはお手軽にブラウザで扱える`Swagger Editor`を試す。  
   
-以下にアクセス。 
+以下にアクセス。  
 https://editor-next.swagger.io  
   
 左側のカラムがYAMLになっていて、右側にその内容がリアルタイムにドキュメント化されているっぽい。  

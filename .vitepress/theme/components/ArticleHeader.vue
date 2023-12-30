@@ -7,7 +7,7 @@ const img = frontmatter.image
 
 <template>
   <div class="entry-meta">
-    <h1>{{ frontmatter.title }}</h1>
+    <h1 v-if="frontmatter.title">{{ frontmatter.title }}</h1>
     <span v-for="tag in frontmatter.tags" class="tags">
       <a :href="`/tag/${tag}`" class="tag">{{ "#" + tag }}</a>
     </span>
