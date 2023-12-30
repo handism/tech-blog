@@ -84,6 +84,7 @@ pre {
   padding: 1rem;
   font-size: 90%;
   border: solid 1px;
+  margin: 2rem 0 2rem 0;
 }
 
 code {
@@ -154,4 +155,9 @@ html:not(.dark) .vp-code span {
   padding: 1rem;
   font-size: 90%;
   border: dashed 1px;
+  margin: 2rem 0 2rem 0;
+}
+
+.custom-block pre {
+  margin: 0;
 }
