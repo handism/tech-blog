@@ -15,6 +15,7 @@ import ArticleHeader from "./ArticleHeader.vue"
 <style scoped>
 .main-content {
   padding: 0.8rem;
+  box-sizing: border-box;
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
