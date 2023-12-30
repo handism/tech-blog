@@ -81,9 +81,9 @@ blockquote {
 
 pre {
   overflow: auto;
-  background-color: var(--base-color);
   padding: 1rem;
   font-size: 90%;
+  border: solid;
 }
 
 code {
@@ -136,4 +136,22 @@ code {
   color: var(--sub-color);
   padding: 10px;
   text-align: center;
+}
+
+.lang, .copy {
+  display: none;
+}
+
+.dark .vp-code span {
+  color: var(--shiki-dark, inherit);
+}
+
+html:not(.dark) .vp-code span {
+  color: var(--shiki-light, inherit);
+}
+
+.custom-block {
+  padding: 1rem;
+  font-size: 90%;
+  border: solid;
 }
