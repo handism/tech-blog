@@ -26,7 +26,7 @@ VitePressで技術ブログを作ってみたのだが、デフォルトのテ�
 * Vue.jsのバージョン：3.3.4
 * VitePressのバージョン：v1.0.0-rc.30
 * 既にVitePressプロジェクトができていることが前提
-* 開発にはWindowsを使用
+* 開発にはWindows 11を使用
 
 
 ## ① index.jsの修正
@@ -177,3 +177,10 @@ element {
   background-color: var(--main-bg-color);
 }
 ```
+
+## ⑦ 動作確認
+ローカルでの動作確認方法は別記事に記載済みのため割愛。
+
+スマホで確認する場合は、いろいろ準備するのが面倒なのでGitHubにデプロイしてからiPhone、Androidの実機で確認している。
+
+OSの設定を参照した自動ダークモードを実装しているので、

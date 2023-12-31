@@ -5,6 +5,7 @@
   --base-color: #e8eaed;
   --accent-color: #006bb3;
   --sub-color: #e8eaed;
+  --code-color: #FF9600;
   color: var(--main-color);
   background-color: var(--base-color);
   font-size: 16px;
@@ -87,7 +88,8 @@ pre {
 }
 
 code {
-  font-family: Consolas, "Courier New", Courier, Monaco, monospace;
+  font-family: Consolas, Menlo, Monaco, -apple-system, BlinkMacSystemFont, "Segoe UI", Meiryo, monospace;
+  color: var(--code-color);
 }
 
 .tag {
