@@ -1,19 +1,5 @@
 @charset "utf-8";
 
-@font-face {
-  font-family: 'noto-sans-jp';
-  src: url(./NotoSansJP-Regular.ttf)format("ttf");
-  font-weight: normal;
-  font-display: swap;
-}
-  
-@font-face {
-  font-family: 'noto-sans-jp';
-  src: url(./NotoSansJP-Bold.ttf)format("ttf");
-  font-weight: bold;
-  font-display: swap;
-}
-
 :root {
   --main-color: #202124;
   --base-color: #e8eaed;
