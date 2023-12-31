@@ -97,6 +97,11 @@ p code, li code, ul code {
   padding: 0 0.2rem 0 0.2rem;
 }
 
+time {
+  margin: 0 1rem 0 0;
+  font-size: 85%;
+}
+
 .tag {
   font-size: 85%;
   margin: 0 0.5rem 0 0;
