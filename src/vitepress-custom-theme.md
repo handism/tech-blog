@@ -123,7 +123,7 @@ import ArticleHeader from "./ArticleHeader.vue"
 
 この要件は以下のように`width`と`max-width`を組み合わせることで実現できた。
 
-また、`box-sizing: border-box;`の設定はborderやpaddingをwidthの範囲内で計算してくれるようになるのでほぼ必須な設定。これがないと色々面倒くさい…
+また、`box-sizing: border-box;`の設定はborderやpaddingをwidthの範囲内で計算してくれるようになるのでほぼ必須な設定。これがないと色々面倒くさい…。
 
 ```css
 .main-content {
