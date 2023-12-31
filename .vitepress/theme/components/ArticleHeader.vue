@@ -6,8 +6,8 @@ const { frontmatter, page} = useData()
 
 <template>
   <div class="entry-meta">
-    <time v-if="frontmatter.title">{{ "⌚" + new Date(page.lastUpdated).toLocaleDateString({timeZone: 'Asia/Tokyo'}) }}</time>
     <h1 v-if="frontmatter.title">{{ frontmatter.title }}</h1>
+    <time v-if="frontmatter.title">{{ "⌚" + new Date(page.lastUpdated).toLocaleDateString({timeZone: 'Asia/Tokyo'}) }}</time>
     <span v-for="tag in frontmatter.tags" class="tags">
       <a :href="`/tag/${tag}`" class="tag">{{ "# " + tag }}</a>
     </span>
