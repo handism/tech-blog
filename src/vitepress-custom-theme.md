@@ -30,7 +30,7 @@ VitePressで技術ブログを作ってみたのだが、デフォルトのテ�
 
 
 ## ① index.jsの修正
-VitePressのエントリポイントは`.vitepress/theme/index.js`。以下のように修正して、自作のVue.jsのSFCが読み込まれるようにする。
+テーマ開発者にとってのVitePressのエントリポイントは`.vitepress/theme/index.js`。以下のように修正して、自作のVue.jsのSFCが読み込まれるようにする。
 
 ```js
 // https://vitepress.dev/guide/custom-theme
@@ -98,7 +98,7 @@ import ArticleHeader from "./ArticleHeader.vue"
 </style>
 ```
 
-グローバルなCSSについては`.vitepress/theme/style.css`に記載していく。一般的なCSSと同様なのでここでは割愛。
+グローバルなCSSについては`.vitepress/theme/style.css`に記載していく。一般的なCSSと同様なので今回は過去に作成したものを流用したためここでは割愛。
 
 これだけでほぼブログサイトが完成する。とはいえ、これだけでは機能が少なすぎて何かと不便なことが多いので作りこみを行っていく。
 
@@ -115,11 +115,13 @@ import ArticleHeader from "./ArticleHeader.vue"
 <meta name="viewport" content="width=device-width,initial-scale=1">
 ```
 
-吐き出されたHTMLを確認してみたところ、VitePressの場合はデフォルトで出してくれているので対応は不要。
+出力されたHTMLを確認してみたところ、VitePressの場合はデフォルトで出してくれているので**対応は不要**。
 
 
 ### メインコンテンツの横幅修正
-1カラムのデザインなのでメインコンテンツ部分はパソコンでは`800px`の幅でセンタリングしたい。一方、スマホで見たときは画面の横幅に合わせるようにする。以下のように`width`と`max-width`を組み合わせることで解決した。
+1カラムのデザインなのでメインコンテンツ部分はパソコンでは`800px`の幅でセンタリングしたい。一方、スマホで見たときは画面の横幅に合わせるようにする。
+
+この要件は以下のように`width`と`max-width`を組み合わせることで実現できた。
 
 また、`box-sizing: border-box;`の設定はborderやpaddingをwidthの範囲内で計算してくれるようになるのでほぼ必須な設定。これがないと色々面倒くさい…
 
@@ -133,7 +135,9 @@ import ArticleHeader from "./ArticleHeader.vue"
 }
 ```
 
-ちなみに、CSSを設定する際には単位を`%`や`rem`を使うことを意識すると良い。これらは相対的な単位なので自然とレスポンシブ対応になる。
+::: tip
+CSSを設定する際には`%`や`rem`を使うことを意識すると良い。これらは相対的な単位なので自然とレスポンシブ対応になる。
+:::
 
 
 ### 画像が枠をはみ出すのを修正

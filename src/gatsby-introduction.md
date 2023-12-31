@@ -5,7 +5,7 @@ image: sample.jpg
 ---
 
 ## Gatsbyについて
-Gatsbyとは、ReactとGraphQLを使用した静的Webサイトジェネレータ（SSG）のこと。読み方は「ギャッツビー」。言語としてはJavaScriptやTypeScriptで記載する。
+Gatsbyとは、ReactとGraphQLを使用した静的Webサイトジェネレータ（SSG）のこと。読み方は「ギャッツビー」。プログラミング言語としてはJavaScriptやTypeScriptで記載する。
 
 できあがるのが動的でなく静的なWebサイトということもあり、爆速で画面が表示されるのが大きな特徴とされている。
 
@@ -97,7 +97,7 @@ npm run develop
 
 
 ## ⑤ コーディングを実施
-トップページに変更を加えたいなら、`src/pages/index.js`を修正していく。
+トップページに変更を加えたいなら、テーマ開発者にとってのエントリポイントである`src/pages/index.js`を修正していく。
 
 
 ### プラグインの追加

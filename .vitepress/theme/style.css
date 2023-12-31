@@ -65,11 +65,6 @@ h4 {
   border-bottom: dotted 1px;
 }
 
-strong {
-  background: linear-gradient(transparent 75%, #c1e0ff 75%);
-  border-radius: 6px;
-}
-
 blockquote {
   margin: 0;
   position: relative;
@@ -77,6 +72,10 @@ blockquote {
   box-sizing: border-box;
   font-style: italic;
   border: solid 1px;
+}
+
+strong {
+  border-bottom: dotted 1px;
 }
 
 pre {
