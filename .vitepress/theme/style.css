@@ -98,9 +98,13 @@ p code, li code, ul code {
 }
 
 time {
-  margin: 0 1rem 0 0;
   font-size: 85%;
   white-space: nowrap;
+}
+
+.entry-title {
+  margin: 0 0 0.5rem 0;
+  padding: 0;
 }
 
 .tag {
