@@ -11,7 +11,21 @@ export default defineConfig({
   cleanUrls: true,
   srcDir: "./src",
   srcExclude: ["**/README.md", "**/TODO.md"],
-  head: [["link", {rel: "icon", href: "/favicon.ico"}]],
+  head: [
+          ["link", {rel: "icon", href: "/favicon.ico"}],
+          [
+            'link',
+            { rel: 'preconnect', href: 'https://fonts.googleapis.com' }
+          ],
+          [
+            'link',
+            { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }
+          ],
+          [
+            'link',
+            { href: 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap', rel: 'stylesheet' }
+          ]
+        ],
   lastUpdated: true,
   // 生成先：https://handism.github.io/sitemap.xml
   sitemap: {
