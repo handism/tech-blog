@@ -95,6 +95,7 @@ tags: [windows]
         * Kotlin Language
         * Python
         * C/C++ Extension Pack
+        * Prettier
     * サクラエディタ
     * Notion
     * Git

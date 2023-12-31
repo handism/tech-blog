@@ -68,7 +68,7 @@ import Footer from './components/Footer.vue'
 </style>
 ```
 
-`Main.vue`の中身は以下とした。ポイントは`<Content />`タグで、これを記載した部分に.mdファイルの中身をHTMLにレンダリングしたものが流し込まれるという仕組み。
+`Main.vue`の中身は以下とした。ポイントは`<Content />`タグで、これを記載した部分に.mdファイルの中身をHTMLにパースしたものが流し込まれるという仕組み。
 
 ```vue
 <script setup>
