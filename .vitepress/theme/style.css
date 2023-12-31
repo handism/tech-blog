@@ -108,6 +108,7 @@ time {
   padding: 0.3rem;
   background: var(--accent-color);
   border-radius: 3px;
+  white-space: nowrap;
 }
 
 .tags a {
