@@ -22,7 +22,7 @@ https://www.gatsbyjs.com/docs/tutorial/getting-started/part-0/
 ## ① Node.jsのインストール
 GatsbyはNode.js上で動くので、インストールする。
 
-自分はVue.js導入の際にインストール済みだったので、ここでは割愛する。
+自分はVue.js導入の際にインストール済みだったので、ここでは割愛。
 
 
 ## ② Gatsbyの導入

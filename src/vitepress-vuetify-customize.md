@@ -13,12 +13,11 @@ tags: [vue, vitepress, frontend]
 
 
 ## やりたいこと
-前回、VitePressで技術ブログを自作したものの、まだまだ足りていない部分があるので追加していく。  
+前回、VitePressで技術ブログを自作したものの、まだまだ足りていない部分があるので追加していく。
 
-まずは、記事上部のタイトル表示をかっこよくし、カテゴリのリンクを表示するようにしたい。  
+まずは、記事上部のタイトル表示をかっこよくし、カテゴリのリンクを表示するようにしたい。
     
-VitePressにはデフォルトテーマを拡張する機能があるとのこと。  
-今回はこれを利用する。  
+VitePressにはデフォルトテーマを拡張する機能があるとのこと。今回はこれを利用する。  
 参考：https://vitepress.dev/guide/extending-default-theme 
 
 
@@ -26,14 +25,13 @@ VitePressにはデフォルトテーマを拡張する機能があるとのこ�
 https://vuetifyjs.com/en/getting-started/installation/#installation  
 ↑公式ページを参考に。  
   
-今回はnpmでインストールする。  
-Vueのプロジェクトにcdし、ターミナルから以下を叩く。  
-  
+今回はnpmでインストールする。Vueのプロジェクトにcdし、ターミナルから以下を叩く。
+
 ```zsh
 npm install vuetify
 ```
   
-これでインストールが完了。  
+これでインストールが完了。
 
 
 ## Vuetifyの利用方法
@@ -54,8 +52,8 @@ const vuetify = createVuetify({
   ssr: true,
 })
 ```
-  
-また、`export default`内にも`app.use(vuetify)`を追加する。  
+
+また、`export default`内にも`app.use(vuetify)`を追加する。
   
 ```ts{5}
 export default {
@@ -66,15 +64,15 @@ export default {
   }
 } satisfies Theme
 ```
-  
-これだけだと`npm run docs:build`時に以下のようなエラーが出てしまう…
+
+これだけだと`npm run docs:build`時に以下のようなエラーが出てしまう…。
   
 ```
 build error:
 TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".css" for /xxx/node_modules/vuetify/lib/components/VCode/VCode.css
 ```
-  
-これを解消するためには、`.vitepress/config.mts`の`defineCongig`の中に以下を追加すればOK。  
+
+これを解消するためには、`.vitepress/config.mts`の`defineCongig`の中に以下を追加すればOK。
   
 ```ts
  vite: {
@@ -88,8 +86,7 @@ TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".css" for /xxx/n
 
 
 ## Vuetifyで記事ページのタイトルとカテゴリを装飾する
-で、ここからがやっと本題。  
-記事ページにタイトルとカテゴリをいい感じに表示するコンポーネントを作成する。
+で、ここからがやっと本題。記事ページにタイトルとカテゴリをいい感じに表示するコンポーネントを作成する。
 
 ```vue
 <script setup>
@@ -113,12 +110,11 @@ const { page, frontmatter } = useData()
   </Layout>
 </template>
 ```
-  
+
 こんな感じで記事ページの上部がかっこ良くなった。
 
 ::: tip
-`<template #doc-top>`の部分はVitePressのデフォルトテーマに備わっている「レイアウトスロット」という機能。  
-ページ内の特定の場所にコンポーネントを注入できる。  
-  
+`<template #doc-top>`の部分はVitePressのデフォルトテーマに備わっている「レイアウトスロット」という機能。ページ内の特定の場所にコンポーネントを注入できる。
+
 https://vitepress.dev/guide/extending-default-theme#layout-slots
 :::

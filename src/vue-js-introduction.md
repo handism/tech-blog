@@ -65,7 +65,7 @@ console.log(tags)
 
 
 ### 本番デプロイ
-本番デプロイする場合は以下コマンド。  
+本番デプロイする場合は以下コマンド。
 
 ```zsh
 npm run build
@@ -81,8 +81,8 @@ npm run build
 npm run preview
 ```
 
-`http://localhost:4173`で動作確認も可能。  
-  
+`http://localhost:4173`で動作確認も可能。
+
 
 ## ③ コーディングする
 ここからVue.jsのコーディングを開始する。
