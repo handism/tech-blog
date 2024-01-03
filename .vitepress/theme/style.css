@@ -194,3 +194,39 @@ html:not(.dark) .vp-code span {
   border-radius: 5px;
   cursor: pointer;
 }
+
+.entry-footer {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.blog-navigation {
+  display: flex;
+  box-sizing: border-box;
+}
+
+.navigation-button .previous {
+  text-align: left;
+  width: 50%;
+}
+
+.navigation-button .next {
+  text-align: right;
+  width: 50%;
+}
+
+.navigation-button a {
+  font-size: 0.8rem;
+  text-decoration: none;
+  background: var(--accent-color);
+  color: var(--sub-color);
+  transition: background-color 0.3s, color 0.3s;
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin: 10px 15px;
+}
+
+.navigation-button a:hover {
+  background: var(--sub-color);
+  color: var(--accent-color);
+}

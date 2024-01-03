@@ -1,5 +1,6 @@
 <script setup>
 import ArticleHeader from "./ArticleHeader.vue"
+import ArticleFooter from "./ArticleFooter.vue"
 </script>
 
 <template>
@@ -7,6 +8,7 @@ import ArticleHeader from "./ArticleHeader.vue"
     <article>
       <ArticleHeader />
       <Content />
+      <ArticleFooter />
     </article>
   </div>
 </template>
