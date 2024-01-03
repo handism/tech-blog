@@ -196,37 +196,40 @@ html:not(.dark) .vp-code span {
 }
 
 .entry-footer {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .blog-navigation {
+  margin: 0 auto;
   display: flex;
+  justify-content: space-between;
   box-sizing: border-box;
 }
 
-.navigation-button .previous {
+.previous-post {
   text-align: left;
   width: 50%;
+
 }
 
-.navigation-button .next {
+.next-post {
   text-align: right;
   width: 50%;
 }
 
-.navigation-button a {
+.blog-navigation a {
   font-size: 0.8rem;
   text-decoration: none;
   background: var(--accent-color);
   color: var(--sub-color);
   transition: background-color 0.3s, color 0.3s;
   border-radius: 5px;
-  padding: 10px 15px;
-  margin: 10px 15px;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
 }
 
-.navigation-button a:hover {
+.blog-navigation a:hover {
   background: var(--sub-color);
   color: var(--accent-color);
 }
