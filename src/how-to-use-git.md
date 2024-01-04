@@ -1,6 +1,7 @@
 ---
 title: Gitの使い方
 tags: [git]
+image: flower.webp
 ---
 
 ## Gitについて

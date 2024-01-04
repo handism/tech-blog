@@ -1,7 +1,7 @@
 ---
 title: Gatsbyに再度入門する
 tags: [gatsby, blog, frontend]
-image: sample.jpg
+image: polka-dot.webp
 ---
 
 ## Gatsbyについて
