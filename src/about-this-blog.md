@@ -10,7 +10,7 @@ import PieChart from "../.vitepress/theme/components/PieChart.vue"
 
 
 ## 特徴
-現役の企業内インフラエンジニアによる技術ブログです。
+現役の企業内インフラエンジニアによる技術ブログです。日々の業務やプライベートで得た知識の備忘録として使っています。
 
 当ブログはVitePressにて作成し、GitHub Pages上でホスティングしています。
 

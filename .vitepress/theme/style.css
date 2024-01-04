@@ -208,14 +208,10 @@ html:not(.dark) .vp-code span {
 .blog-navigation {
   display: table;
   width: 100%;
-  /* margin: 0 auto;
-  display: flex;
-  justify-content: space-between; */
   box-sizing: border-box;
 }
 
 .previous-post {
-  /* text-align: left; */
   display: table-cell;
   vertical-align: middle;
   text-align: left;
@@ -227,7 +223,6 @@ html:not(.dark) .vp-code span {
 }
 
 .next-post {
-  /* text-align: right; */
   width: 45%;
   display: table-cell;
   vertical-align: middle;

@@ -42,6 +42,7 @@
   <style scoped>
   .pie-chart {
     max-width: 80%;
+    height: 400px;
   }
   </style>
   
