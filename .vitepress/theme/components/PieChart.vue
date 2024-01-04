@@ -1,6 +1,6 @@
 <template>
     <div>
-      <canvas ref="myCanvas" width="400" height="400"></canvas>
+      <canvas ref="myCanvas" class="pie-chart"></canvas>
     </div>
   </template>
   
@@ -40,5 +40,8 @@
   </script>
   
   <style scoped>
+  .pie-chart {
+    max-width: 80%;
+  }
   </style>
   
