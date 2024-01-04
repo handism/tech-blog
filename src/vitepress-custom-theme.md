@@ -305,14 +305,8 @@ export default {
 :root {
   --main-color: #202124;
   --base-color: #e8eaed;
-  --accent-color: #006bb3;
-  --sub-color: #e8eaed;
-  --code-color: #FF9600;
   color: var(--main-color);
   background-color: var(--base-color);
-  font-size: 16px;
-  line-height: 1.7;
-  letter-spacing: 0.05rem;
 }
 
 @media (prefers-color-scheme: dark) {
