@@ -166,27 +166,170 @@ pre {
 }
 ```
 
-## ④ タグ機能を追加
+## ④ タグ機能 ＆ サムネイル画像表示機能を追加
+一般的なブログの記事の上らへんに良くあるのが、タグとサムネイル画像を表示する機能。勉強がてら機能を追加してみる。
+
+タグについては、カテゴリのようにフォルダ作成で管理ができないのでFrontmatterで管理することに。`tag:`を新たに追加。1記事あたりN個のタグを付けられるように配列形式とする。
+
+画像は`src/public`に入れていくとして、記事ごとにどの画像を表示するか？についても同様にFrontmatterで管理することにした。`image:`も新たに追加。
+
+```md
+---
+title: VitePress + GitHub Actions + GitHub Pagesで技術ブログを自作する
+tags: [frontend, vue, vitepress, blog]
+image: man-with-pc.webp
+---
+```
+
+タグと画像を表示するために、記事上用に`ArticleHeader.vue`コンポーネントを作成して以下のようにした。
+
+```vue
+<script setup>
+import { useData } from 'vitepress'
+
+const { frontmatter, page } = useData()
+</script>
+
+<template>
+  <div class="entry-meta">
+    <time v-if="frontmatter.title">{{ new Date(page.lastUpdated).toLocaleDateString({timeZone: 'Asia/Tokyo'}) }}</time>
+    <h1 v-if="frontmatter.title" class="entry-title">{{ frontmatter.title }}</h1>   
+    <span v-for="tag in frontmatter.tags" class="tags">
+      <a :href="`/tag/${tag}`" class="tag">{{ "# " + tag }}</a>
+    </span>
+    <img v-if="frontmatter.image" :src="frontmatter.image" class="thumbnail" alt="ブログのサムネイル画像">
+  </div>
+</template>
+```
+
+ブログ内で使用されているタグ一覧の表示は少々面倒だった。VitePressが提供している**データローダー**の機能を利用する。
+
+参考：https://vitepress.dev/guide/data-loading
+
+公式サイトを参考にし、こんな感じでデータローダーを作成。
+
+```js
+import { createContentLoader } from 'vitepress'
+
+export default createContentLoader('src/*.md', {
+  includeSrc: false,
+  transform(rawData) {
+    return rawData
+      .filter(page => !page.url.endsWith("/"))
+      .sort((a, b) => {
+        return +new Date(b.frontmatter.date) - +new Date(a.frontmatter.date)
+      })
+  }
+})
+```
+
+タグ一覧を表示したいmdファイルでデータローダーを読み込み、以下のようにしてタグ一覧を表示した。
+
+```md
+<script setup>
+import { data as posts } from '../.vitepress/theme/components/posts.data.mjs'
+
+const tagSet = new Set() // タグを格納するためのセット
+
+posts.forEach((data) => {
+  // tags:がある場合は配列からセットに格納していく
+  if (data.frontmatter && data.frontmatter.tags && Array.isArray(data.frontmatter.tags)) {
+    data.frontmatter.tags.forEach((tag) => tagSet.add(tag))
+  }
+})
+</script>
+
+## タグ一覧
+
+<ul>
+  <li v-for="tag of Array.from(tagSet)">
+    <a :href="'/tag/' + tag">{{ tag }}</a>
+  </li>
+</ul>
+```
+
+タグのアーカイブページも自作。どうしてもURLは`/tag/[タグ名]`の形にしたかったので、VitePressの**ルーティング**機能をうまく使うことで実現した。
+
+参考：https://vitepress.dev/guide/routing
+
+`/src/tag/[tag].md`ファイルと`/src/tag/[tag].paths.mjs`ファイルを新たに作成。
+
+mdファイルのほうでは、上と同じようにデータローダーを利用して特定のタグを持つ記事の一覧を出力するように。
+
+mjsファイルのほうでは、データローダーがどうしても使用できなかったため、以下のように`fast-glob`と`gray-matter`を利用してmdファイルの一覧を読み込んでタグ一覧を返すようにしてみた。
+
+```js
+/**
+ * @file [tag].paths.mjs
+ * @description フォルダ内のMarkdownファイルをすべて読み込み、Frontmatterのtags:からタグ一覧を返却する
+ */
+
+import fg from 'fast-glob'
+import matter from 'gray-matter'
+
+const folderPath = 'src/*.md' // Markdownファイルのあるフォルダのパスを指定
+const tagSet = new Set() // タグを格納するためのセット
+const files = fg.sync([folderPath, '!**/node_modules'])
+
+files.forEach((file) => {
+  // Markdownファイル内のFrontmatterを取得
+  const { data } = matter.read(file)
+
+  // tags:がある場合は配列からセットに格納していく
+  if (data && data.tags && Array.isArray(data.tags)) {
+    data.tags.forEach((tag) => tagSet.add(tag))
+  }
+})
+
+// 重複をなくしたタグの一覧を配列に変換
+const tagList = Array.from(tagSet)
+// VitePressのパラメータ用にオブジェクト形式に変換
+const paramsArray = tagList.map((tag) => ({ params: { tag } }))
+
+/**
+ * タグ一覧を返却
+ * @param なし
+ * @returns {any[]} タグ一覧
+ */
+export default {
+  tagList() {return tagList},
+  paths() {return paramsArray}
+}  
+
+```
 
 
-## ⑤ サムネイル画像表示機能を追加
+## ⑤ CSS変数を導入（自動ダークモードの対応）
+昔はCSSを一生懸命べた書きしていたが、ふとCSS変数を使用してみようと思って挑戦してみた。
 
-
-## ⑥ CSS変数を導入
-`:root`疑似クラスに対してカスタムプロパティを定義することでHTML全体に適用される。
-
+と言っても仕組みは簡単で、他のプログラミング言語みたいに変数を宣言し、値を複数個所で参照できるってだけ。`:root`疑似クラスに対してカスタムプロパティを定義することでHTML全体に適用され、参照は`var([変数名])`。
 
 ```css
 :root {
-  --main-bg-color: brown;
+  --main-color: #202124;
+  --base-color: #e8eaed;
+  --accent-color: #006bb3;
+  --sub-color: #e8eaed;
+  --code-color: #FF9600;
+  color: var(--main-color);
+  background-color: var(--base-color);
+  font-size: 16px;
+  line-height: 1.7;
+  letter-spacing: 0.05rem;
 }
 
-element {
-  background-color: var(--main-bg-color);
+@media (prefers-color-scheme: dark) {
+  :root {
+    --main-color: #e8eaed;
+    --base-color: #202124;
+  }
 }
 ```
 
-## ⑦ 動作確認
+こんな感じで、クライアント端末のOSのダークモード設定によって自動的にダークモードを適用するようなスタイリングが実現できた。
+
+
+## ⑥ 動作確認
 ローカルでの動作確認方法は別記事に記載済みのため割愛。
 
 スマホで確認する場合は、いろいろ準備するのが面倒なのでGitHubにデプロイしてからiPhone、Androidの実機で確認している。
