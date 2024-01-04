@@ -164,10 +164,9 @@ jobs:
 ここまでの作業が終わったらGitにコミットしてみる。ビルドとデプロイが自動で走って、`https://[username].github.io`でサイトが見られれば成功！
 
 ::: tip
-デプロイに失敗する場合  
-Settings>Environmentsの「`github-pages`」っていう保護ルールを確認。  
-`Deployment branches and tags`のところに上で指定した「`main`」などのブランチ名が記載されているかどうかを確認し、ない場合は追加する。  
-昔のデフォルトブランチ名は「`master`」だったので、最近「`main`」に変更したなどの場合は注意が必要。
+デプロイに失敗する場合は、Settings>Environmentsの「`github-pages`」っていう保護ルールを確認。
+
+`Deployment branches and tags`のところに上で指定した「`main`」などのブランチ名が記載されているかどうかを確認し、ない場合は追加する。昔のデフォルトブランチ名は「`master`」だったので、最近「`main`」に変更したなどの場合は注意が必要。
 :::
 
 
@@ -194,14 +193,16 @@ description: 記事の概要
 <<記事内容>>
 ```
 
-いったん持たせたい要素はこれだけとする。  
-`thumbnail:`を持たせようかと思ったけど技術ブログにサムネイルなんて要るかな？ってことで不要とした。  
-`category:`を持たせてもいいんだけど、公式が「ファイルベースのルーティング」を謳っているのでそれに沿う形で。  
-`tag:`はあると便利なんだけど1:nで扱いが大変そうなので一旦はなしの方向で…。  
+いったん持たせたい要素はこれだけとする。
+
+`thumbnail:`を持たせようかと思ったけど技術ブログにサムネイルなんて要るかな？ってことで不要とした。
+
+`category:`を持たせてもいいんだけど、公式が「ファイルベースのルーティング」を謳っているのでそれに沿う形で。
+
+`tag:`はあると便利なんだけど1:nで扱いが大変そうなので一旦はなしの方向で…。
 
 ::: warning
-(!) Found dead link http://localhost:5173 in file vue-js.md と出てビルドがエラーとなってしまう場合。
-`config.mts`に以下を追加すると解決。
+(!) Found dead link http://localhost:5173 in file vue-js.md と出てビルドがエラーとなってしまう場合、`config.mts`に以下を追加すると解決。
 ```ts
   ignoreDeadLinks: "localhostLinks",
 ```
@@ -376,9 +377,8 @@ import { data as posts } from '../../.vitepress/theme/posts.data.mjs'
 ```
 
 ::: tip
-mdファイル内からVueコンポーネントを呼びたい場合は以下のようにする。  
-docs/componentsフォルダにコンポーネントを入れることを想定。  
-  
+mdファイル内からVueコンポーネントを呼びたい場合は以下のようにする。docs/componentsフォルダにコンポーネントを入れることを想定。  
+
 ```md
 <script setup>
 import DrawCanvas from "../../components/DrawCanvas.vue"
@@ -390,8 +390,8 @@ import DrawCanvas from "../../components/DrawCanvas.vue"
 
 
 ::: tip
-mdファイル内で画像を表示したい場合は以下。  
-  
+mdファイル内で画像を表示したい場合は以下。
+
 ```md
 ![An image](../../public/image.png)
 ```
