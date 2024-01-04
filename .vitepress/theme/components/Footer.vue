@@ -6,7 +6,7 @@ const { theme } = useData()
 
 <template>
   <footer class="footer">
-    <small>{{ theme.footer.copyright }}</small>
+    <small>©︎ {{ new Date().getFullYear() + " " + theme.siteTitle }}</small>
   </footer>
 </template>
   
