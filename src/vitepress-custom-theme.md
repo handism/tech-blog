@@ -33,11 +33,9 @@ VitePressで技術ブログを作ってみたのだが、デフォルトのテ�
 テーマ開発者にとってのVitePressのエントリポイントは`.vitepress/theme/index.js`。以下のように修正して、自作のVue.jsのSFCが読み込まれるようにする。
 
 ```js
-// https://vitepress.dev/guide/custom-theme
 import SimplaLayout from './SimplaLayout.vue'
 import './style.css'
 
-/** @type {import('vitepress').Theme} */
 export default {
   Layout: SimplaLayout,
   enhanceApp({ app, router, siteData }) {
@@ -78,7 +76,6 @@ import ArticleHeader from "./ArticleHeader.vue"
 <template>
   <div class="main-content">
     <article>
-      <!-- Add more article content as needed -->
       <ArticleHeader />
       <Content />
     </article>
