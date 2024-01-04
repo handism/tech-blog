@@ -201,21 +201,32 @@ html:not(.dark) .vp-code span {
 }
 
 .blog-navigation {
-  margin: 0 auto;
+  display: table;
+  width: 100%;
+  /* margin: 0 auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; */
   box-sizing: border-box;
 }
 
 .previous-post {
+  /* text-align: left; */
+  display: table-cell;
+  vertical-align: middle;
   text-align: left;
-  width: 50%;
+  width: 45%;
+}
 
+.cushion {
+  width: 10%;
 }
 
 .next-post {
+  /* text-align: right; */
+  width: 45%;
+  display: table-cell;
+  vertical-align: middle;
   text-align: right;
-  width: 50%;
 }
 
 .blog-navigation a {
@@ -226,7 +237,6 @@ html:not(.dark) .vp-code span {
   transition: background-color 0.3s, color 0.3s;
   border-radius: 5px;
   padding: 0.5rem 1rem;
-  margin: 0.5rem;
 }
 
 .blog-navigation a:hover {
