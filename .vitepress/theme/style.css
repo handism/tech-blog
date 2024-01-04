@@ -11,6 +11,7 @@
   font-size: 16px;
   line-height: 1.7;
   letter-spacing: 0.05rem;
+  box-sizing: border-box;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -71,7 +72,6 @@ blockquote {
   margin: 0;
   position: relative;
   padding: 10px 15px 10px 50px;
-  box-sizing: border-box;
   font-style: italic;
   border: solid 1px;
 }
@@ -130,7 +130,6 @@ time {
 
 .main-content {
   padding: 0.8rem;
-  box-sizing: border-box;
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
@@ -206,7 +205,6 @@ html:not(.dark) .vp-code span {
   /* margin: 0 auto;
   display: flex;
   justify-content: space-between; */
-  box-sizing: border-box;
 }
 
 .previous-post {
