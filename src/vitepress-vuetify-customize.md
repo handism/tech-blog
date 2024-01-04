@@ -38,7 +38,6 @@ npm install vuetify
 VitePressでVuetifyを利用するには、`.vitepress/theme/index.ts`に以下を追加する。
 
 ```ts
-// Vuetify
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
@@ -72,7 +71,7 @@ build error:
 TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".css" for /xxx/node_modules/vuetify/lib/components/VCode/VCode.css
 ```
 
-これを解消するためには、`.vitepress/config.mts`の`defineCongig`の中に以下を追加すればOK。
+これを解消するためには、`.vitepress/config.mts`の`defineConfig`の中に以下を追加すればOK。
   
 ```ts
  vite: {
