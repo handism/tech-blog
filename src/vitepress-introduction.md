@@ -1,7 +1,7 @@
 ---
 title: VitePress + GitHub Actions + GitHub Pagesで技術ブログを自作する
 tags: [frontend, vue, vitepress, blog]
-image: symbol-mark.webp
+image: man-with-pc.webp
 ---
 
 ## 何故やるのか

@@ -1,6 +1,7 @@
 ---
 title: Vue.jsをあれこれ試してみる
 tags: [vue, frontend]
+image: icicle-pattern.webp
 ---
 
 ## 前提
