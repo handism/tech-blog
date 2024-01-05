@@ -95,11 +95,18 @@ pre {
 table {
   margin: 2rem 0 2rem 0;
   border-collapse: collapse;
+  border: solid 1px;
 }
 
 th, td {
-  border: solid 1px;
+  border: dashed 1px;
   padding: 0.7rem;
+}
+
+th {
+  background: var(--accent-color);
+  color: var(--sub-color);
+  border-bottom: double;
 }
 
 code {
