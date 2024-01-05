@@ -130,14 +130,19 @@ th {
 
 .header {
   background-color: var(--accent-color);
-  padding: 0.5rem;
+  padding: 1rem;
   text-align: center;
+}
+
+.site-title {
+  margin: 0;
+  padding: 0;
 }
 
 .site-title a {
   color: var(--sub-color);
   text-decoration: none;
-  font-size: 90%;
+  font-size: 75%;
 }
 
 .entry-title {
@@ -250,7 +255,7 @@ html:not(.dark) .vp-code span {
 .footer {
   background-color: var(--accent-color);
   color: var(--sub-color);
-  padding: 10px;
+  padding: 1rem;
   text-align: center;
 }
 
