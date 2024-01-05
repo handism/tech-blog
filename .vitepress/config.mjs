@@ -1,8 +1,8 @@
 import { defineConfig } from "vitepress"
 
 export default defineConfig({
-  title: "handism's tech blog",
-  description: "handism's tech blog",
+  title: "Handism's Tech Blog",
+  description: "Handism's Tech Blog",
   ignoreDeadLinks: "localhostLinks",
   lang: "ja-JP",
   cleanUrls: true,
@@ -25,7 +25,7 @@ export default defineConfig({
   sitemap: {hostname: "https://handism.github.io"},
 
   themeConfig: {
-    siteTitle: "handism's tech blog",
+    siteTitle: "Handism's Tech Blog",
     footerNav: [
       {text: "About", link: "/about"},
       {text: "Sitemap", link: "/"},
