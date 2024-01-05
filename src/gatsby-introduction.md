@@ -1,5 +1,5 @@
 ---
-title: Gatsbyに再度入門する
+title: 過去にGatsbyで作成したブログを手直しする
 tags: [Gatsby, Blog, Frontend]
 image: polka-dot.webp
 ---

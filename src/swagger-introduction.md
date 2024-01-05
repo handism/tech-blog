@@ -1,5 +1,5 @@
 ---
-title: Swagger Editorを試してみる
+title: Swagger Editorに入門してみる
 tags: [Swagger, Backend]
 image: outdoor-sauna.webp
 ---

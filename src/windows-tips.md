@@ -1,5 +1,5 @@
 ---
-title: Windowsセットアップ
+title: Windowsのセットアップ時の設定メモ
 tags: [Windows]
 ---
 

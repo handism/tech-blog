@@ -1,5 +1,5 @@
 ---
-title: VitePressで作った技術ブログをVuetifyでカスタマイズする
+title: VitePressで作ったブログをVuetifyでカスタマイズする
 tags: [Vue, VitePress, Frontend]
 image: business-person.webp
 ---

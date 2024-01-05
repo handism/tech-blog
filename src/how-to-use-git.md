@@ -1,5 +1,5 @@
 ---
-title: Gitの使い方
+title: 個人的によく使うGitのコマンド集
 tags: [Git]
 image: flower.webp
 ---

@@ -1,5 +1,5 @@
 ---
-title: Vue.jsをあれこれ試してみる
+title: Vue.jsに入門してみる
 tags: [Vue, Frontend]
 image: icicle-pattern.webp
 ---

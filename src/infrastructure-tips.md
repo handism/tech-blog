@@ -1,5 +1,5 @@
 ---
-title: インフラ管理のコツを考える
+title: インフラ管理のコツ・ポイントを考える
 tags: [Infrastructure]
 image: drawing-nature.webp
 ---
