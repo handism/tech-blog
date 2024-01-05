@@ -97,6 +97,7 @@ table {
   border-collapse: collapse;
   border: solid 1px;
   overflow: auto;
+  font-size: 90%;
 }
 
 th, td {
@@ -107,7 +108,7 @@ th, td {
 th {
   background: var(--accent-color);
   color: var(--sub-color);
-  border-bottom: double;
+  border-bottom: double 1px;
 }
 
 code {
@@ -209,6 +210,7 @@ html:not(.dark) .vp-code span {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  mix-blend-mode: screen;
 }
 
 .entry-footer {
@@ -264,9 +266,9 @@ html:not(.dark) .vp-code span {
 
 .footer-links a {
   color: var(--sub-color);
-  margin: 0 0.3rem 0 0.3rem;
+  margin: 0 0.4rem 0 0.3rem;
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 85%;
 }
 
 .footer-links a:hover {
