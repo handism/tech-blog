@@ -7,9 +7,9 @@ const { theme } = useData()
 <template>
   <footer class="footer">
     <div class="footer-links">
-      <a href="/about-this-blog">about</a>|
-      <a href="/">sitemap</a>|
-      <a href="">privacy policy</a>
+      <template v-for="item in theme.footerNav">
+        <a :href="item.link">{{ item.text }}</a>
+      </template>
     </div>
     <small>&copy; {{ new Date().getFullYear() + " " + theme.siteTitle }}</small>
   </footer>
