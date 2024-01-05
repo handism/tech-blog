@@ -164,13 +164,6 @@ time {
   text-decoration: none;
 }
 
-.footer {
-  background-color: var(--accent-color);
-  color: var(--sub-color);
-  padding: 10px;
-  text-align: center;
-}
-
 .lang, .copy {
   display: none;
 }
@@ -252,4 +245,22 @@ html:not(.dark) .vp-code span {
 .blog-navigation a:hover {
   background: var(--sub-color);
   color: var(--accent-color);
+}
+
+.footer {
+  background-color: var(--accent-color);
+  color: var(--sub-color);
+  padding: 10px;
+  text-align: center;
+}
+
+.footer-links a {
+  color: var(--sub-color);
+  margin: 0 0.5rem 0 0.5rem;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
 }
