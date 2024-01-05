@@ -1,6 +1,6 @@
 ---
 title: Windowsセットアップ
-tags: [windows]
+tags: [Windows]
 ---
 
 ## Windows11初期セットアップ

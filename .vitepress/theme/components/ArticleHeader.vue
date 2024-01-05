@@ -9,7 +9,7 @@ const { frontmatter, page } = useData()
     <time v-if="frontmatter.tags">{{ new Date(page.lastUpdated).toLocaleDateString("ja-JP", {year: "numeric",month: "2-digit", day: "2-digit"}) }}</time>
     <h1 v-if="frontmatter.tags" class="entry-title">{{ frontmatter.title }}</h1>   
     <span v-for="tag in frontmatter.tags" class="tags">
-      <a :href="`/tag/${tag}`" class="tag">{{ "# " + tag }}</a>
+      <a :href="`/tag/${tag.toLowerCase().replace(' ', '-')}`" class="tag">{{ "# " + tag }}</a>
     </span>
     <img v-if="frontmatter.image" :src="frontmatter.image" class="thumbnail" alt="ブログのサムネイル画像">
   </div>

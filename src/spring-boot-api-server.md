@@ -1,6 +1,6 @@
 ---
 title: Spring BootでDocker上にAPIサーバーを構築する
-tags: [backend, springboot, kotlin]
+tags: [Backend, Spring Boot, Kotlin]
 image: tree-pattern.webp
 ---
 

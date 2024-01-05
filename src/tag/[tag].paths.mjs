@@ -14,9 +14,9 @@ files.forEach((file) => {
   // Markdownファイル内のFrontmatterを取得
   const { data } = matter.read(file)
 
-  // tags:がある場合は配列からセットに格納していく
+  // tags:がある場合は配列からセットに格納していく（URLに利用されるため小文字＆ハイフンつなぎに変換）
   if (data && data.tags && Array.isArray(data.tags)) {
-    data.tags.forEach((tag) => tagSet.add(tag))
+    data.tags.forEach((tag) => tagSet.add(tag.toLowerCase().replace(" ", "-")))
   }
 })
 

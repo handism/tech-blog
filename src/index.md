@@ -28,6 +28,6 @@ posts.forEach((data) => {
 
 <ul>
   <li v-for="tag of Array.from(tagSet)">
-    <a :href="'/tag/' + tag">{{ tag }}</a>
+    <a :href="'/tag/' + tag.toLowerCase().replace(' ', '-')">{{ tag }}</a>
   </li>
 </ul>

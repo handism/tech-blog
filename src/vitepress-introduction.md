@@ -1,6 +1,6 @@
 ---
 title: VitePress + GitHub Actions + GitHub Pagesで技術ブログを自作する
-tags: [frontend, vue, vitepress, blog]
+tags: [Frontend, Vue, VitePress, Blog]
 image: man-with-pc.webp
 ---
 

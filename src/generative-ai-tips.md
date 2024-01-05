@@ -1,6 +1,6 @@
 ---
 title: 生成AIの使い方
-tags: [ai]
+tags: [AI]
 image: man-sitting-chair.webp
 ---
 
