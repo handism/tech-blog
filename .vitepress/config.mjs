@@ -27,10 +27,9 @@ export default defineConfig({
   themeConfig: {
     siteTitle: "handism's tech blog",
     footerNav: [
-      {text: "about", link: "/about-this-blog"},
-      {text: "sitemap", link: "/"},
-      {text: "privacy policy", link: "/"}
-    ],
-    socialLinks: [{icon: "github", link: "https://github.com/handism"}]
+      {text: "About", link: "/about"},
+      {text: "Sitemap", link: "/"},
+      {text: "GitHub", link: "https://github.com/handism"}
+    ]
   }
 })
