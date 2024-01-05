@@ -1,5 +1,5 @@
 ---
-titleTemplate: ":title"
+title: タグアーカイブ
 ---
 
 <script setup>

@@ -7,7 +7,7 @@ export default defineConfig({
   lang: "ja-JP",
   cleanUrls: true,
   srcDir: "./src",
-srcExclude: ["**/README.md", "**/TODO.md", "draft/*.md"],
+  srcExclude: ["**/README.md", "**/TODO.md", "draft/*.md"],
   head: [
           ["link", {rel: "icon", href: "/favicon.ico"}],
           ["link", {rel: "preconnect", href: "https://fonts.googleapis.com"}],

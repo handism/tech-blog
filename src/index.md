@@ -1,5 +1,5 @@
 ---
-titleTemplate: ":title"
+titleTemplate: :title
 ---
 
 <script setup>
