@@ -6,6 +6,7 @@
   --accent-color: #006bb3;
   --sub-color: #e8eaed;
   --code-color: #FF9600;
+  --gradient-color: linear-gradient(90deg, #006bb3, #6f69c0, #b25fba, #e654a0, #ff5778, #ff7149, #ff9600);
   --mix-brend-mode: multiply;
   color: var(--main-color);
   background-color: var(--base-color);
@@ -25,6 +26,10 @@
 body {
   font-family: "Noto Sans JP",'Avenir','Helvetica Neue','Helvetica','Arial', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro','メイリオ', 'Meiryo', '游ゴシック', 'Yu Gothic', 'ＭＳ Ｐゴシック', sans-serif;
   margin: 0;
+}
+
+h1 {
+  font-size: 150%;
 }
 
 h2 {
@@ -56,6 +61,7 @@ h4 {
 time {
   font-size: 85%;
   white-space: nowrap;
+  margin-left: 0.3rem;
 }
 
 a,
@@ -129,7 +135,7 @@ th {
 }
 
 .header {
-  background-color: var(--accent-color);
+  background: var(--gradient-color);
   padding: 1rem;
   text-align: center;
 }
@@ -253,7 +259,7 @@ html:not(.dark) .vp-code span {
 }
 
 .footer {
-  background-color: var(--accent-color);
+  background: var(--gradient-color);
   color: var(--sub-color);
   padding: 1rem;
   text-align: center;
