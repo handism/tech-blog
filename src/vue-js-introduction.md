@@ -1,7 +1,7 @@
 ---
 title: Vue.jsに入門してみる
 tags: [Vue, Frontend]
-image: icicle-pattern.webp
+image: new-start.webp
 ---
 
 ## 前提

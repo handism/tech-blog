@@ -1,6 +1,7 @@
 ---
 title: Windowsのセットアップ時の設定メモ
 tags: [Windows]
+image: many-windows.webp
 ---
 
 ## Windows11初期セットアップ
