@@ -16,6 +16,26 @@ const { theme } = useData()
 </template>
   
 <style scoped>
+.footer {
+  background: var(--gradient-color);
+  color: var(--sub-color);
+  padding: 1rem;
+  text-align: center;
+}
 
+.footer-links a {
+  color: var(--sub-color);
+  padding: 0 0.7rem 0 0.7rem;
+  text-decoration: none;
+  font-size: 85%;
+}
+
+.footer-links a+ a {
+  border-left: 1px solid;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
 </style>
   

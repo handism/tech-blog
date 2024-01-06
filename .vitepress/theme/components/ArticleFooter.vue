@@ -1,6 +1,6 @@
 <script setup>
-import { data as posts } from './posts.data.mjs'
-import { useData } from 'vitepress'
+import { data as posts } from "./posts.data.mjs"
+import { useData } from "vitepress"
 const { page } = useData()
 </script>
 
@@ -19,5 +19,48 @@ const { page } = useData()
 </template>
 
 <style scoped>
+.entry-footer {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.blog-navigation {
+  display: table;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.previous-post {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: left;
+  width: 45%;
+}
+
+.cushion {
+  width: 10%;
+}
+
+.next-post {
+  width: 45%;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: right;
+}
+
+.blog-navigation a {
+  font-size: 0.8rem;
+  text-decoration: none;
+  background: var(--accent-color);
+  color: var(--sub-color);
+  transition: background-color 0.3s, color 0.3s;
+  border-radius: 5px;
+  padding: 0.5rem 1rem;
+}
+
+.blog-navigation a:hover {
+  background: var(--sub-color);
+  color: var(--accent-color);
+}
 
 </style>

@@ -25,7 +25,6 @@
 
 body {
   font-family: "Noto Sans JP",'Avenir','Helvetica Neue','Helvetica','Arial', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro','メイリオ', 'Meiryo', '游ゴシック', 'Yu Gothic', 'ＭＳ Ｐゴシック', sans-serif;
-  margin: 0;
 }
 
 h1 {
@@ -134,59 +133,6 @@ th {
   border-bottom: double 1px;
 }
 
-.header {
-  background: var(--gradient-color);
-  padding: 1rem;
-  text-align: center;
-}
-
-.site-title {
-  margin: 0;
-  padding: 0;
-}
-
-.site-title a {
-  color: var(--sub-color);
-  text-decoration: none;
-  font-size: 75%;
-}
-
-.entry-title {
-  margin: 0 0 0.5rem 0;
-  padding: 0;
-}
-
-.tag {
-  font-size: 85%;
-  margin: 0 0.5rem 0 0;
-  padding: 0.3rem;
-  background: var(--accent-color);
-  border-radius: 3px;
-  white-space: nowrap;
-}
-
-.tags a {
-  color: var(--sub-color);
-  text-decoration: none;
-}
-
-.thumbnail {
-  max-width: 95%;
-  padding: 1.5rem 0 1.5rem 0;
-  margin: auto;
-  display: block;
-}
-
-.main-content {
-  padding: 0.8rem;
-  box-sizing: border-box;
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  justify-content: center;
-  overflow-wrap: break-word;
-}
-
 .lang, .copy {
   display: none;
 }
@@ -212,83 +158,4 @@ html:not(.dark) .vp-code span {
 
 .custom-block-title {
   font-weight: bold;
-}
-
-.entry-footer {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
-.blog-navigation {
-  display: table;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.previous-post {
-  display: table-cell;
-  vertical-align: middle;
-  text-align: left;
-  width: 45%;
-}
-
-.cushion {
-  width: 10%;
-}
-
-.next-post {
-  width: 45%;
-  display: table-cell;
-  vertical-align: middle;
-  text-align: right;
-}
-
-.blog-navigation a {
-  font-size: 0.8rem;
-  text-decoration: none;
-  background: var(--accent-color);
-  color: var(--sub-color);
-  transition: background-color 0.3s, color 0.3s;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-}
-
-.blog-navigation a:hover {
-  background: var(--sub-color);
-  color: var(--accent-color);
-}
-
-.footer {
-  background: var(--gradient-color);
-  color: var(--sub-color);
-  padding: 1rem;
-  text-align: center;
-}
-
-.footer-links a {
-  color: var(--sub-color);
-  padding: 0 0.7rem 0 0.7rem;
-  text-decoration: none;
-  font-size: 85%;
-}
-
-.footer-links a+ a {
-  border-left: 1px solid;
-}
-
-.footer-links a:hover {
-  text-decoration: underline;
-}
-
-.scroll-top-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 10px;
-  background-color: var(--accent-color);
-  color: var(--sub-color);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  mix-blend-mode: var(--mix-brend-mode);
 }

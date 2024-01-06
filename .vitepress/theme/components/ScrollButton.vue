@@ -34,5 +34,16 @@ export default {
 </template>
 
 <style scoped>
-
+.scroll-top-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px;
+  background-color: var(--accent-color);
+  color: var(--sub-color);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  mix-blend-mode: var(--mix-brend-mode);
+}
 </style>

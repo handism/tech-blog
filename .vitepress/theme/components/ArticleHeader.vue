@@ -1,5 +1,5 @@
 <script setup>
-import { useData } from 'vitepress'
+import { useData } from "vitepress"
 
 const { frontmatter, page } = useData()
 </script>
@@ -16,5 +16,29 @@ const { frontmatter, page } = useData()
 </template>
 
 <style scoped>
+.entry-title {
+  margin: 0 0 0.5rem 0;
+  padding: 0;
+}
 
+.tag {
+  font-size: 85%;
+  margin: 0 0.5rem 0 0;
+  padding: 0.3rem;
+  background: var(--accent-color);
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.tags a {
+  color: var(--sub-color);
+  text-decoration: none;
+}
+
+.thumbnail {
+  max-width: 95%;
+  padding: 1.5rem 0 1.5rem 0;
+  margin: auto;
+  display: block;
+}
 </style>
