@@ -1,7 +1,7 @@
 ---
 title: 個人的によく使うGitのコマンド集
 tags: [Git]
-image: flower.webp
+image: git-image.webp
 ---
 
 ## Gitについて

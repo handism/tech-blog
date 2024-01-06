@@ -1,7 +1,7 @@
 ---
 title: Swagger Editorに入門してみる
 tags: [Swagger, Backend]
-image: outdoor-sauna.webp
+image: api-image.webp
 ---
 
 ## 経緯

@@ -1,7 +1,7 @@
 ---
 title: 生成AIの個人的な活用事例集
 tags: [AI]
-image: man-sitting-chair.webp
+image: robot-drawing.webp
 ---
 
 ## Vue.jsコンポーネントを作ってもらう

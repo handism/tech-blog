@@ -1,7 +1,7 @@
 ---
 title: VitePressのカスタムテーマを自作する
 tags: [Frontend, Vue, VitePress, Blog]
-image: symbol-mark.webp
+image: man-with-pc.webp
 ---
 
 ## 何故やるのか

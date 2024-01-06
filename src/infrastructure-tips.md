@@ -1,7 +1,7 @@
 ---
 title: インフラ管理のコツ・ポイントを考える
 tags: [Infrastructure]
-image: drawing-nature.webp
+image: cloud-image.webp
 ---
 
 ## インフラ管理を考える
