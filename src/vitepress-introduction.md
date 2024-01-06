@@ -14,7 +14,7 @@ ITエンジニアとして働いていて、毎日が勉強だと感じている
 | --- | --- | --- |
 | はてなブログ | WordPress | Gatsby |
 | Blogger | Jimdo | Hugo |
-| Qiita | Ameba Ownd | Jskyll |
+| Qiita | Movable Type | Jskyll |
 
 
 ::: tip
