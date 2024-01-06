@@ -2,11 +2,6 @@
 title: このブログについて
 ---
 
-<script setup>
-import PieChart from "../.vitepress/theme/components/PieChart.vue"
-</script>
-
-
 ## このブログについて
 現役の企業内インフラエンジニアによる技術ブログです。日々の業務やプライベートで得た知識の備忘録として運用中です。
 
