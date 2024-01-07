@@ -7,7 +7,7 @@ const { frontmatter, page } = useData()
 <template>
   <div class="l-post-header">
     <time v-if="frontmatter.tags" class="last-updated">{{ new Date(page.lastUpdated).toLocaleDateString("ja-JP", {year: "numeric",month: "2-digit", day: "2-digit"}) }}</time>
-    <h1 v-if="frontmatter.tags">{{ frontmatter.title }}</h1>   
+    <h1 v-if="frontmatter.tags" class="post-title">{{ frontmatter.title }}</h1>   
     <span v-for="tag in frontmatter.tags" class="tags">
       <a :href="`/tag/${tag.toLowerCase().replace(' ', '-')}`" class="tag">{{ "# " + tag }}</a>
     </span>
@@ -25,6 +25,10 @@ const { frontmatter, page } = useData()
   font-size: 85%;
   white-space: nowrap;
   margin-left: 0.2rem;
+}
+
+.post-title {
+  padding-bottom: 0.5rem;
 }
 
 .tag {

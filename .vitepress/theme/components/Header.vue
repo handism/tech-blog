@@ -17,11 +17,6 @@ const { theme } = useData()
   text-align: center;
 }
 
-.site-title {
-  margin: 0;
-  padding: 0;
-}
-
 .site-title a {
   color: var(--sub-color);
   text-decoration: none;

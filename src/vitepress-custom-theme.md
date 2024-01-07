@@ -339,4 +339,5 @@ OSの設定を参照した自動ダークモードを実装しているので、
 * 右下に固定で表示される上方向へのスクロールボタンについては、`ChatGPT`にお願いしたらほぼそのまま使える形で作ってくれた
 * 記事のサムネイル画像は`Midjourney`が高クオリティでいい感じ
 * イラレやフォトショにある「色の乗算」はCSSの`mix-blend-mode`で実現可能
+* `PCCS`：https://www.dic-color.com/knowledge/pccs.html
 * `linear-gradient`で線形グラデーションもできる
