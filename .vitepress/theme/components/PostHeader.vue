@@ -5,9 +5,9 @@ const { frontmatter, page } = useData()
 </script>
 
 <template>
-  <div class="entry-meta">
-    <time v-if="frontmatter.tags">{{ new Date(page.lastUpdated).toLocaleDateString("ja-JP", {year: "numeric",month: "2-digit", day: "2-digit"}) }}</time>
-    <h1 v-if="frontmatter.tags" class="entry-title">{{ frontmatter.title }}</h1>   
+  <div class="l-post-header">
+    <time v-if="frontmatter.tags" class="last-updated">{{ new Date(page.lastUpdated).toLocaleDateString("ja-JP", {year: "numeric",month: "2-digit", day: "2-digit"}) }}</time>
+    <h1 v-if="frontmatter.tags">{{ frontmatter.title }}</h1>   
     <span v-for="tag in frontmatter.tags" class="tags">
       <a :href="`/tag/${tag.toLowerCase().replace(' ', '-')}`" class="tag">{{ "# " + tag }}</a>
     </span>
@@ -16,9 +16,15 @@ const { frontmatter, page } = useData()
 </template>
 
 <style scoped>
-.entry-title {
+.l-post-header {
   margin: 0 0 0.5rem 0;
   padding: 0;
+}
+
+.last-updated {
+  font-size: 85%;
+  white-space: nowrap;
+  margin-left: 0.2rem;
 }
 
 .tag {

@@ -5,12 +5,12 @@ const { page } = useData()
 </script>
 
 <template>
-  <div class="entry-footer">
-    <div class="blog-navigation">
+  <div class="l-post-footer">
+    <div class="post-nav">
       <template v-for="(post, i) in posts">
         <a class="previous-post" v-if="i - 1 in posts && posts[i - 1].frontmatter.tags && post.url.replace('/', '') == page.relativePath.replace('.md', '')" :href="posts[i - 1].url">{{ "<< " + posts[i - 1].frontmatter.title }}</a>
       </template>
-      <div class="cushion"></div>
+      <div class="nav-cushion"></div>
       <template v-for="(post, i) in posts">
         <a class="next-post" v-if="i + 1 in posts && posts[i + 1].frontmatter.tags && post.url.replace('/', '') == page.relativePath.replace('.md', '')" :href="posts[i + 1].url">{{ posts[i + 1].frontmatter.title + " >>" }}</a>
       </template>
@@ -19,36 +19,18 @@ const { page } = useData()
 </template>
 
 <style scoped>
-.entry-footer {
+.l-post-footer {
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
 
-.blog-navigation {
+.post-nav {
   display: table;
   width: 100%;
   box-sizing: border-box;
 }
 
-.previous-post {
-  display: table-cell;
-  vertical-align: middle;
-  text-align: left;
-  width: 45%;
-}
-
-.cushion {
-  width: 10%;
-}
-
-.next-post {
-  width: 45%;
-  display: table-cell;
-  vertical-align: middle;
-  text-align: right;
-}
-
-.blog-navigation a {
+.post-nav a {
   font-size: 0.8rem;
   text-decoration: none;
   background: var(--accent-color);
@@ -58,9 +40,26 @@ const { page } = useData()
   padding: 0.5rem 1rem;
 }
 
-.blog-navigation a:hover {
+.post-nav a:hover {
   background: var(--sub-color);
   color: var(--accent-color);
 }
 
+.previous-post {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: left;
+  width: 45%;
+}
+
+.nav-cushion {
+  width: 10%;
+}
+
+.next-post {
+  width: 45%;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: right;
+}
 </style>

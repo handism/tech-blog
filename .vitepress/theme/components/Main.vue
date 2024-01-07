@@ -1,20 +1,20 @@
 <script setup>
-import ArticleHeader from "./ArticleHeader.vue"
-import ArticleFooter from "./ArticleFooter.vue"
+import PostHeader from "./PostHeader.vue"
+import PostFooter from "./PostFooter.vue"
 </script>
 
 <template>
-  <div class="main-content">
+  <div class="l-main">
     <article>
-      <ArticleHeader />
+      <PostHeader />
       <Content />
-      <ArticleFooter />
+      <PostFooter />
     </article>
   </div>
 </template>
   
 <style scoped>
-.main-content {
+.l-main {
   padding: 0.8rem;
   box-sizing: border-box;
   width: 100%;

@@ -1,6 +1,6 @@
-import { createContentLoader } from 'vitepress'
+import { createContentLoader } from "vitepress"
 
-export default createContentLoader('src/*.md', {
+export default createContentLoader("src/*.md", {
   includeSrc: false,
   transform(rawData) {
     return rawData

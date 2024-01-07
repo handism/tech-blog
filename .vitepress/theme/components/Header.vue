@@ -1,17 +1,17 @@
 <script setup>
-import { useData } from 'vitepress'
+import { useData } from "vitepress"
 
 const { theme } = useData()
 </script>
 
 <template>
-  <header class="header">
+  <header class="l-header">
     <h1 class="site-title"><a href="/">{{ theme.siteTitle }}</a></h1>
   </header>
 </template>
   
 <style scoped>
-.header {
+.l-header {
   background: var(--gradient-color);
   padding: 1rem;
   text-align: center;

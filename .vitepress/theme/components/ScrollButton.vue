@@ -1,3 +1,11 @@
+<template>
+  <div>
+    <button v-show="showScrollButton" @click="scrollToTop" class="scroll-button">
+      Top
+    </button>
+  </div>
+</template>
+
 <script>
 export default {
   data() {
@@ -6,10 +14,10 @@ export default {
     }
   },
   mounted() {
-    window.addEventListener('scroll', this.handleScroll)
+    window.addEventListener("scroll", this.handleScroll)
   },
   beforeUnmount() {
-    window.removeEventListener('scroll', this.handleScroll)
+    window.removeEventListener("scroll", this.handleScroll)
   },
   methods: {
     handleScroll() {
@@ -18,23 +26,15 @@ export default {
     scrollToTop() {
       window.scrollTo({
         top: 0,
-        behavior: 'smooth'
+        behavior: "smooth"
       })
     }
   }
 }
 </script>
 
-<template>
-  <div>
-    <button v-show="showScrollButton" @click="scrollToTop" class="scroll-top-button">
-      Top
-    </button>
-  </div>
-</template>
-
 <style scoped>
-.scroll-top-button {
+.scroll-button {
   position: fixed;
   bottom: 20px;
   right: 20px;

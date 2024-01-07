@@ -24,7 +24,7 @@
 }
 
 body {
-  font-family: "Noto Sans JP",'Avenir','Helvetica Neue','Helvetica','Arial', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro','メイリオ', 'Meiryo', '游ゴシック', 'Yu Gothic', 'ＭＳ Ｐゴシック', sans-serif;
+  font-family: "Noto Sans JP", "Avenir", "Helvetica Neue", "Helvetica", "Arial", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo", "游ゴシック", "Yu Gothic", "ＭＳ Ｐゴシック", sans-serif;
 }
 
 h1 {
@@ -55,12 +55,6 @@ h4 {
   font-size: 100%;
   border-bottom: dotted 1px;
   box-sizing: border-box;
-}
-
-time {
-  font-size: 85%;
-  white-space: nowrap;
-  margin-left: 0.2rem;
 }
 
 a,

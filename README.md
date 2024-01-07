@@ -65,6 +65,17 @@
 * `.vitepress/theme/components`内に格納
 
 
+### CSS
+
+* クラス名はケバブケースで命名
+* `SMACSS（スマックス）`に少しだけ準拠してみる
+  * ベース：`.vitepress/theme/style.css`に書いてグローバルで読み込む
+  * レイアウト：クラス名の頭に`l-`を付ける
+  * モジュール：
+  * 状態：
+  * テーマ：
+
+
 ## Vue.js
 
 * script、template、styleの順で書く
