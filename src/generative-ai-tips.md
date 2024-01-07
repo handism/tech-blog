@@ -1,6 +1,6 @@
 ---
 title: 生成AIの個人的な活用事例集
-tags: [AI]
+tags: [Generative AI]
 image: robot-drawing.webp
 ---
 
