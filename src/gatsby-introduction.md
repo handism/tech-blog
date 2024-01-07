@@ -13,7 +13,7 @@ Gatsbyとは、ReactとGraphQLを使用した静的Webサイトジェネレー�
 
 
 ## 経緯
-3年ほど前にこのGatsbyを利用してブログサイトを自作してGitHubにコミットしていたのだが、現在はそのときの記憶がだいぶ薄れてしまっている。勉強のため、再度Gatsbyに入門して当時の記憶を呼び起こしたい。  
+3年ほど前にGatsbyを利用してブログサイトを自作してGitHubにコミットしていたのだが、現在はそのときの記憶がだいぶ薄れてしまっている。勉強のため、再度Gatsbyに入門して当時の記憶を呼び起こしたい。  
   
 https://www.gatsbyjs.com/docs/tutorial/getting-started/part-0/  
 ↑公式のこのページを参考にする。
