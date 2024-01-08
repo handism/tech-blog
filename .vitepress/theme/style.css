@@ -35,7 +35,7 @@ h1 {
 }
 
 h2 {
-  font-size: 120%;
+  font-size: 130%;
   border-left: solid 5px;
   border-bottom: solid 1px;
   margin-top: 3rem;
@@ -45,7 +45,7 @@ h2 {
 }
 
 h3 {
-  font-size: 110%;
+  font-size: 120%;
   border-left: dashed 1px;
   border-bottom: dashed 1px;
   margin-top: 3rem;
@@ -56,7 +56,7 @@ h3 {
 }
 
 h4 {
-  font-size: 100%;
+  font-size: 110%;
   border-left: solid 2px;
   margin-top: 3rem;
   margin-left: 0.4rem;
