@@ -42,43 +42,77 @@ https://d1.awsstatic.com/ja_JP/training-and-certification/docs-sysops-associate/
 
 
 ### 分析
-* Amazon OpenSearch Service
+
+#### Amazon OpenSearch Service
+
 
 
 ### アプリケーション統合
-* Amazon EventBridge
-* Amazon Simple Notification Service (Amazon SNS)
-* Amazon Simple Queue Service (Amazon SQS)
+
+#### Amazon EventBridge
+
+
+#### Amazon Simple Notification Service (Amazon SNS)
+
+
+#### Amazon Simple Queue Service (Amazon SQS)
 
 
 ### クラウド財務管理
-* AWS Cost and Usage Report
-* AWS Cost Explorer
-* Savings Plans
+
+#### AWS Cost and Usage Report
+
+
+#### AWS Cost Explorer
+
+
+#### Savings Plans
 
 
 ### コンピューティング
-* AWS Auto Scaling
-* Amazon EC2
-* Amazon EC2 Auto Scaling
-* Amazon EC2 Image Builder
-* AWS Lambda
+
+#### AWS Auto Scaling
+
+
+#### Amazon EC2
+
+
+#### Amazon EC2 Auto Scaling
+
+
+#### Amazon EC2 Image Builder
+
+
+#### AWS Lambda
 
 
 ### データベース
-* Amazon Aurora
-* Amazon DynamoDB
-* Amazon ElastiCache
-* Amazon RDS
+
+#### Amazon Aurora
+
+
+#### Amazon DynamoDB
+
+
+#### Amazon ElastiCache
+
+
+#### Amazon RDS
 
 
 ### デベロッパーツール
-* AWS のツールと SDK
+
+#### AWS のツールと SDK
+
 
 
 ### マネジメントとガバナンス
-* AWS CLI
-* AWS CloudFormation
+
+
+#### AWS CLI
+
+
+#### AWS CloudFormation
 
 AWSリソースのデプロイ自動化としては`AWS CloudFormation`が便利。Infrastructure as Code（IaC）という概念があり、インフラをコードで管理することで様々なメリットがある。
 
@@ -94,58 +128,134 @@ CloudFormationには`リソース`、`テンプレート`、`スタック`の概
 | 構築対象のAWSインフラの単位のこと。 | インフラ構築の手続き内容を記載したコードのこと。YAMLやJSONで記載する。 | テンプレートを読み込ませて構築したリソースの集合体のこと。 |
 
 
-* AWS CloudTrail
-* Amazon CloudWatch
-* AWS Compute Optimizer
-* AWS Config
-* AWS Control Tower
-* AWS Health Dashboard
-* AWS License Manager
-* AWS マネジメントコンソール
-* AWS Organizations
-* AWS Service Catalog
-* AWS Systems Manager
-* AWS Trusted Advisor
+#### AWS CloudTrail
+
+
+#### Amazon CloudWatch
+
+
+#### AWS Compute Optimizer
+
+
+#### AWS Config
+
+
+#### AWS Control Tower
+
+
+#### AWS Health Dashboard
+
+
+#### AWS License Manager
+
+
+#### AWS マネジメントコンソール
+
+
+#### AWS Organizations
+
+
+#### AWS Service Catalog
+
+
+#### AWS Systems Manager
+
+
+#### AWS Trusted Advisor
 
 
 
 ### 移行と転送
-* AWS DataSync
-* AWS Transfer Family
+
+#### AWS DataSync
+
+
+#### AWS Transfer Family
 
 
 ### ネットワークとコンテンツ配信
-* Amazon CloudFront
-* Elastic Load Balancing (ELB)
-* AWS Global Accelerator
-* Amazon Route 53
-* AWS Transit Gateway
-* Amazon VPC
-* AWS VPN
+
+#### Amazon CloudFront
+
+
+#### Elastic Load Balancing (ELB)
+
+
+#### AWS Global Accelerator
+
+
+#### Amazon Route 53
+
+
+#### AWS Transit Gateway
+
+
+#### Amazon VPC
+
+
+#### AWS VPN
 
 
 ### セキュリティ、アイデンティティ、コンプライアンス
-* AWS Certificate Manager (ACM)
-* Amazon Detective
-* AWS Directory Service
-* AWS Firewall Manager
-* Amazon GuardDuty
-* AWS Identity and Access Management (IAM)
-* AWS Identity and Access Management Access Analyzer
-* Amazon Inspector
-* AWS Key Management Service (AWS KMS)
-* AWS Secrets Manager
-* AWS Security Hub
-* AWS Shield
-* AWS WAF
+
+#### AWS Certificate Manager (ACM)
+
+
+#### Amazon Detective
+
+
+#### AWS Directory Service
+
+
+#### AWS Firewall Manager
+
+
+#### Amazon GuardDuty
+
+
+#### AWS Identity and Access Management (IAM)
+
+
+#### AWS Identity and Access Management Access Analyzer
+
+
+#### Amazon Inspector
+
+
+#### AWS Key Management Service (AWS KMS)
+
+
+#### AWS Secrets Manager
+
+
+#### AWS Security Hub
+
+
+#### AWS Shield
+
+
+#### AWS WAF
 
 
 
 ### ストレージ
-* AWS Backup
-* Amazon Elastic Block Store (Amazon EBS)
-* Amazon Elastic File System (Amazon EFS)
-* Amazon FSx
-* Amazon S3
-* Amazon S3 Glacier
-* AWS Storage Gateway
+
+#### AWS Backup
+
+
+#### Amazon Elastic Block Store (Amazon EBS)
+
+
+#### Amazon Elastic File System (Amazon EFS)
+
+
+#### Amazon FSx
+
+
+#### Amazon S3
+
+
+#### Amazon S3 Glacier
+
+
+#### AWS Storage Gateway
