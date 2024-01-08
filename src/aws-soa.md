@@ -1,6 +1,6 @@
 ---
-title: AWS Certified SysOps Administrator - Associate認定を対策する
-tags: [AWS, Infastructure]
+title: AWS Certified SysOps Administrator - Associate認定の対策
+tags: [AWS, Infrastructure]
 image: cloud-fantasy.webp
 ---
 
