@@ -19,10 +19,7 @@ image: cloud-fantasy.webp
 オペレーションの役割を担うシステムアドミニストレーター」で、取得すると、「AWS でのワークロードのデプロイ、管理、運用の経験
 」が証明される
 
-
-## SOAの試験対策
-
-SOAの試験内容は以下の通り。分野ごとに対策していく。
+SOAの試験内容は以下の通りとのこと。
 
 ```
 第 1 分野: モニタリング、ロギング、および修復 (採点対象コンテンツの 20%)
@@ -34,34 +31,54 @@ SOAの試験内容は以下の通り。分野ごとに対策していく。
 ```
 
 
-### 第1分野：モニタリング、ロギング、および修復
+## 試験対象のサービス
 
-* Amazon CloudWatch Logs
-* AWS CloudTrailログ
-* Amazon Simple Notification Service（SNS）
-* Service Quotas
-* AWS Health Events
+SOAの試験対象のサービスは、以下PDFに列記されているためそれごとに学んでいったほうが効率的。逆に対象外のサービスも列記されている。
+
+https://d1.awsstatic.com/ja_JP/training-and-certification/docs-sysops-associate/AWS-Certified-SysOps-Administrator-Associate_Exam-Guide.pdf
+
+デプロイやプロビジョニングの自動化…と聞いて真っ先に思い浮かぶのは`AWS CodePipeline`、`AWS CodeBuild`、`AWS CodeCommit`、`AWS CodeDeploy`らへんだったが、本試験では対象外とのこと。
 
 
-### 第2分野：信頼性と事業の継続性
 
+### 分析
+* Amazon OpenSearch Service
+
+
+### アプリケーション統合
+* Amazon EventBridge
+* Amazon Simple Notification Service (Amazon SNS)
+* Amazon Simple Queue Service (Amazon SQS)
+
+
+### クラウド財務管理
+* AWS Cost and Usage Report
+* AWS Cost Explorer
+* Savings Plans
+
+
+### コンピューティング
 * AWS Auto Scaling
-* キャッシュ
-* Amazon RDS レプリカ
-* 疎結合アーキテクチャ
-* 水平スケーリング、垂直スケーリング
-* ELB、Amazon Route 53ヘルスチェック
-* マルチAZ
-* 耐障害性（EFS、EIP）
-* Route 53ルーティングポリシー
-* バックアップ（AWS Backup、RDSスナップショット、Amazon Data Lifecycle Manager）
-* クロスリージョンレプリケーション（CRR）
-* DR
+* Amazon EC2
+* Amazon EC2 Auto Scaling
+* Amazon EC2 Image Builder
+* AWS Lambda
 
 
+### データベース
+* Amazon Aurora
+* Amazon DynamoDB
+* Amazon ElastiCache
+* Amazon RDS
 
-### 第3分野：デプロイ、プロビジョニング、およびオートメーション
-デプロイやプロビジョニングの自動化…と聞いて真っ先に思い浮かぶのは`AWS CodePipeline`、`AWS CodeBuild`、`AWS CodeCommit`、`AWS CodeDeploy`らへんなんだけど、本試験では対象外。
+
+### デベロッパーツール
+* AWS のツールと SDK
+
+
+### マネジメントとガバナンス
+* AWS CLI
+* AWS CloudFormation
 
 AWSリソースのデプロイ自動化としては`AWS CloudFormation`が便利。Infrastructure as Code（IaC）という概念があり、インフラをコードで管理することで様々なメリットがある。
 
@@ -76,58 +93,59 @@ CloudFormationには`リソース`、`テンプレート`、`スタック`の概
 | --- | --- | --- |
 | 構築対象のAWSインフラの単位のこと。 | インフラ構築の手続き内容を記載したコードのこと。YAMLやJSONで記載する。 | テンプレートを読み込ませて構築したリソースの集合体のこと。 |
 
-* EC2 Image Builder
-* CloudFormation StackSets
-* Service Quotas
-* Systems Manager
-* EventBridge
-* AWS Config
 
-* ブルー/グリーンデプロイ
-* ローリング
-* Canary
-
-
-
-
-### 第4分野：セキュリティとコンプライアンス
-
-* IAM
-* CloudTrail
-* IAM Access Analyzer
-* IAM Policy Simulator
-* SCP
-* AWS Trusted Advisor
-* AWS Control Tower
-* AWS Organizations
-* KMS
-* ACM
-* AWS Secrets Manager
-* Systems Manager
-* AWS Security Hub
-* Amazon GuardDuty
-* AWS Config
-* Amazon Inspector
-
-
-### 第5分野：ネットワークとコンテンツ配信
-
-* VPC
-* Systems Manager Session Manager
-* VPN
-* AWS WAF
-* AWS Shield
-* Route 53
-* Amazon CloudFront
-* S3オリジンアクセスコントロール
-
-
-### 第6分野：コストとパフォーマンスの最適化
-
-* コスト割り当てタグ
-* Trusted Advisor
+* AWS CloudTrail
+* Amazon CloudWatch
 * AWS Compute Optimizer
-* AWS Cost Exploerer
-* AWS Budgets
-* EC2スポットインスタンス
-* パフォーマンスメトリクス
+* AWS Config
+* AWS Control Tower
+* AWS Health Dashboard
+* AWS License Manager
+* AWS マネジメントコンソール
+* AWS Organizations
+* AWS Service Catalog
+* AWS Systems Manager
+* AWS Trusted Advisor
+
+
+
+### 移行と転送
+* AWS DataSync
+* AWS Transfer Family
+
+
+### ネットワークとコンテンツ配信
+* Amazon CloudFront
+* Elastic Load Balancing (ELB)
+* AWS Global Accelerator
+* Amazon Route 53
+* AWS Transit Gateway
+* Amazon VPC
+* AWS VPN
+
+
+### セキュリティ、アイデンティティ、コンプライアンス
+* AWS Certificate Manager (ACM)
+* Amazon Detective
+* AWS Directory Service
+* AWS Firewall Manager
+* Amazon GuardDuty
+* AWS Identity and Access Management (IAM)
+* AWS Identity and Access Management Access Analyzer
+* Amazon Inspector
+* AWS Key Management Service (AWS KMS)
+* AWS Secrets Manager
+* AWS Security Hub
+* AWS Shield
+* AWS WAF
+
+
+
+### ストレージ
+* AWS Backup
+* Amazon Elastic Block Store (Amazon EBS)
+* Amazon Elastic File System (Amazon EFS)
+* Amazon FSx
+* Amazon S3
+* Amazon S3 Glacier
+* AWS Storage Gateway
