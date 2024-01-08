@@ -36,31 +36,32 @@ h1 {
 
 h2 {
   font-size: 120%;
-  border-left: solid 10px;
+  border-left: solid 5px;
   border-bottom: solid 1px;
+  margin-top: 3rem;
   padding: 0.5rem;
   padding-left: 0.8rem;
-  margin-top: 3rem;
   box-sizing: border-box;
 }
 
 h3 {
   font-size: 110%;
+  border-left: dashed 1px;
   border-bottom: dashed 1px;
   margin-top: 3rem;
-  margin-left: 0.2rem;
+  margin-left: 0.4rem;
   padding: 0.4rem;
   padding-left: 0.8rem;
   box-sizing: border-box;
 }
 
 h4 {
-  border-left: solid 2px;
+  font-size: 100%;
+  border-left: solid 1px;
   margin-top: 3rem;
-  margin-left: 0.4rem;
+  margin-left: 0.6rem;
   padding: 0.3rem;
   padding-left: 0.8rem;
-  font-size: 100%;
   box-sizing: border-box;
 }
 
