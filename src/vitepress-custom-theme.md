@@ -341,3 +341,7 @@ OSの設定を参照した自動ダークモードを実装しているので、
 * イラレやフォトショにある「色の乗算」はCSSの`mix-blend-mode`で実現可能
 * `PCCS`：https://www.dic-color.com/knowledge/pccs.html
 * `linear-gradient`で線形グラデーションもできる
+  * 背景色に設定するときは`background-color`ではなく`background`に設定する点に注意
+* 行と行との間隔は`line-height`、文字と文字の間隔は`letter-spacing`で設定
+  * 一般的には、日本語フォントは欧文フォントよりも広めな行間隔が必要
+  * 更には、日本語フォントの中でも明朝体よりもゴシック系のほうが広めな行間隔が望ましい
