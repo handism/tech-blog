@@ -28,7 +28,7 @@ const { frontmatter, page } = useData()
 }
 
 .post-title {
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.6rem;
 }
 
 .tag {
