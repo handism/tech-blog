@@ -252,6 +252,10 @@ EC2やEBSの設定が準拠しているかを確認してくれる。
 
 `npm`、`pip`などの各言語系パッケージは取得対象外。
 
+* `Session Manager`：
+* `RunAs`：
+* `Shell Profile`：
+
 
 #### AWS Trusted Advisor
 AWSの適切な利用をサジェストするツール。例えば、使用率が高いEC2インスタンスを全て検出するなどができる。
