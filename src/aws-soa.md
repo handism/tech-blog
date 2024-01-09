@@ -1,5 +1,5 @@
 ---
-title: AWS Certified SysOps Administrator - Associate認定の対策
+title: AWS Certified SysOps Administrator - Associateの対策
 tags: [AWS, Infrastructure]
 image: cloud-fantasy.webp
 ---
@@ -186,6 +186,7 @@ Infrastructure as Code（IaC）という概念があり、インフラをコー�
 - テンプレートから作成されるリソースの集合体のこと。この単位でリソースを管理可能
 - テンプレートを修正した場合、作ったスタックに後から再度テンプレートを適用でき、差分だけが適用されるから安心
 - スタックを削除することで、作られたリソースも自動的に削除される
+- `ドリフト`：
 
 テンプレート
 
@@ -223,6 +224,8 @@ AWS上のリソースやアプリケーションのモニタリングサービ�
 #### AWS Config
 EC2やEBSの設定が準拠しているかを確認してくれる。
 
+`発見的ガードレール`と呼ばれる。
+
 
 #### AWS Control Tower
 
@@ -243,6 +246,11 @@ EC2やEBSの設定が準拠しているかを確認してくれる。
 
 
 #### AWS Systems Manager
+`AWS Systems Manager Inventory`で、EC2インスタンス内のOSやソフトウェアなどを収集して一覧化できる。
+
+内部的には`npm -qa`などのOS系パッケージ取得コマンドを使用しているとのこと。
+
+`npm`、`pip`などの各言語系パッケージは取得対象外。
 
 
 #### AWS Trusted Advisor
@@ -354,9 +362,23 @@ AWS上にプライベートネットワーク空間を提供するサービス�
     - STSで一時的にトークンを払い出される
 - `IAMポリシー`：どのリソースにどの操作を許可するか権限を定義
     - これを作成して上の3つにアタッチする
+- `IAM Policy Simulator`：
+
+::: tip
+IAMのベストプラクティスは以下。
+* ルートアカウントのまま作業しない
+* IAMユーザーを共有しない
+* 認証情報を定期的にローテーションする
+* 不要な認証情報は削除する
+* MFAを使用する
+:::
 
 
 #### AWS Identity and Access Management Access Analyzer
+
+必要以上の権限が付与されていないかを確認可能。
+
+外部アクセスできるリソースが一覧化されたり、未使用リソースが一覧化されたりする。
 
 
 #### Amazon Inspector
