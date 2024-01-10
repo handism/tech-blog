@@ -28,7 +28,7 @@ export default defineConfig({
     siteTitle: "Handism's Tech Blog",
     footerNav: [
       {text: "About", link: "/about"},
-      {text: "Sitemap", link: "/"},
+      {text: "Sitemap", link: "/sitemap"},
       {text: "GitHub", link: "https://github.com/handism"}
     ]
   }

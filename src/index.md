@@ -4,6 +4,8 @@ titleTemplate: :title
 
 <script setup>
 import { data as posts } from '../.vitepress/theme/components/posts.data.mjs'
+import TopPage from '../.vitepress/theme/components/TopPage.vue'
+
 
 const tagSet = new Set() // タグを格納するためのセット
 
@@ -15,19 +17,47 @@ posts.forEach((data) => {
 })
 </script>
 
-## 記事一覧
+  <style scoped>
+.article-card-container {
+  display: flex;
+  flex-wrap: wrap;
+}
 
-<ul>
-  <li v-for="post of posts">
-    <a :href="post.url">{{ post.frontmatter.title }}</a>
-  </li>
-</ul>
+ .article-card {
+  width: calc(33.33% - 32px);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px;
+  text-align: center;
+  box-sizing: border-box;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.thumbnail {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.title {
+  margin: 0;
+  padding: 0;
+  margin-top: 8px;
+  font-size: 16px;
+  border: none;
+}
+  </style>
+
+<div class="article-card-container">
+<template v-for="post of posts">
+    <a :href=post.url class="article-card">
+      <img :src="post.frontmatter.image" alt="Article Thumbnail" class="thumbnail" />
+      <h2 class="title">{{ post.frontmatter.title }}</h2>
+    </a>
+</template>
+</div>
 
 
-## タグ一覧
-
-<ul>
-  <li v-for="tag of Array.from(tagSet)">
-    <a :href="'/tag/' + tag.toLowerCase().replace(' ', '-')">{{ tag }}</a>
-  </li>
-</ul>
