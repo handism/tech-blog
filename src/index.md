@@ -6,7 +6,6 @@ titleTemplate: :title
 import { data as posts } from '../.vitepress/theme/components/posts.data.mjs'
 import TopPage from '../.vitepress/theme/components/TopPage.vue'
 
-
 const tagSet = new Set() // タグを格納するためのセット
 
 posts.forEach((data) => {
@@ -17,13 +16,13 @@ posts.forEach((data) => {
 })
 </script>
 
-  <style scoped>
+<style scoped>
 .article-card-container {
   display: flex;
   flex-wrap: wrap;
 }
 
- .article-card {
+.article-card {
   width: calc(33.33% - 32px);
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -49,7 +48,20 @@ posts.forEach((data) => {
   font-size: 16px;
   border: none;
 }
-  </style>
+
+/* メディアクエリを追加してスマホ用のスタイルを適用 */
+@media (max-width: 767px) {
+  .article-card-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .article-card {
+    width: 100%;
+  }
+}
+</style>
+
 
 <div class="article-card-container">
 <template v-for="post of posts">
@@ -59,5 +71,3 @@ posts.forEach((data) => {
     </a>
 </template>
 </div>
-
-
