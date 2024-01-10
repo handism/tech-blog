@@ -20,6 +20,8 @@ posts.forEach((data) => {
 .article-card-container {
   display: flex;
   flex-wrap: wrap;
+  margin: 0 auto;
+  justify-content: center;
 }
 
 .article-card {
