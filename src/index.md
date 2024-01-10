@@ -40,13 +40,12 @@ posts.forEach((data) => {
   max-width: 100%;
   height: auto;
   border-radius: 4px;
-  mix-blend-mode: var(--mix-brend-mode);
+  mix-blend-mode: normal;
   transition: .5s; 
 }
 
 .thumbnail:hover {
-  mix-blend-mode: normal;
- 
+  mix-blend-mode: var(--mix-brend-mode);
 }
 
 .title {
