@@ -21,6 +21,7 @@ posts.forEach((data) => {
   display: flex;
   flex-wrap: wrap;
   box-sizing: border-box;
+  margin: 0 auto;
 }
 
 .article-card {
@@ -58,7 +59,7 @@ posts.forEach((data) => {
   }
 
   .article-card {
-    width: 100%;
+    width: 90%;
   }
 }
 </style>
