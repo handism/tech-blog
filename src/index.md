@@ -16,14 +16,14 @@ posts.forEach((data) => {
 </script>
 
 <style scoped>
-.article-card-container {
+.post-card-container {
   display: flex;
   flex-wrap: wrap;
   box-sizing: border-box;
   margin: 0 auto;
 }
 
-.article-card {
+.post-card {
   width: calc(33.33% - 32px);
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -48,7 +48,7 @@ posts.forEach((data) => {
   mix-blend-mode: var(--mix-brend-mode);
 }
 
-.title {
+.post-title {
   margin: 0;
   padding: 0;
   margin-top: 8px;
@@ -57,23 +57,23 @@ posts.forEach((data) => {
 }
 
 @media (max-width: 767px) {
-  .article-card-container {
+  .post-card-container {
     flex-direction: column;
     align-items: stretch;
   }
 
-  .article-card {
+  .post-card {
     width: 90%;
   }
 }
 </style>
 
 
-<div class="article-card-container">
+<div class="post-card-container">
 <template v-for="post of posts">
-    <a :href=post.url class="article-card">
-      <img :src="post.frontmatter.image" alt="Article Thumbnail" class="thumbnail" />
-      <h2 class="title">{{ post.frontmatter.title }}</h2>
+    <a :href=post.url class="post-card">
+      <img :src="post.frontmatter.image" alt="Post Thumbnail" class="thumbnail" />
+      <h2 class="post-title">{{ post.frontmatter.title }}</h2>
     </a>
 </template>
 </div>
