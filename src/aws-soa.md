@@ -22,28 +22,26 @@ image: cloud-fantasy.webp
 SOAの試験内容は以下の通りとのこと。
 
 ```
-第 1 分野: モニタリング、ロギング、および修復 (採点対象コンテンツの 20%)
-第 2 分野: 信頼性と事業の継続性 (採点対象コンテンツの 16%)
-第 3 分野: デプロイ、プロビジョニング、およびオートメーション (採点対象コンテンツの 18%)
-第 4 分野: セキュリティとコンプライアンス (採点対象コンテンツの 16%)
-第 5 分野: ネットワークとコンテンツ配信 (採点対象コンテンツの 18%)
-第 6 分野: コストとパフォーマンスの最適化 (採点対象コンテンツの 12%)
+第1分野：モニタリング、ロギング、および修復 (採点対象コンテンツの 20%)
+第2分野：信頼性と事業の継続性 (採点対象コンテンツの 16%)
+第3分野：デプロイ、プロビジョニング、およびオートメーション (採点対象コンテンツの 18%)
+第4分野：セキュリティとコンプライアンス (採点対象コンテンツの 16%)
+第5分野：ネットワークとコンテンツ配信 (採点対象コンテンツの 18%)
+第6分野：コストとパフォーマンスの最適化 (採点対象コンテンツの 12%)
 ```
 
 
 ## 試験対象のサービス
-
-SOAの試験対象のサービスは、以下PDFに列記されているためそれごとに学んでいったほうが効率的。逆に対象外のサービスも列記されている。
+SOAの試験対象のAWSサービスは、以下PDFに列記されているためそれごとに学んでいったほうが効率的。逆に対象外のサービスも列記されている。
 
 https://d1.awsstatic.com/ja_JP/training-and-certification/docs-sysops-associate/AWS-Certified-SysOps-Administrator-Associate_Exam-Guide.pdf
 
-デプロイやプロビジョニングの自動化…と聞いて真っ先に思い浮かぶのは`AWS CodePipeline`、`AWS CodeBuild`、`AWS CodeCommit`、`AWS CodeDeploy`らへんだったが、本試験では対象外とのこと。
+以下、AWSサービス別に対策していく。
 
 
+## 分析
 
-### 分析
-
-#### Amazon OpenSearch Service
+### Amazon OpenSearch Service
 - OpenSearchとは、ElasticsearchとKibanaの最後のALv2バージョンからフォークを作成したもの。Amazonだけじゃなく、いろんな企業や個人が参画して更新し続けている
   - マネージドのため構築・管理コストは低い
   - ユーザー管理はIAMで行う、もしくはOpenSearch側で独自のユーザー管理も可
@@ -64,9 +62,9 @@ https://d1.awsstatic.com/ja_JP/training-and-certification/docs-sysops-associate/
     - OpenSearch Compute Unit（OCU）ごとに課金で、最低4OCUが必要なので毎月146,292円くらいはかかる
 
 
-### アプリケーション統合
+## アプリケーション統合
 
-#### Amazon EventBridge
+### Amazon EventBridge
 イベント駆動型アプリケーションを構築するためのマネージドサービス。
 
 アプリケーション内およびAWS上の異なるサービス間でイベントの受け渡しを簡素化し、異なるコンポーネントやサービス間の結合を疎結合にすることを支援。
@@ -74,13 +72,13 @@ https://d1.awsstatic.com/ja_JP/training-and-certification/docs-sysops-associate/
 * SDKで`createSchedule`を呼び出せば、アプリ側で動的にスケジュールを設定できそう
 * フレックスタイムウインドウをONにすると処理を分散できて便利
 
-#### Amazon Simple Notification Service (Amazon SNS)
+### Amazon Simple Notification Service (Amazon SNS)
 プッシュ型のメッセージングサービス。
 
 * `トピック`：メッセージを配信する論理的な宛先のこと。Firehose、SQS、Lambda、HTTP/S、Eメールなどをグループにまとめることが可能
 
 
-#### Amazon Simple Queue Service (Amazon SQS)
+### Amazon Simple Queue Service (Amazon SQS)
 メッセージキューサービス。実は最も古いAWSサービス。
 
 SQSを挟んだ非同期のアプリケーションは、疎結合になる。SQSの代わりにELBを挟んで水平方向のスケーリングをするのも良い。
@@ -93,20 +91,20 @@ SQSを挟んだ非同期のアプリケーションは、疎結合になる。SQ
 - `デッドレターキュー`：問題のあるメッセージを隔離する
 
 
-### クラウド財務管理
+## クラウド財務管理
 
-#### AWS Cost and Usage Report
+### AWS Cost and Usage Report
 AWS請求レポートをS3に発行できる。コスト別、時間、日、月、タグなどで分類されている。
 
 レポートは1日に3回まで更新される。
 
-#### AWS Cost Explorer
+### AWS Cost Explorer
 AWSのコストと使用料を経時的に可視化、把握、管理できる。
 
 データを詳細に分析して傾向、コスト要因、異常を特定可能。
 
 
-#### Savings Plans
+### Savings Plans
 柔軟な価格設定モデルで最大72%コストを節約可能。
 
 1年または3年の時間単位で利用する条件となる。
@@ -114,13 +112,13 @@ AWSのコストと使用料を経時的に可視化、把握、管理できる�
 対象は3種類。Compute Saving Plans、EC2 Instance Saving Plans、SageMaker Saving Plans。
 
 
-### コンピューティング
+## コンピューティング
 
-#### AWS Auto Scaling
+### AWS Auto Scaling
 スケーリングクールダウン：オートスケーリングが連続実行されないように設定する待ち時間。デフォルトは300秒。
 
 
-#### Amazon EC2
+### Amazon EC2
 
 * 購入オプション
   * `リザーブドインスタンス`：オンデマンドよりもかなり安い。ただし、3年とか縛りで途中でキャンセルができない
@@ -136,11 +134,11 @@ AWSのコストと使用料を経時的に可視化、把握、管理できる�
   - ストレージ最適化：`H,I,D`
 
 
-#### Amazon EC2 Auto Scaling
+### Amazon EC2 Auto Scaling
 CloudWatchのメトリクスの増減とも連携できる。CPU、ネットワーク、キュー。
 
 
-#### Amazon EC2 Image Builder
+### Amazon EC2 Image Builder
 カスタムAMIが作れると、同じようなインスタンスを複数作りたいケースで便利。
 
 ゴールデンイメージ用途やバックアップ用途などに。CI/CD。
@@ -149,7 +147,7 @@ CloudWatchのメトリクスの増減とも連携できる。CPU、ネットワ�
 * `イメージレシピ`：Build、Validate、Testまでやってくれて便利。裏ではSystems Managerのドキュメントが動いているとか
 
 
-#### AWS Lambda
+### AWS Lambda
 フルマネージド型のコンピューティングサービス。コードが実行されるごとに課金される。
 
 イベントへの応答として、または指定された時間間隔でコードを実行でき、ログはCloudWatch Logsに保存される。
@@ -159,38 +157,38 @@ CloudWatchのメトリクスの増減とも連携できる。CPU、ネットワ�
 - `Java,Node.js,C#,Python,Go,PowerShell,Ruby`に対応
 
 
-### データベース
+## データベース
 
-#### Amazon Aurora
+### Amazon Aurora
 PostgreSQLおよびMySQL互換のデータベースエンジン。AWS独自開発なのでイチオシのため、試験問題の答えになる可能性が高い。
 
 
-#### Amazon DynamoDB
+### Amazon DynamoDB
 マネージド型のKey-Value型データベース。自動的に3つのAZにデータ保存で高可用性がある。
 
 
-#### Amazon ElastiCache
+### Amazon ElastiCache
 フルマネージド型のインメモリデータストアおよびキャッシュシステムのPaaS。
  
 - `Redis`：複雑なデータに対応。シングルスレッドで可用性が高い。Pub/Sub機能を提供
 - `Memcached`：高パフォーマンスとマルチスレッド対応が可能
 
 
-#### Amazon RDS
+### Amazon RDS
 * `RDS Proxy`：停止などはできないので存在する限り課金され続ける点に注意
 
 
-### デベロッパーツール
+## デベロッパーツール
 
-#### AWS のツールと SDK
+### AWS のツールと SDK
 
 * `SDK`：各プログラミング言語、環境に合わせた開発ツール。Python、Java、.NET、Node.js、JavaScript、C++、Go、Ruby、PHPに対応
 
 
-### マネジメントとガバナンス
+## マネジメントとガバナンス
 
 
-#### AWS CLI
+### AWS CLI
 AWSのサービスを管理するための統合ツール。
 
 Win、Mac、Linux向けがあり、`Amazon Linux AMI`にはプレインストールされている。
@@ -198,7 +196,7 @@ Win、Mac、Linux向けがあり、`Amazon Linux AMI`にはプレインストー
 `AWS CloudShell`から利用するのがインストール不要で楽ちんでよい。
 
 
-#### AWS CloudFormation
+### AWS CloudFormation
 
 AWSリソースのデプロイ自動化としては`AWS CloudFormation`が便利。AWSの中では「プロビジョニング」に相当する。
 
@@ -239,18 +237,18 @@ Infrastructure as Code（IaC）という概念があり、インフラをコー�
     - 参照側は`Fn::ImportValue`で参照
 
 
-#### AWS CloudTrail
+### AWS CloudTrail
 AWSのAPI呼び出しを記録してロギングするサービス。監査証跡に使える。データイベントと管理イベントのログを記録できる。
 
 
-#### Amazon CloudWatch
+### Amazon CloudWatch
 AWS上のリソースやアプリケーションのモニタリングサービス。
 
 * `ロググループ`：
 * `サブスクリプションフィルター`：ログ内に特定の文言があったら通知できる機能
 * `ログストリーム`：ロググループに所属できる
 
-#### AWS Compute Optimizer
+### AWS Compute Optimizer
 AWSリソースの使用を最適化するための推奨事項を取得。
 
 使用状況データに基づいて、以下4種類のリソースのオーバープロビジョニングとアンダープロビジョニングを回避できる。
@@ -261,45 +259,45 @@ AWSリソースの使用を最適化するための推奨事項を取得。
 * Lambda関数
 
 
-#### AWS Config
+### AWS Config
 EC2やEBSの設定が準拠しているかを確認してくれる。
 
 * `Configルール`：`発見的ガードレール`と呼ばれる
 
 
-#### AWS Control Tower
+### AWS Control Tower
 安全なマルチアカウントAWS環境のセットアップと管理。組織のセキュリティとコンプライアンスのニーズを維持しながら、複数のAWSサービスを調整しやすくする。
 
 * `ランディングゾーン`：
 
 
-#### AWS Health Dashboard
+### AWS Health Dashboard
 AWS環境に影響を及ぼす重大なイベントや変更を表示。
 
 
-#### AWS License Manager
+### AWS License Manager
 ソフトウェアライセンスを管理し、ライセンスコストを微調整する。
 
 Microsoft、SAP、Oracle、IBMなどのベンダーが提供するライセンスの管理を簡単に行えるサービス。
 
 
-#### AWS マネジメントコンソール
+### AWS マネジメントコンソール
 AWSクラウドにアクセスして管理するために必要なもの全てを1つのウェブインターフェースに集結。
 
 
-#### AWS Organizations
+### AWS Organizations
 複数のAWSアカウントを効果的に組織化、管理するためのサービス。
 
 AWS Organizationsを使用することで、複数のAWSアカウントを一元的に制御し、セキュリティの向上やリソースの共有などができる。
 
 
-#### AWS Service Catalog
+### AWS Service Catalog
 ガバナンスとアジリティの両立。
 
 * `ポートフォリオ`：
 
 
-#### AWS Systems Manager
+### AWS Systems Manager
 `AWS Systems Manager Inventory`で、EC2インスタンス内のOSやソフトウェアなどを収集して一覧化できる。
 
 内部的には`npm -qa`などのOS系パッケージ取得コマンドを使用しているとのこと。
@@ -312,16 +310,16 @@ AWS Organizationsを使用することで、複数のAWSアカウントを一元
 * `Shell Profile`：
 
 
-#### AWS Trusted Advisor
+### AWS Trusted Advisor
 AWSの適切な利用をサジェストするツール。例えば、使用率が高いEC2インスタンスを全て検出するなどができる。
 
 セキュリティ、コストなどのベストプラクティスに準拠してるかをチェックできる。
 
 
 
-### 移行と転送
+## 移行と転送
 
-#### AWS DataSync
+### AWS DataSync
 例えば、S3内の大量のオブジェクトをコピーしたりできる。クロスアカウントでも可能。
 
 CFnでも構築が可能。
@@ -330,19 +328,19 @@ CFnでも構築が可能。
 * `タスク`：コピーの仕方などを定義
 
 
-#### AWS Transfer Family
+### AWS Transfer Family
 シンプルで安全かつスケーラブルなファイル転送により、データの管理と共有を容易に実現。
 
 
-### ネットワークとコンテンツ配信
+## ネットワークとコンテンツ配信
 
-#### Amazon CloudFront
+### Amazon CloudFront
 CDNサービス。キャッシュサービス。
 
 - `エッジロケーション`：コンテンツ配信を行うための拠点となる設備。CloudFrontの拠点
 
 
-#### Elastic Load Balancing (ELB)
+### Elastic Load Balancing (ELB)
 ハードウェアの制約を受けず、自動的にスケーリングする。CloudWatch、Route53、AWS Auto Scalingなどと連携できる。
 
 * `ALB`：レイヤー7（アプリケーション層）で動作するロードバランサー。HTTP、HTTPSに対応
@@ -355,13 +353,13 @@ CDNサービス。キャッシュサービス。
 * `Pre-warming（暖機運転）`：ELBを事前にスケールさせておく操作のこと
 
 
-#### AWS Global Accelerator
+### AWS Global Accelerator
 AWSグローバルネットワークを使用して、アプリケーションの可用性、パフォーマンス、セキュリティを向上する。
 
 ALB、NLB、EC2インスタンス、EIPなどのアプリケーションエンドポイントへの固定エントリポイントとして機能する2つのグローバル静的パブリックIPを提供。
 
 
-#### Amazon Route 53
+### Amazon Route 53
 ドメインネームシステムを提供するサービス。唯一`100%`のSLAを保証。
 
 AWSの各サービス間連携は、DNSホスト名（FQDN）を使うことで拡張性や運用性が高まる。
@@ -369,13 +367,13 @@ AWSの各サービス間連携は、DNSホスト名（FQDN）を使うことで�
 ドメインレジストラやフォールトトレラントアーキテクチャ（DNSフェイルオーバー）の役割も果たす。
 
 
-#### AWS Transit Gateway
+### AWS Transit Gateway
 VPC、AWSアカウント、オンプレミスネットワークを単一のゲートウェイに接続できる。
 
 ネットワークが簡素化され、シンプルな構成にできる。
 
 
-#### Amazon VPC
+### Amazon VPC
 AWS上にプライベートネットワーク空間を提供するサービス。ハードウェアや配線を意識せずに簡単にプライベートネットワークを構築できる。
 
 オンプレのデータセンターとも、AWS Direct Connectで接続できる。大事なリソースは、プライベートサブネット内に配置し、NATゲートウェイでアウトバウンドのアクセスのみ可能にして必要に応じてアクセスするようにする。
@@ -401,16 +399,16 @@ AWS上にプライベートネットワーク空間を提供するサービス�
 * `AWS PrivateLink for Amazon S3`：
 
 
-#### AWS VPN
+### AWS VPN
 オンプレミスのネットワークとリモートワーカーをクラウドに接続する。
 
 * `AWS Client VPN`：フルマネージド型で伸縮自在なVPNサービス
 * `AWS Site-to-Site VPN`：データセンターまたは支社とAWSクラウドリソース間の安全な接続を作成
 
 
-### セキュリティ、アイデンティティ、コンプライアンス
+## セキュリティ、アイデンティティ、コンプライアンス
 
-#### AWS Certificate Manager (ACM)
+### AWS Certificate Manager (ACM)
 SSL/TLS証明書を管理するためのサービス。例えば、独自ドメインで自作アプリにアクセスさせたい場合などに出番となる。
 
 DNSレコードで証明書をAWSに検証してもらう。
@@ -422,27 +420,27 @@ ACMで証明書が発行されるリージョンは、スタックを作成し�
 Route53管理のドメインを設定した証明書を発行した場合は、自動的にDNSレコードが作成されて検証済みになるので楽。
 
 
-#### Amazon Detective
+### Amazon Detective
 セキュリティに関する検出結果や疑わしいアクティビティの根本原因を分析、調査、および迅速に特定できる。
 
 ログデータを自動的に収集し、機械学習、統計分析、グラフ理論を使用して分析。
 
 
-#### AWS Directory Service
+### AWS Directory Service
 フルマネージドのMS ADサービス。
 
 
-#### AWS Firewall Manager
+### AWS Firewall Manager
 アカウント全体のファイアウォールルールを一元的に構成および管理できる。Organization内のアカウントをまたぐことも可能。
 
 
-#### Amazon GuardDuty
+### Amazon GuardDuty
 マネージド型脅威検出サービス。ログを自動的に収集し、機械学習などで怪しい動きを検知し、継続的に分析する。調査結果には推奨される修復手順も記載される。
 
 `PCI DSS`の対応としても、「侵入検知要件」達成のために用いることが可能。
 
 
-#### AWS Identity and Access Management (IAM)
+### AWS Identity and Access Management (IAM)
 ユーザーとユーザー権限を集中管理でき、MicrosoftのADとも統合できる。
 
 `最小権限の原則`が大事。
@@ -467,38 +465,38 @@ IAMのベストプラクティスは以下。
 :::
 
 
-#### AWS Identity and Access Management Access Analyzer
+### AWS Identity and Access Management Access Analyzer
 
 必要以上の権限が付与されていないかを確認可能。
 
 外部アクセスできるリソースが一覧化されたり、未使用リソースが一覧化されたりする。
 
 
-#### Amazon Inspector
+### Amazon Inspector
 自動的にアプリケーションを評価し、脆弱性やベストプラクティスからの逸脱がないかを確認。
 
 PCI DSS 3.0のアセスメントのために用いることも可能。
 
 
-#### AWS Key Management Service (AWS KMS)
+### AWS Key Management Service (AWS KMS)
 暗号化キーの管理サービス。KMSキーは、AWSのサービスやアプリケーションで使用されるデータの暗号化やデジタル署名に使用される。
 
 
-#### AWS Secrets Manager
+### AWS Secrets Manager
 SSMのParameter Storeとの違いは、有料な代わりにローテーション機能があるという点。
 
 
-#### AWS Security Hub
+### AWS Security Hub
 AWSのセキュリティチェックの自動化とセキュリティアラートの一元化。セキュリティのベストプラクティスのチェックを行い、アラートを集約し、自動集約を可能にする。
 
 
-#### AWS Shield
+### AWS Shield
 マネージド型の分散サービス妨害（DDoS）に対する保護サービス。AWSで実行されているウェブアプリケーションを保護。
 
 StandardとAdvancedの二つのレベルがあり、後者は有料。
 
 
-#### AWS WAF
+### AWS WAF
 マネージド型のウェブアプリケーションファイアウォールサービス。アプリの可用性低下、セキュリティの侵害、リソースの過剰消費などのウェブの脆弱性から保護。
 
 データの中身をアプリケーションレベルで解析可能で、ISMSやPCI DSSへの準拠へも寄与できる。
@@ -506,16 +504,16 @@ StandardとAdvancedの二つのレベルがあり、後者は有料。
 基本利用料は無料だが、WAF定義によって課金が発生する。
 
 
-### ストレージ
+## ストレージ
 
-#### AWS Backup
+### AWS Backup
 AWSの各種サービスを横断的に、バックアップの集中管理および自動化が可能。
 
 * `バックアップボールト`：
 * `バックアッププラン`：
 
 
-#### Amazon Elastic Block Store (Amazon EBS)
+### Amazon Elastic Block Store (Amazon EBS)
 EC2のインスタンスから利用するブロックレベルのストレージ。外付けディスクみたいなもんで、EC2インスタンスと同じアベイラベリティゾーンにアタッチして使用。
 
 永続性があるので、長期的に持続するアクセスを提供するのに使う。スナップショットも対応。
@@ -531,7 +529,7 @@ EC2のインスタンスから利用するブロックレベルのストレー�
   - `コールドHDD`：低スループットかつ安価
   - `マグネティック`：旧世代
 
-#### Amazon Elastic File System (Amazon EFS)
+### Amazon Elastic File System (Amazon EFS)
 
 フルマネージドサービス。スケーラブルなファイルストレージ。自動的に容量を拡張できる。共有ストレージなので、複数インスタンスからアクセス可能。
 
@@ -539,7 +537,7 @@ EC2のインスタンスから利用するブロックレベルのストレー�
 - `最大I/Oモード`：スループット重視
 
 
-#### Amazon FSx
+### Amazon FSx
 数回クリックするだけで、機能が豊富でパフォーマンスの高いファイルシステムを起動、実行可能。
 
 信頼性、セキュリティ、スケーラビリティ、幅広い機能を備え、さまざまなワークロードをサポート。
@@ -549,7 +547,7 @@ NetApp ONTAP、OpenZFS、ファイルサーバー、Lustreの4つのファイル
 for Windowsは、WindowsのSMBプロトコルに対応している。
 
 
-#### Amazon S3
+### Amazon S3
 高耐久・大容量のオブジェクトストレージサービス。AZのアベイラビリティと高い耐久性を持つ。
 
 アクセスコントロールの選択肢としては、オブジェクトACL、バケットACL、バケットポリシー、IAMポリシーがある。
@@ -568,7 +566,7 @@ for Windowsは、WindowsのSMBプロトコルに対応している。
   - `1ゾーンー低頻度アクセス`：耐久性が低い代わりに安い
   - `Intelligent-Tiering`：オブジェクトへのアクセス頻度に応じてコスト最適に自動的使い分け
 
-#### Amazon S3 Glacier
+### Amazon S3 Glacier
 氷河の名前を冠したデータの長期保存向けのサービス。S3の5分の1のコストですむ。
 
 あまり使わないファイルを入れておく。
@@ -576,5 +574,5 @@ for Windowsは、WindowsのSMBプロトコルに対応している。
 S3にファイルが復元された時、イベントでメールで通知を送信することができる。
  
 
-#### AWS Storage Gateway
+### AWS Storage Gateway
 オンプレミスアプリケーションに、事実上無制限のクラウドストレージへのアクセスを提供する。
