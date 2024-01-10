@@ -4,7 +4,6 @@ titleTemplate: :title
 
 <script setup>
 import { data as posts } from '../.vitepress/theme/components/posts.data.mjs'
-import TopPage from '../.vitepress/theme/components/TopPage.vue'
 
 const tagSet = new Set() // タグを格納するためのセット
 
@@ -41,6 +40,13 @@ posts.forEach((data) => {
   max-width: 100%;
   height: auto;
   border-radius: 4px;
+  mix-blend-mode: var(--mix-brend-mode);
+  transition: .5s; 
+}
+
+.thumbnail:hover {
+  mix-blend-mode: normal;
+ 
 }
 
 .title {
@@ -51,7 +57,6 @@ posts.forEach((data) => {
   border: none;
 }
 
-/* メディアクエリを追加してスマホ用のスタイルを適用 */
 @media (max-width: 767px) {
   .article-card-container {
     flex-direction: column;
