@@ -28,7 +28,7 @@ const { frontmatter, page } = useData()
   font-size: 120%;
   position: relative;
   top: 0.2rem;
-  margin-right: 0.2rem;
+  margin-right: 0.1rem;
 }
 
 .last-updated::before{
@@ -37,13 +37,13 @@ const { frontmatter, page } = useData()
   font-size: 120%;
   position: relative;
   top: 0.2rem;
-  margin-right: 0.2rem;
+  margin-right: 0.1rem;
 }
 
 .created, .last-updated {
   font-size: 90%;
   white-space: nowrap;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
 }
 
 .post-title {
