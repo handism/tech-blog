@@ -30,8 +30,8 @@ SOAの試験内容は以下の通りとのこと。
 ```
 
 ::: tip
-* `Lambda`は大体不正解
 * `Aurora`は大体正解
+* `Lambda`は大体不正解
 :::
 
 
@@ -46,7 +46,9 @@ https://d1.awsstatic.com/ja_JP/training-and-certification/docs-sysops-associate/
 ## 分析
 
 ### Amazon OpenSearch Service
-- OpenSearchとは、ElasticsearchとKibanaの最後のALv2バージョンからフォークを作成したもの。Amazonだけじゃなく、いろんな企業や個人が参画して更新し続けている
+OpenSearchとは、ElasticsearchとKibanaの最後のALv2バージョンからフォークを作成したもの。Amazonだけじゃなく、いろんな企業や個人が参画して更新し続けている
+
+- `Amazon OpenSearch Service`
   - マネージドのため構築・管理コストは低い
   - ユーザー管理はIAMで行う、もしくはOpenSearch側で独自のユーザー管理も可
   - このサービス自体のログ、セキュリティ、バックアップなどが考慮不要
@@ -56,7 +58,8 @@ https://d1.awsstatic.com/ja_JP/training-and-certification/docs-sysops-associate/
   - インスタンス時間、ストレージの量、転送されるデータで課金される
     - 自動スナップショットは無料
     - 開発環境ではt3.small.search、本番環境ではt3.medium.searchが良さそう。大体毎月6,351円くらい？
-- Amazon OpenSearch Serverless
+
+- `Amazon OpenSearch Serverless`
   - Serviceの方と比べて以下の運用タスクを削減可能
     - データライフサイクルの管理
     - バージョンアップグレード、ソフトウェアアップデート
@@ -75,8 +78,8 @@ https://d1.awsstatic.com/ja_JP/training-and-certification/docs-sysops-associate/
 
 * `EventBridge Scheduler`：
   * `スケジュールグループ`：
-* SDKで`createSchedule`を呼び出せば、アプリ側で動的にスケジュールを設定できそう
-* フレックスタイムウインドウをONにすると処理を分散できて便利
+  * SDKで`createSchedule`を呼び出せば、アプリ側で動的にスケジュールを設定できそう
+  * フレックスタイムウインドウをONにすると処理を分散できて便利
 
 ### Amazon Simple Notification Service (Amazon SNS)
 プッシュ型のメッセージングサービス。
@@ -89,9 +92,8 @@ https://d1.awsstatic.com/ja_JP/training-and-certification/docs-sysops-associate/
 
 SQSを挟んだ非同期のアプリケーションは、疎結合になる。SQSの代わりにELBを挟んで水平方向のスケーリングをするのも良い。
 
-- `Standard`：順番を保証しない。
-- `FIFO`：二重配信の排除も順番も保証
-
+- `Standard`：順番を保証しない
+- `FIFO`：二重配信の排除、順番の保証
 - `可視性タイムアウト`：重複を防ぐ
 - `遅延キュー`：時間整合性を保つ
 - `デッドレターキュー`：問題のあるメッセージを隔離する
@@ -115,13 +117,18 @@ AWSのコストと使用料を経時的に可視化、把握、管理できる�
 
 1年または3年の時間単位で利用する条件となる。
 
-対象は3種類。Compute Saving Plans、EC2 Instance Saving Plans、SageMaker Saving Plans。
+対象は3種類。
+
+* `Compute Saving Plans`
+* `EC2 Instance Saving Plans`
+* `SageMaker Saving Plans`
 
 
 ## コンピューティング
 
 ### AWS Auto Scaling
-スケーリングクールダウン：オートスケーリングが連続実行されないように設定する待ち時間。デフォルトは300秒。
+
+* `スケーリングクールダウン`：オートスケーリングが連続実行されないように設定する待ち時間。デフォルトは300秒
 
 
 ### Amazon EC2
@@ -146,7 +153,7 @@ AWSのコストと使用料を経時的に可視化、把握、管理できる�
   * `shutting-down`：インスタンス削除準備中の状態
   * `terminated（終了済み）`：インスタンスが完全に削除されているため再開不可。時間経過で勝手にリストから消える
 * `ユーザーデータ`：インスタンスの初回起動時に一回だけスクリプトを実行できる機能。例えば`yam`などで必要なアプリをインストールしたりできる
-  * 再起動しても再実行はされない
+  * インスタンスを再起動してもユーザーデータの再実行はされない
 
 
 ### Amazon EC2 Auto Scaling
