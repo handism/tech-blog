@@ -15,7 +15,7 @@ pip install ~~
 
 ### Pythonの実行
 
-拡張子を「xxx.py」にして保存し、コンソールから「`python3 xxx.py`」で実行
+拡張子を「`xxx.py`」にして保存し、コンソールから「`python3 xxx.py`」で実行
 
 
 ### .pyを定期実行する
