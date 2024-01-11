@@ -1,6 +1,6 @@
 ---
 title: インフラ管理のコツ・ポイントを考える
-date: 2023-12-30
+date: 2023-12-14
 tags: [Infrastructure]
 image: cloud-image.webp
 ---
