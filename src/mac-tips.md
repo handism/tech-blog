@@ -90,6 +90,7 @@ image: falling-apples.webp
   - http://hseisyu.blogspot.jp/2010/10/linux-mac-finder.html
   - ↑を参考に。
   - 最後に自動でターミナルを終了させたい場合は`killall Terminal`
+- 仮想デスクトップを活用する
 
 
 ## よく使うショートカット
@@ -109,8 +110,12 @@ image: falling-apples.webp
 - ウィンドウ全画面化：`command + control + f`
 - safariタブ切り替え：`control + Tab` または `command + shift + 矢印`
 - 戻る：`command + 矢印`　または　`２本指横スワイプ`
-- `地球儀キー ＋ F`：アプリのフルスクリーンモード切り替え
-- `地球儀キー ＋ H`：デスクトップを表示
+- アプリのフルスクリーンモード切り替え：`地球儀キー ＋ F`
+- ファイル削除：`Command + Delete`
+- デスクトップを表示：`地球儀キー ＋ H`
+- 隠しファイルの表示非表示切り替え：`Command + Shift`
+- 切り取り：貼り付けるときに`Command + Option + V`
+- リンゴマークを出す：`Option + Shift + K`
 - 変換
     - `F6`：ひらがな
     - `F7`：カタカナ
