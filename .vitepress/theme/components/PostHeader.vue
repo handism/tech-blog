@@ -6,6 +6,7 @@ const { frontmatter, page } = useData()
 
 <template>
   <div class="l-post-header">
+    <time v-if="frontmatter.tags" class="created">{{ new Date(frontmatter.date).toLocaleDateString("ja-JP", {year: "numeric",month: "2-digit", day: "2-digit"}) }}</time>
     <time v-if="frontmatter.tags" class="last-updated">{{ new Date(page.lastUpdated).toLocaleDateString("ja-JP", {year: "numeric",month: "2-digit", day: "2-digit"}) }}</time>
     <h1 v-if="frontmatter.tags" class="post-title">{{ frontmatter.title }}</h1>   
     <span v-for="tag in frontmatter.tags" class="tags">
@@ -21,10 +22,28 @@ const { frontmatter, page } = useData()
   padding: 0;
 }
 
-.last-updated {
-  font-size: 85%;
+.created::before{
+  font-family: "Material Icons";
+  content: "\e8b5";
+  font-size: 120%;
+  position: relative;
+  top: 0.2rem;
+  margin-right: 0.2rem;
+}
+
+.last-updated::before{
+  font-family: "Material Icons";
+  content: "\e923";
+  font-size: 120%;
+  position: relative;
+  top: 0.2rem;
+  margin-right: 0.2rem;
+}
+
+.created, .last-updated {
+  font-size: 90%;
   white-space: nowrap;
-  margin-left: 0.2rem;
+  margin-right: 1rem;
 }
 
 .post-title {
