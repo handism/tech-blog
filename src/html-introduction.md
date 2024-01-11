@@ -1,5 +1,6 @@
 ---
 title: HTMLに入門する
+date: 2024-01-10
 tags: [HTML]
 image: many-monitors.webp
 ---

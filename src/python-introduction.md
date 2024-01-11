@@ -1,5 +1,6 @@
 ---
 title: Pythonに入門する
+date: 2024-01-09
 tags: [Python]
 image: python-character.webp
 ---

@@ -1,5 +1,6 @@
 ---
 title: VitePressで作ったブログをVuetifyでカスタマイズする
+date: 2023-12-30
 tags: [Vue, VitePress, Frontend]
 image: many-ui.webp
 ---

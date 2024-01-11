@@ -1,5 +1,6 @@
 ---
 title: 過去にGatsbyで作成したブログを手直しする
+date: 2023-12-30
 tags: [Gatsby, Blog, Frontend]
 image: gatsby-food.webp
 ---

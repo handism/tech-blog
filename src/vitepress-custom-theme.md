@@ -1,5 +1,6 @@
 ---
 title: VitePressのカスタムテーマを自作する
+date: 2023-12-30
 tags: [Frontend, Vue, VitePress, Blog]
 image: man-with-pc.webp
 ---

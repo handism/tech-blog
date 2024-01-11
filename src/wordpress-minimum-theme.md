@@ -1,5 +1,6 @@
 ---
 title: WordPressの最小構成のブログテーマを自作する
+date: 2024-01-09
 tags: [WordPress, Blog, PHP, Frontend]
 image: many-letters.webp
 ---

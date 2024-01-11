@@ -1,5 +1,6 @@
 ---
 title: Vue.jsに入門してみる
+date: 2023-12-30
 tags: [Vue, Frontend]
 image: new-start.webp
 ---

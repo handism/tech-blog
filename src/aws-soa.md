@@ -1,5 +1,6 @@
 ---
 title: AWS Certified SysOps Administrator - Associateの対策
+date: 2024-01-08
 tags: [AWS, Infrastructure]
 image: cloud-fantasy.webp
 ---

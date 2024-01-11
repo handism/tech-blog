@@ -1,5 +1,6 @@
 ---
 title: Macのセットアップ時の設定メモ
+date: 2024-01-10
 tags: [Mac]
 image: falling-apples.webp
 ---

@@ -1,5 +1,6 @@
 ---
 title: CSS3に入門する
+date: 2024-01-10
 tags: [CSS]
 image: cascade-image.webp
 ---

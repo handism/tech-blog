@@ -1,5 +1,6 @@
 ---
 title: 個人的によく使うGitのコマンド集
+date: 2023-12-30
 tags: [Git]
 image: git-image.webp
 ---
