@@ -4,7 +4,7 @@ tags: [Linux, Mac]
 image: laptop-pc.webp
 ---
 
-## よく使うLinuxコマンド
+## Linuxコマンドの文法
 
 - ｜：標準入力を渡す
 - ；：続けて実行
@@ -13,6 +13,9 @@ image: laptop-pc.webp
 - >：標準出力をfileに書き込む
 - >>：追加書き込みで書き込む
 - <：fileの内容をcmdの標準入力で使用
+
+
+## よく使うLinuxコマンド
 
 - top：負荷の高いプロセスを表示
 - ps：色々表示
