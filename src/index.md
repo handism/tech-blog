@@ -72,7 +72,7 @@ posts.forEach((data) => {
 <div class="post-card-container">
 <template v-for="post of posts">
     <a :href=post.url class="post-card">
-      <img :src="post.frontmatter.image" alt="Post Thumbnail" class="thumbnail" loading="lazy"/>
+      <img :src="post.frontmatter.image" alt="Post Thumbnail" class="thumbnail"/>
       <h2 class="post-title">{{ post.frontmatter.title }}</h2>
     </a>
 </template>

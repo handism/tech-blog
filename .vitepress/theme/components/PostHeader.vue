@@ -12,7 +12,7 @@ const { frontmatter, page } = useData()
     <span v-for="tag in frontmatter.tags" class="tags">
       <a :href="`/tag/${tag.toLowerCase().replace(' ', '-')}`" class="tag">{{ "# " + tag }}</a>
     </span>
-    <img v-if="frontmatter.image" :src="frontmatter.image" class="thumbnail" alt="ブログのサムネイル画像" loading="lazy">
+    <img v-if="frontmatter.image" :src="frontmatter.image" class="thumbnail" alt="ブログのサムネイル画像">
   </div>
 </template>
 
