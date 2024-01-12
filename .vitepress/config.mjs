@@ -7,7 +7,7 @@ export default defineConfig({
   lang: "ja-JP",
   cleanUrls: true,
   srcDir: "./src",
-  srcExclude: ["**/README.md", "**/TODO.md", "draft/*.md"],
+  srcExclude: ["**/README.md", "draft/*.md", "template/*.md"],
   markdown: {
     image: {
       // image lazy loading is disabled by default
