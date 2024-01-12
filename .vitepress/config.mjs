@@ -8,6 +8,12 @@ export default defineConfig({
   cleanUrls: true,
   srcDir: "./src",
   srcExclude: ["**/README.md", "**/TODO.md", "draft/*.md"],
+  markdown: {
+    image: {
+      // image lazy loading is disabled by default
+      lazyLoading: true
+    }
+  },
   head: [
           ["link", {rel: "icon", href: "/favicon.ico"}],
           ["link", {rel: "preconnect", href: "https://fonts.googleapis.com"}],

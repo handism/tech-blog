@@ -1,6 +1,6 @@
 ---
 title: Spring BootでDocker上にAPIサーバーを構築する
-date: 2023-12-13
+date: 2023-12-03
 tags: [Backend, Spring Boot, Kotlin]
 image: spring-boot-image.webp
 ---

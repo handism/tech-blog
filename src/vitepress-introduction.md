@@ -1,6 +1,6 @@
 ---
 title: VitePress + GitHub Actions + GitHub Pagesでブログを自作する
-date: 2023-11-27
+date: 2023-11-26
 tags: [Frontend, Vue, VitePress, Blog]
 image: blog-image.webp
 ---
