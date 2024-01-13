@@ -26,7 +26,9 @@ export default defineConfig({
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-MSJLEN90KY');`
-          ]
+          ],
+          ["meta", { property: "og:image", content: "https://handism.github.io/cloud-fantasy.webp" }],
+          ["meta", { property: "og:site_name", content: "Handism's Tech Blog" }]
         ],
   lastUpdated: true,
   sitemap: {hostname: "https://handism.github.io"},
