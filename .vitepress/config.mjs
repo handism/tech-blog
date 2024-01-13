@@ -44,7 +44,7 @@ export default defineConfig({
   async transformHead(context) {
     return [
       ["meta", { property: "og:title", content: context.pageData.title }],
-      ["meta", { property: "og:image", content: `https://handism.github.io/${context.pageData.frontmatter.image ? context.pageData.frontmatter.image : "cloud-fantasy.webp"}`}]
+      ["meta", { property: "og:image", content: `https://handism.github.io/${context.pageData.frontmatter.image ? context.pageData.frontmatter.image : "site-image.webp"}`}]
     ]
   }
 
