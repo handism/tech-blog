@@ -1,4 +1,4 @@
-# ブログサイト向けVitePressテーマ「Hekireki」
+# ブログサイト向けVitePressテーマ「hekireki」
 
 ## 特徴
 
@@ -8,7 +8,7 @@
 * ブログ運営に手間をかけさせない
 * URLは`/[mdファイル名]`の形式、タグページは`/tag/[タグ名]`の形式
 * OS設定に基づいたダークモード、レスポンシブレイアウトに対応済み
-* Windows 11、iPhone、Androidでの動作確認済み
+* Windows 11、Mac、iPhone、Androidでの動作確認済み
 
 
 ## 仕様
