@@ -1,4 +1,4 @@
-# ブログサイト向けVitePressテーマ「Simpla」
+# ブログサイト向けVitePressテーマ「Hekireki」
 
 ## 特徴
 

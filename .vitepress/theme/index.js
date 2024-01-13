@@ -1,8 +1,8 @@
-import SimplaLayout from './SimplaLayout.vue'
+import Hekireki from './Hekireki.vue'
 import './style.css'
 
 export default {
-  Layout: SimplaLayout,
+  Layout: Hekireki,
   enhanceApp({ app, router, siteData }) {
   }
 }
