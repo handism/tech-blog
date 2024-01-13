@@ -40,5 +40,14 @@ export default defineConfig({
       {text: "Sitemap", link: "/sitemap"},
       {text: "GitHub", link: "https://github.com/handism"}
     ]
+  },
+
+  async transformHead(context) {
+    return [
+      ["meta", { property: "og:title", content: context.pageData.title }],
+      ["meta", { property: "og:url", content: `https://handism.github.io/${context.pageData.filePath}`}],
+      ["meta", { property: "og:image", content: `https://handism.github.io/${context.pageData.frontmatter.image}`}]
+    ]
   }
+
 })
