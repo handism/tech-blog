@@ -27,7 +27,6 @@ export default defineConfig({
             gtag('js', new Date());
             gtag('config', 'G-MSJLEN90KY');`
           ],
-          ["meta", { property: "og:image", content: "https://handism.github.io/cloud-fantasy.webp" }],
           ["meta", { property: "og:site_name", content: "Handism's Tech Blog" }]
         ],
   lastUpdated: true,
@@ -45,8 +44,7 @@ export default defineConfig({
   async transformHead(context) {
     return [
       ["meta", { property: "og:title", content: context.pageData.title }],
-      ["meta", { property: "og:url", content: `https://handism.github.io/${context.pageData.filePath}`}],
-      ["meta", { property: "og:image", content: `https://handism.github.io/${context.pageData.frontmatter.image}`}]
+      ["meta", { property: "og:image", content: `https://handism.github.io/${context.pageData.frontmatter.image ? context.pageData.frontmatter.image : "cloud-fantasy.webp"}`}]
     ]
   }
 
