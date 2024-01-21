@@ -138,6 +138,7 @@ npm install [プラグイン名]
 * @fortawesome/react-fontawesome
 * react-share
 * gatsby-plugin-image
+* gatsby-plugin-manifest
 
 
 ### Reactについて
