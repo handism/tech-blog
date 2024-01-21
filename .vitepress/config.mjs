@@ -9,10 +9,7 @@ export default defineConfig({
   srcDir: "./src",
   srcExclude: ["**/README.md", "draft/*.md", "template/*.md"],
   markdown: {
-    image: {
-      // image lazy loading is disabled by default
-      lazyLoading: true
-    }
+    image: {lazyLoading: true}
   },
   head: [
           ["link", {rel: "icon", href: "/favicon.ico"}],
