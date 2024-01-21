@@ -36,6 +36,12 @@ image: git-image.webp
     - リモートリポジトリに反映：`git push origin [ブランチ名]`
 
 
+
+## その他Tips
+
+* GitHubリポジトリの命名規則は特になさそう。しいて言えば**ケバブケース**が多いかも
+
+
 ::: tip
 Commit時に`Untracked files:`が出た時は`git clean -f`。
 :::
