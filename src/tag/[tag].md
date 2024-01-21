@@ -4,7 +4,7 @@ title: タグアーカイブ
 
 <script setup>
 import { data as posts } from '../../.vitepress/theme/components/posts.data.mjs'
-import { useData } from "vitepress"
+import { withBase, useData } from "vitepress"
 const { params } = useData()
 const tag = params.value.tag
 </script>
@@ -13,7 +13,7 @@ const tag = params.value.tag
 <ul>
     <template v-for="post of posts">
         <li v-if="post.frontmatter.tags && post.frontmatter.tags.some(t => t.toLowerCase().replace(' ', '-') == tag)">
-            <a :href="post.url">{{ post.frontmatter.title }}</a>
+            <a :href="withBase(post.url)">{{ post.frontmatter.title }}</a>
         </li>
     </template>
 </ul>
