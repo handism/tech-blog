@@ -4,6 +4,7 @@ title: サイトマップ
 
 <script setup>
 import { data as posts } from '../.vitepress/theme/components/posts.data.mjs'
+import { withBase } from 'vitepress'
 
 const tagSet = new Set() // タグを格納するためのセット
 const tagCount = {}; // タグの個数をカウントするオブジェクト
@@ -24,7 +25,7 @@ posts.forEach((data) => {
 
 <ul>
   <li v-for="post of posts">
-    <a :href="post.url">{{ post.frontmatter.title }}</a>
+    <a :href="withBase(post.url)">{{ post.frontmatter.title }}</a>
   </li>
 </ul>
 
@@ -33,6 +34,6 @@ posts.forEach((data) => {
 
 <ul>
   <li v-for="tag of Array.from(tagSet)">
-    <a :href="'/tag/' + tag.toLowerCase().replace(' ', '-')">{{ tag }} ({{ tagCount[tag] }})</a>
+    <a :href="withBase(`/tag/${tag.toLowerCase().replace(' ', '-')}`)">{{ tag }} ({{ tagCount[tag] }})</a>
   </li>
 </ul>
