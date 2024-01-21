@@ -3,8 +3,8 @@ title: サイトマップ
 ---
 
 <script setup>
-import { data as posts } from '../.vitepress/theme/components/posts.data.mjs'
-import { withBase } from 'vitepress'
+import { data as posts } from "../.vitepress/theme/components/posts.data.mjs"
+import { withBase } from "vitepress"
 
 const tagSet = new Set() // タグを格納するためのセット
 const tagCount = {}; // タグの個数をカウントするオブジェクト

@@ -3,7 +3,7 @@ title: タグアーカイブ
 ---
 
 <script setup>
-import { data as posts } from '../../.vitepress/theme/components/posts.data.mjs'
+import { data as posts } from "../../.vitepress/theme/components/posts.data.mjs"
 import { withBase, useData } from "vitepress"
 const { params } = useData()
 const tag = params.value.tag

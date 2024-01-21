@@ -1,18 +1,18 @@
 <script setup>
-import { useData } from "vitepress"
+import { useData, withBase } from "vitepress"
 
 const { theme } = useData()
 </script>
 
 <template>
   <header class="l-header">
-    <h1 class="site-title"><a href="/">{{ theme.siteTitle }}</a></h1>
+    <h1 class="site-title"><a :href="withBase('/')">{{ theme.siteTitle }}</a></h1>
   </header>
 </template>
   
 <style scoped>
 .l-header {
-  background: var(--gradient-color);
+  background: var(--accent-color);
   padding: 1rem;
   text-align: center;
 }
@@ -23,4 +23,3 @@ const { theme } = useData()
   font-size: 75%;
 }
 </style>
-  
