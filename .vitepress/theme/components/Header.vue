@@ -12,7 +12,7 @@ const { theme } = useData()
   
 <style scoped>
 .l-header {
-  background: var(--accent-color);
+  background: var(--gradient-color);
   padding: 1rem;
   text-align: center;
 }
