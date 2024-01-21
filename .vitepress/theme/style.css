@@ -70,6 +70,12 @@ a:active {
   color: var(--accent-color);
 }
 
+.l-main img {
+  max-width: 95%;
+  margin: auto;
+  display: block;
+}
+
 strong {
   font-weight: bold;
 }
