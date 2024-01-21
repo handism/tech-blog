@@ -1,8 +1,8 @@
 ---
-title: 記事タイトル
+title: 記事ページタイトル
 date: YYYY-MM-DD
 tags: [tag1, tag2]
-image: thumbnail.webp
+image: site-image.webp
 ---
 
 ## H2

@@ -24,7 +24,7 @@ export default defineConfig({
             gtag('js', new Date());
             gtag('config', 'G-MSJLEN90KY');`
           ],
-          ["meta", { property: "og:site_name", content: "Handism's Tech Blog" }]
+          ["meta", {property: "og:site_name", content: "Handism's Tech Blog"}]
         ],
   lastUpdated: true,
   sitemap: {hostname: "https://handism.github.io"},

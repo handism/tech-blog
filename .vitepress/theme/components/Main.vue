@@ -7,7 +7,9 @@ import PostFooter from "./PostFooter.vue"
   <div class="l-main">
     <article>
       <PostHeader />
-      <Content />
+      <div class="l-content">
+        <Content />
+      </div>
       <PostFooter />
     </article>
   </div>
@@ -24,4 +26,3 @@ import PostFooter from "./PostFooter.vue"
   overflow-wrap: break-word;
 }
 </style>
-  
