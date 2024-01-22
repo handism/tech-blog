@@ -70,7 +70,7 @@ a:active {
   color: var(--accent-color);
 }
 
-.l-main img {
+.l-main img:not(.thumbnail) {
   max-width: 95%;
   margin: auto;
   display: block;
