@@ -340,3 +340,47 @@ WordPressのテンプレートタグが最終的にどんなタグに展開さ�
 この2ファイルをテーマ名を冠したフォルダに入れてzip化したら準備は完了。WordPressの管理画面にログインし、`外観 ＞ テーマ`から「新規追加」を押下後、「テーマのアップロード」ボタンで先ほどのzipファイルをアップロードすれば自作テーマのインストールできる。
 
 あとは、URLにアクセスして実際に表示してみながらHTMLやCSSを調整していく。`外観 ＞ テーマの編集` からHTMLやCSSを編集可能。
+
+
+## ⑤ WordPressの設定変更
+
+自分の行った設定は以下の通り。
+
+* WordPressやプラグインの最新化
+* 一般設定
+  * サイトのタイトル：入力
+  * キャッチフレーズ：入力
+  * WordPressアドレス(URL)：httpsに変える
+  * サイトアドレス(URL)：httpsに変える
+  * 日付形式：Y年n月j日
+  * 時刻形式：H:i
+* 表示設定
+  * ホームページの表示：最新の投稿
+  * 1ページに表示する最大投稿数：18件
+* メディア設定
+  * サムネイルのサイズ
+    * 幅：0
+    * 高さ：0
+  * 中サイズ
+    * 幅の上限：0
+    * 高さの上限：0
+  * 大サイズ
+    * 幅の上限：812
+    * 高さの上限：0
+* パーマリンク設定
+  * パーマリンク構造：投稿名
+
+
+## ⑥ プラグインのインストール
+
+個人的なお気に入りプラグインは以下の通り。
+
+* BackWPup
+* Contact Form 7
+* Customizer Export/Import
+* Media File Renamer: Rename Files (Manual, Auto, AI)
+* Safe SVG
+* SEO SIMPLE PACK
+* WP Multibyte Patch
+* WP Revisions Control
+* XML Sitemap & Google News
