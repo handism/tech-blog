@@ -111,7 +111,7 @@ IT系の未知の分野だと、動かしてみないとわからないな…っ
 
 ## 画像生成AIについて
 
-画像を生成してくれるAIについては、`Stable Diffusion`、`Midjourney`、`Adobe Firefly`を使用したことがある。品質は圧倒的にMidjourneyが良くて、手軽さや商用可かどうかで言えばAdobe Fireflyも使える。
+画像を生成してくれるAIについては、`Stable Diffusion`、`Midjourney`、`DALL-E3`、`Adobe Firefly`を使用したことがある。品質は圧倒的にMidjourneyが良くて、手軽さや商用可かどうかで言えばAdobe Fireflyも使える。
 
 以下に個人的な活用事例を記載していく。
 

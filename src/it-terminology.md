@@ -2,7 +2,7 @@
 title: IT用語集
 date: 2024-01-22
 tags: [IT]
-image: beautiful-nature.webp
+image: many-books.webp
 ---
 
 
