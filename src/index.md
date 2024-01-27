@@ -76,13 +76,13 @@ posts.forEach((data) => {
 
 日々の業務やプライベートで得た知識の備忘録として運用しています。
 
-## 記事一覧
+## 新着記事
 
 <div class="post-card-container">
-<template v-for="post of posts">
+  <template v-for="post of posts.splice(0, 9)">
     <a :href="withBase(post.url)" class="post-card">
       <img :src="post.frontmatter.image" alt="Post Thumbnail" class="thumbnail" width="2688" height="1536" />
       <h2 class="post-title">{{ post.frontmatter.title }}</h2>
     </a>
-</template>
+  </template>
 </div>
