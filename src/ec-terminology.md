@@ -18,6 +18,7 @@ image: ec-polar-bear.webp
 * `CC手順`: クレジットカードの処理手順。
 * `CDS（Credit Default Swap）`: 債務不履行リスクを取引する金融派生商品。
 * `BIN（Bank Identification Number）`: クレジットカード番号の最初の6桁で、発行銀行を特定する。
+* `MII（Major Industry Identifier）`：クレジットカード番号の最初の数字で、発行業種を示す識別子。
 * `CAFIS（Card Acceptance and Financial Information System）`: クレジットカードの受け入れと金融情報処理を統合したシステム。
 * `CAM（Card Authentication Method）`: カード認証の手法。
 * `CARDNET`: カード会員が利用可能な提携先のネットワーク。
@@ -48,3 +49,6 @@ image: ec-polar-bear.webp
 * `越境EC`: 国境を越えて取引が行われる電子商取引。
 * `AISAS`: 顧客行動のフレームワークで、Awareness（認知）、Interest（興味）、Search（検索）、Action（行動）、Share（共有）の頭文字。
 * `カスタマージャーニーマップ`: 顧客が商品やサービスを利用する過程を可視化した図。
+* `イシュア`：クレジットカードを発行する金融機関
+* `アクワイアラ`：クレジットカード取引を処理する機関やプロバイダ。
+* `DUKPT（Derived Unique Key Per Transaction）`：クレジットカード取引ごとに独自の暗号鍵を生成するキー管理手法。
