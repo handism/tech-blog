@@ -1,7 +1,7 @@
 ---
 title: 決済・EC用語集
 date: 2024-01-27
-tags: [ec]
+tags: [EC, Terminology]
 image: ec-polar-bear.webp
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: IT用語集
 date: 2024-01-22
-tags: [IT]
+tags: [IT, Terminology]
 image: many-books.webp
 ---
 
