@@ -349,5 +349,6 @@ OSの設定を参照した自動ダークモードを実装しているので、
 * 昔使っていたので再度`Font Awesome`を使用させていただこうと思ったらいつの間にか会員登録制になっていた
   * Googleが`Material Icons`を出してくれているのでそちらを使わせていただく
 * JavaScriptで、元の配列を変更せずに先頭の9要素だけを抽出したコピー配列を返すには`.toSpliced(9)`
+  * ただし、`Node.js`がバージョン18だとこの関数に対応していないため、GitHub Actionsで使用するNode.jsのバージョンを20にした
 * リンクは`withBase()`をかませるとVitePressが自動的にベースのパスを補ってくれて便利
   * こんな感じ→`:href="withBase(post.url)"`
