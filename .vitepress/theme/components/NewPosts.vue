@@ -1,7 +1,7 @@
 <script setup>
 import { withBase } from "vitepress"
 
-const props = defineProps(['posts'])
+const props = defineProps(["posts"])
 </script>
 
 <template>
