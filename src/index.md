@@ -15,4 +15,4 @@ import NewPosts from "../.vitepress/theme/components/NewPosts.vue"
 
 ## 新着記事
 
-<NewPosts :posts="posts" />
+<NewPosts :posts="posts.toSpliced(9)" />

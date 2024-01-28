@@ -8,7 +8,7 @@ const props = defineProps(['posts'])
 
 <template>
   <div class="post-card-container">
-    <template v-for="post of posts.splice(0, 9)">
+    <template v-for="post of posts">
       <a :href="withBase(post.url)" class="post-card">
         <img :src="post.frontmatter.image" alt="Post Thumbnail" class="thumbnail" width="2688" height="1536" />
         <h2 class="post-title">{{ post.frontmatter.title }}</h2>
