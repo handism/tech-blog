@@ -21,7 +21,7 @@ import NewPosts from "../.vitepress/theme/components/NewPosts.vue"
   transform: translate(-50%,-50%);
   margin: 0;
   padding: 0;
-  color: #e8eaed;
+  color: white;
   mix-blend-mode: overlay;
 }
 
