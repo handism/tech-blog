@@ -26,7 +26,7 @@ import NewPosts from "../.vitepress/theme/components/NewPosts.vue"
 
 .example img {
   width: 100%;
-  height: 200px;
+  height: 100px;
   mix-blend-mode: overlay;
   object-fit: cover;
 }
@@ -35,7 +35,7 @@ import NewPosts from "../.vitepress/theme/components/NewPosts.vue"
 
 <div class="example">
   <img src="./public/site-image.webp" />
-  <p>現役のインハウスエンジニアによる技術ブログ</p>	
+  <p>内製エンジニアの技術メモ</p>	
 </div>
 
 
