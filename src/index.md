@@ -35,7 +35,7 @@ import NewPosts from "../.vitepress/theme/components/NewPosts.vue"
 
 <div class="example">
   <img src="./public/site-image.webp" />
-  <p>内製エンジニアの技術メモ</p>	
+  <p>エンジニアの技術メモ</p>	
 </div>
 
 
