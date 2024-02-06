@@ -22,13 +22,14 @@ import NewPosts from "../.vitepress/theme/components/NewPosts.vue"
   margin: 0;
   padding: 0;
   color: #e8eaed;
+  mix-blend-mode: overlay;
 }
 
 .example img {
   width: 100%;
   height: 100px;
-  mix-blend-mode: multiply;
   object-fit: cover;
+  filter: brightness(50%);
 }
 </style>
 
