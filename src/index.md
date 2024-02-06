@@ -27,7 +27,7 @@ import NewPosts from "../.vitepress/theme/components/NewPosts.vue"
 .example img {
   width: 100%;
   height: 100px;
-  mix-blend-mode: overlay;
+  mix-blend-mode: multiply;
   object-fit: cover;
 }
 </style>
