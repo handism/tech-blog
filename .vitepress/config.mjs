@@ -31,9 +31,6 @@ export default defineConfig({
 
   themeConfig: {
     siteTitle: "Handism's Tech Blog",
-    search: {
-      provider: "local"
-    },
     footerNav: [
       {text: "About", link: "/about"},
       {text: "Sitemap", link: "/sitemap"},
