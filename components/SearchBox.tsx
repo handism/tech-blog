@@ -39,13 +39,14 @@ export default function SearchBox({ posts }: Props) {
         className="w-full border p-2 rounded"
       />
       <ul className="mt-2 space-y-1">
-        {(results.length ? results : posts).map((post) => (
-          <li key={post.slug}>
-            <a href={`/posts/${post.slug}`} className="hover:underline">
-              {post.title} <span className="text-sm text-gray-500">[{post.category}]</span>
-            </a>
-          </li>
-        ))}
+        {query &&
+          results.map((post) => (
+            <li key={post.slug}>
+              <a href={`/blog/posts/${post.slug}`} className="hover:underline">
+                {post.title} <span className="text-sm text-gray-500">[{post.category}]</span>
+              </a>
+            </li>
+          ))}
       </ul>
     </div>
   );
