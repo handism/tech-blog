@@ -14,7 +14,7 @@ export default function TagList({ posts }: Props) {
       {tags.map((tag) => (
         <Link
           key={tag}
-          href={`/blog/tags/${tag}`}
+          href={`/blog/tags/${encodeURIComponent(tag)}`}
           className="
               text-xs
               text-text/80
