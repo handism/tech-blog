@@ -34,7 +34,7 @@ export default function PostCard({ post }: { post: Post }) {
           <div className="flex flex-wrap gap-3 text-sm text-text/70 mb-3">
             {post.date && (
               <time dateTime={post.date.toISOString()}>
-                {post.date.toLocaleDateString('ja-JP')}
+                📅 {post.date.toLocaleDateString('ja-JP')}
               </time>
             )}
             <span>📁 {post.category}</span>
