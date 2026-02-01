@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
-import Sidebar from "@/components/Sidebar";
-import { TocItem } from "@/lib/posts";
+import { ReactNode } from 'react';
+import Sidebar from '@/components/Sidebar';
+import { TocItem } from '@/lib/posts';
 
 interface BlogLayoutProps {
   children: ReactNode;
@@ -17,7 +17,7 @@ export default function BlogLayout({ children, posts, toc, categories }: BlogLay
         <main className="md:w-2/3">{children}</main>
 
         {/* サイドバー */}
-        <aside className="md:w-1/3 md:sticky md:top-20 md:h-fit">
+        <aside className="md:w-1/3 md:sticky md:h-fit">
           {posts && <Sidebar posts={posts} toc={toc} categories={categories} />}
         </aside>
       </div>
