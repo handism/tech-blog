@@ -25,6 +25,7 @@ export default function TagList({ posts }: Props) {
               bg-bg
               hover:bg-border
               transition
+              tag-chip
             "
         >
           #{tag}

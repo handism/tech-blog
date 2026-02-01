@@ -235,3 +235,33 @@ article.prose pre[class*='language-']::before {
 article.prose pre {
   max-height: 70vh;
 }
+
+/* =======================
+   タグ（台形チップ）
+   ======================= */
+.tag-chip {
+  position: relative;
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+
+  color: var(--text);
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+
+  clip-path: polygon(0.4rem 0%, 100% 0%, calc(100% - 0.4rem) 100%, 0% 100%);
+
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.tag-chip:hover {
+  background-color: color-mix(in srgb, var(--card) 80%, var(--border));
+  border-color: var(--text);
+  transform: translateY(-1px);
+}

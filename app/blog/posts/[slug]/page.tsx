@@ -55,7 +55,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         <h1>{post.title}</h1>
 
         {/* メタ情報 */}
-        <div className="flex flex-wrap gap-4 text-sm text-text/70 not-prose mb-2">
+        <div className="flex flex-wrap gap-4 text-sm text-text/70 not-prose mb-0">
           {/* 投稿日時 */}
           {post.date && (
             <time dateTime={post.date.toISOString()}>
@@ -78,7 +78,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                 <Link
                   key={tag}
                   href={`/blog/tags/${tagToSlug(tag)}`}
-                  className="hover:underline text-accent"
+                  className="hover:underline text-accent tag-chip"
                 >
                   #{tag}
                 </Link>
