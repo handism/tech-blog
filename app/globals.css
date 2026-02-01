@@ -55,7 +55,8 @@ article.prose h3 {
 
 article.prose h4 {
   @apply text-base font-semibold mt-6 mb-2 scroll-mt-20;
-  color: var(--text);
+  padding-left: 0.5rem;
+  border-left: 2px solid var(--border);
 }
 
 article.prose p {

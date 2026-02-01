@@ -101,7 +101,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         )}
 
         {/* 記事本文 */}
-        <div dangerouslySetInnerHTML={{ __html: post.content }} />
+        <div className="mt-10 md:mt-14" dangerouslySetInnerHTML={{ __html: post.content }} />
       </article>
 
       {/* 前後の記事へのリンク */}
