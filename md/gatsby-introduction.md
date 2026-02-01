@@ -86,14 +86,14 @@ http://localhost:8000/
 以下でGraphiQLを起動可能。  
 http://localhost:8000/\_\_\_graphql
 
-> Tips
+> Tips  
 > Gatsby CLIを入れずにクイックに始めることも可能。
->
-> ```zsh
-> npm init gatsby
-> cd gatsby-blogsite
-> npm run develop
-> ```
+
+```zsh
+npm init gatsby
+cd gatsby-blogsite
+npm run develop
+```
 
 ## ⑤ コーディングを実施
 

@@ -135,9 +135,8 @@ public class DummyController {
 This is a dummy GET response
 ```
 
-::: tip
-ちなみに、実行をやめたい場合は`Ctrl + C`。
-:::
+> Tips  
+> ちなみに、実行をやめたい場合は`Ctrl + C`。
 
 ### プロジェクトのビルド
 
