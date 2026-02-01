@@ -7,23 +7,12 @@ export default function Footer() {
         </p>
         <div className="flex space-x-4">
           <a
-            href="https://twitter.com/yourhandle"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-text/80 hover:text-text transition"
-          >
-            Twitter
-          </a>
-          <a
             href="https://github.com/handism"
             target="_blank"
             rel="noopener noreferrer"
             className="text-text/80 hover:text-text transition"
           >
             GitHub
-          </a>
-          <a href="/privacy" className="text-text/80 hover:text-text transition">
-            Privacy
           </a>
         </div>
       </div>
