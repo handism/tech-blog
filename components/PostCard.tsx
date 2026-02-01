@@ -48,7 +48,7 @@ export default function PostCard({ post }: { post: Post }) {
                   key={tag}
                   href={`/blog/tags/${tagToSlug(tag)}`}
                   className="text-xs px-2 py-1 bg-secondary text-text rounded hover:bg-accent hover:text-background transition-colors"
-                  onClick={(e) => e.stopPropagation()}
+                  // onClick削除 ← ここを削除
                 >
                   #{tag}
                 </Link>
