@@ -2,6 +2,11 @@ import { getAllPosts } from '@/lib/posts-server';
 import PostCard from '@/components/PostCard';
 import BlogLayout from '@/components/BlogLayout';
 import Pagination from '@/components/Pagination';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'ホーム',
+};
 
 const POSTS_PER_PAGE = 10;
 

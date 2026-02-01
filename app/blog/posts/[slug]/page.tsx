@@ -5,6 +5,27 @@ import BlogLayout from '@/components/BlogLayout';
 import Link from 'next/link';
 import { tagToSlug } from '@/lib/utils';
 import Image from 'next/image';
+import type { Metadata } from 'next';
+
+type Props = {
+  params: Promise<{ slug: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPost(slug);
+
+  if (!post) {
+    return {
+      title: '記事が見つかりません',
+    };
+  }
+
+  return {
+    title: post.title,
+    description: post.plaintext?.slice(0, 160),
+  };
+}
 
 export async function generateStaticParams() {
   const posts = getAllPosts();

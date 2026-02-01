@@ -1,6 +1,11 @@
 import { getAllPosts } from '@/lib/posts-server';
 import BlogLayout from '@/components/BlogLayout';
 import Link from 'next/link';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Tools',
+};
 
 export default async function ToolsPage() {
   const posts = getAllPosts();
