@@ -26,6 +26,7 @@ export type Post = {
   content: string;
   plaintext?: string;
   toc?: TocItem[];
+  image?: string; // 追加
 };
 
 /**
@@ -69,6 +70,7 @@ export function getAllPosts(): Post[] {
       category: data.category ?? 'uncategorized',
       content: String(processed),
       plaintext: markdownToPlaintext(content),
+      image: data.image, // 追加
     };
   });
 }
@@ -106,5 +108,6 @@ export async function getPost(slug: string): Promise<Post | null> {
     content: htmlContent,
     plaintext: plaintext || '',
     toc,
+    image: data.image, // 追加
   };
 }

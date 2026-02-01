@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import BlogLayout from '@/components/BlogLayout';
 import Link from 'next/link';
 import { tagToSlug } from '@/lib/utils';
+import Image from 'next/image';
 
 export async function generateStaticParams() {
   const posts = getAllPosts();
@@ -31,6 +32,19 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     <BlogLayout posts={posts} toc={post.toc} categories={categories}>
       <article className="prose dark:prose-invert max-w-none">
         <h1>{post.title}</h1>
+
+        {/* サムネイル画像（オプション） */}
+        {post.image && (
+          <div className="relative w-full h-64 md:h-96 mb-8 not-prose">
+            <Image
+              src={`/images/${post.image}`}
+              alt={post.title}
+              fill
+              className="object-cover rounded-lg"
+              priority
+            />
+          </div>
+        )}
 
         {/* メタ情報 */}
         <div className="flex flex-wrap gap-4 text-sm text-text/70 not-prose mb-8">
