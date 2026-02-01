@@ -33,19 +33,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       <article className="prose dark:prose-invert max-w-none">
         <h1>{post.title}</h1>
 
-        {/* サムネイル画像（オプション） */}
-        {post.image && (
-          <div className="relative w-full h-64 md:h-96 mb-8 not-prose">
-            <Image
-              src={`/images/${post.image}`}
-              alt={post.title}
-              fill
-              className="object-cover rounded-lg"
-              priority
-            />
-          </div>
-        )}
-
         {/* メタ情報 */}
         <div className="flex flex-wrap gap-4 text-sm text-text/70 not-prose mb-8">
           {/* 投稿日時 */}
@@ -78,6 +65,19 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             </div>
           )}
         </div>
+
+        {/* サムネイル画像（オプション） */}
+        {post.image && (
+          <div className="relative w-full h-64 md:h-96 mb-8 not-prose">
+            <Image
+              src={`/images/${post.image}`}
+              alt={post.title}
+              fill
+              className="object-cover rounded-lg"
+              priority
+            />
+          </div>
+        )}
 
         {/* 記事本文 */}
         <div dangerouslySetInnerHTML={{ __html: post.content }} />
