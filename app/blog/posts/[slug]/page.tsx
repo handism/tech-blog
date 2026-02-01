@@ -55,7 +55,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         <h1>{post.title}</h1>
 
         {/* メタ情報 */}
-        <div className="flex flex-wrap gap-4 text-sm text-text/70 not-prose mb-0">
+        <div className="flex flex-wrap items-center gap-4 text-sm text-text/70 not-prose">
           {/* 投稿日時 */}
           {post.date && (
             <time dateTime={post.date.toISOString()}>
