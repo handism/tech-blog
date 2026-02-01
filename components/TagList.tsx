@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Post } from '@/lib/posts';
+import { tagToSlug } from '@/lib/utils';
 
 type Props = {
   posts: Post[];
@@ -14,7 +15,7 @@ export default function TagList({ posts }: Props) {
       {tags.map((tag) => (
         <Link
           key={tag}
-          href={`/blog/tags/${encodeURIComponent(tag)}`}
+          href={`/blog/tags/${tagToSlug(encodeURIComponent(tag))}`}
           className="
               text-xs
               text-text/80
