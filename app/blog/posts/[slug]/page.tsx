@@ -34,7 +34,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         <h1>{post.title}</h1>
 
         {/* メタ情報 */}
-        <div className="flex flex-wrap gap-4 text-sm text-text/70 not-prose mb-4">
+        <div className="flex flex-wrap gap-4 text-sm text-text/70 not-prose">
           {/* 投稿日時 */}
           {post.date && (
             <time dateTime={post.date.toISOString()}>
@@ -68,7 +68,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
         {/* サムネイル画像（オプション） */}
         {post.image && (
-          <div className="relative w-full h-64 md:h-96 mb-4 not-prose">
+          <div className="relative w-full h-64 md:h-96 not-prose">
             <Image
               src={`/images/${post.image}`}
               alt={post.title}
