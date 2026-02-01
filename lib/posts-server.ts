@@ -47,12 +47,14 @@ function markdownToPlaintext(markdown: string): string {
  * 全記事取得（一覧用）- サーバー側のみ
  */
 export function getAllPosts(): Post[] {
-  const files = fs.readdirSync(postsDir);
+  const files = fs.readdirSync(postsDir, { withFileTypes: true });
 
   return files
+    .filter((dirent) => dirent.isFile()) // ← ディレクトリ除外
+    .filter((dirent) => dirent.name.endsWith('.md')) // ← md だけ
     .map((file) => {
-      const slug = file.replace(/\.md$/, '');
-      const fullPath = path.join(postsDir, file);
+      const slug = file.name.replace(/\.md$/, '');
+      const fullPath = path.join(postsDir, file.name);
       const fileContents = fs.readFileSync(fullPath, 'utf8');
       const { data, content } = matter(fileContents);
 
