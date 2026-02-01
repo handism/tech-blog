@@ -1,10 +1,10 @@
 import { ReactNode } from 'react';
 import Sidebar from '@/components/Sidebar';
-import { TocItem } from '@/lib/posts';
+import { Post, TocItem } from '@/lib/posts';
 
 interface BlogLayoutProps {
   children: ReactNode;
-  posts?: any[];
+  posts?: Post[];
   toc?: TocItem[]; // ここで TOC をオプションとして受け取る
   categories?: string[]; // カテゴリ一覧
 }

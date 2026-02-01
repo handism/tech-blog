@@ -87,7 +87,8 @@ export async function getPost(slug: string): Promise<Post | null> {
     .process(content);
 
   const htmlContent = String(processed.value || processed);
-  const toc = generateToc(htmlContent);
+  // TOC は id が付与された HTML から生成
+  const toc = generateToc(processed.toString());
 
   // HTML を plain text に変換して Fuse.js 用にする
   const plaintext = markdownToPlaintext(htmlContent);

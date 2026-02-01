@@ -1,29 +1,24 @@
 // lib/toc.ts
-import type { TocItem } from "./posts";
+import type { TocItem } from './posts';
+import { JSDOM } from 'jsdom'; // npm install jsdom
 
-// Generate TOC from HTML string by extracting <h1>-<h6> tags and their ids/text.
-// This ensures IDs match the final HTML (including any prefixes like "user-content-").
 export function generateToc(html: string): TocItem[] {
   const toc: TocItem[] = [];
 
-  const headingRe = /<h([1-6])\b([^>]*)>([\s\S]*?)<\/h\1>/gi;
-  let match: RegExpExecArray | null;
+  const dom = new JSDOM(html);
+  const document = dom.window.document;
 
-  while ((match = headingRe.exec(html)) !== null) {
-    const level = parseInt(match[1], 10);
-    const attrs = match[2];
-    let inner = match[3];
+  // h1〜h6 を全て取得
+  const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
 
-    // extract id attr if present
-    const idMatch = /id=(?:"|')([^"']+)(?:"|')/i.exec(attrs);
-    const id = idMatch ? idMatch[1] : "";
+  headings.forEach((el) => {
+    const level = parseInt(el.tagName[1], 10);
+    const id = el.id; // ここで正しい id を取得
+    const text = el.textContent?.trim() || '';
+    if (!text || !id) return;
 
-    // strip any inner HTML tags for the text
-    inner = inner.replace(/<[^>]+>/g, "").trim();
-    if (!inner) continue;
-
-    toc.push({ text: inner, id, level });
-  }
+    toc.push({ text, id, level });
+  });
 
   return toc;
 }
