@@ -2,29 +2,52 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 
-const MemphisGenerator = () => {
-  const canvasRef = useRef(null);
-  const [selectedSize, setSelectedSize] = useState('youtube');
-  const [selectedTone, setSelectedTone] = useState('pale');
-  const [selectedDensity, setSelectedDensity] = useState('standard');
-  const [backgroundMode, setBackgroundMode] = useState('auto'); // 'auto', 'custom', 'transparent'
-  const [customBackgroundColor, setCustomBackgroundColor] = useState('#FFF9F3');
-  // 関数形式で初期化
-  const [currentSeed, setCurrentSeed] = useState(() => Date.now());
+type Size = {
+  width: number;
+  height: number;
+  label: string;
+};
 
-  const sizes = {
+type Density = {
+  name: string;
+  min: number;
+  max: number;
+};
+
+type ColorPalette = {
+  name: string;
+  primary: string[];
+  secondary: string[];
+  backgrounds: string[];
+};
+
+type SizeKey = 'youtube' | 'instagram' | 'twitter';
+type DensityKey = 'simple' | 'standard' | 'busy';
+type ToneKey = 'pale' | 'light' | 'bright' | 'vivid';
+type BackgroundMode = 'auto' | 'custom' | 'transparent';
+
+const MemphisGenerator: React.FC = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [selectedSize, setSelectedSize] = useState<SizeKey>('youtube');
+  const [selectedTone, setSelectedTone] = useState<ToneKey>('pale');
+  const [selectedDensity, setSelectedDensity] = useState<DensityKey>('standard');
+  const [backgroundMode, setBackgroundMode] = useState<BackgroundMode>('auto');
+  const [customBackgroundColor, setCustomBackgroundColor] = useState<string>('#FFF9F3');
+  const [currentSeed, setCurrentSeed] = useState<number>(() => Date.now());
+
+  const sizes: Record<SizeKey, Size> = {
     youtube: { width: 1280, height: 720, label: 'YouTube サムネイル (1280×720)' },
     instagram: { width: 1080, height: 1080, label: 'Instagram 投稿 (1080×1080)' },
     twitter: { width: 1200, height: 675, label: 'X (Twitter) 投稿 (1200×675)' },
   };
 
-  const densities = {
+  const densities: Record<DensityKey, Density> = {
     simple: { name: 'シンプル', min: 8, max: 15 },
     standard: { name: '標準', min: 20, max: 30 },
     busy: { name: '賑やか', min: 35, max: 50 },
   };
 
-  const colorPalettes = {
+  const colorPalettes: Record<ToneKey, ColorPalette> = {
     pale: {
       name: 'ペールトーン',
       primary: ['#FFB3C1', '#FFFACD', '#B4E7F5', '#D4C5F9', '#FFB6B9'],
@@ -53,35 +76,38 @@ const MemphisGenerator = () => {
 
   const colors = colorPalettes[selectedTone];
 
-  // Seeded random number generator for reproducibility
-  const seededRandom = (seed) => {
+  const seededRandom = (seed: number): number => {
     const x = Math.sin(seed++) * 10000;
     return x - Math.floor(x);
   };
 
-  const getRandomColor = (palette, seed) => {
+  const getRandomColor = (palette: string[], seed: number): string => {
     const index = Math.floor(seededRandom(seed) * palette.length);
     return palette[index];
   };
 
-  const drawMemphisPattern = (ctx, width, height, seed, density, bgMode, customBgColor) => {
+  const drawMemphisPattern = (
+    ctx: CanvasRenderingContext2D,
+    width: number,
+    height: number,
+    seed: number,
+    density: DensityKey,
+    bgMode: BackgroundMode,
+    customBgColor: string
+  ): void => {
     ctx.clearRect(0, 0, width, height);
 
-    // Background
     if (bgMode === 'transparent') {
-      // 透明背景の場合は何も描画しない
+      // 透明背景
     } else if (bgMode === 'custom') {
       ctx.fillStyle = customBgColor;
       ctx.fillRect(0, 0, width, height);
     } else {
-      // auto mode
       ctx.fillStyle = getRandomColor(colors.backgrounds, seed);
       ctx.fillRect(0, 0, width, height);
     }
 
     let shapeSeed = seed;
-
-    // Draw shapes based on density
     const densityConfig = densities[density];
     const shapeCount =
       densityConfig.min +
@@ -107,19 +133,19 @@ const MemphisGenerator = () => {
       ctx.lineWidth = seededRandom(shapeSeed++) > 0.8 ? 4 : 0;
 
       switch (shapeType) {
-        case 0: // Circle
+        case 0:
           ctx.beginPath();
           ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
           if (seededRandom(shapeSeed++) > 0.5) ctx.fill();
           else ctx.stroke();
           break;
 
-        case 1: // Square
+        case 1:
           ctx.fillRect(-size / 2, -size / 2, size, size);
           if (ctx.lineWidth > 0) ctx.strokeRect(-size / 2, -size / 2, size, size);
           break;
 
-        case 2: // Triangle
+        case 2:
           ctx.beginPath();
           ctx.moveTo(0, -size / 2);
           ctx.lineTo(-size / 2, size / 2);
@@ -129,7 +155,7 @@ const MemphisGenerator = () => {
           else ctx.stroke();
           break;
 
-        case 3: // Zigzag line
+        case 3:
           ctx.beginPath();
           ctx.lineWidth = 5;
           const segments = 5;
@@ -139,7 +165,7 @@ const MemphisGenerator = () => {
           ctx.stroke();
           break;
 
-        case 4: // Wavy line
+        case 4:
           ctx.beginPath();
           ctx.lineWidth = 5;
           for (let t = 0; t < Math.PI * 2; t += 0.1) {
@@ -151,7 +177,7 @@ const MemphisGenerator = () => {
           ctx.stroke();
           break;
 
-        case 5: // Dots pattern
+        case 5:
           for (let dx = -2; dx <= 2; dx++) {
             for (let dy = -2; dy <= 2; dy++) {
               ctx.beginPath();
@@ -161,7 +187,7 @@ const MemphisGenerator = () => {
           }
           break;
 
-        case 6: // Half circle
+        case 6:
           ctx.beginPath();
           ctx.arc(0, 0, size / 2, 0, Math.PI);
           if (seededRandom(shapeSeed++) > 0.5) ctx.fill();
@@ -173,9 +199,16 @@ const MemphisGenerator = () => {
     }
   };
 
-  const generateMemphisSVG = (width, height, seed, density, bgMode, customBgColor) => {
+  const generateMemphisSVG = (
+    width: number,
+    height: number,
+    seed: number,
+    density: DensityKey,
+    bgMode: BackgroundMode,
+    customBgColor: string
+  ): string => {
     let shapeSeed = seed;
-    let bgColor;
+    let bgColor: string;
 
     if (bgMode === 'transparent') {
       bgColor = 'none';
@@ -185,8 +218,7 @@ const MemphisGenerator = () => {
       bgColor = getRandomColor(colors.backgrounds, seed);
     }
 
-    const shapes = [];
-
+    const shapes: string[] = [];
     const densityConfig = densities[density];
     const shapeCount =
       densityConfig.min +
@@ -210,14 +242,14 @@ const MemphisGenerator = () => {
       let shapeElement = '';
 
       switch (shapeType) {
-        case 0: // Circle
+        case 0:
           shapeElement = `<circle cx="${x}" cy="${y}" r="${size / 2}" 
             fill="${filled ? color : 'none'}" 
             stroke="${strokeColor}" 
             stroke-width="${strokeWidth}"/>`;
           break;
 
-        case 1: // Square
+        case 1:
           shapeElement = `<rect x="${x - size / 2}" y="${y - size / 2}" 
             width="${size}" height="${size}" 
             fill="${color}" 
@@ -226,7 +258,7 @@ const MemphisGenerator = () => {
             transform="rotate(${rotation} ${x} ${y})"/>`;
           break;
 
-        case 2: // Triangle
+        case 2:
           const points = `${x},${y - size / 2} ${x - size / 2},${y + size / 2} ${x + size / 2},${y + size / 2}`;
           shapeElement = `<polygon points="${points}" 
             fill="${filled ? color : 'none'}" 
@@ -235,7 +267,7 @@ const MemphisGenerator = () => {
             transform="rotate(${rotation} ${x} ${y})"/>`;
           break;
 
-        case 3: // Zigzag line
+        case 3:
           let zigzagPath = `M ${x - 75} ${y}`;
           for (let j = 0; j < 5; j++) {
             zigzagPath += ` L ${x - 75 + j * 30} ${y + ((j % 2) * 30 - 15)}`;
@@ -248,7 +280,7 @@ const MemphisGenerator = () => {
             transform="rotate(${rotation} ${x} ${y})"/>`;
           break;
 
-        case 4: // Wavy line
+        case 4:
           let wavyPath = 'M ';
           for (let t = 0; t < Math.PI * 2; t += 0.1) {
             const wx = x + t * 20 - 60;
@@ -262,7 +294,7 @@ const MemphisGenerator = () => {
             stroke-linecap="round"/>`;
           break;
 
-        case 5: // Dots pattern
+        case 5:
           let dots = '';
           for (let dx = -2; dx <= 2; dx++) {
             for (let dy = -2; dy <= 2; dy++) {
@@ -272,7 +304,7 @@ const MemphisGenerator = () => {
           shapeElement = dots;
           break;
 
-        case 6: // Half circle
+        case 6:
           shapeElement = `<path d="M ${x - size / 2} ${y} A ${size / 2} ${size / 2} 0 0 1 ${x + size / 2} ${y}" 
             fill="${filled ? color : 'none'}" 
             stroke="${strokeColor}" 
@@ -295,18 +327,20 @@ const MemphisGenerator = () => {
     const canvas = canvasRef.current;
     if (canvas) {
       const ctx = canvas.getContext('2d');
-      const size = sizes[selectedSize];
-      canvas.width = size.width;
-      canvas.height = size.height;
-      drawMemphisPattern(
-        ctx,
-        size.width,
-        size.height,
-        currentSeed,
-        selectedDensity,
-        backgroundMode,
-        customBackgroundColor
-      );
+      if (ctx) {
+        const size = sizes[selectedSize];
+        canvas.width = size.width;
+        canvas.height = size.height;
+        drawMemphisPattern(
+          ctx,
+          size.width,
+          size.height,
+          currentSeed,
+          selectedDensity,
+          backgroundMode,
+          customBackgroundColor
+        );
+      }
     }
   }, [
     selectedSize,
@@ -317,19 +351,20 @@ const MemphisGenerator = () => {
     currentSeed,
   ]);
 
-  const generateNew = () => {
+  const generateNew = (): void => {
     setCurrentSeed(Date.now());
   };
 
-  const downloadPNG = () => {
+  const downloadPNG = (): void => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
     const link = document.createElement('a');
     link.download = `memphis-bg-${selectedSize}-${currentSeed}.png`;
     link.href = canvas.toDataURL('image/png');
     link.click();
   };
 
-  const downloadSVG = () => {
+  const downloadSVG = (): void => {
     const size = sizes[selectedSize];
     const svg = generateMemphisSVG(
       size.width,
@@ -432,7 +467,7 @@ const MemphisGenerator = () => {
               {Object.entries(sizes).map(([key, { label }]) => (
                 <button
                   key={key}
-                  onClick={() => setSelectedSize(key)}
+                  onClick={() => setSelectedSize(key as SizeKey)}
                   style={{
                     padding: '18px 24px',
                     fontSize: '1rem',
@@ -450,12 +485,13 @@ const MemphisGenerator = () => {
                     fontFamily: 'inherit',
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.transform = 'scale(1.02)';
-                    e.target.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.2)';
+                    e.currentTarget.style.transform = 'scale(1.02)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.2)';
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.transform = selectedSize === key ? 'scale(1.02)' : 'scale(1)';
-                    e.target.style.boxShadow = 'none';
+                    e.currentTarget.style.transform =
+                      selectedSize === key ? 'scale(1.02)' : 'scale(1)';
+                    e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
                   {label}
@@ -487,7 +523,7 @@ const MemphisGenerator = () => {
               {Object.entries(colorPalettes).map(([key, { name }]) => (
                 <button
                   key={key}
-                  onClick={() => setSelectedTone(key)}
+                  onClick={() => setSelectedTone(key as ToneKey)}
                   style={{
                     padding: '18px 24px',
                     fontSize: '1rem',
@@ -505,12 +541,13 @@ const MemphisGenerator = () => {
                     fontFamily: 'inherit',
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.transform = 'scale(1.02)';
-                    e.target.style.boxShadow = '0 4px 12px rgba(255, 107, 157, 0.2)';
+                    e.currentTarget.style.transform = 'scale(1.02)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 107, 157, 0.2)';
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.transform = selectedTone === key ? 'scale(1.02)' : 'scale(1)';
-                    e.target.style.boxShadow = 'none';
+                    e.currentTarget.style.transform =
+                      selectedTone === key ? 'scale(1.02)' : 'scale(1)';
+                    e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
                   {name}
@@ -542,7 +579,7 @@ const MemphisGenerator = () => {
               {Object.entries(densities).map(([key, { name }]) => (
                 <button
                   key={key}
-                  onClick={() => setSelectedDensity(key)}
+                  onClick={() => setSelectedDensity(key as DensityKey)}
                   style={{
                     padding: '18px 24px',
                     fontSize: '1rem',
@@ -560,12 +597,13 @@ const MemphisGenerator = () => {
                     fontFamily: 'inherit',
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.transform = 'scale(1.02)';
-                    e.target.style.boxShadow = '0 4px 12px rgba(0, 217, 255, 0.2)';
+                    e.currentTarget.style.transform = 'scale(1.02)';
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 217, 255, 0.2)';
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.transform = selectedDensity === key ? 'scale(1.02)' : 'scale(1)';
-                    e.target.style.boxShadow = 'none';
+                    e.currentTarget.style.transform =
+                      selectedDensity === key ? 'scale(1.02)' : 'scale(1)';
+                    e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
                   {name}
@@ -614,12 +652,13 @@ const MemphisGenerator = () => {
                   fontFamily: 'inherit',
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.transform = 'scale(1.02)';
-                  e.target.style.boxShadow = '0 4px 12px rgba(162, 89, 255, 0.2)';
+                  e.currentTarget.style.transform = 'scale(1.02)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(162, 89, 255, 0.2)';
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.transform = backgroundMode === 'auto' ? 'scale(1.02)' : 'scale(1)';
-                  e.target.style.boxShadow = 'none';
+                  e.currentTarget.style.transform =
+                    backgroundMode === 'auto' ? 'scale(1.02)' : 'scale(1)';
+                  e.currentTarget.style.boxShadow = 'none';
                 }}
               >
                 自動選択
@@ -644,13 +683,13 @@ const MemphisGenerator = () => {
                   fontFamily: 'inherit',
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.transform = 'scale(1.02)';
-                  e.target.style.boxShadow = '0 4px 12px rgba(162, 89, 255, 0.2)';
+                  e.currentTarget.style.transform = 'scale(1.02)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(162, 89, 255, 0.2)';
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.transform =
+                  e.currentTarget.style.transform =
                     backgroundMode === 'custom' ? 'scale(1.02)' : 'scale(1)';
-                  e.target.style.boxShadow = 'none';
+                  e.currentTarget.style.boxShadow = 'none';
                 }}
               >
                 カスタム色
@@ -676,13 +715,13 @@ const MemphisGenerator = () => {
                   fontFamily: 'inherit',
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.transform = 'scale(1.02)';
-                  e.target.style.boxShadow = '0 4px 12px rgba(162, 89, 255, 0.2)';
+                  e.currentTarget.style.transform = 'scale(1.02)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(162, 89, 255, 0.2)';
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.transform =
+                  e.currentTarget.style.transform =
                     backgroundMode === 'transparent' ? 'scale(1.02)' : 'scale(1)';
-                  e.target.style.boxShadow = 'none';
+                  e.currentTarget.style.boxShadow = 'none';
                 }}
               >
                 透明
@@ -794,12 +833,12 @@ const MemphisGenerator = () => {
                 fontFamily: 'inherit',
               }}
               onMouseEnter={(e) => {
-                e.target.style.transform = 'translateY(-2px)';
-                e.target.style.boxShadow = '0 8px 25px rgba(254, 198, 1, 0.5)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(254, 198, 1, 0.5)';
               }}
               onMouseLeave={(e) => {
-                e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = '0 4px 15px rgba(254, 198, 1, 0.4)';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 15px rgba(254, 198, 1, 0.4)';
               }}
             >
               🎨 新しく生成
@@ -821,12 +860,12 @@ const MemphisGenerator = () => {
                 fontFamily: 'inherit',
               }}
               onMouseEnter={(e) => {
-                e.target.style.transform = 'translateY(-2px)';
-                e.target.style.boxShadow = '0 8px 25px rgba(102, 126, 234, 0.5)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(102, 126, 234, 0.5)';
               }}
               onMouseLeave={(e) => {
-                e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.4)';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.4)';
               }}
             >
               📥 PNG でダウンロード
@@ -848,12 +887,12 @@ const MemphisGenerator = () => {
                 fontFamily: 'inherit',
               }}
               onMouseEnter={(e) => {
-                e.target.style.transform = 'translateY(-2px)';
-                e.target.style.boxShadow = '0 8px 25px rgba(0, 217, 255, 0.5)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 217, 255, 0.5)';
               }}
               onMouseLeave={(e) => {
-                e.target.style.transform = 'translateY(0)';
-                e.target.style.boxShadow = '0 4px 15px rgba(0, 217, 255, 0.4)';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 217, 255, 0.4)';
               }}
             >
               📥 SVG でダウンロード
