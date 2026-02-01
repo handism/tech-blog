@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="bg-card border-t border-border py-6 mt-16">
+    <footer className="bg-card border-t border-border py-6">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center text-sm text-text/70">
         <p className="mb-2 md:mb-0">
           &copy; {new Date().getFullYear()} Handism&apos;s Tech Blog. All rights reserved.
