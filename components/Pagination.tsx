@@ -10,9 +10,9 @@ type PaginationProps = {
 export default function Pagination({ currentPage, totalPages }: PaginationProps) {
   if (totalPages <= 1) return null;
 
-  // ページ番号からURLを生成（1ページ目は / それ以外は /page/N）
+  // ページ番号からURLを生成（1ページ目は / それ以外は /blog/page/N）
   const getPageUrl = (pageNum: number) => {
-    return pageNum === 1 ? '/' : `/page/${pageNum}`;
+    return pageNum === 1 ? '/' : `/blog/page/${pageNum}`;
   };
 
   const pages: (number | string)[] = [];
