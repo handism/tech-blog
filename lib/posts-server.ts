@@ -3,8 +3,8 @@ import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import remarkHtml from 'remark-html';
-import remarkSlug from 'remark-slug';
-import remarkAutolinkHeadings from 'remark-autolink-headings';
+import rehypeSlug from 'rehype-slug';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import { generateToc } from './toc';
 
 const postsDir = path.join(process.cwd(), 'md');
@@ -76,20 +76,23 @@ export function getAllPosts(): Post[] {
  */
 export async function getPost(slug: string): Promise<Post | null> {
   const fullPath = path.join(postsDir, `${slug}.md`);
-
   if (!fs.existsSync(fullPath)) return null;
 
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const processed = await (remark() as any)
-    .use(remarkSlug)
-    .use(remarkAutolinkHeadings, { behavior: 'wrap' })
+  // Markdown → HTML + 見出しID付与 + 自動リンク
+  const processed = await remark()
+    .use(rehypeSlug)
+    .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
     .use(remarkHtml)
     .process(content);
 
-  const toc = generateToc(String(processed.value || processed));
+  const htmlContent = String(processed.value || processed);
+  const toc = generateToc(htmlContent);
+
+  // HTML を plain text に変換して Fuse.js 用にする
+  const plaintext = markdownToPlaintext(htmlContent);
 
   return {
     slug,
@@ -97,8 +100,8 @@ export async function getPost(slug: string): Promise<Post | null> {
     date: data.date ? new Date(data.date) : undefined,
     tags: data.tags ?? [],
     category: data.category ?? 'uncategorized',
-    content: String(processed.value || processed),
-    plaintext: markdownToPlaintext(content),
+    content: htmlContent,
+    plaintext: plaintext || '', // 必ず文字列
     toc,
   };
 }
