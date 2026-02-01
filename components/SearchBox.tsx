@@ -23,6 +23,8 @@ export default function SearchBox({ posts }: Props) {
           { name: 'category', weight: 0.5 },
         ],
         threshold: 0.3,
+        ignoreLocation: true, // 部分一致を許可
+        minMatchCharLength: 1, // 1文字からマッチ
       }),
     [posts]
   );

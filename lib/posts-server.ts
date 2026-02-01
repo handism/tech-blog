@@ -31,11 +31,10 @@ export type Post = {
  */
 function markdownToPlaintext(markdown: string): string {
   return markdown
-    .replace(/^#+\s+/gm, '') // 見出し削除
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // リンク削除
-    .replace(/`[^`]+`/g, '') // インラインコード削除
-    .replace(/```[\s\S]*?```/g, '') // コードブロック削除
-    .replace(/[*_~-]+/g, '') // マークダウン記号削除
+    .replace(/^#+\s+/gm, '') // 見出し
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // リンク
+    .replace(/`{1,3}[^`]+`{1,3}/g, '') // インライン/ブロックコード
+    .replace(/[*_~]+/g, '') // 強調記号だけ削除
     .replace(/\n+/g, ' ')
     .trim();
 }
