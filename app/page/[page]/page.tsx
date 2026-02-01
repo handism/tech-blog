@@ -2,7 +2,7 @@ import { getAllPosts } from '@/lib/posts-server';
 import PostCard from '@/components/PostCard';
 import BlogLayout from '@/components/BlogLayout';
 import Pagination from '@/components/Pagination';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 const POSTS_PER_PAGE = 10;
 
@@ -18,10 +18,15 @@ export default async function PageView({ params }: Props) {
     notFound();
   }
 
+  // 1ページ目は / にリダイレクト
+  if (currentPage === 1) {
+    redirect('/');
+  }
+
   const allPosts = getAllPosts();
   const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
 
-  if (currentPage > totalPages && totalPages > 0) {
+  if (currentPage > totalPages) {
     notFound();
   }
 
@@ -47,12 +52,13 @@ export default async function PageView({ params }: Props) {
   );
 }
 
-// 静的生成用のパス生成
+// 静的生成用のパス生成（2ページ目以降のみ）
 export async function generateStaticParams() {
   const allPosts = getAllPosts();
   const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
 
-  return Array.from({ length: totalPages }, (_, i) => ({
-    page: String(i + 1),
+  // 2ページ目以降のみ生成
+  return Array.from({ length: Math.max(0, totalPages - 1) }, (_, i) => ({
+    page: String(i + 2),
   }));
 }

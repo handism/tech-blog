@@ -10,16 +10,19 @@ type PaginationProps = {
 export default function Pagination({ currentPage, totalPages }: PaginationProps) {
   if (totalPages <= 1) return null;
 
+  // ページ番号からURLを生成（1ページ目は / それ以外は /page/N）
+  const getPageUrl = (pageNum: number) => {
+    return pageNum === 1 ? '/' : `/page/${pageNum}`;
+  };
+
   const pages: (number | string)[] = [];
 
   // ページ番号の表示ロジック
   if (totalPages <= 7) {
-    // 7ページ以下なら全て表示
     for (let i = 1; i <= totalPages; i++) {
       pages.push(i);
     }
   } else {
-    // 8ページ以上の場合は省略記号を入れる
     if (currentPage <= 3) {
       pages.push(1, 2, 3, 4, '...', totalPages);
     } else if (currentPage >= totalPages - 2) {
@@ -34,7 +37,7 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
       {/* 前へボタン */}
       {currentPage > 1 ? (
         <Link
-          href={`/page/${currentPage - 1}`}
+          href={getPageUrl(currentPage - 1)}
           className="px-4 py-2 rounded-md bg-secondary text-text hover:bg-accent transition-colors"
         >
           前へ
@@ -61,7 +64,7 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
         return (
           <Link
             key={pageNum}
-            href={`/page/${pageNum}`}
+            href={getPageUrl(pageNum)}
             className={`px-4 py-2 rounded-md transition-colors ${
               isActive
                 ? 'bg-accent text-background font-bold'
@@ -77,7 +80,7 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
       {/* 次へボタン */}
       {currentPage < totalPages ? (
         <Link
-          href={`/page/${currentPage + 1}`}
+          href={getPageUrl(currentPage + 1)}
           className="px-4 py-2 rounded-md bg-secondary text-text hover:bg-accent transition-colors"
         >
           次へ
