@@ -34,7 +34,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
         {/* メタ情報 */}
         <div className="flex flex-wrap gap-4 text-sm text-text/70 not-prose mb-8">
-          {/* 投稿日時 */}
+          📅 {/* 投稿日時 */}
           {post.date && (
             <time dateTime={post.date.toISOString()}>
               {post.date.toLocaleDateString('ja-JP', {
@@ -44,12 +44,10 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
               })}
             </time>
           )}
-
           {/* カテゴリ */}
           <Link href={`/blog/categories/${post.category}`} className="hover:underline text-accent">
             📁 {post.category}
           </Link>
-
           {/* タグ */}
           {post.tags.length > 0 && (
             <div className="flex flex-wrap gap-2">
