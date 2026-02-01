@@ -36,45 +36,66 @@ article.prose {
 }
 
 article.prose h1 {
-  @apply text-3xl font-bold mt-0 mb-6;
+  @apply text-3xl font-bold mt-0 mb-8 tracking-tight;
 }
 
 article.prose h2 {
-  @apply text-2xl font-semibold mt-8 mb-4 scroll-mt-28; /* TOCリンク用のスクロール調整 */
+  @apply text-2xl font-semibold mt-10 mb-4 tracking-tight scroll-mt-28;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.25rem;
+}
+
+article.prose h2 + p {
+  margin-top: 0.5rem;
 }
 
 article.prose h3 {
-  @apply text-xl font-medium mt-6 mb-3 scroll-mt-24;
+  @apply text-xl font-medium mt-8 mb-3 scroll-mt-24;
+}
+
+article.prose h4 {
+  @apply text-base font-semibold mt-6 mb-2 scroll-mt-20;
+  color: var(--text);
 }
 
 article.prose p {
-  @apply mb-4 leading-relaxed;
+  @apply mb-5 leading-relaxed text-base;
 }
 
 article.prose img {
-  @apply rounded-lg shadow-md my-6;
-}
-
-article.prose pre {
-  background-color: var(--card);
-  @apply p-4 rounded-lg overflow-x-auto my-4;
-}
-
-article.prose code {
-  background-color: var(--card);
-  color: var(--text);
-  @apply px-1 py-0.5 rounded text-sm;
+  @apply rounded-xl shadow-md my-8 mx-auto;
+  max-width: 100%;
 }
 
 article.prose blockquote {
+  background-color: var(--card);
   border-left-color: var(--border);
   color: var(--text);
-  @apply border-l-4 pl-4 italic my-4;
+  @apply border-l-4 pl-4 pr-4 py-3 my-6 rounded-r-lg italic;
 }
 
 article.prose ul,
 article.prose ol {
-  @apply list-inside list-disc space-y-1 mb-4;
+  @apply list-outside list-disc pl-6 space-y-1 mb-4;
+}
+
+article.prose ul ul,
+article.prose ol ol,
+article.prose ul ol,
+article.prose ol ul {
+  @apply mt-2 pl-6;
+}
+
+article.prose li {
+  @apply leading-relaxed;
+}
+
+article.prose ul ul {
+  list-style-type: circle;
+}
+
+article.prose ul ul ul {
+  list-style-type: square;
 }
 
 /* =======================
@@ -131,4 +152,85 @@ article.prose pre::-webkit-scrollbar {
 article.prose pre::-webkit-scrollbar-thumb {
   background-color: var(--border);
   @apply rounded;
+}
+
+/* =======================
+   表（table）
+   ======================= */
+article.prose table {
+  @apply w-full border-collapse my-6 text-sm;
+  background-color: var(--card);
+  border-color: var(--border);
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+article.prose thead {
+  background-color: var(--bg);
+}
+
+article.prose th {
+  @apply px-3 py-2 text-left font-semibold;
+  border-bottom: 2px solid var(--border);
+  color: var(--text);
+}
+
+article.prose td {
+  @apply px-3 py-2 align-top;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+
+article.prose tbody tr:hover {
+  background-color: color-mix(in srgb, var(--border) 20%, transparent);
+}
+
+article.prose table code {
+  @apply font-mono text-xs;
+}
+
+/* =======================
+   コードブロック
+   ======================= */
+article.prose pre {
+  background-color: var(--card);
+  color: var(--text);
+  @apply p-4 rounded-lg overflow-x-auto my-6 text-sm leading-relaxed;
+  border: 1px solid var(--border);
+}
+
+/* 中の code */
+article.prose pre code {
+  @apply bg-transparent p-0 text-sm font-mono;
+  color: inherit;
+}
+
+article.prose :not(pre) > code {
+  background-color: var(--card);
+  color: var(--text);
+  @apply px-1.5 py-0.5 rounded text-sm font-mono;
+  border: 1px solid var(--border);
+}
+
+article.prose pre::-webkit-scrollbar {
+  height: 8px;
+}
+
+article.prose pre::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: 9999px;
+}
+
+article.prose pre::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+article.prose pre[class*='language-']::before {
+  content: attr(class);
+  @apply absolute top-2 right-3 text-xs opacity-60;
+}
+
+article.prose pre {
+  max-height: 70vh;
 }

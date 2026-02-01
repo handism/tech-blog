@@ -89,7 +89,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
         {/* サムネイル画像（オプション） */}
         {post.image && (
-          <div className="relative w-full h-64 md:h-96 not-prose">
+          <div className="relative w-full h-64 md:h-96 mb-6 md:mb-8 lg:mb-10 not-prose">
             <Image
               src={`/images/${post.image}`}
               alt={post.title}
