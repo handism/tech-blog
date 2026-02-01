@@ -45,13 +45,17 @@ export default function Sidebar({
         <div className="p-4 border border-border rounded-lg bg-card max-h-[calc(100vh-120px)] overflow-y-auto">
           <h2 className="font-bold text-lg mb-4 text-text">目次</h2>
           <ul className="space-y-2 text-sm">
-            {toc.map((item) => (
-              <li key={item.id} className={`pl-${(item.level - 1) * 4}`}>
-                <a href={`#${item.id}`} className="text-text/80 hover:underline">
-                  {item.text}
-                </a>
-              </li>
-            ))}
+            {toc.map((item) => {
+              const maxLevel = 4; // 最大見出しレベルに合わせる
+              const reversedIndent = (maxLevel - item.level) * 4; // 右寄せ用
+              return (
+                <li key={item.id} className={`pl-${reversedIndent}`}>
+                  <a href={`#${item.id}`} className="text-text/80 hover:underline">
+                    {item.text}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </div>
       )}
