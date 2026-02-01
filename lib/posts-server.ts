@@ -22,8 +22,23 @@ export type Post = {
   tags: string[];
   category: string;
   content: string;
+  plaintext?: string;
   toc?: TocItem[];
 };
+
+/**
+ * マークダウンをプレーンテキストに変換
+ */
+function markdownToPlaintext(markdown: string): string {
+  return markdown
+    .replace(/^#+\s+/gm, '') // ヘッダーを削除
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // リンクを削除
+    .replace(/`[^`]+`/g, '') // インラインコードを削除
+    .replace(/```[\s\S]*?```/g, '') // コードブロックを削除
+    .replace(/[*_~-]+/g, '') // マークダウン記号を削除
+    .replace(/\n+/g, ' ') // 改行をスペースに
+    .trim();
+}
 
 /**
  * 全記事取得（一覧用）- サーバー側のみ
@@ -45,6 +60,7 @@ export function getAllPosts(): Post[] {
       tags: data.tags ?? [],
       category: data.category ?? 'uncategorized',
       content,
+      plaintext: markdownToPlaintext(content),
     };
   });
 
@@ -82,6 +98,7 @@ export async function getPost(slug: string): Promise<Post | null> {
     tags: data.tags ?? [],
     category: data.category ?? 'uncategorized',
     content: String(processed.value || processed),
+    plaintext: markdownToPlaintext(content),
     toc,
   };
 }
