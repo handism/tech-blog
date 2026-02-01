@@ -1,0 +1,34 @@
+import Link from 'next/link';
+import { Post } from '@/lib/posts';
+
+type Props = {
+  posts: Post[];
+};
+
+export default function TagList({ posts }: Props) {
+  // 全記事からタグを集約（重複排除）
+  const tags = Array.from(new Set(posts.flatMap((p) => p.tags)));
+
+  return (
+    <div className="flex flex-wrap gap-2">
+      {tags.map((tag) => (
+        <Link
+          key={tag}
+          href={`/blog/tags/${tag}`}
+          className="
+              text-xs
+              text-text/80
+              px-2
+              py-1
+              rounded-full
+              bg-bg
+              hover:bg-border
+              transition
+            "
+        >
+          #{tag}
+        </Link>
+      ))}
+    </div>
+  );
+}

@@ -1,0 +1,133 @@
+@import 'tailwindcss';
+
+:root {
+  --bg: #ffffff;
+  --card: #f9fafb;
+  --text: #111827;
+  --border: #e5e7eb;
+}
+
+.dark {
+  --bg: #0f172a;
+  --card: #1e293b;
+  --text: #f8fafc;
+  --border: #334155;
+}
+
+/* Body に適用 */
+body {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+html {
+  scroll-behavior: smooth;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+/* =======================
+   記事本文スタイル（prose）
+   ======================= */
+article.prose {
+  @apply max-w-none px-0;
+}
+
+article.prose h1 {
+  @apply text-3xl font-bold mt-0 mb-6;
+}
+
+article.prose h2 {
+  @apply text-2xl font-semibold mt-8 mb-4 scroll-mt-28; /* TOCリンク用のスクロール調整 */
+}
+
+article.prose h3 {
+  @apply text-xl font-medium mt-6 mb-3 scroll-mt-24;
+}
+
+article.prose p {
+  @apply mb-4 leading-relaxed;
+}
+
+article.prose img {
+  @apply rounded-lg shadow-md my-6;
+}
+
+article.prose pre {
+  background-color: var(--card);
+  @apply p-4 rounded-lg overflow-x-auto my-4;
+}
+
+article.prose code {
+  background-color: var(--card);
+  color: var(--text);
+  @apply px-1 py-0.5 rounded text-sm;
+}
+
+article.prose blockquote {
+  border-left-color: var(--border);
+  color: var(--text);
+  @apply border-l-4 pl-4 italic my-4;
+}
+
+article.prose ul,
+article.prose ol {
+  @apply list-inside list-disc space-y-1 mb-4;
+}
+
+/* =======================
+   サイドバー（TOC）
+   ======================= */
+aside.toc-sidebar {
+  @apply w-64 sticky top-20 hidden lg:block;
+}
+
+aside.toc-sidebar > div {
+  background-color: var(--card);
+  border-color: var(--border);
+  @apply p-4 border rounded-lg;
+}
+
+aside.toc-sidebar h2 {
+  color: var(--text);
+  @apply font-bold text-lg mb-4;
+}
+
+aside.toc-sidebar ul {
+  @apply space-y-2 text-sm;
+}
+
+aside.toc-sidebar li {
+  @apply pl-2;
+}
+
+aside.toc-sidebar a {
+  color: var(--text);
+  @apply hover:underline;
+}
+
+/* ネストされた見出しのインデント */
+aside.toc-sidebar li.level-2 {
+  @apply pl-4;
+}
+
+aside.toc-sidebar li.level-3 {
+  @apply pl-6;
+}
+
+aside.toc-sidebar li.level-4 {
+  @apply pl-8;
+}
+
+/* =======================
+   コード内スクロールバー調整
+   ======================= */
+article.prose pre::-webkit-scrollbar {
+  @apply h-2;
+}
+
+article.prose pre::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  @apply rounded;
+}
