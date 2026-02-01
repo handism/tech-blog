@@ -2,9 +2,9 @@
 title: Pythonに入門する
 date: 2024-01-09
 tags: [Python]
+category: IT
 image: python-character.webp
 ---
-
 
 ## Pythonの基礎知識
 
@@ -18,11 +18,10 @@ pip install ~~
 
 拡張子を「`xxx.py`」にして保存し、コンソールから「`python3 xxx.py`」で実行
 
-
 ### .pyを定期実行する
+
 Mac：Automator＞アプリケーション＞シェルスクリプトを実行　でできる
 Win：タスクスケジューラ＞基本タスクの作成
-
 
 ### 関数作成
 
@@ -33,19 +32,20 @@ def open_finder():
 ~~
 ```
 
-
 ## Webスクレイピング
 
 ### ブラウザ操作
-* `Selenium`をインストールする
-  * Webのテストに適している
-  * テキスト入力やボタンのクリックなどができる
-  * ブラウザを直接操作する
-* `beautiful soup`はデータ抽出に優れる
-  * `html.parsar`で要素を取得できる
-  * ブラウザは不要
+
+- `Selenium`をインストールする
+  - Webのテストに適している
+  - テキスト入力やボタンのクリックなどができる
+  - ブラウザを直接操作する
+- `beautiful soup`はデータ抽出に優れる
+  - `html.parsar`で要素を取得できる
+  - ブラウザは不要
 
 ### スクレイピング結果をcsvに出力する
+
 `pandas`をインストールする
 
 ```py
@@ -53,24 +53,24 @@ pd.DaraFrame()
 pd.to_csv('ファイル名.csv')
 ```
 
-
 ## OCRの実装
-モジュールのインストール
-* `tesseract-ocr`
-* `pyocr`
 
+モジュールのインストール
+
+- `tesseract-ocr`
+- `pyocr`
 
 ## Pythonの文法など
 
 ### 算術演算子
 
-* 1 + 1 # 加算
-* 1 - 1 # 減算
-* 1 * 1 # 乗算
-* 1 / 1 # 割算
-* 1 // 1 # 商
-* 1 % 1 # あまり
-* 1 ** 1 # べき乗
+- 1 + 1 # 加算
+- 1 - 1 # 減算
+- 1 \* 1 # 乗算
+- 1 / 1 # 割算
+- 1 // 1 # 商
+- 1 % 1 # あまり
+- 1 \*\* 1 # べき乗
 
 ### 標準体重算出
 
@@ -132,14 +132,12 @@ import calendar
 from calendar import TextCalendar
 ```
 
-
 ### カレンダー表示
 
 ```py
 cal = calendar.TextCalendar(6) # 日曜日から始める
 cal.prmonth(2016, 1)
 ```
-
 
 ### mathモジュール
 
@@ -159,7 +157,6 @@ math.pi
 math.e # 自然対数の底
 ```
 
-
 ### 乱数
 
 ```py
@@ -167,7 +164,6 @@ import random
 random.randint(0, 3)
 random.randrange(3)
 ```
-
 
 ### おみくじ
 
@@ -197,7 +193,6 @@ and
 or
 ```
 
-
 ### うるう年判定
 
 ```py
@@ -207,7 +202,6 @@ print(str(year) + "年は閏年です")
 else:
 print(str(year) + "年は閏年じゃない")
 ```
-
 
 ### リスト、タプル、文字列の要素かどうか
 
@@ -236,7 +230,6 @@ for (eng, jap) in zip(weekday1, weekday2): # 二つ以上のリストの要素�
 
 forのあとにelse:も使える。
 
-
 ### 例外処理
 
 ```py
@@ -244,7 +237,6 @@ try:
 except 例外:
 else:
 ```
-
 
 ### 文字列
 
@@ -264,7 +256,6 @@ s[:3]
 "{:.3f}".format(10 / 2.54)
 "{:,}".format(111111111) # カンマ区切り
 ```
-
 
 ### リスト
 
@@ -288,14 +279,12 @@ sort(reverse=True)
 sorted(lst)
 ```
 
-
 ### 引数を受け取る（ただし、argvは文字列）
 
 ```py
 import sys
 sys.argv
 ```
-
 
 ### Dictionary（マッピング型）
 
@@ -311,7 +300,6 @@ values() # 戻り値は「ビュー」
 items()
 ```
 
-
 ### set（集合）（重複を許さない）
 
 ```py
@@ -326,7 +314,6 @@ set1 - set2 # set1に含まれ、set2に含まれないもの
 set1 ^ set2 # どちらか一方のみに含まれるもの
 ```
 
-
 ### 内包表記（高速に動作する）
 
 ```py
@@ -335,7 +322,6 @@ lst = [num ** 2 for num in range(0, 21, 2)]
 {キー:値 for 変数 in イテレータ}
 {式 for 変数 in イテレータ}
 ```
-
 
 ### 関数定義
 
@@ -348,7 +334,6 @@ def func(**dic): # 辞書も受け取れる。
 map(関数名, lst)
 filter(関数名, lst)
 ```
-
 
 ### ファイル操作
 
@@ -363,7 +348,6 @@ writelines()
 with open() as ファイル: # withが終わったらcloseしてくれる
 os.path.exists()
 ```
-
 
 ### クラス定義
 

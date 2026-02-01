@@ -2,20 +2,22 @@
 title: Swagger Editorに入門してみる
 date: 2023-12-14
 tags: [Swagger, Backend]
+category: Backend
 image: api-image.webp
 ---
 
 ## 経緯
+
 今まではAPIを送信する機能をゴリゴリにプログラミングしていたが、いとも簡単にAPIを生成できるSwagger（OpenAPI）なる仕組みがあると知って驚愕した。
 
 実際に使用してみて便利さを確かめてみる。
 
-
 ## Swagger Editorをいじる
+
 まずはお手軽にブラウザで扱える`Swagger Editor`を試す。
 
 以下にアクセス。  
-https://editor-next.swagger.io  
+https://editor-next.swagger.io
 
 左側のカラムがYAMLになっていて、右側にその内容がリアルタイムにドキュメント化されているっぽい。
 
@@ -45,31 +47,34 @@ paths:
       summary: Returns a list of users.
       description: Optional extended description in CommonMark or HTML.
       responses:
-        '200':    # status code
+        '200': # status code
           description: A JSON array of user names
           content:
             application/json:
-              schema: 
+              schema:
                 type: array
-                items: 
+                items:
                   type: string
 ```
 
 必須なのは以下の3点。
-* `openapi`：バージョン
-* `info`：API情報
-* `paths`：APIの個々のエンドポイントとHTTPメソッド
+
+- `openapi`：バージョン
+- `info`：API情報
+- `paths`：APIの個々のエンドポイントとHTTPメソッド
 
 必須でないものについては以下。
-* `servers`：APIサーバーとベースURL
-* `externalDocs`：外部のドキュメントを参照する場合
-* `tags`：APIをタグごとに分けて表示できるっぽい
 
+- `servers`：APIサーバーとベースURL
+- `externalDocs`：外部のドキュメントを参照する場合
+- `tags`：APIをタグごとに分けて表示できるっぽい
 
 ## YAMLファイルを保存する
+
 `File > Save as YAML`
 
 ## サーバを生成する
+
 Spring Bootで起動したかったので、`Generate Server > Spring`を選択。Zipファイルで生成される。
 
 `src/main/java/io/swagger/api`内にjavaファイルが6ファイル生成された。
@@ -80,14 +85,14 @@ Spring Bootで起動したかったので、`Generate Server > Spring`を選択�
 
 ローカルのモックAPIサーバーがすごく簡単に構築できた。
 
-
 ## クライアントを生成する
+
 `Generate Client > html2`でいい感じのドキュメントが生成されて便利。単一HTMLファイルが生成されるので扱いも楽ちん。
 
 APIを送るのは`Postman`が扱いやすくて良い。`curl`でも良いし、Vue.jsに`axios`を組み込んでも良いし。
 
-
 ## サンプル
+
 ```yml
 openapi: 3.0.0
 info:

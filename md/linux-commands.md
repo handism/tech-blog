@@ -2,6 +2,7 @@
 title: Linux（Mac）のよく使うコマンド集
 date: 2024-01-11
 tags: [Linux, Mac]
+category: OS
 image: laptop-pc.webp
 ---
 
@@ -14,7 +15,6 @@ image: laptop-pc.webp
 - `>`：標準出力をfileに書き込む
 - `>>`：追加書き込みで書き込む
 - `<`：fileの内容をcmdの標準入力で使用
-
 
 ## よく使うLinuxコマンド
 
