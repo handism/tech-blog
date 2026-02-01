@@ -40,6 +40,5 @@ image: beautiful-nature.webp
 
 - GitHubリポジトリの命名規則は特になさそう。しいて言えば**ケバブケース**が多いかも
 
-::: tip
-Commit時に`Untracked files:`が出た時は`git clean -f`。
-:::
+> Tips
+> Commit時に`Untracked files:`が出た時は`git clean -f`。

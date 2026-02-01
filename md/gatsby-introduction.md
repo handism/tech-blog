@@ -66,10 +66,8 @@ What would you like to name the folder where your site will be created?
 · No (or I'll add it later)
 ```
 
-::: warning
-細い回線で上記作業をすると途中でエラーとなってしまうので注意。  
-モバイル回線で実施した場合は、YouTubeを見ながらだと無理だった。
-:::
+> 細い回線で上記作業をすると途中でエラーとなってしまうので注意。  
+> モバイル回線で実施した場合は、YouTubeを見ながらだと無理だった。
 
 ## ④ ローカルで動作確認する
 
@@ -88,16 +86,14 @@ http://localhost:8000/
 以下でGraphiQLを起動可能。  
 http://localhost:8000/\_\_\_graphql
 
-::: tip
-Gatsby CLIを入れずにクイックに始めることも可能。
-
-```zsh
-npm init gatsby
-cd gatsby-blogsite
-npm run develop
-```
-
-:::
+> Tips
+> Gatsby CLIを入れずにクイックに始めることも可能。
+>
+> ```zsh
+> npm init gatsby
+> cd gatsby-blogsite
+> npm run develop
+> ```
 
 ## ⑤ コーディングを実施
 
