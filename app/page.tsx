@@ -5,7 +5,7 @@ import Pagination from '@/components/Pagination';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'ホーム',
+  title: "Handism's Tech Blog",
 };
 
 const POSTS_PER_PAGE = 10;
