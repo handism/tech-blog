@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Post } from '@/lib/posts';
+import { tagToSlug } from '@/lib/utils';
 
 type Props = {
   post: Post;
@@ -36,7 +37,7 @@ export default function PostCard({ post }: Props) {
         {post.tags.map((tag) => (
           <Link
             key={tag}
-            href={`/blog/tags/${tag}`}
+            href={`/blog/tags/${tagToSlug(tag)}`}
             className="
           text-xs
           text-text/80
