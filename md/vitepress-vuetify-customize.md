@@ -118,8 +118,7 @@ const { page, frontmatter } = useData();
 
 こんな感じで記事ページの上部がかっこ良くなった。
 
-::: tip
-`<template #doc-top>`の部分はVitePressのデフォルトテーマに備わっている「レイアウトスロット」という機能。ページ内の特定の場所にコンポーネントを注入できる。
-
-https://vitepress.dev/guide/extending-default-theme#layout-slots
-:::
+> Tips  
+> `<template #doc-top>`の部分はVitePressのデフォルトテーマに備わっている「レイアウトスロット」という機能。ページ内の特定の場所にコンポーネントを注入できる。
+>
+> https://vitepress.dev/guide/extending-default-theme#layout-slots

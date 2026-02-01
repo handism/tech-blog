@@ -1,7 +1,7 @@
 ---
 title: Vue.jsに入門してみる
 date: 2023-11-25
-tags: [Vue, Frontend]
+tags: [Vue]
 category: Frontend
 image: new-start.webp
 ---
@@ -81,9 +81,7 @@ npm run build
 
 `dist`フォルダ内に静的ファイルが生成されるので、中身をホスティングサーバにアップロードするだけ。
 
-::: warning
-ローカルの`file://`では動かないので注意。
-:::
+> ローカルの`file://`では動かないので注意。
 
 ```zsh
 npm run preview
@@ -95,10 +93,9 @@ npm run preview
 
 ここからVue.jsのコーディングを開始する。
 
-::: tip
-Vue.jsのスタイルガイドは以下。  
-https://ja.vuejs.org/style-guide/
-:::
+> Tips  
+> Vue.jsのスタイルガイドは以下。  
+> https://ja.vuejs.org/style-guide/
 
 ### 組み込みコンポーネント
 

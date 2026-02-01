@@ -1,7 +1,7 @@
 ---
 title: VitePress + GitHub Actions + GitHub Pagesでブログを自作する
 date: 2023-11-26
-tags: [Frontend, Vue, VitePress, Blog]
+tags: [Vue, VitePress, Blog]
 category: Frontend
 image: blog-image.webp
 ---
@@ -18,7 +18,7 @@ ITエンジニアとして働いていて、毎日が勉強だと感じている
 | Blogger        | Jimdo        | Hugo   |
 | Qiita          | Movable Type | Jskyll |
 
-> Tips
+> Tips  
 > VitePressの名前に含まれている「`Vite`」とは、Vue.jsのコマンドラインツールのこと。  
 > 読み方は「ヴィート」。フランス語で「高速」という意味で、名前の通りプロジェクト生成や実行が高速という特徴がある。
 
@@ -388,7 +388,7 @@ import { data as posts } from '../../.vitepress/theme/posts.data.mjs'
 </ul>
 ```
 
-> [!TIP]
+> Tips  
 > mdファイル内からVueコンポーネントを呼びたい場合は以下のようにする。docs/componentsフォルダにコンポーネントを入れることを想定。
 >
 > ```md
