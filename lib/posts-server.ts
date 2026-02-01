@@ -49,32 +49,38 @@ function markdownToPlaintext(markdown: string): string {
 export function getAllPosts(): Post[] {
   const files = fs.readdirSync(postsDir);
 
-  return files.map((file) => {
-    const slug = file.replace(/\.md$/, '');
-    const fullPath = path.join(postsDir, file);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-    const { data, content } = matter(fileContents);
+  return files
+    .map((file) => {
+      const slug = file.replace(/\.md$/, '');
+      const fullPath = path.join(postsDir, file);
+      const fileContents = fs.readFileSync(fullPath, 'utf8');
+      const { data, content } = matter(fileContents);
 
-    const processed = unified()
-      .use(remarkParse)
-      .use(remarkGfm) // 追加：GFMサポート（テーブル、打ち消し線など）
-      .use(remarkRehype)
-      .use(rehypeSlug)
-      .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
-      .use(rehypeStringify)
-      .processSync(content);
+      const processed = unified()
+        .use(remarkParse)
+        .use(remarkGfm) // 追加：GFMサポート（テーブル、打ち消し線など）
+        .use(remarkRehype)
+        .use(rehypeSlug)
+        .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
+        .use(rehypeStringify)
+        .processSync(content);
 
-    return {
-      slug,
-      title: data.title ?? 'No title',
-      date: data.date ? new Date(data.date) : undefined,
-      tags: data.tags ?? [],
-      category: data.category ?? 'uncategorized',
-      content: String(processed),
-      plaintext: markdownToPlaintext(content),
-      image: data.image, // 追加
-    };
-  });
+      return {
+        slug,
+        title: data.title ?? 'No title',
+        date: data.date ? new Date(data.date) : undefined,
+        tags: data.tags ?? [],
+        category: data.category ?? 'uncategorized',
+        content: String(processed),
+        plaintext: markdownToPlaintext(content),
+        image: data.image, // 追加
+      };
+    })
+    .sort((a, b) => {
+      if (!a.date) return 1; // 日付なしは後ろ
+      if (!b.date) return -1;
+      return b.date.getTime() - a.date.getTime(); // ← 新しい順
+    });
 }
 
 /**
