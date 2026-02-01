@@ -1,10 +1,12 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { remark } from 'remark';
-import remarkHtml from 'remark-html';
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypeStringify from 'rehype-stringify';
 import { generateToc } from './toc';
 
 const postsDir = path.join(process.cwd(), 'md');
@@ -51,19 +53,21 @@ export function getAllPosts(): Post[] {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const { data, content } = matter(fileContents);
 
+    const processed = unified()
+      .use(remarkParse)
+      .use(remarkRehype)
+      .use(rehypeSlug)
+      .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
+      .use(rehypeStringify)
+      .processSync(content);
+
     return {
       slug,
       title: data.title ?? 'No title',
       date: data.date ? new Date(data.date) : undefined,
       tags: data.tags ?? [],
       category: data.category ?? 'uncategorized',
-      content: String(
-        remark()
-          .use(rehypeSlug)
-          .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
-          .use(remarkHtml)
-          .processSync(content)
-      ),
+      content: String(processed),
       plaintext: markdownToPlaintext(content),
     };
   });
@@ -80,17 +84,18 @@ export async function getPost(slug: string): Promise<Post | null> {
   const { data, content } = matter(fileContents);
 
   // Markdown → HTML + 見出しID付与 + 自動リンク
-  const processed = await remark()
+  const processed = await unified()
+    .use(remarkParse)
+    .use(remarkRehype)
     .use(rehypeSlug)
     .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
-    .use(remarkHtml)
+    .use(rehypeStringify)
     .process(content);
 
-  const htmlContent = String(processed.value || processed);
+  const htmlContent = String(processed);
   const toc = generateToc(htmlContent);
 
-  // HTML を plain text に変換して Fuse.js 用にする
-  const plaintext = markdownToPlaintext(htmlContent);
+  const plaintext = markdownToPlaintext(content);
 
   return {
     slug,
@@ -99,7 +104,7 @@ export async function getPost(slug: string): Promise<Post | null> {
     tags: data.tags ?? [],
     category: data.category ?? 'uncategorized',
     content: htmlContent,
-    plaintext: plaintext || '', // 必ず文字列
+    plaintext: plaintext || '',
     toc,
   };
 }
