@@ -16,6 +16,7 @@ export type Post = {
   tags: string[];
   category: string;
   content: string;
+  plaintext?: string;
   toc?: TocItem[];
 };
 

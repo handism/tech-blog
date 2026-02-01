@@ -1,37 +1,52 @@
+// components/SearchBox.tsx
 'use client';
+
 import { useState, useMemo } from 'react';
-import Link from 'next/link';
-import { searchPosts } from '@/lib/client-search';
-import type { Post } from '@/lib/posts';
+import Fuse from 'fuse.js';
+import type { Post } from '@/lib/posts-server';
 
-export default function SearchBox({ posts }: { posts: (Post & { plaintext: string })[] }) {
-  const [q, setQ] = useState('');
+type Props = {
+  posts: Post[];
+};
 
-  const filtered = useMemo(() => {
-    if (!q.trim()) return [];
-    return searchPosts(posts, q);
-  }, [q, posts]);
+export default function SearchBox({ posts }: Props) {
+  const [query, setQuery] = useState('');
+
+  // Fuse.js 設定
+  const fuse = useMemo(
+    () =>
+      new Fuse(posts, {
+        keys: [
+          { name: 'title', weight: 0.7 },
+          { name: 'plaintext', weight: 0.3 },
+          { name: 'tags', weight: 0.5 },
+          { name: 'category', weight: 0.5 },
+        ],
+        threshold: 0.3,
+      }),
+    [posts]
+  );
+
+  const results = query ? fuse.search(query).map((r) => r.item) : [];
 
   return (
-    <div className="relative">
+    <div className="space-y-2">
       <input
-        className="w-full p-2 border border-border rounded bg-bg text-text placeholder:text-text/50"
-        placeholder="記事を検索..."
-        value={q}
-        onChange={(e) => setQ(e.target.value)}
+        type="text"
+        placeholder="検索..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        className="w-full border p-2 rounded"
       />
-      {q && filtered.length > 0 && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-card border border-border rounded shadow-lg z-10 max-h-64 overflow-y-auto">
-          {filtered.map((p) => (
-            <Link key={p.slug} href={`/blog/posts/${p.slug}`}>
-              <div className="p-2 border-b border-border last:border-b-0 hover:bg-bg text-sm cursor-pointer">
-                <div className="font-medium text-text">{p.title}</div>
-                <div className="text-text/60 text-xs">{p.category}</div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      )}
+      <ul className="mt-2 space-y-1">
+        {(results.length ? results : posts).map((post) => (
+          <li key={post.slug}>
+            <a href={`/posts/${post.slug}`} className="hover:underline">
+              {post.title} <span className="text-sm text-gray-500">[{post.category}]</span>
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

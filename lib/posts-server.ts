@@ -31,12 +31,12 @@ export type Post = {
  */
 function markdownToPlaintext(markdown: string): string {
   return markdown
-    .replace(/^#+\s+/gm, '') // ヘッダーを削除
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // リンクを削除
-    .replace(/`[^`]+`/g, '') // インラインコードを削除
-    .replace(/```[\s\S]*?```/g, '') // コードブロックを削除
-    .replace(/[*_~-]+/g, '') // マークダウン記号を削除
-    .replace(/\n+/g, ' ') // 改行をスペースに
+    .replace(/^#+\s+/gm, '') // 見出し削除
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // リンク削除
+    .replace(/`[^`]+`/g, '') // インラインコード削除
+    .replace(/```[\s\S]*?```/g, '') // コードブロック削除
+    .replace(/[*_~-]+/g, '') // マークダウン記号削除
+    .replace(/\n+/g, ' ')
     .trim();
 }
 
@@ -46,11 +46,10 @@ function markdownToPlaintext(markdown: string): string {
 export function getAllPosts(): Post[] {
   const files = fs.readdirSync(postsDir);
 
-  const posts = files.map((file) => {
+  return files.map((file) => {
     const slug = file.replace(/\.md$/, '');
     const fullPath = path.join(postsDir, file);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
-
     const { data, content } = matter(fileContents);
 
     return {
@@ -59,15 +58,15 @@ export function getAllPosts(): Post[] {
       date: data.date ? new Date(data.date) : undefined,
       tags: data.tags ?? [],
       category: data.category ?? 'uncategorized',
-      content,
+      content: String(
+        remark()
+          .use(rehypeSlug)
+          .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
+          .use(remarkHtml)
+          .processSync(content)
+      ),
       plaintext: markdownToPlaintext(content),
     };
-  });
-
-  return posts.sort((a, b) => {
-    if (!a.date) return 1;
-    if (!b.date) return -1;
-    return b.date.getTime() - a.date.getTime();
   });
 }
 
