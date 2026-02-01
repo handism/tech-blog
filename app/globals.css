@@ -22,6 +22,7 @@ body {
 
 html {
   scroll-behavior: smooth;
+  overflow-y: scroll;
   transition:
     background-color 0.2s,
     color 0.2s;

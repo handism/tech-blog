@@ -16,7 +16,7 @@ export default async function AboutPage() {
       <div className="prose dark:prose-invert max-w-none">
         <h1>About</h1>
         <h2>このブログについて</h2>
-        <img src="./public/wolf-icon.webp" alt="狼の画像" />
+        <img src="/images/wolf-icon.webp" alt="狼の画像" />
         <p>
           現役のインハウスエンジニアによる技術ブログです。日々の業務やプライベートで得た知識の備忘録として運用しています。
           当ブログは`VitePress`にて作成し、`GitHub Pages`上でホスティングしています。
