@@ -1,3 +1,4 @@
+'use client'; // ← これを追加！
 import React, { useState, useCallback, useRef } from 'react';
 import Cropper, { Area, Point } from 'react-easy-crop';
 import { Upload, Download, Maximize, ImageIcon } from 'lucide-react';
