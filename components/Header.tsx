@@ -44,7 +44,7 @@ export default function Header() {
         </div>
 
         {/* ナビ (スマホでは2段目、PCではタイトルの隣) */}
-        <nav className="flex items-center gap-4">
+        <nav className="flex items-center gap-4 md:ml-6">
           <Link href="/about" className="text-sm text-text/80 hover:text-accent transition-colors">
             About
           </Link>
