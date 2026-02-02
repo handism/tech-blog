@@ -1,9 +1,9 @@
-'use client'; // ← これを追加！
+'use client';
+
 import React, { useState, useCallback, useRef } from 'react';
 import Cropper, { Area, Point } from 'react-easy-crop';
-import { Upload, Download, Maximize, ImageIcon } from 'lucide-react';
+import { Upload, Download, Maximize, ImageIcon, FileImage } from 'lucide-react';
 
-// トリミング後の画像を生成するユーティリティ関数
 const getCroppedImg = async (
   imageSrc: string,
   pixelCrop: Area,
@@ -15,7 +15,6 @@ const getCroppedImg = async (
 
   const canvas = document.createElement('canvas');
   const ctx = canvas.getContext('2d');
-
   if (!ctx) throw new Error('No 2d context');
 
   canvas.width = pixelCrop.width;
@@ -43,13 +42,37 @@ export default function ImageTrimmingApp() {
   const [aspect, setAspect] = useState(16 / 9);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [format, setFormat] = useState<'png' | 'webp'>('png');
+  const [isDragging, setIsDragging] = useState(false);
 
-  // ファイル読み込み
-  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
+  // ファイル処理の共通ロジック
+  const handleFile = (file: File) => {
+    if (file && file.type.startsWith('image/')) {
       const reader = new FileReader();
-      reader.addEventListener('load', () => setImage(reader.result as string));
-      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = () => setImage(reader.result as string);
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // フォルダから選択
+  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      handleFile(e.target.files[0]);
+    }
+  };
+
+  // ドラッグ&ドロップのハンドラー
+  const onDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const onDragLeave = () => setIsDragging(false);
+
+  const onDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      handleFile(e.dataTransfer.files[0]);
     }
   };
 
@@ -57,7 +80,6 @@ export default function ImageTrimmingApp() {
     setCroppedAreaPixels(pixels);
   }, []);
 
-  // ダウンロード実行
   const downloadResult = async () => {
     if (!image || !croppedAreaPixels) return;
     const croppedImage = await getCroppedImg(image, croppedAreaPixels, format);
@@ -68,19 +90,20 @@ export default function ImageTrimmingApp() {
   };
 
   return (
-    <div className="flex flex-col items-center p-6 min-h-screen bg-gray-50 text-gray-800">
+    <div className="flex flex-col items-center p-6 min-h-screen bg-slate-50 text-slate-900">
       <header className="mb-8 text-center">
-        <h1 className="text-3xl font-bold flex items-center gap-2">
-          <ImageIcon className="w-8 h-8 text-blue-500" /> Image Trimmer
+        <h1 className="text-4xl font-extrabold flex items-center justify-center gap-3 tracking-tight">
+          <ImageIcon className="w-10 h-10 text-indigo-600" />
+          Image Trimmer
         </h1>
-        <p className="text-gray-500 mt-2">画像をアップロードして、自由な位置でトリミング</p>
+        <p className="text-slate-500 mt-2 font-medium">ドラッグ＆ドロップで素早くトリミング</p>
       </header>
 
-      <main className="w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden">
+      <main className="w-full max-w-5xl bg-white rounded-3xl shadow-2xl shadow-indigo-100 overflow-hidden border border-slate-200">
         {image ? (
-          <div className="flex flex-col md:flex-row">
+          <div className="flex flex-col lg:flex-row">
             {/* トリミングエリア */}
-            <div className="relative w-full h-[400px] md:w-2/3 bg-black">
+            <div className="relative w-full h-[500px] lg:w-3/4 bg-slate-900">
               <Cropper
                 image={image}
                 crop={crop}
@@ -93,24 +116,24 @@ export default function ImageTrimmingApp() {
             </div>
 
             {/* コントロールパネル */}
-            <div className="p-6 w-full md:w-1/3 flex flex-col gap-6 border-l">
+            <div className="p-8 w-full lg:w-1/4 flex flex-col gap-8 border-l border-slate-100 bg-white">
               <section>
-                <label className="text-sm font-semibold mb-3 flex items-center gap-2">
-                  <Maximize className="w-4 h-4" /> アスペクト比
+                <label className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4 flex items-center gap-2">
+                  <Maximize className="w-4 h-4" /> Aspect Ratio
                 </label>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-1 gap-2">
                   {[
-                    { label: '16:9', val: 16 / 9 },
-                    { label: '4:3', val: 4 / 3 },
-                    { label: '1:1', val: 1 / 1 },
+                    { label: '16 : 9 (Wide)', val: 16 / 9 },
+                    { label: '4 : 3 (Standard)', val: 4 / 3 },
+                    { label: '1 : 1 (Square)', val: 1 / 1 },
                   ].map((ratio) => (
                     <button
                       key={ratio.label}
                       onClick={() => setAspect(ratio.val)}
-                      className={`py-2 text-sm rounded-lg border transition ${
+                      className={`py-3 px-4 text-sm font-semibold rounded-xl border-2 transition-all ${
                         aspect === ratio.val
-                          ? 'bg-blue-500 text-white border-blue-500'
-                          : 'hover:bg-gray-100'
+                          ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-200'
+                          : 'bg-white text-slate-600 border-slate-100 hover:border-indigo-200 hover:bg-indigo-50'
                       }`}
                     >
                       {ratio.label}
@@ -120,7 +143,9 @@ export default function ImageTrimmingApp() {
               </section>
 
               <section>
-                <label className="text-sm font-semibold mb-2 block">ズーム</label>
+                <label className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 block">
+                  Zoom
+                </label>
                 <input
                   type="range"
                   min={1}
@@ -128,46 +153,59 @@ export default function ImageTrimmingApp() {
                   step={0.1}
                   value={zoom}
                   onChange={(e) => setZoom(Number(e.target.value))}
-                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-500"
+                  className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-indigo-600"
                 />
               </section>
 
               <section>
-                <label className="text-sm font-semibold mb-3 block">保存形式</label>
-                <div className="flex gap-4">
+                <label className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 block">
+                  Format
+                </label>
+                <div className="flex bg-slate-100 p-1 rounded-xl">
                   {['png', 'webp'].map((f) => (
-                    <label key={f} className="flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="format"
-                        checked={format === f}
-                        onChange={() => setFormat(f as 'png' | 'webp')}
-                        className="text-blue-500 focus:ring-blue-500"
-                      />
-                      <span className="uppercase text-sm font-medium">{f}</span>
-                    </label>
+                    <button
+                      key={f}
+                      onClick={() => setFormat(f as 'png' | 'webp')}
+                      className={`flex-1 py-2 text-xs font-bold uppercase rounded-lg transition-all ${
+                        format === f
+                          ? 'bg-white shadow-sm text-indigo-600'
+                          : 'text-slate-400 hover:text-slate-600'
+                      }`}
+                    >
+                      {f}
+                    </button>
                   ))}
                 </div>
               </section>
 
-              <div className="mt-auto flex flex-col gap-2">
+              <div className="mt-auto pt-6 flex flex-col gap-3">
                 <button
                   onClick={downloadResult}
-                  className="flex items-center justify-center gap-2 bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700 transition"
+                  className="flex items-center justify-center gap-2 bg-indigo-600 text-white py-4 rounded-2xl font-bold hover:bg-indigo-700 active:scale-[0.98] transition-all shadow-xl shadow-indigo-200"
                 >
-                  <Download className="w-5 h-5" /> ダウンロード
+                  <Download className="w-5 h-5" /> Download
                 </button>
                 <button
                   onClick={() => setImage(null)}
-                  className="text-sm text-gray-400 hover:text-red-500 transition"
+                  className="py-2 text-sm font-medium text-slate-400 hover:text-red-500 transition-colors"
                 >
-                  別の画像をアップロード
+                  Clear and Restart
                 </button>
               </div>
             </div>
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center h-64 border-2 border-dashed border-gray-300 m-8 rounded-xl">
+          /* アップロードエリア（D&D対応） */
+          <div
+            onDragOver={onDragOver}
+            onDragLeave={onDragLeave}
+            onDrop={onDrop}
+            className={`group m-8 h-80 border-4 border-dashed rounded-3xl flex flex-col items-center justify-center transition-all ${
+              isDragging
+                ? 'border-indigo-500 bg-indigo-50 scale-[1.02]'
+                : 'border-slate-200 bg-slate-50 hover:bg-white hover:border-indigo-300'
+            }`}
+          >
             <input
               type="file"
               accept="image/*"
@@ -175,13 +213,22 @@ export default function ImageTrimmingApp() {
               className="hidden"
               id="upload-input"
             />
-            <label
-              htmlFor="upload-input"
-              className="flex flex-col items-center cursor-pointer hover:opacity-70 transition"
-            >
-              <Upload className="w-12 h-12 text-gray-400 mb-2" />
-              <span className="font-medium">画像を選択して開始</span>
-              <span className="text-xs text-gray-400 mt-1">PNG, JPG, WEBPに対応</span>
+            <label htmlFor="upload-input" className="flex flex-col items-center cursor-pointer">
+              <div
+                className={`p-5 rounded-full mb-4 transition-all ${
+                  isDragging
+                    ? 'bg-indigo-500 text-white animate-bounce'
+                    : 'bg-white text-slate-400 shadow-sm group-hover:text-indigo-500'
+                }`}
+              >
+                <FileImage className="w-12 h-12" />
+              </div>
+              <span className="text-xl font-bold text-slate-700">
+                {isDragging ? 'そのままドロップ！' : '画像をドロップして開始'}
+              </span>
+              <span className="text-slate-400 mt-2 font-medium border-b border-slate-200 pb-1 hover:text-indigo-500 transition-colors">
+                またはフォルダから選択
+              </span>
             </label>
           </div>
         )}
