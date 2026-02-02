@@ -46,6 +46,12 @@ export default function Header() {
                 >
                   Memphis Generator
                 </Link>
+                <Link
+                  href="/tools/memphis"
+                  className="block px-4 py-2 text-sm text-text/80 hover:text-accent hover:bg-accent/10"
+                >
+                  Memphis Generator
+                </Link>
               </div>
             </div>
           </nav>
