@@ -35,7 +35,7 @@ export default function Sidebar({
               <a
                 href={`#${item.id}`}
                 onClick={() => setIsOpen(false)}
-                className="text-text/80 hover:text-accent hover:underline block py-1"
+                className="text-text/80 hover:text-accent hover:underline block"
               >
                 {item.text}
               </a>
