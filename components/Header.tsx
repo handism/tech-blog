@@ -1,14 +1,37 @@
+'use client'; // ← これを追加（useStateを使うのでクライアントコンポーネントに）
+
+import { useState, useEffect, useRef } from 'react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import Link from 'next/link';
 
 export default function Header() {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // 外側クリックで閉じる処理
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, []);
+
   return (
     <header className="bg-bg">
       <div
         className="
           max-w-6xl mx-auto px-4
-          py-3 md:py-4               // 少し高さを調整
-          relative                   // ← ここをrelativeに（absoluteの基準になる）
+          py-3 md:py-4
+          relative
           flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-0
         "
       >
@@ -23,32 +46,31 @@ export default function Header() {
               About
             </Link>
 
-            <div className="relative group">
+            {/* Toolsドロップダウン */}
+            <div className="relative" ref={dropdownRef}>
               <button
-                className="text-text/80 hover:text-accent transition-colors flex items-center gap-1"
-                aria-haspopup="true"
+                className="text-text/80 hover:text-accent transition-colors flex items-center gap-1 focus:outline-none"
+                onClick={() => setIsOpen((prev) => !prev)} // スマホ: タップでトグル
+                onMouseEnter={() => setIsOpen(true)} // PC: ホバーで開く
+                onMouseLeave={() => setIsOpen(false)} // PC: ホバー解除で閉じる
               >
                 Tools
                 <span className="text-xs">▾</span>
               </button>
 
               <div
-                className="
+                className={`
                   absolute left-0 mt-2 w-48
-                  rounded-md border border-border bg-card shadow-lg
-                  opacity-0 invisible group-hover:opacity-100 group-hover:visible
-                  transition-all z-50
-                "
+                  rounded-md border border-border
+                  bg-card shadow-lg
+                  transition-all duration-150 z-50
+                  ${isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-1 pointer-events-none'}
+                `}
               >
                 <Link
                   href="/tools/memphis"
                   className="block px-4 py-2 text-sm text-text/80 hover:text-accent hover:bg-accent/10"
-                >
-                  Memphis Generator
-                </Link>
-                <Link
-                  href="/tools/memphis"
-                  className="block px-4 py-2 text-sm text-text/80 hover:text-accent hover:bg-accent/10"
+                  onClick={() => setIsOpen(false)} // メニュー選択したら閉じる
                 >
                   Memphis Generator
                 </Link>
@@ -57,10 +79,10 @@ export default function Header() {
           </nav>
         </div>
 
-        {/* ★ アイコンはここ1箇所だけ！ */}
+        {/* アイコン（1箇所だけ・absoluteでモバイル対応） */}
         <div
           className="
-            absolute right-3 top-3 md:static               // モバイル: absoluteで右上、PC: staticで通常位置
+            absolute right-3 top-3 md:static
             flex items-center gap-1.5 md:gap-2
             md:self-auto
           "
