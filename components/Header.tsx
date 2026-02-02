@@ -73,11 +73,11 @@ export default function Header() {
                   {/* 他のメニューが増えてもここに追加すればOK */}
                   <li>
                     <Link
-                      href="/about"
+                      href="/tools/trimming"
                       onClick={() => setIsOpen(false)}
                       className="block px-4 py-2 text-sm text-text/80 hover:text-accent hover:bg-accent/10 first:rounded-t-md last:rounded-b-md"
                     >
-                      About
+                      Image Trimmer
                     </Link>
                   </li>
                 </ul>
