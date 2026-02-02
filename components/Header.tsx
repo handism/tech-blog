@@ -4,13 +4,31 @@ import Link from 'next/link';
 export default function Header() {
   return (
     <header className="bg-bg">
-      <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-6">
+      <div
+        className="
+          max-w-6xl mx-auto px-4 py-4
+          flex flex-col gap-3
+          md:flex-row md:items-center md:justify-between md:gap-0
+        "
+      >
+        {/* 左側（ロゴ + ナビ） */}
+        <div
+          className="
+            flex flex-col gap-2
+            md:flex-row md:items-center md:gap-6
+          "
+        >
           <Link href="/" className="text-xl font-bold text-text hover:opacity-80">
             Handism&apos;s Tech Blog
           </Link>
 
-          <nav className="flex items-center gap-4">
+          <nav
+            className="
+              flex items-center gap-4
+              flex-wrap
+              md:flex-nowrap
+            "
+          >
             <Link
               href="/about"
               className="text-sm text-text/80 hover:text-accent transition-colors"
@@ -28,17 +46,16 @@ export default function Header() {
                 <span className="text-xs">▾</span>
               </button>
 
-              {/* Dropdown menu */}
               <div
                 className="
-                absolute left-0 mt-2 w-48
-                rounded-md border border-border
-                bg-card shadow-lg
-                opacity-0 invisible
-                group-hover:opacity-100 group-hover:visible
-                transition-all
-                z-50
-              "
+                  absolute left-0 mt-2 w-48
+                  rounded-md border border-border
+                  bg-card shadow-lg
+                  opacity-0 invisible
+                  group-hover:opacity-100 group-hover:visible
+                  transition-all
+                  z-50
+                "
               >
                 <Link
                   href="/tools/memphis"
@@ -55,8 +72,8 @@ export default function Header() {
           </nav>
         </div>
 
-        <div className="flex items-center gap-2">
-          {/* GitHub */}
+        {/* 右側（アイコン類） */}
+        <div className="flex items-center gap-2 self-end md:self-auto">
           <a
             href="https://github.com/handism"
             target="_blank"
