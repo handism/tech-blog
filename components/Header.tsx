@@ -48,21 +48,34 @@ export default function Header() {
               </button>
 
               <div
-                onMouseLeave={() => setIsOpen(false)} // マウスが離れたら閉じる
+                onMouseLeave={() => setIsOpen(false)}
                 className={`
                   absolute left-0 mt-2 w-48
-                  rounded-md border border-border bg-card shadow-lg
+                  rounded-md border border-border 
+                  /* 背景色をしっかり指定（bg-cardの定義が半透明なら bg-white 等に置き換え） */
+                  bg-card 
+                  /* 強い影をつけて浮かせる */
+                  shadow-xl shadow-black/10
+                  /* 背後を少しぼかすとおしゃれで読みやすい */
+                  backdrop-blur-md
                   transition-all z-50
-                  ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}
+                  ${isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}
                 `}
               >
-                <Link
-                  href="/tools/memphis"
-                  onClick={() => setIsOpen(false)} // リンククリック時に閉じる
-                  className="block px-4 py-2 text-sm text-text/80 hover:text-accent hover:bg-accent/10"
-                >
-                  Memphis Generator
-                </Link>
+                <ul className="py-1">
+                  {' '}
+                  {/* 上下に少し余白を入れると綺麗です */}
+                  <li>
+                    <Link
+                      href="/tools/memphis"
+                      onClick={() => setIsOpen(false)}
+                      className="block px-4 py-3 text-sm text-text/90 hover:text-accent hover:bg-accent/10 transition-colors"
+                    >
+                      Memphis Generator
+                    </Link>
+                  </li>
+                  {/* 他のメニューが増えてもここに追加すればOK */}
+                </ul>
               </div>
             </div>
           </nav>
