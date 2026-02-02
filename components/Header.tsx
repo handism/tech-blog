@@ -7,39 +7,25 @@ export default function Header() {
       <div
         className="
           max-w-6xl mx-auto px-4
-          py-2 md:py-4
-          flex flex-col gap-2
-          md:flex-row md:items-center md:justify-between md:gap-0
+          py-3 md:py-4               // 少し高さを調整
+          relative                   // ← ここをrelativeに（absoluteの基準になる）
+          flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-0
         "
       >
-        {/* 左側：タイトル + ナビ */}
-        <div
-          className="
-            flex flex-col gap-1
-            md:flex-row md:items-center md:gap-6
-          "
-        >
+        {/* タイトル + ナビのグループ */}
+        <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6">
           <Link href="/" className="text-xl font-bold text-text hover:opacity-80">
             Handism&apos;s Tech Blog
           </Link>
 
-          <nav
-            className="
-              flex items-center gap-4
-              w-full
-              md:w-auto
-            "
-          >
-            <Link
-              href="/about"
-              className="text-sm text-text/80 hover:text-accent transition-colors"
-            >
+          <nav className="flex items-center gap-4 md:gap-6 text-sm">
+            <Link href="/about" className="text-text/80 hover:text-accent transition-colors">
               About
             </Link>
 
             <div className="relative group">
               <button
-                className="text-sm text-text/80 hover:text-accent transition-colors flex items-center gap-1"
+                className="text-text/80 hover:text-accent transition-colors flex items-center gap-1"
                 aria-haspopup="true"
               >
                 Tools
@@ -49,21 +35,14 @@ export default function Header() {
               <div
                 className="
                   absolute left-0 mt-2 w-48
-                  rounded-md border border-border
-                  bg-card shadow-lg
-                  opacity-0 invisible
-                  group-hover:opacity-100 group-hover:visible
-                  transition-all
-                  z-50
+                  rounded-md border border-border bg-card shadow-lg
+                  opacity-0 invisible group-hover:opacity-100 group-hover:visible
+                  transition-all z-50
                 "
               >
                 <Link
                   href="/tools/memphis"
-                  className="
-                    block px-4 py-2 text-sm
-                    text-text/80 hover:text-accent
-                    hover:bg-accent/10
-                  "
+                  className="block px-4 py-2 text-sm text-text/80 hover:text-accent hover:bg-accent/10"
                 >
                   Memphis Generator
                 </Link>
@@ -72,13 +51,19 @@ export default function Header() {
           </nav>
         </div>
 
-        {/* 右側：アイコン */}
-        <div className="flex items-center gap-2 self-end md:self-auto">
+        {/* ★ アイコンはここ1箇所だけ！ */}
+        <div
+          className="
+            absolute right-3 top-3 md:static               // モバイル: absoluteで右上、PC: staticで通常位置
+            flex items-center gap-1.5 md:gap-2
+            md:self-auto
+          "
+        >
           <a
             href="https://github.com/handism"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-text hover:text-accent transition-colors p-2"
+            className="text-text hover:text-accent transition-colors p-1.5 -mr-1.5 md:p-2 md:mr-0"
             aria-label="GitHub"
           >
             <svg
