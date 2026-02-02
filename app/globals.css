@@ -237,31 +237,30 @@ article.prose pre {
 }
 
 /* =======================
-   タグ（台形チップ）
+   タグ
    ======================= */
 .tag-chip {
-  position: relative;
   display: inline-block;
-  padding: 0.25rem 0.75rem;
-  font-size: 0.75rem;
+  padding: 0.375rem 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 500;
+  line-height: 1.2;
 
   color: var(--text);
   background-color: var(--card);
   border: 1px solid var(--border);
-  border-radius: 0.25rem;
-
-  clip-path: polygon(0.4rem 0%, 100% 0%, calc(100% - 0.4rem) 100%, 0% 100%);
+  border-radius: 0.5rem;
 
   transition:
-    background-color 0.15s ease,
-    color 0.15s ease,
-    border-color 0.15s ease,
-    transform 0.1s ease;
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .tag-chip:hover {
-  background-color: color-mix(in srgb, var(--card) 80%, var(--border));
-  border-color: var(--text);
+  background-color: color-mix(in srgb, var(--border) 15%, var(--card));
+  border-color: color-mix(in srgb, var(--text) 40%, var(--border));
   transform: translateY(-1px);
+  box-shadow: 0 2px 4px color-mix(in srgb, var(--text) 8%, transparent);
 }
