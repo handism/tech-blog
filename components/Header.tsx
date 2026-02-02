@@ -71,6 +71,15 @@ export default function Header() {
                     </Link>
                   </li>
                   {/* 他のメニューが増えてもここに追加すればOK */}
+                  <li>
+                    <Link
+                      href="/about"
+                      onClick={() => setIsOpen(false)}
+                      className="block px-4 py-2 text-sm text-text/80 hover:text-accent hover:bg-accent/10 first:rounded-t-md last:rounded-b-md"
+                    >
+                      About
+                    </Link>
+                  </li>
                 </ul>
               </div>
             </div>
