@@ -1,7 +1,12 @@
+'use client';
+
 import { ThemeToggle } from '@/components/theme-toggle';
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function Header() {
+  const [isToolsOpen, setIsToolsOpen] = useState(false);
+
   return (
     <header className="bg-bg">
       <div
@@ -116,37 +121,39 @@ export default function Header() {
             About
           </Link>
 
-          <div className="relative group">
+          <div className="relative">
             <button
+              onClick={() => setIsToolsOpen(!isToolsOpen)}
               className="text-sm text-text/80 hover:text-accent transition-colors flex items-center gap-1"
               aria-haspopup="true"
+              aria-expanded={isToolsOpen}
             >
               Tools
-              <span className="text-xs">▾</span>
+              <span className="text-xs">{isToolsOpen ? '▴' : '▾'}</span>
             </button>
 
-            <div
-              className="
-                absolute left-0 mt-2 w-48
-                rounded-md border border-border
-                bg-card shadow-lg
-                opacity-0 invisible
-                group-hover:opacity-100 group-hover:visible
-                transition-all
-                z-50
-              "
-            >
-              <Link
-                href="/tools/memphis"
+            {isToolsOpen && (
+              <div
                 className="
-                  block px-4 py-2 text-sm
-                  text-text/80 hover:text-accent
-                  hover:bg-accent/10
+                  absolute left-0 mt-2 w-48
+                  rounded-md border border-border
+                  bg-card shadow-lg
+                  z-50
                 "
               >
-                Memphis Generator
-              </Link>
-            </div>
+                <Link
+                  href="/tools/memphis"
+                  className="
+                    block px-4 py-2 text-sm
+                    text-text/80 hover:text-accent
+                    hover:bg-accent/10
+                  "
+                  onClick={() => setIsToolsOpen(false)}
+                >
+                  Memphis Generator
+                </Link>
+              </div>
+            )}
           </div>
         </nav>
       </div>
