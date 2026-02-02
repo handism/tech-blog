@@ -1,4 +1,4 @@
-'use client'; // ← これを追加（useStateを使うのでクライアントコンポーネントに）
+'use client';
 
 import { useState, useEffect, useRef } from 'react';
 import { ThemeToggle } from '@/components/theme-toggle';
@@ -8,7 +8,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // 外側クリックで閉じる処理
+  // 外側クリック/タッチで閉じる
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent | TouchEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -46,13 +46,16 @@ export default function Header() {
               About
             </Link>
 
-            {/* Toolsドロップダウン */}
-            <div className="relative" ref={dropdownRef}>
+            {/* Toolsドロップダウン全体を親divで囲んでホバー領域にする */}
+            <div
+              className="relative"
+              ref={dropdownRef}
+              onMouseEnter={() => setIsOpen(true)} // ← ここに移動
+              onMouseLeave={() => setIsOpen(false)} // ← ここに移動
+            >
               <button
                 className="text-text/80 hover:text-accent transition-colors flex items-center gap-1 focus:outline-none"
                 onClick={() => setIsOpen((prev) => !prev)} // スマホ: タップでトグル
-                onMouseEnter={() => setIsOpen(true)} // PC: ホバーで開く
-                onMouseLeave={() => setIsOpen(false)} // PC: ホバー解除で閉じる
               >
                 Tools
                 <span className="text-xs">▾</span>
@@ -64,13 +67,17 @@ export default function Header() {
                   rounded-md border border-border
                   bg-card shadow-lg
                   transition-all duration-150 z-50
-                  ${isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-1 pointer-events-none'}
+                  ${
+                    isOpen
+                      ? 'opacity-100 visible translate-y-0'
+                      : 'opacity-0 invisible -translate-y-1 pointer-events-none'
+                  }
                 `}
               >
                 <Link
                   href="/tools/memphis"
                   className="block px-4 py-2 text-sm text-text/80 hover:text-accent hover:bg-accent/10"
-                  onClick={() => setIsOpen(false)} // メニュー選択したら閉じる
+                  onClick={() => setIsOpen(false)} // 選択したら閉じる
                 >
                   Memphis Generator
                 </Link>
@@ -79,7 +86,7 @@ export default function Header() {
           </nav>
         </div>
 
-        {/* アイコン（1箇所だけ・absoluteでモバイル対応） */}
+        {/* アイコン（absoluteでモバイル対応） */}
         <div
           className="
             absolute right-3 top-3 md:static
