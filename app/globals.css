@@ -40,7 +40,7 @@ article.prose h1 {
 }
 
 article.prose h2 {
-  @apply text-2xl font-semibold mt-10 mb-4 tracking-tight scroll-mt-28;
+  @apply text-2xl font-semibold mt-10 mb-4 tracking-tight;
   border-bottom: 1px solid var(--border);
   padding-bottom: 0.25rem;
 }
@@ -50,11 +50,11 @@ article.prose h2 + p {
 }
 
 article.prose h3 {
-  @apply text-xl font-medium mt-8 mb-3 scroll-mt-24;
+  @apply text-xl font-medium mt-8 mb-3;
 }
 
 article.prose h4 {
-  @apply text-base font-semibold mt-6 mb-2 scroll-mt-20;
+  @apply text-base font-semibold mt-6 mb-2;
   padding-left: 0.5rem;
   border-left: 2px solid var(--border);
 }
