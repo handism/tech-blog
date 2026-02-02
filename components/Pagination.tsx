@@ -33,7 +33,7 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
   }
 
   return (
-    <nav className="flex justify-center items-center gap-2 mt-12" aria-label="ページネーション">
+    <nav className="flex justify-center items-center gap-2 mt-4" aria-label="ページネーション">
       {/* 前へボタン */}
       {currentPage > 1 ? (
         <Link
