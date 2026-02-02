@@ -12,7 +12,7 @@ export default function Header() {
 
           <nav className="flex items-center gap-4">
             <Link
-              href="/blog/about"
+              href="/about"
               className="text-sm text-text/80 hover:text-accent transition-colors"
             >
               About
