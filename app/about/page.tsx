@@ -39,7 +39,7 @@ export default async function AboutPage() {
             {/* テキスト */}
             <div className="flex-1 text-center md:text-left">
               <h2 className="text-2xl font-bold mb-3 text-text">Handism</h2>
-              <p className="text-text/80 leading-relaxed">現役のインハウスエンジニア</p>
+              <p className="text-text/80 leading-relaxed">内製クラウドエンジニア</p>
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@ export default async function AboutPage() {
           </h2>
           <div className="bg-secondary/30 rounded-xl p-6 border-l-4 border-accent">
             <p className="text-text/90 leading-relaxed">
-              現役のインハウスエンジニアによる技術ブログです。日々の業務やプライベートで得た知識の備忘録として運用しています。
+              現役の内製クラウドエンジニアによる技術ブログです。日々の業務やプライベートで得た知識の備忘録として運用しています。
             </p>
             <p className="text-text/90 leading-relaxed mt-4">
               当ブログは<code className="px-2 py-1 bg-accent/10 rounded text-accent">Next.js</code>
@@ -117,9 +117,6 @@ export default async function AboutPage() {
             </Link>
           </div>
         </section>
-
-        {/* 最小限の高さを確保 */}
-        <div style={{ minHeight: '20vh' }} />
       </div>
     </BlogLayout>
   );
