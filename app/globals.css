@@ -99,6 +99,16 @@ article.prose ul ul ul {
   list-style-type: square;
 }
 
+/* globals.css または適切なCSSファイル */
+article img {
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+article img:hover {
+  opacity: 0.8;
+}
+
 /* =======================
    サイドバー（TOC）
    ======================= */

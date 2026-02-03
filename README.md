@@ -89,7 +89,7 @@ SSG出力は`out`ディレクトリに生成されます。
 - 改行：`半角スペース2つ`
 - 段落：`空行`
 - 箇条書き：`*`、`-`
-- 画像表示：`![トップ画像](./public/site-image.webp)`
+- 画像表示：`![画像](/images/image.png)`
 - リンク：`[リンク文言](https://github.com/handism/hekireki)`
 - 強調：`**強調**`
 - 絵文字表示：`:tada: :100:`

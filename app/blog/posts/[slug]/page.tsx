@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { tagToSlug } from '@/lib/utils';
 import Image from 'next/image';
 import type { Metadata } from 'next';
+import { ImageModal } from '@/components/ImageModal';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -103,6 +104,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         {/* 記事本文 */}
         <div className="mt-16 md:mt-20" dangerouslySetInnerHTML={{ __html: post.content }} />
       </article>
+      <ImageModal />
 
       {/* 前後の記事へのリンク */}
       <nav className="mt-12 pt-8 border-t border-border">
