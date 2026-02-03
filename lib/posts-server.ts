@@ -9,6 +9,7 @@ import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeStringify from 'rehype-stringify';
 import { generateToc } from './toc';
+import { rehypeRootImg } from './rehype-root-img';
 
 const postsDir = path.join(process.cwd(), 'md');
 
@@ -62,6 +63,7 @@ export function getAllPosts(): Post[] {
         .use(remarkParse)
         .use(remarkGfm) // 追加：GFMサポート（テーブル、打ち消し線など）
         .use(remarkRehype)
+        .use(rehypeRootImg) // ← ここ
         .use(rehypeSlug)
         .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
         .use(rehypeStringify)
