@@ -241,3 +241,28 @@ article.prose pre[class*='language-']::before {
 article.prose pre {
   max-height: 70vh;
 }
+
+.prose code,
+.prose pre {
+  @apply rounded-lg border border-zinc-800/50 bg-zinc-900/80;
+}
+
+.prose pre {
+  @apply p-0 overflow-x-auto;
+}
+
+/* 行番号をきれいにしたい場合 */
+pre code {
+  counter-reset: line;
+}
+
+pre code .line::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 2.5rem;
+  margin-right: 1.5rem;
+  text-align: right;
+  color: #6b7280;
+  user-select: none;
+}
