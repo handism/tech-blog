@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback } from 'react';
 import Cropper, { Area, Point } from 'react-easy-crop';
 import { Upload, Download, Maximize, ImageIcon, FileImage } from 'lucide-react';
 
@@ -44,7 +44,6 @@ export default function ImageTrimmingApp() {
   const [format, setFormat] = useState<'png' | 'webp'>('png');
   const [isDragging, setIsDragging] = useState(false);
 
-  // ファイル処理の共通ロジック
   const handleFile = (file: File) => {
     if (file && file.type.startsWith('image/')) {
       const reader = new FileReader();
@@ -53,14 +52,12 @@ export default function ImageTrimmingApp() {
     }
   };
 
-  // フォルダから選択
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       handleFile(e.target.files[0]);
     }
   };
 
-  // ドラッグ&ドロップのハンドラー
   const onDragOver = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(true);
@@ -80,48 +77,18 @@ export default function ImageTrimmingApp() {
     setCroppedAreaPixels(pixels);
   }, []);
 
+  /**
+   * 🔽 スマホ対応 Download
+   * - PC：そのまま新タブで表示（右クリック保存も可）
+   * - スマホ：新タブ表示 → 長押し保存
+   */
   const downloadResult = async () => {
     if (!image || !croppedAreaPixels) return;
 
-    try {
-      const croppedImage = await getCroppedImg(image, croppedAreaPixels, format);
+    const croppedImage = await getCroppedImg(image, croppedAreaPixels, format);
 
-      // Blob を使った方法に変更
-      const response = await fetch(croppedImage);
-      const blob = await response.blob();
-
-      // モバイル対応：navigator.share API があれば使用
-      if (
-        navigator.share &&
-        navigator.canShare &&
-        navigator.canShare({
-          files: [new File([blob], `trimmed-image.${format}`, { type: `image/${format}` })],
-        })
-      ) {
-        const file = new File([blob], `trimmed-image.${format}`, { type: `image/${format}` });
-        await navigator.share({
-          files: [file],
-          title: 'Trimmed Image',
-        });
-      } else {
-        // 従来のダウンロード方法（改善版）
-        const link = document.createElement('a');
-        const url = URL.createObjectURL(blob);
-        link.href = url;
-        link.download = `trimmed-image.${format}`;
-
-        // DOM に一時的に追加（モバイルで必要な場合がある）
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        // メモリ解放
-        URL.revokeObjectURL(url);
-      }
-    } catch (error) {
-      console.error('Download failed:', error);
-      alert('ダウンロードに失敗しました');
-    }
+    // スマホ対応の定番解決策
+    window.open(croppedImage, '_blank');
   };
 
   return (
@@ -160,7 +127,7 @@ export default function ImageTrimmingApp() {
                   {[
                     { label: '16 : 9 (Wide)', val: 16 / 9 },
                     { label: '4 : 3 (Standard)', val: 4 / 3 },
-                    { label: '1 : 1 (Square)', val: 1 / 1 },
+                    { label: '1 : 1 (Square)', val: 1 },
                   ].map((ratio) => (
                     <button
                       key={ratio.label}
@@ -220,6 +187,13 @@ export default function ImageTrimmingApp() {
                 >
                   <Download className="w-5 h-5" /> Download
                 </button>
+
+                <p className="text-xs text-slate-400 text-center">
+                  ※ スマホでは画像が表示されます。
+                  <br />
+                  長押しして保存してください。
+                </p>
+
                 <button
                   onClick={() => setImage(null)}
                   className="py-2 text-sm font-medium text-slate-400 hover:text-red-500 transition-colors"
@@ -230,7 +204,7 @@ export default function ImageTrimmingApp() {
             </div>
           </div>
         ) : (
-          /* アップロードエリア（D&D対応） */
+          /* アップロードエリア */
           <div
             onDragOver={onDragOver}
             onDragLeave={onDragLeave}
@@ -249,21 +223,11 @@ export default function ImageTrimmingApp() {
               id="upload-input"
             />
             <label htmlFor="upload-input" className="flex flex-col items-center cursor-pointer">
-              <div
-                className={`p-5 rounded-full mb-4 transition-all ${
-                  isDragging
-                    ? 'bg-indigo-500 text-white animate-bounce'
-                    : 'bg-white text-slate-400 shadow-sm group-hover:text-indigo-500'
-                }`}
-              >
+              <div className="p-5 rounded-full mb-4 bg-white text-slate-400 shadow-sm group-hover:text-indigo-500">
                 <FileImage className="w-12 h-12" />
               </div>
-              <span className="text-xl font-bold text-slate-700">
-                {isDragging ? 'そのままドロップ！' : '画像をドロップして開始'}
-              </span>
-              <span className="text-slate-400 mt-2 font-medium border-b border-slate-200 pb-1 hover:text-indigo-500 transition-colors">
-                またはフォルダから選択
-              </span>
+              <span className="text-xl font-bold text-slate-700">画像をドロップして開始</span>
+              <span className="text-slate-400 mt-2 font-medium">またはフォルダから選択</span>
             </label>
           </div>
         )}
