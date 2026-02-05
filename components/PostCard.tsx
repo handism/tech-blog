@@ -47,8 +47,7 @@ export default function PostCard({ post }: { post: Post }) {
                 <Link
                   key={tag}
                   href={`/blog/tags/${tagToSlug(tag)}`}
-                  className="hover:underline bg-accent/10 text-accent"
-                  // onClick削除 ← ここを削除
+                  className="inline-flex items-center px-3 py-1 text-xs font-medium rounded-full bg-accent/10 text-accent"
                 >
                   #{tag}
                 </Link>
