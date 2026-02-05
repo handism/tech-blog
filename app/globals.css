@@ -2,18 +2,18 @@
 
 @theme {
   --color-bg: #ffffff;
-  --color-card: #f9fafb;
-  --color-text: #111827;
-  --color-border: #e5e7eb;
-  --color-accent: #6366f1; /* indigo-500 */
+  --color-card: #f8fafc; /* 少し明るめで清潔感UP */
+  --color-text: #0f172a; /* ほぼ黒に近いslate-950で読みやすく */
+  --color-border: #e2e8f0;
+  --color-accent: #10b981; /* emerald-500 そのまま */
 }
 
 .dark {
-  --color-bg: #0f172a;
-  --color-card: #1e293b;
-  --color-text: #f8fafc;
-  --color-border: #475569; /* slate-600 で少し明るめ境界 */
-  --color-accent: #a5b4fc; /* indigo-300 でdarkでも目立つけどtoxicじゃない */
+  --color-bg: #0f172a; /* slate-950 */
+  --color-card: #1e293b; /* slate-800 */
+  --color-text: #f1f5f9; /* slate-100 で柔らかく */
+  --color-border: #334155; /* slate-700 */
+  --color-accent: #34d399; /* emerald-400 でdarkでも鮮やか */
 }
 
 /* Body に適用 */
@@ -246,33 +246,4 @@ article.prose pre[class*='language-']::before {
 
 article.prose pre {
   max-height: 70vh;
-}
-
-/* =======================
-   タグ
-   ======================= */
-.tag-chip {
-  display: inline-block;
-  padding: 0.375rem 0.875rem;
-  font-size: 0.8125rem;
-  font-weight: 500;
-  line-height: 1.2;
-
-  color: var(--text);
-  background-color: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
-}
-
-.tag-chip:hover {
-  background-color: color-mix(in srgb, var(--border) 15%, var(--card));
-  border-color: color-mix(in srgb, var(--text) 40%, var(--border));
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px color-mix(in srgb, var(--text) 8%, transparent);
 }
