@@ -59,7 +59,7 @@ export default function Sidebar({
               <li key={cat}>
                 <a
                   href={`/blog/categories/${cat}`}
-                  className="text-text/80 hover:underline capitalize"
+                  className="text-text/80 hover:text-accent hover:underline block"
                 >
                   {cat}
                 </a>
