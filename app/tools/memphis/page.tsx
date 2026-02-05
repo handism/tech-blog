@@ -2,11 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Image } from 'lucide-react';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Memphis Generator',
-};
 
 // =====================
 // Types
