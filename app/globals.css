@@ -32,19 +32,6 @@ html {
     color 0.2s;
 }
 
-a {
-  color: var(--accent);
-}
-
-a:hover {
-  color: var(--accent-hover);
-}
-
-.button-primary {
-  background: var(--accent);
-  color: white;
-}
-
 /* =======================
    記事本文スタイル（prose）
    ======================= */
