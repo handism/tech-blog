@@ -5,6 +5,8 @@
   --card: #f9fafb;
   --text: #111827;
   --border: #e5e7eb;
+  --accent: #10b981; /* emerald-500 */
+  --accent-hover: #059669; /* emerald-600 */
 }
 
 .dark {
@@ -12,6 +14,8 @@
   --card: #1e293b;
   --text: #f8fafc;
   --border: #334155;
+  --accent: #34d399; /* emerald-400 */
+  --accent-hover: #10b981; /* emerald-500 */
 }
 
 /* Body に適用 */
@@ -26,6 +30,19 @@ html {
   transition:
     background-color 0.2s,
     color 0.2s;
+}
+
+a {
+  color: var(--accent);
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+.button-primary {
+  background: var(--accent);
+  color: white;
 }
 
 /* =======================
