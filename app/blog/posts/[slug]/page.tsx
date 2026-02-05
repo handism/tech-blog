@@ -79,7 +79,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
                 <Link
                   key={tag}
                   href={`/blog/tags/${tagToSlug(tag)}`}
-                  className="hover:underline text-accent tag-chip"
+                  className="hover:underline bg-accent/10 text-accent"
                 >
                   #{tag}
                 </Link>
