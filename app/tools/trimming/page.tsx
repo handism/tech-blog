@@ -82,11 +82,46 @@ export default function ImageTrimmingApp() {
 
   const downloadResult = async () => {
     if (!image || !croppedAreaPixels) return;
-    const croppedImage = await getCroppedImg(image, croppedAreaPixels, format);
-    const link = document.createElement('a');
-    link.download = `trimmed-image.${format}`;
-    link.href = croppedImage;
-    link.click();
+
+    try {
+      const croppedImage = await getCroppedImg(image, croppedAreaPixels, format);
+
+      // Blob を使った方法に変更
+      const response = await fetch(croppedImage);
+      const blob = await response.blob();
+
+      // モバイル対応：navigator.share API があれば使用
+      if (
+        navigator.share &&
+        navigator.canShare &&
+        navigator.canShare({
+          files: [new File([blob], `trimmed-image.${format}`, { type: `image/${format}` })],
+        })
+      ) {
+        const file = new File([blob], `trimmed-image.${format}`, { type: `image/${format}` });
+        await navigator.share({
+          files: [file],
+          title: 'Trimmed Image',
+        });
+      } else {
+        // 従来のダウンロード方法（改善版）
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.href = url;
+        link.download = `trimmed-image.${format}`;
+
+        // DOM に一時的に追加（モバイルで必要な場合がある）
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // メモリ解放
+        URL.revokeObjectURL(url);
+      }
+    } catch (error) {
+      console.error('Download failed:', error);
+      alert('ダウンロードに失敗しました');
+    }
   };
 
   return (
