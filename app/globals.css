@@ -270,41 +270,13 @@ pre code .line::before {
 /* globals.css */
 
 pre {
-  @apply relative my-6 overflow-x-auto rounded-xl bg-zinc-900 p-4;
+  @apply my-6 overflow-x-auto rounded-xl bg-zinc-900 p-5;
 }
 
 pre code {
-  @apply block text-sm leading-relaxed text-zinc-100;
-  font-family:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
-    monospace;
-}
-
-.hljs-keyword {
-  @apply text-sky-400 font-semibold;
-}
-
-.hljs-string {
-  @apply text-emerald-300;
+  @apply block text-sm leading-7 text-zinc-100;
 }
 
 .hljs-comment {
   @apply text-zinc-500 italic;
-}
-
-.hljs-function {
-  @apply text-violet-400;
-}
-
-pre {
-  counter-reset: line;
-}
-
-pre code > span {
-  counter-increment: line;
-}
-
-pre code > span::before {
-  content: counter(line);
-  @apply mr-4 inline-block w-6 text-right text-zinc-500 select-none;
 }
