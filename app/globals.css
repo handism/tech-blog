@@ -2,19 +2,18 @@
 
 @theme {
   --color-bg: #ffffff;
-  --color-card: #f9fafb; /* lightのデフォルト */
+  --color-card: #f9fafb;
   --color-text: #111827;
   --color-border: #e5e7eb;
-  --color-accent: #10b981;
-  /* 他の色もここに */
+  --color-accent: #6366f1; /* indigo-500 */
 }
 
 .dark {
   --color-bg: #0f172a;
-  --color-card: #1e293b; /* ← ここで上書き！ @theme じゃなく普通の変数上書き */
+  --color-card: #1e293b;
   --color-text: #f8fafc;
-  --color-border: #334155;
-  --color-accent: #34d399;
+  --color-border: #475569; /* slate-600 で少し明るめ境界 */
+  --color-accent: #a5b4fc; /* indigo-300 でdarkでも目立つけどtoxicじゃない */
 }
 
 /* Body に適用 */
