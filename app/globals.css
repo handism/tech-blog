@@ -1,21 +1,28 @@
 @import 'tailwindcss';
 
-:root {
-  --bg: #ffffff;
-  --card: #f9fafb;
-  --text: #111827;
-  --border: #e5e7eb;
-  --accent: #10b981; /* emerald-500 */
-  --accent-hover: #059669; /* emerald-600 */
+@theme {
+  /* 基本の色（lightモードのデフォルト） */
+  --color-bg: #ffffff;
+  --color-card: #f9fafb;
+  --color-text: #111827;
+  --color-border: #e5e7eb;
+  --color-accent: #10b981; /* emerald-500 */
+  --color-accent-hover: #059669; /* emerald-600 */
+
+  /* 影とか他のトークンもここに追加可能 */
+  /* --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25); */
 }
 
+/* darkモード用（.darkクラスがついたときに上書き） */
 .dark {
-  --bg: #0f172a;
-  --card: #1e293b;
-  --text: #f8fafc;
-  --border: #334155;
-  --accent: #34d399; /* emerald-400 */
-  --accent-hover: #10b981; /* emerald-500 */
+  @theme {
+    --color-bg: #0f172a;
+    --color-card: #1e293b;
+    --color-text: #f8fafc;
+    --color-border: #334155;
+    --color-accent: #34d399; /* emerald-400 */
+    --color-accent-hover: #10b981; /* emerald-500 */
+  }
 }
 
 /* Body に適用 */
