@@ -3,6 +3,11 @@
 import React, { useState, useCallback } from 'react';
 import Cropper, { Area, Point } from 'react-easy-crop';
 import { Download, Maximize, Crop, FileImage } from 'lucide-react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Image Trimmer',
+};
 
 const getCroppedImg = async (
   imageSrc: string,
