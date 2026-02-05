@@ -16,16 +16,6 @@
   --color-accent: #34d399; /* emerald-400 でdarkでも鮮やか */
 }
 
-@layer base {
-  a {
-    @apply text-text/80 hover:text-accent hover:underline;
-  }
-  a:visited {
-    @apply text-text/60; /* 例: 訪問済みは少し薄く */
-  }
-}
-
-/* Body に適用 */
 html {
   scroll-behavior: smooth;
   overflow-y: scroll;
