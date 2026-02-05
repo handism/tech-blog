@@ -268,15 +268,10 @@ pre code .line::before {
 } */
 
 /* globals.css */
-
 pre {
-  @apply my-6 overflow-x-auto rounded-xl bg-zinc-900 p-5;
+  @apply rounded-xl bg-zinc-900 p-5 overflow-x-auto;
 }
 
 pre code {
-  @apply block text-sm leading-7 text-zinc-100;
-}
-
-.hljs-comment {
-  @apply text-zinc-500 italic;
+  @apply text-sm leading-7;
 }
