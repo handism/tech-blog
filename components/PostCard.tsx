@@ -37,7 +37,10 @@ export default function PostCard({ post }: { post: Post }) {
                 📅 {post.date.toLocaleDateString('ja-JP')}
               </time>
             )}
-            <span>📁 {post.category}</span>
+            {/* カテゴリ */}
+            <Link href={`/blog/categories/${post.category}`} className="hover:underline">
+              📁 {post.category}
+            </Link>
           </div>
 
           {/* タグ */}

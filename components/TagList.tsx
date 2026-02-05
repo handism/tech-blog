@@ -16,17 +16,7 @@ export default function TagList({ posts }: Props) {
         <Link
           key={tag}
           href={`/blog/tags/${tagToSlug(tag)}`}
-          className="
-              text-xs
-              text-text/80
-              px-2
-              py-1
-              rounded-full
-              bg-bg
-              hover:bg-border
-              transition
-              tag-chip
-            "
+          className="inline-flex items-center px-3 py-1 text-xs font-medium rounded-full bg-accent/10 text-accent"
         >
           #{tag}
         </Link>

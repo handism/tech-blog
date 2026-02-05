@@ -69,7 +69,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
             </time>
           )}
           {/* カテゴリ */}
-          <Link href={`/blog/categories/${post.category}`} className="hover:underline text-accent">
+          <Link href={`/blog/categories/${post.category}`} className="hover:underline">
             📁 {post.category}
           </Link>
           {/* タグ */}
