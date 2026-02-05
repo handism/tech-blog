@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import Cropper, { Area, Point } from 'react-easy-crop';
 import { Upload, Download, Maximize, ImageIcon, FileImage } from 'lucide-react';
 
@@ -44,6 +44,7 @@ export default function ImageTrimmingApp() {
   const [format, setFormat] = useState<'png' | 'webp'>('png');
   const [isDragging, setIsDragging] = useState(false);
 
+  // ファイル処理の共通ロジック
   const handleFile = (file: File) => {
     if (file && file.type.startsWith('image/')) {
       const reader = new FileReader();
@@ -52,12 +53,14 @@ export default function ImageTrimmingApp() {
     }
   };
 
+  // フォルダから選択
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       handleFile(e.target.files[0]);
     }
   };
 
+  // ドラッグ&ドロップのハンドラー
   const onDragOver = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(true);
@@ -77,18 +80,44 @@ export default function ImageTrimmingApp() {
     setCroppedAreaPixels(pixels);
   }, []);
 
-  /**
-   * 🔽 スマホ対応 Download
-   * - PC：そのまま新タブで表示（右クリック保存も可）
-   * - スマホ：新タブ表示 → 長押し保存
-   */
   const downloadResult = async () => {
     if (!image || !croppedAreaPixels) return;
 
-    const croppedImage = await getCroppedImg(image, croppedAreaPixels, format);
+    try {
+      const croppedImage = await getCroppedImg(image, croppedAreaPixels, format);
 
-    // スマホ対応の定番解決策
-    window.open(croppedImage, '_blank');
+      // ─────────────── 修正版 ───────────────
+      if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        // iOSの場合：新しいタブで開いて長押し保存を促す
+        const newWindow = window.open('');
+        if (newWindow) {
+          newWindow.document.write(`
+          <html>
+            <head><title>画像を保存</title></head>
+            <body style="margin:0;display:flex;align-items:center;justify-content:center;height:100vh;background:#000;">
+              <img src="${croppedImage}" style="max-width:95%;max-height:95%;object-fit:contain;" />
+              <p style="position:absolute;top:16px;color:white;font-family:sans-serif;">
+                画像を長押し →「画像を保存」をタップしてください
+              </p>
+            </body>
+          </html>
+        `);
+        } else {
+          alert('ポップアップがブロックされています。\n設定でポップアップを許可してください。');
+        }
+      } else {
+        // Android / PC は従来の方法でOK（ただし最近Androidも怪しい）
+        const link = document.createElement('a');
+        link.download = `trimmed-image.${format}`;
+        link.href = croppedImage;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('画像の作成に失敗しました');
+    }
   };
 
   return (
@@ -127,7 +156,7 @@ export default function ImageTrimmingApp() {
                   {[
                     { label: '16 : 9 (Wide)', val: 16 / 9 },
                     { label: '4 : 3 (Standard)', val: 4 / 3 },
-                    { label: '1 : 1 (Square)', val: 1 },
+                    { label: '1 : 1 (Square)', val: 1 / 1 },
                   ].map((ratio) => (
                     <button
                       key={ratio.label}
@@ -187,13 +216,6 @@ export default function ImageTrimmingApp() {
                 >
                   <Download className="w-5 h-5" /> Download
                 </button>
-
-                <p className="text-xs text-slate-400 text-center">
-                  ※ スマホでは画像が表示されます。
-                  <br />
-                  長押しして保存してください。
-                </p>
-
                 <button
                   onClick={() => setImage(null)}
                   className="py-2 text-sm font-medium text-slate-400 hover:text-red-500 transition-colors"
@@ -204,7 +226,7 @@ export default function ImageTrimmingApp() {
             </div>
           </div>
         ) : (
-          /* アップロードエリア */
+          /* アップロードエリア（D&D対応） */
           <div
             onDragOver={onDragOver}
             onDragLeave={onDragLeave}
@@ -223,11 +245,21 @@ export default function ImageTrimmingApp() {
               id="upload-input"
             />
             <label htmlFor="upload-input" className="flex flex-col items-center cursor-pointer">
-              <div className="p-5 rounded-full mb-4 bg-white text-slate-400 shadow-sm group-hover:text-indigo-500">
+              <div
+                className={`p-5 rounded-full mb-4 transition-all ${
+                  isDragging
+                    ? 'bg-indigo-500 text-white animate-bounce'
+                    : 'bg-white text-slate-400 shadow-sm group-hover:text-indigo-500'
+                }`}
+              >
                 <FileImage className="w-12 h-12" />
               </div>
-              <span className="text-xl font-bold text-slate-700">画像をドロップして開始</span>
-              <span className="text-slate-400 mt-2 font-medium">またはフォルダから選択</span>
+              <span className="text-xl font-bold text-slate-700">
+                {isDragging ? 'そのままドロップ！' : '画像をドロップして開始'}
+              </span>
+              <span className="text-slate-400 mt-2 font-medium border-b border-slate-200 pb-1 hover:text-indigo-500 transition-colors">
+                またはフォルダから選択
+              </span>
             </label>
           </div>
         )}
