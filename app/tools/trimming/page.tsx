@@ -124,10 +124,10 @@ export default function ImageTrimmingApp() {
   };
 
   return (
-    <div className="flex flex-col items-center p-6 min-h-screen bg-slate-50 text-slate-900">
+    <div className="flex flex-col items-center p-6 min-h-screen">
       <header className="mb-8 text-center">
         <h1 className="text-4xl font-extrabold flex items-center justify-center gap-3 tracking-tight">
-          <ImageIcon className="w-10 h-10 text-indigo-600" />
+          <ImageIcon className="w-10 h-10 text-accent" />
           Image Trimmer
         </h1>
         <p className="text-slate-500 mt-2 font-medium">ドラッグ＆ドロップで素早くトリミング</p>
