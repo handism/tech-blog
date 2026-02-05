@@ -38,7 +38,10 @@ export default function PostCard({ post }: { post: Post }) {
               </time>
             )}
             {/* カテゴリ */}
-            <Link href={`/blog/categories/${post.category}`} className="hover:underline">
+            <Link
+              href={`/blog/categories/${post.category}`}
+              className="text-text/80 hover:text-accent hover:underline block"
+            >
               📁 {post.category}
             </Link>
           </div>
