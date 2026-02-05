@@ -1,19 +1,13 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-type Size = {
-  width: number;
-  height: number;
-  label: string;
-};
+// =====================
+// Types
+// =====================
 
-type Density = {
-  name: string;
-  min: number;
-  max: number;
-};
-
+type Size = { width: number; height: number; label: string };
+type Density = { name: string; min: number; max: number };
 type ColorPalette = {
   name: string;
   primary: string[];
@@ -26,157 +20,151 @@ type DensityKey = 'simple' | 'standard' | 'busy';
 type ToneKey = 'pale' | 'light' | 'bright' | 'vivid';
 type BackgroundMode = 'auto' | 'custom' | 'transparent';
 
-const MemphisGenerator: React.FC = () => {
+// =====================
+// Constants
+// =====================
+
+const sizes: Record<SizeKey, Size> = {
+  youtube: { width: 1280, height: 720, label: 'YouTube サムネイル (1280×720)' },
+  instagram: { width: 1080, height: 1080, label: 'Instagram 投稿 (1080×1080)' },
+  twitter: { width: 1200, height: 675, label: 'X (Twitter) 投稿 (1200×675)' },
+};
+
+const densities: Record<DensityKey, Density> = {
+  simple: { name: 'シンプル', min: 8, max: 15 },
+  standard: { name: '標準', min: 20, max: 30 },
+  busy: { name: '賑やか', min: 35, max: 50 },
+};
+
+const colorPalettes: Record<ToneKey, ColorPalette> = {
+  pale: {
+    name: 'ペールトーン',
+    primary: ['#FFB3C1', '#FFFACD', '#B4E7F5', '#D4C5F9', '#FFB6B9'],
+    secondary: ['#C9E4CA', '#FFF4E0', '#E8C4F7', '#C1E1C1', '#FAD2E1'],
+    backgrounds: ['#FFF9F3', '#F7F9FB', '#FFF5F7', '#F8F9FF', '#FFFEF7'],
+  },
+  light: {
+    name: 'ライトトーン',
+    primary: ['#FFD4E5', '#FFF9B1', '#C4E8F5', '#E5D4FF', '#FFD4D4'],
+    secondary: ['#D4F1D4', '#FFEAA7', '#DFD4FF', '#D4F5E8', '#FFE4E8'],
+    backgrounds: ['#FFFBF5', '#F5FAFF', '#FFF7FA', '#FAFBFF', '#FFFFF5'],
+  },
+  bright: {
+    name: 'ブライトトーン',
+    primary: ['#FF9EBB', '#FFE066', '#66D9EF', '#B98FFF', '#FF8A8A'],
+    secondary: ['#8FE8A0', '#FFD93D', '#C78FFF', '#6EDDB8', '#FFA8B8'],
+    backgrounds: ['#FFF8F0', '#F0F8FF', '#FFF3F8', '#F8F0FF', '#FFFEF0'],
+  },
+  vivid: {
+    name: 'ビビッドトーン',
+    primary: ['#FF6B9D', '#FEC601', '#00D9FF', '#A259FF', '#FF4E50'],
+    secondary: ['#00E676', '#FFD600', '#D500F9', '#00BFA5', '#FF1744'],
+    backgrounds: ['#FFF5E6', '#E8F4F8', '#FFF0F5', '#F0F8FF', '#FFFACD'],
+  },
+};
+
+// =====================
+// Utils
+// =====================
+
+const seededRandom = (seed: number): number => {
+  const x = Math.sin(seed++) * 10000;
+  return x - Math.floor(x);
+};
+
+const getRandomColor = (palette: string[], seed: number): string => {
+  const index = Math.floor(seededRandom(seed) * palette.length);
+  return palette[index];
+};
+
+// =====================
+// Component
+// =====================
+
+export default function MemphisGenerator() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
   const [selectedSize, setSelectedSize] = useState<SizeKey>('youtube');
   const [selectedTone, setSelectedTone] = useState<ToneKey>('pale');
   const [selectedDensity, setSelectedDensity] = useState<DensityKey>('standard');
   const [backgroundMode, setBackgroundMode] = useState<BackgroundMode>('auto');
-  const [customBackgroundColor, setCustomBackgroundColor] = useState<string>('#FFF9F3');
-  const [currentSeed, setCurrentSeed] = useState<number>(() => Date.now());
-
-  const sizes: Record<SizeKey, Size> = {
-    youtube: { width: 1280, height: 720, label: 'YouTube サムネイル (1280×720)' },
-    instagram: { width: 1080, height: 1080, label: 'Instagram 投稿 (1080×1080)' },
-    twitter: { width: 1200, height: 675, label: 'X (Twitter) 投稿 (1200×675)' },
-  };
-
-  const densities: Record<DensityKey, Density> = {
-    simple: { name: 'シンプル', min: 8, max: 15 },
-    standard: { name: '標準', min: 20, max: 30 },
-    busy: { name: '賑やか', min: 35, max: 50 },
-  };
-
-  const colorPalettes: Record<ToneKey, ColorPalette> = {
-    pale: {
-      name: 'ペールトーン',
-      primary: ['#FFB3C1', '#FFFACD', '#B4E7F5', '#D4C5F9', '#FFB6B9'],
-      secondary: ['#C9E4CA', '#FFF4E0', '#E8C4F7', '#C1E1C1', '#FAD2E1'],
-      backgrounds: ['#FFF9F3', '#F7F9FB', '#FFF5F7', '#F8F9FF', '#FFFEF7'],
-    },
-    light: {
-      name: 'ライトトーン',
-      primary: ['#FFD4E5', '#FFF9B1', '#C4E8F5', '#E5D4FF', '#FFD4D4'],
-      secondary: ['#D4F1D4', '#FFEAA7', '#DFD4FF', '#D4F5E8', '#FFE4E8'],
-      backgrounds: ['#FFFBF5', '#F5FAFF', '#FFF7FA', '#FAFBFF', '#FFFFF5'],
-    },
-    bright: {
-      name: 'ブライトトーン',
-      primary: ['#FF9EBB', '#FFE066', '#66D9EF', '#B98FFF', '#FF8A8A'],
-      secondary: ['#8FE8A0', '#FFD93D', '#C78FFF', '#6EDDB8', '#FFA8B8'],
-      backgrounds: ['#FFF8F0', '#F0F8FF', '#FFF3F8', '#F8F0FF', '#FFFEF0'],
-    },
-    vivid: {
-      name: 'ビビッドトーン',
-      primary: ['#FF6B9D', '#FEC601', '#00D9FF', '#A259FF', '#FF4E50'],
-      secondary: ['#00E676', '#FFD600', '#D500F9', '#00BFA5', '#FF1744'],
-      backgrounds: ['#FFF5E6', '#E8F4F8', '#FFF0F5', '#F0F8FF', '#FFFACD'],
-    },
-  };
+  const [customBackgroundColor, setCustomBackgroundColor] = useState('#FFF9F3');
+  const [seed, setSeed] = useState(() => Date.now());
 
   const colors = colorPalettes[selectedTone];
 
-  const seededRandom = (seed: number): number => {
-    const x = Math.sin(seed++) * 10000;
-    return x - Math.floor(x);
-  };
+  // =====================
+  // Drawing
+  // =====================
 
-  const getRandomColor = (palette: string[], seed: number): string => {
-    const index = Math.floor(seededRandom(seed) * palette.length);
-    return palette[index];
-  };
-
-  const drawMemphisPattern = (
-    ctx: CanvasRenderingContext2D,
-    width: number,
-    height: number,
-    seed: number,
-    density: DensityKey,
-    bgMode: BackgroundMode,
-    customBgColor: string
-  ): void => {
+  const draw = (ctx: CanvasRenderingContext2D, width: number, height: number) => {
     ctx.clearRect(0, 0, width, height);
 
-    if (bgMode === 'transparent') {
-      // 透明背景
-    } else if (bgMode === 'custom') {
-      ctx.fillStyle = customBgColor;
+    if (backgroundMode === 'custom') {
+      ctx.fillStyle = customBackgroundColor;
       ctx.fillRect(0, 0, width, height);
-    } else {
+    } else if (backgroundMode === 'auto') {
       ctx.fillStyle = getRandomColor(colors.backgrounds, seed);
       ctx.fillRect(0, 0, width, height);
     }
 
-    let shapeSeed = seed;
-    const densityConfig = densities[density];
-    const shapeCount =
-      densityConfig.min +
-      Math.floor(seededRandom(shapeSeed++) * (densityConfig.max - densityConfig.min + 1));
+    let s = seed;
+    const { min, max } = densities[selectedDensity];
+    const count = min + Math.floor(seededRandom(s++) * (max - min + 1));
 
-    for (let i = 0; i < shapeCount; i++) {
-      const shapeType = Math.floor(seededRandom(shapeSeed++) * 7);
-      const x = seededRandom(shapeSeed++) * width;
-      const y = seededRandom(shapeSeed++) * height;
-      const size = 30 + seededRandom(shapeSeed++) * 150;
-      const rotation = seededRandom(shapeSeed++) * Math.PI * 2;
+    for (let i = 0; i < count; i++) {
+      const type = Math.floor(seededRandom(s++) * 7);
+      const x = seededRandom(s++) * width;
+      const y = seededRandom(s++) * height;
+      const size = 30 + seededRandom(s++) * 150;
+      const rot = seededRandom(s++) * Math.PI * 2;
       const color =
-        seededRandom(shapeSeed++) > 0.5
-          ? getRandomColor(colors.primary, shapeSeed++)
-          : getRandomColor(colors.secondary, shapeSeed++);
+        seededRandom(s++) > 0.5
+          ? getRandomColor(colors.primary, s++)
+          : getRandomColor(colors.secondary, s++);
 
       ctx.save();
       ctx.translate(x, y);
-      ctx.rotate(rotation);
-
+      ctx.rotate(rot);
       ctx.fillStyle = color;
       ctx.strokeStyle = color;
-      ctx.lineWidth = seededRandom(shapeSeed++) > 0.8 ? 4 : 0;
+      ctx.lineWidth = seededRandom(s++) > 0.8 ? 4 : 0;
 
-      switch (shapeType) {
+      switch (type) {
         case 0:
           ctx.beginPath();
           ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
-          if (seededRandom(shapeSeed++) > 0.5) ctx.fill();
-          else ctx.stroke();
+          seededRandom(s++) > 0.5 ? ctx.fill() : ctx.stroke();
           break;
-
         case 1:
           ctx.fillRect(-size / 2, -size / 2, size, size);
-          if (ctx.lineWidth > 0) ctx.strokeRect(-size / 2, -size / 2, size, size);
           break;
-
         case 2:
           ctx.beginPath();
           ctx.moveTo(0, -size / 2);
           ctx.lineTo(-size / 2, size / 2);
           ctx.lineTo(size / 2, size / 2);
           ctx.closePath();
-          if (seededRandom(shapeSeed++) > 0.5) ctx.fill();
-          else ctx.stroke();
+          seededRandom(s++) > 0.5 ? ctx.fill() : ctx.stroke();
           break;
-
         case 3:
           ctx.beginPath();
           ctx.lineWidth = 5;
-          const segments = 5;
-          for (let j = 0; j < segments; j++) {
-            ctx.lineTo((j - segments / 2) * 30, (j % 2) * 30 - 15);
+          for (let j = 0; j < 5; j++) {
+            ctx.lineTo((j - 2.5) * 30, (j % 2) * 30 - 15);
           }
           ctx.stroke();
           break;
-
         case 4:
           ctx.beginPath();
           ctx.lineWidth = 5;
           for (let t = 0; t < Math.PI * 2; t += 0.1) {
             const wx = t * 20 - 60;
             const wy = Math.sin(t * 3) * 20;
-            if (t === 0) ctx.moveTo(wx, wy);
-            else ctx.lineTo(wx, wy);
+            t === 0 ? ctx.moveTo(wx, wy) : ctx.lineTo(wx, wy);
           }
           ctx.stroke();
           break;
-
         case 5:
           for (let dx = -2; dx <= 2; dx++) {
             for (let dy = -2; dy <= 2; dy++) {
@@ -186,12 +174,10 @@ const MemphisGenerator: React.FC = () => {
             }
           }
           break;
-
         case 6:
           ctx.beginPath();
           ctx.arc(0, 0, size / 2, 0, Math.PI);
-          if (seededRandom(shapeSeed++) > 0.5) ctx.fill();
-          else ctx.stroke();
+          seededRandom(s++) > 0.5 ? ctx.fill() : ctx.stroke();
           break;
       }
 
@@ -199,758 +185,130 @@ const MemphisGenerator: React.FC = () => {
     }
   };
 
-  const generateMemphisSVG = (
-    width: number,
-    height: number,
-    seed: number,
-    density: DensityKey,
-    bgMode: BackgroundMode,
-    customBgColor: string
-  ): string => {
-    let shapeSeed = seed;
-    let bgColor: string;
-
-    if (bgMode === 'transparent') {
-      bgColor = 'none';
-    } else if (bgMode === 'custom') {
-      bgColor = customBgColor;
-    } else {
-      bgColor = getRandomColor(colors.backgrounds, seed);
-    }
-
-    const shapes: string[] = [];
-    const densityConfig = densities[density];
-    const shapeCount =
-      densityConfig.min +
-      Math.floor(seededRandom(shapeSeed++) * (densityConfig.max - densityConfig.min + 1));
-
-    for (let i = 0; i < shapeCount; i++) {
-      const shapeType = Math.floor(seededRandom(shapeSeed++) * 7);
-      const x = seededRandom(shapeSeed++) * width;
-      const y = seededRandom(shapeSeed++) * height;
-      const size = 30 + seededRandom(shapeSeed++) * 150;
-      const rotation = seededRandom(shapeSeed++) * 360;
-      const color =
-        seededRandom(shapeSeed++) > 0.5
-          ? getRandomColor(colors.primary, shapeSeed++)
-          : getRandomColor(colors.secondary, shapeSeed++);
-
-      const strokeColor = color;
-      const strokeWidth = seededRandom(shapeSeed++) > 0.8 ? 4 : 0;
-      const filled = seededRandom(shapeSeed++) > 0.5;
-
-      let shapeElement = '';
-
-      switch (shapeType) {
-        case 0:
-          shapeElement = `<circle cx="${x}" cy="${y}" r="${size / 2}" 
-            fill="${filled ? color : 'none'}" 
-            stroke="${strokeColor}" 
-            stroke-width="${strokeWidth}"/>`;
-          break;
-
-        case 1:
-          shapeElement = `<rect x="${x - size / 2}" y="${y - size / 2}" 
-            width="${size}" height="${size}" 
-            fill="${color}" 
-            stroke="${strokeColor}" 
-            stroke-width="${strokeWidth}"
-            transform="rotate(${rotation} ${x} ${y})"/>`;
-          break;
-
-        case 2:
-          const points = `${x},${y - size / 2} ${x - size / 2},${y + size / 2} ${x + size / 2},${y + size / 2}`;
-          shapeElement = `<polygon points="${points}" 
-            fill="${filled ? color : 'none'}" 
-            stroke="${strokeColor}" 
-            stroke-width="${strokeWidth}"
-            transform="rotate(${rotation} ${x} ${y})"/>`;
-          break;
-
-        case 3:
-          let zigzagPath = `M ${x - 75} ${y}`;
-          for (let j = 0; j < 5; j++) {
-            zigzagPath += ` L ${x - 75 + j * 30} ${y + ((j % 2) * 30 - 15)}`;
-          }
-          shapeElement = `<path d="${zigzagPath}" 
-            fill="none" 
-            stroke="${color}" 
-            stroke-width="5"
-            stroke-linecap="round"
-            transform="rotate(${rotation} ${x} ${y})"/>`;
-          break;
-
-        case 4:
-          let wavyPath = 'M ';
-          for (let t = 0; t < Math.PI * 2; t += 0.1) {
-            const wx = x + t * 20 - 60;
-            const wy = y + Math.sin(t * 3) * 20;
-            wavyPath += `${t === 0 ? '' : 'L '}${wx} ${wy} `;
-          }
-          shapeElement = `<path d="${wavyPath}" 
-            fill="none" 
-            stroke="${color}" 
-            stroke-width="5"
-            stroke-linecap="round"/>`;
-          break;
-
-        case 5:
-          let dots = '';
-          for (let dx = -2; dx <= 2; dx++) {
-            for (let dy = -2; dy <= 2; dy++) {
-              dots += `<circle cx="${x + dx * 15}" cy="${y + dy * 15}" r="4" fill="${color}"/>`;
-            }
-          }
-          shapeElement = dots;
-          break;
-
-        case 6:
-          shapeElement = `<path d="M ${x - size / 2} ${y} A ${size / 2} ${size / 2} 0 0 1 ${x + size / 2} ${y}" 
-            fill="${filled ? color : 'none'}" 
-            stroke="${strokeColor}" 
-            stroke-width="${strokeWidth}"
-            transform="rotate(${rotation} ${x} ${y})"/>`;
-          break;
-      }
-
-      shapes.push(shapeElement);
-    }
-
-    return `<?xml version="1.0" encoding="UTF-8"?>
-<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
-  <rect width="${width}" height="${height}" fill="${bgColor}"/>
-  ${shapes.join('\n  ')}
-</svg>`;
-  };
-
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (canvas) {
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        const size = sizes[selectedSize];
-        canvas.width = size.width;
-        canvas.height = size.height;
-        drawMemphisPattern(
-          ctx,
-          size.width,
-          size.height,
-          currentSeed,
-          selectedDensity,
-          backgroundMode,
-          customBackgroundColor
-        );
-      }
-    }
-  }, [
-    selectedSize,
-    selectedTone,
-    selectedDensity,
-    backgroundMode,
-    customBackgroundColor,
-    currentSeed,
-  ]);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-  const generateNew = (): void => {
-    setCurrentSeed(Date.now());
-  };
+    const { width, height } = sizes[selectedSize];
+    canvas.width = width;
+    canvas.height = height;
+    draw(ctx, width, height);
+  }, [selectedSize, selectedTone, selectedDensity, backgroundMode, customBackgroundColor, seed]);
 
-  const downloadPNG = (): void => {
+  // =====================
+  // Actions
+  // =====================
+
+  const downloadPNG = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const link = document.createElement('a');
-    link.download = `memphis-bg-${selectedSize}-${currentSeed}.png`;
-    link.href = canvas.toDataURL('image/png');
-    link.click();
+    const a = document.createElement('a');
+    a.download = `memphis-${seed}.png`;
+    a.href = canvas.toDataURL('image/png');
+    a.click();
   };
 
-  const downloadSVG = (): void => {
-    const size = sizes[selectedSize];
-    const svg = generateMemphisSVG(
-      size.width,
-      size.height,
-      currentSeed,
-      selectedDensity,
-      backgroundMode,
-      customBackgroundColor
-    );
-    const blob = new Blob([svg], { type: 'image/svg+xml' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.download = `memphis-bg-${selectedSize}-${currentSeed}.svg`;
-    link.href = url;
-    link.click();
-    URL.revokeObjectURL(url);
-  };
+  // =====================
+  // UI
+  // =====================
 
   return (
-    <div
-      style={{
-        minHeight: '100vh',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        padding: '40px 20px',
-        fontFamily: '"Outfit", -apple-system, sans-serif',
-      }}
-    >
-      <div
-        style={{
-          maxWidth: '1400px',
-          margin: '0 auto',
-        }}
-      >
-        {/* Header */}
-        <header
-          style={{
-            textAlign: 'center',
-            marginBottom: '50px',
-            animation: 'fadeIn 0.6s ease-out',
-          }}
-        >
-          <h1
-            style={{
-              fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
-              fontWeight: '900',
-              background: 'linear-gradient(45deg, #FEC601, #FF6B9D, #00D9FF)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              marginBottom: '15px',
-              textShadow: '0 4px 20px rgba(0,0,0,0.1)',
-              letterSpacing: '-0.02em',
-            }}
-          >
+    <div className="min-h-screen bg-gradient-to-br from-indigo-500 to-purple-600 p-6 font-sans">
+      <div className="mx-auto max-w-7xl">
+        <header className="mb-12 text-center">
+          <h1 className="text-4xl md:text-6xl font-black bg-gradient-to-r from-yellow-400 via-pink-500 to-cyan-400 bg-clip-text text-transparent">
             Memphis Generator
           </h1>
-          <p
-            style={{
-              fontSize: '1.3rem',
-              color: 'rgba(255,255,255,0.95)',
-              fontWeight: '500',
-              maxWidth: '600px',
-              margin: '0 auto',
-            }}
-          >
-            80年代風のカラフルな背景画像を一瞬で生成
-          </p>
+          <p className="mt-4 text-white/90 text-lg">80年代風のカラフルな背景画像を生成</p>
         </header>
 
-        {/* Main Content */}
-        <div
-          style={{
-            background: 'white',
-            borderRadius: '24px',
-            padding: '40px',
-            boxShadow: '0 20px 60px rgba(0,0,0,0.2)',
-            animation: 'slideUp 0.7s ease-out',
-          }}
-        >
-          {/* Size Selection */}
-          <div style={{ marginBottom: '30px' }}>
-            <label
-              style={{
-                display: 'block',
-                fontSize: '1.1rem',
-                fontWeight: '700',
-                color: '#1A1A1A',
-                marginBottom: '15px',
-              }}
-            >
-              📐 サイズを選択
-            </label>
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-                gap: '15px',
-              }}
-            >
-              {Object.entries(sizes).map(([key, { label }]) => (
-                <button
-                  key={key}
-                  onClick={() => setSelectedSize(key as SizeKey)}
-                  style={{
-                    padding: '18px 24px',
-                    fontSize: '1rem',
-                    fontWeight: '600',
-                    border: selectedSize === key ? '3px solid #667eea' : '2px solid #E5E7EB',
-                    borderRadius: '12px',
-                    background:
-                      selectedSize === key
-                        ? 'linear-gradient(135deg, #667eea15, #764ba215)'
-                        : 'white',
-                    color: selectedSize === key ? '#667eea' : '#4B5563',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-                    transform: selectedSize === key ? 'scale(1.02)' : 'scale(1)',
-                    fontFamily: 'inherit',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'scale(1.02)';
-                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.2)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform =
-                      selectedSize === key ? 'scale(1.02)' : 'scale(1)';
-                    e.currentTarget.style.boxShadow = 'none';
-                  }}
-                >
-                  {label}
-                </button>
-              ))}
+        <div className="rounded-3xl bg-white p-8 shadow-2xl">
+          {/* Controls */}
+          <div className="grid gap-8 md:grid-cols-2">
+            <div className="space-y-6">
+              <section>
+                <h2 className="mb-3 font-bold">サイズ</h2>
+                <div className="grid gap-2">
+                  {(Object.keys(sizes) as SizeKey[]).map((k) => (
+                    <button
+                      key={k}
+                      onClick={() => setSelectedSize(k)}
+                      className={`rounded-xl border px-4 py-3 text-left font-semibold transition ${
+                        selectedSize === k
+                          ? 'border-indigo-500 bg-indigo-50 text-indigo-600'
+                          : 'border-gray-200 hover:bg-gray-50'
+                      }`}
+                    >
+                      {sizes[k].label}
+                    </button>
+                  ))}
+                </div>
+              </section>
+
+              <section>
+                <h2 className="mb-3 font-bold">トーン</h2>
+                <div className="grid grid-cols-2 gap-2">
+                  {(Object.keys(colorPalettes) as ToneKey[]).map((k) => (
+                    <button
+                      key={k}
+                      onClick={() => setSelectedTone(k)}
+                      className={`rounded-xl border px-4 py-3 font-semibold transition ${
+                        selectedTone === k
+                          ? 'border-pink-500 bg-pink-50 text-pink-600'
+                          : 'border-gray-200 hover:bg-gray-50'
+                      }`}
+                    >
+                      {colorPalettes[k].name}
+                    </button>
+                  ))}
+                </div>
+              </section>
+
+              <section>
+                <h2 className="mb-3 font-bold">密度</h2>
+                <div className="grid grid-cols-3 gap-2">
+                  {(Object.keys(densities) as DensityKey[]).map((k) => (
+                    <button
+                      key={k}
+                      onClick={() => setSelectedDensity(k)}
+                      className={`rounded-xl border px-3 py-3 font-semibold transition ${
+                        selectedDensity === k
+                          ? 'border-cyan-500 bg-cyan-50 text-cyan-600'
+                          : 'border-gray-200 hover:bg-gray-50'
+                      }`}
+                    >
+                      {densities[k].name}
+                    </button>
+                  ))}
+                </div>
+              </section>
+            </div>
+
+            {/* Preview */}
+            <div className="flex items-center justify-center rounded-2xl border bg-gray-50 p-4">
+              <canvas ref={canvasRef} className="max-h-[500px] max-w-full" />
             </div>
           </div>
 
-          {/* Tone Selection */}
-          <div style={{ marginBottom: '30px' }}>
-            <label
-              style={{
-                display: 'block',
-                fontSize: '1.1rem',
-                fontWeight: '700',
-                color: '#1A1A1A',
-                marginBottom: '15px',
-              }}
-            >
-              🎨 カラートーンを選択
-            </label>
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                gap: '15px',
-              }}
-            >
-              {Object.entries(colorPalettes).map(([key, { name }]) => (
-                <button
-                  key={key}
-                  onClick={() => setSelectedTone(key as ToneKey)}
-                  style={{
-                    padding: '18px 24px',
-                    fontSize: '1rem',
-                    fontWeight: '600',
-                    border: selectedTone === key ? '3px solid #FF6B9D' : '2px solid #E5E7EB',
-                    borderRadius: '12px',
-                    background:
-                      selectedTone === key
-                        ? 'linear-gradient(135deg, #FF6B9D15, #FEC60115)'
-                        : 'white',
-                    color: selectedTone === key ? '#FF6B9D' : '#4B5563',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-                    transform: selectedTone === key ? 'scale(1.02)' : 'scale(1)',
-                    fontFamily: 'inherit',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'scale(1.02)';
-                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 107, 157, 0.2)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform =
-                      selectedTone === key ? 'scale(1.02)' : 'scale(1)';
-                    e.currentTarget.style.boxShadow = 'none';
-                  }}
-                >
-                  {name}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Density Selection */}
-          <div style={{ marginBottom: '30px' }}>
-            <label
-              style={{
-                display: 'block',
-                fontSize: '1.1rem',
-                fontWeight: '700',
-                color: '#1A1A1A',
-                marginBottom: '15px',
-              }}
-            >
-              ⚡ 図形の密度を選択
-            </label>
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-                gap: '15px',
-              }}
-            >
-              {Object.entries(densities).map(([key, { name }]) => (
-                <button
-                  key={key}
-                  onClick={() => setSelectedDensity(key as DensityKey)}
-                  style={{
-                    padding: '18px 24px',
-                    fontSize: '1rem',
-                    fontWeight: '600',
-                    border: selectedDensity === key ? '3px solid #00D9FF' : '2px solid #E5E7EB',
-                    borderRadius: '12px',
-                    background:
-                      selectedDensity === key
-                        ? 'linear-gradient(135deg, #00D9FF15, #A259FF15)'
-                        : 'white',
-                    color: selectedDensity === key ? '#00D9FF' : '#4B5563',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-                    transform: selectedDensity === key ? 'scale(1.02)' : 'scale(1)',
-                    fontFamily: 'inherit',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'scale(1.02)';
-                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 217, 255, 0.2)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform =
-                      selectedDensity === key ? 'scale(1.02)' : 'scale(1)';
-                    e.currentTarget.style.boxShadow = 'none';
-                  }}
-                >
-                  {name}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Background Color Selection */}
-          <div style={{ marginBottom: '30px' }}>
-            <label
-              style={{
-                display: 'block',
-                fontSize: '1.1rem',
-                fontWeight: '700',
-                color: '#1A1A1A',
-                marginBottom: '15px',
-              }}
-            >
-              🖼️ 背景色を設定
-            </label>
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-                gap: '15px',
-                marginBottom: '15px',
-              }}
-            >
-              <button
-                onClick={() => setBackgroundMode('auto')}
-                style={{
-                  padding: '18px 24px',
-                  fontSize: '1rem',
-                  fontWeight: '600',
-                  border: backgroundMode === 'auto' ? '3px solid #A259FF' : '2px solid #E5E7EB',
-                  borderRadius: '12px',
-                  background:
-                    backgroundMode === 'auto'
-                      ? 'linear-gradient(135deg, #A259FF15, #FF6B9D15)'
-                      : 'white',
-                  color: backgroundMode === 'auto' ? '#A259FF' : '#4B5563',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-                  transform: backgroundMode === 'auto' ? 'scale(1.02)' : 'scale(1)',
-                  fontFamily: 'inherit',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.02)';
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(162, 89, 255, 0.2)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform =
-                    backgroundMode === 'auto' ? 'scale(1.02)' : 'scale(1)';
-                  e.currentTarget.style.boxShadow = 'none';
-                }}
-              >
-                自動選択
-              </button>
-
-              <button
-                onClick={() => setBackgroundMode('custom')}
-                style={{
-                  padding: '18px 24px',
-                  fontSize: '1rem',
-                  fontWeight: '600',
-                  border: backgroundMode === 'custom' ? '3px solid #A259FF' : '2px solid #E5E7EB',
-                  borderRadius: '12px',
-                  background:
-                    backgroundMode === 'custom'
-                      ? 'linear-gradient(135deg, #A259FF15, #FF6B9D15)'
-                      : 'white',
-                  color: backgroundMode === 'custom' ? '#A259FF' : '#4B5563',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-                  transform: backgroundMode === 'custom' ? 'scale(1.02)' : 'scale(1)',
-                  fontFamily: 'inherit',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.02)';
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(162, 89, 255, 0.2)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform =
-                    backgroundMode === 'custom' ? 'scale(1.02)' : 'scale(1)';
-                  e.currentTarget.style.boxShadow = 'none';
-                }}
-              >
-                カスタム色
-              </button>
-
-              <button
-                onClick={() => setBackgroundMode('transparent')}
-                style={{
-                  padding: '18px 24px',
-                  fontSize: '1rem',
-                  fontWeight: '600',
-                  border:
-                    backgroundMode === 'transparent' ? '3px solid #A259FF' : '2px solid #E5E7EB',
-                  borderRadius: '12px',
-                  background:
-                    backgroundMode === 'transparent'
-                      ? 'linear-gradient(135deg, #A259FF15, #FF6B9D15)'
-                      : 'white',
-                  color: backgroundMode === 'transparent' ? '#A259FF' : '#4B5563',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-                  transform: backgroundMode === 'transparent' ? 'scale(1.02)' : 'scale(1)',
-                  fontFamily: 'inherit',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.02)';
-                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(162, 89, 255, 0.2)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform =
-                    backgroundMode === 'transparent' ? 'scale(1.02)' : 'scale(1)';
-                  e.currentTarget.style.boxShadow = 'none';
-                }}
-              >
-                透明
-              </button>
-            </div>
-
-            {backgroundMode === 'custom' && (
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '15px',
-                  padding: '20px',
-                  background: '#F9FAFB',
-                  borderRadius: '12px',
-                  border: '2px solid #E5E7EB',
-                }}
-              >
-                <label
-                  style={{
-                    fontSize: '1rem',
-                    fontWeight: '600',
-                    color: '#4B5563',
-                    minWidth: '100px',
-                  }}
-                >
-                  背景色を選択:
-                </label>
-                <input
-                  type="color"
-                  value={customBackgroundColor}
-                  onChange={(e) => setCustomBackgroundColor(e.target.value)}
-                  style={{
-                    width: '80px',
-                    height: '50px',
-                    border: '2px solid #E5E7EB',
-                    borderRadius: '8px',
-                    cursor: 'pointer',
-                  }}
-                />
-                <span
-                  style={{
-                    fontSize: '1rem',
-                    fontWeight: '600',
-                    color: '#1A1A1A',
-                    fontFamily: 'monospace',
-                    background: 'white',
-                    padding: '10px 16px',
-                    borderRadius: '8px',
-                    border: '2px solid #E5E7EB',
-                  }}
-                >
-                  {customBackgroundColor}
-                </span>
-              </div>
-            )}
-          </div>
-
-          {/* Canvas Preview */}
-          <div
-            style={{
-              marginBottom: '30px',
-              border: '3px solid #F3F4F6',
-              borderRadius: '16px',
-              overflow: 'hidden',
-              background:
-                backgroundMode === 'transparent'
-                  ? 'repeating-conic-gradient(#E5E7EB 0% 25%, #F9FAFB 0% 50%) 50% / 20px 20px'
-                  : '#F9FAFB',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              padding: '20px',
-            }}
-          >
-            <canvas
-              ref={canvasRef}
-              style={{
-                display: 'block',
-                maxWidth: '100%',
-                maxHeight: '600px',
-                width: 'auto',
-                height: 'auto',
-              }}
-            />
-          </div>
-
-          {/* Action Buttons */}
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-              gap: '15px',
-            }}
-          >
+          {/* Actions */}
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
             <button
-              onClick={generateNew}
-              style={{
-                padding: '18px 32px',
-                fontSize: '1.1rem',
-                fontWeight: '700',
-                background: 'linear-gradient(135deg, #FEC601, #FF6B9D)',
-                color: 'white',
-                border: 'none',
-                borderRadius: '12px',
-                cursor: 'pointer',
-                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: '0 4px 15px rgba(254, 198, 1, 0.4)',
-                fontFamily: 'inherit',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(254, 198, 1, 0.5)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 15px rgba(254, 198, 1, 0.4)';
-              }}
+              onClick={() => setSeed(Date.now())}
+              className="rounded-xl bg-gradient-to-r from-yellow-400 to-pink-500 py-4 font-bold text-white shadow-lg hover:opacity-90"
             >
-              🎨 新しく生成
+              新しく生成
             </button>
-
             <button
               onClick={downloadPNG}
-              style={{
-                padding: '18px 32px',
-                fontSize: '1.1rem',
-                fontWeight: '700',
-                background: 'linear-gradient(135deg, #667eea, #764ba2)',
-                color: 'white',
-                border: 'none',
-                borderRadius: '12px',
-                cursor: 'pointer',
-                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: '0 4px 15px rgba(102, 126, 234, 0.4)',
-                fontFamily: 'inherit',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(102, 126, 234, 0.5)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.4)';
-              }}
+              className="rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 py-4 font-bold text-white shadow-lg hover:opacity-90"
             >
-              📥 PNG でダウンロード
-            </button>
-
-            <button
-              onClick={downloadSVG}
-              style={{
-                padding: '18px 32px',
-                fontSize: '1.1rem',
-                fontWeight: '700',
-                background: 'linear-gradient(135deg, #00D9FF, #A259FF)',
-                color: 'white',
-                border: 'none',
-                borderRadius: '12px',
-                cursor: 'pointer',
-                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: '0 4px 15px rgba(0, 217, 255, 0.4)',
-                fontFamily: 'inherit',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 217, 255, 0.5)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 217, 255, 0.4)';
-              }}
-            >
-              📥 SVG でダウンロード
+              PNG ダウンロード
             </button>
           </div>
         </div>
-
-        {/* Footer */}
-        <footer
-          style={{
-            textAlign: 'center',
-            marginTop: '40px',
-            color: 'rgba(255,255,255,0.8)',
-            fontSize: '0.95rem',
-          }}
-        >
-          <p>メンフィスデザイン風の幾何学パターンを自動生成 | 完全サーバレス</p>
-        </footer>
       </div>
-
-      <style>
-        {`
-          @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;900&display=swap');
-          
-          @keyframes fadeIn {
-            from {
-              opacity: 0;
-              transform: translateY(-20px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-
-          @keyframes slideUp {
-            from {
-              opacity: 0;
-              transform: translateY(30px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-
-          * {
-            box-sizing: border-box;
-          }
-
-          body {
-            margin: 0;
-            padding: 0;
-          }
-        `}
-      </style>
     </div>
   );
-};
-
-export default MemphisGenerator;
+}
