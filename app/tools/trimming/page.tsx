@@ -32,6 +32,9 @@ const getCroppedImg = async (
     pixelCrop.height
   );
 
+  // ★ここが重要：Safari対策で100〜500ms待つ
+  await new Promise((resolve) => setTimeout(resolve, 300)); // 300ms前後が安定しやすい
+
   return canvas.toDataURL(`image/${format}`);
 };
 
