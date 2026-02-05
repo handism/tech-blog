@@ -83,6 +83,10 @@ const getRandomColor = (palette: string[], seed: number): string => {
 // =====================
 
 export default function MemphisGenerator() {
+  useEffect(() => {
+    document.title = "Memphis Generator | Handism's Tech Blog";
+  }, []);
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const [selectedSize, setSelectedSize] = useState<SizeKey>('youtube');
