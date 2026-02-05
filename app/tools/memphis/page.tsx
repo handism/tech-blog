@@ -215,13 +215,13 @@ export default function MemphisGenerator() {
   // =====================
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-500 to-purple-600 p-6 font-sans">
+    <div className="flex flex-col items-center p-6 min-h-screen">
       <div className="mx-auto max-w-7xl">
         <header className="mb-12 text-center">
-          <h1 className="text-4xl md:text-6xl font-black bg-gradient-to-r from-yellow-400 via-pink-500 to-cyan-400 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-extrabold flex items-center justify-center gap-3 tracking-tight">
             Memphis Generator
           </h1>
-          <p className="mt-4 text-white/90 text-lg">80年代風のカラフルな背景画像を生成</p>
+          <p className="mt-2 font-medium">80年代風のカラフルな背景画像を生成</p>
         </header>
 
         <div className="rounded-3xl bg-white p-8 shadow-2xl">

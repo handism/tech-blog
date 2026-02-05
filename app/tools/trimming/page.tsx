@@ -130,7 +130,7 @@ export default function ImageTrimmingApp() {
           <ImageIcon className="w-10 h-10 text-accent" />
           Image Trimmer
         </h1>
-        <p className="text-slate-500 mt-2 font-medium">ドラッグ＆ドロップで素早くトリミング</p>
+        <p className="mt-2 font-medium">ドラッグ＆ドロップで素早くトリミング</p>
       </header>
 
       <main className="w-full max-w-5xl bg-white rounded-3xl shadow-2xl shadow-indigo-100 overflow-hidden border border-slate-200">
