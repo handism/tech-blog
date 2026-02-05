@@ -48,6 +48,21 @@ npm start
 
 SSG出力は`out`ディレクトリに生成されます。
 
+### テスト
+
+Playwrightでテストしたい場合は以下。
+テストシナリオは`tests`ディレクトリ以下に配置する。
+
+```bash
+npm run test:e2e
+```
+
+UIモードでテストしたい場合は以下。
+
+```bash
+npm run test:e2e:ui
+```
+
 ### コンテンツの追加
 
 ブログ記事は`md`ディレクトリにMarkdownファイルとして配置します。  
