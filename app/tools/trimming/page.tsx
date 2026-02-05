@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback } from 'react';
 import Cropper, { Area, Point } from 'react-easy-crop';
-import { Upload, Download, Maximize, ImageIcon, FileImage } from 'lucide-react';
+import { Download, Maximize, Crop, FileImage } from 'lucide-react';
 
 const getCroppedImg = async (
   imageSrc: string,
@@ -127,7 +127,7 @@ export default function ImageTrimmingApp() {
     <div className="flex flex-col items-center p-6 min-h-screen">
       <header className="mb-8 text-center">
         <h1 className="text-4xl font-extrabold flex items-center justify-center gap-3 tracking-tight">
-          <ImageIcon className="w-10 h-10 text-accent" />
+          <Crop className="w-10 h-10 text-accent" />
           Image Trimmer
         </h1>
         <p className="mt-2 font-medium">ドラッグ＆ドロップで素早くトリミング</p>

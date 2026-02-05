@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { Image } from 'lucide-react';
 
 // =====================
 // Types
@@ -219,6 +220,7 @@ export default function MemphisGenerator() {
       <div className="mx-auto max-w-7xl">
         <header className="mb-12 text-center">
           <h1 className="text-4xl font-extrabold flex items-center justify-center gap-3 tracking-tight">
+            <Image className="w-10 h-10 text-accent" />
             Memphis Generator
           </h1>
           <p className="mt-2 font-medium">80年代風のカラフルな背景画像を生成</p>
