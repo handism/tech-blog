@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import hljs from 'highlight.js/lib/core';
 
 // 必要な言語だけ登録（軽量＆確実）
@@ -47,21 +48,75 @@ hljs.registerLanguage('markdown', markdown);
 hljs.registerLanguage('md', markdown);
 
 export function CodeHighlight() {
+  const pathname = usePathname();
+
   useEffect(() => {
+    // ハイライト処理
     hljs.highlightAll();
 
-    // 👇 ハイライト後に Copy ボタンを付与
-    document.querySelectorAll('pre').forEach((pre) => {
-      if (pre.querySelector('.code-copy-button')) return;
+    // コピーボタンを追加
+    const codeBlocks = document.querySelectorAll('pre code');
 
-      const button = document.createElement('button');
-      button.textContent = 'Copy';
-      button.className = 'code-copy-button absolute right-3 top-3 rounded-md px-2 py-1 text-xs';
+    codeBlocks.forEach((codeBlock) => {
+      const pre = codeBlock.parentElement;
+      if (!pre) return;
 
+      // 既にボタンがある場合はスキップ
+      if (pre.querySelector('.copy-button')) return;
+
+      // preを相対位置に
       pre.style.position = 'relative';
+
+      // コピーボタンを作成
+      const button = document.createElement('button');
+      button.className = 'copy-button';
+      button.textContent = 'Copy';
+      button.style.cssText = `
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        padding: 4px 12px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
+        color: #fff;
+        cursor: pointer;
+        font-size: 12px;
+        transition: all 0.2s;
+      `;
+
+      // ホバー効果
+      button.onmouseenter = () => {
+        button.style.background = 'rgba(255, 255, 255, 0.2)';
+      };
+      button.onmouseleave = () => {
+        button.style.background = 'rgba(255, 255, 255, 0.1)';
+      };
+
+      // クリックイベント
+      button.onclick = async () => {
+        const code = codeBlock.textContent || '';
+
+        try {
+          await navigator.clipboard.writeText(code);
+          button.textContent = 'Copied!';
+          button.style.background = 'rgba(0, 255, 0, 0.2)';
+
+          setTimeout(() => {
+            button.textContent = 'Copy';
+            button.style.background = 'rgba(255, 255, 255, 0.1)';
+          }, 2000);
+        } catch (err) {
+          button.textContent = 'Failed';
+          setTimeout(() => {
+            button.textContent = 'Copy';
+          }, 2000);
+        }
+      };
+
       pre.appendChild(button);
     });
-  }, []);
+  }, [pathname]);
 
   return null;
 }
