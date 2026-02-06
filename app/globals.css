@@ -202,7 +202,7 @@ pre {
 }
 
 pre code {
-  @apply text-sm rounded-xl leading-7;
+  @apply text-sm rounded-xl p-5 leading-7;
 }
 
 .code-copy-button {
