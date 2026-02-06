@@ -24,18 +24,6 @@ html {
     color 0.2s;
 }
 
-@layer components {
-  /* highlight.js のベースカラーを html の色より優先させる */
-  pre code {
-    /* inherit(継承) ではなく、テーマの色を強制的に使う */
-    color: inherit; /* 一旦リセット */
-    background: inherit; /* 一旦リセット */
-
-    /* もしテーマが反映されないなら、明示的に unset する */
-    all: revert;
-  }
-}
-
 /* =======================
    記事本文スタイル（prose）
    ======================= */
@@ -215,6 +203,8 @@ pre {
 
 pre code {
   @apply text-sm leading-7;
+  color: inherit; /* 一旦リセット */
+  background: inherit; /* 一旦リセット */
 }
 
 .code-copy-button {
