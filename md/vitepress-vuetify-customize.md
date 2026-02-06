@@ -3,7 +3,7 @@ title: VitePressで作ったブログをVuetifyでカスタマイズする
 date: 2023-12-03
 tags: [Vue, VitePress]
 category: Frontend
-image: beautiful-starry-sky.webp
+image: vitepress-vuetify-customize.webp
 ---
 
 ## 前提
