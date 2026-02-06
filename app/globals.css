@@ -26,7 +26,7 @@ html {
 
 @layer components {
   /* highlight.js のベースカラーを html の色より優先させる */
-  pre code.hljs {
+  pre code {
     /* inherit(継承) ではなく、テーマの色を強制的に使う */
     color: inherit; /* 一旦リセット */
     background: inherit; /* 一旦リセット */
