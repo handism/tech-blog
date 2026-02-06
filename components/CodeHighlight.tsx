@@ -10,6 +10,9 @@ import javascript from 'highlight.js/lib/languages/javascript';
 import java from 'highlight.js/lib/languages/java';
 import xml from 'highlight.js/lib/languages/xml';
 import css from 'highlight.js/lib/languages/css';
+import bash from 'highlight.js/lib/languages/bash';
+import json from 'highlight.js/lib/languages/json';
+import yaml from 'highlight.js/lib/languages/yaml';
 
 hljs.registerLanguage('ts', typescript);
 hljs.registerLanguage('typescript', typescript);
@@ -21,6 +24,16 @@ hljs.registerLanguage('java', java);
 hljs.registerLanguage('vue', xml);
 hljs.registerLanguage('html', xml);
 hljs.registerLanguage('css', css);
+
+hljs.registerLanguage('xml', xml);
+
+// 👇 これが sh 対応の正体
+hljs.registerLanguage('bash', bash);
+hljs.registerLanguage('sh', bash);
+hljs.registerLanguage('shell', bash);
+hljs.registerLanguage('json', json);
+hljs.registerLanguage('yaml', yaml);
+hljs.registerLanguage('yml', yaml);
 
 export function CodeHighlight() {
   const pathname = usePathname();
