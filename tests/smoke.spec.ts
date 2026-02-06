@@ -1,4 +1,4 @@
-// tests/example.spec.ts
+// tests/smoke.spec.ts
 import { test, expect } from '@playwright/test';
 
 test('ホームページが表示される', async ({ page }) => {
