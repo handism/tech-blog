@@ -198,7 +198,7 @@ article.prose table code {
 }
 
 pre {
-  @apply rounded-xl text-white p-6 overflow-x-auto;
+  @apply rounded-xl text-white p-4 overflow-x-auto;
   background: #0d1117;
 }
 
