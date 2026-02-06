@@ -203,7 +203,7 @@ pre {
 }
 
 pre code {
-  @apply text-sm rounded-xl leading-7 bg-zinc-900;
+  @apply text-sm leading-7;
 }
 
 .hljs {
