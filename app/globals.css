@@ -205,9 +205,9 @@ article.prose tbody tr:hover {
   background-color: color-mix(in srgb, var(--border) 20%, transparent);
 }
 
-/* article.prose table code {
+article.prose table code {
   @apply font-mono text-xs;
-} */
+}
 
 pre {
   @apply rounded-xl bg-zinc-900 p-5 overflow-x-auto;
