@@ -198,11 +198,16 @@ article.prose table code {
 }
 
 pre {
-  @apply rounded-xl bg-zinc-900 text-white p-6 overflow-x-auto;
+  @apply rounded-xl text-white p-6 overflow-x-auto;
+  background: #0d1117;
 }
 
 pre code {
   @apply text-sm rounded-xl leading-7 bg-zinc-900;
+}
+
+.hljs {
+  background: transparent;
 }
 
 .code-copy-button {
