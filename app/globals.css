@@ -204,11 +204,12 @@ article.prose td {
 article.prose tbody tr:hover {
   background-color: color-mix(in srgb, var(--border) 20%, transparent);
 }
-/* 
+
 article.prose table code {
   @apply font-mono text-xs;
 }
 
+/* 
 pre {
   @apply my-6 overflow-x-auto rounded-xl bg-zinc-900 p-5;
 }
