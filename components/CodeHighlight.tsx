@@ -15,6 +15,7 @@ import json from 'highlight.js/lib/languages/json';
 import yaml from 'highlight.js/lib/languages/yaml';
 import php from 'highlight.js/lib/languages/php';
 import python from 'highlight.js/lib/languages/python';
+import markdown from 'highlight.js/lib/languages/markdown';
 
 hljs.registerLanguage('ts', typescript);
 hljs.registerLanguage('typescript', typescript);
@@ -42,6 +43,9 @@ hljs.registerLanguage('phtml', php);
 
 hljs.registerLanguage('python', python);
 hljs.registerLanguage('py', python);
+
+hljs.registerLanguage('markdown', markdown);
+hljs.registerLanguage('md', markdown);
 
 export function CodeHighlight() {
   const pathname = usePathname();
