@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import { usePathname } from 'next/navigation';
 import hljs from 'highlight.js/lib/core';
 
 // 必要な言語だけ登録（軽量＆確実）
@@ -48,11 +47,21 @@ hljs.registerLanguage('markdown', markdown);
 hljs.registerLanguage('md', markdown);
 
 export function CodeHighlight() {
-  const pathname = usePathname();
-
   useEffect(() => {
     hljs.highlightAll();
-  }, [pathname]);
+
+    // 👇 ハイライト後に Copy ボタンを付与
+    document.querySelectorAll('pre').forEach((pre) => {
+      if (pre.querySelector('.code-copy-button')) return;
+
+      const button = document.createElement('button');
+      button.textContent = 'Copy';
+      button.className = 'code-copy-button absolute right-3 top-3 rounded-md px-2 py-1 text-xs';
+
+      pre.style.position = 'relative';
+      pre.appendChild(button);
+    });
+  }, []);
 
   return null;
 }

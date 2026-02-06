@@ -6,7 +6,6 @@ import './globals.css';
 import { ThemeProvider } from 'next-themes'; // ← これが正しい
 import 'highlight.js/styles/github-dark.css';
 import { CodeHighlight } from '@/components/CodeHighlight';
-import { CodeCopyButton } from '@/components/CodeCopyButton';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -31,7 +30,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ja" className="bg-bg text-text" suppressHydrationWarning>
       <body className="antialiased">
         <CodeHighlight />
-        <CodeCopyButton />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
           <Header />
           {children}
