@@ -202,9 +202,7 @@ pre {
 }
 
 pre code {
-  @apply text-sm leading-7;
-  color: inherit; /* 一旦リセット */
-  background: inherit; /* 一旦リセット */
+  @apply text-text text-sm leading-7;
 }
 
 .code-copy-button {
