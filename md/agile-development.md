@@ -3,7 +3,7 @@ title: アジャイル開発を学ぶ
 date: 2024-01-25
 tags: [Agile]
 category: IT
-image: agile-cheetah.webp
+image: agile-development.webp
 ---
 
 ## 用語
