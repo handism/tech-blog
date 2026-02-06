@@ -236,7 +236,7 @@ export default createContentLoader('src/*.md', {
 
 タグ一覧を表示したいmdファイルでデータローダーを読み込み、以下のようにしてタグ一覧を表示した。
 
-```md
+```js
 <script setup>
 import { data as posts } from '../.vitepress/theme/components/posts.data.mjs'
 
