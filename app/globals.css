@@ -210,29 +210,11 @@ article.prose table code {
 }
 
 pre {
-  @apply rounded-xl bg-zinc-900 p-5 overflow-x-auto relative;
+  @apply rounded-xl bg-zinc-900 p-5 overflow-x-auto;
 }
 
 pre code {
   @apply text-sm leading-7;
-  counter-reset: line;
-}
-
-pre code > span {
-  display: block;
-  padding-left: 3.5em;
-  position: relative;
-}
-
-pre code > span::before {
-  counter-increment: line;
-  content: counter(line);
-  position: absolute;
-  left: 0;
-  width: 3em;
-  text-align: right;
-  opacity: 0.4;
-  user-select: none;
 }
 
 .code-copy-button {
