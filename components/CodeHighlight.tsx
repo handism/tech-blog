@@ -30,6 +30,7 @@ hljs.registerLanguage('xml', xml);
 // 👇 これが sh 対応の正体
 hljs.registerLanguage('bash', bash);
 hljs.registerLanguage('sh', bash);
+hljs.registerLanguage('zsh', bash);
 hljs.registerLanguage('shell', bash);
 hljs.registerLanguage('json', json);
 hljs.registerLanguage('yaml', yaml);
