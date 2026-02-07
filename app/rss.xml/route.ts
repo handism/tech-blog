@@ -1,7 +1,8 @@
 import { getAllPosts } from '@/src/lib/posts-server';
 import { siteConfig } from '@/src/config/site';
 
-export const revalidate = siteConfig.rss.revalidateSeconds; // 1時間ごとに再検証
+// NOTE: Next.js segment config requires a static literal value.
+export const revalidate = 3600; // 1時間ごとに再検証
 
 export async function GET() {
   const posts = getAllPosts();
