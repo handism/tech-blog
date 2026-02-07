@@ -236,7 +236,7 @@ export default function MemphisGenerator() {
   // =====================
 
   return (
-    <div className="flex flex-col items-center p-6 min-h-screen">
+    <div className="flex flex-col items-center p-4 min-h-screen">
       <div className="mx-auto max-w-6xl">
         <header className="mb-12 text-center">
           <h1 className="text-4xl font-extrabold flex items-center justify-center gap-3 tracking-tight">
@@ -246,7 +246,7 @@ export default function MemphisGenerator() {
           <p className="mt-2 font-medium">80年代風のカラフルな背景画像を生成</p>
         </header>
 
-        <main className="rounded-3xl bg-bg shadow-2xl">
+        <main className="rounded-3xl bg-bg p-5 shadow-2xl">
           {/* Controls */}
           <div className="grid gap-8 md:grid-cols-2">
             <div className="space-y-6">
