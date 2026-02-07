@@ -9,7 +9,7 @@ export default async function AboutPage() {
   return (
     <div className="max-w-3xl mx-auto">
       <header className="mb-8 text-center">
-        <h1 className="text-4xl font-extrabold flex items-center justify-center gap-3 tracking-tight">
+        <h1 className="text-4xl font-extrabold grid grid-flow-col auto-cols-max items-center justify-center gap-3 tracking-tight">
           <User className="w-10 h-10 text-accent" />
           About
         </h1>
@@ -18,7 +18,7 @@ export default async function AboutPage() {
 
       {/* プロフィールカード */}
       <div className="bg-card border border-border rounded-2xl p-8 mb-12 shadow-lg hover:shadow-xl transition-shadow">
-        <div className="flex flex-col md:flex-row items-center gap-8">
+        <div className="grid gap-8 md:grid-cols-[auto_1fr] md:items-center">
           {/* アイコン */}
           <div className="shrink-0">
             <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-accent shadow-lg">
@@ -32,7 +32,7 @@ export default async function AboutPage() {
           </div>
 
           {/* テキスト */}
-          <div className="flex-1 text-center md:text-left">
+          <div className="text-center md:text-left">
             <h2 className="text-2xl font-bold mb-3 text-text">Handism</h2>
             <p className="text-text/80 leading-relaxed">内製クラウドエンジニア</p>
           </div>
@@ -41,7 +41,7 @@ export default async function AboutPage() {
 
       {/* このブログについて */}
       <section className="mb-12">
-        <h2 className="text-2xl font-bold mb-6 text-text flex items-center gap-3">
+        <h2 className="text-2xl font-bold mb-6 text-text grid grid-flow-col auto-cols-max items-center gap-3">
           <span className="text-3xl">📝</span>
           このブログについて
         </h2>
@@ -67,7 +67,7 @@ export default async function AboutPage() {
 
       {/* 技術スタック */}
       <section className="mb-12">
-        <h2 className="text-2xl font-bold mb-6 text-text flex items-center gap-3">
+        <h2 className="text-2xl font-bold mb-6 text-text grid grid-flow-col auto-cols-max items-center gap-3">
           <span className="text-3xl">⚡</span>
           技術スタック
         </h2>
@@ -87,7 +87,7 @@ export default async function AboutPage() {
 
       {/* Contact */}
       <section className="mb-12">
-        <h2 className="text-2xl font-bold mb-6 text-text flex items-center gap-3">
+        <h2 className="text-2xl font-bold mb-6 text-text grid grid-flow-col auto-cols-max items-center gap-3">
           <span className="text-3xl">📧</span>
           Contact
         </h2>
@@ -97,7 +97,7 @@ export default async function AboutPage() {
             href="https://github.com/handism"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-background rounded-lg font-semibold hover:opacity-90 transition-opacity"
+            className="inline-grid grid-flow-col auto-cols-max items-center gap-2 px-6 py-3 bg-accent text-background rounded-lg font-semibold hover:opacity-90 transition-opacity"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
