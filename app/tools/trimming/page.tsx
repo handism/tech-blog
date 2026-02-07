@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useCallback, useEffect } from 'react';
+import { siteConfig } from '@/src/config/site';
 import Cropper, { Area, Point } from 'react-easy-crop';
 import { Download, Maximize, Crop, FileImage } from 'lucide-react';
 
@@ -40,7 +41,7 @@ const getCroppedImg = async (
 
 export default function ImageTrimmingApp() {
   useEffect(() => {
-    document.title = "Image Trimmer | Handism's Tech Blog";
+    document.title = `Image Trimmer | ${siteConfig.name}`;
   }, []);
 
   const [image, setImage] = useState<string | null>(null);

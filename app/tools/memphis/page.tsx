@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { siteConfig } from '@/src/config/site';
 import { Image } from 'lucide-react';
 
 // =====================
@@ -84,7 +85,7 @@ const getRandomColor = (palette: string[], seed: number): string => {
 
 export default function MemphisGenerator() {
   useEffect(() => {
-    document.title = "Memphis Generator | Handism's Tech Blog";
+    document.title = `Memphis Generator | ${siteConfig.name}`;
   }, []);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
