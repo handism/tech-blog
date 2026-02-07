@@ -1,7 +1,7 @@
 'use client'; // 状態管理を使うため追加
 
 import { useState, useEffect, useRef } from 'react'; // hooksを追加
-import { ThemeToggle } from '@/components/theme-toggle';
+import { ThemeToggle } from '@/src/components/theme-toggle';
 import Link from 'next/link';
 
 export default function Header() {

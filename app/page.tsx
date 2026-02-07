@@ -1,7 +1,7 @@
-import { getAllPosts } from '@/lib/posts-server';
-import PostCard from '@/components/PostCard';
-import BlogLayout from '@/components/BlogLayout';
-import Pagination from '@/components/Pagination';
+import { getAllPosts } from '@/src/lib/posts-server';
+import PostCard from '@/src/components/PostCard';
+import BlogLayout from '@/src/components/BlogLayout';
+import Pagination from '@/src/components/Pagination';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {

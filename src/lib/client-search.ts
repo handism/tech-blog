@@ -3,7 +3,7 @@
  * ビルド時にすべての記事データが埋め込まれる
  */
 import Fuse from 'fuse.js';
-import type { Post } from './posts';
+import type { Post } from '../types/posts';
 
 export interface SearchablePost extends Post {
   plaintext: string;

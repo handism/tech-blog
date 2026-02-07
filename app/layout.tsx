@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Header from '@/src/components/Header';
+import Footer from '@/src/components/Footer';
 import './globals.css';
 import { ThemeProvider } from 'next-themes'; // ← これが正しい
 import 'highlight.js/styles/github-dark.css';
-import { CodeHighlight } from '@/components/CodeHighlight';
+import { CodeHighlight } from '@/src/components/CodeHighlight';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',

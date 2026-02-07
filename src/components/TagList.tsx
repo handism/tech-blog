@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { Post } from '@/lib/posts';
-import { tagToSlug } from '@/lib/utils';
+import { Post } from '@/src/types/posts';
+import { tagToSlug } from '@/src/lib/utils';
 
 type Props = {
   posts: Post[];

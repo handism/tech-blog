@@ -1,12 +1,12 @@
 // app/posts/[slug]/page.tsx
-import { getAllPosts, getPost } from '@/lib/posts-server';
+import { getAllPosts, getPost } from '@/src/lib/posts-server';
 import { notFound } from 'next/navigation';
-import BlogLayout from '@/components/BlogLayout';
+import BlogLayout from '@/src/components/BlogLayout';
 import Link from 'next/link';
-import { tagToSlug } from '@/lib/utils';
+import { tagToSlug } from '@/src/lib/utils';
 import Image from 'next/image';
 import type { Metadata } from 'next';
-import { ImageModal } from '@/components/ImageModal';
+import { ImageModal } from '@/src/components/ImageModal';
 
 type Props = {
   params: Promise<{ slug: string }>;

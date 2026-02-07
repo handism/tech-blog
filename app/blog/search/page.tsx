@@ -1,4 +1,4 @@
-import { getAllPosts } from '@/lib/posts-server';
+import { getAllPosts } from '@/src/lib/posts-server';
 import SearchPage from './search-client';
 
 export const revalidate = 3600;

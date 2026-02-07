@@ -1,5 +1,5 @@
-import { getAllPosts } from '@/lib/posts-server';
-import BlogLayout from '@/components/BlogLayout';
+import { getAllPosts } from '@/src/lib/posts-server';
+import BlogLayout from '@/src/components/BlogLayout';
 import Link from 'next/link';
 
 export async function generateStaticParams() {

@@ -1,7 +1,7 @@
-import { getAllPosts } from '@/lib/posts-server';
-import BlogLayout from '@/components/BlogLayout';
+import { getAllPosts } from '@/src/lib/posts-server';
+import BlogLayout from '@/src/components/BlogLayout';
 import Link from 'next/link';
-import { tagToSlug, findTagBySlug } from '@/lib/utils';
+import { tagToSlug, findTagBySlug } from '@/src/lib/utils';
 
 export async function generateStaticParams() {
   const posts = getAllPosts();

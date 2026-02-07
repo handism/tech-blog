@@ -1,5 +1,5 @@
 // lib/toc.ts
-import type { TocItem } from './posts';
+import type { TocItem } from '../types/posts';
 
 // Generate TOC from HTML string by extracting <h1>-<h6> tags and their ids/text.
 // This ensures IDs match the final HTML (including any prefixes like "user-content-").

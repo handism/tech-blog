@@ -1,8 +1,8 @@
 'use client';
 import { useState } from 'react';
-import SearchBox from '@/components/SearchBox';
-import TagList from '@/components/TagList';
-import type { TocItem, Post } from '@/lib/posts';
+import SearchBox from '@/src/components/SearchBox';
+import TagList from '@/src/components/TagList';
+import type { TocItem, Post } from '@/src/types/posts';
 
 export default function Sidebar({
   posts,

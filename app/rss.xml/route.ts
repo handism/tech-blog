@@ -1,4 +1,4 @@
-import { getAllPosts } from '@/lib/posts-server';
+import { getAllPosts } from '@/src/lib/posts-server';
 
 export const revalidate = 3600; // 1時間ごとに再検証
 

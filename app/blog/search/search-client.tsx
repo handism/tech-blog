@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { searchPosts } from '@/lib/client-search';
-import BlogLayout from '@/components/BlogLayout';
-import type { Post } from '@/lib/posts';
+import { searchPosts } from '@/src/lib/client-search';
+import BlogLayout from '@/src/components/BlogLayout';
+import type { Post } from '@/src/types/posts';
 
 // SSG: ビルド時にサーバーから受け取られた記事データ
 interface SearchPageProps {

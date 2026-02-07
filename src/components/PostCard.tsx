@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import type { Post } from '@/lib/posts-server';
-import { tagToSlug } from '@/lib/utils';
+import type { Post } from '@/src/lib/posts-server';
+import { tagToSlug } from '@/src/lib/utils';
 
 export default function PostCard({ post }: { post: Post }) {
   return (

@@ -1,6 +1,6 @@
-import { getAllPosts } from '@/lib/posts-server';
-import PostCard from '@/components/PostCard';
-import BlogLayout from '@/components/BlogLayout';
+import { getAllPosts } from '@/src/lib/posts-server';
+import PostCard from '@/src/components/PostCard';
+import BlogLayout from '@/src/components/BlogLayout';
 
 export default async function Home() {
   const posts = getAllPosts();
