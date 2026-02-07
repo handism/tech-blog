@@ -56,7 +56,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         <h1>{post.title}</h1>
 
         {/* メタ情報 */}
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(140px,auto))] items-center gap-4 text-sm text-text/70 not-prose">
+        <div className="flex flex-wrap items-center gap-4 text-sm text-text/70 not-prose">
           {/* 投稿日時 */}
           {post.date && (
             <time dateTime={post.date.toISOString()}>
@@ -77,12 +77,12 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           </Link>
           {/* タグ */}
           {post.tags.length > 0 && (
-            <div className="grid grid-cols-[repeat(auto-fit,minmax(80px,auto))] gap-2">
+            <div className="flex flex-wrap gap-2">
               {post.tags.map((tag) => (
                 <Link
                   key={tag}
                   href={`/blog/tags/${tagToSlug(tag)}`}
-                  className="inline-grid grid-flow-col auto-cols-max items-center px-3 py-1 text-xs font-medium rounded-full bg-accent/10 text-accent"
+                  className="inline-flex items-center px-3 py-1 text-xs font-medium rounded-full bg-accent/10 text-accent"
                 >
                   #{tag}
                 </Link>
