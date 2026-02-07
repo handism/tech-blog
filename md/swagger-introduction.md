@@ -1,7 +1,7 @@
 ---
 title: Swagger Editorに入門してみる
 date: 2023-12-14
-tags: [Swagger, Backend]
+tags: [Swagger]
 category: Backend
 image: api-image.webp
 ---
