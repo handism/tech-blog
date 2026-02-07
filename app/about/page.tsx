@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default async function AboutPage() {
   return (
-    <div className="flex flex-col items-stretch p-4 min-h-screen mx-auto max-w-6xl">
+    <div className="flex flex-col items-stretch p-6 min-h-screen mx-auto max-w-6xl">
       <header className="mb-12 text-center w-full">
         <h1 className="text-4xl font-extrabold flex items-center justify-center gap-3 tracking-tight">
           <User className="w-10 h-10 text-accent" />
