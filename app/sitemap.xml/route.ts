@@ -1,9 +1,10 @@
 import { getAllPosts } from '@/src/lib/posts-server';
+import { siteConfig } from '@/src/config/site';
 
-export const revalidate = 3600; // 1時間ごとに再検証
+export const revalidate = siteConfig.rss.revalidateSeconds; // 1時間ごとに再検証
 
 export async function GET() {
-  const baseUrl = 'https://yourdomain.com';
+  const baseUrl = siteConfig.url;
   const posts = getAllPosts();
 
   const urls = posts.map((post) => `<url><loc>${baseUrl}/posts/${post.slug}</loc></url>`).join('');
