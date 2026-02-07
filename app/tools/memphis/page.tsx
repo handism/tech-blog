@@ -246,7 +246,7 @@ export default function MemphisGenerator() {
           <p className="mt-2 font-medium">80年代風のカラフルな背景画像を生成</p>
         </header>
 
-        <div className="rounded-3xl bg-bg p-8 shadow-2xl">
+        <main className="rounded-3xl bg-bg shadow-2xl">
           {/* Controls */}
           <div className="grid gap-8 md:grid-cols-2">
             <div className="space-y-6">
@@ -329,7 +329,7 @@ export default function MemphisGenerator() {
               PNG ダウンロード
             </button>
           </div>
-        </div>
+        </main>
       </div>
     </div>
   );
