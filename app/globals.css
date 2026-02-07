@@ -32,7 +32,7 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-y: scroll;
+  scrollbar-gutter: stable;
   transition:
     background-color 0.2s,
     color 0.2s;
