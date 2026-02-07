@@ -1,4 +1,4 @@
-// components/ImageModal.tsx（拡張版）
+// src/components/ImageModal.tsx（拡張版）
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -14,11 +14,13 @@ export function ImageModal() {
       if (target.tagName === 'IMG' && target.closest('article')) {
         e.preventDefault();
         const img = target as HTMLImageElement;
+        // サムネイル等（.not-prose 内）の画像は対象外
+        if (img.closest('.not-prose')) return;
 
         // 記事内の全画像を取得
-        const images = Array.from(document.querySelectorAll('article img')).map(
-          (img) => (img as HTMLImageElement).src
-        );
+        const images = Array.from(document.querySelectorAll('article img'))
+          .filter((img) => !(img as HTMLImageElement).closest('.not-prose'))
+          .map((img) => (img as HTMLImageElement).src);
 
         const index = images.indexOf(img.src);
         setAllImages(images);
