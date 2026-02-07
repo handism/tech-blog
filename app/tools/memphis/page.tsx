@@ -237,101 +237,99 @@ export default function MemphisGenerator() {
   // =====================
 
   return (
-    <div className="flex flex-col items-center p-4 min-h-screen">
-      <div className="mx-auto max-w-6xl">
-        <header className="mb-12 text-center">
-          <h1 className="text-4xl font-extrabold flex items-center justify-center gap-3 tracking-tight">
-            <Image className="w-10 h-10 text-accent" />
-            Memphis Generator
-          </h1>
-          <p className="mt-2 font-medium">80年代風のカラフルな背景画像を生成</p>
-        </header>
+    <div className="flex flex-col items-center p-4 min-h-screen max-w-6xl mx-auto">
+      <header className="mb-12 text-center">
+        <h1 className="text-4xl font-extrabold flex items-center justify-center gap-3 tracking-tight">
+          <Image className="w-10 h-10 text-accent" />
+          Memphis Generator
+        </h1>
+        <p className="mt-2 font-medium">80年代風のカラフルな背景画像を生成</p>
+      </header>
 
-        <main className="rounded-3xl bg-bg p-5 shadow-2xl">
-          {/* Controls */}
-          <div className="grid gap-8 md:grid-cols-2">
-            <div className="space-y-6">
-              <section>
-                <h2 className="mb-3 font-bold">サイズ</h2>
-                <div className="grid gap-2">
-                  {(Object.keys(sizes) as SizeKey[]).map((k) => (
-                    <button
-                      key={k}
-                      onClick={() => setSelectedSize(k)}
-                      className={`rounded-xl border px-4 py-3 text-left font-semibold transition ${
-                        selectedSize === k
-                          ? 'border-indigo-500 bg-indigo-50 text-indigo-600'
-                          : 'border-gray-200 hover:bg-gray-50'
-                      }`}
-                    >
-                      {sizes[k].label}
-                    </button>
-                  ))}
-                </div>
-              </section>
+      <main className="rounded-3xl bg-bg p-5 shadow-2xl">
+        {/* Controls */}
+        <div className="grid gap-8 md:grid-cols-2">
+          <div className="space-y-6">
+            <section>
+              <h2 className="mb-3 font-bold">サイズ</h2>
+              <div className="grid gap-2">
+                {(Object.keys(sizes) as SizeKey[]).map((k) => (
+                  <button
+                    key={k}
+                    onClick={() => setSelectedSize(k)}
+                    className={`rounded-xl border px-4 py-3 text-left font-semibold transition ${
+                      selectedSize === k
+                        ? 'border-indigo-500 bg-indigo-50 text-indigo-600'
+                        : 'border-gray-200 hover:bg-gray-50'
+                    }`}
+                  >
+                    {sizes[k].label}
+                  </button>
+                ))}
+              </div>
+            </section>
 
-              <section>
-                <h2 className="mb-3 font-bold">トーン</h2>
-                <div className="grid grid-cols-2 gap-2">
-                  {(Object.keys(colorPalettes) as ToneKey[]).map((k) => (
-                    <button
-                      key={k}
-                      onClick={() => setSelectedTone(k)}
-                      className={`rounded-xl border px-4 py-3 font-semibold transition ${
-                        selectedTone === k
-                          ? 'border-pink-500 bg-pink-50 text-pink-600'
-                          : 'border-gray-200 hover:bg-gray-50'
-                      }`}
-                    >
-                      {colorPalettes[k].name}
-                    </button>
-                  ))}
-                </div>
-              </section>
+            <section>
+              <h2 className="mb-3 font-bold">トーン</h2>
+              <div className="grid grid-cols-2 gap-2">
+                {(Object.keys(colorPalettes) as ToneKey[]).map((k) => (
+                  <button
+                    key={k}
+                    onClick={() => setSelectedTone(k)}
+                    className={`rounded-xl border px-4 py-3 font-semibold transition ${
+                      selectedTone === k
+                        ? 'border-pink-500 bg-pink-50 text-pink-600'
+                        : 'border-gray-200 hover:bg-gray-50'
+                    }`}
+                  >
+                    {colorPalettes[k].name}
+                  </button>
+                ))}
+              </div>
+            </section>
 
-              <section>
-                <h2 className="mb-3 font-bold">密度</h2>
-                <div className="grid grid-cols-3 gap-2">
-                  {(Object.keys(densities) as DensityKey[]).map((k) => (
-                    <button
-                      key={k}
-                      onClick={() => setSelectedDensity(k)}
-                      className={`rounded-xl border px-3 py-3 font-semibold transition ${
-                        selectedDensity === k
-                          ? 'border-cyan-500 bg-cyan-50 text-cyan-600'
-                          : 'border-gray-200 hover:bg-gray-50'
-                      }`}
-                    >
-                      {densities[k].name}
-                    </button>
-                  ))}
-                </div>
-              </section>
-            </div>
-
-            {/* Preview */}
-            <div className="flex items-center justify-center rounded-2xl border bg-gray-50 p-4">
-              <canvas ref={canvasRef} className="max-h-125 max-w-full" />
-            </div>
+            <section>
+              <h2 className="mb-3 font-bold">密度</h2>
+              <div className="grid grid-cols-3 gap-2">
+                {(Object.keys(densities) as DensityKey[]).map((k) => (
+                  <button
+                    key={k}
+                    onClick={() => setSelectedDensity(k)}
+                    className={`rounded-xl border px-3 py-3 font-semibold transition ${
+                      selectedDensity === k
+                        ? 'border-cyan-500 bg-cyan-50 text-cyan-600'
+                        : 'border-gray-200 hover:bg-gray-50'
+                    }`}
+                  >
+                    {densities[k].name}
+                  </button>
+                ))}
+              </div>
+            </section>
           </div>
 
-          {/* Actions */}
-          <div className="mt-8 grid gap-4 md:grid-cols-2">
-            <button
-              onClick={() => setSeed(Date.now())}
-              className="rounded-xl bg-linear-to-r from-yellow-400 to-pink-500 py-4 font-bold text-white shadow-lg hover:opacity-90"
-            >
-              新しく生成
-            </button>
-            <button
-              onClick={downloadPNG}
-              className="rounded-xl bg-linear-to-r from-indigo-500 to-purple-600 py-4 font-bold text-white shadow-lg hover:opacity-90"
-            >
-              PNG ダウンロード
-            </button>
+          {/* Preview */}
+          <div className="flex items-center justify-center rounded-2xl border bg-gray-50 p-4">
+            <canvas ref={canvasRef} className="max-h-125 max-w-full" />
           </div>
-        </main>
-      </div>
+        </div>
+
+        {/* Actions */}
+        <div className="mt-8 grid gap-4 md:grid-cols-2">
+          <button
+            onClick={() => setSeed(Date.now())}
+            className="rounded-xl bg-linear-to-r from-yellow-400 to-pink-500 py-4 font-bold text-white shadow-lg hover:opacity-90"
+          >
+            新しく生成
+          </button>
+          <button
+            onClick={downloadPNG}
+            className="rounded-xl bg-linear-to-r from-indigo-500 to-purple-600 py-4 font-bold text-white shadow-lg hover:opacity-90"
+          >
+            PNG ダウンロード
+          </button>
+        </div>
+      </main>
     </div>
   );
 }
