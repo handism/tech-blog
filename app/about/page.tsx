@@ -26,6 +26,7 @@ export default async function AboutPage() {
                 src="/images/wolf-icon.webp"
                 alt="狼の画像"
                 className="w-full h-full object-cover"
+                loading="eager"
               />
             </div>
           </div>
