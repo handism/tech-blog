@@ -237,7 +237,7 @@ export default function MemphisGenerator() {
   // =====================
 
   return (
-    <div className="flex flex-col items-center p-4 min-h-screen max-w-6xl mx-auto">
+    <div className="flex flex-col items-center p-5 min-h-screen max-w-6xl mx-auto">
       <header className="mb-12 text-center">
         <h1 className="text-4xl font-extrabold flex items-center justify-center gap-3 tracking-tight">
           <Image className="w-10 h-10 text-accent" />
