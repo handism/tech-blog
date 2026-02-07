@@ -47,7 +47,7 @@ export default function Sidebar({
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 h-full">
       <SearchBox posts={posts ?? []} />
 
       {/* カテゴリ・タグ一覧（省略せずそのまま） */}

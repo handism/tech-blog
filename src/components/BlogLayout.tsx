@@ -12,12 +12,14 @@ interface BlogLayoutProps {
 export default function BlogLayout({ children, posts, toc, categories }: BlogLayoutProps) {
   return (
     <div className="mx-auto max-w-6xl px-4 py-4">
-      <div className="grid gap-8 md:grid-cols-[2fr_1fr] items-start">
+      <div className="grid gap-8 md:grid-cols-[2fr_1fr]">
         {/* メイン */}
         <main>{children}</main>
 
         {/* サイドバー */}
-        <aside>{posts && <Sidebar posts={posts} toc={toc} categories={categories} />}</aside>
+        <aside className="relative">
+          {posts && <Sidebar posts={posts} toc={toc} categories={categories} />}
+        </aside>
       </div>
     </div>
   );
