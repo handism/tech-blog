@@ -12,9 +12,8 @@ interface BlogLayoutProps {
 export default function BlogLayout({ children, posts, toc, categories }: BlogLayoutProps) {
   return (
     <div className="mx-auto max-w-6xl px-4 py-4">
-      <div className="flex flex-col md:flex-row gap-8 items-start">
-        {/* メイン */}
-        <main className="md:w-2/3">{children}</main>
+      <div className="grid md:grid-cols-3 gap-8">
+        <main className="md:col-span-2">{children}</main>
 
         {/* サイドバー */}
         <aside className="md:w-1/3 self-start">
