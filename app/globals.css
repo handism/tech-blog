@@ -63,6 +63,11 @@ article.prose h3 {
   @apply text-xl font-medium mt-8 mb-3;
 }
 
+article.prose h2 a,
+article.prose h3 a {
+  @apply no-underline;
+}
+
 article.prose h4 {
   @apply text-base font-semibold mt-6 mb-2;
   padding-left: 0.5rem;
