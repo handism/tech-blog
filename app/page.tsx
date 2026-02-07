@@ -3,12 +3,13 @@ import PostCard from '@/src/components/PostCard';
 import BlogLayout from '@/src/components/BlogLayout';
 import Pagination from '@/src/components/Pagination';
 import type { Metadata } from 'next';
+import { siteConfig } from '@/src/config/site';
 
 export const metadata: Metadata = {
-  title: "Handism's Tech Blog",
+  title: siteConfig.name,
 };
 
-const POSTS_PER_PAGE = 10;
+const POSTS_PER_PAGE = siteConfig.pagination.postsPerPage;
 
 export default async function Home() {
   const allPosts = getAllPosts();

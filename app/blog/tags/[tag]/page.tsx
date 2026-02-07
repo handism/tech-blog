@@ -1,6 +1,7 @@
 import { getAllPosts } from '@/src/lib/posts-server';
 import BlogLayout from '@/src/components/BlogLayout';
-import Link from 'next/link';
+import PostCard from '@/src/components/PostCard';
+import Pagination from '@/src/components/Pagination';
 import { tagToSlug, findTagBySlug } from '@/src/lib/utils';
 
 export async function generateStaticParams() {
@@ -45,18 +46,14 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
         {filteredPosts.length === 0 ? (
           <p className="text-text/60">このタグの記事はありません。</p>
         ) : (
-          <ul className="space-y-4">
-            {filteredPosts.map((p) => (
-              <li key={p.slug}>
-                <Link
-                  href={`/blog/posts/${p.slug}`}
-                  className="hover:underline text-lg font-medium"
-                >
-                  {p.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <>
+            <div className="space-y-6">
+              {filteredPosts.map((post) => (
+                <PostCard key={post.slug} post={post} />
+              ))}
+            </div>
+            <Pagination currentPage={1} totalPages={1} />
+          </>
         )}
       </div>
     </BlogLayout>

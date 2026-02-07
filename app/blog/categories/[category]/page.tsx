@@ -1,6 +1,7 @@
 import { getAllPosts } from '@/src/lib/posts-server';
 import BlogLayout from '@/src/components/BlogLayout';
-import Link from 'next/link';
+import PostCard from '@/src/components/PostCard';
+import Pagination from '@/src/components/Pagination';
 
 export async function generateStaticParams() {
   const posts = getAllPosts();
@@ -21,15 +22,13 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
       <div>
         <h1 className="text-3xl font-bold mb-6">Category: {category}</h1>
 
-        <ul className="space-y-4">
-          {filteredPosts.map((p) => (
-            <li key={p.slug}>
-              <Link href={`/blog/posts/${p.slug}`} className="hover:underline text-lg font-medium">
-                {p.title}
-              </Link>
-            </li>
+        <div className="space-y-6">
+          {filteredPosts.map((post) => (
+            <PostCard key={post.slug} post={post} />
           ))}
-        </ul>
+        </div>
+
+        <Pagination currentPage={1} totalPages={1} />
       </div>
     </BlogLayout>
   );

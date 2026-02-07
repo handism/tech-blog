@@ -9,4 +9,7 @@ export const siteConfig = {
     defaultCategory: "uncategorized",
     defaultTitle: "No title",
   },
+  pagination: {
+    postsPerPage: 10,
+  },
 };
