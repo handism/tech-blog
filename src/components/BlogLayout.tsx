@@ -12,12 +12,12 @@ interface BlogLayoutProps {
 export default function BlogLayout({ children, posts, toc, categories }: BlogLayoutProps) {
   return (
     <div className="mx-auto max-w-6xl px-4 py-4">
-      <div className="flex flex-col md:flex-row gap-8 items-start">
+      <div className="flex flex-col md:flex-row gap-8">
         {/* メイン */}
         <main className="md:w-2/3">{children}</main>
 
         {/* サイドバー */}
-        <aside className="md:w-1/3 self-start">
+        <aside className="md:w-1/3">
           {posts && <Sidebar posts={posts} toc={toc} categories={categories} />}
         </aside>
       </div>
