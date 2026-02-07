@@ -78,8 +78,10 @@ export default function Sidebar({
       {toc && toc.length > 0 && (
         <>
           {/* 1. PC用 */}
-          <div className="sticky hidden lg:block p-4 border border-border rounded-lg bg-card max-h-[calc(100vh-120px)] overflow-y-auto top-24">
-            {tocElements}
+          <div className="hidden lg:block sticky top-24">
+            <div className="p-4 border border-border rounded-lg bg-card max-h-[calc(100vh-120px)] overflow-y-auto">
+              {tocElements}
+            </div>
           </div>
 
           {/* 2. スマホ用ボタン */}
