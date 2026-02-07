@@ -31,11 +31,18 @@
 }
 
 html {
-  /* scroll-behavior: smooth; */
+  scroll-behavior: auto;
   scrollbar-gutter: stable;
   transition:
     background-color 0.2s,
     color 0.2s;
+}
+
+/* ページ内リンク（#から始まるリンク）がクリックされた時や、
+   URLにハッシュが含まれている時だけスムーズにする */
+html:has(:target),
+html:focus-within {
+  scroll-behavior: smooth;
 }
 
 /* =======================
