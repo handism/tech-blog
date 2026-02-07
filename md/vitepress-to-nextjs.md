@@ -24,6 +24,8 @@ Reactで色々調べてみると、結局「Next.js」っていうフレーム�
 
 ![alt text](/images/image.png)
 
+![alt text](/images/image-2.png)
+
 ## ChatGPTがまとめてくれたReact/Next.js実戦メモ（数日間の学び）
 
 ### 全体を通した重要な学び
