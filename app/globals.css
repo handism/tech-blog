@@ -95,6 +95,11 @@ article.prose img:hover {
   opacity: 0.8;
 }
 
+/* サムネイルはホバーで暗くしない */
+article.prose .not-prose img:hover {
+  opacity: 1;
+}
+
 article.prose blockquote {
   background-color: var(--card);
   border-left-color: var(--border);
