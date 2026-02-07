@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "serve out",
     "lint": "eslint",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui"
@@ -59,6 +59,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "postcss": "^8.4.32",
     "prettier": "^3.8.1",
+    "serve": "^14.2.5",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
