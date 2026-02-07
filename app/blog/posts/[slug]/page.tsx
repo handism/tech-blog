@@ -7,7 +7,6 @@ import { tagToSlug } from '@/src/lib/utils';
 import Image from 'next/image';
 import type { Metadata } from 'next';
 import { ImageModal } from '@/src/components/ImageModal';
-import { CodeHighlight } from '@/src/components/CodeHighlight';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -53,7 +52,6 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
   return (
     <BlogLayout posts={posts} toc={post.toc} categories={categories}>
-      <CodeHighlight />
       <article className="prose dark:prose-invert max-w-none">
         <h1>{post.title}</h1>
 
