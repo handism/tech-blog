@@ -86,6 +86,11 @@ article.prose img {
   transition: opacity 0.2s;
 }
 
+/* サムネイル（.not-prose 内）はクリック対象外なのでカーソルも戻す */
+article.prose .not-prose img {
+  cursor: default;
+}
+
 article.prose img:hover {
   opacity: 0.8;
 }
