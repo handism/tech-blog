@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import { searchPosts } from '@/src/lib/client-search';
 import BlogLayout from '@/src/components/BlogLayout';
-import type { Post } from '@/src/types/posts';
+import type { Post } from '@/src/types/post';
 
 // SSG: ビルド時にサーバーから受け取られた記事データ
 interface SearchPageProps {

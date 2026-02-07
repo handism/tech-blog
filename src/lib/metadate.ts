@@ -1,4 +1,4 @@
-import { Post } from '../types/posts';
+import { Post } from '../types/post';
 
 export function generateMetadata(post?: Post) {
   const baseUrl = 'https://yourdomain.com';

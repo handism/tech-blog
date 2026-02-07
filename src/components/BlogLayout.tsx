@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import Sidebar from '@/src/components/Sidebar';
-import { Post, TocItem } from '@/src/types/posts';
+import { Post, TocItem } from '@/src/types/post';
 
 interface BlogLayoutProps {
   children: ReactNode;

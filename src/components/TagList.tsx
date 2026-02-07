@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Post } from '@/src/types/posts';
+import { Post } from '@/src/types/post';
 import { tagToSlug } from '@/src/lib/utils';
 
 type Props = {
