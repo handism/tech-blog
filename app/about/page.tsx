@@ -85,6 +85,42 @@ export default async function AboutPage() {
         </div>
       </section>
 
+      {/* RPG風スキルゲージ */}
+      <section className="mb-12">
+        <h2 className="text-2xl font-bold mb-6 text-text flex items-center gap-3">
+          <span className="text-3xl">🗡️</span>
+          Skill Gauge
+        </h2>
+        <div className="bg-linear-to-br from-secondary/60 to-card rounded-2xl border border-border p-6 shadow-lg">
+          <div className="grid gap-4">
+            {[
+              { name: 'Cloud Architecture', level: 92, tone: 'from-emerald-400 to-emerald-600' },
+              { name: 'Backend (Java / Spring)', level: 85, tone: 'from-cyan-400 to-cyan-600' },
+              { name: 'Frontend (Next.js)', level: 78, tone: 'from-violet-400 to-violet-600' },
+              { name: 'DevOps / CI-CD', level: 74, tone: 'from-amber-400 to-amber-600' },
+              { name: 'Observability', level: 68, tone: 'from-pink-400 to-pink-600' },
+            ].map((skill) => (
+              <div key={skill.name} className="grid gap-2">
+                <div className="grid grid-cols-[1fr_auto] items-center">
+                  <span className="text-sm font-semibold text-text">{skill.name}</span>
+                  <span className="text-xs text-text/70">Lv.{skill.level}</span>
+                </div>
+                <div className="relative h-4 rounded-full bg-black/10 overflow-hidden border border-border">
+                  <div
+                    className={`h-full rounded-full bg-linear-to-r ${skill.tone} shadow-[inset_0_0_8px_rgba(255,255,255,0.35)]`}
+                    style={{ width: `${skill.level}%` }}
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(255,255,255,0.35),transparent_55%)]" />
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 text-xs text-text/60">
+            Quest log: 年間を通してスキルアップを継続中。
+          </div>
+        </div>
+      </section>
+
       {/* Contact */}
       <section className="mb-12">
         <h2 className="text-2xl font-bold mb-6 text-text flex items-center gap-3">
