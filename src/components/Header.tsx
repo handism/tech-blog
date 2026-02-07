@@ -53,7 +53,7 @@ export default function Header() {
                 className={`
                   absolute left-0 mt-2 w-48
                   rounded-md border border-border
-                  bg-card/95 
+                  bg-card/95 backdrop-blur-md 
                   shadow-xl shadow-black/20
                   transition-all z-50
                   ${isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}
