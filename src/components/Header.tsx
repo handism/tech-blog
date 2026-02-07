@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'; // hooksを追加
 import { siteConfig } from '@/src/config/site';
-import { ThemeToggle } from '@/src/components/theme-toggle';
+import { ThemeToggle } from '@/src/components/ThemeToggle';
 import Link from 'next/link';
 
 export default function Header() {

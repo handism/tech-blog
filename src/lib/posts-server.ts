@@ -9,7 +9,7 @@ import remarkRehype from 'remark-rehype';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeStringify from 'rehype-stringify';
-import { generateToc } from './toc';
+import { generateToc } from '@/src/lib/toc';
 
 const postsDir = path.join(process.cwd(), siteConfig.posts.dir);
 
