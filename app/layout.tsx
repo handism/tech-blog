@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
 import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
 import './globals.css';
@@ -8,16 +7,6 @@ import 'highlight.js/styles/github-dark.css';
 import { CodeHighlight } from '@/src/components/CodeHighlight';
 
 import { siteConfig } from '@/src/config/site';
-
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
 
 export const metadata: Metadata = {
   title: {

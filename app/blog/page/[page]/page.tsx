@@ -7,11 +7,13 @@ import { notFound, redirect } from 'next/navigation';
 const POSTS_PER_PAGE = 10;
 
 type Props = {
-  params: Promise<{ page: string }>;
+  params: { page: string };
 };
 
+export const dynamicParams = false;
+
 export default async function PageView({ params }: Props) {
-  const { page } = await params;
+  const { page } = params;
   const currentPage = parseInt(page, 10);
 
   if (isNaN(currentPage) || currentPage < 1) {
