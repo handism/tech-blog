@@ -108,10 +108,7 @@ export default function Sidebar({
           <div
             className={`lg:hidden fixed inset-0 z-50 transition-opacity duration-300 ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
           >
-            <div
-              className="bg-bg absolute inset-0 backdrop-blur-sm"
-              onClick={() => setIsOpen(false)}
-            />
+            <div className="bg-bg absolute inset-0" onClick={() => setIsOpen(false)} />
             <div
               className={`absolute bottom-0 left-0 right-0 bg-card rounded-t-2xl p-6 max-h-[80vh] overflow-y-auto border-t border-border shadow-2xl transition-transform duration-300 ease-out ${isOpen ? 'translate-y-0' : 'translate-y-full'}`}
             >
