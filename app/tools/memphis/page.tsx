@@ -92,8 +92,8 @@ export default function MemphisGenerator() {
   const [selectedSize, setSelectedSize] = useState<SizeKey>('youtube');
   const [selectedTone, setSelectedTone] = useState<ToneKey>('pale');
   const [selectedDensity, setSelectedDensity] = useState<DensityKey>('standard');
-  const [backgroundMode, setBackgroundMode] = useState<BackgroundMode>('auto');
-  const [customBackgroundColor, setCustomBackgroundColor] = useState('#FFF9F3');
+  const [backgroundMode] = useState<BackgroundMode>('auto');
+  const [customBackgroundColor] = useState('#FFF9F3');
   const [seed, setSeed] = useState(() => Date.now());
 
   const colors = colorPalettes[selectedTone];
@@ -139,7 +139,11 @@ export default function MemphisGenerator() {
         case 0:
           ctx.beginPath();
           ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
-          seededRandom(s++) > 0.5 ? ctx.fill() : ctx.stroke();
+          if (seededRandom(s++) > 0.5) {
+            ctx.fill();
+          } else {
+            ctx.stroke();
+          }
           break;
         case 1:
           ctx.fillRect(-size / 2, -size / 2, size, size);
@@ -150,7 +154,11 @@ export default function MemphisGenerator() {
           ctx.lineTo(-size / 2, size / 2);
           ctx.lineTo(size / 2, size / 2);
           ctx.closePath();
-          seededRandom(s++) > 0.5 ? ctx.fill() : ctx.stroke();
+          if (seededRandom(s++) > 0.5) {
+            ctx.fill();
+          } else {
+            ctx.stroke();
+          }
           break;
         case 3:
           ctx.beginPath();
@@ -166,7 +174,11 @@ export default function MemphisGenerator() {
           for (let t = 0; t < Math.PI * 2; t += 0.1) {
             const wx = t * 20 - 60;
             const wy = Math.sin(t * 3) * 20;
-            t === 0 ? ctx.moveTo(wx, wy) : ctx.lineTo(wx, wy);
+            if (t === 0) {
+              ctx.moveTo(wx, wy);
+            } else {
+              ctx.lineTo(wx, wy);
+            }
           }
           ctx.stroke();
           break;
@@ -182,7 +194,11 @@ export default function MemphisGenerator() {
         case 6:
           ctx.beginPath();
           ctx.arc(0, 0, size / 2, 0, Math.PI);
-          seededRandom(s++) > 0.5 ? ctx.fill() : ctx.stroke();
+          if (seededRandom(s++) > 0.5) {
+            ctx.fill();
+          } else {
+            ctx.stroke();
+          }
           break;
       }
 
@@ -294,7 +310,7 @@ export default function MemphisGenerator() {
 
             {/* Preview */}
             <div className="flex items-center justify-center rounded-2xl border bg-gray-50 p-4">
-              <canvas ref={canvasRef} className="max-h-[500px] max-w-full" />
+              <canvas ref={canvasRef} className="max-h-125 max-w-full" />
             </div>
           </div>
 
@@ -302,13 +318,13 @@ export default function MemphisGenerator() {
           <div className="mt-8 grid gap-4 md:grid-cols-2">
             <button
               onClick={() => setSeed(Date.now())}
-              className="rounded-xl bg-gradient-to-r from-yellow-400 to-pink-500 py-4 font-bold text-white shadow-lg hover:opacity-90"
+              className="rounded-xl bg-linear-to-r from-yellow-400 to-pink-500 py-4 font-bold text-white shadow-lg hover:opacity-90"
             >
               新しく生成
             </button>
             <button
               onClick={downloadPNG}
-              className="rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 py-4 font-bold text-white shadow-lg hover:opacity-90"
+              className="rounded-xl bg-linear-to-r from-indigo-500 to-purple-600 py-4 font-bold text-white shadow-lg hover:opacity-90"
             >
               PNG ダウンロード
             </button>

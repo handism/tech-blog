@@ -20,7 +20,7 @@ export default async function AboutPage() {
       <div className="bg-card border border-border rounded-2xl p-8 mb-12 shadow-lg hover:shadow-xl transition-shadow">
         <div className="flex flex-col md:flex-row items-center gap-8">
           {/* アイコン */}
-          <div className="flex-shrink-0">
+          <div className="shrink-0">
             <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-accent shadow-lg">
               <img
                 src="/images/wolf-icon.webp"
@@ -90,7 +90,7 @@ export default async function AboutPage() {
           <span className="text-3xl">📧</span>
           Contact
         </h2>
-        <div className="bg-gradient-to-r from-accent/10 to-purple-500/10 rounded-xl p-6 border border-accent/30">
+        <div className="bg-linear-to-r from-accent/10 to-purple-500/10 rounded-xl p-6 border border-accent/30">
           <p className="text-text/80 mb-4">お気軽にご連絡ください</p>
           <a
             href="https://github.com/handism"

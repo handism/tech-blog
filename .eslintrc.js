@@ -34,5 +34,6 @@ module.exports = {
     'react/react-in-jsx-scope': 'off', // Next.js では不要
     '@typescript-eslint/no-unused-vars': ['warn'],
     'tailwindcss/classnames-order': 'warn',
+    '@next/next/no-img-element': 'off',
   },
 };

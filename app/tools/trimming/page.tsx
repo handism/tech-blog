@@ -141,7 +141,7 @@ export default function ImageTrimmingApp() {
         {image ? (
           <div className="flex flex-col lg:flex-row">
             {/* トリミングエリア */}
-            <div className="relative w-full h-[500px] lg:w-3/4 bg-slate-900">
+            <div className="relative w-full h-125 lg:w-3/4 bg-slate-900">
               <Cropper
                 image={image}
                 crop={crop}
