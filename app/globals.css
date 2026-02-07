@@ -64,7 +64,8 @@ article.prose h3 {
 }
 
 article.prose h2 a,
-article.prose h3 a {
+article.prose h3 a,
+article.prose h4 a {
   @apply no-underline;
 }
 
@@ -104,6 +105,11 @@ article.prose ol ul {
 
 article.prose li {
   @apply leading-relaxed;
+}
+
+article.prose code::before,
+article.prose code::after {
+  content: none;
 }
 
 article.prose ul ul {
