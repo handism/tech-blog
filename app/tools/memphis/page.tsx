@@ -236,10 +236,10 @@ export default function MemphisGenerator() {
   // =====================
 
   return (
-    <div className="grid justify-items-center p-6 min-h-screen">
+    <div className="flex flex-col items-center p-6 min-h-screen">
       <div className="mx-auto max-w-7xl">
         <header className="mb-12 text-center">
-          <h1 className="text-4xl font-extrabold grid grid-flow-col auto-cols-max items-center justify-center gap-3 tracking-tight">
+          <h1 className="text-4xl font-extrabold flex items-center justify-center gap-3 tracking-tight">
             <Image className="w-10 h-10 text-accent" />
             Memphis Generator
           </h1>
@@ -309,7 +309,7 @@ export default function MemphisGenerator() {
             </div>
 
             {/* Preview */}
-            <div className="grid place-items-center rounded-2xl border bg-gray-50 p-4">
+            <div className="flex items-center justify-center rounded-2xl border bg-gray-50 p-4">
               <canvas ref={canvasRef} className="max-h-125 max-w-full" />
             </div>
           </div>

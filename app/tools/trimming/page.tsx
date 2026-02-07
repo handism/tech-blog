@@ -101,7 +101,7 @@ export default function ImageTrimmingApp() {
           newWindow.document.write(`
           <html>
             <head><title>画像を保存</title></head>
-            <body style="margin:0;display:grid;place-items:center;height:100vh;background:#000;">
+            <body style="margin:0;display:flex;align-items:center;justify-content:center;height:100vh;background:#000;">
               <img src="${croppedImage}" style="max-width:95%;max-height:95%;object-fit:contain;" />
               <p style="position:absolute;top:16px;color:white;font-family:sans-serif;">
                 画像を長押し →「画像を保存」をタップしてください
@@ -128,9 +128,9 @@ export default function ImageTrimmingApp() {
   };
 
   return (
-    <div className="grid justify-items-center p-6 min-h-screen">
+    <div className="flex flex-col items-center p-6 min-h-screen">
       <header className="mb-8 text-center">
-        <h1 className="text-4xl font-extrabold grid grid-flow-col auto-cols-max items-center justify-center gap-3 tracking-tight">
+        <h1 className="text-4xl font-extrabold flex items-center justify-center gap-3 tracking-tight">
           <Crop className="w-10 h-10 text-accent" />
           Image Trimmer
         </h1>
@@ -139,9 +139,9 @@ export default function ImageTrimmingApp() {
 
       <main className="w-full max-w-5xl bg-white rounded-3xl shadow-2xl shadow-indigo-100 overflow-hidden border border-slate-200">
         {image ? (
-          <div className="grid lg:grid-cols-[3fr_1fr]">
+          <div className="flex flex-col lg:flex-row">
             {/* トリミングエリア */}
-            <div className="relative w-full h-125 bg-slate-900">
+            <div className="relative w-full h-125 lg:w-3/4 bg-slate-900">
               <Cropper
                 image={image}
                 crop={crop}
@@ -154,9 +154,9 @@ export default function ImageTrimmingApp() {
             </div>
 
             {/* コントロールパネル */}
-            <div className="p-8 w-full grid gap-8 border-l border-slate-100 bg-white">
+            <div className="p-8 w-full lg:w-1/4 flex flex-col gap-8 border-l border-slate-100 bg-white">
               <section>
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4 inline-grid grid-flow-col auto-cols-max items-center gap-2">
+                <label className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4 flex items-center gap-2">
                   <Maximize className="w-4 h-4" /> Aspect Ratio
                 </label>
                 <div className="grid grid-cols-1 gap-2">
@@ -199,12 +199,12 @@ export default function ImageTrimmingApp() {
                 <label className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 block">
                   Format
                 </label>
-                <div className="grid grid-cols-2 bg-slate-100 p-1 rounded-xl">
+                <div className="flex bg-slate-100 p-1 rounded-xl">
                   {['png', 'webp'].map((f) => (
                     <button
                       key={f}
                       onClick={() => setFormat(f as 'png' | 'webp')}
-                      className={`py-2 text-xs font-bold uppercase rounded-lg transition-all ${
+                      className={`flex-1 py-2 text-xs font-bold uppercase rounded-lg transition-all ${
                         format === f
                           ? 'bg-white shadow-sm text-indigo-600'
                           : 'text-slate-400 hover:text-slate-600'
@@ -216,10 +216,10 @@ export default function ImageTrimmingApp() {
                 </div>
               </section>
 
-              <div className="mt-auto pt-6 grid gap-3">
+              <div className="mt-auto pt-6 flex flex-col gap-3">
                 <button
                   onClick={downloadResult}
-                  className="grid grid-flow-col auto-cols-max items-center justify-center gap-2 bg-indigo-600 text-white py-4 rounded-2xl font-bold hover:bg-indigo-700 active:scale-[0.98] transition-all shadow-xl shadow-indigo-200"
+                  className="flex items-center justify-center gap-2 bg-indigo-600 text-white py-4 rounded-2xl font-bold hover:bg-indigo-700 active:scale-[0.98] transition-all shadow-xl shadow-indigo-200"
                 >
                   <Download className="w-5 h-5" /> Download
                 </button>
@@ -238,7 +238,7 @@ export default function ImageTrimmingApp() {
             onDragOver={onDragOver}
             onDragLeave={onDragLeave}
             onDrop={onDrop}
-            className={`group m-8 h-80 border-4 border-dashed rounded-3xl grid place-items-center transition-all ${
+            className={`group m-8 h-80 border-4 border-dashed rounded-3xl flex flex-col items-center justify-center transition-all ${
               isDragging
                 ? 'border-indigo-500 bg-indigo-50 scale-[1.02]'
                 : 'border-slate-200 bg-slate-50 hover:bg-white hover:border-indigo-300'
@@ -251,7 +251,7 @@ export default function ImageTrimmingApp() {
               className="hidden"
               id="upload-input"
             />
-            <label htmlFor="upload-input" className="grid place-items-center cursor-pointer">
+            <label htmlFor="upload-input" className="flex flex-col items-center cursor-pointer">
               <div
                 className={`p-5 rounded-full mb-4 transition-all ${
                   isDragging
