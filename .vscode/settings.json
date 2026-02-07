@@ -3,5 +3,6 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"
   },
-  "eslint.validate": ["javascript", "typescript", "typescriptreact", "javascriptreact"]
+  "eslint.validate": ["javascript", "typescript", "typescriptreact", "javascriptreact"],
+  "css.lint.unknownAtRules": "ignore"
 }
