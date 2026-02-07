@@ -14,7 +14,7 @@ export default function BlogLayout({ children, posts, toc, categories }: BlogLay
     <div className="mx-auto max-w-6xl px-4 py-4">
       <div className="grid gap-8 md:grid-cols-[2fr_1fr]">
         {/* メイン */}
-        <main>{children}</main>
+        <main className="min-w-0">{children}</main>
 
         {/* サイドバー */}
         <aside className="relative">
