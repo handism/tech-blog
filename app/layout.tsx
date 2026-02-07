@@ -5,7 +5,6 @@ import Footer from '@/src/components/Footer';
 import './globals.css';
 import { ThemeProvider } from 'next-themes'; // ← これが正しい
 import 'highlight.js/styles/github-dark.css';
-import { CodeHighlight } from '@/src/components/CodeHighlight';
 
 import { siteConfig } from '@/src/config/site';
 
@@ -31,11 +30,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ja" className="bg-bg text-text" suppressHydrationWarning>
       <body className="antialiased">
-        <CodeHighlight />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
-          <Header />
-          {children}
-          <Footer />
+          <div className="max-w-6xl">
+            <Header />
+            {children}
+            <Footer />
+          </div>
         </ThemeProvider>
       </body>
     </html>
