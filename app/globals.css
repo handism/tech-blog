@@ -38,20 +38,6 @@ html {
     color 0.2s;
 }
 
-body {
-  font-family:
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    'Segoe UI',
-    'Helvetica Neue',
-    Arial,
-    'Noto Sans',
-    'Apple Color Emoji',
-    'Segoe UI Emoji',
-    'Segoe UI Symbol';
-}
-
 /* =======================
    記事本文スタイル（prose）
    ======================= */

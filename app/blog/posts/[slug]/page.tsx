@@ -9,13 +9,11 @@ import type { Metadata } from 'next';
 import { ImageModal } from '@/src/components/ImageModal';
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
-export const dynamicParams = false;
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = params;
+  const { slug } = await params;
   const post = await getPost(slug);
 
   if (!post) {
@@ -38,8 +36,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const post = await getPost(slug);
 
   const posts = getAllPosts();

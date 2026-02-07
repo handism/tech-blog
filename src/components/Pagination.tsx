@@ -5,18 +5,13 @@ import Link from 'next/link';
 type PaginationProps = {
   currentPage: number;
   totalPages: number;
-  basePath?: string;
 };
 
-export default function Pagination({ currentPage, totalPages, basePath }: PaginationProps) {
+export default function Pagination({ currentPage, totalPages }: PaginationProps) {
   if (totalPages <= 1) return null;
 
-  // ページ番号からURLを生成
+  // ページ番号からURLを生成（1ページ目は / それ以外は /blog/page/N）
   const getPageUrl = (pageNum: number) => {
-    if (basePath) {
-      return pageNum === 1 ? basePath : `${basePath}/page/${pageNum}`;
-    }
-    // デフォルトの動作（メインのブログページ用）
     return pageNum === 1 ? '/' : `/blog/page/${pageNum}`;
   };
 
