@@ -1,16 +1,30 @@
 @import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --color-bg: #ffffff;
+  --color-background: var(--color-bg);
   --color-card: #f8fafc; /* 少し明るめで清潔感UP */
+  --color-secondary: #f1f5f9; /* slate-100 */
   --color-text: #0f172a; /* ほぼ黒に近いslate-950で読みやすく */
   --color-border: #e2e8f0;
   --color-accent: #10b981; /* emerald-500 そのまま */
+
+  --bg: var(--color-bg);
+  --background: var(--color-background);
+  --card: var(--color-card);
+  --secondary: var(--color-secondary);
+  --text: var(--color-text);
+  --border: var(--color-border);
+  --accent: var(--color-accent);
 }
 
 .dark {
   --color-bg: #0f172a; /* slate-950 */
+  --color-background: var(--color-bg);
   --color-card: #1e293b; /* slate-800 */
+  --color-secondary: #243449; /* slate-800+ */
   --color-text: #f1f5f9; /* slate-100 で柔らかく */
   --color-border: #334155; /* slate-700 */
   --color-accent: #34d399; /* emerald-400 でdarkでも鮮やか */
