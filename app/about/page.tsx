@@ -7,8 +7,8 @@ export const metadata: Metadata = {
 
 export default async function AboutPage() {
   return (
-    <div className="flex flex-col items-center p-4 min-h-screen mx-auto max-w-6xl">
-      <header className="mb-12 text-center">
+    <div className="flex flex-col items-stretch p-4 min-h-screen mx-auto max-w-6xl">
+      <header className="mb-12 text-center w-full">
         <h1 className="text-4xl font-extrabold flex items-center justify-center gap-3 tracking-tight">
           <User className="w-10 h-10 text-accent" />
           About
@@ -17,7 +17,7 @@ export default async function AboutPage() {
       </header>
 
       {/* プロフィールカード */}
-      <div className="bg-card border border-border rounded-2xl p-8 mb-12 shadow-lg hover:shadow-xl transition-shadow">
+      <div className="bg-card border border-border rounded-2xl p-8 mb-12 shadow-lg hover:shadow-xl transition-shadow w-full">
         <div className="flex flex-col md:flex-row items-center gap-8">
           {/* アイコン */}
           <div className="shrink-0">
@@ -40,7 +40,7 @@ export default async function AboutPage() {
       </div>
 
       {/* このブログについて */}
-      <section className="mb-12">
+      <section className="mb-12 w-full">
         <h2 className="text-2xl font-bold mb-6 text-text flex items-center gap-3">
           <span className="text-3xl">📝</span>
           このブログについて
@@ -66,7 +66,7 @@ export default async function AboutPage() {
       </section>
 
       {/* 技術スタック */}
-      <section className="mb-12">
+      <section className="mb-12 w-full">
         <h2 className="text-2xl font-bold mb-6 text-text flex items-center gap-3">
           <span className="text-3xl">⚡</span>
           技術スタック
@@ -86,7 +86,7 @@ export default async function AboutPage() {
       </section>
 
       {/* RPG風スキルゲージ */}
-      <section className="mb-12">
+      <section className="mb-12 w-full">
         <h2 className="text-2xl font-bold mb-6 text-text flex items-center gap-3">
           <span className="text-3xl">🗡️</span>
           Skill Gauge
@@ -122,7 +122,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Contact */}
-      <section className="mb-12">
+      <section className="mb-12 w-full">
         <h2 className="text-2xl font-bold mb-6 text-text flex items-center gap-3">
           <span className="text-3xl">📧</span>
           Contact
