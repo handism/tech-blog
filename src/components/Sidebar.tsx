@@ -47,7 +47,7 @@ export default function Sidebar({
   );
 
   return (
-    <div className="space-y-6 lg:self-start">
+    <div className="space-y-6">
       <SearchBox posts={posts ?? []} />
 
       {/* カテゴリ・タグ一覧（省略せずそのまま） */}
@@ -78,8 +78,10 @@ export default function Sidebar({
       {toc && toc.length > 0 && (
         <>
           {/* 1. PC用 */}
-          <div className="hidden lg:block p-4 border border-border rounded-lg bg-card max-h-[calc(100vh-120px)] overflow-y-auto sticky top-4">
-            {tocElements}
+          <div className="hidden lg:block sticky top-4">
+            <div className="p-4 border border-border rounded-lg bg-card max-h-[calc(100vh-120px)] overflow-y-auto">
+              {tocElements}
+            </div>
           </div>
 
           {/* 2. スマホ用ボタン */}
