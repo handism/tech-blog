@@ -1,6 +1,7 @@
 'use client'; // 状態管理を使うため追加
 
 import { useState, useEffect, useRef } from 'react'; // hooksを追加
+import { siteConfig } from '@/src/config/site';
 import { ThemeToggle } from '@/src/components/theme-toggle';
 import Link from 'next/link';
 
@@ -24,7 +25,7 @@ export default function Header() {
       <div className="max-w-6xl mx-auto px-4 py-3 md:py-4 relative flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-0">
         <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6">
           <Link href="/" className="text-xl font-bold text-text hover:opacity-80">
-            Handism&apos;s Tech Blog
+            {siteConfig.name}
           </Link>
 
           <nav className="flex items-center gap-4 md:gap-6 text-sm">
@@ -89,7 +90,7 @@ export default function Header() {
         {/* アイコン類 */}
         <div className="absolute right-3 top-3 md:static flex items-center gap-1.5 md:gap-2 md:self-auto">
           <a
-            href="https://github.com/handism"
+            href={siteConfig.github}
             target="_blank"
             rel="noopener noreferrer"
             className="text-text hover:text-accent transition-colors p-1.5 -mr-1.5 md:p-2 md:mr-0"

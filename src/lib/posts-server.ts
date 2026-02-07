@@ -1,3 +1,4 @@
+import { siteConfig } from '@/src/config/site';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
@@ -10,7 +11,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeStringify from 'rehype-stringify';
 import { generateToc } from './toc';
 
-const postsDir = path.join(process.cwd(), 'md');
+const postsDir = path.join(process.cwd(), siteConfig.posts.dir);
 
 export type TocItem = {
   id: string;
@@ -69,10 +70,10 @@ export function getAllPosts(): Post[] {
 
       return {
         slug,
-        title: data.title ?? 'No title',
+        title: data.title ?? siteConfig.posts.defaultTitle,
         date: data.date ? new Date(data.date) : undefined,
         tags: data.tags ?? [],
-        category: data.category ?? 'uncategorized',
+        category: data.category ?? siteConfig.posts.defaultCategory,
         content: String(processed),
         plaintext: markdownToPlaintext(content),
         image: data.image, // 追加
@@ -112,10 +113,10 @@ export async function getPost(slug: string): Promise<Post | null> {
 
   return {
     slug,
-    title: data.title ?? 'No title',
+    title: data.title ?? siteConfig.posts.defaultTitle,
     date: data.date ? new Date(data.date) : undefined,
     tags: data.tags ?? [],
-    category: data.category ?? 'uncategorized',
+    category: data.category ?? siteConfig.posts.defaultCategory,
     content: htmlContent,
     plaintext: plaintext || '',
     toc,

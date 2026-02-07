@@ -7,6 +7,8 @@ import { ThemeProvider } from 'next-themes'; // ← これが正しい
 import 'highlight.js/styles/github-dark.css';
 import { CodeHighlight } from '@/src/components/CodeHighlight';
 
+import { siteConfig } from '@/src/config/site';
+
 const geistSans = Geist({
   variable: '--font-geist-sans',
   subsets: ['latin'],
@@ -19,10 +21,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Handism's Tech Blog",
-    template: "%s | Handism's Tech Blog", // 各ページで使用
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`, // 各ページで使用
   },
-  description: '技術的な学びや備忘録を記録するための個人ブログ',
+  description: siteConfig.description,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
