@@ -101,16 +101,16 @@ export default async function AboutPage() {
             <div className="grid gap-4">
               {[
                 {
-                  name: 'クラウドアーキテクチャ (AWS)',
-                  level: 30,
-                  tone: 'from-emerald-400 to-emerald-600',
-                },
-                {
                   name: 'フロントエンド (C言語 / HTML / CSS / JavaScript / Next.js / Vue)',
                   level: 78,
                   tone: 'from-violet-400 to-violet-600',
                 },
                 { name: 'バックエンド (Java)', level: 29, tone: 'from-cyan-400 to-cyan-600' },
+                {
+                  name: 'クラウドアーキテクチャ (AWS)',
+                  level: 30,
+                  tone: 'from-emerald-400 to-emerald-600',
+                },
                 { name: 'SRE', level: 28, tone: 'from-amber-400 to-amber-600' },
                 // { name: 'Observability', level: 68, tone: 'from-pink-400 to-pink-600' },
               ].map((skill) => (
