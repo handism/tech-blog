@@ -13,9 +13,8 @@ export default async function AboutPage() {
 
   return (
     <BlogLayout posts={posts} categories={categories}>
-      <div className="dark:prose-invert max-w-none">
+      <article className="prose dark:prose-invert max-w-none">
         <h1>About</h1>
-        <p className="text-sm text-text/60 mt-2">このブログについて</p>
 
         {/* プロフィールカード */}
         <div className="bg-card border border-border rounded-2xl p-8 mb-12 shadow-lg hover:shadow-xl transition-shadow w-full">
@@ -141,7 +140,7 @@ export default async function AboutPage() {
             </a>
           </div>
         </section>
-      </div>
+      </article>
     </BlogLayout>
   );
 }

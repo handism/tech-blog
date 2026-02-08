@@ -52,8 +52,7 @@ article.prose {
   @apply max-w-none px-0;
 }
 
-article.prose h1,
-h1 {
+article.prose h1 {
   @apply text-3xl font-bold mt-0 mb-2 tracking-tight;
 }
 
