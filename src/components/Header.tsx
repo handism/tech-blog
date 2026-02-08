@@ -33,6 +33,12 @@ export default function Header() {
             <Link href="/about" className="text-text/80 hover:text-accent transition-colors">
               About
             </Link>
+            <Link
+              href="/privacy-policy"
+              className="text-text/80 hover:text-accent transition-colors"
+            >
+              Policy
+            </Link>
 
             {/* ドロップダウン部分 */}
             <div className="relative" ref={dropdownRef}>
