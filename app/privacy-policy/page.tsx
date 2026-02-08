@@ -3,7 +3,7 @@ import BlogLayout from '@/src/components/BlogLayout';
 import { getAllPosts } from '@/src/lib/posts-server';
 
 export const metadata: Metadata = {
-  title: 'プライバシーポリシー・免責事項',
+  title: 'プライバシーポリシー',
 };
 
 export default function PrivacyPolicyPage() {
@@ -14,9 +14,7 @@ export default function PrivacyPolicyPage() {
     <BlogLayout posts={posts} categories={categories}>
       <div className="dark:prose-invert max-w-none">
         <header className="mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold text-text">
-            プライバシーポリシー・免責事項
-          </h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-text">プライバシーポリシー</h1>
           <p className="text-sm text-text/60 mt-2">最終更新日: 2026-02-08</p>
         </header>
 
