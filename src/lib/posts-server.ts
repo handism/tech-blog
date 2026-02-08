@@ -47,31 +47,32 @@ function markdownToPlaintext(markdown: string): string {
 }
 
 /**
- * 全記事取得（一覧用）- サーバー側のみ
+ * 全記事取得（一覧用）- 非同期に変更
  */
-export function getAllPosts(): Post[] {
+export async function getAllPosts(): Promise<Post[]> {
   const files = fs.readdirSync(postsDir, { withFileTypes: true });
 
-  return files
-    .filter((dirent) => dirent.isFile()) // ← ディレクトリ除外
-    .filter((dirent) => dirent.name.endsWith('.md')) // ← md だけ
-    .map((file) => {
+  // mapの中で await を使うため、Promiseの配列を作成
+  const postPromises = files
+    .filter((dirent) => dirent.isFile() && dirent.name.endsWith('.md'))
+    .map(async (file) => {
       const slug = file.name.replace(/\.md$/, '');
       const fullPath = path.join(postsDir, file.name);
       const fileContents = fs.readFileSync(fullPath, 'utf8');
       const { data, content } = matter(fileContents);
 
-      const processed = unified()
+      // processSync ではなく process を使い、await する
+      const processed = await unified()
         .use(remarkParse)
         .use(remarkGfm)
         .use(remarkRehype)
         .use(rehypeShiki, {
-          theme: 'github-dark', // または 'tokyo-night', 'vitesse-dark' など
+          theme: 'github-dark',
         })
         .use(rehypeSlug)
         .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
         .use(rehypeStringify)
-        .processSync(content);
+        .process(content);
 
       return {
         slug,
@@ -83,12 +84,16 @@ export function getAllPosts(): Post[] {
         plaintext: markdownToPlaintext(content),
         image: data.image,
       };
-    })
-    .sort((a, b) => {
-      if (!a.date) return 1; // 日付なしは後ろ
-      if (!b.date) return -1;
-      return b.date.getTime() - a.date.getTime(); // ← 新しい順
     });
+
+  // 全てのPromiseが解決するのを待つ
+  const posts = await Promise.all(postPromises);
+
+  return posts.sort((a, b) => {
+    if (!a.date) return 1;
+    if (!b.date) return -1;
+    return b.date.getTime() - a.date.getTime();
+  });
 }
 
 /**

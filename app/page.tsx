@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 const POSTS_PER_PAGE = siteConfig.pagination.postsPerPage;
 
 export default async function Home() {
-  const allPosts = getAllPosts();
+  const allPosts = await getAllPosts();
   const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
   const categories = Array.from(new Set(allPosts.map((p) => p.category)));
 

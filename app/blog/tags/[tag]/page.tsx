@@ -6,7 +6,7 @@ import Pagination from '@/src/components/Pagination';
 import { tagToSlug, findTagBySlug } from '@/src/lib/utils';
 
 export async function generateStaticParams() {
-  const posts = getAllPosts();
+  const posts = await getAllPosts();
   const tags = Array.from(new Set(posts.flatMap((p) => p.tags)));
 
   // tagToSlugでスラッグ化してパスを生成
@@ -18,7 +18,7 @@ export async function generateStaticParams() {
 export default async function TagPage({ params }: { params: Promise<{ tag: string }> }) {
   const { tag: slug } = await params;
 
-  const posts = getAllPosts();
+  const posts = await getAllPosts();
   const categories = Array.from(new Set(posts.map((p) => p.category)));
 
   // 全タグを取得

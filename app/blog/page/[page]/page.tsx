@@ -23,7 +23,7 @@ export default async function PageView({ params }: Props) {
     redirect('/');
   }
 
-  const allPosts = getAllPosts();
+  const allPosts = await getAllPosts();
   const totalPages = Math.ceil(allPosts.length / siteConfig.pagination.postsPerPage);
 
   if (currentPage > totalPages) {
@@ -54,7 +54,7 @@ export default async function PageView({ params }: Props) {
 
 // 静的生成用のパス生成（2ページ目以降のみ）
 export async function generateStaticParams() {
-  const allPosts = getAllPosts();
+  const allPosts = await getAllPosts();
   const totalPages = Math.ceil(allPosts.length / siteConfig.pagination.postsPerPage);
 
   // 2ページ目以降のみ生成

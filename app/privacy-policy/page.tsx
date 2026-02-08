@@ -7,8 +7,8 @@ export const metadata: Metadata = {
   title: 'プライバシーポリシー・免責事項',
 };
 
-export default function PrivacyPolicyPage() {
-  const posts = getAllPosts();
+export default async function PrivacyPolicyPage() {
+  const posts = await getAllPosts();
   const categories = Array.from(new Set(posts.map((p) => p.category)));
 
   return (

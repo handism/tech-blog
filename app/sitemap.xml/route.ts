@@ -6,7 +6,7 @@ export const revalidate = 3600; // 1時間ごとに再検証
 
 export async function GET() {
   const baseUrl = siteConfig.url;
-  const posts = getAllPosts();
+  const posts = await getAllPosts();
 
   const urls = posts.map((post) => `<url><loc>${baseUrl}/posts/${post.slug}</loc></url>`).join('');
 

@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   title: 'サイトマップ',
 };
 
-export default function SitemapPage() {
-  const posts = getAllPosts();
+export default async function SitemapPage() {
+  const posts = await getAllPosts();
   const categories = Array.from(new Set(posts.map((p) => p.category)));
   const tags = Array.from(new Set(posts.flatMap((p) => p.tags)));
 

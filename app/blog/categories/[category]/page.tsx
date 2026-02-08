@@ -5,7 +5,7 @@ import PostCard from '@/src/components/PostCard';
 import Pagination from '@/src/components/Pagination';
 
 export async function generateStaticParams() {
-  const posts = getAllPosts();
+  const posts = await getAllPosts();
   const categories = Array.from(new Set(posts.map((p) => p.category)));
 
   return categories.map((category) => ({ category }));

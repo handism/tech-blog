@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function AboutPage() {
-  const posts = getAllPosts();
+  const posts = await getAllPosts();
   const categories = Array.from(new Set(posts.map((p) => p.category)));
 
   return (

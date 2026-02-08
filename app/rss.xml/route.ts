@@ -5,7 +5,7 @@ import { siteConfig } from '@/src/config/site';
 export const revalidate = 3600; // 1時間ごとに再検証
 
 export async function GET() {
-  const posts = getAllPosts();
+  const posts = await getAllPosts();
   const baseUrl = siteConfig.url;
 
   const rssItems = posts
