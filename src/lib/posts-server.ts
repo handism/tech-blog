@@ -12,7 +12,6 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeStringify from 'rehype-stringify';
 import { generateToc } from '@/src/lib/toc';
 import rehypeShiki from '@shikijs/rehype';
-import rehypeCodeTitles from 'rehype-code-titles';
 
 const postsDir = path.join(process.cwd(), siteConfig.posts.dir);
 
@@ -67,9 +66,32 @@ export async function getAllPosts(): Promise<Post[]> {
         .use(remarkParse)
         .use(remarkGfm)
         .use(remarkRehype)
-        .use(rehypeCodeTitles) // --- Shikiの前に挿入 ---
         .use(rehypeShiki, {
           theme: 'github-dark',
+          transformers: [
+            {
+              // Shikiの内部処理で言語名を差し込む
+              name: 'add-language-title',
+              pre(node) {
+                // codeブロックから言語名を取得
+                const lang = this.options.lang;
+                if (!lang) return;
+
+                // 言語名を表示するdivを自前で作成
+                const titleNode = {
+                  type: 'element',
+                  tagName: 'div',
+                  properties: { className: ['rehype-code-title'] },
+                  children: [{ type: 'text', value: lang }],
+                };
+
+                // preタグの前にタイトルを挿入するのではなく、
+                // 構造を工夫するか、CSSでpreの上に表示させます
+                // ここでは簡単に、node（pre）の属性に言語名を保持させ、CSSで表示する方法が楽です
+                node.properties['data-language'] = lang;
+              },
+            },
+          ],
         })
         .use(rehypeSlug)
         .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
@@ -113,9 +135,32 @@ export async function getPost(slug: string): Promise<Post | null> {
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkRehype)
-    .use(rehypeCodeTitles) // --- Shikiの前に挿入 ---
     .use(rehypeShiki, {
       theme: 'github-dark',
+      transformers: [
+        {
+          // Shikiの内部処理で言語名を差し込む
+          name: 'add-language-title',
+          pre(node) {
+            // codeブロックから言語名を取得
+            const lang = this.options.lang;
+            if (!lang) return;
+
+            // 言語名を表示するdivを自前で作成
+            const titleNode = {
+              type: 'element',
+              tagName: 'div',
+              properties: { className: ['rehype-code-title'] },
+              children: [{ type: 'text', value: lang }],
+            };
+
+            // preタグの前にタイトルを挿入するのではなく、
+            // 構造を工夫するか、CSSでpreの上に表示させます
+            // ここでは簡単に、node（pre）の属性に言語名を保持させ、CSSで表示する方法が楽です
+            node.properties['data-language'] = lang;
+          },
+        },
+      ],
     })
     .use(rehypeSlug)
     .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
