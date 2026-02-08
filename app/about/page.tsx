@@ -100,11 +100,11 @@ export default async function AboutPage() {
               {[
                 {
                   name: 'クラウドアーキテクチャ (AWS)',
-                  level: 28,
+                  level: 30,
                   tone: 'from-emerald-400 to-emerald-600',
                 },
                 {
-                  name: 'フロントエンド (C言語 / HTML / CSS / Next.js / Vue)',
+                  name: 'フロントエンド (C言語 / HTML / CSS / JavaScript / Next.js / Vue)',
                   level: 78,
                   tone: 'from-violet-400 to-violet-600',
                 },
