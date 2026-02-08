@@ -1,12 +1,10 @@
 // app/layout.tsx
 import './globals.css';
-import 'highlight.js/styles/github-dark.css';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
 import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
-import { CodeHighlight } from '@/src/components/CodeHighlight';
 import ScrollToTopButton from '@/src/components/ScrollToTopButton';
 
 import { siteConfig } from '@/src/config/site';
@@ -33,7 +31,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ja" className="bg-bg text-text" suppressHydrationWarning>
       <body className="antialiased">
-        <CodeHighlight />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
           <Header />
           {children}
