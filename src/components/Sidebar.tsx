@@ -14,6 +14,8 @@ export default function Sidebar({
   categories?: string[];
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const hasToc = !!(toc && toc.length > 0);
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   // --- 修正ポイント: JSXを返す「変数」にする（または関数の外に定義する） ---
   const tocElements = (
@@ -75,7 +77,7 @@ export default function Sidebar({
       </div>
 
       {/* --- TOC セクション --- */}
-      {toc && toc.length > 0 && (
+      {hasToc && (
         <>
           {/* 1. PC用 */}
           <div className="hidden lg:block sticky top-5">
@@ -122,6 +124,23 @@ export default function Sidebar({
           </div>
         </>
       )}
+
+      {/* トップへ戻るボタン */}
+      <button
+        onClick={scrollToTop}
+        className={`text-text fixed bottom-6 z-40 w-12 h-12 bg-card border border-border rounded-full shadow-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all right-6${hasToc ? ' lg:right-6 right-24' : ''}`}
+        aria-label="トップへ戻る"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+        </svg>
+      </button>
     </div>
   );
 }
