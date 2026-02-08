@@ -44,106 +44,6 @@ html:focus-within {
   scroll-behavior: smooth;
 }
 
-/* 例：コードブロック全体のスタイル調整 */
-pre.shiki {
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  overflow-x: auto;
-  font-family:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
-    monospace;
-  font-size: 0.9rem;
-  line-height: 1.6;
-}
-
-code {
-  counter-reset: step;
-  counter-increment: step 0;
-}
-
-/* 1. コードブロック内の行にカウンターを設定 */
-pre.shiki code {
-  counter-reset: line;
-}
-
-/* 2. 各行（.line）の前に番号を表示 */
-pre.shiki .line::before {
-  counter-increment: line;
-  content: counter(line);
-
-  /* 見た目の調整 */
-  display: inline-block;
-  width: 1.5rem;
-  margin-right: 1.5rem;
-  text-align: right;
-  color: #6e7681; /* 控えめなグレー */
-  user-select: none; /* コピーされないようにする */
-}
-
-/* 3. 中身が空の行も高さを保持する（空行対策） */
-pre.shiki .line {
-  display: inline-block;
-  width: 100%;
-}
-
-/* 親要素の pre を基準にする */
-pre.shiki {
-  position: relative;
-  padding-top: 2rem; /* ボタンと重ならないよう、上部に余裕を持たせる */
-}
-
-/* コピーボタンの基本スタイル */
-.copy-button {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  padding: 0.3rem 0.6rem;
-  font-size: 0.75rem;
-  color: #e6edf3; /* 白に近いグレー */
-  background-color: rgba(110, 118, 129, 0.3); /* 半透明の背景 */
-  border: 1px solid rgba(240, 246, 252, 0.1);
-  border-radius: 6px;
-  cursor: pointer;
-  opacity: 0; /* 通常時は隠しておく（お好みで） */
-  transition: all 0.2s ease;
-  z-index: 10;
-}
-
-/* ホバー時にボタンを表示する */
-pre.shiki:hover .copy-button {
-  opacity: 1;
-}
-
-/* ボタン単体のホバー動作 */
-.copy-button:hover {
-  background-color: rgba(110, 118, 129, 0.5);
-  border-color: rgba(240, 246, 252, 0.5);
-}
-
-/* クリックした時の「Copied!」状態を少し強調したい場合 */
-.copy-button:active {
-  scale: 0.95;
-}
-
-/* preタグの上に言語名を表示 */
-pre.shiki {
-  position: relative;
-  padding-top: 2.5rem; /* 上部に隙間を作る */
-}
-
-pre.shiki::before {
-  content: attr(data-language); /* data-language属性から取得 */
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: #343941;
-  color: #e6edf3;
-  padding: 0.2rem 0.8rem;
-  font-size: 0.75rem;
-  border-radius: 0 0 4px 0; /* 左上をpreに合わせるなら 0 0 4px 0 */
-  text-transform: uppercase;
-}
-
 /* =======================
    記事本文スタイル（prose）
    ======================= */
@@ -329,4 +229,96 @@ article.prose tbody tr:hover {
 
 article.prose table code {
   @apply font-mono text-xs;
+}
+
+/* =======================
+    コードブロックの行番号＆コピーボタン
+   ======================= */
+pre.shiki {
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+    monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+code {
+  counter-reset: step;
+  counter-increment: step 0;
+}
+
+pre.shiki code {
+  counter-reset: line;
+}
+
+pre.shiki .line::before {
+  counter-increment: line;
+  content: counter(line);
+
+  display: inline-block;
+  width: 1.5rem;
+  margin-right: 1.5rem;
+  text-align: right;
+  color: #6e7681;
+  user-select: none;
+}
+
+pre.shiki .line {
+  display: inline-block;
+  width: 100%;
+}
+
+pre.shiki {
+  position: relative;
+  padding-top: 2rem;
+}
+
+.copy-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.75rem;
+  color: #e6edf3;
+  background-color: rgba(110, 118, 129, 0.3);
+  border: 1px solid rgba(240, 246, 252, 0.1);
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+pre.shiki:hover .copy-button {
+  opacity: 1;
+}
+
+.copy-button:hover {
+  background-color: rgba(110, 118, 129, 0.5);
+  border-color: rgba(240, 246, 252, 0.5);
+}
+
+.copy-button:active {
+  scale: 0.95;
+}
+
+pre.shiki {
+  position: relative;
+  padding-top: 2.5rem;
+}
+
+pre.shiki::before {
+  content: attr(data-language);
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #343941;
+  color: #e6edf3;
+  padding: 0.2rem 0.8rem;
+  font-size: 0.75rem;
+  border-radius: 0 0 4px 0;
+  text-transform: uppercase;
 }
