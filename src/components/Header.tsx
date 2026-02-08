@@ -39,6 +39,9 @@ export default function Header() {
             >
               Policy
             </Link>
+            <Link href="/sitemap" className="text-text/80 hover:text-accent transition-colors">
+              Sitemap
+            </Link>
 
             {/* ドロップダウン部分 */}
             <div className="relative" ref={dropdownRef}>
