@@ -89,12 +89,12 @@ export default function Sidebar({
           {/* 2. スマホ用ボタン */}
           <button
             onClick={() => setIsOpen(true)}
-            className="text-text lg:hidden fixed bottom-6 right-6 z-40 w-14 h-14 bg-accent rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all"
+            className="text-text lg:hidden fixed bottom-[4.5rem] right-6 z-40 w-12 h-12 bg-card border border-border rounded-full shadow-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all"
             aria-label="目次を開く"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
+              className="h-5 w-5"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -128,7 +128,7 @@ export default function Sidebar({
       {/* トップへ戻るボタン */}
       <button
         onClick={scrollToTop}
-        className={`text-text fixed bottom-6 z-40 w-12 h-12 bg-card border border-border rounded-full shadow-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all right-6${hasToc ? ' lg:right-6 right-24' : ''}`}
+        className="text-text fixed bottom-6 right-6 z-40 w-12 h-12 bg-card border border-border rounded-full shadow-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all"
         aria-label="トップへ戻る"
       >
         <svg
