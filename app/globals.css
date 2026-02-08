@@ -247,7 +247,7 @@ article.prose tbody tr:hover {
 article.prose table code {
   @apply font-mono text-xs;
 }
-
+/* 
 pre {
   @apply rounded-xl text-white p-4 overflow-x-auto;
   background: #0d1117;
@@ -263,4 +263,4 @@ pre code {
 
 .code-copy-button {
   font-family: system-ui, sans-serif;
-}
+} */
