@@ -1,6 +1,5 @@
-import Link from 'next/link';
 import { Post } from '@/src/types/post';
-import { tagToSlug } from '@/src/lib/utils';
+import TagLink from '@/src/components/TagLink';
 
 type Props = {
   posts: Post[];
@@ -13,13 +12,7 @@ export default function TagList({ posts }: Props) {
   return (
     <div className="flex flex-wrap gap-2">
       {tags.map((tag) => (
-        <Link
-          key={tag}
-          href={`/blog/tags/${tagToSlug(tag)}`}
-          className="inline-flex items-center px-3 py-1 text-xs font-medium rounded-full bg-accent/10 text-accent"
-        >
-          #{tag}
-        </Link>
+        <TagLink key={tag} tag={tag} />
       ))}
     </div>
   );

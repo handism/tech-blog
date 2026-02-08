@@ -3,10 +3,10 @@ import { getAllPosts, getPost } from '@/src/lib/posts-server';
 import { notFound } from 'next/navigation';
 import BlogLayout from '@/src/components/BlogLayout';
 import Link from 'next/link';
-import { tagToSlug } from '@/src/lib/utils';
 import Image from 'next/image';
 import type { Metadata } from 'next';
 import { ImageModal } from '@/src/components/ImageModal';
+import TagLink from '@/src/components/TagLink';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -79,13 +79,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           {post.tags.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {post.tags.map((tag) => (
-                <Link
-                  key={tag}
-                  href={`/blog/tags/${tagToSlug(tag)}`}
-                  className="inline-flex items-center px-3 py-1 text-xs font-medium rounded-full bg-accent/10 text-accent"
-                >
-                  #{tag}
-                </Link>
+                <TagLink key={tag} tag={tag} />
               ))}
             </div>
           )}

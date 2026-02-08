@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Post } from '@/src/lib/posts-server';
-import { tagToSlug } from '@/src/lib/utils';
+import TagLink from '@/src/components/TagLink';
 
 export default function PostCard({ post }: { post: Post }) {
   return (
@@ -50,13 +50,7 @@ export default function PostCard({ post }: { post: Post }) {
           {post.tags.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {post.tags.map((tag) => (
-                <Link
-                  key={tag}
-                  href={`/blog/tags/${tagToSlug(tag)}`}
-                  className="inline-flex items-center px-3 py-1 text-xs font-medium rounded-full bg-accent/10 text-accent"
-                >
-                  #{tag}
-                </Link>
+                <TagLink key={tag} tag={tag} />
               ))}
             </div>
           )}
