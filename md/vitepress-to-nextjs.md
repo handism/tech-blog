@@ -24,7 +24,48 @@ Reactで色々調べてみると、結局「Next.js」っていうフレーム�
 
 ![alt text](/images/image.png)
 
-![alt text](/images/image-2.png)
+## Next.jsの導入
+
+### Node.js をインストール
+
+MacかつHomebrew導入済みであれば以下コマンドでOK。
+
+```sh
+brew install node
+```
+
+### Next.jsプロジェクトを作成
+
+以下コマンドを打つだけ。
+
+```sh
+npx create-next-app@latest
+```
+
+対話的に設定が可能。デフォルトだと以下が導入される。
+
+- TypeScript
+- Tailwind CSS
+- ESLint
+- App Router
+- Turbopack
+
+### ローカルで動作確認
+
+ターミナルで以下を打つ。
+
+```sh
+cd my-app
+npm run dev
+```
+
+ブラウザで`http://localhost:3000`にアクセスして動作確認可能。
+
+## Reactについて
+
+すでに入門済みの`Vue.js`との違いについて。
+
+コンポーネントが基本的にHTML、CSS、JavaScriptを.vueファイルにまとめて記載するVue.jsに対して、.jsファイルにJavaScriptとして記載してHTMLとCSSはJavaScriptで返すようにするのがReact。
 
 ## ChatGPTがまとめてくれたReact/Next.js実戦メモ（数日間の学び）
 
@@ -140,3 +181,23 @@ Reactで色々調べてみると、結局「Next.js」っていうフレーム�
 
 - 各コンポーネントにダークモードの背景色とテキスト色が書かれてたのでhtml要素にまとめる
 - Tailwindの書き方がバージョン3と4で混在していたので4に統一
+- srcフォルダ作成
+- libフォルダをsrc以下に移動
+- componentsをsrc以下に移動
+- typesフォルダを作成してposts.tsを移動
+- src/config/site.tsを新規作成
+- Gemini：全体的に、定数はsrc/config/site.tsに外出ししてください
+- カテゴリページとタグページも記事一覧ページと同じデザインを適用
+- SVGアイコンはLucideに置き換え
+- 読了時間表示
+- トップへ戻るボタン追加
+- 不要なパッケージのアンインストール
+
+```sh
+npx depcheck
+npm uninstall <package>
+```
+
+- コメントつけ直し
+- サイトマップ追加
+- プライバシーポリシー追加
