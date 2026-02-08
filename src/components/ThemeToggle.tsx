@@ -2,6 +2,7 @@
 
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
+import { Moon, Sun } from 'lucide-react';
 
 export function ThemeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
@@ -20,7 +21,7 @@ export function ThemeToggle() {
         disabled
         className="rounded-full p-2 text-text transition hover:bg-card opacity-50 cursor-not-allowed"
       >
-        🌙
+        <Moon className="h-5 w-5" />
       </button>
     );
   }
@@ -32,7 +33,7 @@ export function ThemeToggle() {
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
       className="rounded-full p-2 text-text transition hover:bg-card"
     >
-      {isDark ? '☀️' : '🌙'}
+      {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
     </button>
   );
 }
