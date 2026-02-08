@@ -89,7 +89,7 @@ export default function Sidebar({
           {/* 2. スマホ用ボタン */}
           <button
             onClick={() => setIsOpen(true)}
-            className="text-text lg:hidden fixed bottom-[4.5rem] right-6 z-40 w-12 h-12 bg-card border border-border rounded-full shadow-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all"
+            className="text-text lg:hidden fixed bottom-18 right-6 z-40 w-12 h-12 bg-card border border-border rounded-full shadow-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all"
             aria-label="目次を開く"
           >
             <svg

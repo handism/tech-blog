@@ -30,12 +30,7 @@ export default function PostCard({ post }: { post: Post }) {
             {post.title}
           </h2>
 
-          <PostMeta
-            post={post}
-            showReadingTime={false}
-            className="gap-3 mb-3"
-            stackTags
-          />
+          <PostMeta post={post} showReadingTime={false} stackTags />
         </div>
       </Link>
     </article>
