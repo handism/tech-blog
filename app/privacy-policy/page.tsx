@@ -12,7 +12,7 @@ export default function PrivacyPolicyPage() {
 
   return (
     <BlogLayout posts={posts} categories={categories}>
-      <div className="dark:prose-invert max-w-none">
+      <div className="max-w-none">
         <header className="mb-10">
           <h1 className="text-3xl md:text-4xl font-bold text-text">
             プライバシーポリシー・免責事項

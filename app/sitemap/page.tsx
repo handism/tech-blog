@@ -15,7 +15,7 @@ export default function SitemapPage() {
 
   return (
     <BlogLayout posts={posts} categories={categories}>
-      <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
+      <div className="max-w-none">
         <header className="mb-10">
           <h1 className="text-3xl md:text-4xl font-bold text-text">サイトマップ</h1>
           <p className="text-sm text-text/60 mt-2">このサイトの主要ページ一覧です。</p>
@@ -37,11 +37,6 @@ export default function SitemapPage() {
             <li>
               <Link href="/privacy-policy" className="hover:text-accent hover:underline">
                 プライバシーポリシー・免責事項
-              </Link>
-            </li>
-            <li>
-              <Link href="/blog" className="hover:text-accent hover:underline">
-                Blog
               </Link>
             </li>
           </ul>
