@@ -13,8 +13,11 @@ export default async function AboutPage() {
 
   return (
     <BlogLayout posts={posts} categories={categories}>
-      <article className="prose dark:prose-invert max-w-none">
-        <h1>About</h1>
+      <div className="dark:prose-invert max-w-none">
+        <header className="mb-10">
+          <h1 className="text-3xl md:text-4xl font-bold text-text">About</h1>
+          <p className="text-sm text-text/60 mt-2">このブログについて</p>
+        </header>
 
         {/* プロフィールカード */}
         <div className="bg-card border border-border rounded-2xl p-8 mb-12 shadow-lg hover:shadow-xl transition-shadow w-full">
@@ -140,7 +143,7 @@ export default async function AboutPage() {
             </a>
           </div>
         </section>
-      </article>
+      </div>
     </BlogLayout>
   );
 }
