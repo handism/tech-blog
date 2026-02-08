@@ -88,7 +88,9 @@ export default async function AboutPage() {
               {/* テキスト */}
               <div className="flex-1 text-center md:text-left">
                 <h2 className="text-2xl font-bold mb-3 text-text">Handism</h2>
-                <p className="text-text/80 leading-relaxed">内製クラウドエンジニア</p>
+                <p className="text-text/80 leading-relaxed">
+                  フロントエンド → バックエンド → クラウドエンジニア
+                </p>
               </div>
             </div>
           </div>
@@ -137,7 +139,7 @@ export default async function AboutPage() {
         <section className="mb-12 w-full">
           <h2 className="text-2xl font-bold mb-6 text-text flex items-center gap-3">
             <Mail className="h-7 w-7 text-accent" />
-            Contact
+            問い合わせ
           </h2>
           <div className="bg-linear-to-r from-accent/10 to-purple-500/10 rounded-xl p-6 border border-accent/30">
             <p className="text-text/80 mb-4">お気軽にご連絡ください</p>
