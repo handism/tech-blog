@@ -1,16 +1,20 @@
 import type { Metadata } from 'next';
+import BlogLayout from '@/src/components/BlogLayout';
+import { getAllPosts } from '@/src/lib/posts-server';
 
 export const metadata: Metadata = {
   title: 'プライバシーポリシー・免責事項',
 };
 
 export default function PrivacyPolicyPage() {
+  const posts = getAllPosts();
+  const categories = Array.from(new Set(posts.map((p) => p.category)));
+
   return (
-    <div className="min-h-screen mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
+    <BlogLayout posts={posts} categories={categories}>
+      <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
       <header className="mb-10">
-        <h1 className="text-3xl md:text-4xl font-bold text-text">
-          プライバシーポリシー・免責事項
-        </h1>
+        <h1 className="text-3xl md:text-4xl font-bold text-text">プライバシーポリシー・免責事項</h1>
         <p className="text-sm text-text/60 mt-2">最終更新日: 2026-02-08</p>
       </header>
 
@@ -50,9 +54,7 @@ export default function PrivacyPolicyPage() {
 
         <div className="space-y-2">
           <h2 className="text-xl font-semibold text-text">4. 第三者提供</h2>
-          <p>
-            取得した個人情報は、法令に基づく場合を除き、本人の同意なく第三者に提供しません。
-          </p>
+          <p>取得した個人情報は、法令に基づく場合を除き、本人の同意なく第三者に提供しません。</p>
         </div>
 
         <div className="space-y-2">
@@ -101,6 +103,7 @@ export default function PrivacyPolicyPage() {
           </p>
         </div>
       </section>
-    </div>
+      </div>
+    </BlogLayout>
   );
 }

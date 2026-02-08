@@ -1,13 +1,19 @@
 import type { Metadata } from 'next';
 import { Github, User, PenSquare, Zap, Sword, Mail } from 'lucide-react';
+import BlogLayout from '@/src/components/BlogLayout';
+import { getAllPosts } from '@/src/lib/posts-server';
 
 export const metadata: Metadata = {
   title: 'About',
 };
 
 export default async function AboutPage() {
+  const posts = getAllPosts();
+  const categories = Array.from(new Set(posts.map((p) => p.category)));
+
   return (
-    <div className="flex flex-col items-stretch p-5 min-h-screen mx-auto max-w-4xl">
+    <BlogLayout posts={posts} categories={categories}>
+      <div className="flex flex-col items-stretch p-5 mx-auto max-w-4xl">
       <header className="mb-12 text-center w-full">
         <h1 className="text-4xl font-extrabold flex items-center justify-center gap-3 tracking-tight">
           <User className="w-10 h-10 text-accent" />
@@ -140,6 +146,7 @@ export default async function AboutPage() {
           </a>
         </div>
       </section>
-    </div>
+      </div>
+    </BlogLayout>
   );
 }
