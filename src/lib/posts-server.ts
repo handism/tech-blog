@@ -1,10 +1,11 @@
+// src/lib/posts-server.ts
 import { siteConfig } from '@/src/config/site';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
-import remarkGfm from 'remark-gfm'; // 追加
+import remarkGfm from 'remark-gfm';
 import remarkRehype from 'remark-rehype';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
@@ -61,7 +62,7 @@ export function getAllPosts(): Post[] {
 
       const processed = unified()
         .use(remarkParse)
-        .use(remarkGfm) // 追加：GFMサポート（テーブル、打ち消し線など）
+        .use(remarkGfm)
         .use(remarkRehype)
         .use(rehypeSlug)
         .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
@@ -76,7 +77,7 @@ export function getAllPosts(): Post[] {
         category: data.category ?? siteConfig.posts.defaultCategory,
         content: String(processed),
         plaintext: markdownToPlaintext(content),
-        image: data.image, // 追加
+        image: data.image,
       };
     })
     .sort((a, b) => {
@@ -99,7 +100,7 @@ export async function getPost(slug: string): Promise<Post | null> {
   // Markdown → HTML + 見出しID付与 + 自動リンク
   const processed = await unified()
     .use(remarkParse)
-    .use(remarkGfm) // 追加：GFMサポート（テーブル、打ち消し線など）
+    .use(remarkGfm)
     .use(remarkRehype)
     .use(rehypeSlug)
     .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
@@ -120,6 +121,6 @@ export async function getPost(slug: string): Promise<Post | null> {
     content: htmlContent,
     plaintext: plaintext || '',
     toc,
-    image: data.image, // 追加
+    image: data.image,
   };
 }

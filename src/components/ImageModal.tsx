@@ -1,4 +1,4 @@
-// src/components/ImageModal.tsx（拡張版）
+// src/components/ImageModal.tsx
 'use client';
 
 import { useState, useEffect } from 'react';

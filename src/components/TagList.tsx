@@ -1,3 +1,4 @@
+// src/components/TagList.tsx
 import { Post } from '@/src/types/post';
 import TagLink from '@/src/components/TagLink';
 

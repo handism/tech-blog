@@ -1,3 +1,4 @@
+// src/components/PostCard.tsx
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Post } from '@/src/lib/posts-server';

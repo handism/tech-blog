@@ -1,7 +1,8 @@
+// src/components/PostMeta.tsx
 import Link from 'next/link';
+import { Clock, Calendar, Folder } from 'lucide-react';
 import type { Post } from '@/src/lib/posts-server';
 import TagLink from '@/src/components/TagLink';
-import { Clock, Calendar, Folder } from 'lucide-react';
 
 type Props = {
   post: Post;

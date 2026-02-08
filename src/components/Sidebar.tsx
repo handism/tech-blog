@@ -1,9 +1,10 @@
+// src/components/Sidebar.tsx
 'use client';
 import { useState } from 'react';
+import { Menu } from 'lucide-react';
 import SearchBox from '@/src/components/SearchBox';
 import TagList from '@/src/components/TagList';
 import type { TocItem, Post } from '@/src/types/post';
-import { Menu } from 'lucide-react';
 
 export default function Sidebar({
   posts,
@@ -31,7 +32,7 @@ export default function Sidebar({
       </div>
       <ul className="space-y-2 text-sm">
         {toc?.map((item) => {
-          const indent = (item.level - 1) * 16; // px単位で調整
+          const indent = (item.level - 1) * 16;
           return (
             <li key={item.id} style={{ paddingLeft: `${indent}px` }}>
               <a

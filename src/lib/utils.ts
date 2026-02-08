@@ -1,4 +1,4 @@
-// lib/utils.ts
+// src/lib/utils.ts
 export function tagToSlug(tag: string): string {
   return tag
     .toLowerCase()

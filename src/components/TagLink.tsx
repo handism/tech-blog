@@ -1,3 +1,4 @@
+// src/components/TagLink.tsx
 import Link from 'next/link';
 import { tagToSlug } from '@/src/lib/utils';
 

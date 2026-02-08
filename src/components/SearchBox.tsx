@@ -1,4 +1,4 @@
-// components/SearchBox.tsx
+// src/components/SearchBox.tsx
 'use client';
 
 import { useState, useMemo } from 'react';

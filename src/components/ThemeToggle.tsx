@@ -1,3 +1,4 @@
+// src/components/ThemeToggle.tsx
 'use client';
 
 import { useTheme } from 'next-themes';
@@ -9,7 +10,6 @@ export function ThemeToggle() {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    // マイクロタスクキューで次のティックに実行
     const timer = setTimeout(() => setIsMounted(true), 0);
     return () => clearTimeout(timer);
   }, []);

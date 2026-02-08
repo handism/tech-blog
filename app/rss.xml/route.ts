@@ -22,9 +22,9 @@ export async function GET() {
   const rss = `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
 <channel>
-  <title>${siteConfig.rss.title}</title>
+  <title>${siteConfig.name}</title>
   <link>${baseUrl}</link>
-  <description>${siteConfig.rss.description}</description>
+  <description>${siteConfig.description}</description>
   ${rssItems}
 </channel>
 </rss>`;

@@ -1,8 +1,4 @@
-/**
- * 型定義のみをエクスポート
- * 実装はサーバー側の lib/posts-server.ts で行う
- */
-
+// src/types/post.ts
 export type TocItem = {
   id: string;
   text: string;
@@ -19,6 +15,3 @@ export type Post = {
   plaintext?: string;
   toc?: TocItem[];
 };
-
-// NOTE: 実装関数 (getAllPosts, getPost) はサーバー側からのみインポート可能
-// クライアント側で fs モジュールへのアクセスを避けるため

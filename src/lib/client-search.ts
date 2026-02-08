@@ -1,3 +1,4 @@
+// src/lib/client-search.ts
 /**
  * クライアント側検索機能（SSG/Static Export 対応）
  * ビルド時にすべての記事データが埋め込まれる
