@@ -3,6 +3,7 @@ import { useState } from 'react';
 import SearchBox from '@/src/components/SearchBox';
 import TagList from '@/src/components/TagList';
 import type { TocItem, Post } from '@/src/types/post';
+import { Menu, ChevronUp } from 'lucide-react';
 
 export default function Sidebar({
   posts,
@@ -92,20 +93,7 @@ export default function Sidebar({
             className="text-text lg:hidden fixed bottom-18 right-6 z-40 w-12 h-12 bg-card border border-border rounded-full shadow-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all"
             aria-label="目次を開く"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16m-7 6h7"
-              />
-            </svg>
+            <Menu className="h-5 w-5" />
           </button>
 
           {/* 3. スマホ用オーバーレイ */}
@@ -131,15 +119,7 @@ export default function Sidebar({
         className="text-text fixed bottom-6 right-6 z-40 w-12 h-12 bg-card border border-border rounded-full shadow-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all"
         aria-label="トップへ戻る"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-        </svg>
+        <ChevronUp className="h-5 w-5" />
       </button>
     </div>
   );
