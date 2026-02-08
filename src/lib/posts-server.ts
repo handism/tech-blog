@@ -11,6 +11,7 @@ import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeStringify from 'rehype-stringify';
 import { generateToc } from '@/src/lib/toc';
+import rehypeShiki from '@shikijs/rehype';
 
 const postsDir = path.join(process.cwd(), siteConfig.posts.dir);
 
@@ -64,6 +65,9 @@ export function getAllPosts(): Post[] {
         .use(remarkParse)
         .use(remarkGfm)
         .use(remarkRehype)
+        .use(rehypeShiki, {
+          theme: 'github-dark', // または 'tokyo-night', 'vitesse-dark' など
+        })
         .use(rehypeSlug)
         .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
         .use(rehypeStringify)
@@ -103,6 +107,9 @@ export async function getPost(slug: string): Promise<Post | null> {
     .use(remarkGfm)
     .use(remarkRehype)
     .use(rehypeSlug)
+    .use(rehypeShiki, {
+      theme: 'github-dark', // または 'tokyo-night', 'vitesse-dark' など
+    })
     .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
     .use(rehypeStringify)
     .process(content);

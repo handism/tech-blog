@@ -44,6 +44,23 @@ html:focus-within {
   scroll-behavior: smooth;
 }
 
+/* 例：コードブロック全体のスタイル調整 */
+pre.shiki {
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+    monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+code {
+  counter-reset: step;
+  counter-increment: step 0;
+}
+
 /* =======================
    記事本文スタイル（prose）
    ======================= */

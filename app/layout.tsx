@@ -1,9 +1,9 @@
 // app/layout.tsx
 import './globals.css';
+import 'highlight.js/styles/github-dark.css';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { ThemeProvider } from 'next-themes';
-import 'highlight.js/styles/github-dark.css';
 import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
 import { CodeHighlight } from '@/src/components/CodeHighlight';
