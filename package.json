@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@shikijs/rehype": "^3.22.0",
+    "@shikijs/transformers": "^3.22.0",
     "fuse.js": "^7.1.0",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.563.0",

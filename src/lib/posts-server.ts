@@ -113,7 +113,7 @@ export async function getPost(slug: string): Promise<Post | null> {
     .use(remarkRehype)
     .use(rehypeSlug)
     .use(rehypeShiki, {
-      theme: 'github-dark', // または 'tokyo-night', 'vitesse-dark' など
+      theme: 'github-dark',
     })
     .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
     .use(rehypeStringify)

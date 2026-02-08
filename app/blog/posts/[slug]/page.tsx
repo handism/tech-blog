@@ -7,6 +7,7 @@ import Image from 'next/image';
 import type { Metadata } from 'next';
 import { ImageModal } from '@/src/components/ImageModal';
 import PostMeta from '@/src/components/PostMeta';
+import CopyButtonScript from '@/src/components/CopyButtonScript';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -106,6 +107,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           )}
         </div>
       </nav>
+      <CopyButtonScript />
     </BlogLayout>
   );
 }

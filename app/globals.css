@@ -61,6 +61,31 @@ code {
   counter-increment: step 0;
 }
 
+/* 1. コードブロック内の行にカウンターを設定 */
+pre.shiki code {
+  counter-reset: line;
+}
+
+/* 2. 各行（.line）の前に番号を表示 */
+pre.shiki .line::before {
+  counter-increment: line;
+  content: counter(line);
+
+  /* 見た目の調整 */
+  display: inline-block;
+  width: 1.5rem;
+  margin-right: 1.5rem;
+  text-align: right;
+  color: #6e7681; /* 控えめなグレー */
+  user-select: none; /* コピーされないようにする */
+}
+
+/* 3. 中身が空の行も高さを保持する（空行対策） */
+pre.shiki .line {
+  display: inline-block;
+  width: 100%;
+}
+
 /* =======================
    記事本文スタイル（prose）
    ======================= */
