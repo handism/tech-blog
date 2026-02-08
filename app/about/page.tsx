@@ -13,11 +13,9 @@ export default async function AboutPage() {
 
   return (
     <BlogLayout posts={posts} categories={categories}>
-      <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
-        <header className="mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold text-text">About</h1>
-          <p className="text-sm text-text/60 mt-2">このブログについて</p>
-        </header>
+      <div className="prose dark:prose-invert max-w-none">
+        <h1>About</h1>
+        <p className="text-sm text-text/60 mt-2">このブログについて</p>
 
         {/* プロフィールカード */}
         <div className="bg-card border border-border rounded-2xl p-8 mb-12 shadow-lg hover:shadow-xl transition-shadow w-full">
