@@ -13,7 +13,7 @@ export default async function AboutPage() {
 
   return (
     <BlogLayout posts={posts} categories={categories}>
-      <div className="prose dark:prose-invert max-w-none">
+      <div className="dark:prose-invert max-w-none">
         <h1>About</h1>
         <p className="text-sm text-text/60 mt-2">このブログについて</p>
 
