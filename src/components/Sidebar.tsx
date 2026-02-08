@@ -3,7 +3,7 @@ import { useState } from 'react';
 import SearchBox from '@/src/components/SearchBox';
 import TagList from '@/src/components/TagList';
 import type { TocItem, Post } from '@/src/types/post';
-import { Menu, ChevronUp } from 'lucide-react';
+import { Menu } from 'lucide-react';
 
 export default function Sidebar({
   posts,
@@ -16,7 +16,6 @@ export default function Sidebar({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const hasToc = !!(toc && toc.length > 0);
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   // --- 修正ポイント: JSXを返す「変数」にする（または関数の外に定義する） ---
   const tocElements = (
@@ -112,15 +111,6 @@ export default function Sidebar({
           </div>
         </>
       )}
-
-      {/* トップへ戻るボタン */}
-      <button
-        onClick={scrollToTop}
-        className="text-text fixed bottom-6 right-6 z-40 w-12 h-12 bg-card border border-border rounded-full shadow-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all"
-        aria-label="トップへ戻る"
-      >
-        <ChevronUp className="h-5 w-5" />
-      </button>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import './globals.css';
 import { ThemeProvider } from 'next-themes'; // ← これが正しい
 import 'highlight.js/styles/github-dark.css';
 import { CodeHighlight } from '@/src/components/CodeHighlight';
+import ScrollToTopButton from '@/src/components/ScrollToTopButton';
 
 import { siteConfig } from '@/src/config/site';
 
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Header />
           {children}
           <Footer />
+          <ScrollToTopButton />
         </ThemeProvider>
       </body>
     </html>
