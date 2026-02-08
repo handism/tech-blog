@@ -86,6 +86,45 @@ pre.shiki .line {
   width: 100%;
 }
 
+/* 親要素の pre を基準にする */
+pre.shiki {
+  position: relative;
+  padding-top: 2rem; /* ボタンと重ならないよう、上部に余裕を持たせる */
+}
+
+/* コピーボタンの基本スタイル */
+.copy-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.75rem;
+  color: #e6edf3; /* 白に近いグレー */
+  background-color: rgba(110, 118, 129, 0.3); /* 半透明の背景 */
+  border: 1px solid rgba(240, 246, 252, 0.1);
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 0; /* 通常時は隠しておく（お好みで） */
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+/* ホバー時にボタンを表示する */
+pre.shiki:hover .copy-button {
+  opacity: 1;
+}
+
+/* ボタン単体のホバー動作 */
+.copy-button:hover {
+  background-color: rgba(110, 118, 129, 0.5);
+  border-color: rgba(240, 246, 252, 0.5);
+}
+
+/* クリックした時の「Copied!」状態を少し強調したい場合 */
+.copy-button:active {
+  scale: 0.95;
+}
+
 /* =======================
    記事本文スタイル（prose）
    ======================= */
@@ -272,20 +311,3 @@ article.prose tbody tr:hover {
 article.prose table code {
   @apply font-mono text-xs;
 }
-/* 
-pre {
-  @apply rounded-xl text-white p-4 overflow-x-auto;
-  background: #0d1117;
-}
-
-pre code {
-  @apply text-sm leading-7;
-}
-
-.hljs {
-  background: transparent;
-}
-
-.code-copy-button {
-  font-family: system-ui, sans-serif;
-} */
