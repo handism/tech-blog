@@ -1,6 +1,7 @@
 // app/about/page.tsx
 import type { Metadata } from 'next';
-import { Github, User, PenSquare, Zap, Sword, Mail } from 'lucide-react';
+import { PenSquare, Sword, Mail } from 'lucide-react';
+import { FaGithub } from 'react-icons/fa';
 import BlogLayout from '@/src/components/BlogLayout';
 import { getAllPosts } from '@/src/lib/posts-server';
 
@@ -27,7 +28,7 @@ export default async function AboutPage() {
             このブログについて
           </h2>
           <h3 className="text-lg font-semibold mb-4 text-text">特徴</h3>
-          <div className="bg-secondary/30 rounded-xl p-6 border-l-4 border-accent">
+          <div className="bg-secondary/30 rounded-xl p-4 border-l-4 border-accent mb-12">
             <p className="text-text/90 leading-relaxed">
               現役の内製クラウドエンジニアによる技術ブログです。日々の業務やプライベートで得た知識の備忘録として運用しています。
             </p>
@@ -138,7 +139,7 @@ export default async function AboutPage() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-background rounded-lg font-semibold hover:opacity-90 transition-opacity"
             >
-              <Github className="w-5 h-5" />
+              <FaGithub className="w-5 h-5" />
               GitHub
             </a>
           </div>
