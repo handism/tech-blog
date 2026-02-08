@@ -17,31 +17,8 @@ export default async function AboutPage() {
       <div className="max-w-none">
         <header className="mb-10">
           <h1 className="text-3xl md:text-4xl font-bold text-text">About</h1>
-          <p className="text-sm text-text/60 mt-2">このブログについて</p>
+          <p className="text-sm text-text/60 mt-2">最終更新日: 2026-02-08</p>
         </header>
-
-        {/* プロフィールカード */}
-        <div className="bg-card border border-border rounded-2xl p-8 mb-12 shadow-lg hover:shadow-xl transition-shadow w-full">
-          <div className="flex flex-col md:flex-row items-center gap-8">
-            {/* アイコン */}
-            <div className="shrink-0">
-              <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-accent shadow-lg">
-                <img
-                  src="/images/wolf-icon.webp"
-                  alt="狼の画像"
-                  className="w-full h-full object-cover"
-                  loading="eager"
-                />
-              </div>
-            </div>
-
-            {/* テキスト */}
-            <div className="flex-1 text-center md:text-left">
-              <h2 className="text-2xl font-bold mb-3 text-text">Handism</h2>
-              <p className="text-text/80 leading-relaxed">内製クラウドエンジニア</p>
-            </div>
-          </div>
-        </div>
 
         {/* このブログについて */}
         <section className="mb-12 w-full">
@@ -49,6 +26,7 @@ export default async function AboutPage() {
             <PenSquare className="h-7 w-7 text-accent" />
             このブログについて
           </h2>
+          <h3 className="text-lg font-semibold mb-4 text-text">特徴</h3>
           <div className="bg-secondary/30 rounded-xl p-6 border-l-4 border-accent">
             <p className="text-text/90 leading-relaxed">
               現役の内製クラウドエンジニアによる技術ブログです。日々の業務やプライベートで得た知識の備忘録として運用しています。
@@ -67,14 +45,8 @@ export default async function AboutPage() {
               ダークモードにも対応しており、OSの設定でダークモードをONにしている場合は自動的に背景が暗くなります。
             </p>
           </div>
-        </section>
 
-        {/* 技術スタック */}
-        <section className="mb-12 w-full">
-          <h2 className="text-2xl font-bold mb-6 text-text flex items-center gap-3">
-            <Zap className="h-7 w-7 text-accent" />
-            技術スタック
-          </h2>
+          <h3 className="text-lg font-semibold mb-4 text-text">技術スタック</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'GitHub Pages', 'Markdown'].map(
               (tech) => (
@@ -89,12 +61,39 @@ export default async function AboutPage() {
           </div>
         </section>
 
-        {/* RPG風スキルゲージ */}
+        {/* プロフィール */}
         <section className="mb-12 w-full">
           <h2 className="text-2xl font-bold mb-6 text-text flex items-center gap-3">
             <Sword className="h-7 w-7 text-accent" />
-            Skill Gauge
+            プロフィール
           </h2>
+
+          <h3 className="text-lg font-semibold mb-4 text-text">運営者情報</h3>
+          {/* プロフィールカード */}
+          <div className="bg-card border border-border rounded-2xl p-8 mb-12 shadow-lg hover:shadow-xl transition-shadow w-full">
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              {/* アイコン */}
+              <div className="shrink-0">
+                <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-accent shadow-lg">
+                  <img
+                    src="/images/wolf-icon.webp"
+                    alt="狼の画像"
+                    className="w-full h-full object-cover"
+                    loading="eager"
+                  />
+                </div>
+              </div>
+
+              {/* テキスト */}
+              <div className="flex-1 text-center md:text-left">
+                <h2 className="text-2xl font-bold mb-3 text-text">Handism</h2>
+                <p className="text-text/80 leading-relaxed">内製クラウドエンジニア</p>
+              </div>
+            </div>
+          </div>
+
+          {/* RPG風スキルゲージ */}
+          <h3 className="text-lg font-semibold mb-4 text-text">スキルゲージ</h3>
           <div className="bg-linear-to-br from-secondary/60 to-card rounded-2xl border border-border p-6 shadow-lg">
             <div className="grid gap-4">
               {[
