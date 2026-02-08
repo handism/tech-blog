@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Post } from '@/src/lib/posts-server';
 import TagLink from '@/src/components/TagLink';
+import { Clock, Calendar, Folder } from 'lucide-react';
 
 type Props = {
   post: Post;
@@ -29,11 +30,16 @@ export default function PostMeta({
       }`}
     >
       {/* 読了時間 */}
-      {showReadingTime && readingMinutes && <span>⏱️ 読了 {readingMinutes} 分</span>}
+      {showReadingTime && readingMinutes && (
+        <span className="inline-flex items-center gap-1.5">
+          <Clock className="h-4 w-4" />
+          読了 {readingMinutes} 分
+        </span>
+      )}
       {/* 投稿日時 */}
       {post.date && (
-        <time dateTime={post.date.toISOString()}>
-          📅{' '}
+        <time dateTime={post.date.toISOString()} className="inline-flex items-center gap-1.5">
+          <Calendar className="h-4 w-4" />
           {post.date.toLocaleDateString('ja-JP', {
             year: 'numeric',
             month: 'long',
@@ -44,9 +50,10 @@ export default function PostMeta({
       {/* カテゴリ */}
       <Link
         href={`/blog/categories/${post.category}`}
-        className="text-text/80 hover:text-accent hover:underline block"
+        className="text-text/80 hover:text-accent hover:underline inline-flex items-center gap-1.5"
       >
-        📁 {post.category}
+        <Folder className="h-4 w-4" />
+        {post.category}
       </Link>
       {/* タグ */}
       {showTags && post.tags.length > 0 && (
