@@ -1,10 +1,11 @@
-'use client'; // 状態管理を使うため追加
+// src/components/Header.tsx
+'use client';
 
-import { useState, useEffect, useRef } from 'react'; // hooksを追加
+import { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import { siteConfig } from '@/src/config/site';
 import { ThemeToggle } from '@/src/components/ThemeToggle';
-import Link from 'next/link';
-import { Github } from 'lucide-react';
+import { FaGithub } from 'react-icons/fa';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,8 +47,8 @@ export default function Header() {
             {/* ドロップダウン部分 */}
             <div className="relative" ref={dropdownRef}>
               <button
-                onClick={() => setIsOpen(!isOpen)} // タップで切り替え
-                onMouseEnter={() => setIsOpen(true)} // PCでの利便性のためにホバーも残す
+                onClick={() => setIsOpen(!isOpen)}
+                onMouseEnter={() => setIsOpen(true)}
                 className="text-text/80 hover:text-accent transition-colors flex items-center gap-1"
                 aria-haspopup="true"
                 aria-expanded={isOpen}
@@ -71,7 +72,6 @@ export default function Header() {
               >
                 <ul className="py-1">
                   {' '}
-                  {/* 上下に少し余白を入れると綺麗です */}
                   <li>
                     <Link
                       href="/tools/memphis"
@@ -81,7 +81,6 @@ export default function Header() {
                       Memphis Generator
                     </Link>
                   </li>
-                  {/* 他のメニューが増えてもここに追加すればOK */}
                   <li>
                     <Link
                       href="/tools/trimming"
@@ -106,7 +105,7 @@ export default function Header() {
             className="text-text hover:text-accent transition-colors p-1.5 -mr-1.5 md:p-2 md:mr-0"
             aria-label="GitHub"
           >
-            <Github className="w-5 h-5" />
+            <FaGithub className="w-5 h-5" />
           </a>
           <ThemeToggle />
         </div>

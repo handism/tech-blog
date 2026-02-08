@@ -1,3 +1,4 @@
+// src/components/BlogLayout.tsx
 import { ReactNode } from 'react';
 import Sidebar from '@/src/components/Sidebar';
 import { Post, TocItem } from '@/src/types/post';
@@ -5,8 +6,8 @@ import { Post, TocItem } from '@/src/types/post';
 interface BlogLayoutProps {
   children: ReactNode;
   posts?: Post[];
-  toc?: TocItem[]; // ここで TOC をオプションとして受け取る
-  categories?: string[]; // カテゴリ一覧
+  toc?: TocItem[];
+  categories?: string[];
 }
 
 export default function BlogLayout({ children, posts, toc, categories }: BlogLayoutProps) {

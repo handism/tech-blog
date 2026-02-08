@@ -1,3 +1,4 @@
+// src/components/Footer.tsx
 import { siteConfig } from '@/src/config/site';
 
 export default function Footer() {

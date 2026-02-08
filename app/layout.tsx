@@ -1,10 +1,11 @@
+// app/layout.tsx
+import './globals.css';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import { ThemeProvider } from 'next-themes';
+import 'highlight.js/styles/github-dark.css';
 import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
-import './globals.css';
-import { ThemeProvider } from 'next-themes'; // ← これが正しい
-import 'highlight.js/styles/github-dark.css';
 import { CodeHighlight } from '@/src/components/CodeHighlight';
 import ScrollToTopButton from '@/src/components/ScrollToTopButton';
 
@@ -23,7 +24,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
-    template: `%s | ${siteConfig.name}`, // 各ページで使用
+    template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
 };

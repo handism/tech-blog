@@ -1,3 +1,4 @@
+/* app/globals.css */
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 @custom-variant dark (&:where(.dark, .dark *));
@@ -38,8 +39,6 @@ html {
     color 0.2s;
 }
 
-/* ページ内リンク（#から始まるリンク）がクリックされた時や、
-   URLにハッシュが含まれている時だけスムーズにする */
 html:has(:target),
 html:focus-within {
   scroll-behavior: smooth;
@@ -93,7 +92,6 @@ article.prose img {
   transition: opacity 0.2s;
 }
 
-/* サムネイル（.not-prose 内）はクリック対象外なのでカーソルも戻す */
 article.prose .not-prose img {
   cursor: default;
 }
@@ -102,7 +100,6 @@ article.prose img:hover {
   opacity: 0.8;
 }
 
-/* サムネイルはホバーで暗くしない */
 article.prose .not-prose img:hover {
   opacity: 1;
 }
@@ -174,7 +171,6 @@ aside.toc-sidebar a {
   @apply hover:underline;
 }
 
-/* ネストされた見出しのインデント */
 aside.toc-sidebar li.level-2 {
   @apply pl-4;
 }

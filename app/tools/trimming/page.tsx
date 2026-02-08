@@ -1,9 +1,10 @@
+// app/tools/trimming/page.tsx
 'use client';
 
 import React, { useState, useCallback, useEffect } from 'react';
-import { siteConfig } from '@/src/config/site';
 import Cropper, { Area, Point } from 'react-easy-crop';
 import { Download, Maximize, Crop, FileImage } from 'lucide-react';
+import { siteConfig } from '@/src/config/site';
 
 const getCroppedImg = async (
   imageSrc: string,
@@ -33,8 +34,8 @@ const getCroppedImg = async (
     pixelCrop.height
   );
 
-  // ★ここが重要：Safari対策で100〜500ms待つ
-  await new Promise((resolve) => setTimeout(resolve, 300)); // 300ms前後が安定しやすい
+  // Safari対策で300ms待つ
+  await new Promise((resolve) => setTimeout(resolve, 300));
 
   return canvas.toDataURL(`image/${format}`);
 };
@@ -94,7 +95,6 @@ export default function ImageTrimmingApp() {
     try {
       const croppedImage = await getCroppedImg(image, croppedAreaPixels, format);
 
-      // ─────────────── 修正版 ───────────────
       if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
         // iOSの場合：新しいタブで開いて長押し保存を促す
         const newWindow = window.open('');
@@ -114,7 +114,7 @@ export default function ImageTrimmingApp() {
           alert('ポップアップがブロックされています。\n設定でポップアップを許可してください。');
         }
       } else {
-        // Android / PC は従来の方法でOK（ただし最近Androidも怪しい）
+        // Android / PC は従来の方法で
         const link = document.createElement('a');
         link.download = `trimmed-image.${format}`;
         link.href = croppedImage;

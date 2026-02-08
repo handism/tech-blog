@@ -1,3 +1,4 @@
+// app/privacy-policy/page.tsx
 import type { Metadata } from 'next';
 import BlogLayout from '@/src/components/BlogLayout';
 import { getAllPosts } from '@/src/lib/posts-server';

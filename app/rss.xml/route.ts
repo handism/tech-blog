@@ -1,7 +1,7 @@
+// app/rss.xml/route.ts
 import { getAllPosts } from '@/src/lib/posts-server';
 import { siteConfig } from '@/src/config/site';
 
-// NOTE: Next.js segment config requires a static literal value.
 export const revalidate = 3600; // 1時間ごとに再検証
 
 export async function GET() {

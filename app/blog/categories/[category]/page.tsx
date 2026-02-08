@@ -1,3 +1,4 @@
+// app/blog/categories/[category]/page.tsx
 import { getAllPosts } from '@/src/lib/posts-server';
 import BlogLayout from '@/src/components/BlogLayout';
 import PostCard from '@/src/components/PostCard';

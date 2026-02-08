@@ -1,3 +1,4 @@
+// app/about/page.tsx
 import type { Metadata } from 'next';
 import { Github, User, PenSquare, Zap, Sword, Mail } from 'lucide-react';
 import BlogLayout from '@/src/components/BlogLayout';

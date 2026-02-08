@@ -1,10 +1,10 @@
+// app/blog/page/[page]/page.tsx
 import { getAllPosts } from '@/src/lib/posts-server';
 import PostCard from '@/src/components/PostCard';
 import BlogLayout from '@/src/components/BlogLayout';
 import Pagination from '@/src/components/Pagination';
 import { notFound, redirect } from 'next/navigation';
-
-const POSTS_PER_PAGE = 10;
+import { siteConfig } from '@/src/config/site';
 
 type Props = {
   params: Promise<{ page: string }>;
@@ -24,7 +24,7 @@ export default async function PageView({ params }: Props) {
   }
 
   const allPosts = getAllPosts();
-  const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+  const totalPages = Math.ceil(allPosts.length / siteConfig.pagination.postsPerPage);
 
   if (currentPage > totalPages) {
     notFound();
@@ -33,8 +33,8 @@ export default async function PageView({ params }: Props) {
   const categories = Array.from(new Set(allPosts.map((p) => p.category)));
 
   // ページネーション用に記事を切り出し
-  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
-  const endIndex = startIndex + POSTS_PER_PAGE;
+  const startIndex = (currentPage - 1) * siteConfig.pagination.postsPerPage;
+  const endIndex = startIndex + siteConfig.pagination.postsPerPage;
   const posts = allPosts.slice(startIndex, endIndex);
 
   return (
@@ -55,7 +55,7 @@ export default async function PageView({ params }: Props) {
 // 静的生成用のパス生成（2ページ目以降のみ）
 export async function generateStaticParams() {
   const allPosts = getAllPosts();
-  const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+  const totalPages = Math.ceil(allPosts.length / siteConfig.pagination.postsPerPage);
 
   // 2ページ目以降のみ生成
   return Array.from({ length: Math.max(0, totalPages - 1) }, (_, i) => ({
