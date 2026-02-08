@@ -61,11 +61,29 @@ npm run dev
 
 ブラウザで`http://localhost:3000`にアクセスして動作確認可能。
 
+## Node.jsについて
+
+JavaScriptのブラウザ以外での動作環境として、Node.jsというランタイムが存在する。
+
+Reactによるアプリ開発や、ECMAScriptのトランスパイル、バンドルといった操作はNode.jsによって行う。
+
+Reactなどの各種ライブラリは、Node.jsのパッケージマネージャであるnpmによってインストール可能。
+
 ## Reactについて
 
 すでに入門済みの`Vue.js`との違いについて。
 
 コンポーネントが基本的にHTML、CSS、JavaScriptを.vueファイルにまとめて記載するVue.jsに対して、.jsファイルにJavaScriptとして記載してHTMLとCSSはJavaScriptで返すようにするのがReact。
+
+宣言的にDOM操作を行うために開発されたのがReact。JSXというJavaScriptの拡張構文を用いて宣言的にDOMを操作可能。
+
+Reactでは、画面要素を`コンポーネント`という単位に分割して再利用可能な形で扱うことが可能。
+
+## Next.jsについて
+
+`サーバーサイドレンダリング`という手法によって、Webサーバー上であらかじめJavaScript（React）からHTMLを生成できる。
+
+他にも、APIサーバーとしての役割を持たせることも可能。
 
 ## ChatGPTがまとめてくれたReact/Next.js実戦メモ（数日間の学び）
 
