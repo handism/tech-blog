@@ -105,7 +105,7 @@ export default async function AboutPage() {
                   level: 78,
                   tone: 'from-violet-400 to-violet-600',
                 },
-                { name: 'バックエンド (Java)', level: 29, tone: 'from-cyan-400 to-cyan-600' },
+                { name: 'バックエンド (Java / PHP)', level: 31, tone: 'from-cyan-400 to-cyan-600' },
                 {
                   name: 'クラウドアーキテクチャ (AWS)',
                   level: 30,
