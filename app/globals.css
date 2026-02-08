@@ -125,6 +125,33 @@ pre.shiki:hover .copy-button {
   scale: 0.95;
 }
 
+/* 言語名・ファイル名バーのスタイル */
+.rehype-code-title {
+  background-color: #24292e; /* Shikiのテーマに近い色に合わせる */
+  color: #e6edf3;
+  font-family: ui-monospace, monospace;
+  font-size: 0.8rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px 8px 0 0; /* 上だけ丸める */
+  border: 1px solid rgba(240, 246, 252, 0.1);
+  border-bottom: none;
+  display: inline-block; /* タイトルの長さに合わせる場合はこちら */
+  width: 100%; /* 横幅いっぱいに広げる場合はこちら */
+}
+
+/* バーがある場合のコードブロック本体の調整 */
+.rehype-code-title + pre.shiki {
+  margin-top: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: none;
+}
+
+/* コピーボタンの位置微調整（バーがある分、少し下げるなど） */
+.rehype-code-title + pre.shiki .copy-button {
+  top: 0.5rem;
+}
+
 /* =======================
    記事本文スタイル（prose）
    ======================= */

@@ -12,6 +12,7 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeStringify from 'rehype-stringify';
 import { generateToc } from '@/src/lib/toc';
 import rehypeShiki from '@shikijs/rehype';
+import rehypeCodeTitles from 'rehype-code-titles';
 
 const postsDir = path.join(process.cwd(), siteConfig.posts.dir);
 
@@ -66,6 +67,7 @@ export async function getAllPosts(): Promise<Post[]> {
         .use(remarkParse)
         .use(remarkGfm)
         .use(remarkRehype)
+        .use(rehypeCodeTitles) // --- Shikiの前に挿入 ---
         .use(rehypeShiki, {
           theme: 'github-dark',
         })
@@ -111,10 +113,11 @@ export async function getPost(slug: string): Promise<Post | null> {
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkRehype)
-    .use(rehypeSlug)
+    .use(rehypeCodeTitles) // --- Shikiの前に挿入 ---
     .use(rehypeShiki, {
       theme: 'github-dark',
     })
+    .use(rehypeSlug)
     .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
     .use(rehypeStringify)
     .process(content);
