@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
 import { ImageModal } from '@/src/components/ImageModal';
-import TagLink from '@/src/components/TagLink';
+import PostMeta from '@/src/components/PostMeta';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -56,40 +56,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         <h1>{post.title}</h1>
 
         {/* メタ情報 */}
-        <div className="flex flex-wrap items-center gap-4 text-sm text-text/70 not-prose">
-          {/* 読了時間 */}
-          {post.plaintext && (
-            <span>
-              ⏱️ 読了 {Math.max(1, Math.ceil(post.plaintext.length / 500))} 分
-            </span>
-          )}
-          {/* 投稿日時 */}
-          {post.date && (
-            <time dateTime={post.date.toISOString()}>
-              📅{' '}
-              {post.date.toLocaleDateString('ja-JP', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
-            </time>
-          )}
-          {/* カテゴリ */}
-          <Link
-            href={`/blog/categories/${post.category}`}
-            className="text-text/80 hover:text-accent hover:underline block"
-          >
-            📁 {post.category}
-          </Link>
-          {/* タグ */}
-          {post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
-                <TagLink key={tag} tag={tag} />
-              ))}
-            </div>
-          )}
-        </div>
+        <PostMeta post={post} />
 
         {/* サムネイル画像（オプション） */}
         {post.image && (

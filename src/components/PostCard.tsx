@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Post } from '@/src/lib/posts-server';
-import TagLink from '@/src/components/TagLink';
+import PostMeta from '@/src/components/PostMeta';
 
 export default function PostCard({ post }: { post: Post }) {
   return (
@@ -30,30 +30,12 @@ export default function PostCard({ post }: { post: Post }) {
             {post.title}
           </h2>
 
-          {/* メタ情報 */}
-          <div className="flex flex-wrap gap-3 text-sm text-text/70 mb-3">
-            {post.date && (
-              <time dateTime={post.date.toISOString()}>
-                📅 {post.date.toLocaleDateString('ja-JP')}
-              </time>
-            )}
-            {/* カテゴリ */}
-            <Link
-              href={`/blog/categories/${post.category}`}
-              className="text-text/80 hover:text-accent hover:underline block"
-            >
-              📁 {post.category}
-            </Link>
-          </div>
-
-          {/* タグ */}
-          {post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2">
-              {post.tags.map((tag) => (
-                <TagLink key={tag} tag={tag} />
-              ))}
-            </div>
-          )}
+          <PostMeta
+            post={post}
+            showReadingTime={false}
+            className="gap-3 mb-3"
+            stackTags
+          />
         </div>
       </Link>
     </article>
