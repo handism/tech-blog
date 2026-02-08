@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Github, User } from 'lucide-react';
+import { Github, User, PenSquare, Zap, Sword, Mail } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'About',
@@ -42,7 +42,7 @@ export default async function AboutPage() {
       {/* このブログについて */}
       <section className="mb-12 w-full">
         <h2 className="text-2xl font-bold mb-6 text-text flex items-center gap-3">
-          <span className="text-3xl">📝</span>
+          <PenSquare className="h-7 w-7 text-accent" />
           このブログについて
         </h2>
         <div className="bg-secondary/30 rounded-xl p-6 border-l-4 border-accent">
@@ -68,7 +68,7 @@ export default async function AboutPage() {
       {/* 技術スタック */}
       <section className="mb-12 w-full">
         <h2 className="text-2xl font-bold mb-6 text-text flex items-center gap-3">
-          <span className="text-3xl">⚡</span>
+          <Zap className="h-7 w-7 text-accent" />
           技術スタック
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -88,7 +88,7 @@ export default async function AboutPage() {
       {/* RPG風スキルゲージ */}
       <section className="mb-12 w-full">
         <h2 className="text-2xl font-bold mb-6 text-text flex items-center gap-3">
-          <span className="text-3xl">🗡️</span>
+          <Sword className="h-7 w-7 text-accent" />
           Skill Gauge
         </h2>
         <div className="bg-linear-to-br from-secondary/60 to-card rounded-2xl border border-border p-6 shadow-lg">
@@ -124,7 +124,7 @@ export default async function AboutPage() {
       {/* Contact */}
       <section className="mb-12 w-full">
         <h2 className="text-2xl font-bold mb-6 text-text flex items-center gap-3">
-          <span className="text-3xl">📧</span>
+          <Mail className="h-7 w-7 text-accent" />
           Contact
         </h2>
         <div className="bg-linear-to-r from-accent/10 to-purple-500/10 rounded-xl p-6 border border-accent/30">
