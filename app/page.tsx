@@ -6,12 +6,18 @@ import BlogLayout from '@/src/components/BlogLayout';
 import Pagination from '@/src/components/Pagination';
 import { siteConfig } from '@/src/config/site';
 
+/**
+ * トップページのメタデータ。
+ */
 export const metadata: Metadata = {
   title: siteConfig.name,
 };
 
 const POSTS_PER_PAGE = siteConfig.pagination.postsPerPage;
 
+/**
+ * トップページ（最新記事一覧）。
+ */
 export default async function Home() {
   const allPosts = await getAllPosts();
   const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);

@@ -2,6 +2,9 @@
 'use client';
 import { useEffect } from 'react';
 
+/**
+ * コードブロックにコピー用ボタンを付与するクライアントスクリプト。
+ */
 export default function CopyButtonScript() {
   useEffect(() => {
     const blocks = document.querySelectorAll('pre');

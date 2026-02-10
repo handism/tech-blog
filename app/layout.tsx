@@ -19,6 +19,9 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
+/**
+ * ルートレイアウトで利用するメタデータ。
+ */
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
@@ -27,6 +30,9 @@ export const metadata: Metadata = {
   description: siteConfig.description,
 };
 
+/**
+ * アプリ全体の共通レイアウト。
+ */
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja" className="bg-bg text-text" suppressHydrationWarning>

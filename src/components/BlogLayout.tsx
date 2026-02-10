@@ -3,6 +3,9 @@ import { ReactNode } from 'react';
 import Sidebar from '@/src/components/Sidebar';
 import { Post, TocItem } from '@/src/types/post';
 
+/**
+ * ブログレイアウトのプロパティ。
+ */
 interface BlogLayoutProps {
   children: ReactNode;
   posts?: Post[];
@@ -10,6 +13,9 @@ interface BlogLayoutProps {
   categories?: string[];
 }
 
+/**
+ * ブログページの共通レイアウト。
+ */
 export default function BlogLayout({ children, posts, toc, categories }: BlogLayoutProps) {
   return (
     <div className="mx-auto max-w-6xl px-4 py-4">

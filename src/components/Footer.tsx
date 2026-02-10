@@ -1,6 +1,9 @@
 // src/components/Footer.tsx
 import { siteConfig } from '@/src/config/site';
 
+/**
+ * サイト全体のフッター。
+ */
 export default function Footer() {
   return (
     <footer className="py-6">
