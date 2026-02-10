@@ -1,10 +1,10 @@
 // app/tools/trimming/page.tsx
 'use client';
 
+import { siteConfig } from '@/src/config/site';
+import { Download, Maximize, Crop, FileImage } from 'lucide-react';
 import React, { useState, useCallback, useEffect } from 'react';
 import Cropper, { Area, Point } from 'react-easy-crop';
-import { Download, Maximize, Crop, FileImage } from 'lucide-react';
-import { siteConfig } from '@/src/config/site';
 
 /**
  * 画像を指定領域で切り抜いたデータURLを生成する。

@@ -1,8 +1,8 @@
 // src/components/PostCard.tsx
-import Link from 'next/link';
-import Image from 'next/image';
-import type { Post } from '@/src/types/post';
 import PostMeta from '@/src/components/PostMeta';
+import type { Post } from '@/src/types/post';
+import Image from 'next/image';
+import Link from 'next/link';
 
 /**
  * 記事カードのプロパティ。

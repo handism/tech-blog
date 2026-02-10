@@ -1,9 +1,9 @@
 // src/components/SearchBox.tsx
 'use client';
 
-import { useState, useMemo } from 'react';
-import Fuse from 'fuse.js';
 import type { Post } from '@/src/types/post';
+import Fuse from 'fuse.js';
+import { useState, useMemo } from 'react';
 
 /**
  * 検索ボックスのプロパティ。

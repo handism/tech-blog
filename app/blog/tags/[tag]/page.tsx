@@ -1,8 +1,8 @@
 // app/blog/tags/[tag]/page.tsx
-import { getAllPosts } from '@/src/lib/posts-server';
 import BlogLayout from '@/src/components/BlogLayout';
-import PostCard from '@/src/components/PostCard';
 import Pagination from '@/src/components/Pagination';
+import PostCard from '@/src/components/PostCard';
+import { getAllPosts } from '@/src/lib/posts-server';
 import { tagToSlug, findTagBySlug } from '@/src/lib/utils';
 
 /**

@@ -1,8 +1,8 @@
 // src/components/PostMeta.tsx
-import Link from 'next/link';
-import { Clock, Calendar, Folder } from 'lucide-react';
-import type { Post } from '@/src/types/post';
 import TagLink from '@/src/components/TagLink';
+import type { Post } from '@/src/types/post';
+import { Clock, Calendar, Folder } from 'lucide-react';
+import Link from 'next/link';
 
 /**
  * 投稿メタ情報のプロパティ。

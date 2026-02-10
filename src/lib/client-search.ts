@@ -3,8 +3,8 @@
  * クライアント側検索機能（SSG/Static Export 対応）
  * ビルド時にすべての記事データが埋め込まれる
  */
-import Fuse from 'fuse.js';
 import type { Post } from '../types/post';
+import Fuse from 'fuse.js';
 
 /**
  * 検索用に本文テキストを含めた記事型。

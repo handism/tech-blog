@@ -1,8 +1,8 @@
 // app/blog/categories/[category]/page.tsx
-import { getAllPosts } from '@/src/lib/posts-server';
 import BlogLayout from '@/src/components/BlogLayout';
-import PostCard from '@/src/components/PostCard';
 import Pagination from '@/src/components/Pagination';
+import PostCard from '@/src/components/PostCard';
+import { getAllPosts } from '@/src/lib/posts-server';
 
 /**
  * カテゴリページの静的生成パラメータを生成する。

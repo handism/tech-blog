@@ -1,10 +1,10 @@
 // app/blog/page/[page]/page.tsx
-import { getAllPosts } from '@/src/lib/posts-server';
-import PostCard from '@/src/components/PostCard';
 import BlogLayout from '@/src/components/BlogLayout';
 import Pagination from '@/src/components/Pagination';
-import { notFound, redirect } from 'next/navigation';
+import PostCard from '@/src/components/PostCard';
 import { siteConfig } from '@/src/config/site';
+import { getAllPosts } from '@/src/lib/posts-server';
+import { notFound, redirect } from 'next/navigation';
 
 /**
  * ページネーション用のルートパラメータ。

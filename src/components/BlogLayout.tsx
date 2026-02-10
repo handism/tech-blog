@@ -1,7 +1,7 @@
 // src/components/BlogLayout.tsx
-import { ReactNode } from 'react';
 import Sidebar from '@/src/components/Sidebar';
 import { Post, TocItem } from '@/src/types/post';
+import { ReactNode } from 'react';
 
 /**
  * ブログレイアウトのプロパティ。

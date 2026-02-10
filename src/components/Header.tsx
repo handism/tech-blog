@@ -1,10 +1,10 @@
 // src/components/Header.tsx
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
-import { siteConfig } from '@/src/config/site';
 import { ThemeToggle } from '@/src/components/ThemeToggle';
+import { siteConfig } from '@/src/config/site';
+import Link from 'next/link';
+import { useState, useEffect, useRef } from 'react';
 import { FaGithub } from 'react-icons/fa';
 
 /**

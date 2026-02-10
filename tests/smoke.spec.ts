@@ -1,6 +1,6 @@
 // tests/smoke.spec.ts
-import { test, expect } from '@playwright/test';
 import { siteConfig } from '@/src/config/site';
+import { test, expect } from '@playwright/test';
 
 /**
  * トップページの表示確認。

@@ -1,13 +1,13 @@
 // app/posts/[slug]/page.tsx
-import { getAllPosts, getPost } from '@/src/lib/posts-server';
-import { notFound } from 'next/navigation';
 import BlogLayout from '@/src/components/BlogLayout';
-import Link from 'next/link';
-import Image from 'next/image';
-import type { Metadata } from 'next';
+import CopyButtonScript from '@/src/components/CopyButtonScript';
 import { ImageModal } from '@/src/components/ImageModal';
 import PostMeta from '@/src/components/PostMeta';
-import CopyButtonScript from '@/src/components/CopyButtonScript';
+import { getAllPosts, getPost } from '@/src/lib/posts-server';
+import type { Metadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
 /**
  * 記事詳細ページのルートパラメータ。

@@ -1,9 +1,9 @@
 // app/sitemap/page.tsx
-import type { Metadata } from 'next';
-import Link from 'next/link';
-import { getAllPosts } from '@/src/lib/posts-server';
 import BlogLayout from '@/src/components/BlogLayout';
 import TagLink from '@/src/components/TagLink';
+import { getAllPosts } from '@/src/lib/posts-server';
+import type { Metadata } from 'next';
+import Link from 'next/link';
 
 /**
  * サイトマップページのメタデータ。

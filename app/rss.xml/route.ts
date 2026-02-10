@@ -1,6 +1,6 @@
 // app/rss.xml/route.ts
-import { getAllPosts } from '@/src/lib/posts-server';
 import { siteConfig } from '@/src/config/site';
+import { getAllPosts } from '@/src/lib/posts-server';
 
 /**
  * RSSの再検証間隔（秒）。

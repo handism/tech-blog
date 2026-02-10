@@ -1,9 +1,9 @@
 // app/about/page.tsx
-import type { Metadata } from 'next';
-import { PenSquare, Sword, Mail } from 'lucide-react';
-import { FaGithub } from 'react-icons/fa';
 import BlogLayout from '@/src/components/BlogLayout';
 import { getAllPosts } from '@/src/lib/posts-server';
+import { PenSquare, Sword, Mail } from 'lucide-react';
+import type { Metadata } from 'next';
+import { FaGithub } from 'react-icons/fa';
 
 /**
  * Aboutページのメタデータ。

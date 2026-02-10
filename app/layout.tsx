@@ -1,13 +1,13 @@
 // app/layout.tsx
 import './globals.css';
-import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
-import { ThemeProvider } from 'next-themes';
-import Header from '@/src/components/Header';
-import Footer from '@/src/components/Footer';
-import ScrollToTopButton from '@/src/components/ScrollToTopButton';
 
+import Footer from '@/src/components/Footer';
+import Header from '@/src/components/Header';
+import ScrollToTopButton from '@/src/components/ScrollToTopButton';
 import { siteConfig } from '@/src/config/site';
+import type { Metadata } from 'next';
+import { ThemeProvider } from 'next-themes';
+import { Geist, Geist_Mono } from 'next/font/google';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
