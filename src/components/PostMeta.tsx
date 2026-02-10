@@ -1,7 +1,7 @@
 // src/components/PostMeta.tsx
 import Link from 'next/link';
 import { Clock, Calendar, Folder } from 'lucide-react';
-import type { Post } from '@/src/lib/posts-server';
+import type { Post } from '@/src/types/post';
 import TagLink from '@/src/components/TagLink';
 
 /**

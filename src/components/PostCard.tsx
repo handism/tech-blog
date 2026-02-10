@@ -1,7 +1,7 @@
 // src/components/PostCard.tsx
 import Link from 'next/link';
 import Image from 'next/image';
-import type { Post } from '@/src/lib/posts-server';
+import type { Post } from '@/src/types/post';
 import PostMeta from '@/src/components/PostMeta';
 
 /**

@@ -3,7 +3,7 @@
 
 import { useState, useMemo } from 'react';
 import Fuse from 'fuse.js';
-import type { Post } from '@/src/lib/posts-server';
+import type { Post } from '@/src/types/post';
 
 /**
  * 検索ボックスのプロパティ。
