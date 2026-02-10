@@ -20,4 +20,5 @@ export type Post = {
   content: string;
   plaintext?: string;
   toc?: TocItem[];
+  image?: string;
 };

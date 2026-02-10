@@ -11,33 +11,12 @@ import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeStringify from 'rehype-stringify';
 import { generateToc } from '@/src/lib/toc';
+import type { Post } from '@/src/types/post';
 import rehypeShiki from '@shikijs/rehype';
 
 const postsDir = path.join(process.cwd(), siteConfig.posts.dir);
 
-/**
- * 目次項目。
- */
-export type TocItem = {
-  id: string;
-  text: string;
-  level: number;
-};
-
-/**
- * 記事データ。
- */
-export type Post = {
-  slug: string;
-  title: string;
-  date?: Date;
-  tags: string[];
-  category: string;
-  content: string;
-  plaintext?: string;
-  toc?: TocItem[];
-  image?: string; // 追加
-};
+// 型定義は src/types/post.ts を参照
 
 /**
  * マークダウンをプレーンテキストに変換
