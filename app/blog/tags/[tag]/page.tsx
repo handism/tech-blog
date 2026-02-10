@@ -5,6 +5,9 @@ import PostCard from '@/src/components/PostCard';
 import Pagination from '@/src/components/Pagination';
 import { tagToSlug, findTagBySlug } from '@/src/lib/utils';
 
+/**
+ * タグページの静的生成パラメータを生成する。
+ */
 export async function generateStaticParams() {
   const posts = await getAllPosts();
   const tags = Array.from(new Set(posts.flatMap((p) => p.tags)));
@@ -15,6 +18,9 @@ export async function generateStaticParams() {
   }));
 }
 
+/**
+ * タグ別の記事一覧ページ。
+ */
 export default async function TagPage({ params }: { params: Promise<{ tag: string }> }) {
   const { tag: slug } = await params;
 

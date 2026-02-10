@@ -1,6 +1,9 @@
 // src/lib/toc.ts
 import type { TocItem } from '../types/post';
 
+/**
+ * HTML文字列から目次（見出し）情報を生成する。
+ */
 export function generateToc(html: string): TocItem[] {
   const toc: TocItem[] = [];
 

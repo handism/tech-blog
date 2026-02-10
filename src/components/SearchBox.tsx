@@ -5,10 +5,16 @@ import { useState, useMemo } from 'react';
 import Fuse from 'fuse.js';
 import type { Post } from '@/src/lib/posts-server';
 
+/**
+ * 検索ボックスのプロパティ。
+ */
 type Props = {
   posts: Post[];
 };
 
+/**
+ * 記事を検索する入力UI。
+ */
 export default function SearchBox({ posts }: Props) {
   const [query, setQuery] = useState('');
 

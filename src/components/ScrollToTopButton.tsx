@@ -3,6 +3,9 @@
 
 import { ChevronUp } from 'lucide-react';
 
+/**
+ * 画面上部へスクロールするボタン。
+ */
 export default function ScrollToTopButton() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 

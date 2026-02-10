@@ -1,5 +1,8 @@
 import type { NextConfig } from 'next';
 
+/**
+ * Next.js の設定。
+ */
 const nextConfig: NextConfig = {
   /* config options here */
   output: 'export',
@@ -9,4 +12,7 @@ const nextConfig: NextConfig = {
   },
 };
 
+/**
+ * Next.js 設定のエクスポート。
+ */
 export default nextConfig;

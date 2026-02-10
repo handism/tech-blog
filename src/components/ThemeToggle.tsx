@@ -5,6 +5,9 @@ import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { Moon, Sun } from 'lucide-react';
 
+/**
+ * テーマの切り替えボタン。
+ */
 export function ThemeToggle() {
   const { setTheme, resolvedTheme } = useTheme();
   const [isMounted, setIsMounted] = useState(false);

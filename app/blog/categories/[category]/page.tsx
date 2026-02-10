@@ -4,6 +4,9 @@ import BlogLayout from '@/src/components/BlogLayout';
 import PostCard from '@/src/components/PostCard';
 import Pagination from '@/src/components/Pagination';
 
+/**
+ * カテゴリページの静的生成パラメータを生成する。
+ */
 export async function generateStaticParams() {
   const posts = await getAllPosts();
   const categories = Array.from(new Set(posts.map((p) => p.category)));
@@ -11,6 +14,9 @@ export async function generateStaticParams() {
   return categories.map((category) => ({ category }));
 }
 
+/**
+ * カテゴリ別の記事一覧ページ。
+ */
 export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
   const { category } = await params;
 

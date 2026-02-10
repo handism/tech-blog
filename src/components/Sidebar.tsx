@@ -6,15 +6,19 @@ import SearchBox from '@/src/components/SearchBox';
 import TagList from '@/src/components/TagList';
 import type { TocItem, Post } from '@/src/types/post';
 
-export default function Sidebar({
-  posts,
-  toc,
-  categories,
-}: {
+/**
+ * サイドバーのプロパティ。
+ */
+type SidebarProps = {
   posts?: Post[];
   toc?: TocItem[];
   categories?: string[];
-}) {
+};
+
+/**
+ * 記事一覧・カテゴリ・目次を表示するサイドバー。
+ */
+export default function Sidebar({ posts, toc, categories }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const hasToc = !!(toc && toc.length > 0);
 

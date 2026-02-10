@@ -15,12 +15,18 @@ import rehypeShiki from '@shikijs/rehype';
 
 const postsDir = path.join(process.cwd(), siteConfig.posts.dir);
 
+/**
+ * 目次項目。
+ */
 export type TocItem = {
   id: string;
   text: string;
   level: number;
 };
 
+/**
+ * 記事データ。
+ */
 export type Post = {
   slug: string;
   title: string;

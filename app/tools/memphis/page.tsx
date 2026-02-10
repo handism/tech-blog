@@ -9,8 +9,19 @@ import { siteConfig } from '@/src/config/site';
 // Types
 // =====================
 
+/**
+ * 出力サイズ定義。
+ */
 type Size = { width: number; height: number; label: string };
+
+/**
+ * 描画密度定義。
+ */
 type Density = { name: string; min: number; max: number };
+
+/**
+ * カラーパレット定義。
+ */
 type ColorPalette = {
   name: string;
   primary: string[];
@@ -18,27 +29,51 @@ type ColorPalette = {
   backgrounds: string[];
 };
 
+/**
+ * サイズのキー。
+ */
 type SizeKey = 'youtube' | 'instagram' | 'twitter';
+
+/**
+ * 密度のキー。
+ */
 type DensityKey = 'simple' | 'standard' | 'busy';
+
+/**
+ * トーンのキー。
+ */
 type ToneKey = 'pale' | 'light' | 'bright' | 'vivid';
+
+/**
+ * 背景指定モード。
+ */
 type BackgroundMode = 'auto' | 'custom' | 'transparent';
 
 // =====================
 // Constants
 // =====================
 
+/**
+ * 出力サイズの一覧。
+ */
 const sizes: Record<SizeKey, Size> = {
   youtube: { width: 1280, height: 720, label: 'YouTube サムネイル (1280×720)' },
   instagram: { width: 1080, height: 1080, label: 'Instagram 投稿 (1080×1080)' },
   twitter: { width: 1200, height: 675, label: 'X (Twitter) 投稿 (1200×675)' },
 };
 
+/**
+ * 描画密度の一覧。
+ */
 const densities: Record<DensityKey, Density> = {
   simple: { name: 'シンプル', min: 8, max: 15 },
   standard: { name: '標準', min: 20, max: 30 },
   busy: { name: '賑やか', min: 35, max: 50 },
 };
 
+/**
+ * トーン別のカラーパレット。
+ */
 const colorPalettes: Record<ToneKey, ColorPalette> = {
   pale: {
     name: 'ペールトーン',
@@ -70,11 +105,17 @@ const colorPalettes: Record<ToneKey, ColorPalette> = {
 // Utils
 // =====================
 
+/**
+ * シード値から擬似乱数を生成する。
+ */
 const seededRandom = (seed: number): number => {
   const x = Math.sin(seed++) * 10000;
   return x - Math.floor(x);
 };
 
+/**
+ * パレットから色を選択する。
+ */
 const getRandomColor = (palette: string[], seed: number): string => {
   const index = Math.floor(seededRandom(seed) * palette.length);
   return palette[index];
@@ -84,6 +125,9 @@ const getRandomColor = (palette: string[], seed: number): string => {
 // Component
 // =====================
 
+/**
+ * メンフィス柄のジェネレーター画面。
+ */
 export default function MemphisGenerator() {
   useEffect(() => {
     document.title = `Memphis Generator | ${siteConfig.name}`;
@@ -104,6 +148,9 @@ export default function MemphisGenerator() {
   // Drawing
   // =====================
 
+  /**
+   * キャンバスにメンフィス柄を描画する。
+   */
   const draw = (ctx: CanvasRenderingContext2D, width: number, height: number) => {
     ctx.clearRect(0, 0, width, height);
 
@@ -224,6 +271,9 @@ export default function MemphisGenerator() {
   // Actions
   // =====================
 
+  /**
+   * 現在のキャンバスをPNGでダウンロードする。
+   */
   const downloadPNG = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;

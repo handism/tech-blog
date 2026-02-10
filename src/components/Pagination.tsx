@@ -3,11 +3,17 @@
 
 import Link from 'next/link';
 
+/**
+ * ページネーションのプロパティ。
+ */
 type PaginationProps = {
   currentPage: number;
   totalPages: number;
 };
 
+/**
+ * ページネーションUI。
+ */
 export default function Pagination({ currentPage, totalPages }: PaginationProps) {
   if (totalPages <= 1) return null;
 

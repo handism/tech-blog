@@ -6,10 +6,16 @@ import Pagination from '@/src/components/Pagination';
 import { notFound, redirect } from 'next/navigation';
 import { siteConfig } from '@/src/config/site';
 
+/**
+ * ページネーション用のルートパラメータ。
+ */
 type Props = {
   params: Promise<{ page: string }>;
 };
 
+/**
+ * ページネーション付き記事一覧ページ。
+ */
 export default async function PageView({ params }: Props) {
   const { page } = await params;
   const currentPage = parseInt(page, 10);
@@ -52,7 +58,9 @@ export default async function PageView({ params }: Props) {
   );
 }
 
-// 静的生成用のパス生成（2ページ目以降のみ）
+/**
+ * 静的生成用のパス生成（2ページ目以降のみ）。
+ */
 export async function generateStaticParams() {
   const allPosts = await getAllPosts();
   const totalPages = Math.ceil(allPosts.length / siteConfig.pagination.postsPerPage);

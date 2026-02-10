@@ -2,11 +2,17 @@
 import Link from 'next/link';
 import { tagToSlug } from '@/src/lib/utils';
 
+/**
+ * タグリンクのプロパティ。
+ */
 type Props = {
   tag: string;
   className?: string;
 };
 
+/**
+ * タグページへのリンクを表示する。
+ */
 export default function TagLink({ tag, className }: Props) {
   return (
     <Link

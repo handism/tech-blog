@@ -4,7 +4,17 @@ import Image from 'next/image';
 import type { Post } from '@/src/lib/posts-server';
 import PostMeta from '@/src/components/PostMeta';
 
-export default function PostCard({ post }: { post: Post }) {
+/**
+ * 記事カードのプロパティ。
+ */
+type PostCardProps = {
+  post: Post;
+};
+
+/**
+ * 記事一覧向けのカード表示。
+ */
+export default function PostCard({ post }: PostCardProps) {
   return (
     <article className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
       <Link href={`/blog/posts/${post.slug}`} className="block">

@@ -5,10 +5,16 @@ import { getAllPosts } from '@/src/lib/posts-server';
 import BlogLayout from '@/src/components/BlogLayout';
 import TagLink from '@/src/components/TagLink';
 
+/**
+ * サイトマップページのメタデータ。
+ */
 export const metadata: Metadata = {
   title: 'サイトマップ',
 };
 
+/**
+ * サイトマップページ。
+ */
 export default async function SitemapPage() {
   const posts = await getAllPosts();
   const categories = Array.from(new Set(posts.map((p) => p.category)));

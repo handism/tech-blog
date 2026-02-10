@@ -3,10 +3,16 @@ import type { Metadata } from 'next';
 import BlogLayout from '@/src/components/BlogLayout';
 import { getAllPosts } from '@/src/lib/posts-server';
 
+/**
+ * プライバシーポリシーページのメタデータ。
+ */
 export const metadata: Metadata = {
   title: 'プライバシーポリシー・免責事項',
 };
 
+/**
+ * プライバシーポリシーページ。
+ */
 export default async function PrivacyPolicyPage() {
   const posts = await getAllPosts();
   const categories = Array.from(new Set(posts.map((p) => p.category)));

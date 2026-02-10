@@ -9,10 +9,16 @@ import { ImageModal } from '@/src/components/ImageModal';
 import PostMeta from '@/src/components/PostMeta';
 import CopyButtonScript from '@/src/components/CopyButtonScript';
 
+/**
+ * 記事詳細ページのルートパラメータ。
+ */
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
+/**
+ * 記事詳細ページのメタデータを生成する。
+ */
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const post = await getPost(slug);
@@ -29,6 +35,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+/**
+ * 静的生成用のパラメータを生成する。
+ */
 export async function generateStaticParams() {
   const posts = await getAllPosts();
 
@@ -37,6 +46,9 @@ export async function generateStaticParams() {
   }));
 }
 
+/**
+ * 記事詳細ページ。
+ */
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const post = await getPost(slug);

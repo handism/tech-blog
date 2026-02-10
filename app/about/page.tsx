@@ -5,10 +5,16 @@ import { FaGithub } from 'react-icons/fa';
 import BlogLayout from '@/src/components/BlogLayout';
 import { getAllPosts } from '@/src/lib/posts-server';
 
+/**
+ * Aboutページのメタデータ。
+ */
 export const metadata: Metadata = {
   title: 'About',
 };
 
+/**
+ * Aboutページ。
+ */
 export default async function AboutPage() {
   const posts = await getAllPosts();
   const categories = Array.from(new Set(posts.map((p) => p.category)));

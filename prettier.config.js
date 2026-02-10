@@ -1,3 +1,6 @@
+/**
+ * Prettier の設定。
+ */
 module.exports = {
   semi: true,
   singleQuote: true,

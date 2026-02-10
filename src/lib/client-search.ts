@@ -6,6 +6,9 @@
 import Fuse from 'fuse.js';
 import type { Post } from '../types/post';
 
+/**
+ * 検索用に本文テキストを含めた記事型。
+ */
 export interface SearchablePost extends Post {
   plaintext: string;
 }

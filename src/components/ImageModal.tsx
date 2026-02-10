@@ -3,6 +3,9 @@
 
 import { useState, useEffect } from 'react';
 
+/**
+ * 記事内画像の拡大表示モーダル。
+ */
 export function ImageModal() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [allImages, setAllImages] = useState<string[]>([]);

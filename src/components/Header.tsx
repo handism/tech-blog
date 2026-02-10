@@ -7,6 +7,9 @@ import { siteConfig } from '@/src/config/site';
 import { ThemeToggle } from '@/src/components/ThemeToggle';
 import { FaGithub } from 'react-icons/fa';
 
+/**
+ * サイト全体のヘッダー。
+ */
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);

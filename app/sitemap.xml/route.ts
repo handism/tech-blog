@@ -2,8 +2,14 @@
 import { getAllPosts } from '@/src/lib/posts-server';
 import { siteConfig } from '@/src/config/site';
 
+/**
+ * サイトマップの再検証間隔（秒）。
+ */
 export const revalidate = 3600; // 1時間ごとに再検証
 
+/**
+ * サイトマップXMLを生成して返す。
+ */
 export async function GET() {
   const baseUrl = siteConfig.url;
   const posts = await getAllPosts();

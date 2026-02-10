@@ -6,6 +6,9 @@ import Cropper, { Area, Point } from 'react-easy-crop';
 import { Download, Maximize, Crop, FileImage } from 'lucide-react';
 import { siteConfig } from '@/src/config/site';
 
+/**
+ * 画像を指定領域で切り抜いたデータURLを生成する。
+ */
 const getCroppedImg = async (
   imageSrc: string,
   pixelCrop: Area,
@@ -40,6 +43,9 @@ const getCroppedImg = async (
   return canvas.toDataURL(`image/${format}`);
 };
 
+/**
+ * 画像トリミングツール画面。
+ */
 export default function ImageTrimmingApp() {
   useEffect(() => {
     document.title = `Image Trimmer | ${siteConfig.name}`;
@@ -54,6 +60,9 @@ export default function ImageTrimmingApp() {
   const [isDragging, setIsDragging] = useState(false);
 
   // ファイル処理の共通ロジック
+  /**
+   * 画像ファイルを読み込み、状態に反映する。
+   */
   const handleFile = (file: File) => {
     if (file && file.type.startsWith('image/')) {
       const reader = new FileReader();
@@ -63,6 +72,9 @@ export default function ImageTrimmingApp() {
   };
 
   // フォルダから選択
+  /**
+   * ファイル選択時のハンドラー。
+   */
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       handleFile(e.target.files[0]);
@@ -70,13 +82,22 @@ export default function ImageTrimmingApp() {
   };
 
   // ドラッグ&ドロップのハンドラー
+  /**
+   * ドラッグ中のハンドラー。
+   */
   const onDragOver = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(true);
   };
 
+  /**
+   * ドラッグ離脱時のハンドラー。
+   */
   const onDragLeave = () => setIsDragging(false);
 
+  /**
+   * ドロップ時のハンドラー。
+   */
   const onDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
@@ -85,10 +106,16 @@ export default function ImageTrimmingApp() {
     }
   };
 
+  /**
+   * トリミング完了時のハンドラー。
+   */
   const onCropComplete = useCallback((_area: Area, pixels: Area) => {
     setCroppedAreaPixels(pixels);
   }, []);
 
+  /**
+   * トリミング結果を生成してダウンロードする。
+   */
   const downloadResult = async () => {
     if (!image || !croppedAreaPixels) return;
 

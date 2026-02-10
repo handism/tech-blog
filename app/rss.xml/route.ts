@@ -2,8 +2,14 @@
 import { getAllPosts } from '@/src/lib/posts-server';
 import { siteConfig } from '@/src/config/site';
 
+/**
+ * RSSの再検証間隔（秒）。
+ */
 export const revalidate = 3600; // 1時間ごとに再検証
 
+/**
+ * RSSフィードXMLを生成して返す。
+ */
 export async function GET() {
   const posts = await getAllPosts();
   const baseUrl = siteConfig.url;

@@ -4,6 +4,9 @@ import { Clock, Calendar, Folder } from 'lucide-react';
 import type { Post } from '@/src/lib/posts-server';
 import TagLink from '@/src/components/TagLink';
 
+/**
+ * 投稿メタ情報のプロパティ。
+ */
 type Props = {
   post: Post;
   className?: string;
@@ -12,6 +15,9 @@ type Props = {
   stackTags?: boolean;
 };
 
+/**
+ * 投稿のメタ情報（日時・カテゴリ・タグ・読了時間）を表示する。
+ */
 export default function PostMeta({
   post,
   className,

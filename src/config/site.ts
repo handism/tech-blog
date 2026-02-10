@@ -1,4 +1,7 @@
 // src/config/site.ts
+/**
+ * サイト全体の設定。
+ */
 export const siteConfig = {
   name: "Handism's Tech Blog",
   url: 'https://handism.github.io',
