@@ -16,8 +16,6 @@ import rehypeShiki from '@shikijs/rehype';
 
 const postsDir = path.join(process.cwd(), siteConfig.posts.dir);
 
-// 型定義は src/types/post.ts を参照
-
 /**
  * マークダウンをプレーンテキストに変換
  */
