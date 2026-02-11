@@ -7,15 +7,9 @@ import ScrollToTopButton from '@/src/components/ScrollToTopButton';
 import { siteConfig } from '@/src/config/site';
 import type { Metadata } from 'next';
 import { ThemeProvider } from 'next-themes';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Geist } from 'next/font/google';
 
 const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
   subsets: ['latin'],
 });
 
@@ -36,7 +30,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja" suppressHydrationWarning data-scroll-behavior="smooth">
-      <body className="bg-bg text-text antialiased">
+      <body className={`${geistSans.className} bg-bg text-text antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
           <Header />
           {children}
