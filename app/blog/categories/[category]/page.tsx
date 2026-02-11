@@ -3,7 +3,8 @@ import BlogLayout from '@/src/components/BlogLayout';
 import Pagination from '@/src/components/Pagination';
 import PostCardList from '@/src/components/PostCardList';
 import { getBlogViewContext } from '@/src/lib/posts-view';
-import { categoryToSlug, findCategoryBySlug } from '@/src/lib/utils';
+import { resolveSlugOrNotFound } from '@/src/lib/slug-resolver';
+import { categoryToSlug } from '@/src/lib/utils';
 
 /**
  * カテゴリページの静的生成パラメータを生成する。
@@ -21,17 +22,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
   const { category: slug } = await params;
 
   const { allPosts: posts, categories } = await getBlogViewContext();
-  const actualCategory = findCategoryBySlug(slug, categories);
-
-  if (!actualCategory) {
-    return (
-      <BlogLayout posts={posts} categories={categories}>
-        <div>
-          <h1 className="text-3xl font-bold mb-6">カテゴリが見つかりません</h1>
-        </div>
-      </BlogLayout>
-    );
-  }
+  const actualCategory = resolveSlugOrNotFound(slug, categories, categoryToSlug);
 
   const filteredPosts = posts.filter((p) => p.category === actualCategory);
 

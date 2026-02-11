@@ -2,8 +2,9 @@
 import BlogLayout from '@/src/components/BlogLayout';
 import Pagination from '@/src/components/Pagination';
 import PostCardList from '@/src/components/PostCardList';
+import { resolveSlugOrNotFound } from '@/src/lib/slug-resolver';
 import { getAllTags, getBlogViewContext } from '@/src/lib/posts-view';
-import { tagToSlug, findTagBySlug } from '@/src/lib/utils';
+import { tagToSlug } from '@/src/lib/utils';
 
 /**
  * タグページの静的生成パラメータを生成する。
@@ -29,18 +30,7 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
   // 全タグを取得
   const allTags = getAllTags(posts);
 
-  // findTagBySlugでスラッグから元のタグ名を復元
-  const actualTag = findTagBySlug(slug, allTags);
-
-  if (!actualTag) {
-    return (
-      <BlogLayout posts={posts} categories={categories}>
-        <div>
-          <h1 className="text-3xl font-bold mb-6">タグが見つかりません</h1>
-        </div>
-      </BlogLayout>
-    );
-  }
+  const actualTag = resolveSlugOrNotFound(slug, allTags, tagToSlug);
 
   const filteredPosts = posts.filter((p) => p.tags.includes(actualTag));
 
