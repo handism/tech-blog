@@ -258,3 +258,4 @@ npm uninstall <package>
 - generateMetadata で重い処理を呼んでいる
 - import順の整理
 - slug生成ロジックの衝突リスク
+- タグ集計ロジックの重複

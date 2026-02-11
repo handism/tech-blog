@@ -1,5 +1,6 @@
 // src/components/TagList.tsx
 import TagLink from '@/src/components/TagLink';
+import { getAllTags } from '@/src/lib/posts-view';
 import { PostMeta } from '@/src/types/post';
 
 /**
@@ -13,8 +14,7 @@ type Props = {
  * 投稿から集計したタグの一覧を表示する。
  */
 export default function TagList({ posts }: Props) {
-  // 全記事からタグを集約（重複排除）
-  const tags = Array.from(new Set(posts.flatMap((p) => p.tags)));
+  const tags = getAllTags(posts);
 
   return (
     <div className="flex flex-wrap gap-2">
