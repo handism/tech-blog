@@ -9,7 +9,7 @@ import { cache } from 'react';
  * 全記事のメタ情報を取得（一覧用）。
  */
 export const getAllPostMeta = cache(async function getAllPostMeta(): Promise<PostMeta[]> {
-  const sources = readAllPostSources();
+  const sources = await readAllPostSources();
   const posts = sources.map(({ slug, raw }) => {
     const { data, content } = parsePostSource(raw);
     return createPostMeta(slug, data, content);
@@ -28,7 +28,7 @@ export const getAllPostMeta = cache(async function getAllPostMeta(): Promise<Pos
 export const getPostMetaBySlug = cache(async function getPostMetaBySlug(
   slug: string
 ): Promise<PostMeta | null> {
-  const source = readPostSourceBySlug(slug);
+  const source = await readPostSourceBySlug(slug);
   if (!source) return null;
 
   const { data, content } = parsePostSource(source.raw);
@@ -39,7 +39,7 @@ export const getPostMetaBySlug = cache(async function getPostMetaBySlug(
  * 単記事取得（詳細ページ用）- サーバー側のみ
  */
 export async function getPost(slug: string): Promise<Post | null> {
-  const source = readPostSourceBySlug(slug);
+  const source = await readPostSourceBySlug(slug);
   if (!source) return null;
 
   const { data, content } = parsePostSource(source.raw);

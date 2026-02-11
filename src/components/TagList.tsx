@@ -1,6 +1,6 @@
 // src/components/TagList.tsx
 import TagLink from '@/src/components/TagLink';
-import { getAllTags } from '@/src/lib/posts-view';
+import { getAllTags } from '@/src/lib/post-taxonomy';
 import { PostMeta } from '@/src/types/post';
 
 /**

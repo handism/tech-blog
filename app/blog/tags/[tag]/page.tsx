@@ -2,8 +2,9 @@
 import BlogLayout from '@/src/components/BlogLayout';
 import Pagination from '@/src/components/Pagination';
 import PostCardList from '@/src/components/PostCardList';
+import { getAllTags } from '@/src/lib/post-taxonomy';
 import { resolveSlugOrNotFound } from '@/src/lib/slug-resolver';
-import { getAllTags, getBlogViewContext } from '@/src/lib/posts-view';
+import { getBlogViewContext } from '@/src/lib/posts-view';
 import { tagToSlug } from '@/src/lib/utils';
 
 /**
