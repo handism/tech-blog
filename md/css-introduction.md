@@ -1,5 +1,5 @@
 ---
-title: CSS3に入門する
+title: CSSに入門する
 date: 2024-01-10
 tags: [CSS]
 category: Frontend
