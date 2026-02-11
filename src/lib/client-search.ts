@@ -4,12 +4,13 @@
  * ビルド時にすべての記事データが埋め込まれる
  */
 import Fuse from 'fuse.js';
+import type { IFuseOptions } from 'fuse.js';
 import type { Post } from '@/src/types/post';
 
 /**
  * 記事検索時に使うFuse.js設定。
  */
-const postSearchOptions: Fuse.IFuseOptions<Post> = {
+const postSearchOptions: IFuseOptions<Post> = {
   keys: [
     { name: 'title', weight: 0.7 },
     { name: 'plaintext', weight: 0.3 },
