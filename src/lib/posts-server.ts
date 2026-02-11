@@ -23,6 +23,19 @@ export const getAllPostMeta = cache(async function getAllPostMeta(): Promise<Pos
 });
 
 /**
+ * 単記事のメタ情報のみを取得（メタデータ生成用）。
+ */
+export const getPostMetaBySlug = cache(async function getPostMetaBySlug(
+  slug: string
+): Promise<PostMeta | null> {
+  const source = readPostSourceBySlug(slug);
+  if (!source) return null;
+
+  const { data, content } = parsePostSource(source.raw);
+  return createPostMeta(slug, data, content);
+});
+
+/**
  * 単記事取得（詳細ページ用）- サーバー側のみ
  */
 export async function getPost(slug: string): Promise<Post | null> {

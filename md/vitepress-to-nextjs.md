@@ -255,3 +255,5 @@ npm uninstall <package>
 - データアクセス層の責務分離
 - 検索結果の条件を設定
 - タグ/カテゴリの「存在しない時」の扱いを共通化
+- generateMetadata で重い処理を呼んでいる
+- import順の整理

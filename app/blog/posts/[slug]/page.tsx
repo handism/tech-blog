@@ -3,7 +3,7 @@ import BlogLayout from '@/src/components/BlogLayout';
 import CopyButtonScript from '@/src/components/CopyButtonScript';
 import { ImageModal } from '@/src/components/ImageModal';
 import PostMeta from '@/src/components/PostMeta';
-import { getAllPostMeta, getPost } from '@/src/lib/posts-server';
+import { getAllPostMeta, getPost, getPostMetaBySlug } from '@/src/lib/posts-server';
 import { getBlogViewContext } from '@/src/lib/posts-view';
 import type { Metadata } from 'next';
 import Image from 'next/image';
@@ -22,17 +22,17 @@ type Props = {
  */
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = await getPost(slug);
+  const postMeta = await getPostMetaBySlug(slug);
 
-  if (!post) {
+  if (!postMeta) {
     return {
       title: '記事が見つかりません',
     };
   }
 
   return {
-    title: post.title,
-    description: post.plaintext?.slice(0, 160),
+    title: postMeta.title,
+    description: postMeta.plaintext?.slice(0, 160),
   };
 }
 
