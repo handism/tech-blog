@@ -12,6 +12,7 @@ import rehypeStringify from 'rehype-stringify';
 import remarkGfm from 'remark-gfm';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
+import { cache } from 'react';
 import { unified } from 'unified';
 
 const postsDir = path.join(process.cwd(), siteConfig.posts.dir);
@@ -85,7 +86,7 @@ function createPostMeta(slug: string, data: Record<string, unknown>, content: st
 /**
  * 全記事のメタ情報を取得（一覧用）。
  */
-export async function getAllPostMeta(): Promise<PostMeta[]> {
+export const getAllPostMeta = cache(async function getAllPostMeta(): Promise<PostMeta[]> {
   const files = fs.readdirSync(postsDir, { withFileTypes: true });
 
   const posts = files
@@ -104,7 +105,7 @@ export async function getAllPostMeta(): Promise<PostMeta[]> {
     if (!b.date) return -1;
     return b.date.getTime() - a.date.getTime();
   });
-}
+});
 
 /**
  * 互換用: 既存呼び出し向けに一覧メタ情報を返す。
