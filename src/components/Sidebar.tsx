@@ -4,6 +4,7 @@ import SearchBox from '@/src/components/SearchBox';
 import TagList from '@/src/components/TagList';
 import type { TocItem, Post } from '@/src/types/post';
 import { Menu } from 'lucide-react';
+import Link from 'next/link';
 import { useState } from 'react';
 
 /**
@@ -64,12 +65,12 @@ export default function Sidebar({ posts, toc, categories }: SidebarProps) {
           <ul className="space-y-2 text-sm">
             {categories.map((cat) => (
               <li key={cat}>
-                <a
+                <Link
                   href={`/blog/categories/${cat}`}
                   className="text-text/80 hover:text-accent hover:underline block"
                 >
                   {cat}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

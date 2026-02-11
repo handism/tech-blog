@@ -3,6 +3,7 @@
 
 import { createPostSearcher, searchPosts } from '@/src/lib/client-search';
 import type { Post } from '@/src/types/post';
+import Link from 'next/link';
 import { useState, useMemo } from 'react';
 
 /**
@@ -39,9 +40,9 @@ export default function SearchBox({ posts }: Props) {
         {query &&
           results.map((post) => (
             <li key={post.slug}>
-              <a href={`/blog/posts/${post.slug}`} className="hover:underline">
+              <Link href={`/blog/posts/${post.slug}`} className="hover:underline">
                 {post.title} <span className="text-sm text-gray-500">[{post.category}]</span>
-              </a>
+              </Link>
             </li>
           ))}
       </ul>
