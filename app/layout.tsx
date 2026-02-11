@@ -6,11 +6,16 @@ import Header from '@/src/components/Header';
 import ScrollToTopButton from '@/src/components/ScrollToTopButton';
 import { siteConfig } from '@/src/config/site';
 import type { Metadata } from 'next';
+import localFont from 'next/font/local';
 import { ThemeProvider } from 'next-themes';
-import { Geist } from 'next/font/google';
 
-const geistSans = Geist({
-  subsets: ['latin'],
+const geistSans = localFont({
+  src: [
+    { path: './fonts/geist-latin.woff2', style: 'normal' },
+    { path: './fonts/geist-latin-ext.woff2', style: 'normal' },
+  ],
+  display: 'swap',
+  fallback: ['system-ui', 'sans-serif'],
 });
 
 /**
