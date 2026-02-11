@@ -1,5 +1,5 @@
 ---
-title: IT用語集 (完全版・拡張2026)
+title: IT用語集 (2026年版)
 date: 2026-02-11
 tags: [Terminology]
 category: IT
