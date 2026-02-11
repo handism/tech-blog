@@ -23,13 +23,6 @@ export const getAllPostMeta = cache(async function getAllPostMeta(): Promise<Pos
 });
 
 /**
- * 互換用: 既存呼び出し向けに一覧メタ情報を返す。
- */
-export async function getAllPosts(): Promise<PostMeta[]> {
-  return getAllPostMeta();
-}
-
-/**
  * 単記事取得（詳細ページ用）- サーバー側のみ
  */
 export async function getPost(slug: string): Promise<Post | null> {

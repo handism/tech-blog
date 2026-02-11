@@ -24,7 +24,6 @@ export default function Sidebar({ posts, toc, categories }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const hasToc = !!(toc && toc.length > 0);
 
-  // --- 修正ポイント: JSXを返す「変数」にする（または関数の外に定義する） ---
   const tocElements = (
     <>
       <div className="flex justify-between items-center mb-4">

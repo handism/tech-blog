@@ -4,7 +4,7 @@
 import { createPostSearcher, searchPosts } from '@/src/lib/client-search';
 import type { PostMeta } from '@/src/types/post';
 import Link from 'next/link';
-import { useState, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 /**
  * 検索ボックスのプロパティ。
@@ -18,9 +18,21 @@ type Props = {
  */
 export default function SearchBox({ posts }: Props) {
   const [query, setQuery] = useState('');
+  const [debouncedQuery, setDebouncedQuery] = useState('');
 
   const searcher = useMemo(() => createPostSearcher(posts), [posts]);
-  const results = useMemo(() => searchPosts(searcher, query), [searcher, query]);
+  const results = useMemo(
+    () => searchPosts(searcher, debouncedQuery).slice(0, 8),
+    [searcher, debouncedQuery]
+  );
+
+  useEffect(() => {
+    const timerId = window.setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 200);
+
+    return () => window.clearTimeout(timerId);
+  }, [query]);
 
   return (
     <div className="space-y-2">
@@ -37,7 +49,7 @@ export default function SearchBox({ posts }: Props) {
         className="w-full border p-2 rounded"
       />
       <ul className="mt-2 space-y-1">
-        {query &&
+        {debouncedQuery &&
           results.map((post) => (
             <li key={post.slug}>
               <Link href={`/blog/posts/${post.slug}`} className="hover:underline">
@@ -45,6 +57,9 @@ export default function SearchBox({ posts }: Props) {
               </Link>
             </li>
           ))}
+        {debouncedQuery && results.length === 0 && (
+          <li className="text-sm text-text/60">検索結果が見つかりませんでした。</li>
+        )}
       </ul>
     </div>
   );
