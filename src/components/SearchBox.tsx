@@ -1,8 +1,8 @@
 // src/components/SearchBox.tsx
 'use client';
 
+import { createPostSearcher, searchPosts } from '@/src/lib/client-search';
 import type { Post } from '@/src/types/post';
-import Fuse from 'fuse.js';
 import { useState, useMemo } from 'react';
 
 /**
@@ -18,23 +18,8 @@ type Props = {
 export default function SearchBox({ posts }: Props) {
   const [query, setQuery] = useState('');
 
-  // Fuse.js 設定
-  const fuse = useMemo(
-    () =>
-      new Fuse(posts, {
-        keys: [
-          { name: 'title', weight: 0.7 },
-          { name: 'plaintext', weight: 0.3 },
-          { name: 'tags', weight: 0.5 },
-          { name: 'category', weight: 0.5 },
-        ],
-        threshold: 0.3,
-        ignoreLocation: true,
-      }),
-    [posts]
-  );
-
-  const results = query ? fuse.search(query).map((r) => r.item) : [];
+  const searcher = useMemo(() => createPostSearcher(posts), [posts]);
+  const results = useMemo(() => searchPosts(searcher, query), [searcher, query]);
 
   return (
     <div className="space-y-2">

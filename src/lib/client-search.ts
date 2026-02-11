@@ -3,34 +3,36 @@
  * クライアント側検索機能（SSG/Static Export 対応）
  * ビルド時にすべての記事データが埋め込まれる
  */
-import type { Post } from '../types/post';
 import Fuse from 'fuse.js';
+import type { Post } from '@/src/types/post';
 
 /**
- * 検索用に本文テキストを含めた記事型。
+ * 記事検索時に使うFuse.js設定。
  */
-export interface SearchablePost extends Post {
-  plaintext: string;
+const postSearchOptions: Fuse.IFuseOptions<Post> = {
+  keys: [
+    { name: 'title', weight: 0.7 },
+    { name: 'plaintext', weight: 0.3 },
+    { name: 'tags', weight: 0.5 },
+    { name: 'category', weight: 0.5 },
+  ],
+  threshold: 0.3,
+  ignoreLocation: true,
+  minMatchCharLength: 2,
+};
+
+/**
+ * 記事配列から検索インデックスを生成する。
+ */
+export function createPostSearcher(posts: Post[]): Fuse<Post> {
+  return new Fuse(posts, postSearchOptions);
 }
 
 /**
- * Fuse.jsを使用した高度な全文検索
- * タイトル、本文、タグ、カテゴリーを検索対象とする
+ * 生成済みの検索インデックスで記事を検索する。
  */
-export function searchPosts(posts: SearchablePost[], keyword: string): SearchablePost[] {
+export function searchPosts(searcher: Fuse<Post>, keyword: string): Post[] {
   if (!keyword.trim()) return [];
 
-  const fuse = new Fuse(posts, {
-    keys: [
-      { name: 'title', weight: 0.7 }, // タイトルは重み付け高
-      { name: 'plaintext', weight: 0.3 }, // 本文は重み付け低
-      { name: 'tags', weight: 0.5 },
-      { name: 'category', weight: 0.5 },
-    ],
-    includeScore: true,
-    threshold: 0.3, // 柔軟なマッチング
-    minMatchCharLength: 2, // 最小2文字以上
-  });
-
-  return fuse.search(keyword).map((result) => result.item);
+  return searcher.search(keyword).map((result) => result.item);
 }
