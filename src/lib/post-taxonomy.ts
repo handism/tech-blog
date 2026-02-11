@@ -1,3 +1,4 @@
+// src/lib/post-taxonomy.ts
 import type { PostMeta } from '@/src/types/post';
 
 /**

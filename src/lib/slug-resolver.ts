@@ -1,3 +1,4 @@
+// src/lib/slug-resolver.ts
 import { notFound } from 'next/navigation';
 
 /**

@@ -1,3 +1,4 @@
+// src/lib/post-parser.ts
 import { siteConfig } from '@/src/config/site';
 import type { PostMeta } from '@/src/types/post';
 import matter from 'gray-matter';

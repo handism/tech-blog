@@ -1,3 +1,4 @@
+// src/components/PostCardList.tsx
 import PostCard from '@/src/components/PostCard';
 import type { PostMeta } from '@/src/types/post';
 

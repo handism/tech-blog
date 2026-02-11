@@ -1,3 +1,4 @@
+// src/lib/posts-view.ts
 import { getAllPostMeta } from '@/src/lib/posts-server';
 import type { PostMeta } from '@/src/types/post';
 

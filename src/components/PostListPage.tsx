@@ -1,3 +1,4 @@
+// src/components/PostListPage.tsx
 import BlogLayout from '@/src/components/BlogLayout';
 import Pagination from '@/src/components/Pagination';
 import PostCardList from '@/src/components/PostCardList';

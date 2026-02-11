@@ -1,4 +1,4 @@
-// components/CopyButtonScript.tsx
+// src/components/CopyButtonScript.tsx
 'use client';
 import { useEffect } from 'react';
 

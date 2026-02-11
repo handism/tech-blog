@@ -1,3 +1,4 @@
+// src/lib/post-renderer.ts
 import { generateTocFromHast } from '@/src/lib/toc';
 import type { TocItem } from '@/src/types/post';
 import rehypeShiki from '@shikijs/rehype';

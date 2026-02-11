@@ -1,3 +1,4 @@
+// src/lib/post-repository.ts
 import { siteConfig } from '@/src/config/site';
 import fs from 'fs/promises';
 import path from 'path';

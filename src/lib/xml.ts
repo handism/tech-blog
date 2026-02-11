@@ -1,3 +1,4 @@
+// src/lib/xml.ts
 type RssItem = {
   title: string;
   link: string;
