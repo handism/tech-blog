@@ -1,7 +1,5 @@
 // app/page.tsx
-import BlogLayout from '@/src/components/BlogLayout';
-import Pagination from '@/src/components/Pagination';
-import PostCardList from '@/src/components/PostCardList';
+import PostListPage from '@/src/components/PostListPage';
 import { siteConfig } from '@/src/config/site';
 import { getBlogViewContext, paginatePosts } from '@/src/lib/posts-view';
 import type { Metadata } from 'next';
@@ -23,12 +21,12 @@ export default async function Home() {
   const { posts, totalPages } = paginatePosts(allPosts, 1, POSTS_PER_PAGE);
 
   return (
-    <BlogLayout posts={allPosts} categories={categories}>
-      <div>
-        <PostCardList posts={posts} />
-
-        <Pagination currentPage={1} totalPages={totalPages} />
-      </div>
-    </BlogLayout>
+    <PostListPage
+      allPosts={allPosts}
+      categories={categories}
+      posts={posts}
+      currentPage={1}
+      totalPages={totalPages}
+    />
   );
 }

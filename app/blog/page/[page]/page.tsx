@@ -1,7 +1,5 @@
 // app/blog/page/[page]/page.tsx
-import BlogLayout from '@/src/components/BlogLayout';
-import Pagination from '@/src/components/Pagination';
-import PostCardList from '@/src/components/PostCardList';
+import PostListPage from '@/src/components/PostListPage';
 import { siteConfig } from '@/src/config/site';
 import { getBlogViewContext, paginatePosts } from '@/src/lib/posts-view';
 import { notFound, redirect } from 'next/navigation';
@@ -41,13 +39,13 @@ export default async function PageView({ params }: Props) {
   }
 
   return (
-    <BlogLayout posts={allPosts} categories={categories}>
-      <div>
-        <PostCardList posts={posts} />
-
-        <Pagination currentPage={currentPage} totalPages={totalPages} />
-      </div>
-    </BlogLayout>
+    <PostListPage
+      allPosts={allPosts}
+      categories={categories}
+      posts={posts}
+      currentPage={currentPage}
+      totalPages={totalPages}
+    />
   );
 }
 
