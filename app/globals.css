@@ -199,10 +199,12 @@ article.prose pre::-webkit-scrollbar-thumb {
    表（table）
    ======================= */
 article.prose table {
-  @apply w-full border-collapse my-6 text-sm;
+  @apply border-collapse my-6 text-sm;
   background-color: var(--card);
   border-color: var(--border);
   display: block;
+  width: fit-content;
+  max-width: 100%;
   overflow-x: auto;
   white-space: nowrap;
 }
