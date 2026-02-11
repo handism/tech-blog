@@ -1,6 +1,7 @@
 // app/sitemap.xml/route.ts
 import { siteConfig } from '@/src/config/site';
 import { getAllPostMeta } from '@/src/lib/posts-server';
+import { buildSitemapXml } from '@/src/lib/xml';
 
 /**
  * サイトマップの再検証間隔（秒）。
@@ -14,15 +15,10 @@ export async function GET() {
   const baseUrl = siteConfig.url;
   const posts = await getAllPostMeta();
 
-  const urls = posts
-    .map((post) => `<url><loc>${baseUrl}/blog/posts/${post.slug}</loc></url>`)
-    .join('');
-
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>${baseUrl}</loc></url>
-${urls}
-</urlset>`;
+  const sitemap = buildSitemapXml([
+    baseUrl,
+    ...posts.map((post) => `${baseUrl}/blog/posts/${post.slug}`),
+  ]);
 
   return new Response(sitemap, {
     headers: {
