@@ -85,6 +85,11 @@ article.prose p {
   @apply mb-5 leading-relaxed text-base;
 }
 
+article.prose a {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 article.prose img {
   @apply rounded-xl shadow-md my-8 mx-auto;
   max-width: 100%;
