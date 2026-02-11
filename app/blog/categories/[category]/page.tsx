@@ -1,15 +1,14 @@
 // app/blog/categories/[category]/page.tsx
 import BlogLayout from '@/src/components/BlogLayout';
 import Pagination from '@/src/components/Pagination';
-import PostCard from '@/src/components/PostCard';
-import { getAllPostMeta } from '@/src/lib/posts-server';
+import PostCardList from '@/src/components/PostCardList';
+import { getBlogViewContext } from '@/src/lib/posts-view';
 
 /**
  * カテゴリページの静的生成パラメータを生成する。
  */
 export async function generateStaticParams() {
-  const posts = await getAllPostMeta();
-  const categories = Array.from(new Set(posts.map((p) => p.category)));
+  const { categories } = await getBlogViewContext();
 
   return categories.map((category) => ({ category }));
 }
@@ -20,20 +19,15 @@ export async function generateStaticParams() {
 export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
   const { category } = await params;
 
-  const posts = await getAllPostMeta();
+  const { allPosts: posts, categories } = await getBlogViewContext();
   const filteredPosts = posts.filter((p) => p.category === category);
-  const categories = Array.from(new Set(posts.map((p) => p.category)));
 
   return (
     <BlogLayout posts={posts} categories={categories}>
       <div>
         <h1 className="text-3xl font-bold mb-6">Category: {category}</h1>
 
-        <div className="space-y-6">
-          {filteredPosts.map((post, index) => (
-            <PostCard key={post.slug} post={post} priorityImage={index === 0} />
-          ))}
-        </div>
+        <PostCardList posts={filteredPosts} />
 
         <Pagination currentPage={1} totalPages={1} />
       </div>

@@ -4,6 +4,7 @@ import CopyButtonScript from '@/src/components/CopyButtonScript';
 import { ImageModal } from '@/src/components/ImageModal';
 import PostMeta from '@/src/components/PostMeta';
 import { getAllPostMeta, getPost } from '@/src/lib/posts-server';
+import { getBlogViewContext } from '@/src/lib/posts-view';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -53,8 +54,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const { slug } = await params;
   const post = await getPost(slug);
 
-  const posts = await getAllPostMeta();
-  const categories = Array.from(new Set(posts.map((p) => p.category)));
+  const { allPosts: posts, categories } = await getBlogViewContext();
 
   if (!post) notFound();
 

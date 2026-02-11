@@ -1,16 +1,16 @@
 // app/blog/tags/[tag]/page.tsx
 import BlogLayout from '@/src/components/BlogLayout';
 import Pagination from '@/src/components/Pagination';
-import PostCard from '@/src/components/PostCard';
-import { getAllPostMeta } from '@/src/lib/posts-server';
+import PostCardList from '@/src/components/PostCardList';
+import { getAllTags, getBlogViewContext } from '@/src/lib/posts-view';
 import { tagToSlug, findTagBySlug } from '@/src/lib/utils';
 
 /**
  * タグページの静的生成パラメータを生成する。
  */
 export async function generateStaticParams() {
-  const posts = await getAllPostMeta();
-  const tags = Array.from(new Set(posts.flatMap((p) => p.tags)));
+  const { allPosts } = await getBlogViewContext();
+  const tags = getAllTags(allPosts);
 
   // tagToSlugでスラッグ化してパスを生成
   return tags.map((tag) => ({
@@ -24,11 +24,10 @@ export async function generateStaticParams() {
 export default async function TagPage({ params }: { params: Promise<{ tag: string }> }) {
   const { tag: slug } = await params;
 
-  const posts = await getAllPostMeta();
-  const categories = Array.from(new Set(posts.map((p) => p.category)));
+  const { allPosts: posts, categories } = await getBlogViewContext();
 
   // 全タグを取得
-  const allTags = Array.from(new Set(posts.flatMap((p) => p.tags)));
+  const allTags = getAllTags(posts);
 
   // findTagBySlugでスラッグから元のタグ名を復元
   const actualTag = findTagBySlug(slug, allTags);
@@ -54,11 +53,7 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
           <p className="text-text/60">このタグの記事はありません。</p>
         ) : (
           <>
-            <div className="space-y-6">
-              {filteredPosts.map((post, index) => (
-                <PostCard key={post.slug} post={post} priorityImage={index === 0} />
-              ))}
-            </div>
+            <PostCardList posts={filteredPosts} />
             <Pagination currentPage={1} totalPages={1} />
           </>
         )}

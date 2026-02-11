@@ -1,9 +1,9 @@
 // app/page.tsx
 import BlogLayout from '@/src/components/BlogLayout';
 import Pagination from '@/src/components/Pagination';
-import PostCard from '@/src/components/PostCard';
+import PostCardList from '@/src/components/PostCardList';
 import { siteConfig } from '@/src/config/site';
-import { getAllPostMeta } from '@/src/lib/posts-server';
+import { getBlogViewContext, paginatePosts } from '@/src/lib/posts-view';
 import type { Metadata } from 'next';
 
 /**
@@ -19,21 +19,13 @@ const POSTS_PER_PAGE = siteConfig.pagination.postsPerPage;
  * トップページ（最新記事一覧）。
  */
 export default async function Home() {
-  const allPosts = await getAllPostMeta();
-  const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
-  const categories = Array.from(new Set(allPosts.map((p) => p.category)));
-
-  // 1ページ目の記事を取得
-  const posts = allPosts.slice(0, POSTS_PER_PAGE);
+  const { allPosts, categories } = await getBlogViewContext();
+  const { posts, totalPages } = paginatePosts(allPosts, 1, POSTS_PER_PAGE);
 
   return (
     <BlogLayout posts={allPosts} categories={categories}>
       <div>
-        <div className="space-y-6">
-          {posts.map((post, index) => (
-            <PostCard key={post.slug} post={post} priorityImage={index === 0} />
-          ))}
-        </div>
+        <PostCardList posts={posts} />
 
         <Pagination currentPage={1} totalPages={totalPages} />
       </div>

@@ -1,9 +1,9 @@
 // app/blog/page/[page]/page.tsx
 import BlogLayout from '@/src/components/BlogLayout';
 import Pagination from '@/src/components/Pagination';
-import PostCard from '@/src/components/PostCard';
+import PostCardList from '@/src/components/PostCardList';
 import { siteConfig } from '@/src/config/site';
-import { getAllPostMeta } from '@/src/lib/posts-server';
+import { getBlogViewContext, paginatePosts } from '@/src/lib/posts-view';
 import { notFound, redirect } from 'next/navigation';
 
 /**
@@ -29,28 +29,21 @@ export default async function PageView({ params }: Props) {
     redirect('/');
   }
 
-  const allPosts = await getAllPostMeta();
-  const totalPages = Math.ceil(allPosts.length / siteConfig.pagination.postsPerPage);
+  const { allPosts, categories } = await getBlogViewContext();
+  const { posts, totalPages } = paginatePosts(
+    allPosts,
+    currentPage,
+    siteConfig.pagination.postsPerPage
+  );
 
   if (currentPage > totalPages) {
     notFound();
   }
 
-  const categories = Array.from(new Set(allPosts.map((p) => p.category)));
-
-  // ページネーション用に記事を切り出し
-  const startIndex = (currentPage - 1) * siteConfig.pagination.postsPerPage;
-  const endIndex = startIndex + siteConfig.pagination.postsPerPage;
-  const posts = allPosts.slice(startIndex, endIndex);
-
   return (
     <BlogLayout posts={allPosts} categories={categories}>
       <div>
-        <div className="space-y-6">
-          {posts.map((post, index) => (
-            <PostCard key={post.slug} post={post} priorityImage={index === 0} />
-          ))}
-        </div>
+        <PostCardList posts={posts} />
 
         <Pagination currentPage={currentPage} totalPages={totalPages} />
       </div>
@@ -62,8 +55,8 @@ export default async function PageView({ params }: Props) {
  * 静的生成用のパス生成（2ページ目以降のみ）。
  */
 export async function generateStaticParams() {
-  const allPosts = await getAllPostMeta();
-  const totalPages = Math.ceil(allPosts.length / siteConfig.pagination.postsPerPage);
+  const { allPosts } = await getBlogViewContext();
+  const { totalPages } = paginatePosts(allPosts, 1, siteConfig.pagination.postsPerPage);
 
   // 2ページ目以降のみ生成
   return Array.from({ length: Math.max(0, totalPages - 1) }, (_, i) => ({
