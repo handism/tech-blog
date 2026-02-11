@@ -247,3 +247,4 @@ npm uninstall <package>
 - 重複ロジックを整理
 - <a>を<Link>に置き換え
 - ビルド時間とメモリ効率の改善
+- getAllPostMeta() の結果を cache() でメモ化して、ビルド時の重複読み込みを減らす
