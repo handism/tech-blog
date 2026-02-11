@@ -61,6 +61,8 @@ npm run dev
 
 ブラウザで`http://localhost:3000`にアクセスして動作確認可能。
 
+ブラウザに`React Developer Tools`も入れる。
+
 ## Node.jsについて
 
 JavaScriptのブラウザ以外での動作環境として、Node.jsというランタイムが存在する。

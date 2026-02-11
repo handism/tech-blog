@@ -30,8 +30,8 @@ export default async function Home() {
     <BlogLayout posts={allPosts} categories={categories}>
       <div>
         <div className="space-y-6">
-          {posts.map((post) => (
-            <PostCard key={post.slug} post={post} />
+          {posts.map((post, index) => (
+            <PostCard key={post.slug} post={post} priorityImage={index === 0} />
           ))}
         </div>
 

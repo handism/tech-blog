@@ -38,7 +38,12 @@ export default function SearchBox({ posts }: Props) {
 
   return (
     <div className="space-y-2">
+      <label htmlFor="site-search" className="sr-only">
+        記事検索
+      </label>
       <input
+        id="site-search"
+        name="q"
         type="text"
         placeholder="検索..."
         value={query}

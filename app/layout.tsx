@@ -35,7 +35,7 @@ export const metadata: Metadata = {
  */
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ja" suppressHydrationWarning>
+    <html lang="ja" suppressHydrationWarning data-scroll-behavior="smooth">
       <body className="bg-bg text-text antialiased">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
           <Header />

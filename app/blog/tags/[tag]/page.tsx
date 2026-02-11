@@ -55,8 +55,8 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
         ) : (
           <>
             <div className="space-y-6">
-              {filteredPosts.map((post) => (
-                <PostCard key={post.slug} post={post} />
+              {filteredPosts.map((post, index) => (
+                <PostCard key={post.slug} post={post} priorityImage={index === 0} />
               ))}
             </div>
             <Pagination currentPage={1} totalPages={1} />

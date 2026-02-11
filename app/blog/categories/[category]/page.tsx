@@ -30,8 +30,8 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
         <h1 className="text-3xl font-bold mb-6">Category: {category}</h1>
 
         <div className="space-y-6">
-          {filteredPosts.map((post) => (
-            <PostCard key={post.slug} post={post} />
+          {filteredPosts.map((post, index) => (
+            <PostCard key={post.slug} post={post} priorityImage={index === 0} />
           ))}
         </div>
 
