@@ -1,7 +1,7 @@
 ---
 title: VitePressで作ったブログをNext.jsにマイグレーションする
 date: 2026-02-01
-tags: [Next.js, React, Blog, Generative AI]
+tags: [Next.js, React, Blog, AI]
 category: Frontend
 image: vitepress-to-nextjs.webp
 ---

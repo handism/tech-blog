@@ -1,7 +1,7 @@
 ---
 title: 生成AIの個人的な活用事例集
 date: 2023-12-14
-tags: [Generative AI]
+tags: [AI]
 category: IT
 image: robot-drawing.webp
 ---

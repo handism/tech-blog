@@ -1,7 +1,7 @@
 ---
 title: IT用語集 (完全版・拡張2026)
 date: 2026-02-11
-tags: [Terminology, DevOps, CloudNative, AI, Security]
+tags: [Terminology]
 category: IT
 image: many-books.webp
 ---
