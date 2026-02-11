@@ -2,6 +2,7 @@
 import BlogLayout from '@/src/components/BlogLayout';
 import TagLink from '@/src/components/TagLink';
 import { getAllPostMeta } from '@/src/lib/posts-server';
+import { categoryToSlug } from '@/src/lib/utils';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
@@ -58,7 +59,7 @@ export default async function SitemapPage() {
               {categories.map((cat) => (
                 <li key={cat}>
                   <Link
-                    href={`/blog/categories/${cat}`}
+                    href={`/blog/categories/${categoryToSlug(cat)}`}
                     className="hover:text-accent hover:underline"
                   >
                     {cat}

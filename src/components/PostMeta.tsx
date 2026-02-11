@@ -1,5 +1,6 @@
 // src/components/PostMeta.tsx
 import TagLink from '@/src/components/TagLink';
+import { categoryToSlug } from '@/src/lib/utils';
 import type { PostMeta } from '@/src/types/post';
 import { Clock, Calendar, Folder } from 'lucide-react';
 import Link from 'next/link';
@@ -56,7 +57,7 @@ export default function PostMeta({
       )}
       {/* カテゴリ */}
       <Link
-        href={`/blog/categories/${post.category}`}
+        href={`/blog/categories/${categoryToSlug(post.category)}`}
         className="text-text/80 hover:text-accent hover:underline inline-flex items-center gap-1.5"
       >
         <Folder className="h-4 w-4" />

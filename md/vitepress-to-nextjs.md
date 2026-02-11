@@ -250,3 +250,5 @@ npm uninstall <package>
 - getAllPostMeta() の結果を cache() でメモ化して、ビルド時の重複読み込みを減らす
 - RSS/Sitemap のXML生成を共通化 + エスケープ対応
 - 一覧ページの重複ロジックを統合
+- TOC生成の正規表現依存をやめる
+- カテゴリURLをslug化して統一

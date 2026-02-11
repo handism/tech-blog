@@ -2,6 +2,7 @@
 'use client';
 import SearchBox from '@/src/components/SearchBox';
 import TagList from '@/src/components/TagList';
+import { categoryToSlug } from '@/src/lib/utils';
 import type { TocItem, PostMeta } from '@/src/types/post';
 import { Menu } from 'lucide-react';
 import Link from 'next/link';
@@ -66,7 +67,7 @@ export default function Sidebar({ posts, toc, categories }: SidebarProps) {
             {categories.map((cat) => (
               <li key={cat}>
                 <Link
-                  href={`/blog/categories/${cat}`}
+                  href={`/blog/categories/${categoryToSlug(cat)}`}
                   className="text-text/80 hover:text-accent hover:underline block"
                 >
                   {cat}
