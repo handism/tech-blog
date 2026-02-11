@@ -2,8 +2,8 @@
 'use client';
 
 import { siteConfig } from '@/src/config/site';
-import { Image } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { Image as ImageIcon } from 'lucide-react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 // =====================
 // Types
@@ -151,109 +151,112 @@ export default function MemphisGenerator() {
   /**
    * キャンバスにメンフィス柄を描画する。
    */
-  const draw = (ctx: CanvasRenderingContext2D, width: number, height: number) => {
-    ctx.clearRect(0, 0, width, height);
+  const draw = useCallback(
+    (ctx: CanvasRenderingContext2D, width: number, height: number) => {
+      ctx.clearRect(0, 0, width, height);
 
-    if (backgroundMode === 'custom') {
-      ctx.fillStyle = customBackgroundColor;
-      ctx.fillRect(0, 0, width, height);
-    } else if (backgroundMode === 'auto') {
-      ctx.fillStyle = getRandomColor(colors.backgrounds, seed);
-      ctx.fillRect(0, 0, width, height);
-    }
-
-    let s = seed;
-    const { min, max } = densities[selectedDensity];
-    const count = min + Math.floor(seededRandom(s++) * (max - min + 1));
-
-    for (let i = 0; i < count; i++) {
-      const type = Math.floor(seededRandom(s++) * 7);
-      const x = seededRandom(s++) * width;
-      const y = seededRandom(s++) * height;
-      const size = 30 + seededRandom(s++) * 150;
-      const rot = seededRandom(s++) * Math.PI * 2;
-      const color =
-        seededRandom(s++) > 0.5
-          ? getRandomColor(colors.primary, s++)
-          : getRandomColor(colors.secondary, s++);
-
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.rotate(rot);
-      ctx.fillStyle = color;
-      ctx.strokeStyle = color;
-      ctx.lineWidth = seededRandom(s++) > 0.8 ? 4 : 0;
-
-      switch (type) {
-        case 0:
-          ctx.beginPath();
-          ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
-          if (seededRandom(s++) > 0.5) {
-            ctx.fill();
-          } else {
-            ctx.stroke();
-          }
-          break;
-        case 1:
-          ctx.fillRect(-size / 2, -size / 2, size, size);
-          break;
-        case 2:
-          ctx.beginPath();
-          ctx.moveTo(0, -size / 2);
-          ctx.lineTo(-size / 2, size / 2);
-          ctx.lineTo(size / 2, size / 2);
-          ctx.closePath();
-          if (seededRandom(s++) > 0.5) {
-            ctx.fill();
-          } else {
-            ctx.stroke();
-          }
-          break;
-        case 3:
-          ctx.beginPath();
-          ctx.lineWidth = 5;
-          for (let j = 0; j < 5; j++) {
-            ctx.lineTo((j - 2.5) * 30, (j % 2) * 30 - 15);
-          }
-          ctx.stroke();
-          break;
-        case 4:
-          ctx.beginPath();
-          ctx.lineWidth = 5;
-          for (let t = 0; t < Math.PI * 2; t += 0.1) {
-            const wx = t * 20 - 60;
-            const wy = Math.sin(t * 3) * 20;
-            if (t === 0) {
-              ctx.moveTo(wx, wy);
-            } else {
-              ctx.lineTo(wx, wy);
-            }
-          }
-          ctx.stroke();
-          break;
-        case 5:
-          for (let dx = -2; dx <= 2; dx++) {
-            for (let dy = -2; dy <= 2; dy++) {
-              ctx.beginPath();
-              ctx.arc(dx * 15, dy * 15, 4, 0, Math.PI * 2);
-              ctx.fill();
-            }
-          }
-          break;
-        case 6:
-          ctx.beginPath();
-          ctx.arc(0, 0, size / 2, 0, Math.PI);
-          if (seededRandom(s++) > 0.5) {
-            ctx.fill();
-          } else {
-            ctx.stroke();
-          }
-          break;
+      if (backgroundMode === 'custom') {
+        ctx.fillStyle = customBackgroundColor;
+        ctx.fillRect(0, 0, width, height);
+      } else if (backgroundMode === 'auto') {
+        ctx.fillStyle = getRandomColor(colors.backgrounds, seed);
+        ctx.fillRect(0, 0, width, height);
       }
 
-      ctx.restore();
-    }
-  };
+      let s = seed;
+      const { min, max } = densities[selectedDensity];
+      const count = min + Math.floor(seededRandom(s++) * (max - min + 1));
+
+      for (let i = 0; i < count; i++) {
+        const type = Math.floor(seededRandom(s++) * 7);
+        const x = seededRandom(s++) * width;
+        const y = seededRandom(s++) * height;
+        const size = 30 + seededRandom(s++) * 150;
+        const rot = seededRandom(s++) * Math.PI * 2;
+        const color =
+          seededRandom(s++) > 0.5
+            ? getRandomColor(colors.primary, s++)
+            : getRandomColor(colors.secondary, s++);
+
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(rot);
+        ctx.fillStyle = color;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = seededRandom(s++) > 0.8 ? 4 : 0;
+
+        switch (type) {
+          case 0:
+            ctx.beginPath();
+            ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
+            if (seededRandom(s++) > 0.5) {
+              ctx.fill();
+            } else {
+              ctx.stroke();
+            }
+            break;
+          case 1:
+            ctx.fillRect(-size / 2, -size / 2, size, size);
+            break;
+          case 2:
+            ctx.beginPath();
+            ctx.moveTo(0, -size / 2);
+            ctx.lineTo(-size / 2, size / 2);
+            ctx.lineTo(size / 2, size / 2);
+            ctx.closePath();
+            if (seededRandom(s++) > 0.5) {
+              ctx.fill();
+            } else {
+              ctx.stroke();
+            }
+            break;
+          case 3:
+            ctx.beginPath();
+            ctx.lineWidth = 5;
+            for (let j = 0; j < 5; j++) {
+              ctx.lineTo((j - 2.5) * 30, (j % 2) * 30 - 15);
+            }
+            ctx.stroke();
+            break;
+          case 4:
+            ctx.beginPath();
+            ctx.lineWidth = 5;
+            for (let t = 0; t < Math.PI * 2; t += 0.1) {
+              const wx = t * 20 - 60;
+              const wy = Math.sin(t * 3) * 20;
+              if (t === 0) {
+                ctx.moveTo(wx, wy);
+              } else {
+                ctx.lineTo(wx, wy);
+              }
+            }
+            ctx.stroke();
+            break;
+          case 5:
+            for (let dx = -2; dx <= 2; dx++) {
+              for (let dy = -2; dy <= 2; dy++) {
+                ctx.beginPath();
+                ctx.arc(dx * 15, dy * 15, 4, 0, Math.PI * 2);
+                ctx.fill();
+              }
+            }
+            break;
+          case 6:
+            ctx.beginPath();
+            ctx.arc(0, 0, size / 2, 0, Math.PI);
+            if (seededRandom(s++) > 0.5) {
+              ctx.fill();
+            } else {
+              ctx.stroke();
+            }
+            break;
+        }
+
+        ctx.restore();
+      }
+    },
+    [backgroundMode, customBackgroundColor, colors, seed, selectedDensity]
+  );
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -265,7 +268,7 @@ export default function MemphisGenerator() {
     canvas.width = width;
     canvas.height = height;
     draw(ctx, width, height);
-  }, [selectedSize, selectedTone, selectedDensity, backgroundMode, customBackgroundColor, seed]);
+  }, [draw, selectedSize]);
 
   // =====================
   // Actions
@@ -291,7 +294,7 @@ export default function MemphisGenerator() {
     <div className="flex flex-col items-center p-5 min-h-screen max-w-6xl mx-auto">
       <header className="mb-12 text-center">
         <h1 className="text-4xl font-extrabold flex items-center justify-center gap-3 tracking-tight">
-          <Image className="w-10 h-10 text-accent" />
+          <ImageIcon className="w-10 h-10 text-accent" />
           Memphis Generator
         </h1>
         <p className="mt-2 font-medium">80年代風のカラフルな背景画像を生成</p>

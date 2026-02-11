@@ -60,14 +60,6 @@ export async function getAllPosts(): Promise<Post[]> {
                 const lang = this.options.lang;
                 if (!lang) return;
 
-                // 言語名を表示するdivを自前で作成
-                const titleNode = {
-                  type: 'element',
-                  tagName: 'div',
-                  properties: { className: ['rehype-code-title'] },
-                  children: [{ type: 'text', value: lang }],
-                };
-
                 // preタグの前にタイトルを挿入するのではなく、
                 // 構造を工夫するか、CSSでpreの上に表示させます
                 // ここでは簡単に、node（pre）の属性に言語名を保持させ、CSSで表示する方法が楽です
@@ -128,14 +120,6 @@ export async function getPost(slug: string): Promise<Post | null> {
             // codeブロックから言語名を取得
             const lang = this.options.lang;
             if (!lang) return;
-
-            // 言語名を表示するdivを自前で作成
-            const titleNode = {
-              type: 'element',
-              tagName: 'div',
-              properties: { className: ['rehype-code-title'] },
-              children: [{ type: 'text', value: lang }],
-            };
 
             // preタグの前にタイトルを挿入するのではなく、
             // 構造を工夫するか、CSSでpreの上に表示させます
