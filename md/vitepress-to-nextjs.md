@@ -257,3 +257,4 @@ npm uninstall <package>
 - タグ/カテゴリの「存在しない時」の扱いを共通化
 - generateMetadata で重い処理を呼んでいる
 - import順の整理
+- slug生成ロジックの衝突リスク
