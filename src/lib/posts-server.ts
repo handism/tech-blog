@@ -1,7 +1,7 @@
 // src/lib/posts-server.ts
 import { siteConfig } from '@/src/config/site';
-import { generateToc } from '@/src/lib/toc';
-import type { Post, PostMeta } from '@/src/types/post';
+import { generateTocFromHast } from '@/src/lib/toc';
+import type { Post, PostMeta, TocItem } from '@/src/types/post';
 import rehypeShiki from '@shikijs/rehype';
 import fs from 'fs';
 import matter from 'gray-matter';
@@ -33,7 +33,9 @@ function markdownToPlaintext(markdown: string): string {
 /**
  * MarkdownをHTMLへ変換する共通処理。
  */
-async function renderMarkdownToHtml(content: string): Promise<string> {
+async function renderMarkdownToHtml(content: string): Promise<{ html: string; toc: TocItem[] }> {
+  let toc: TocItem[] = [];
+
   const processed = await unified()
     .use(remarkParse)
     .use(remarkGfm)
@@ -59,10 +61,16 @@ async function renderMarkdownToHtml(content: string): Promise<string> {
     })
     .use(rehypeSlug)
     .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
+    .use(() => (tree) => {
+      toc = generateTocFromHast(tree);
+    })
     .use(rehypeStringify)
     .process(content);
 
-  return String(processed);
+  return {
+    html: String(processed),
+    toc,
+  };
 }
 
 /**
@@ -124,8 +132,7 @@ export async function getPost(slug: string): Promise<Post | null> {
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
 
-  const htmlContent = await renderMarkdownToHtml(content);
-  const toc = generateToc(htmlContent);
+  const { html: htmlContent, toc } = await renderMarkdownToHtml(content);
   const meta = createPostMeta(slug, data as Record<string, unknown>, content);
 
   return {

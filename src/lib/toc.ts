@@ -2,26 +2,56 @@
 import type { TocItem } from '../types/post';
 
 /**
- * HTML文字列から目次（見出し）情報を生成する。
+ * HASTノードの最小表現。
  */
-export function generateToc(html: string): TocItem[] {
+type HastNode = {
+  type: string;
+  tagName?: string;
+  value?: string;
+  properties?: Record<string, unknown>;
+  children?: HastNode[];
+};
+
+/**
+ * HASTノード配下のテキストを連結する。
+ */
+function toText(node: HastNode): string {
+  if (node.type === 'text') {
+    return node.value ?? '';
+  }
+
+  if (!node.children || node.children.length === 0) {
+    return '';
+  }
+
+  return node.children.map((child) => toText(child)).join('');
+}
+
+/**
+ * HASTから目次（見出し）情報を生成する。
+ */
+export function generateTocFromHast(tree: unknown): TocItem[] {
   const toc: TocItem[] = [];
 
-  const headingRe = /<h([1-6])\b([^>]*)>([\s\S]*?)<\/h\1>/gi;
-  let match: RegExpExecArray | null;
+  function walk(node: HastNode): void {
+    if (node.type === 'element' && node.tagName && /^h[1-6]$/.test(node.tagName)) {
+      const level = Number(node.tagName.slice(1));
+      const idProp = node.properties?.id;
+      const id = typeof idProp === 'string' ? idProp : '';
+      const text = toText(node).trim();
 
-  while ((match = headingRe.exec(html)) !== null) {
-    const level = parseInt(match[1], 10);
-    const attrs = match[2];
-    let inner = match[3];
+      if (text) {
+        toc.push({ id, text, level });
+      }
+    }
 
-    const idMatch = /id=(?:"|')([^"']+)(?:"|')/i.exec(attrs);
-    const id = idMatch ? idMatch[1] : '';
+    if (node.children) {
+      node.children.forEach((child) => walk(child));
+    }
+  }
 
-    inner = inner.replace(/<[^>]+>/g, '').trim();
-    if (!inner) continue;
-
-    toc.push({ text: inner, id, level });
+  if (tree && typeof tree === 'object' && 'type' in tree) {
+    walk(tree as HastNode);
   }
 
   return toc;
