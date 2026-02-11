@@ -19,7 +19,7 @@ export async function GET() {
       (post) => `
 <item>
   <title>${post.title}</title>
-  <link>${baseUrl}/posts/${post.slug}</link>
+  <link>${baseUrl}/blog/posts/${post.slug}</link>
   <pubDate>${post.date?.toUTCString()}</pubDate>
 </item>`
     )

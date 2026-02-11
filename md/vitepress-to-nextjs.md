@@ -1,7 +1,7 @@
 ---
 title: VitePressで作ったブログをNext.jsにマイグレーションする
 date: 2026-02-01
-tags: [Next.js, React, Blog]
+tags: [Next.js, React, Blog, Generative AI]
 category: Frontend
 image: vitepress-to-nextjs.webp
 ---
@@ -214,6 +214,8 @@ JavaScriptの動的型付けを起因とする実行時エラーから解放さ�
 - `Gemini Code Assist`も入れたけど無料枠多くて良さそう
 
 ## リファクタリング
+
+「このプロジェクト全体を通して、リファクタリングできる箇所はある？」
 
 - 各コンポーネントにダークモードの背景色とテキスト色が書かれてたのでhtml要素にまとめる
 - Tailwindの書き方がバージョン3と4で混在していたので4に統一
