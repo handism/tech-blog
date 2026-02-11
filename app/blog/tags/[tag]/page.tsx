@@ -2,14 +2,14 @@
 import BlogLayout from '@/src/components/BlogLayout';
 import Pagination from '@/src/components/Pagination';
 import PostCard from '@/src/components/PostCard';
-import { getAllPosts } from '@/src/lib/posts-server';
+import { getAllPostMeta } from '@/src/lib/posts-server';
 import { tagToSlug, findTagBySlug } from '@/src/lib/utils';
 
 /**
  * タグページの静的生成パラメータを生成する。
  */
 export async function generateStaticParams() {
-  const posts = await getAllPosts();
+  const posts = await getAllPostMeta();
   const tags = Array.from(new Set(posts.flatMap((p) => p.tags)));
 
   // tagToSlugでスラッグ化してパスを生成
@@ -24,7 +24,7 @@ export async function generateStaticParams() {
 export default async function TagPage({ params }: { params: Promise<{ tag: string }> }) {
   const { tag: slug } = await params;
 
-  const posts = await getAllPosts();
+  const posts = await getAllPostMeta();
   const categories = Array.from(new Set(posts.map((p) => p.category)));
 
   // 全タグを取得

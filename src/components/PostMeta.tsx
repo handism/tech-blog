@@ -1,6 +1,6 @@
 // src/components/PostMeta.tsx
 import TagLink from '@/src/components/TagLink';
-import type { Post } from '@/src/types/post';
+import type { PostMeta } from '@/src/types/post';
 import { Clock, Calendar, Folder } from 'lucide-react';
 import Link from 'next/link';
 
@@ -8,7 +8,7 @@ import Link from 'next/link';
  * 投稿メタ情報のプロパティ。
  */
 type Props = {
-  post: Post;
+  post: PostMeta;
   className?: string;
   showReadingTime?: boolean;
   showTags?: boolean;

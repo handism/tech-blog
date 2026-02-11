@@ -1,6 +1,6 @@
 // src/components/PostCard.tsx
 import PostMeta from '@/src/components/PostMeta';
-import type { Post } from '@/src/types/post';
+import type { PostMeta as PostMetaType } from '@/src/types/post';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -8,7 +8,7 @@ import Link from 'next/link';
  * 記事カードのプロパティ。
  */
 type PostCardProps = {
-  post: Post;
+  post: PostMetaType;
   priorityImage?: boolean;
 };
 

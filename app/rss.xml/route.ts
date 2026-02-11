@@ -1,6 +1,6 @@
 // app/rss.xml/route.ts
 import { siteConfig } from '@/src/config/site';
-import { getAllPosts } from '@/src/lib/posts-server';
+import { getAllPostMeta } from '@/src/lib/posts-server';
 
 /**
  * RSSの再検証間隔（秒）。
@@ -11,7 +11,7 @@ export const revalidate = 3600; // 1時間ごとに再検証
  * RSSフィードXMLを生成して返す。
  */
 export async function GET() {
-  const posts = await getAllPosts();
+  const posts = await getAllPostMeta();
   const baseUrl = siteConfig.url;
 
   const rssItems = posts

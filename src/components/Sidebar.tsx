@@ -2,7 +2,7 @@
 'use client';
 import SearchBox from '@/src/components/SearchBox';
 import TagList from '@/src/components/TagList';
-import type { TocItem, Post } from '@/src/types/post';
+import type { TocItem, PostMeta } from '@/src/types/post';
 import { Menu } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -11,7 +11,7 @@ import { useState } from 'react';
  * サイドバーのプロパティ。
  */
 type SidebarProps = {
-  posts?: Post[];
+  posts?: PostMeta[];
   toc?: TocItem[];
   categories?: string[];
 };

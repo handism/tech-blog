@@ -2,13 +2,13 @@
 import BlogLayout from '@/src/components/BlogLayout';
 import Pagination from '@/src/components/Pagination';
 import PostCard from '@/src/components/PostCard';
-import { getAllPosts } from '@/src/lib/posts-server';
+import { getAllPostMeta } from '@/src/lib/posts-server';
 
 /**
  * カテゴリページの静的生成パラメータを生成する。
  */
 export async function generateStaticParams() {
-  const posts = await getAllPosts();
+  const posts = await getAllPostMeta();
   const categories = Array.from(new Set(posts.map((p) => p.category)));
 
   return categories.map((category) => ({ category }));
@@ -20,7 +20,7 @@ export async function generateStaticParams() {
 export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
   const { category } = await params;
 
-  const posts = await getAllPosts();
+  const posts = await getAllPostMeta();
   const filteredPosts = posts.filter((p) => p.category === category);
   const categories = Array.from(new Set(posts.map((p) => p.category)));
 

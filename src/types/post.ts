@@ -9,16 +9,22 @@ export type TocItem = {
 };
 
 /**
- * 記事データ。
+ * 記事の一覧・メタ情報。
  */
-export type Post = {
+export type PostMeta = {
   slug: string;
   title: string;
   date?: Date;
   tags: string[];
   category: string;
-  content: string;
-  plaintext?: string;
-  toc?: TocItem[];
+  plaintext: string;
   image?: string;
+};
+
+/**
+ * 記事詳細データ。
+ */
+export type Post = PostMeta & {
+  content: string;
+  toc?: TocItem[];
 };

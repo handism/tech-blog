@@ -3,7 +3,7 @@ import BlogLayout from '@/src/components/BlogLayout';
 import Pagination from '@/src/components/Pagination';
 import PostCard from '@/src/components/PostCard';
 import { siteConfig } from '@/src/config/site';
-import { getAllPosts } from '@/src/lib/posts-server';
+import { getAllPostMeta } from '@/src/lib/posts-server';
 import { notFound, redirect } from 'next/navigation';
 
 /**
@@ -29,7 +29,7 @@ export default async function PageView({ params }: Props) {
     redirect('/');
   }
 
-  const allPosts = await getAllPosts();
+  const allPosts = await getAllPostMeta();
   const totalPages = Math.ceil(allPosts.length / siteConfig.pagination.postsPerPage);
 
   if (currentPage > totalPages) {
@@ -62,7 +62,7 @@ export default async function PageView({ params }: Props) {
  * 静的生成用のパス生成（2ページ目以降のみ）。
  */
 export async function generateStaticParams() {
-  const allPosts = await getAllPosts();
+  const allPosts = await getAllPostMeta();
   const totalPages = Math.ceil(allPosts.length / siteConfig.pagination.postsPerPage);
 
   // 2ページ目以降のみ生成

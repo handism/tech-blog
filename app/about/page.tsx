@@ -1,6 +1,6 @@
 // app/about/page.tsx
 import BlogLayout from '@/src/components/BlogLayout';
-import { getAllPosts } from '@/src/lib/posts-server';
+import { getAllPostMeta } from '@/src/lib/posts-server';
 import { PenSquare, Sword, Mail } from 'lucide-react';
 import type { Metadata } from 'next';
 import { FaGithub } from 'react-icons/fa';
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
  * Aboutページ。
  */
 export default async function AboutPage() {
-  const posts = await getAllPosts();
+  const posts = await getAllPostMeta();
   const categories = Array.from(new Set(posts.map((p) => p.category)));
 
   return (

@@ -1,6 +1,6 @@
 // src/components/BlogLayout.tsx
 import Sidebar from '@/src/components/Sidebar';
-import { Post, TocItem } from '@/src/types/post';
+import { PostMeta, TocItem } from '@/src/types/post';
 import { ReactNode } from 'react';
 
 /**
@@ -8,7 +8,7 @@ import { ReactNode } from 'react';
  */
 interface BlogLayoutProps {
   children: ReactNode;
-  posts?: Post[];
+  posts?: PostMeta[];
   toc?: TocItem[];
   categories?: string[];
 }

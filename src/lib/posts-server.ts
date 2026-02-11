@@ -1,7 +1,7 @@
 // src/lib/posts-server.ts
 import { siteConfig } from '@/src/config/site';
 import { generateToc } from '@/src/lib/toc';
-import type { Post } from '@/src/types/post';
+import type { Post, PostMeta } from '@/src/types/post';
 import rehypeShiki from '@shikijs/rehype';
 import fs from 'fs';
 import matter from 'gray-matter';
@@ -65,42 +65,52 @@ async function renderMarkdownToHtml(content: string): Promise<string> {
 }
 
 /**
- * 全記事取得（一覧用）- 非同期に変更
+ * frontmatterと本文から一覧向けメタ情報を生成する。
  */
-export async function getAllPosts(): Promise<Post[]> {
+function createPostMeta(slug: string, data: Record<string, unknown>, content: string): PostMeta {
+  return {
+    slug,
+    title: typeof data.title === 'string' ? data.title : siteConfig.posts.defaultTitle,
+    date:
+      typeof data.date === 'string' || data.date instanceof Date ? new Date(data.date) : undefined,
+    tags: Array.isArray(data.tags)
+      ? data.tags.filter((tag): tag is string => typeof tag === 'string')
+      : [],
+    category: typeof data.category === 'string' ? data.category : siteConfig.posts.defaultCategory,
+    plaintext: markdownToPlaintext(content),
+    image: typeof data.image === 'string' ? data.image : undefined,
+  };
+}
+
+/**
+ * 全記事のメタ情報を取得（一覧用）。
+ */
+export async function getAllPostMeta(): Promise<PostMeta[]> {
   const files = fs.readdirSync(postsDir, { withFileTypes: true });
 
-  // mapの中で await を使うため、Promiseの配列を作成
-  const postPromises = files
+  const posts = files
     .filter((dirent) => dirent.isFile() && dirent.name.endsWith('.md'))
-    .map(async (file) => {
+    .map((file) => {
       const slug = file.name.replace(/\.md$/, '');
       const fullPath = path.join(postsDir, file.name);
       const fileContents = fs.readFileSync(fullPath, 'utf8');
       const { data, content } = matter(fileContents);
 
-      const htmlContent = await renderMarkdownToHtml(content);
-
-      return {
-        slug,
-        title: data.title ?? siteConfig.posts.defaultTitle,
-        date: data.date ? new Date(data.date) : undefined,
-        tags: data.tags ?? [],
-        category: data.category ?? siteConfig.posts.defaultCategory,
-        content: htmlContent,
-        plaintext: markdownToPlaintext(content),
-        image: data.image,
-      };
+      return createPostMeta(slug, data as Record<string, unknown>, content);
     });
-
-  // 全てのPromiseが解決するのを待つ
-  const posts = await Promise.all(postPromises);
 
   return posts.sort((a, b) => {
     if (!a.date) return 1;
     if (!b.date) return -1;
     return b.date.getTime() - a.date.getTime();
   });
+}
+
+/**
+ * 互換用: 既存呼び出し向けに一覧メタ情報を返す。
+ */
+export async function getAllPosts(): Promise<PostMeta[]> {
+  return getAllPostMeta();
 }
 
 /**
@@ -115,18 +125,11 @@ export async function getPost(slug: string): Promise<Post | null> {
 
   const htmlContent = await renderMarkdownToHtml(content);
   const toc = generateToc(htmlContent);
-
-  const plaintext = markdownToPlaintext(content);
+  const meta = createPostMeta(slug, data as Record<string, unknown>, content);
 
   return {
-    slug,
-    title: data.title ?? siteConfig.posts.defaultTitle,
-    date: data.date ? new Date(data.date) : undefined,
-    tags: data.tags ?? [],
-    category: data.category ?? siteConfig.posts.defaultCategory,
+    ...meta,
     content: htmlContent,
-    plaintext: plaintext || '',
     toc,
-    image: data.image,
   };
 }

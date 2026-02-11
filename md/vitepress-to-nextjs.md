@@ -246,3 +246,4 @@ npm uninstall <package>
 - Markdown処理の重複共通化
 - 重複ロジックを整理
 - <a>を<Link>に置き換え
+- ビルド時間とメモリ効率の改善

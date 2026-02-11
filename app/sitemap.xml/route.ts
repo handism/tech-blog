@@ -1,6 +1,6 @@
 // app/sitemap.xml/route.ts
 import { siteConfig } from '@/src/config/site';
-import { getAllPosts } from '@/src/lib/posts-server';
+import { getAllPostMeta } from '@/src/lib/posts-server';
 
 /**
  * サイトマップの再検証間隔（秒）。
@@ -12,7 +12,7 @@ export const revalidate = 3600; // 1時間ごとに再検証
  */
 export async function GET() {
   const baseUrl = siteConfig.url;
-  const posts = await getAllPosts();
+  const posts = await getAllPostMeta();
 
   const urls = posts
     .map((post) => `<url><loc>${baseUrl}/blog/posts/${post.slug}</loc></url>`)

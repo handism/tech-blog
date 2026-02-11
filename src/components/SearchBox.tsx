@@ -2,7 +2,7 @@
 'use client';
 
 import { createPostSearcher, searchPosts } from '@/src/lib/client-search';
-import type { Post } from '@/src/types/post';
+import type { PostMeta } from '@/src/types/post';
 import Link from 'next/link';
 import { useState, useMemo } from 'react';
 
@@ -10,7 +10,7 @@ import { useState, useMemo } from 'react';
  * 検索ボックスのプロパティ。
  */
 type Props = {
-  posts: Post[];
+  posts: PostMeta[];
 };
 
 /**

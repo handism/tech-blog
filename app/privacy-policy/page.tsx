@@ -1,6 +1,6 @@
 // app/privacy-policy/page.tsx
 import BlogLayout from '@/src/components/BlogLayout';
-import { getAllPosts } from '@/src/lib/posts-server';
+import { getAllPostMeta } from '@/src/lib/posts-server';
 import type { Metadata } from 'next';
 
 /**
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
  * プライバシーポリシーページ。
  */
 export default async function PrivacyPolicyPage() {
-  const posts = await getAllPosts();
+  const posts = await getAllPostMeta();
   const categories = Array.from(new Set(posts.map((p) => p.category)));
 
   return (

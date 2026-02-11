@@ -1,12 +1,12 @@
 // src/components/TagList.tsx
 import TagLink from '@/src/components/TagLink';
-import { Post } from '@/src/types/post';
+import { PostMeta } from '@/src/types/post';
 
 /**
  * タグ一覧のプロパティ。
  */
 type Props = {
-  posts: Post[];
+  posts: PostMeta[];
 };
 
 /**
