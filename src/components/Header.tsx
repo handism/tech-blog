@@ -93,6 +93,17 @@ export default function Header() {
                       Image Trimmer
                     </Link>
                   </li>
+                  <li>
+                    <a
+                      href="https://handism.github.io/sauna-itta/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setIsOpen(false)}
+                      className="block px-4 py-2 text-sm text-text/80 hover:text-accent hover:bg-accent/10 first:rounded-t-md last:rounded-b-md"
+                    >
+                      Sauna Itta
+                    </a>
+                  </li>
                 </ul>
               </div>
             </div>
