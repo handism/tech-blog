@@ -1,7 +1,7 @@
 ---
 title: 2026年上期のバイブコーディングに入門する
 date: 2026-02-23
-tags: [AI, Agent]
+tags: [AI, Agent, Programming]
 category: IT
 image: vibe-coding.webp
 ---
