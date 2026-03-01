@@ -134,6 +134,8 @@ Agent Teamsっていうマルチエージェントの機能もあるらしいけ
 - CLAUDE.md：
 - Agent Skills：
 - MCP：
+- Hooks：
+- Sub Agents：
 
 ## バイブコーディングしてみての感想
 
