@@ -23,6 +23,7 @@ image: vibe-coding.webp
 - CLI系
   - Claude Code
   - Gemini CLI
+  - Codex CLI
 
 ## バイブコーディングとは
 
