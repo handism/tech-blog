@@ -20,6 +20,7 @@ image: vibe-coding.webp
 - IDE系
   - Google Antigravity
   - Cursor
+  - Kiro
 - CLI系
   - Claude Code
   - Gemini CLI
