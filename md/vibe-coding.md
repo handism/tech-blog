@@ -12,13 +12,17 @@ image: vibe-coding.webp
 
 色々プログラミング向きのAIエージェントを調べてみたんだけど以下の選択肢があった。とりあえず職業エンジニアとして、勉強がてらそれぞれを試してみたい。
 
-- GitHub Copilot
-- Google Antigravity
-- Gemini Code Assist
-- Codex
-- Claude Code
-- Amazon Q Developer(Kiro)
-- Cursor
+- VSCode拡張系
+  - GitHub Copilot
+  - Gemini Code Assist
+  - Codex
+  - Amazon Q Developer
+- IDE系
+  - Google Antigravity
+  - Cursor
+- CLI系
+  - Claude Code
+  - Gemini CLI
 
 ## バイブコーディングとは
 
@@ -137,6 +141,13 @@ Agent Teamsっていうマルチエージェントの機能もあるらしいけ
 - MCP：
 - Hooks：
 - Sub Agents：
+
+### Gemini CLI
+
+ローカルにインストールして、ターミナルでAIと対話できるようになる系のAIエージェント。要はClaude CodeのGoogle版。  
+無料枠は60リクエスト/分、1,000リクエスト/日なので結構でかい！
+
+無料だからなのかはわかんないけど、他社のAIエージェントと比較して処理に時間がかかるのはあえて言えば難点かな？
 
 ## バイブコーディングしてみての感想
 
