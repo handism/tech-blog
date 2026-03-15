@@ -9,6 +9,9 @@ import type { Metadata } from 'next';
  */
 export const metadata: Metadata = {
   title: siteConfig.name,
+  alternates: {
+    canonical: '/',
+  },
 };
 
 const POSTS_PER_PAGE = siteConfig.pagination.postsPerPage;

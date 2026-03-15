@@ -42,10 +42,23 @@ export function buildRssXml(channel: RssChannel): string {
   )}</description>${itemsXml}</channel></rss>`;
 }
 
+type SitemapUrl = {
+  loc: string;
+  lastmod?: string;
+};
+
 /**
  * Sitemap XMLを組み立てる。
  */
-export function buildSitemapXml(urls: string[]): string {
-  const urlXml = urls.map((url) => `<url><loc>${escapeXml(url)}</loc></url>`).join('');
+export function buildSitemapXml(urls: (string | SitemapUrl)[]): string {
+  const urlXml = urls
+    .map((url) => {
+      if (typeof url === 'string') {
+        return `<url><loc>${escapeXml(url)}</loc></url>`;
+      }
+      const lastmodXml = url.lastmod ? `<lastmod>${url.lastmod}</lastmod>` : '';
+      return `<url><loc>${escapeXml(url.loc)}</loc>${lastmodXml}</url>`;
+    })
+    .join('');
   return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urlXml}</urlset>`;
 }
