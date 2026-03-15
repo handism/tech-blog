@@ -50,7 +50,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "postcss": "^8.4.32",
     "prettier": "^3.8.1",
-    "serve": "^14.2.5",
+    "serve": "^14.2.6",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.1.0"
