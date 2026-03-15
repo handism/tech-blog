@@ -1,8 +1,8 @@
 ---
 title: Claude Codeに課金して初期設定する
 date: 2026-03-15
-tags: [AI, Agent, Programming]
-category: IT
+tags: [AI, Claude Code]
+category: AI
 image: claude-code-introduction.webp
 ---
 
@@ -110,6 +110,12 @@ claude
 ```
 
 ファイル名を `@` 付きで指定すると、そのファイルの内容をコンテキストとして渡せる。大きなコードベースで特定のファイルに絞って作業させたいときに便利。
+
+### 利用量確認
+
+```sh
+/usage
+```
 
 ### 会話を終了する
 

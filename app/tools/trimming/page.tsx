@@ -158,18 +158,18 @@ export default function ImageTrimmingApp() {
   return (
     <div className="flex flex-col items-center p-5 min-h-screen max-w-6xl mx-auto">
       <header className="mb-8 text-center">
-        <h1 className="text-4xl font-extrabold flex items-center justify-center gap-3 tracking-tight">
+        <h1 className="text-4xl font-extrabold flex items-center justify-center gap-3 tracking-tight text-text">
           <Crop className="w-10 h-10 text-accent" />
           Image Trimmer
         </h1>
-        <p className="mt-2 font-medium">ドラッグ＆ドロップで素早くトリミング</p>
+        <p className="mt-2 font-medium text-text/70">ドラッグ＆ドロップで素早くトリミング</p>
       </header>
 
-      <main className="w-full max-w-5xl bg-white rounded-3xl shadow-2xl shadow-indigo-100 overflow-hidden border border-slate-200">
+      <main className="w-full max-w-5xl bg-card rounded-3xl shadow-lg overflow-hidden border border-border">
         {image ? (
           <div className="flex flex-col lg:flex-row">
             {/* トリミングエリア */}
-            <div className="relative w-full h-125 lg:w-3/4 bg-slate-900">
+            <div className="relative w-full h-125 lg:w-3/4 bg-[#0f172a]">
               <Cropper
                 image={image}
                 crop={crop}
@@ -182,9 +182,9 @@ export default function ImageTrimmingApp() {
             </div>
 
             {/* コントロールパネル */}
-            <div className="p-8 w-full lg:w-1/4 flex flex-col gap-8 border-l border-slate-100 bg-white">
+            <div className="p-8 w-full lg:w-1/4 flex flex-col gap-8 border-l border-border bg-card">
               <section>
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4 flex items-center gap-2">
+                <label className="text-xs font-bold uppercase tracking-wider text-text/50 mb-4 flex items-center gap-2">
                   <Maximize className="w-4 h-4" /> Aspect Ratio
                 </label>
                 <div className="grid grid-cols-1 gap-2">
@@ -198,8 +198,8 @@ export default function ImageTrimmingApp() {
                       onClick={() => setAspect(ratio.val)}
                       className={`py-3 px-4 text-sm font-semibold rounded-xl border-2 transition-all ${
                         aspect === ratio.val
-                          ? 'bg-indigo-600 text-white border-indigo-600 shadow-lg shadow-indigo-200'
-                          : 'bg-white text-slate-600 border-slate-100 hover:border-indigo-200 hover:bg-indigo-50'
+                          ? 'bg-accent text-white border-accent shadow-lg'
+                          : 'bg-bg text-text border-border hover:border-accent/40 hover:bg-accent/10'
                       }`}
                     >
                       {ratio.label}
@@ -209,7 +209,7 @@ export default function ImageTrimmingApp() {
               </section>
 
               <section>
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 block">
+                <label className="text-xs font-bold uppercase tracking-wider text-text/50 mb-3 block">
                   Zoom
                 </label>
                 <input
@@ -219,23 +219,23 @@ export default function ImageTrimmingApp() {
                   step={0.1}
                   value={zoom}
                   onChange={(e) => setZoom(Number(e.target.value))}
-                  className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                  className="w-full h-2 bg-secondary rounded-lg appearance-none cursor-pointer accent-accent"
                 />
               </section>
 
               <section>
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 block">
+                <label className="text-xs font-bold uppercase tracking-wider text-text/50 mb-3 block">
                   Format
                 </label>
-                <div className="flex bg-slate-100 p-1 rounded-xl">
+                <div className="flex bg-secondary p-1 rounded-xl">
                   {['png', 'webp'].map((f) => (
                     <button
                       key={f}
                       onClick={() => setFormat(f as 'png' | 'webp')}
                       className={`flex-1 py-2 text-xs font-bold uppercase rounded-lg transition-all ${
                         format === f
-                          ? 'bg-white shadow-sm text-indigo-600'
-                          : 'text-slate-400 hover:text-slate-600'
+                          ? 'bg-bg shadow-sm text-accent'
+                          : 'text-text/50 hover:text-text'
                       }`}
                     >
                       {f}
@@ -247,13 +247,13 @@ export default function ImageTrimmingApp() {
               <div className="mt-auto pt-6 flex flex-col gap-3">
                 <button
                   onClick={downloadResult}
-                  className="flex items-center justify-center gap-2 bg-indigo-600 text-white py-4 rounded-2xl font-bold hover:bg-indigo-700 active:scale-[0.98] transition-all shadow-xl shadow-indigo-200"
+                  className="flex items-center justify-center gap-2 bg-accent text-white py-4 rounded-2xl font-bold hover:opacity-90 active:scale-[0.98] transition-all shadow-lg"
                 >
                   <Download className="w-5 h-5" /> Download
                 </button>
                 <button
                   onClick={() => setImage(null)}
-                  className="py-2 text-sm font-medium text-slate-400 hover:text-red-500 transition-colors"
+                  className="py-2 text-sm font-medium text-text/40 hover:text-red-500 transition-colors"
                 >
                   Clear and Restart
                 </button>
@@ -268,8 +268,8 @@ export default function ImageTrimmingApp() {
             onDrop={onDrop}
             className={`group m-8 h-80 border-4 border-dashed rounded-3xl flex flex-col items-center justify-center transition-all ${
               isDragging
-                ? 'border-indigo-500 bg-indigo-50 scale-[1.02]'
-                : 'border-slate-200 bg-slate-50 hover:bg-white hover:border-indigo-300'
+                ? 'border-accent bg-accent/10 scale-[1.02]'
+                : 'border-border bg-secondary hover:bg-bg hover:border-accent/50'
             }`}
           >
             <input
@@ -283,16 +283,16 @@ export default function ImageTrimmingApp() {
               <div
                 className={`p-5 rounded-full mb-4 transition-all ${
                   isDragging
-                    ? 'bg-indigo-500 text-white animate-bounce'
-                    : 'bg-white text-slate-400 shadow-sm group-hover:text-indigo-500'
+                    ? 'bg-accent text-white animate-bounce'
+                    : 'bg-bg text-text/40 shadow-sm group-hover:text-accent'
                 }`}
               >
                 <FileImage className="w-12 h-12" />
               </div>
-              <span className="text-xl font-bold text-slate-700">
+              <span className="text-xl font-bold text-text">
                 {isDragging ? 'そのままドロップ！' : '画像をドロップして開始'}
               </span>
-              <span className="text-slate-400 mt-2 font-medium border-b border-slate-200 pb-1 hover:text-indigo-500 transition-colors">
+              <span className="text-text/50 mt-2 font-medium border-b border-border pb-1 hover:text-accent transition-colors">
                 またはフォルダから選択
               </span>
             </label>
