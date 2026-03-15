@@ -1,3 +1,4 @@
+import bundleAnalyzer from '@next/bundle-analyzer';
 import type { NextConfig } from 'next';
 
 /**
@@ -12,7 +13,12 @@ const nextConfig: NextConfig = {
   },
 };
 
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
+
 /**
  * Next.js 設定のエクスポート。
+ * ANALYZE=true npm run build でバンドル分析レポートを生成する。
  */
-export default nextConfig;
+export default withBundleAnalyzer(nextConfig);
