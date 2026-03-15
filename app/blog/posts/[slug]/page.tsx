@@ -3,6 +3,7 @@ import BlogLayout from '@/src/components/BlogLayout';
 import CopyButtonScript from '@/src/components/CopyButtonScript';
 import { ImageModal } from '@/src/components/ImageModal';
 import PostMeta from '@/src/components/PostMeta';
+import { siteConfig } from '@/src/config/site';
 import { getAllPostMeta, getPost, getPostMetaBySlug } from '@/src/lib/posts-server';
 import { getBlogViewContext } from '@/src/lib/posts-view';
 import type { Metadata } from 'next';
@@ -30,9 +31,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
+  const description = postMeta.plaintext?.slice(0, 160);
+  const imageUrl = postMeta.image ? `${siteConfig.url}/images/${postMeta.image}` : undefined;
+
   return {
     title: postMeta.title,
-    description: postMeta.plaintext?.slice(0, 160),
+    description,
+    openGraph: {
+      type: 'article',
+      title: postMeta.title,
+      description,
+      url: `${siteConfig.url}/blog/posts/${slug}`,
+      siteName: siteConfig.name,
+      images: imageUrl ? [{ url: imageUrl, width: 1200, height: 630 }] : [],
+      publishedTime: postMeta.date?.toISOString(),
+      authors: [siteConfig.author],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: postMeta.title,
+      description,
+      images: imageUrl ? [imageUrl] : [],
+    },
   };
 }
 
@@ -63,8 +83,35 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const prevPost = currentIndex > 0 ? posts[currentIndex - 1] : null;
   const nextPost = currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null;
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.plaintext?.slice(0, 160),
+    image: post.image ? `${siteConfig.url}/images/${post.image}` : undefined,
+    datePublished: post.date?.toISOString(),
+    author: {
+      '@type': 'Person',
+      name: siteConfig.author,
+      url: siteConfig.url,
+    },
+    publisher: {
+      '@type': 'Person',
+      name: siteConfig.author,
+      url: siteConfig.url,
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${siteConfig.url}/blog/posts/${post.slug}`,
+    },
+  };
+
   return (
     <BlogLayout posts={posts} toc={post.toc} categories={categories}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <article className="prose dark:prose-invert max-w-none">
         <h1>{post.title}</h1>
 
