@@ -6,114 +6,141 @@ category: IT
 image: claude-code-introduction.webp
 ---
 
+## Claude Codeとは
+
+Claude Codeは、Anthropicが提供するAIコーディングエージェントのCLIツールだ。単なるコード補完ではなく、ターミナルやVSCodeから自然言語で指示するだけでファイルの編集・作成・テスト実行・Git操作まで自律的にこなしてくれる。
+
+いわゆる「バイブコーディング」（ノリで指示を投げて、AIに実装を任せるスタイル）を本格的にやりたくて課金してみた。
+
 ## Claude Codeに課金しました
 
-バイブコーディングに興味があって、色々AIエージェントを試してみているのだが、今回はClaude Codeに課金してみた。
-
-Claudeのチャットの左下のメニューから「プランをアップグレード」で課金画面へ。  
-Proプランで年間じゃなくて月間契約にしたので20ドル/月。  
-クレカ情報とかを入力したら契約できた。
-
-2026/3/15から課金開始。
+Claudeのチャット画面の左下メニューから「プランをアップグレード」を選ぶと課金ページに移動できる。
+プランはProとMaxがあるが、まずはProプランの月間契約にした。月20ドル。
+クレカ情報を入力して完了。2026/3/15から課金開始。
 
 ## Claude Codeをインストール
 
-https://code.claude.com/docs/ja/quickstart
+公式のクイックスタートはこちら: https://code.claude.com/docs/ja/quickstart
+
+インストールは2通りある。
 
 ```sh
+# curlでインストール
 curl -fsSL https://claude.ai/install.sh | bash
 
-or
-
+# Homebrewでインストール（Mac推奨）
 brew install --cask claude-code
 ```
+
+アップデートも簡単。
 
 ```sh
 brew upgrade claude-code
 ```
 
+インストール後、ターミナルで `claude` コマンドが使えるようになる。初回起動時にブラウザでAnthropicアカウントの認証が行われる。
+
 ## VSCodeにClaude Code拡張機能をインストール
 
-「Claude.ai Subscription」ボタンを押す
+VSCodeの拡張機能マーケットプレイスで「Claude Code」を検索してインストールする。
+インストール後、サイドバーに「Claude.ai Subscription」ボタンが表示されるのでクリックしてサインイン。
 
-## 初期設定方法
+これにより、VSCodeのコマンドパレットやエディタ内からClaude Codeを操作できるようになる。
 
-VSCodeのコマンドパレットから「Claude Code: New Conversation」を選択すると、チャットウィンドウが開く。
+## 初期設定
 
-```sh
-claude
-```
+VSCodeで初めて起動すると、いくつかの設定を聞かれる。
 
-チャットウィンドウで、質問や指示を入力すると、Claude Codeがコードの提案や説明を返してくれる。
+- **Dark Mode** — テーマ選択（好みで）
+- **Claude account with subscription** — Proプランのアカウントで認証
+- **Yes, use recommended settings** — 推奨設定をそのまま使う
+- **Yes, I trust this folder** — ワークスペースへのアクセスを許可
 
-初期設定
-
-- Dark Mode
-- Claude account with subscription
-- Yes, use recommended settings
-- Yes, I trust this folder
+起動後に以下のスラッシュコマンドを実行しておくと便利。
 
 ```sh
-/statusline
-/init
+/statusline   # VSCodeのステータスバーにClaude Codeの状態を表示
+/init         # プロジェクトのCLAUDE.mdを自動生成
 ```
 
-/initでCLAUDE.mdを自動生成可能
+`/init` を実行すると、コードベースを分析してプロジェクト固有の指示書（`CLAUDE.md`）を自動生成してくれる。これがあるとClaude Codeがプロジェクトの構成を理解した上で作業してくれるようになる。
 
+## 設定ファイルの構成
 
+Claude Codeの設定ファイルはユーザースコープとプロジェクトスコープの2層構造になっている。
 
 ```
 ~/
-├── .claude/                     # Userスコープ（すべてのプロジェクトに適用）
-│   ├── settings.json            #   権限や動作に関する設定
-│   ├── CLAUDE.md                #   AIへの指示書（メモリ）
-│   ├── skills/                  #   カスタムSkills
+├── .claude/                     # ユーザースコープ（全プロジェクトに適用）
+│   ├── settings.json            #   権限・動作に関する設定
+│   ├── CLAUDE.md                #   AIへの指示書（全プロジェクト共通）
+│   ├── skills/                  #   カスタムスキル
 │   └── agents/                  #   カスタムサブエージェント
 │
-└── my-project/                  # Projectスコープ（このプロジェクトのみに適用）
+└── my-project/                  # プロジェクトスコープ（このプロジェクトのみ）
     ├── .claude/
     │   ├── settings.json
     │   ├── CLAUDE.md
     │   ├── skills/
     │   └── agents/
-    ├── CLAUDE.md                #   このCLAUDE.mdもプロジェクトのみに適用される
+    ├── CLAUDE.md                #   プロジェクト直下のCLAUDE.mdも有効
     └── .mcp.json                #   プロジェクト内で利用するMCP設定
-
 ```
 
+CLAUDE.mdには「日本語で回答してください」「テストを書いてから実装してください」といった指示を書いておける。ユーザースコープに書けば全プロジェクトに適用されるので、個人の作業スタイルを定義しておくと捗る。
 
 ## 使用方法
 
-
-VSCodeのコマンドパレットから「Claude Code: New Conversation」を選択すると、チャットウィンドウが開く。
+### ターミナルから使う
 
 ```sh
 claude
 ```
 
-チャットウィンドウで、質問や指示を入力すると、Claude Codeがコードの提案や説明を返してくれる。
+インタラクティブなチャットが起動する。自然言語で指示を投げると、コードの修正・ファイル作成・コマンド実行などを自律的にやってくれる。
 
-### コンテキストの渡し方
+### VSCodeから使う
+
+コマンドパレット（`Cmd+Shift+P`）から「Claude Code: New Conversation」を選択するとチャットウィンドウが開く。エディタで開いているファイルのコンテキストを自動的に認識してくれるので、「このファイルのここを修正して」といった指示がしやすい。
+
+### コンテキストを渡す
 
 ```sh
 @md/claude-code-introduction.md
 ```
 
+ファイル名を `@` 付きで指定すると、そのファイルの内容をコンテキストとして渡せる。大きなコードベースで特定のファイルに絞って作業させたいときに便利。
 
-### 会話終了
+### 会話を終了する
 
 ```sh
 /exit
 ```
 
-またはCtrl + C
-
+または `Ctrl + C` で終了。
 
 ## スキルの使い方
 
+スキルはスラッシュコマンド形式で呼び出せるプリセットのタスクだ。GitHubと連携するものが特に便利。
+
 ```sh
+# 新しいIssueを作成
 /gh-issue-create <内容>
-/gh-issue-pr <issue番号> で Issue から PR まで一貫処理
-/gh-pr-review <PR番号> で PR レビューを投稿
+
+# IssueからPRまで一貫して処理（ブランチ作成・実装・コミット・プッシュ・PR作成）
+/gh-issue-pr <issue番号>
+
+# PRのレビューコメントを確認して修正・返信まで対応
 /gh-pr-resolve <PR番号>
+
+# PRをレビューしてコメントを投稿
+/gh-pr-review <PR番号>
 ```
+
+`/gh-issue-pr` は特に強力で、Issue番号を渡すだけでブランチを切って実装してPRを出すところまで全自動でやってくれる。試してみたら本当に動いて驚いた。
+
+## 使ってみた感想
+
+まだ使い始めたばかりだが、単純な機能追加やリファクタリングはかなりの精度でこなしてくれる印象。指示の粒度が細かいほど意図通りの結果になりやすい。
+
+CLAUDE.mdへのプロジェクト情報の充実と、スキルのカスタマイズが使いこなしのカギになりそうだ。しばらく使い込んでまたレポートしたい。
