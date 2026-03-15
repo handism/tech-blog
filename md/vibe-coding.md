@@ -138,11 +138,11 @@ AIコーディングはAnthropicが覇権取りそう。
 
 Agent Teamsっていうマルチエージェントの機能もあるらしいけど、その分トークン消費量エグそうだな。
 
-- CLAUDE.md：
-- Agent Skills：
-- MCP：
-- Hooks：
-- Sub Agents：
+- CLAUDE.md：プロジェクトや個人スコープで Claude への指示を記述する設定ファイル。コーディング規約やコマンドなどを定義しておける。
+- Agent Skills：スラッシュコマンド（例：`/commit`）として呼び出せるカスタムプロンプト集。繰り返し使うタスクを自動化できる。
+- MCP：Model Context Protocol の略。外部ツールやデータソース（GitHub・Slack・DBなど）を Claude に接続するための標準仕様。
+- Hooks：ファイル保存やコマンド実行などのイベントに連動して、シェルスクリプトを自動実行できる仕組み。
+- Sub Agents：Claude が複雑なタスクを並列・分割処理するために、内部で別の Claude インスタンスを呼び出す機能。
 
 ### Gemini CLI
 
