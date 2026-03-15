@@ -34,7 +34,7 @@ brew upgrade claude-code
 
 「Claude.ai Subscription」ボタンを押す
 
-## 使用方法
+## 初期設定方法
 
 VSCodeのコマンドパレットから「Claude Code: New Conversation」を選択すると、チャットウィンドウが開く。
 
@@ -57,3 +57,59 @@ claude
 ```
 
 /initでCLAUDE.mdを自動生成可能
+
+
+
+```
+~/
+├── .claude/                     # Userスコープ（すべてのプロジェクトに適用）
+│   ├── settings.json            #   権限や動作に関する設定
+│   ├── CLAUDE.md                #   AIへの指示書（メモリ）
+│   ├── skills/                  #   カスタムSkills
+│   └── agents/                  #   カスタムサブエージェント
+│
+└── my-project/                  # Projectスコープ（このプロジェクトのみに適用）
+    ├── .claude/
+    │   ├── settings.json
+    │   ├── CLAUDE.md
+    │   ├── skills/
+    │   └── agents/
+    ├── CLAUDE.md                #   このCLAUDE.mdもプロジェクトのみに適用される
+    └── .mcp.json                #   プロジェクト内で利用するMCP設定
+
+```
+
+
+## 使用方法
+
+
+VSCodeのコマンドパレットから「Claude Code: New Conversation」を選択すると、チャットウィンドウが開く。
+
+```sh
+claude
+```
+
+チャットウィンドウで、質問や指示を入力すると、Claude Codeがコードの提案や説明を返してくれる。
+
+### コンテキストの渡し方
+
+```sh
+@md/claude-code-introduction.md
+```
+
+
+### 会話終了
+
+```sh
+/exit
+```
+
+またはCtrl + C
+
+
+## スキルの使い方
+
+```sh
+/gh-issue-pr <issue番号> で Issue から PR まで一貫処理
+/gh-pr-review <PR番号> で PR レビューを投稿 
+```
