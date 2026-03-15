@@ -35,6 +35,7 @@ export function ThemeToggle() {
     <button
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
       className="rounded-full p-2 text-text transition hover:bg-card"
+      aria-label={isDark ? 'ライトモードに切り替え' : 'ダークモードに切り替え'}
     >
       {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
     </button>

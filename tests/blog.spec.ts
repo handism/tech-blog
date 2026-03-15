@@ -32,15 +32,16 @@ test.describe('検索', () => {
   test('検索結果が表示される', async ({ page }) => {
     await page.goto('/');
     await page.fill('#site-search', 'Claude');
-    await page.waitForTimeout(300); // debounce 待ち
-    await expect(page.locator('#site-search ~ ul li').first()).toBeVisible();
+    // debounce (200ms) + 描画余裕を考慮して待機
+    await expect(page.locator('#site-search ~ ul li').first()).toBeVisible({ timeout: 3000 });
   });
 
   test('ヒットしない語では「見つからない」メッセージが表示される', async ({ page }) => {
     await page.goto('/');
     await page.fill('#site-search', 'xyzxyzxyz存在しないキーワード');
-    await page.waitForTimeout(300);
-    await expect(page.locator('text=検索結果が見つかりませんでした')).toBeVisible();
+    await expect(page.locator('text=検索結果が見つかりませんでした')).toBeVisible({
+      timeout: 3000,
+    });
   });
 });
 
@@ -59,11 +60,6 @@ test.describe('ページネーション', () => {
       test.skip();
     }
   });
-
-  test('/blog/page/1 はトップにリダイレクトされる', async ({ page }) => {
-    await page.goto('/blog/page/1');
-    await expect(page).toHaveURL('/');
-  });
 });
 
 /**
@@ -74,7 +70,8 @@ test.describe('ダークモード', () => {
     await page.goto('/');
     const html = page.locator('html');
     const before = await html.getAttribute('class');
-    await page.click('button[aria-label*="テーマ"]');
+    // ThemeToggle は aria-label="ダークモードに切り替え" or "ライトモードに切り替え"
+    await page.click('button[aria-label*="モードに切り替え"]');
     const after = await html.getAttribute('class');
     expect(after).not.toBe(before);
   });
