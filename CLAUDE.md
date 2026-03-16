@@ -25,8 +25,12 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 
 1. **`src/lib/post-repository.ts`** — ディスクから `.md` ファイルを読み込む
 2. **`src/lib/post-parser.ts`** — `gray-matter` で YAML フロントマターを抽出し、**Zod** でバリデーション（不正な値はデフォルト値にフォールバック）
-3. **`src/lib/post-renderer.ts`** — Remark/Rehype（GFM・Shiki シンタックスハイライト・見出し slug/自動リンク・TOC 生成）で Markdown を HTML に変換
+3. **`src/lib/post-renderer.ts`** — Remark/Rehype（GFM・Shiki シンタックスハイライト・見出し slug/自動リンク・TOC 生成）で Markdown を HTML に変換。`remarkExtractCodeFilename()` カスタムプラグインにより ` ```lang:filename ` 構文でコードブロック上部にファイル名を表示
 4. **`src/lib/posts-server.ts`** — React `cache()` でデータを集約し SSG に対応。`getAllPostMeta()` と `getPost(slug)` をエクスポート
+   - **`src/lib/client-search.ts`** — Fuse.js を使った重み付きクライアント検索（title > tags > category > plaintext の優先度）。`createPostSearcher()` / `searchPosts()` をエクスポート
+   - **`src/lib/post-taxonomy.ts`** — タグ・カテゴリ集約。`getAllTags()` / `getTagsWithCount()`（出現回数降順）をエクスポート
+   - **`src/lib/posts-view.ts`** — 一覧ページ共通ロジック。`getBlogViewContext()` / `paginatePosts()` をエクスポート
+   - **`src/lib/toc.ts`** — HAST から目次アイテムを生成
 5. **`app/`** — Next.js App Router ページが上記を呼び出し、`generateStaticParams()` で静的 HTML を生成
 
 ### 主要ディレクトリ
@@ -51,12 +55,23 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 | `app/blog/page/[page]/page.tsx` | ページネーション一覧（`/blog/page/1` は `/` にリダイレクト） |
 | `app/blog/categories/[category]/page.tsx` | カテゴリ絞り込み |
 | `app/blog/tags/[tag]/page.tsx` | タグ絞り込み |
+| `app/tools/memphis/page.tsx` | Memphis 柄の背景画像生成ツール |
+| `app/tools/trimming/page.tsx` | 画像トリミングツール |
+| `app/about/page.tsx` | About ページ |
+| `app/privacy-policy/page.tsx` | プライバシーポリシー |
+| `app/sitemap/page.tsx` | HTML Sitemap |
+| `app/rss.xml/route.ts` | RSS フィード |
 
 ### クライアント / サーバーコンポーネント
 
 - サーバーコンポーネントがデータ取得を担当（ブログルート）
-- クライアントコンポーネント（`'use client'`）はインタラクティブな UI に使用：`Header`・`SearchBox`・`ThemeToggle`・`ImageModal`・`CopyButtonScript`
+- クライアントコンポーネント（`'use client'`）はインタラクティブな UI に使用：`Header`・`SearchBox`・`ThemeToggle`・`ImageModal`・`CopyButtonScript`・`TagCloud`
 - ダークモードは `next-themes` によるクラスベースの切り替えで管理
+
+### 設定
+
+- `src/config/site.ts` にサイト名・URL・著者などの基本設定を集約
+- `toolsMenuItems` 配列で Header の Tools ドロップダウンメニュー項目を管理
 
 ### SEO・メタデータ
 
