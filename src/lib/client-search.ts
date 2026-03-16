@@ -9,15 +9,17 @@ import type { PostMeta } from '@/src/types/post';
 
 /**
  * 記事検索時に使うFuse.js設定。
+ * ウェイトの合計を基に正規化される（title:30%, plaintext:25%, tags:25%, category:20%）。
+ * threshold を 0.4 にして本文部分一致も拾えるよう調整。
  */
 const postSearchOptions: IFuseOptions<PostMeta> = {
   keys: [
-    { name: 'title', weight: 0.7 },
-    { name: 'plaintext', weight: 0.3 },
+    { name: 'title', weight: 0.6 },
+    { name: 'plaintext', weight: 0.5 },
     { name: 'tags', weight: 0.5 },
-    { name: 'category', weight: 0.5 },
+    { name: 'category', weight: 0.4 },
   ],
-  threshold: 0.3,
+  threshold: 0.4,
   ignoreLocation: true,
   minMatchCharLength: 2,
 };

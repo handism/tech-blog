@@ -45,3 +45,16 @@ export function tagToSlug(tag: string): string {
 export function categoryToSlug(category: string): string {
   return toSlug(category);
 }
+
+/**
+ * プレーンテキストから読了時間（分）を推定する。
+ * CJK文字（日本語等）は約600字/分、英単語は約200語/分で計算する。
+ */
+export function estimateReadingMinutes(plaintext: string): number {
+  if (!plaintext) return 1;
+  // ひらがな・カタカナ・漢字・全角文字など
+  const cjkCount = (plaintext.match(/[\u3000-\u9FFF\uF900-\uFAFF\uFF00-\uFFEF]/g) ?? []).length;
+  // 英単語
+  const wordCount = (plaintext.match(/[a-zA-Z]+(?:['-][a-zA-Z]+)*/g) ?? []).length;
+  return Math.max(1, Math.ceil(cjkCount / 600 + wordCount / 200));
+}

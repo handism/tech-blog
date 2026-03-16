@@ -1,7 +1,7 @@
 // src/components/Sidebar.tsx
 'use client';
 import SearchBox from '@/src/components/SearchBox';
-import TagList from '@/src/components/TagList';
+import TagCloud from '@/src/components/TagCloud';
 import { categoryToSlug } from '@/src/lib/utils';
 import type { TocItem, PostMeta } from '@/src/types/post';
 import { Menu } from 'lucide-react';
@@ -79,7 +79,7 @@ export default function Sidebar({ posts, toc, categories }: SidebarProps) {
 
       <div className="p-4 border border-border rounded-lg bg-card">
         <h2 className="font-bold text-lg mb-4 text-text">タグ</h2>
-        <TagList posts={posts ?? []} />
+        <TagCloud posts={posts ?? []} />
       </div>
 
       {/* --- TOC セクション --- */}

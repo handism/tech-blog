@@ -341,3 +341,15 @@ pre.shiki::before {
   border-radius: 0 0 4px 0;
   text-transform: uppercase;
 }
+
+pre.shiki[data-filename]::before {
+  content: attr(data-filename);
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+    monospace;
+  text-transform: none;
+  letter-spacing: 0;
+  background: #2d333b;
+  border-bottom: 1px solid #444c56;
+  padding: 0.2rem 1rem;
+}

@@ -1,6 +1,6 @@
 // src/components/PostMeta.tsx
 import TagLink from '@/src/components/TagLink';
-import { categoryToSlug } from '@/src/lib/utils';
+import { categoryToSlug, estimateReadingMinutes } from '@/src/lib/utils';
 import type { PostMeta } from '@/src/types/post';
 import { Clock, Calendar, Folder } from 'lucide-react';
 import Link from 'next/link';
@@ -26,10 +26,7 @@ export default function PostMeta({
   showTags = true,
   stackTags = false,
 }: Props) {
-  const readingMinutes =
-    post.plaintext && post.plaintext.length > 0
-      ? Math.max(1, Math.ceil(post.plaintext.length / 500))
-      : null;
+  const readingMinutes = post.plaintext ? estimateReadingMinutes(post.plaintext) : null;
 
   return (
     <div
