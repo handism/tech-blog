@@ -8,14 +8,14 @@ import { cache } from 'react';
 /**
  * スラッグからソースを読み込み、メタ情報と本文を返す内部ヘルパー。
  */
-async function _loadAndParseMeta(
+const _loadAndParseMeta = cache(async function _loadAndParseMeta(
   slug: string
 ): Promise<{ meta: PostMeta; content: string } | null> {
   const source = await readPostSourceBySlug(slug);
   if (!source) return null;
   const { data, content } = parsePostSource(source.raw);
   return { meta: createPostMeta(slug, data, content), content };
-}
+});
 
 /**
  * 全記事のメタ情報を取得（一覧用）。

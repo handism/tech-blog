@@ -7,8 +7,6 @@ import Link from 'next/link';
 import { useState, useEffect, useRef, KeyboardEvent } from 'react';
 import { FaGithub } from 'react-icons/fa';
 
-const menuItems = toolsMenuItems;
-
 /**
  * サイト全体のヘッダー。
  */
@@ -42,7 +40,7 @@ export default function Header() {
       focusItem(0);
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
-      focusItem(menuItems.length - 1);
+      focusItem(toolsMenuItems.length - 1);
     } else if (e.key === 'Escape') {
       setIsOpen(false);
     }
@@ -51,10 +49,10 @@ export default function Header() {
   const handleItemKeyDown = (e: KeyboardEvent<HTMLAnchorElement>, index: number) => {
     if (e.key === 'ArrowDown') {
       e.preventDefault();
-      itemRefs.current[(index + 1) % menuItems.length]?.focus();
+      itemRefs.current[(index + 1) % toolsMenuItems.length]?.focus();
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
-      itemRefs.current[(index - 1 + menuItems.length) % menuItems.length]?.focus();
+      itemRefs.current[(index - 1 + toolsMenuItems.length) % toolsMenuItems.length]?.focus();
     } else if (e.key === 'Escape') {
       e.preventDefault();
       setIsOpen(false);
@@ -114,7 +112,7 @@ export default function Header() {
                 `}
               >
                 <ul id="tools-menu" role="menu" className="py-1">
-                  {menuItems.map((item, index) =>
+                  {toolsMenuItems.map((item, index) =>
                     item.external ? (
                       <li key={item.href} role="none">
                         <a
