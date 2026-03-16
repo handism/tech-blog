@@ -15,10 +15,7 @@ const FrontmatterSchema = z.object({
     .transform((v) => new Date(v))
     .pipe(z.date())
     .optional(),
-  tags: z
-    .array(z.string())
-    .default([])
-    .catch([]),
+  tags: z.array(z.string()).default([]).catch([]),
   category: z.string().min(1).default(siteConfig.posts.defaultCategory),
   image: z.string().optional(),
 });
@@ -87,7 +84,11 @@ function markdownToPlaintext(markdown: string): string {
 /**
  * frontmatterと本文から一覧向けメタ情報を生成する。
  */
-export function createPostMeta(slug: string, data: ValidatedFrontmatter, content: string): PostMeta {
+export function createPostMeta(
+  slug: string,
+  data: ValidatedFrontmatter,
+  content: string
+): PostMeta {
   return {
     slug,
     title: data.title,

@@ -12,6 +12,22 @@ type PaginationProps = {
 };
 
 /**
+ * 表示するページ番号の配列を生成する（省略は `'...'` で表現）。
+ */
+export function generatePageNumbers(currentPage: number, totalPages: number): (number | string)[] {
+  if (totalPages <= 7) {
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+  if (currentPage <= 3) {
+    return [1, 2, 3, 4, '...', totalPages];
+  }
+  if (currentPage >= totalPages - 2) {
+    return [1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+  }
+  return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+}
+
+/**
  * ページネーションUI。
  */
 export default function Pagination({ currentPage, totalPages }: PaginationProps) {
@@ -22,22 +38,7 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
     return pageNum === 1 ? '/' : `/blog/page/${pageNum}`;
   };
 
-  const pages: (number | string)[] = [];
-
-  // ページ番号の表示ロジック
-  if (totalPages <= 7) {
-    for (let i = 1; i <= totalPages; i++) {
-      pages.push(i);
-    }
-  } else {
-    if (currentPage <= 3) {
-      pages.push(1, 2, 3, 4, '...', totalPages);
-    } else if (currentPage >= totalPages - 2) {
-      pages.push(1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
-    } else {
-      pages.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages);
-    }
-  }
+  const pages = generatePageNumbers(currentPage, totalPages);
 
   return (
     <nav className="flex justify-center items-center gap-2 mt-4" aria-label="ページネーション">

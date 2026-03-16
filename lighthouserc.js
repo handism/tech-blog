@@ -21,7 +21,7 @@ module.exports = {
         'categories:best-practices': ['warn', { minScore: 0.9 }],
         'categories:seo': ['warn', { minScore: 0.9 }],
         // CI環境（localhost）ではcanonicalがprod URLと一致しないためoff
-        'canonical': 'off',
+        canonical: 'off',
         // CI環境では値を生成しないaudit（minScore指定不可）
         'lcp-lazy-loaded': 'off',
         'non-composited-animations': 'off',

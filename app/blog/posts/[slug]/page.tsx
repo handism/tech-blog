@@ -4,7 +4,12 @@ import CopyButtonScript from '@/src/components/CopyButtonScript';
 import { ImageModal } from '@/src/components/ImageModal';
 import PostMeta from '@/src/components/PostMeta';
 import { siteConfig } from '@/src/config/site';
-import { getAllPostMeta, getPost, getPostMetaBySlug } from '@/src/lib/posts-server';
+import {
+  getAdjacentPosts,
+  getAllPostMeta,
+  getPost,
+  getPostMetaBySlug,
+} from '@/src/lib/posts-server';
 import { getBlogViewContext } from '@/src/lib/posts-view';
 import type { Metadata } from 'next';
 import Image from 'next/image';
@@ -78,10 +83,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
   if (!post) notFound();
 
-  // 前後の記事を取得
-  const currentIndex = posts.findIndex((p) => p.slug === slug);
-  const prevPost = currentIndex > 0 ? posts[currentIndex - 1] : null;
-  const nextPost = currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null;
+  const { prevPost, nextPost } = await getAdjacentPosts(slug);
 
   const jsonLd = {
     '@context': 'https://schema.org',

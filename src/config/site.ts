@@ -1,5 +1,14 @@
 // src/config/site.ts
 /**
+ * ヘッダー Tools ドロップダウンのメニュー項目。
+ */
+export const toolsMenuItems = [
+  { href: '/tools/memphis', label: 'Memphis Generator', external: false },
+  { href: '/tools/trimming', label: 'Image Trimmer', external: false },
+  { href: 'https://handism.github.io/sauna-itta/', label: 'Sauna Itta', external: true },
+] as const;
+
+/**
  * サイト全体の設定。
  */
 export const siteConfig = {

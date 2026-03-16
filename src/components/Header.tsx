@@ -2,16 +2,12 @@
 'use client';
 
 import { ThemeToggle } from '@/src/components/ThemeToggle';
-import { siteConfig } from '@/src/config/site';
+import { siteConfig, toolsMenuItems } from '@/src/config/site';
 import Link from 'next/link';
 import { useState, useEffect, useRef, KeyboardEvent } from 'react';
 import { FaGithub } from 'react-icons/fa';
 
-const menuItems = [
-  { href: '/tools/memphis', label: 'Memphis Generator', external: false },
-  { href: '/tools/trimming', label: 'Image Trimmer', external: false },
-  { href: 'https://handism.github.io/sauna-itta/', label: 'Sauna Itta', external: true },
-];
+const menuItems = toolsMenuItems;
 
 /**
  * サイト全体のヘッダー。
