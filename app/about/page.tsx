@@ -1,9 +1,8 @@
 // app/about/page.tsx
 import BlogLayout from '@/src/components/BlogLayout';
 import { getAllPostMeta } from '@/src/lib/posts-server';
-import { PenSquare, Sword, Mail } from 'lucide-react';
+import { PenSquare, Sword, Mail, Github } from 'lucide-react';
 import type { Metadata } from 'next';
-import { FaGithub } from 'react-icons/fa';
 
 /**
  * Aboutページのメタデータ。
@@ -155,7 +154,7 @@ export default async function AboutPage() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 bg-accent text-background rounded-lg font-semibold hover:opacity-90 transition-opacity"
             >
-              <FaGithub className="w-5 h-5" />
+              <Github className="w-5 h-5" />
               GitHub
             </a>
           </div>

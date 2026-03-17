@@ -5,8 +5,8 @@ import { SkinSelector } from '@/src/components/SkinSelector';
 import { ThemeToggle } from '@/src/components/ThemeToggle';
 import { siteConfig, toolsMenuItems } from '@/src/config/site';
 import Link from 'next/link';
+import { Github } from 'lucide-react';
 import { useState, useEffect, useRef, KeyboardEvent } from 'react';
-import { FaGithub } from 'react-icons/fa';
 
 /**
  * サイト全体のヘッダー。
@@ -165,7 +165,7 @@ export default function Header() {
             className="rounded-full p-2 text-text transition hover:bg-card"
             aria-label="GitHub"
           >
-            <FaGithub className="w-5 h-5" />
+            <Github className="w-5 h-5" />
           </a>
           <SkinSelector />
           <ThemeToggle />

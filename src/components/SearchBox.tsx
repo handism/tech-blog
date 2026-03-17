@@ -58,7 +58,7 @@ export default function SearchBox({ posts }: Props) {
   useEffect(() => {
     const timerId = window.setTimeout(() => {
       setDebouncedQuery(query);
-    }, 200);
+    }, 100);
 
     return () => window.clearTimeout(timerId);
   }, [query]);

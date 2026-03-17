@@ -93,7 +93,8 @@ export const getAdjacentPosts = cache(async function getAdjacentPosts(
   slug: string
 ): Promise<{ prevPost: PostMeta | null; nextPost: PostMeta | null }> {
   const posts = await getAllPostMeta();
-  const currentIndex = posts.findIndex((p) => p.slug === slug);
+  const slugToIndex = new Map(posts.map((p, i) => [p.slug, i]));
+  const currentIndex = slugToIndex.get(slug) ?? -1;
   return {
     prevPost: currentIndex > 0 ? posts[currentIndex - 1] : null,
     nextPost: currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null,

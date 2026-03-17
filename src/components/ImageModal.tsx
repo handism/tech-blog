@@ -1,7 +1,7 @@
 // src/components/ImageModal.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 /**
  * 記事内画像の拡大表示モーダル。
@@ -10,6 +10,7 @@ export function ImageModal() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [allImages, setAllImages] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const cachedImages = useRef<string[] | null>(null);
 
   useEffect(() => {
     const handleImageClick = (e: MouseEvent) => {
@@ -20,10 +21,13 @@ export function ImageModal() {
         // サムネイル等（.not-prose 内）の画像は対象外
         if (img.closest('.not-prose')) return;
 
-        // 記事内の全画像を取得
-        const images = Array.from(document.querySelectorAll('article img'))
-          .filter((img) => !(img as HTMLImageElement).closest('.not-prose'))
-          .map((img) => (img as HTMLImageElement).src);
+        // 記事内の全画像を取得（クリックごとのDOM探索を避けるためキャッシュ）
+        if (!cachedImages.current) {
+          cachedImages.current = Array.from(document.querySelectorAll('article img'))
+            .filter((img) => !(img as HTMLImageElement).closest('.not-prose'))
+            .map((img) => (img as HTMLImageElement).src);
+        }
+        const images = cachedImages.current;
 
         const index = images.indexOf(img.src);
         setAllImages(images);
@@ -33,7 +37,10 @@ export function ImageModal() {
     };
 
     document.addEventListener('click', handleImageClick);
-    return () => document.removeEventListener('click', handleImageClick);
+    return () => {
+      document.removeEventListener('click', handleImageClick);
+      cachedImages.current = null;
+    };
   }, []);
 
   useEffect(() => {

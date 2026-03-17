@@ -95,7 +95,7 @@ export function createPostMeta(
     date: data.date,
     tags: data.tags,
     category: data.category,
-    plaintext: markdownToPlaintext(content),
+    plaintext: markdownToPlaintext(content).slice(0, 500),
     image: data.image,
   };
 }
