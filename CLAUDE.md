@@ -65,13 +65,15 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 ### クライアント / サーバーコンポーネント
 
 - サーバーコンポーネントがデータ取得を担当（ブログルート）
-- クライアントコンポーネント（`'use client'`）はインタラクティブな UI に使用：`Header`・`SearchBox`・`ThemeToggle`・`ImageModal`・`CopyButtonScript`・`TagCloud`
+- クライアントコンポーネント（`'use client'`）はインタラクティブな UI に使用：`Header`・`SearchBox`・`ThemeToggle`・`SkinSelector`・`ImageModal`・`CopyButtonScript`・`TagCloud`
 - ダークモードは `next-themes` によるクラスベースの切り替えで管理
+- スキン（カラーテーマ）は `data-skin` 属性によるクラスベースの切り替えで管理（`localStorage` に永続化）
 
 ### 設定
 
 - `src/config/site.ts` にサイト名・URL・著者などの基本設定を集約
 - `toolsMenuItems` 配列で Header の Tools ドロップダウンメニュー項目を管理
+- `skinConfig` 配列でスキン一覧（Emerald・Ocean・Sunset・Purple・Rose）を管理。`DEFAULT_SKIN` でデフォルト指定
 
 ### SEO・メタデータ
 
@@ -86,6 +88,7 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 
 - `Header` の Tools ドロップダウンは ARIA menu パターンに準拠（矢印キー・Escape キー操作対応）
 - `ThemeToggle` には `aria-label`（「ダークモードに切り替え」/「ライトモードに切り替え」）を設定
+- `SkinSelector` は `role="group"` + 各ボタンに `aria-pressed` / `aria-label` を設定
 - `:focus-visible` スタイルをアクセント色で定義（`app/globals.css`）
 
 ### テスト構成
