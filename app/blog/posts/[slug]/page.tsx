@@ -3,12 +3,14 @@ import BlogLayout from '@/src/components/BlogLayout';
 import CopyButtonScript from '@/src/components/CopyButtonScript';
 import { ImageModal } from '@/src/components/ImageModal';
 import PostMeta from '@/src/components/PostMeta';
+import RelatedPosts from '@/src/components/RelatedPosts';
 import { siteConfig } from '@/src/config/site';
 import {
   getAdjacentPosts,
   getAllPostMeta,
   getPost,
   getPostMetaBySlug,
+  getRelatedPosts,
 } from '@/src/lib/posts-server';
 import { getBlogViewContext } from '@/src/lib/posts-view';
 import type { Metadata } from 'next';
@@ -83,7 +85,10 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
   if (!post) notFound();
 
-  const { prevPost, nextPost } = await getAdjacentPosts(slug);
+  const [{ prevPost, nextPost }, relatedPosts] = await Promise.all([
+    getAdjacentPosts(slug),
+    getRelatedPosts(slug),
+  ]);
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -168,6 +173,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           )}
         </div>
       </nav>
+      {/* 関連記事 */}
+      <RelatedPosts posts={relatedPosts} />
+
       <CopyButtonScript />
     </BlogLayout>
   );

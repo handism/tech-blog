@@ -61,6 +61,32 @@ export async function getPost(slug: string): Promise<Post | null> {
 }
 
 /**
+ * 指定スラッグに関連する記事を最大3件取得する。
+ * スコア = タグ一致数 × 2 + カテゴリ一致 × 1
+ */
+export const getRelatedPosts = cache(async function getRelatedPosts(
+  slug: string
+): Promise<PostMeta[]> {
+  const posts = await getAllPostMeta();
+  const current = posts.find((p) => p.slug === slug);
+  if (!current) return [];
+
+  return posts
+    .filter((p) => p.slug !== slug)
+    .map((p) => {
+      const tagOverlap = p.tags.filter((t) => current.tags.includes(t)).length;
+      const categoryMatch = p.category === current.category ? 1 : 0;
+      return { post: p, score: tagOverlap * 2 + categoryMatch };
+    })
+    .filter(({ score }) => score > 0)
+    .sort(
+      (a, b) => b.score - a.score || (b.post.date?.getTime() ?? 0) - (a.post.date?.getTime() ?? 0)
+    )
+    .slice(0, 3)
+    .map(({ post }) => post);
+});
+
+/**
  * 指定スラッグの前後の記事を取得する。
  */
 export const getAdjacentPosts = cache(async function getAdjacentPosts(
