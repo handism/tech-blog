@@ -32,6 +32,21 @@
 }
 
 /* =======================
+   スキン（カラーテーマ）
+   ======================= */
+[data-skin="ocean"]       { --color-accent: #0ea5e9; }
+[data-skin="ocean"].dark  { --color-accent: #38bdf8; }
+
+[data-skin="sunset"]      { --color-accent: #f59e0b; }
+[data-skin="sunset"].dark { --color-accent: #fbbf24; }
+
+[data-skin="purple"]      { --color-accent: #a855f7; }
+[data-skin="purple"].dark { --color-accent: #c084fc; }
+
+[data-skin="rose"]        { --color-accent: #f43f5e; }
+[data-skin="rose"].dark   { --color-accent: #fb7185; }
+
+/* =======================
    フォーカス可視性
    ======================= */
 a:focus-visible,

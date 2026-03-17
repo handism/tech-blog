@@ -47,6 +47,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ja" suppressHydrationWarning data-scroll-behavior="smooth">
       <body className={`${geistSans.className} bg-bg text-text antialiased`}>
+        {/* フラッシュ防止スクリプト: キー名は SKIN_STORAGE_KEY、フォールバック値は DEFAULT_SKIN と一致させること */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var s=localStorage.getItem('skin')||'emerald';document.documentElement.setAttribute('data-skin',s);}catch(e){}})();`,
+          }}
+        />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
           <Header />
           {children}

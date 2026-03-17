@@ -95,11 +95,13 @@ npm run test:unit
 
 - 設定ファイルは `src/config/site.ts`
 - サイトごとに必要な設定（サイト名・URL・著者名など）を変更してください
+- `skinConfig` 配列でスキン一覧（Emerald・Ocean・Sunset・Purple・Rose）を管理。`DEFAULT_SKIN` でデフォルト指定
 
 ### CSS 設定
 
 - グローバルの CSS は `app/globals.css` にまとめています
 - `:focus-visible` スタイルはアクセント色（emerald）で定義済みです
+- スキンは `data-skin` 属性で切り替え。`[data-skin="ocean"]` セレクタで `--color-accent` をオーバーライド
 
 ### 記事ページ設定
 
@@ -175,3 +177,4 @@ export function example() { }
 - 検索結果でタイトル・本文スニペットに加え、マッチしたタグ・カテゴリもハイライト表示
 - キーボードナビゲーション対応（ドロップダウンメニュー・フォーカスリング）
 - `ThemeToggle` に `aria-label` を設定
+- `SkinSelector` は `role="group"` + 各ボタンに `aria-pressed` / `aria-label` を設定

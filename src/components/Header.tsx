@@ -1,6 +1,7 @@
 // src/components/Header.tsx
 'use client';
 
+import { SkinSelector } from '@/src/components/SkinSelector';
 import { ThemeToggle } from '@/src/components/ThemeToggle';
 import { siteConfig, toolsMenuItems } from '@/src/config/site';
 import Link from 'next/link';
@@ -166,6 +167,7 @@ export default function Header() {
           >
             <FaGithub className="w-5 h-5" />
           </a>
+          <SkinSelector />
           <ThemeToggle />
         </div>
       </div>
