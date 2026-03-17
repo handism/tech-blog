@@ -26,7 +26,10 @@ function highlightText(text: string, indices: readonly RangeTuple[]): React.Reac
   for (const [start, end] of indices) {
     if (start > cursor) nodes.push(text.slice(cursor, start));
     nodes.push(
-      <mark key={`${start}-${end}`} className="bg-accent/30 dark:bg-accent/40 text-inherit rounded-sm px-0.5">
+      <mark
+        key={`${start}-${end}`}
+        className="bg-accent/30 dark:bg-accent/40 text-inherit rounded-sm px-0.5"
+      >
         {text.slice(start, end + 1)}
       </mark>
     );
