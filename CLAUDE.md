@@ -27,7 +27,7 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 2. **`src/lib/post-parser.ts`** — `gray-matter` で YAML フロントマターを抽出し、**Zod** でバリデーション（不正な値はデフォルト値にフォールバック）
 3. **`src/lib/post-renderer.ts`** — Remark/Rehype（GFM・Shiki シンタックスハイライト・見出し slug/自動リンク・TOC 生成）で Markdown を HTML に変換。`remarkExtractCodeFilename()` カスタムプラグインにより ` ```lang:filename ` 構文でコードブロック上部にファイル名を表示
 4. **`src/lib/posts-server.ts`** — React `cache()` でデータを集約し SSG に対応。`getAllPostMeta()` と `getPost(slug)` をエクスポート
-   - **`src/lib/client-search.ts`** — Fuse.js を使った重み付きクライアント検索（title > tags > category > plaintext の優先度）。`createPostSearcher()` / `searchPosts()` をエクスポート
+   - **`src/lib/client-search.ts`** — Fuse.js を使った重み付きクライアント検索（title > tags > category > plaintext の優先度）。`createPostSearcher()` / `searchPosts()` / `searchPostsWithMatches()` をエクスポート。`searchPostsWithMatches()` はタイトル・本文スニペット・タグ・カテゴリのマッチ位置情報（`RangeTuple`）を返す
    - **`src/lib/post-taxonomy.ts`** — タグ・カテゴリ集約。`getAllTags()` / `getTagsWithCount()`（出現回数降順）をエクスポート
    - **`src/lib/posts-view.ts`** — 一覧ページ共通ロジック。`getBlogViewContext()` / `paginatePosts()` をエクスポート
    - **`src/lib/toc.ts`** — HAST から目次アイテムを生成
@@ -77,8 +77,10 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 
 - `app/layout.tsx` にサイト全体のデフォルト OGP（`og:title`、`og:description`、Twitter Card）を設定
 - 記事ページ（`app/blog/posts/[slug]/page.tsx`）は `generateMetadata` で記事固有の OGP と `og:type: article` を設定
+- カテゴリページ（`app/blog/categories/[category]/page.tsx`）・タグページ（`app/blog/tags/[tag]/page.tsx`）も `generateMetadata` で動的な OGP タイトル・説明文を生成
 - 各記事ページには **JSON-LD**（`BlogPosting` スキーマ）を埋め込み
 - Sitemap（`app/sitemap.xml/route.ts`）は記事・カテゴリ・タグ・ページネーションページを含み、`lastmod` 付きで出力
+- RSS フィード（`app/rss.xml/route.ts`）は各記事の本文要約（先頭 200 文字 + `…`）を `<description>` として出力
 
 ### アクセシビリティ
 
@@ -94,7 +96,10 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 | ユニット（Vitest） | `tests/*.test.ts` | `npm run test:unit` |
 
 - E2E テスト対象：記事詳細表示・OGP タグ・検索・ページネーション・ダークモード
-- ユニットテスト対象：`tagToSlug` / `categoryToSlug`（`src/lib/utils.ts`）
+- ユニットテスト対象：
+  - `tagToSlug` / `categoryToSlug`（`src/lib/utils.ts`）
+  - `parsePostSource` / `createPostMeta`（`src/lib/post-parser.ts`）
+  - `createPostSearcher` / `searchPosts` / `searchPostsWithMatches`（`src/lib/client-search.ts`）
 
 ### 記事フロントマターの形式
 
@@ -115,3 +120,13 @@ image: filename.webp
 - Prettier：行幅 100 文字、シングルクォート、インデント 2 スペース
 - TypeScript strict モード、パスエイリアス `@/*` → プロジェクトルート
 - スタイリングは Tailwind CSS 4、本文組版は Tailwind Typography
+
+## ドキュメント管理ルール
+
+- **`CLAUDE.md` と `README.md` は常に最新の状態を保つこと。**
+- 以下の変更を行った際は、必ず両ファイルを同時に更新する：
+  - 新機能の追加・既存機能の変更
+  - ルーティングの追加・変更
+  - テスト対象の追加
+  - アーキテクチャの変更（ライブラリ追加・パイプライン変更など）
+  - コードスタイルルールの変更

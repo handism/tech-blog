@@ -168,8 +168,10 @@ export function example() { }
 
 ## SEO・アクセシビリティ
 
-- OGP / Twitter Card をサイト全体および記事ページで設定
+- OGP / Twitter Card をサイト全体・記事ページ・カテゴリページ・タグページで設定
 - 記事ページに JSON-LD（`BlogPosting` スキーマ）を埋め込み
 - Sitemap に記事・カテゴリ・タグページと `lastmod` を出力
+- RSS フィードに本文要約（先頭 200 文字）を `<description>` として出力
+- 検索結果でタイトル・本文スニペットに加え、マッチしたタグ・カテゴリもハイライト表示
 - キーボードナビゲーション対応（ドロップダウンメニュー・フォーカスリング）
 - `ThemeToggle` に `aria-label` を設定
