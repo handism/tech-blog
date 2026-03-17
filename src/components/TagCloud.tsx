@@ -24,8 +24,8 @@ export default function TagCloud({ posts }: Props) {
     <div className="flex flex-wrap gap-x-3 gap-y-2 leading-relaxed">
       {tags.map(({ tag, count }) => {
         const t = (count - minCount) / range;
-        // フォントサイズ: 0.78rem（最小）〜 1.48rem（最大）
-        const fontSize = (0.78 + t * 0.7).toFixed(2);
+        // フォントサイズ: 0.85rem（最小）〜 1.5rem（最大）
+        const fontSize = (0.85 + t * 0.65).toFixed(2);
         // 透明度: 0.55（最小）〜 1.0（最大）
         const opacity = (0.55 + t * 0.45).toFixed(2);
 

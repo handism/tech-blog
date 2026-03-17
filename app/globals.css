@@ -180,12 +180,16 @@ aside.toc-sidebar ul {
 }
 
 aside.toc-sidebar li {
-  @apply pl-2;
+  @apply pl-2 border-l-2 border-transparent;
+}
+
+aside.toc-sidebar li.level-1 {
+  @apply border-l-2 border-accent/30;
 }
 
 aside.toc-sidebar a {
   color: var(--text);
-  @apply hover:underline;
+  @apply hover:text-accent hover:underline transition-colors;
 }
 
 aside.toc-sidebar li.level-2 {
@@ -281,7 +285,8 @@ pre.shiki .line::before {
   width: 1.5rem;
   margin-right: 1.5rem;
   text-align: right;
-  color: #6e7681;
+  color: var(--color-text);
+  opacity: 0.35;
   user-select: none;
 }
 
@@ -334,8 +339,9 @@ pre.shiki::before {
   position: absolute;
   top: 0;
   left: 0;
-  background: #343941;
-  color: #e6edf3;
+  background: color-mix(in srgb, var(--color-card) 85%, #000);
+  color: var(--color-text);
+  opacity: 0.9;
   padding: 0.2rem 0.8rem;
   font-size: 0.75rem;
   border-radius: 0 0 4px 0;
@@ -349,7 +355,8 @@ pre.shiki[data-filename]::before {
     monospace;
   text-transform: none;
   letter-spacing: 0;
-  background: #2d333b;
-  border-bottom: 1px solid #444c56;
+  background: color-mix(in srgb, var(--color-card) 75%, #000);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-border) 60%, #000);
   padding: 0.2rem 1rem;
+  opacity: 1;
 }
