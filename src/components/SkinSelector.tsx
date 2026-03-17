@@ -28,28 +28,31 @@ export function SkinSelector() {
 
   if (!isMounted) {
     return (
-      <div className="flex gap-1 opacity-0 pointer-events-none" aria-hidden="true">
+      <div className="flex gap-0.5 opacity-0 pointer-events-none" aria-hidden="true">
         {skinConfig.map((s) => (
-          <div key={s.id} className="w-4 h-4 rounded-full bg-border" />
+          <div key={s.id} className="p-1">
+            <div className="w-4 h-4 rounded-full bg-border" />
+          </div>
         ))}
       </div>
     );
   }
 
   return (
-    <div className="flex items-center gap-1" role="group" aria-label="カラーテーマを選択">
+    <div className="flex items-center gap-0.5" role="group" aria-label="カラーテーマを選択">
       {skinConfig.map((skin) => (
         <button
           key={skin.id}
           onClick={() => handleSelect(skin.id)}
-          className={`w-4 h-4 rounded-full transition-all hover:scale-110 ${
+          className={`p-1 rounded-full transition-all hover:scale-110 ${
             currentSkin === skin.id ? 'ring-2 ring-offset-1 ring-text/50 scale-110' : ''
           }`}
-          style={{ backgroundColor: skin.lightColor }}
           aria-label={`${skin.label}テーマに切り替え`}
           aria-pressed={currentSkin === skin.id}
           title={skin.label}
-        />
+        >
+          <span className="block w-4 h-4 rounded-full" style={{ backgroundColor: skin.lightColor }} />
+        </button>
       ))}
     </div>
   );
