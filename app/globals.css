@@ -308,7 +308,7 @@ pre.shiki .line::before {
   width: 1.5rem;
   margin-right: 1.5rem;
   text-align: right;
-  color: var(--color-text);
+  color: #ffffff;
   opacity: 0.35;
   user-select: none;
 }
