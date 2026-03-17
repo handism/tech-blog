@@ -162,7 +162,7 @@ export default function Header() {
             href={siteConfig.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-text hover:text-accent transition-colors p-1.5 -mr-1.5 md:p-2 md:mr-0"
+            className="text-text hover:text-accent transition-colors p-2"
             aria-label="GitHub"
           >
             <FaGithub className="w-5 h-5" />
