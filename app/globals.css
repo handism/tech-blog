@@ -58,12 +58,20 @@ input:focus-visible,
   border-radius: 2px;
 }
 
+*,
+*::before,
+*::after {
+  transition:
+    color 0.2s,
+    background-color 0.2s,
+    border-color 0.2s,
+    fill 0.2s,
+    stroke 0.2s;
+}
+
 html {
   scroll-behavior: auto;
   scrollbar-gutter: stable;
-  transition:
-    background-color 0.2s,
-    color 0.2s;
 }
 
 html:has(:target),
