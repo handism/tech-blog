@@ -158,13 +158,13 @@ export default function Header() {
 
         {/* アイコン類 */}
         <div className="absolute right-3 top-3 md:static flex items-center gap-1.5 md:gap-2 md:self-auto">
-          <Link
+          <a
             href="/rss.xml"
             className="rounded-full p-2 text-text transition hover:bg-card"
             aria-label="RSS フィード"
           >
             <Rss className="w-5 h-5" />
-          </Link>
+          </a>
           <a
             href={siteConfig.github}
             target="_blank"
