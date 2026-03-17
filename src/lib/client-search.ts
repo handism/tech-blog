@@ -4,7 +4,7 @@
  * ビルド時にすべての記事データが埋め込まれる
  */
 import Fuse from 'fuse.js';
-import type { FuseResult, IFuseOptions, RangeTuple } from 'fuse.js';
+import type { FuseResult, FuseResultMatch, IFuseOptions, RangeTuple } from 'fuse.js';
 import type { PostMeta } from '@/src/types/post';
 
 /**
@@ -33,6 +33,8 @@ export type SearchResult = {
   titleIndices: readonly RangeTuple[];
   snippet: string | undefined;
   snippetIndices: readonly RangeTuple[];
+  matchedTags: { tag: string; indices: readonly RangeTuple[] }[];
+  categoryIndices: readonly RangeTuple[];
 };
 
 /**
@@ -59,8 +61,17 @@ export function searchPostsWithMatches(searcher: Fuse<PostMeta>, keyword: string
   if (!keyword.trim()) return [];
 
   return (searcher.search(keyword) as FuseResult<PostMeta>[]).slice(0, 8).map((result) => {
-    const titleMatch = result.matches?.find((m) => m.key === 'title');
-    const textMatch = result.matches?.find((m) => m.key === 'plaintext');
+    // result.matches を単一パスで振り分ける
+    let titleMatch: FuseResultMatch | undefined;
+    let textMatch: FuseResultMatch | undefined;
+    let categoryMatch: FuseResultMatch | undefined;
+    const tagMatches: FuseResultMatch[] = [];
+    for (const m of result.matches ?? []) {
+      if (m.key === 'title') titleMatch = m;
+      else if (m.key === 'plaintext') textMatch = m;
+      else if (m.key === 'category') categoryMatch = m;
+      else if (m.key === 'tags') tagMatches.push(m);
+    }
 
     let snippet: string | undefined;
     let snippetIndices: readonly RangeTuple[] = [];
@@ -74,8 +85,8 @@ export function searchPostsWithMatches(searcher: Fuse<PostMeta>, keyword: string
       const offset = from > 0 ? 1 : 0;
       snippet = (from > 0 ? '…' : '') + plaintext.slice(from, to);
       snippetIndices = textMatch.indices
-        .filter(([s, e]) => s >= from && e <= to)
-        .map(([s, e]) => [s - from + offset, e - from + offset] as RangeTuple);
+        .filter(([s, e]: RangeTuple) => s >= from && e <= to)
+        .map(([s, e]: RangeTuple) => [s - from + offset, e - from + offset] as RangeTuple);
     }
 
     return {
@@ -83,6 +94,8 @@ export function searchPostsWithMatches(searcher: Fuse<PostMeta>, keyword: string
       titleIndices: titleMatch?.indices ?? [],
       snippet,
       snippetIndices,
+      matchedTags: tagMatches.map((m) => ({ tag: m.value ?? '', indices: m.indices })),
+      categoryIndices: categoryMatch?.indices ?? [],
     };
   });
 }

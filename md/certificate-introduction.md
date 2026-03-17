@@ -1,7 +1,7 @@
 ---
 title: SSL/TLS証明書関連の知識をまとめてみる
 date: 2026-01-27
-tags: [certificate]
+tags: [Certificate]
 category: Security
 image: certificate-introduction.webp
 ---

@@ -77,19 +77,32 @@ export default function SearchBox({ posts }: Props) {
       />
       <ul className="mt-2 space-y-1">
         {debouncedQuery &&
-          results.map(({ post, titleIndices, snippet, snippetIndices }) => (
-            <li key={post.slug}>
-              <Link href={`/blog/posts/${post.slug}`} className="hover:underline block">
-                <span>{highlightText(post.title, titleIndices)}</span>{' '}
-                <span className="text-sm text-gray-500">[{post.category}]</span>
-                {snippet && (
-                  <span className="block text-xs text-text/60 mt-0.5 line-clamp-1">
-                    {highlightText(snippet, snippetIndices)}
+          results.map(
+            ({ post, titleIndices, snippet, snippetIndices, matchedTags, categoryIndices }) => (
+              <li key={post.slug}>
+                <Link href={`/blog/posts/${post.slug}`} className="hover:underline block">
+                  <span>{highlightText(post.title, titleIndices)}</span>{' '}
+                  <span className="text-sm text-gray-500">
+                    [{highlightText(post.category, categoryIndices)}]
                   </span>
-                )}
-              </Link>
-            </li>
-          ))}
+                  {matchedTags.length > 0 && (
+                    <span className="block text-xs text-text/60 mt-0.5">
+                      {matchedTags.map(({ tag, indices }, i) => (
+                        <span key={i} className="mr-1">
+                          #{highlightText(tag, indices)}
+                        </span>
+                      ))}
+                    </span>
+                  )}
+                  {snippet && (
+                    <span className="block text-xs text-text/60 mt-0.5 line-clamp-1">
+                      {highlightText(snippet, snippetIndices)}
+                    </span>
+                  )}
+                </Link>
+              </li>
+            )
+          )}
         {debouncedQuery && results.length === 0 && (
           <li className="text-sm text-text/60">検索結果が見つかりませんでした。</li>
         )}
