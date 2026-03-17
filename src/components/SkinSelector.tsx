@@ -51,7 +51,7 @@ export function SkinSelector() {
   }
 
   return (
-    <div className="relative" ref={containerRef}>
+    <div className="relative inline-flex items-center" ref={containerRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="rounded-full p-2 text-text transition hover:bg-card"
