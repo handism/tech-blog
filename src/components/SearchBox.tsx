@@ -77,8 +77,11 @@ export default function SearchBox({ posts }: Props) {
         onChange={(e) => setQuery(e.target.value)}
         className="w-full border border-border bg-card text-text placeholder:text-text/40 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/40 transition"
       />
-      <ul className={`mt-2 space-y-1 ${hasResults ? 'bg-card border border-border rounded-lg p-2' : ''}`}>
-        {hasResults && results.map(
+      <ul
+        className={`mt-2 space-y-1 ${hasResults ? 'bg-card border border-border rounded-lg p-2' : ''}`}
+      >
+        {hasResults &&
+          results.map(
             ({ post, titleIndices, snippet, snippetIndices, matchedTags, categoryIndices }) => (
               <li key={post.slug}>
                 <Link href={`/blog/posts/${post.slug}`} className="hover:underline block">

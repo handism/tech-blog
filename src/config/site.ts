@@ -4,13 +4,13 @@
  */
 export const skinConfig = [
   { id: 'emerald', label: 'Emerald', lightColor: '#10b981', darkColor: '#34d399' },
-  { id: 'ocean',   label: 'Ocean',   lightColor: '#0ea5e9', darkColor: '#38bdf8' },
-  { id: 'sunset',  label: 'Sunset',  lightColor: '#f59e0b', darkColor: '#fbbf24' },
-  { id: 'purple',  label: 'Purple',  lightColor: '#a855f7', darkColor: '#c084fc' },
-  { id: 'rose',    label: 'Rose',    lightColor: '#f43f5e', darkColor: '#fb7185' },
+  { id: 'ocean', label: 'Ocean', lightColor: '#0ea5e9', darkColor: '#38bdf8' },
+  { id: 'sunset', label: 'Sunset', lightColor: '#f59e0b', darkColor: '#fbbf24' },
+  { id: 'purple', label: 'Purple', lightColor: '#a855f7', darkColor: '#c084fc' },
+  { id: 'rose', label: 'Rose', lightColor: '#f43f5e', darkColor: '#fb7185' },
 ] as const;
 
-export type SkinId = typeof skinConfig[number]['id'];
+export type SkinId = (typeof skinConfig)[number]['id'];
 export const DEFAULT_SKIN: SkinId = 'emerald';
 export const SKIN_STORAGE_KEY = 'skin';
 
