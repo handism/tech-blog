@@ -305,8 +305,8 @@ pre.shiki .line::before {
   content: counter(line);
 
   display: inline-block;
-  width: 1.5rem;
-  margin-right: 1.5rem;
+  width: 1rem;
+  margin-right: 0.75rem;
   text-align: right;
   color: #ffffff;
   opacity: 0.35;
