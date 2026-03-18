@@ -118,6 +118,8 @@ category: Frontend
     expect(meta.tags).toEqual(['React', 'Blog']);
     expect(meta.category).toBe('Frontend');
     expect(meta.plaintext).toContain('本文テキスト');
+    expect(meta.description).toBe('本文テキスト');
+    expect(meta.readingMinutes).toBe(1);
   });
 
   it('plaintext にマークダウン記法が含まれない', () => {

@@ -41,14 +41,14 @@ export async function generateMetadata({
 export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
   const { category: slug } = await params;
 
-  const { allPosts: posts, categories } = await getBlogViewContext();
+  const { allPosts: posts, categories, tagCounts } = await getBlogViewContext();
   const actualCategory = resolveSlugOrNotFound(slug, categories, categoryToSlug);
 
   const filteredPosts = posts.filter((p) => p.category === actualCategory);
 
   return (
     <PostListPage
-      allPosts={posts}
+      tagCounts={tagCounts}
       categories={categories}
       posts={filteredPosts}
       heading={`Category: ${actualCategory}`}

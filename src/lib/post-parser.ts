@@ -82,6 +82,15 @@ function markdownToPlaintext(markdown: string): string {
 }
 
 /**
+ * 読了時間を計算する（日本語 600文字/分 を想定）。
+ */
+function calculateReadingMinutes(plaintext: string): number {
+  const wordsPerMinute = 600;
+  const minutes = Math.ceil(plaintext.length / wordsPerMinute);
+  return Math.max(1, minutes);
+}
+
+/**
  * frontmatterと本文から一覧向けメタ情報を生成する。
  */
 export function createPostMeta(
@@ -89,13 +98,16 @@ export function createPostMeta(
   data: ValidatedFrontmatter,
   content: string
 ): PostMeta {
+  const plaintext = markdownToPlaintext(content);
   return {
     slug,
     title: data.title,
     date: data.date,
     tags: data.tags,
     category: data.category,
-    plaintext: markdownToPlaintext(content).slice(0, 500),
+    plaintext: plaintext.slice(0, 5000), // 検索用に長めに保持
+    description: plaintext.slice(0, 200), // 一覧表示用
+    readingMinutes: calculateReadingMinutes(plaintext),
     image: data.image,
   };
 }

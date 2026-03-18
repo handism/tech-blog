@@ -8,13 +8,6 @@ import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 
 /**
- * 検索ボックスのプロパティ。
- */
-type Props = {
-  posts: PostMeta[];
-};
-
-/**
  * マッチ位置情報をもとにテキストを <mark> でハイライトした React ノード配列を返す。
  */
 function highlightText(text: string, indices: readonly RangeTuple[]): React.ReactNode[] {
@@ -43,9 +36,25 @@ function highlightText(text: string, indices: readonly RangeTuple[]): React.Reac
 /**
  * 記事を検索する入力UI。
  */
-export default function SearchBox({ posts }: Props) {
+export default function SearchBox() {
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
+  const [posts, setPosts] = useState<PostMeta[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleFocus = async () => {
+    if (posts.length > 0 || isLoading) return;
+    setIsLoading(true);
+    try {
+      const res = await fetch('/search.json');
+      const data = await res.json();
+      setPosts(data);
+    } catch (e) {
+      console.error('Failed to fetch search index:', e);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const searcher = useMemo(() => createPostSearcher(posts), [posts]);
   const results = useMemo(
@@ -72,9 +81,11 @@ export default function SearchBox({ posts }: Props) {
         id="site-search"
         name="q"
         type="text"
-        placeholder="検索..."
+        placeholder={isLoading ? '読込中...' : '検索...'}
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        onFocus={handleFocus}
+        onMouseEnter={handleFocus}
         className="w-full border border-border bg-card text-text placeholder:text-text/40 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/40 transition"
       />
       <ul

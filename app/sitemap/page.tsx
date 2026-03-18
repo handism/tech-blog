@@ -1,7 +1,7 @@
 // app/sitemap/page.tsx
 import BlogLayout from '@/src/components/BlogLayout';
 import TagLink from '@/src/components/TagLink';
-import { getAllPostMeta } from '@/src/lib/posts-server';
+import { getBlogViewContext } from '@/src/lib/posts-view';
 import { categoryToSlug } from '@/src/lib/utils';
 import type { Metadata } from 'next';
 import Link from 'next/link';
@@ -17,12 +17,11 @@ export const metadata: Metadata = {
  * サイトマップページ。
  */
 export default async function SitemapPage() {
-  const posts = await getAllPostMeta();
-  const categories = Array.from(new Set(posts.map((p) => p.category)));
-  const tags = Array.from(new Set(posts.flatMap((p) => p.tags)));
+  const { allPosts: posts, categories, tagCounts } = await getBlogViewContext();
+  const tags = tagCounts.map((tc) => tc.tag);
 
   return (
-    <BlogLayout posts={posts} categories={categories}>
+    <BlogLayout categories={categories} tagCounts={tagCounts}>
       <div className="max-w-none">
         <header className="mb-10">
           <h1 className="text-3xl md:text-4xl font-bold text-text">サイトマップ</h1>
