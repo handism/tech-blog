@@ -31,16 +31,29 @@ test.describe('記事詳細ページ', () => {
 test.describe('検索', () => {
   test('検索結果が表示される', async ({ page }) => {
     await page.goto('/');
-    await page.fill('#site-search', 'Claude');
-    // debounce (200ms) + 描画余裕を考慮して待機
-    await expect(page.locator('#site-search ~ ul li').first()).toBeVisible({ timeout: 3000 });
+    const searchInput = page.locator('#site-search');
+
+    // 入力欄をフォーカスしてインデックスを読み込ませる
+    await searchInput.focus();
+
+    // インデックスの取得（fetch）が完了するのを待機（placeholder が「読込中...」でなくなるのを待つ）
+    await expect(searchInput).not.toHaveAttribute('placeholder', '読込中...', { timeout: 5000 });
+
+    await searchInput.fill('Claude');
+    // debounce (100ms) + 検索処理 + 描画を考慮して待機
+    await expect(page.locator('#site-search ~ ul li').first()).toBeVisible({ timeout: 10000 });
   });
 
   test('ヒットしない語では「見つからない」メッセージが表示される', async ({ page }) => {
     await page.goto('/');
-    await page.fill('#site-search', 'xyzxyzxyz存在しないキーワード');
+    const searchInput = page.locator('#site-search');
+
+    await searchInput.focus();
+    await expect(searchInput).not.toHaveAttribute('placeholder', '読込中...', { timeout: 5000 });
+
+    await searchInput.fill('xyzxyzxyz存在しないキーワード');
     await expect(page.locator('text=検索結果が見つかりませんでした')).toBeVisible({
-      timeout: 3000,
+      timeout: 10000,
     });
   });
 });

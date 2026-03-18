@@ -27,7 +27,7 @@ export default async function PageView({ params }: Props) {
     redirect('/');
   }
 
-  const { allPosts, categories } = await getBlogViewContext();
+  const { allPosts, categories, tagCounts } = await getBlogViewContext();
   const { posts, totalPages } = paginatePosts(
     allPosts,
     currentPage,
@@ -40,7 +40,7 @@ export default async function PageView({ params }: Props) {
 
   return (
     <PostListPage
-      allPosts={allPosts}
+      tagCounts={tagCounts}
       categories={categories}
       posts={posts}
       currentPage={currentPage}

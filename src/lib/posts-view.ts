@@ -1,5 +1,6 @@
 // src/lib/posts-view.ts
 import { getAllPostMeta } from '@/src/lib/posts-server';
+import { getTagsWithCount } from '@/src/lib/post-taxonomy';
 import type { PostMeta } from '@/src/types/post';
 
 type PaginatedPosts = {
@@ -7,9 +8,15 @@ type PaginatedPosts = {
   totalPages: number;
 };
 
+export type TagCount = {
+  tag: string;
+  count: number;
+};
+
 type BlogViewContext = {
   allPosts: PostMeta[];
   categories: string[];
+  tagCounts: TagCount[];
 };
 
 /**
@@ -17,8 +24,13 @@ type BlogViewContext = {
  */
 export async function getBlogViewContext(): Promise<BlogViewContext> {
   const allPosts = await getAllPostMeta();
-  const categories = Array.from(new Set(allPosts.map((post) => post.category)));
-  return { allPosts, categories };
+  const categories = Array.from(new Set(allPosts.map((post) => post.category))).sort();
+  const tagCounts = getTagsWithCount(allPosts);
+
+  // クライアントに渡すデータから plaintext を除去して軽量化
+  const lightPosts = allPosts.map(({ plaintext, ...rest }) => rest) as PostMeta[];
+
+  return { allPosts: lightPosts, categories, tagCounts };
 }
 
 /**

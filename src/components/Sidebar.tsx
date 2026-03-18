@@ -1,26 +1,34 @@
 // src/components/Sidebar.tsx
 'use client';
-import SearchBox from '@/src/components/SearchBox';
 import TagCloud from '@/src/components/TagCloud';
+import type { TagCount } from '@/src/lib/posts-view';
 import { categoryToSlug } from '@/src/lib/utils';
-import type { TocItem, PostMeta } from '@/src/types/post';
+import type { TocItem } from '@/src/types/post';
 import { Menu } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useState } from 'react';
+
+const SearchBox = dynamic(() => import('@/src/components/SearchBox'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-10 bg-card border border-border rounded-lg animate-pulse" />
+  ),
+});
 
 /**
  * サイドバーのプロパティ。
  */
 type SidebarProps = {
-  posts?: PostMeta[];
   toc?: TocItem[];
   categories?: string[];
+  tagCounts?: TagCount[];
 };
 
 /**
  * 記事一覧・カテゴリ・目次を表示するサイドバー。
  */
-export default function Sidebar({ posts, toc, categories }: SidebarProps) {
+export default function Sidebar({ toc, categories, tagCounts }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const hasToc = !!(toc && toc.length > 0);
 
@@ -56,7 +64,7 @@ export default function Sidebar({ posts, toc, categories }: SidebarProps) {
 
   return (
     <div className="space-y-6 h-full">
-      <SearchBox posts={posts ?? []} />
+      <SearchBox />
 
       {/* カテゴリ・タグ一覧（省略せずそのまま） */}
       {categories && categories.length > 0 && (
@@ -79,7 +87,7 @@ export default function Sidebar({ posts, toc, categories }: SidebarProps) {
 
       <div className="p-4 border border-border rounded-lg bg-card">
         <h2 className="font-bold text-lg mb-4 text-text">タグ</h2>
-        <TagCloud posts={posts ?? []} />
+        <TagCloud tagCounts={tagCounts ?? []} />
       </div>
 
       {/* --- TOC セクション --- */}

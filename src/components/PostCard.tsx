@@ -48,6 +48,11 @@ export default function PostCard({ post, priorityImage = false }: PostCardProps)
           </Link>
         </h2>
 
+        {/* 説明文 */}
+        {post.description && (
+          <p className="text-text/70 text-sm line-clamp-2 mt-3 mb-4">{post.description}</p>
+        )}
+
         <PostMeta post={post} showReadingTime={false} stackTags />
       </div>
     </article>

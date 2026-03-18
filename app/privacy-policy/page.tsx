@@ -1,6 +1,6 @@
 // app/privacy-policy/page.tsx
 import BlogLayout from '@/src/components/BlogLayout';
-import { getAllPostMeta } from '@/src/lib/posts-server';
+import { getBlogViewContext } from '@/src/lib/posts-view';
 import type { Metadata } from 'next';
 
 /**
@@ -14,11 +14,10 @@ export const metadata: Metadata = {
  * プライバシーポリシーページ。
  */
 export default async function PrivacyPolicyPage() {
-  const posts = await getAllPostMeta();
-  const categories = Array.from(new Set(posts.map((p) => p.category)));
+  const { categories, tagCounts } = await getBlogViewContext();
 
   return (
-    <BlogLayout posts={posts} categories={categories}>
+    <BlogLayout categories={categories} tagCounts={tagCounts}>
       <div className="max-w-none">
         <header className="mb-10">
           <h1 className="text-3xl md:text-4xl font-bold text-text">
