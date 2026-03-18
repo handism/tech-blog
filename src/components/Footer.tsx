@@ -1,4 +1,5 @@
 // src/components/Footer.tsx
+import { siteConfig } from '@/src/config/site';
 import Link from 'next/link';
 
 /**
