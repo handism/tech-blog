@@ -63,12 +63,12 @@ export default function Header() {
 
   return (
     <header>
-      <div className="max-w-6xl mx-auto px-4 py-3 md:py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-0">
-        <Link href="/" className="text-xl font-bold text-text hover:opacity-80">
-          {siteConfig.name}
-        </Link>
+      <div className="max-w-6xl mx-auto px-4 py-3 md:py-4 relative flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-0">
+        <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6">
+          <Link href="/" className="text-xl font-bold text-text hover:opacity-80">
+            {siteConfig.name}
+          </Link>
 
-        <div className="flex items-center justify-between md:justify-start md:gap-6">
           <nav className="flex items-center gap-4 md:gap-6 text-sm">
             <Link href="/about" className="text-text/80 hover:text-accent transition-colors">
               About
@@ -154,28 +154,28 @@ export default function Header() {
               </div>
             </div>
           </nav>
+        </div>
 
-          {/* アイコン類 */}
-          <div className="flex items-center gap-1.5 md:gap-2">
-            <a
-              href="/rss.xml"
-              className="rounded-full p-2 text-text transition hover:bg-card"
-              aria-label="RSS フィード"
-            >
-              <Rss className="w-5 h-5" />
-            </a>
-            <a
-              href={siteConfig.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-full p-2 text-text transition hover:bg-card"
-              aria-label="GitHub"
-            >
-              <Github className="w-5 h-5" />
-            </a>
-            <SkinSelector />
-            <ThemeToggle />
-          </div>
+        {/* アイコン類 */}
+        <div className="absolute right-3 top-3 md:static flex items-center gap-1.5 md:gap-2 md:self-auto">
+          <a
+            href="/rss.xml"
+            className="rounded-full p-2 text-text transition hover:bg-card"
+            aria-label="RSS フィード"
+          >
+            <Rss className="w-5 h-5" />
+          </a>
+          <a
+            href={siteConfig.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-full p-2 text-text transition hover:bg-card"
+            aria-label="GitHub"
+          >
+            <Github className="w-5 h-5" />
+          </a>
+          <SkinSelector />
+          <ThemeToggle />
         </div>
       </div>
     </header>
