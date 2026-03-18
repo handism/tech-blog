@@ -24,10 +24,7 @@ export default function RelatedPosts({ posts }: { posts: PostMeta[] }) {
             </p>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-text/60">
               {post.date && (
-                <time
-                  dateTime={post.date.toISOString()}
-                  className="inline-flex items-center gap-1"
-                >
+                <time dateTime={post.date.toISOString()} className="inline-flex items-center gap-1">
                   <Calendar className="h-3 w-3" />
                   {post.date.toLocaleDateString('ja-JP', {
                     year: 'numeric',
