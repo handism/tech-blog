@@ -23,86 +23,23 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 
 `md/` 内の Markdown ファイルは以下の順で処理される：
 
-1. **`src/lib/post-repository.ts`** — ディスクから `.md` ファイルを読み込む
-2. **`src/lib/post-parser.ts`** — `gray-matter` で YAML フロントマターを抽出し、**Zod** でバリデーション（不正な値はデフォルト値にフォールバック）
-3. **`src/lib/post-renderer.ts`** — Remark/Rehype（GFM・Shiki シンタックスハイライト・見出し slug/自動リンク・TOC 生成）で Markdown を HTML に変換。`remarkExtractCodeFilename()` カスタムプラグインにより ` ```lang:filename ` 構文でコードブロック上部にファイル名を表示
-4. **`src/lib/posts-server.ts`** — React `cache()` でデータを集約し SSG に対応。`getAllPostMeta()` と `getPost(slug)` をエクスポート
-   - **`src/lib/client-search.ts`** — Fuse.js を使った重み付きクライアント検索（title > tags > category > plaintext の優先度）。`createPostSearcher()` / `searchPosts()` / `searchPostsWithMatches()` をエクスポート。`searchPostsWithMatches()` はタイトル・本文スニペット・タグ・カテゴリのマッチ位置情報（`RangeTuple`）を返す
-   - **`src/lib/post-taxonomy.ts`** — タグ・カテゴリ集約。`getAllTags()` / `getTagsWithCount()`（出現回数降順）をエクスポート
-   - **`src/lib/posts-view.ts`** — 一覧ページ共通ロジック。`getBlogViewContext()` / `paginatePosts()` をエクスポート
-   - **`src/lib/toc.ts`** — HAST から目次アイテムを生成
-5. **`app/`** — Next.js App Router ページが上記を呼び出し、`generateStaticParams()` で静的 HTML を生成
+1. `src/lib/post-repository.ts` — ディスクから `.md` ファイルを読み込む
+2. `src/lib/post-parser.ts` — `gray-matter` で YAML フロントマターを抽出し、Zod でバリデーション
+3. `src/lib/post-renderer.ts` — Remark/Rehype で HTML に変換（GFM・Shiki・TOC 生成）。` ```lang:filename ` 構文でコードブロック上部にファイル名を表示
+4. `src/lib/posts-server.ts` — React `cache()` でデータを集約し SSG に対応
+5. `app/` — Next.js App Router ページが `generateStaticParams()` で静的 HTML を生成
 
 ### 主要ディレクトリ
 
 | パス | 役割 |
 |------|------|
-| `md/` | ブログ記事の Markdown ファイル |
-| `md/draft/` | 下書き記事（ビルド対象外） |
+| `md/` | ブログ記事（`draft/` は下書き・ビルド対象外） |
 | `src/lib/` | ビジネスロジック（パース・レンダリング・検索・ページネーション） |
 | `src/components/` | UI コンポーネント（サーバー・クライアント） |
-| `src/config/` | サイト全体の設定（著者・ページネーション・GitHub URL） |
-| `src/types/` | TypeScript インターフェース（`Post`・`PostMeta`・`TocItem`） |
+| `src/config/` | サイト全体の設定（著者・ページネーション・スキン等） |
+| `src/types/` | TypeScript インターフェース |
 | `public/images/` | 記事カバー画像（16:9 比率、`.webp` 推奨） |
 | `tests/` | テストファイル（E2E: `*.spec.ts`、ユニット: `*.test.ts`） |
-
-### ルーティング
-
-| ルート | 用途 |
-|--------|------|
-| `app/page.tsx` | トップページ（記事一覧） |
-| `app/blog/posts/[slug]/page.tsx` | 記事詳細 |
-| `app/blog/page/[page]/page.tsx` | ページネーション一覧（`/blog/page/1` は `/` にリダイレクト） |
-| `app/blog/categories/[category]/page.tsx` | カテゴリ絞り込み |
-| `app/blog/tags/[tag]/page.tsx` | タグ絞り込み |
-| `app/tools/memphis/page.tsx` | Memphis 柄の背景画像生成ツール |
-| `app/tools/trimming/page.tsx` | 画像トリミングツール |
-| `app/about/page.tsx` | About ページ |
-| `app/privacy-policy/page.tsx` | プライバシーポリシー |
-| `app/sitemap/page.tsx` | HTML Sitemap |
-| `app/rss.xml/route.ts` | RSS フィード |
-
-### クライアント / サーバーコンポーネント
-
-- サーバーコンポーネントがデータ取得を担当（ブログルート）
-- クライアントコンポーネント（`'use client'`）はインタラクティブな UI に使用：`Header`・`SearchBox`・`ThemeToggle`・`SkinSelector`・`ImageModal`・`CopyButtonScript`・`TagCloud`
-- ダークモードは `next-themes` によるクラスベースの切り替えで管理
-- スキン（カラーテーマ）は `data-skin` 属性によるクラスベースの切り替えで管理（`localStorage` に永続化）
-
-### 設定
-
-- `src/config/site.ts` にサイト名・URL・著者などの基本設定を集約
-- `toolsMenuItems` 配列で Header の Tools ドロップダウンメニュー項目を管理
-- `skinConfig` 配列でスキン一覧（Emerald・Ocean・Sunset・Purple・Rose）を管理。`DEFAULT_SKIN` でデフォルト指定
-
-### SEO・メタデータ
-
-- `app/layout.tsx` にサイト全体のデフォルト OGP（`og:title`、`og:description`、Twitter Card）を設定
-- 記事ページ（`app/blog/posts/[slug]/page.tsx`）は `generateMetadata` で記事固有の OGP と `og:type: article` を設定
-- カテゴリページ（`app/blog/categories/[category]/page.tsx`）・タグページ（`app/blog/tags/[tag]/page.tsx`）も `generateMetadata` で動的な OGP タイトル・説明文を生成
-- 各記事ページには **JSON-LD**（`BlogPosting` スキーマ）を埋め込み
-- Sitemap（`app/sitemap.xml/route.ts`）は記事・カテゴリ・タグ・ページネーションページを含み、`lastmod` 付きで出力
-- RSS フィード（`app/rss.xml/route.ts`）は各記事の本文要約（先頭 200 文字 + `…`）を `<description>` として出力
-
-### アクセシビリティ
-
-- `Header` の Tools ドロップダウンは ARIA menu パターンに準拠（矢印キー・Escape キー操作対応）
-- `ThemeToggle` には `aria-label`（「ダークモードに切り替え」/「ライトモードに切り替え」）を設定
-- `SkinSelector` は `role="group"` + 各ボタンに `aria-pressed` / `aria-label` を設定
-- `:focus-visible` スタイルをアクセント色で定義（`app/globals.css`）
-
-### テスト構成
-
-| 種別 | ファイル | 実行コマンド |
-|------|----------|-------------|
-| E2E（Playwright） | `tests/*.spec.ts` | `npm run test:e2e` |
-| ユニット（Vitest） | `tests/*.test.ts` | `npm run test:unit` |
-
-- E2E テスト対象：記事詳細表示・OGP タグ・検索・ページネーション・ダークモード
-- ユニットテスト対象：
-  - `tagToSlug` / `categoryToSlug`（`src/lib/utils.ts`）
-  - `parsePostSource` / `createPostMeta`（`src/lib/post-parser.ts`）
-  - `createPostSearcher` / `searchPosts` / `searchPostsWithMatches`（`src/lib/client-search.ts`）
 
 ### 記事フロントマターの形式
 
@@ -116,7 +53,7 @@ image: filename.webp
 ---
 ```
 
-フロントマターは Zod でバリデーションされる。省略・不正な値はデフォルト値（`siteConfig.posts.defaultTitle` / `defaultCategory`）にフォールバック。
+省略・不正な値は `siteConfig.posts.defaultTitle` / `defaultCategory` にフォールバック。
 
 ## コードスタイル
 
@@ -126,10 +63,4 @@ image: filename.webp
 
 ## ドキュメント管理ルール
 
-- **`CLAUDE.md` と `README.md` は常に最新の状態を保つこと。**
-- 以下の変更を行った際は、必ず両ファイルを同時に更新する：
-  - 新機能の追加・既存機能の変更
-  - ルーティングの追加・変更
-  - テスト対象の追加
-  - アーキテクチャの変更（ライブラリ追加・パイプライン変更など）
-  - コードスタイルルールの変更
+**`CLAUDE.md` と `README.md` は常に最新の状態を保つこと。** 新機能・ルーティング・テスト・アーキテクチャ・コードスタイルの変更時は両ファイルを同時に更新する。
