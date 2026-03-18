@@ -281,7 +281,7 @@ article.prose table code {
     コードブロックの行番号＆コピーボタン
    ======================= */
 pre.shiki {
-  padding: 1.5rem 0.75rem;
+  padding: 1.5rem 0.5rem;
   border-radius: 0.5rem;
   overflow-x: auto;
   font-family:
