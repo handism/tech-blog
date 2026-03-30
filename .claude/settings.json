@@ -9,9 +9,6 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git push:*)"
-    ],
-    "additionalDirectories": [
-      "/Users/mba/git/handism.github.io/.claude"
     ]
   }
 }
