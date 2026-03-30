@@ -19,9 +19,9 @@ export default function Footer() {
           <Link href="/privacy-policy" className="hover:text-accent transition-colors">
             Privacy Policy
           </Link>
-          <Link href="/rss.xml" className="hover:text-accent transition-colors">
+          <a href="/rss.xml" className="hover:text-accent transition-colors">
             RSS
-          </Link>
+          </a>
         </nav>
         <p className="text-center text-sm text-text/60">
           &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
