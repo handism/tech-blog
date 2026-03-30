@@ -2,6 +2,7 @@
 'use client';
 
 import { createPostSearcher, searchPostsWithMatches } from '@/src/lib/client-search';
+import { preloadTokenizer, tokenizeForSearch } from '@/src/lib/kuromoji-tokenizer';
 import type { RangeTuple } from 'fuse.js';
 import type { PostMeta } from '@/src/types/post';
 import Link from 'next/link';
@@ -39,10 +40,12 @@ function highlightText(text: string, indices: readonly RangeTuple[]): React.Reac
 export default function SearchBox() {
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
+  const [tokenizedQuery, setTokenizedQuery] = useState('');
   const [posts, setPosts] = useState<PostMeta[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleFocus = async () => {
+    preloadTokenizer();
     if (posts.length > 0 || isLoading) return;
     setIsLoading(true);
     try {
@@ -58,8 +61,8 @@ export default function SearchBox() {
 
   const searcher = useMemo(() => createPostSearcher(posts), [posts]);
   const results = useMemo(
-    () => searchPostsWithMatches(searcher, debouncedQuery),
-    [searcher, debouncedQuery]
+    () => searchPostsWithMatches(searcher, tokenizedQuery),
+    [searcher, tokenizedQuery]
   );
 
   const hasResults = debouncedQuery.length > 0 && results.length > 0;
@@ -71,6 +74,20 @@ export default function SearchBox() {
 
     return () => window.clearTimeout(timerId);
   }, [query]);
+
+  useEffect(() => {
+    if (!debouncedQuery.trim()) {
+      setTokenizedQuery('');
+      return;
+    }
+    let cancelled = false;
+    tokenizeForSearch(debouncedQuery).then((result) => {
+      if (!cancelled) setTokenizedQuery(result);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [debouncedQuery]);
 
   return (
     <div className="space-y-2">
