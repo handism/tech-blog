@@ -5,14 +5,14 @@
 ## コマンド
 
 ```bash
-npm run dev          # 開発サーバー起動
-npm run build        # 本番ビルド（静的ファイルを /out に出力）
-npm run start        # ビルド済み出力をローカルで配信
-npm run lint         # ESLint 実行
-npm run test:e2e     # Playwright E2E テスト実行（deployed site 対象）
-npm run test:e2e:ui  # E2E テストをインタラクティブ UI で実行
-npm run test:unit    # Vitest ユニットテスト実行
-npm run analyze      # バンドルサイズ分析（ANALYZE=true でビルド）
+bun run dev          # 開発サーバー起動
+bun run build        # 本番ビルド（静的ファイルを /out に出力）
+bun run start        # ビルド済み出力をローカルで配信
+bun run lint         # ESLint 実行
+bun run test:e2e     # Playwright E2E テスト実行（deployed site 対象）
+bun run test:e2e:ui  # E2E テストをインタラクティブ UI で実行
+bun run test:unit    # Vitest ユニットテスト実行
+bun run analyze      # バンドルサイズ分析（ANALYZE=true でビルド）
 ```
 
 ## アーキテクチャ

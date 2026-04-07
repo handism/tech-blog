@@ -1,0 +1,2 @@
+# bun.lock is a text-based lockfile (bun >= 1.1.38)
+bun.lock text eol=lf

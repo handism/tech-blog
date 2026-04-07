@@ -41,7 +41,7 @@
 ローカルで動作確認する場合は以下コマンドで。終了するなら Ctrl + C。
 
 ```bash
-npm run dev
+bun run dev
 ```
 
 ### ビルド
@@ -49,8 +49,8 @@ npm run dev
 本番ビルドを実行する場合は以下。
 
 ```bash
-npm run build
-npm start
+bun run build
+bun run start
 ```
 
 SSG 出力は `out` ディレクトリに生成されます。
@@ -58,7 +58,7 @@ SSG 出力は `out` ディレクトリに生成されます。
 ### バンドルサイズ分析
 
 ```bash
-npm run analyze
+bun run analyze
 ```
 
 ブラウザでクライアント・サーバー・エッジのバンドルサイズを可視化するレポートが生成されます。
@@ -68,14 +68,14 @@ npm run analyze
 E2E テスト（Playwright）：
 
 ```bash
-npm run test:e2e      # テスト実行（deployed site 対象）
-npm run test:e2e:ui   # インタラクティブ UI モードで実行
+bun run test:e2e      # テスト実行（deployed site 対象）
+bun run test:e2e:ui   # インタラクティブ UI モードで実行
 ```
 
 ユニットテスト（Vitest）：
 
 ```bash
-npm run test:unit
+bun run test:unit
 ```
 
 テストファイルは `tests/` ディレクトリ以下に配置します。

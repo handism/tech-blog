@@ -6,12 +6,12 @@
 
 クイック参考コマンド
 
-- 開発サーバー: `npm run dev`
-- 本番ビルド: `npm run build` → 出力は `out` ディレクトリ
-- 本番サーバー（静的配信）: `npm run start`
-- ESLint: `npm run lint`
-- ユニットテスト（Vitest）: `npm run test:unit`
-- E2E（Playwright）: `npm run test:e2e` / `npm run test:e2e:ui`
+- 開発サーバー: `bun run dev`
+- 本番ビルド: `bun run build` → 出力は `out` ディレクトリ
+- 本番サーバー（静的配信）: `bun run start`
+- ESLint: `bun run lint`
+- ユニットテスト（Vitest）: `bun run test:unit`
+- E2E（Playwright）: `bun run test:e2e` / `bun run test:e2e:ui`
 
 主要な設計と慣習（短縮版）
 
@@ -34,7 +34,7 @@
 
 チェックすべきポイント（PR を作る前）
 
-- `npm run lint` が通ることを確認
+- `bun run lint` が通ることを確認
 - ユニットテスト / E2E のうち該当するものを実行して破壊的変更がないか検証
 - コンテンツ変更の場合、`md/` 内の frontmatter が Zod のスキーマに準拠していること
 
