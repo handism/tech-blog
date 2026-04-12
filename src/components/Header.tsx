@@ -5,7 +5,7 @@ import { SkinSelector } from '@/src/components/SkinSelector';
 import { ThemeToggle } from '@/src/components/ThemeToggle';
 import { siteConfig, toolsMenuItems } from '@/src/config/site';
 import Link from 'next/link';
-import { Github } from 'lucide-react';
+
 import { useState, useEffect, useRef, KeyboardEvent } from 'react';
 
 /**
@@ -159,15 +159,6 @@ export default function Header() {
 
           {/* アイコン類 */}
           <div className="absolute right-3 top-3 md:static flex items-center gap-1.5 md:gap-2 md:self-auto">
-            <a
-              href={siteConfig.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-full p-2 text-text transition hover:bg-card"
-              aria-label="GitHub"
-            >
-              <Github className="w-5 h-5" />
-            </a>
             <SkinSelector />
             <ThemeToggle />
           </div>

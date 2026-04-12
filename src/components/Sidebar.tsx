@@ -1,5 +1,6 @@
 // src/components/Sidebar.tsx
 'use client';
+import ProfileCard from '@/src/components/ProfileCard';
 import TagCloud from '@/src/components/TagCloud';
 import type { CategoryCount, TagCount } from '@/src/lib/post-taxonomy';
 import { categoryToSlug } from '@/src/lib/utils';
@@ -64,8 +65,8 @@ export default function Sidebar({ toc, categoryCounts, tagCounts }: SidebarProps
 
   return (
     <div className="space-y-6 h-full">
+      <ProfileCard />
       <SearchBox />
-
       {/* カテゴリ一覧 */}
       {categoryCounts && categoryCounts.length > 0 && (
         <div className="p-5 border border-border/60 rounded-3xl bg-card/70 backdrop-blur-md shadow-sm">
