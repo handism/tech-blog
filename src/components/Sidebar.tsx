@@ -68,7 +68,7 @@ export default function Sidebar({ toc, categories, tagCounts }: SidebarProps) {
 
       {/* カテゴリ・タグ一覧（省略せずそのまま） */}
       {categories && categories.length > 0 && (
-        <div className="p-4 border border-border rounded-lg bg-card">
+        <div className="p-5 border border-border/60 rounded-3xl bg-card/70 backdrop-blur-md shadow-sm">
           <h2 className="font-bold text-lg mb-4 text-text">カテゴリ</h2>
           <ul className="space-y-2 text-sm">
             {categories.map((cat) => (
@@ -85,7 +85,7 @@ export default function Sidebar({ toc, categories, tagCounts }: SidebarProps) {
         </div>
       )}
 
-      <div className="p-4 border border-border rounded-lg bg-card">
+      <div className="p-5 border border-border/60 rounded-3xl bg-card/70 backdrop-blur-md shadow-sm">
         <h2 className="font-bold text-lg mb-4 text-text">タグ</h2>
         <TagCloud tagCounts={tagCounts ?? []} />
       </div>
@@ -94,8 +94,8 @@ export default function Sidebar({ toc, categories, tagCounts }: SidebarProps) {
       {hasToc && (
         <>
           {/* 1. PC用 */}
-          <div className="hidden lg:block sticky top-5">
-            <div className="p-4 border border-border rounded-lg bg-card max-h-[calc(100vh-120px)] overflow-y-auto">
+          <div className="hidden lg:block sticky top-28 z-10">
+            <div className="p-5 border border-border/60 rounded-3xl bg-card/70 backdrop-blur-md shadow-sm max-h-[calc(100vh-160px)] overflow-y-auto">
               {tocElements}
             </div>
           </div>

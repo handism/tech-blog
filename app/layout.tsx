@@ -46,7 +46,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja" suppressHydrationWarning data-scroll-behavior="smooth">
-      <body className={`${geistSans.className} bg-bg text-text antialiased`}>
+      <body className={`${geistSans.className} bg-bg text-text antialiased relative min-h-screen`}>
+        {/* 背景装飾 (グラスモーフィズム用) */}
+        <div className="pointer-events-none fixed inset-0 z-[-1] overflow-hidden">
+          <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-accent/10 blur-[120px]" />
+          <div className="absolute top-[40%] -right-[20%] w-[60%] h-[60%] rounded-full bg-accent/10 blur-[150px]" />
+        </div>
         {/* フラッシュ防止スクリプト: キー名は SKIN_STORAGE_KEY、フォールバック値は DEFAULT_SKIN と一致させること */}
         <script
           dangerouslySetInnerHTML={{
@@ -55,7 +60,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
           <Header />
-          {children}
+          <div className="relative z-0">{children}</div>
           <Footer />
           <ScrollToTopButton />
         </ThemeProvider>

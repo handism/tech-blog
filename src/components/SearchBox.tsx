@@ -103,10 +103,10 @@ export default function SearchBox() {
         onChange={(e) => setQuery(e.target.value)}
         onFocus={handleFocus}
         onMouseEnter={handleFocus}
-        className="w-full border border-border bg-card text-text placeholder:text-text/40 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/40 transition"
+        className="w-full border border-border/60 bg-card/60 backdrop-blur-md text-text placeholder:text-text/40 py-2.5 px-4 rounded-full focus:outline-none focus:ring-2 focus:ring-accent/50 shadow-inner transition-all"
       />
       <ul
-        className={`mt-2 space-y-1 ${hasResults ? 'bg-card border border-border rounded-lg p-2' : ''}`}
+        className={`mt-2 space-y-1 ${hasResults ? 'bg-card/80 backdrop-blur-md border border-border/60 rounded-2xl p-4 shadow-xl' : ''}`}
       >
         {hasResults &&
           results.map(
