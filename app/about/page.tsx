@@ -15,10 +15,10 @@ export const metadata: Metadata = {
  * Aboutページ。
  */
 export default async function AboutPage() {
-  const { categories, tagCounts } = await getBlogViewContext();
+  const { categoryCounts, tagCounts } = await getBlogViewContext();
 
   return (
-    <BlogLayout categories={categories} tagCounts={tagCounts}>
+    <BlogLayout categoryCounts={categoryCounts} tagCounts={tagCounts}>
       <div className="max-w-none">
         <header className="mb-10">
           <h1 className="text-3xl md:text-4xl font-bold text-text">About</h1>

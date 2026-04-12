@@ -81,7 +81,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const { slug } = await params;
   const post = await getPost(slug);
 
-  const { categories, tagCounts } = await getBlogViewContext();
+  const { categoryCounts, tagCounts } = await getBlogViewContext();
 
   if (!post) notFound();
 
@@ -114,7 +114,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   };
 
   return (
-    <BlogLayout tagCounts={tagCounts} toc={post.toc} categories={categories}>
+    <BlogLayout tagCounts={tagCounts} toc={post.toc} categoryCounts={categoryCounts}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

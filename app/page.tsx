@@ -20,13 +20,13 @@ const POSTS_PER_PAGE = siteConfig.pagination.postsPerPage;
  * トップページ（最新記事一覧）。
  */
 export default async function Home() {
-  const { categories, tagCounts, allPosts } = await getBlogViewContext();
+  const { categoryCounts, tagCounts, allPosts } = await getBlogViewContext();
   const { posts, totalPages } = paginatePosts(allPosts, 1, POSTS_PER_PAGE);
 
   return (
     <PostListPage
       tagCounts={tagCounts}
-      categories={categories}
+      categoryCounts={categoryCounts}
       posts={posts}
       currentPage={1}
       totalPages={totalPages}

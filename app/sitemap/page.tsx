@@ -17,11 +17,11 @@ export const metadata: Metadata = {
  * サイトマップページ。
  */
 export default async function SitemapPage() {
-  const { allPosts: posts, categories, tagCounts } = await getBlogViewContext();
+  const { allPosts: posts, categories, categoryCounts, tagCounts } = await getBlogViewContext();
   const tags = tagCounts.map((tc) => tc.tag);
 
   return (
-    <BlogLayout categories={categories} tagCounts={tagCounts}>
+    <BlogLayout categoryCounts={categoryCounts} tagCounts={tagCounts}>
       <div className="max-w-none">
         <header className="mb-10">
           <h1 className="text-3xl md:text-4xl font-bold text-text">サイトマップ</h1>

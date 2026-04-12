@@ -2,12 +2,12 @@
 import BlogLayout from '@/src/components/BlogLayout';
 import Pagination from '@/src/components/Pagination';
 import PostCardList from '@/src/components/PostCardList';
-import type { TagCount } from '@/src/lib/posts-view';
+import type { CategoryCount, TagCount } from '@/src/lib/post-taxonomy';
 import type { PostMeta } from '@/src/types/post';
 
 type PostListPageProps = {
   tagCounts: TagCount[];
-  categories: string[];
+  categoryCounts: CategoryCount[];
   posts: PostMeta[];
   heading?: string;
   emptyMessage?: string;
@@ -20,7 +20,7 @@ type PostListPageProps = {
  */
 export default function PostListPage({
   tagCounts,
-  categories,
+  categoryCounts,
   posts,
   heading,
   emptyMessage,
@@ -28,7 +28,7 @@ export default function PostListPage({
   totalPages,
 }: PostListPageProps) {
   return (
-    <BlogLayout tagCounts={tagCounts} categories={categories}>
+    <BlogLayout tagCounts={tagCounts} categoryCounts={categoryCounts}>
       <div>
         {heading && <h1 className="text-3xl font-bold mb-6">{heading}</h1>}
 

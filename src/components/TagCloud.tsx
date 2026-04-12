@@ -1,7 +1,7 @@
 // src/components/TagCloud.tsx
 import { tagToSlug } from '@/src/lib/utils';
 import Link from 'next/link';
-import type { TagCount } from '@/src/lib/posts-view';
+import type { TagCount } from '@/src/lib/post-taxonomy';
 
 type Props = {
   tagCounts: TagCount[];

@@ -47,7 +47,7 @@ export async function generateMetadata({
 export default async function TagPage({ params }: { params: Promise<{ tag: string }> }) {
   const { tag: slug } = await params;
 
-  const { allPosts: posts, categories, tagCounts } = await getBlogViewContext();
+  const { allPosts: posts, categoryCounts, tagCounts } = await getBlogViewContext();
 
   // 全タグを取得
   const allTags = getAllTags(posts);
@@ -59,7 +59,7 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
   return (
     <PostListPage
       tagCounts={tagCounts}
-      categories={categories}
+      categoryCounts={categoryCounts}
       posts={filteredPosts}
       heading={`Tag: #${actualTag}`}
       emptyMessage="このタグの記事はありません。"
