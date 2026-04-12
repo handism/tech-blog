@@ -62,8 +62,8 @@ export default function Header() {
   };
 
   return (
-    <header>
-      <div className="max-w-6xl mx-auto px-4 py-3 md:py-4 relative flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-0">
+    <header className="sticky top-0 z-40 w-full bg-bg/95 backdrop-blur-sm border-b border-border/50">
+      <div className="max-w-6xl mx-auto px-4 py-3 md:py-4 relative flex flex-col md:flex-row md:items-center md:justify-between gap-1 md:gap-0">
         <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6">
           <Link href="/" className="text-xl font-bold text-text hover:opacity-80">
             {siteConfig.name}
