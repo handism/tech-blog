@@ -11,7 +11,6 @@ export type TagCount = {
   count: number;
 };
 
-
 /**
  * 投稿配列から重複なしのタグ一覧を返す。
  */

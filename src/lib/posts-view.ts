@@ -13,7 +13,6 @@ type PaginatedPosts = {
   totalPages: number;
 };
 
-
 type BlogViewContext = {
   allPosts: PostMeta[];
   categories: string[];
