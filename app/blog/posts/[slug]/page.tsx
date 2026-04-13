@@ -129,18 +129,16 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         {/* メタ情報 */}
         <PostMeta post={post} />
 
-        {/* サムネイル画像（オプション） */}
-        {post.image && (
-          <div className="relative w-full h-64 md:h-96 mb-6 md:mb-8 lg:mb-10 not-prose">
-            <Image
-              src={`/images/${post.image}`}
-              alt={post.title}
-              fill
-              className="object-cover rounded-lg"
-              priority
-            />
-          </div>
-        )}
+        {/* サムネイル画像 */}
+        <div className="relative w-full h-64 md:h-96 mb-6 md:mb-8 lg:mb-10 not-prose">
+          <Image
+            src={post.image ? `/images/${post.image}` : `/og/${post.slug}/image.png`}
+            alt={post.title}
+            fill
+            className="object-cover rounded-lg"
+            priority
+          />
+        </div>
 
         {/* 記事本文 */}
         <div className="mt-16 md:mt-20" dangerouslySetInnerHTML={{ __html: post.content }} />
