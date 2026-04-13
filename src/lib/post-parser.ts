@@ -45,7 +45,7 @@ export function parsePostSource(raw: string): ParsedPostSource {
  * マークダウン本文をプレーンテキストに変換する。
  * コードブロック・画像・テーブル・HTML タグなどを除去し、本文のみ残す。
  */
-function markdownToPlaintext(markdown: string): string {
+export function markdownToPlaintext(markdown: string): string {
   return (
     markdown
       // フェンスコードブロック（``` または ~~~）

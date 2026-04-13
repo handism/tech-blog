@@ -34,6 +34,7 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 | パス              | 役割                                                             |
 | ----------------- | ---------------------------------------------------------------- |
 | `md/`             | ブログ記事（`draft/` は下書き・ビルド対象外）                    |
+| `scraps/`         | スクラップ記事（短い技術メモ・備忘録）                           |
 | `src/lib/`        | ビジネスロジック（パース・レンダリング・検索・ページネーション） |
 | `src/components/` | UI コンポーネント（サーバー・クライアント）                      |
 | `src/config/`     | サイト全体の設定（著者・ページネーション・スキン等）             |
@@ -54,6 +55,23 @@ image: filename.webp
 ```
 
 省略・不正な値は `siteConfig.posts.defaultTitle` / `defaultCategory` にフォールバック。
+
+### Scrap（技術メモ）機能
+
+`scraps/` ディレクトリに置いた `.md` ファイルが `/scraps` と `/scraps/[slug]` ルートで配信される。ブログ記事より軽量なフロントマターのみ必要。
+
+```yaml
+---
+title: メモのタイトル
+date: YYYY-MM-DD
+tags: [tag1, tag2]
+---
+```
+
+- 対応パイプライン: `src/lib/scrap-repository.ts` → `src/lib/scrap-parser.ts` → `src/lib/scraps-server.ts`
+- レンダリングは `src/lib/post-renderer.ts` の `renderPostMarkdown()` を共用
+- `category`, `image`, `readingMinutes` は不要（`ScrapMeta` 型は `src/types/scrap.ts`）
+- ルーティング: `/scraps`（一覧）、`/scraps/[slug]`（詳細）
 
 ## コードスタイル
 

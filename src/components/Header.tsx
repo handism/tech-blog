@@ -74,6 +74,9 @@ export default function Header() {
               <Link href="/about" className="text-text/80 hover:text-accent transition-colors">
                 About
               </Link>
+              <Link href="/scraps" className="text-text/80 hover:text-accent transition-colors">
+                Scraps
+              </Link>
               <Link href="/sitemap" className="text-text/80 hover:text-accent transition-colors">
                 Sitemap
               </Link>

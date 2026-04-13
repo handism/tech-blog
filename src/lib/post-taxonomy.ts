@@ -1,6 +1,8 @@
 // src/lib/post-taxonomy.ts
 import type { PostMeta } from '@/src/types/post';
 
+type Tagged = { tags: string[] };
+
 export type CategoryCount = {
   category: string;
   count: number;
@@ -12,9 +14,9 @@ export type TagCount = {
 };
 
 /**
- * 投稿配列から重複なしのタグ一覧を返す。
+ * タグを持つ任意の配列から重複なしのタグ一覧を返す。
  */
-export function getAllTags(posts: PostMeta[]): string[] {
+export function getAllTags(posts: Tagged[]): string[] {
   return Array.from(new Set(posts.flatMap((post) => post.tags)));
 }
 
@@ -32,9 +34,9 @@ export function getCategoriesWithCount(posts: PostMeta[]): CategoryCount[] {
 }
 
 /**
- * 投稿配列からタグと出現回数の一覧を返す（出現回数の多い順）。
+ * タグを持つ任意の配列からタグと出現回数の一覧を返す（出現回数の多い順）。
  */
-export function getTagsWithCount(posts: PostMeta[]): TagCount[] {
+export function getTagsWithCount(posts: Tagged[]): TagCount[] {
   const countMap = new Map<string, number>();
   for (const post of posts) {
     for (const tag of post.tags) {

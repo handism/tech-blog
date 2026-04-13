@@ -37,7 +37,12 @@ export const siteConfig = {
     defaultCategory: 'uncategorized',
     defaultTitle: 'No title',
   },
+  scraps: {
+    dir: 'scraps',
+    defaultTitle: 'No title',
+  },
   pagination: {
     postsPerPage: 10,
+    scrapsPerPage: 20,
   },
 };
