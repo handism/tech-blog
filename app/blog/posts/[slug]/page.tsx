@@ -39,7 +39,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const description = postMeta.plaintext?.slice(0, 160);
-  const imageUrl = postMeta.image ? `${siteConfig.url}/images/${postMeta.image}` : `${siteConfig.url}/og/${slug}/image.png`;
+  const imageUrl = postMeta.image
+    ? `${siteConfig.url}/images/${postMeta.image}`
+    : `${siteConfig.url}/og/${slug}/image.png`;
 
   return {
     title: postMeta.title,
@@ -95,7 +97,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.plaintext?.slice(0, 160),
-    image: post.image ? `${siteConfig.url}/images/${post.image}` : `${siteConfig.url}/og/${post.slug}/image.png`,
+    image: post.image
+      ? `${siteConfig.url}/images/${post.image}`
+      : `${siteConfig.url}/og/${post.slug}/image.png`,
     datePublished: post.date?.toISOString(),
     author: {
       '@type': 'Person',

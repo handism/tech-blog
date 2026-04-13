@@ -11,7 +11,7 @@ export default function ProfileCard() {
     <div className="p-5 border border-border/60 rounded-3xl bg-card/70 backdrop-blur-md shadow-sm flex flex-col items-center">
       <div className="w-24 h-24 mb-4 rounded-full overflow-hidden border-2 border-border/60 shadow-sm relative group">
         <div className="absolute inset-0 bg-gradient-to-tr from-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
+        {}
         <img
           src={avatarUrl}
           alt={`${siteConfig.author}'s avatar`}

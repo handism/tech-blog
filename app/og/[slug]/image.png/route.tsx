@@ -46,132 +46,130 @@ export async function GET(request: Request, props: { params: Promise<{ slug: str
   const avatarUrl = `${siteConfig.github}.png`;
 
   return new ImageResponse(
-    (
+    <div
+      style={{
+        height: '100%',
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        backgroundColor: '#09090b', // zinc-950
+        backgroundImage: 'radial-gradient(circle at 120% 120%, #10b98140 0%, #09090b 70%)',
+        border: '16px solid #10b981', // emerald-500 border
+        padding: '80px',
+        fontFamily: '"Noto Sans JP"',
+      }}
+    >
+      {/* ブログ・ヘッダー情報 */}
       <div
         style={{
-          height: '100%',
-          width: '100%',
           display: 'flex',
-          flexDirection: 'column',
-          backgroundColor: '#09090b', // zinc-950
-          backgroundImage: 'radial-gradient(circle at 120% 120%, #10b98140 0%, #09090b 70%)',
-          border: '16px solid #10b981', // emerald-500 border
-          padding: '80px',
-          fontFamily: '"Noto Sans JP"',
+          alignItems: 'center',
+          marginBottom: '40px',
+          gap: '16px',
         }}
       >
-        {/* ブログ・ヘッダー情報 */}
-        <div
+        {}
+        <img
+          src={avatarUrl}
+          alt="avatar"
+          width={64}
+          height={64}
           style={{
             display: 'flex',
-            alignItems: 'center',
-            marginBottom: '40px',
-            gap: '16px',
+            borderRadius: '50%',
+            objectFit: 'cover',
+          }}
+        />
+        <span
+          style={{
+            display: 'flex',
+            fontSize: '32px',
+            fontWeight: 700,
+            color: '#d4d4d8', // zinc-300
+            letterSpacing: '-0.02em',
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={avatarUrl}
-            alt="avatar"
-            width={64}
-            height={64}
-            style={{
-              display: 'flex',
-              borderRadius: '50%',
-              objectFit: 'cover',
-            }}
-          />
-          <span
-            style={{
-              display: 'flex',
-              fontSize: '32px',
-              fontWeight: 700,
-              color: '#d4d4d8', // zinc-300
-              letterSpacing: '-0.02em',
-            }}
-          >
-            {siteConfig.name}
-          </span>
+          {siteConfig.name}
+        </span>
+      </div>
+
+      {/* 記事タイトル */}
+      <div
+        style={{
+          display: 'flex',
+          flex: 1,
+          alignItems: 'center',
+        }}
+      >
+        <h1
+          style={{
+            display: 'flex',
+            fontSize: '72px',
+            fontWeight: 700,
+            color: '#ffffff',
+            lineHeight: 1.3,
+            letterSpacing: '-0.03em',
+            margin: 0,
+          }}
+        >
+          {post.title || 'No Title'}
+        </h1>
+      </div>
+
+      {/* タグとカテゴリ */}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginTop: '40px',
+        }}
+      >
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+          {post.category && (
+            <span
+              style={{
+                display: 'flex',
+                fontSize: '24px',
+                color: '#10b981',
+                backgroundColor: '#10b98120',
+                padding: '8px 24px',
+                borderRadius: '9999px',
+              }}
+            >
+              {post.category}
+            </span>
+          )}
+          {post.tags?.slice(0, 3).map((tag) => (
+            <span
+              key={tag}
+              style={{
+                display: 'flex',
+                fontSize: '24px',
+                color: '#a1a1aa', // zinc-400
+                backgroundColor: '#27272a', // zinc-800
+                padding: '8px 24px',
+                borderRadius: '9999px',
+              }}
+            >
+              #{tag}
+            </span>
+          ))}
         </div>
 
-        {/* 記事タイトル */}
+        {/* 著者名 */}
         <div
           style={{
             display: 'flex',
-            flex: 1,
-            alignItems: 'center',
+            fontSize: '28px',
+            color: '#e4e4e7', // zinc-200
+            fontWeight: 700,
           }}
         >
-          <h1
-            style={{
-              display: 'flex',
-              fontSize: '72px',
-              fontWeight: 700,
-              color: '#ffffff',
-              lineHeight: 1.3,
-              letterSpacing: '-0.03em',
-              margin: 0,
-            }}
-          >
-            {post.title || 'No Title'}
-          </h1>
-        </div>
-
-        {/* タグとカテゴリ */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginTop: '40px',
-          }}
-        >
-          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-            {post.category && (
-              <span
-                style={{
-                  display: 'flex',
-                  fontSize: '24px',
-                  color: '#10b981',
-                  backgroundColor: '#10b98120',
-                  padding: '8px 24px',
-                  borderRadius: '9999px',
-                }}
-              >
-                {post.category}
-              </span>
-            )}
-            {post.tags?.slice(0, 3).map((tag) => (
-              <span
-                key={tag}
-                style={{
-                  display: 'flex',
-                  fontSize: '24px',
-                  color: '#a1a1aa', // zinc-400
-                  backgroundColor: '#27272a', // zinc-800
-                  padding: '8px 24px',
-                  borderRadius: '9999px',
-                }}
-              >
-                #{tag}
-              </span>
-            ))}
-          </div>
-
-          {/* 著者名 */}
-          <div
-            style={{
-              display: 'flex',
-              fontSize: '28px',
-              color: '#e4e4e7', // zinc-200
-              fontWeight: 700,
-            }}
-          >
-            @ {siteConfig.author}
-          </div>
+          @ {siteConfig.author}
         </div>
       </div>
-    ),
+    </div>,
     {
       width: 1200,
       height: 630,
