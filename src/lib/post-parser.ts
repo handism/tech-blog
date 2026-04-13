@@ -18,6 +18,7 @@ const FrontmatterSchema = z.object({
   tags: z.array(z.string()).default([]).catch([]),
   category: z.string().min(1).default(siteConfig.posts.defaultCategory),
   image: z.string().optional(),
+  draft: z.boolean().optional(),
 });
 
 type ValidatedFrontmatter = z.infer<typeof FrontmatterSchema>;
@@ -109,5 +110,6 @@ export function createPostMeta(
     description: plaintext.slice(0, 200), // 一覧表示用
     readingMinutes: calculateReadingMinutes(plaintext),
     image: data.image,
+    draft: data.draft,
   };
 }

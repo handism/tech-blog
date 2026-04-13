@@ -21,13 +21,17 @@ const _loadAndParseMeta = cache(async function _loadAndParseMeta(
  * 全記事のメタ情報を取得（一覧用）。
  */
 export const getAllPostMeta = cache(async function getAllPostMeta(): Promise<PostMeta[]> {
+  const isDev = process.env.NODE_ENV !== 'production';
   const sources = await readAllPostSources();
   const posts = sources.map(({ slug, raw }) => {
     const { data, content } = parsePostSource(raw);
     return createPostMeta(slug, data, content);
   });
 
-  return posts.sort((a, b) => {
+  // 本番ビルド時は draft: true の記事を除外する
+  const filtered = isDev ? posts : posts.filter((p) => !p.draft);
+
+  return filtered.sort((a, b) => {
     if (!a.date) return 1;
     if (!b.date) return -1;
     return b.date.getTime() - a.date.getTime();
@@ -50,6 +54,10 @@ export const getPostMetaBySlug = cache(async function getPostMetaBySlug(
 export async function getPost(slug: string): Promise<Post | null> {
   const parsed = await _loadAndParseMeta(slug);
   if (!parsed) return null;
+
+  // 本番ビルド時は draft: true の記事へのアクセスを拒否する
+  const isDev = process.env.NODE_ENV !== 'production';
+  if (!isDev && parsed.meta.draft) return null;
 
   const { html: htmlContent, toc } = await renderPostMarkdown(parsed.content);
 

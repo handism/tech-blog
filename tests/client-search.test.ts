@@ -11,6 +11,8 @@ const makePosts = (): PostMeta[] => [
     tags: ['Vue', 'Frontend'],
     category: 'Frontend',
     plaintext: 'Vue.jsの基本的な使い方を解説します。コンポーネントやリアクティビティについて。',
+    description: 'Vue.jsの基本的な使い方を解説します。',
+    readingMinutes: 1,
   },
   {
     slug: 'react-intro',
@@ -19,6 +21,8 @@ const makePosts = (): PostMeta[] => [
     tags: ['React', 'Frontend'],
     category: 'Frontend',
     plaintext: 'Reactの基本的な使い方を解説します。Hooksやコンポーネントについて。',
+    description: 'Reactの基本的な使い方を解説します。',
+    readingMinutes: 1,
   },
   {
     slug: 'aws-intro',
@@ -27,6 +31,8 @@ const makePosts = (): PostMeta[] => [
     tags: ['AWS', 'Infrastructure'],
     category: 'Infrastructure',
     plaintext: 'AWSの各サービスを解説します。EC2、S3、RDSの基本的な使い方。',
+    description: 'AWSの各サービスを解説します。',
+    readingMinutes: 1,
   },
 ];
 
@@ -98,6 +104,8 @@ describe('searchPostsWithMatches', () => {
       tags: ['Test'],
       category: 'IT',
       plaintext: 'テスト本文',
+      description: 'テスト本文',
+      readingMinutes: 1,
     }));
     const searcher = createPostSearcher(manyPosts);
     const results = searchPostsWithMatches(searcher, 'テスト');

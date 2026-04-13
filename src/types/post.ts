@@ -21,6 +21,8 @@ export type PostMeta = {
   description: string;
   readingMinutes: number;
   image?: string;
+  /** 下書きフラグ。trueの場合は開発環境のみで表示され、本番ビルドでは除外される。 */
+  draft?: boolean;
 };
 
 /**

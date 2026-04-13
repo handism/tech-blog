@@ -107,7 +107,8 @@ bun run test:unit
 
 - md ファイルは `md` ディレクトリ内に入れてください
 - `md/template` 内に md ファイルのテンプレートが格納されているので、コピーして使用してください
-- 下書きは `md/draft` ディレクトリ内に入れればサイトに反映されません
+- 下書きは Frontmatter に `draft: true` を設定することで管理できます（後述）。開発環境では表示され、本番環境では自動的に除外されます。
+- また、`md/draft` などのサブディレクトリ内に配置した md ファイルもサイトには反映されません。
 - 画像は `public/images` ディレクトリ内に入れてください
   - サムネイル画像はアスペクト比 `16:9` がおすすめ
 
@@ -122,6 +123,7 @@ date: YYYY-MM-DD             # 省略可
 tags: [tag1, tag2]           # 省略時: []
 category: カテゴリ名          # 省略時: "uncategorized"
 image: filename.webp         # public/images/ 以下のファイル名（省略可）
+draft: true                  # true の場合、本番ビルド時に除外される（省略可）
 ---
 ```
 
