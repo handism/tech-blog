@@ -6,11 +6,17 @@ import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeSlug from 'rehype-slug';
 import rehypeStringify from 'rehype-stringify';
 import type { Code, Root } from 'mdast';
+import type { Root as HastRoot } from 'hast';
 import remarkGfm from 'remark-gfm';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import type { Node } from 'unist';
 import { unified } from 'unified';
+import { imageSizeFromFile } from 'image-size/fromFile';
+import { visit } from 'unist-util-visit';
+import type { Element } from 'hast';
+import path from 'path';
+import fs from 'fs';
 
 type RenderedPost = {
   html: string;
@@ -45,6 +51,65 @@ function remarkExtractCodeFilename() {
 }
 
 /**
+ * Markdown 本文中の画像に対して、ビルド時にファイルの
+ * 実寸を読み取り width / height / loading 属性を自動付与する Rehype プラグイン。
+ * これにより、静的エクスポート環境でも CLS（レイアウトシフト）を防止できる。
+ */
+function rehypeImageSize() {
+  return async (tree: HastRoot) => {
+    const tasks: Promise<void>[] = [];
+
+    visit(tree, 'element', (node: Element) => {
+      if (node.tagName !== 'img') return;
+
+      const src = node.properties?.src;
+      if (typeof src !== 'string') return;
+
+      // 画像パスの特定
+      let filePath = '';
+      if (src.startsWith('http')) return; // 外部画像はスキップ
+
+      if (src.startsWith('/')) {
+        // ルート相対パス（/images/... など）
+        filePath = path.join(process.cwd(), 'public', src);
+      } else {
+        // 相対パス（../../public/... など）
+        // まずは public ディレクトリを基準に解決を試みる
+        const resolvedPath = path.join(process.cwd(), 'public', src.replace(/^(\.\.\/)+public\//, ''));
+        if (fs.existsSync(resolvedPath)) {
+          filePath = resolvedPath;
+        }
+      }
+
+      if (!filePath || !fs.existsSync(filePath)) return;
+
+      tasks.push(
+        (async () => {
+          try {
+            const dimensions = await imageSizeFromFile(filePath);
+            if (dimensions.width && dimensions.height) {
+              node.properties.width = dimensions.width;
+              node.properties.height = dimensions.height;
+
+              // アスペクト比を維持しつつレスポンシブ対応するためのスタイル（Next.js の Image に擬似的に近づける）
+              node.properties.style = `max-width: 100%; height: auto; ${node.properties.style || ''}`;
+            }
+          } catch (e) {
+            console.warn(`Failed to get size for image: ${filePath}`, e);
+          }
+          // 遅延読み込みを設定
+          if (!node.properties.loading) {
+            node.properties.loading = 'lazy';
+          }
+        })()
+      );
+    });
+
+    await Promise.all(tasks);
+  };
+}
+
+/**
  * Markdownレンダリング用プロセッサ（モジュールレベルでシングルトン化）。
  * TOC は VFile の data フィールド経由で受け渡す。
  */
@@ -53,6 +118,7 @@ const processor = unified()
   .use(remarkGfm)
   .use(remarkExtractCodeFilename)
   .use(remarkRehype)
+  .use(rehypeImageSize)
   .use(rehypeShiki, {
     theme: 'github-dark',
     transformers: [
