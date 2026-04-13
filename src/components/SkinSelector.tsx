@@ -67,7 +67,7 @@ export function SkinSelector() {
           absolute right-0 mt-2 p-2
           flex gap-1.5
           rounded-md border border-border
-          bg-card/95 backdrop-blur-md
+          bg-bg/95 backdrop-blur-md
           shadow-xl shadow-black/20
           transition-all z-50
           ${isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}
