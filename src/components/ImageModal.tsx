@@ -73,7 +73,7 @@ export function ImageModal() {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90"
       onClick={() => setSelectedImage(null)}
     >
       <button
