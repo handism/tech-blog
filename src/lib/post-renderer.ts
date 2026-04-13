@@ -75,7 +75,11 @@ function rehypeImageSize() {
       } else {
         // 相対パス（../../public/... など）
         // まずは public ディレクトリを基準に解決を試みる
-        const resolvedPath = path.join(process.cwd(), 'public', src.replace(/^(\.\.\/)+public\//, ''));
+        const resolvedPath = path.join(
+          process.cwd(),
+          'public',
+          src.replace(/^(\.\.\/)+public\//, '')
+        );
         if (fs.existsSync(resolvedPath)) {
           filePath = resolvedPath;
         }
