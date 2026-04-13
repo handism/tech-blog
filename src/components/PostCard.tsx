@@ -34,8 +34,15 @@ export default function PostCard({ post, priorityImage = false }: PostCardProps)
         </Link>
       ) : (
         <Link href={`/blog/posts/${post.slug}`} className="block">
-          <div className="w-full h-56 bg-secondary flex items-center justify-center text-text/30 group-hover:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]">
-            No Image
+          <div className="relative w-full h-56 bg-secondary overflow-hidden">
+            <Image
+              src={`/og/${post.slug}/image.png`}
+              alt={post.title}
+              fill
+              priority={priorityImage}
+              className="object-cover group-hover:scale-105 group-focus-within:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
           </div>
         </Link>
       )}

@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node scripts/copy-kuromoji-dict.js && next dev",
-    "build": "node scripts/copy-kuromoji-dict.js && next build",
+    "dev": "node scripts/download-fonts.js && node scripts/copy-kuromoji-dict.js && next dev",
+    "build": "node scripts/download-fonts.js && node scripts/copy-kuromoji-dict.js && next build",
     "start": "serve out",
     "lint": "eslint",
     "test:e2e": "playwright test",
