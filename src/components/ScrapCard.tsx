@@ -16,11 +16,11 @@ export default function ScrapCard({ scrap }: ScrapCardProps) {
     : null;
 
   return (
-    <article className="py-6 first:pt-0">
+    <article className="py-8 first:pt-0">
       {formattedDate && (
         <time
           dateTime={scrap.date?.toISOString()}
-          className="block text-xs text-text/50 mb-3 font-mono"
+          className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent mb-4 font-mono"
         >
           {formattedDate}
         </time>

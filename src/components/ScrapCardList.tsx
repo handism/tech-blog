@@ -12,7 +12,7 @@ export default function ScrapCardList({ scraps }: ScrapCardListProps) {
   }
 
   return (
-    <div className="divide-y divide-border/40">
+    <div className="divide-y-2 divide-border">
       {scraps.map((scrap) => (
         <ScrapCard key={scrap.slug} scrap={scrap} />
       ))}
