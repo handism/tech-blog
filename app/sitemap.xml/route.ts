@@ -2,7 +2,6 @@
 import { siteConfig } from '@/src/config/site';
 import { getAllTags } from '@/src/lib/post-taxonomy';
 import { getAllPostMeta } from '@/src/lib/posts-server';
-import { getAllScrapMeta } from '@/src/lib/scraps-server';
 import { getBlogViewContext, paginatePosts } from '@/src/lib/posts-view';
 import { categoryToSlug, tagToSlug } from '@/src/lib/utils';
 import { buildSitemapXml } from '@/src/lib/xml';
@@ -17,11 +16,7 @@ export const revalidate = 3600; // 1時間ごとに再検証
  */
 export async function GET() {
   const baseUrl = siteConfig.url;
-  const [posts, scraps, { categories }] = await Promise.all([
-    getAllPostMeta(),
-    getAllScrapMeta(),
-    getBlogViewContext(),
-  ]);
+  const [posts, { categories }] = await Promise.all([getAllPostMeta(), getBlogViewContext()]);
   const tags = getAllTags(posts);
   const { totalPages } = paginatePosts(posts, 1, siteConfig.pagination.postsPerPage);
   const today = new Date().toISOString().split('T')[0];
@@ -42,10 +37,6 @@ export async function GET() {
       loc: `${baseUrl}/blog/page/${i + 2}`,
     })),
     { loc: `${baseUrl}/scraps`, lastmod: today },
-    ...scraps.map((scrap) => ({
-      loc: `${baseUrl}/scraps/${scrap.slug}`,
-      lastmod: scrap.date ? scrap.date.toISOString().split('T')[0] : undefined,
-    })),
   ]);
 
   return new Response(sitemap, {
