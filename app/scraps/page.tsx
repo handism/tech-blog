@@ -1,7 +1,7 @@
 // app/scraps/page.tsx
 import ScrapListPage from '@/src/components/ScrapListPage';
 import { siteConfig } from '@/src/config/site';
-import { getScrapViewContext } from '@/src/lib/scraps-view';
+import { getAllScraps } from '@/src/lib/scraps-server';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -12,11 +12,7 @@ export const metadata: Metadata = {
   },
 };
 
-/**
- * スクラップ一覧ページ。
- */
 export default async function ScrapsPage() {
-  const { allScraps } = await getScrapViewContext();
-
-  return <ScrapListPage scraps={allScraps} />;
+  const scraps = await getAllScraps();
+  return <ScrapListPage scraps={scraps} />;
 }

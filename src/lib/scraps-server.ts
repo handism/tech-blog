@@ -1,24 +1,20 @@
 // src/lib/scraps-server.ts
 import { createScrapMeta, parseScrapSource } from '@/src/lib/scrap-parser';
-import { readAllScrapSources, readScrapSourceBySlug } from '@/src/lib/scrap-repository';
+import { readAllScrapSources } from '@/src/lib/scrap-repository';
 import { renderPostMarkdown } from '@/src/lib/post-renderer';
 import type { Scrap, ScrapMeta } from '@/src/types/scrap';
 import { cache } from 'react';
 
-/**
- * スラッグからソースを読み込み、メタ情報と本文を返す内部ヘルパー。
- */
-const _loadAndParseScrapMeta = cache(async function _loadAndParseScrapMeta(
-  slug: string
-): Promise<{ meta: ScrapMeta; content: string } | null> {
-  const source = await readScrapSourceBySlug(slug);
-  if (!source) return null;
-  const { data, content } = parseScrapSource(source.raw);
-  return { meta: createScrapMeta(slug, data, content), content };
-});
+function sortByDate<T extends { date?: Date }>(items: T[]): T[] {
+  return items.sort((a, b) => {
+    if (!a.date) return 1;
+    if (!b.date) return -1;
+    return b.date.getTime() - a.date.getTime();
+  });
+}
 
 /**
- * 全スクラップのメタ情報を取得（一覧用）。
+ * 全スクラップのメタ情報を取得（軽量・一覧用）。
  */
 export const getAllScrapMeta = cache(async function getAllScrapMeta(): Promise<ScrapMeta[]> {
   const isDev = process.env.NODE_ENV !== 'production';
@@ -27,42 +23,24 @@ export const getAllScrapMeta = cache(async function getAllScrapMeta(): Promise<S
     const { data, content } = parseScrapSource(raw);
     return createScrapMeta(slug, data, content);
   });
-
-  // 本番ビルド時は draft: true のスクラップを除外する
   const filtered = isDev ? scraps : scraps.filter((s) => !s.draft);
-
-  return filtered.sort((a, b) => {
-    if (!a.date) return 1;
-    if (!b.date) return -1;
-    return b.date.getTime() - a.date.getTime();
-  });
+  return sortByDate(filtered);
 });
 
 /**
- * 単スクラップのメタ情報のみを取得（メタデータ生成用）。
+ * 全スクラップを本文HTML付きで取得（フィードページ用）。
  */
-export const getScrapMetaBySlug = cache(async function getScrapMetaBySlug(
-  slug: string
-): Promise<ScrapMeta | null> {
-  const parsed = await _loadAndParseScrapMeta(slug);
-  return parsed?.meta ?? null;
-});
-
-/**
- * 単スクラップ取得（詳細ページ用）- サーバー側のみ
- */
-export async function getScrap(slug: string): Promise<Scrap | null> {
-  const parsed = await _loadAndParseScrapMeta(slug);
-  if (!parsed) return null;
-
-  // 本番ビルド時は draft: true のスクラップへのアクセスを拒否する
+export const getAllScraps = cache(async function getAllScraps(): Promise<Scrap[]> {
   const isDev = process.env.NODE_ENV !== 'production';
-  if (!isDev && parsed.meta.draft) return null;
-
-  const { html: htmlContent } = await renderPostMarkdown(parsed.content);
-
-  return {
-    ...parsed.meta,
-    content: htmlContent,
-  };
-}
+  const sources = await readAllScrapSources();
+  const scraps = await Promise.all(
+    sources.map(async ({ slug, raw }) => {
+      const { data, content } = parseScrapSource(raw);
+      const meta = createScrapMeta(slug, data, content);
+      const { html } = await renderPostMarkdown(content);
+      return { ...meta, content: html };
+    })
+  );
+  const filtered = isDev ? scraps : scraps.filter((s) => !s.draft);
+  return sortByDate(filtered);
+});
