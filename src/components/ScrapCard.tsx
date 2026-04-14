@@ -20,7 +20,7 @@ export default function ScrapCard({ scrap }: ScrapCardProps) {
       {formattedDate && (
         <time
           dateTime={scrap.date?.toISOString()}
-          className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent mb-4 font-mono"
+          className="inline-flex items-center gap-1.5 text-base font-semibold text-accent mb-4 font-mono"
         >
           {formattedDate}
         </time>
