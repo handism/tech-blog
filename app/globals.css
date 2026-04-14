@@ -71,6 +71,11 @@ input:focus-visible,
 
 html {
   scroll-behavior: auto;
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
 }
 
 /* デスクトップのみ: スクロールバー表示時のレイアウトシフトを防ぐ */

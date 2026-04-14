@@ -70,7 +70,7 @@ export default function Header() {
               {siteConfig.name}
             </Link>
 
-            <nav className="flex items-center gap-4 md:gap-6 text-sm">
+            <nav className="flex items-center gap-x-4 gap-y-1.5 md:gap-6 text-sm flex-wrap">
               <Link href="/about" className="text-text/80 hover:text-accent transition-colors">
                 About
               </Link>
