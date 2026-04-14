@@ -71,7 +71,13 @@ input:focus-visible,
 
 html {
   scroll-behavior: auto;
-  scrollbar-gutter: stable;
+}
+
+/* デスクトップのみ: スクロールバー表示時のレイアウトシフトを防ぐ */
+@media (min-width: 768px) {
+  html {
+    scrollbar-gutter: stable;
+  }
 }
 
 html:has(:target),
