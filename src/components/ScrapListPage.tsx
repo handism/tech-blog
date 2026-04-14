@@ -1,17 +1,13 @@
 // src/components/ScrapListPage.tsx
+import CopyButtonScript from '@/src/components/CopyButtonScript';
+import { ImageModal } from '@/src/components/ImageModal';
 import ScrapCardList from '@/src/components/ScrapCardList';
-import type { ScrapMeta } from '@/src/types/scrap';
+import type { Scrap } from '@/src/types/scrap';
 
-/**
- * スクラップ一覧ページのプロパティ。
- */
 type ScrapListPageProps = {
-  scraps: ScrapMeta[];
+  scraps: Scrap[];
 };
 
-/**
- * スクラップ一覧ページの共通レイアウト（1カラム、サイドバーなし）。
- */
 export default function ScrapListPage({ scraps }: ScrapListPageProps) {
   return (
     <div className="mx-auto w-full max-w-2xl px-4 py-8">
@@ -21,6 +17,8 @@ export default function ScrapListPage({ scraps }: ScrapListPageProps) {
       </header>
 
       <ScrapCardList scraps={scraps} />
+      <ImageModal />
+      <CopyButtonScript />
     </div>
   );
 }
