@@ -23,6 +23,9 @@ export async function GET() {
       title: post.title,
       link: `${baseUrl}/blog/posts/${post.slug}`,
       pubDate: post.date?.toUTCString(),
+      description: post.plaintext
+        ? post.plaintext.slice(0, 200) + (post.plaintext.length > 200 ? '…' : '')
+        : undefined,
     })),
   });
 

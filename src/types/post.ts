@@ -17,8 +17,12 @@ export type PostMeta = {
   date?: Date;
   tags: string[];
   category: string;
-  plaintext: string;
+  plaintext?: string;
+  description: string;
+  readingMinutes: number;
   image?: string;
+  /** 下書きフラグ。trueの場合は開発環境のみで表示され、本番ビルドでは除外される。 */
+  draft?: boolean;
 };
 
 /**

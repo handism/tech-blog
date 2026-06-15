@@ -1,6 +1,6 @@
 // src/components/PostMeta.tsx
 import TagLink from '@/src/components/TagLink';
-import { categoryToSlug, estimateReadingMinutes } from '@/src/lib/utils';
+import { categoryToSlug } from '@/src/lib/utils';
 import type { PostMeta } from '@/src/types/post';
 import { Clock, Calendar, Folder } from 'lucide-react';
 import Link from 'next/link';
@@ -26,8 +26,6 @@ export default function PostMeta({
   showTags = true,
   stackTags = false,
 }: Props) {
-  const readingMinutes = post.plaintext ? estimateReadingMinutes(post.plaintext) : null;
-
   return (
     <div
       className={`flex flex-wrap items-center gap-4 text-sm text-text/70 not-prose${
@@ -35,10 +33,10 @@ export default function PostMeta({
       }`}
     >
       {/* 読了時間 */}
-      {showReadingTime && readingMinutes && (
+      {showReadingTime && (
         <span className="inline-flex items-center gap-1.5">
           <Clock className="h-4 w-4" />
-          読了 {readingMinutes} 分
+          読了 {post.readingMinutes} 分
         </span>
       )}
       {/* 投稿日時 */}

@@ -9,6 +9,8 @@ import Link from 'next/link';
 type PaginationProps = {
   currentPage: number;
   totalPages: number;
+  /** ページ番号からURLを生成する関数。省略時はブログ用デフォルト（/ と /blog/page/N）を使用。 */
+  getPageUrl?: (page: number) => string;
 };
 
 /**
@@ -30,13 +32,12 @@ export function generatePageNumbers(currentPage: number, totalPages: number): (n
 /**
  * ページネーションUI。
  */
-export default function Pagination({ currentPage, totalPages }: PaginationProps) {
+export default function Pagination({ currentPage, totalPages, getPageUrl }: PaginationProps) {
   if (totalPages <= 1) return null;
 
-  // ページ番号からURLを生成（1ページ目は / それ以外は /blog/page/N）
-  const getPageUrl = (pageNum: number) => {
-    return pageNum === 1 ? '/' : `/blog/page/${pageNum}`;
-  };
+  // ページ番号からURLを生成（デフォルト: 1ページ目は / それ以外は /blog/page/N）
+  const resolvedGetPageUrl =
+    getPageUrl ?? ((pageNum: number) => (pageNum === 1 ? '/' : `/blog/page/${pageNum}`));
 
   const pages = generatePageNumbers(currentPage, totalPages);
 
@@ -45,7 +46,7 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
       {/* 前へボタン */}
       {currentPage > 1 ? (
         <Link
-          href={getPageUrl(currentPage - 1)}
+          href={resolvedGetPageUrl(currentPage - 1)}
           className="px-4 py-2 rounded-md bg-secondary text-text hover:bg-accent transition-colors"
         >
           前へ
@@ -72,7 +73,7 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
         return (
           <Link
             key={pageNum}
-            href={getPageUrl(pageNum)}
+            href={resolvedGetPageUrl(pageNum)}
             className={`px-4 py-2 rounded-md transition-colors ${
               isActive
                 ? 'bg-accent text-background font-bold'
@@ -88,7 +89,7 @@ export default function Pagination({ currentPage, totalPages }: PaginationProps)
       {/* 次へボタン */}
       {currentPage < totalPages ? (
         <Link
-          href={getPageUrl(currentPage + 1)}
+          href={resolvedGetPageUrl(currentPage + 1)}
           className="px-4 py-2 rounded-md bg-secondary text-text hover:bg-accent transition-colors"
         >
           次へ

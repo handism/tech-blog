@@ -1,6 +1,7 @@
 // src/components/BlogLayout.tsx
 import Sidebar from '@/src/components/Sidebar';
-import { PostMeta, TocItem } from '@/src/types/post';
+import type { CategoryCount, TagCount } from '@/src/lib/post-taxonomy';
+import { TocItem } from '@/src/types/post';
 import { ReactNode } from 'react';
 
 /**
@@ -8,15 +9,15 @@ import { ReactNode } from 'react';
  */
 interface BlogLayoutProps {
   children: ReactNode;
-  posts?: PostMeta[];
   toc?: TocItem[];
-  categories?: string[];
+  categoryCounts?: CategoryCount[];
+  tagCounts?: TagCount[];
 }
 
 /**
  * ブログページの共通レイアウト。
  */
-export default function BlogLayout({ children, posts, toc, categories }: BlogLayoutProps) {
+export default function BlogLayout({ children, toc, categoryCounts, tagCounts }: BlogLayoutProps) {
   return (
     <div className="mx-auto max-w-6xl px-4 py-4">
       <div className="grid gap-8 md:grid-cols-[2fr_1fr]">
@@ -25,7 +26,7 @@ export default function BlogLayout({ children, posts, toc, categories }: BlogLay
 
         {/* サイドバー */}
         <aside className="relative">
-          {posts && <Sidebar posts={posts} toc={toc} categories={categories} />}
+          <Sidebar toc={toc} categoryCounts={categoryCounts} tagCounts={tagCounts} />
         </aside>
       </div>
     </div>

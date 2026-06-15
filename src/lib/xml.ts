@@ -3,6 +3,7 @@ type RssItem = {
   title: string;
   link: string;
   pubDate?: string;
+  description?: string;
 };
 
 type RssChannel = {
@@ -25,13 +26,19 @@ export function escapeXml(value: string): string {
 }
 
 /**
+ * 値が存在する場合のみ XML 要素文字列を返す。
+ */
+function xmlOptElement(tag: string, value: string | undefined): string {
+  return value ? `<${tag}>${escapeXml(value)}</${tag}>` : '';
+}
+
+/**
  * RSS XMLを組み立てる。
  */
 export function buildRssXml(channel: RssChannel): string {
   const itemsXml = channel.items
     .map((item) => {
-      const pubDateXml = item.pubDate ? `<pubDate>${escapeXml(item.pubDate)}</pubDate>` : '';
-      return `<item><title>${escapeXml(item.title)}</title><link>${escapeXml(item.link)}</link>${pubDateXml}</item>`;
+      return `<item><title>${escapeXml(item.title)}</title><link>${escapeXml(item.link)}</link>${xmlOptElement('pubDate', item.pubDate)}${xmlOptElement('description', item.description)}</item>`;
     })
     .join('');
 

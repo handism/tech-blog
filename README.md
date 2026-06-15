@@ -12,6 +12,7 @@
   - **Memphis Generator**（`/tools/memphis`）：Memphis 柄の背景画像をブラウザ上で生成・ダウンロード
   - **Image Trimmer**（`/tools/trimming`）：ブラウザ上で画像をトリミング
 - About・プライバシーポリシー・HTML Sitemap・RSS フィードページを提供
+- **Scraps**（`/scraps`）：Twitter/Mastodon 感覚で日々の気づきやエラー解決ログを短く残せる技術メモ欄。`scraps/` ディレクトリに Markdown を置くだけで公開される
 
 ## 技術スタック
 
@@ -41,7 +42,7 @@
 ローカルで動作確認する場合は以下コマンドで。終了するなら Ctrl + C。
 
 ```bash
-npm run dev
+bun run dev
 ```
 
 ### ビルド
@@ -49,8 +50,8 @@ npm run dev
 本番ビルドを実行する場合は以下。
 
 ```bash
-npm run build
-npm start
+bun run build
+bun run start
 ```
 
 SSG 出力は `out` ディレクトリに生成されます。
@@ -58,7 +59,7 @@ SSG 出力は `out` ディレクトリに生成されます。
 ### バンドルサイズ分析
 
 ```bash
-npm run analyze
+bun run analyze
 ```
 
 ブラウザでクライアント・サーバー・エッジのバンドルサイズを可視化するレポートが生成されます。
@@ -68,14 +69,14 @@ npm run analyze
 E2E テスト（Playwright）：
 
 ```bash
-npm run test:e2e      # テスト実行（deployed site 対象）
-npm run test:e2e:ui   # インタラクティブ UI モードで実行
+bun run test:e2e      # テスト実行（deployed site 対象）
+bun run test:e2e:ui   # インタラクティブ UI モードで実行
 ```
 
 ユニットテスト（Vitest）：
 
 ```bash
-npm run test:unit
+bun run test:unit
 ```
 
 テストファイルは `tests/` ディレクトリ以下に配置します。
@@ -84,7 +85,14 @@ npm run test:unit
 
 ### コンテンツの追加
 
+#### ブログ記事
+
 ブログ記事は `md` ディレクトリに Markdown ファイルとして配置します。
+ファイル名の命名規則：`kebab-case.md`
+
+#### Scraps（技術メモ）
+
+日々の気づきやエラー解決ログなど短いメモは `scraps` ディレクトリに Markdown ファイルとして配置します。
 ファイル名の命名規則：`kebab-case.md`
 
 ### デプロイメント
@@ -95,21 +103,24 @@ npm run test:unit
 
 - 設定ファイルは `src/config/site.ts`
 - サイトごとに必要な設定（サイト名・URL・著者名など）を変更してください
+- `skinConfig` 配列でスキン一覧（Emerald・Ocean・Sunset・Purple・Rose）を管理。`DEFAULT_SKIN` でデフォルト指定
 
 ### CSS 設定
 
 - グローバルの CSS は `app/globals.css` にまとめています
 - `:focus-visible` スタイルはアクセント色（emerald）で定義済みです
+- スキンは `data-skin` 属性で切り替え。`[data-skin="ocean"]` セレクタで `--color-accent` をオーバーライド
 
 ### 記事ページ設定
 
 - md ファイルは `md` ディレクトリ内に入れてください
 - `md/template` 内に md ファイルのテンプレートが格納されているので、コピーして使用してください
-- 下書きは `md/draft` ディレクトリ内に入れればサイトに反映されません
+- 下書きは Frontmatter に `draft: true` を設定することで管理できます（後述）。開発環境では表示され、本番環境では自動的に除外されます。
+- また、`md/draft` などのサブディレクトリ内に配置した md ファイルもサイトには反映されません。
 - 画像は `public/images` ディレクトリ内に入れてください
   - サムネイル画像はアスペクト比 `16:9` がおすすめ
 
-### Frontmatter
+### ブログ記事 Frontmatter
 
 各フィールドは Zod によりバリデーションされます。省略・不正な値はデフォルト値にフォールバックします。
 
@@ -120,10 +131,24 @@ date: YYYY-MM-DD             # 省略可
 tags: [tag1, tag2]           # 省略時: []
 category: カテゴリ名          # 省略時: "uncategorized"
 image: filename.webp         # public/images/ 以下のファイル名（省略可）
+draft: true                  # true の場合、本番ビルド時に除外される（省略可）
 ---
 ```
 
 H1 タグは記事タイトルになるので、見出しは H2 から始めてください。
+
+### Scraps Frontmatter
+
+ブログ記事より軽量な構成です。`category` と `image` は不要です。
+
+```yaml
+---
+title: メモのタイトル        # 省略時: "No title"
+date: YYYY-MM-DD             # 省略可
+tags: [tag1, tag2]           # 省略時: []
+draft: true                  # true の場合、本番ビルド時に除外される（省略可）
+---
+```
 
 ### Markdown
 
@@ -168,8 +193,11 @@ export function example() { }
 
 ## SEO・アクセシビリティ
 
-- OGP / Twitter Card をサイト全体および記事ページで設定
+- OGP / Twitter Card をサイト全体・記事ページ・カテゴリページ・タグページで設定
 - 記事ページに JSON-LD（`BlogPosting` スキーマ）を埋め込み
 - Sitemap に記事・カテゴリ・タグページと `lastmod` を出力
+- RSS フィードに本文要約（先頭 200 文字）を `<description>` として出力
+- 検索結果でタイトル・本文スニペットに加え、マッチしたタグ・カテゴリもハイライト表示
 - キーボードナビゲーション対応（ドロップダウンメニュー・フォーカスリング）
 - `ThemeToggle` に `aria-label` を設定
+- `SkinSelector` は `role="group"` + 各ボタンに `aria-pressed` / `aria-label` を設定

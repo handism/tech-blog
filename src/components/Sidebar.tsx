@@ -1,26 +1,35 @@
 // src/components/Sidebar.tsx
 'use client';
-import SearchBox from '@/src/components/SearchBox';
+import ProfileCard from '@/src/components/ProfileCard';
 import TagCloud from '@/src/components/TagCloud';
+import type { CategoryCount, TagCount } from '@/src/lib/post-taxonomy';
 import { categoryToSlug } from '@/src/lib/utils';
-import type { TocItem, PostMeta } from '@/src/types/post';
+import type { TocItem } from '@/src/types/post';
 import { Menu } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useState } from 'react';
+
+const SearchBox = dynamic(() => import('@/src/components/SearchBox'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-10 bg-card border border-border rounded-lg animate-pulse" />
+  ),
+});
 
 /**
  * サイドバーのプロパティ。
  */
 type SidebarProps = {
-  posts?: PostMeta[];
   toc?: TocItem[];
-  categories?: string[];
+  categoryCounts?: CategoryCount[];
+  tagCounts?: TagCount[];
 };
 
 /**
  * 記事一覧・カテゴリ・目次を表示するサイドバー。
  */
-export default function Sidebar({ posts, toc, categories }: SidebarProps) {
+export default function Sidebar({ toc, categoryCounts, tagCounts }: SidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const hasToc = !!(toc && toc.length > 0);
 
@@ -56,20 +65,21 @@ export default function Sidebar({ posts, toc, categories }: SidebarProps) {
 
   return (
     <div className="space-y-6 h-full">
-      <SearchBox posts={posts ?? []} />
-
-      {/* カテゴリ・タグ一覧（省略せずそのまま） */}
-      {categories && categories.length > 0 && (
-        <div className="p-4 border border-border rounded-lg bg-card">
+      <ProfileCard />
+      <SearchBox />
+      {/* カテゴリ一覧 */}
+      {categoryCounts && categoryCounts.length > 0 && (
+        <div className="p-5 border border-border/60 rounded-3xl bg-card/70 backdrop-blur-md shadow-sm">
           <h2 className="font-bold text-lg mb-4 text-text">カテゴリ</h2>
           <ul className="space-y-2 text-sm">
-            {categories.map((cat) => (
-              <li key={cat}>
+            {categoryCounts.map(({ category, count }) => (
+              <li key={category}>
                 <Link
-                  href={`/blog/categories/${categoryToSlug(cat)}`}
-                  className="text-text/80 hover:text-accent hover:underline block"
+                  href={`/blog/categories/${categoryToSlug(category)}`}
+                  className="flex justify-between items-center text-text/80 hover:text-accent hover:underline"
                 >
-                  {cat}
+                  <span>{category}</span>
+                  <span className="ml-2 text-xs text-text/50 tabular-nums">({count})</span>
                 </Link>
               </li>
             ))}
@@ -77,17 +87,17 @@ export default function Sidebar({ posts, toc, categories }: SidebarProps) {
         </div>
       )}
 
-      <div className="p-4 border border-border rounded-lg bg-card">
+      <div className="p-5 border border-border/60 rounded-3xl bg-card/70 backdrop-blur-md shadow-sm">
         <h2 className="font-bold text-lg mb-4 text-text">タグ</h2>
-        <TagCloud posts={posts ?? []} />
+        <TagCloud tagCounts={tagCounts ?? []} />
       </div>
 
       {/* --- TOC セクション --- */}
       {hasToc && (
         <>
           {/* 1. PC用 */}
-          <div className="hidden lg:block sticky top-5">
-            <div className="p-4 border border-border rounded-lg bg-card max-h-[calc(100vh-120px)] overflow-y-auto">
+          <div className="hidden lg:block sticky top-28 z-10">
+            <div className="p-5 border border-border/60 rounded-3xl bg-card/70 backdrop-blur-md shadow-sm max-h-[calc(100vh-160px)] overflow-y-auto">
               {tocElements}
             </div>
           </div>

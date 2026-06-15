@@ -21,13 +21,17 @@ const _loadAndParseMeta = cache(async function _loadAndParseMeta(
  * 全記事のメタ情報を取得（一覧用）。
  */
 export const getAllPostMeta = cache(async function getAllPostMeta(): Promise<PostMeta[]> {
+  const isDev = process.env.NODE_ENV !== 'production';
   const sources = await readAllPostSources();
   const posts = sources.map(({ slug, raw }) => {
     const { data, content } = parsePostSource(raw);
     return createPostMeta(slug, data, content);
   });
 
-  return posts.sort((a, b) => {
+  // 本番ビルド時は draft: true の記事を除外する
+  const filtered = isDev ? posts : posts.filter((p) => !p.draft);
+
+  return filtered.sort((a, b) => {
     if (!a.date) return 1;
     if (!b.date) return -1;
     return b.date.getTime() - a.date.getTime();
@@ -51,6 +55,10 @@ export async function getPost(slug: string): Promise<Post | null> {
   const parsed = await _loadAndParseMeta(slug);
   if (!parsed) return null;
 
+  // 本番ビルド時は draft: true の記事へのアクセスを拒否する
+  const isDev = process.env.NODE_ENV !== 'production';
+  if (!isDev && parsed.meta.draft) return null;
+
   const { html: htmlContent, toc } = await renderPostMarkdown(parsed.content);
 
   return {
@@ -61,13 +69,40 @@ export async function getPost(slug: string): Promise<Post | null> {
 }
 
 /**
+ * 指定スラッグに関連する記事を最大3件取得する。
+ * スコア = タグ一致数 × 2 + カテゴリ一致 × 1
+ */
+export const getRelatedPosts = cache(async function getRelatedPosts(
+  slug: string
+): Promise<PostMeta[]> {
+  const posts = await getAllPostMeta();
+  const current = posts.find((p) => p.slug === slug);
+  if (!current) return [];
+
+  return posts
+    .filter((p) => p.slug !== slug)
+    .map((p) => {
+      const tagOverlap = p.tags.filter((t) => current.tags.includes(t)).length;
+      const categoryMatch = p.category === current.category ? 1 : 0;
+      return { post: p, score: tagOverlap * 2 + categoryMatch };
+    })
+    .filter(({ score }) => score > 0)
+    .sort(
+      (a, b) => b.score - a.score || (b.post.date?.getTime() ?? 0) - (a.post.date?.getTime() ?? 0)
+    )
+    .slice(0, 3)
+    .map(({ post }) => post);
+});
+
+/**
  * 指定スラッグの前後の記事を取得する。
  */
 export const getAdjacentPosts = cache(async function getAdjacentPosts(
   slug: string
 ): Promise<{ prevPost: PostMeta | null; nextPost: PostMeta | null }> {
   const posts = await getAllPostMeta();
-  const currentIndex = posts.findIndex((p) => p.slug === slug);
+  const slugToIndex = new Map(posts.map((p, i) => [p.slug, i]));
+  const currentIndex = slugToIndex.get(slug) ?? -1;
   return {
     prevPost: currentIndex > 0 ? posts[currentIndex - 1] : null,
     nextPost: currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null,

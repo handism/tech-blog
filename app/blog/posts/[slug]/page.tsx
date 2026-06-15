@@ -3,12 +3,14 @@ import BlogLayout from '@/src/components/BlogLayout';
 import CopyButtonScript from '@/src/components/CopyButtonScript';
 import { ImageModal } from '@/src/components/ImageModal';
 import PostMeta from '@/src/components/PostMeta';
+import RelatedPosts from '@/src/components/RelatedPosts';
 import { siteConfig } from '@/src/config/site';
 import {
   getAdjacentPosts,
   getAllPostMeta,
   getPost,
   getPostMetaBySlug,
+  getRelatedPosts,
 } from '@/src/lib/posts-server';
 import { getBlogViewContext } from '@/src/lib/posts-view';
 import type { Metadata } from 'next';
@@ -37,7 +39,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const description = postMeta.plaintext?.slice(0, 160);
-  const imageUrl = postMeta.image ? `${siteConfig.url}/images/${postMeta.image}` : undefined;
+  const imageUrl = postMeta.image
+    ? `${siteConfig.url}/images/${postMeta.image}`
+    : `${siteConfig.url}/og/${slug}/image.png`;
 
   return {
     title: postMeta.title,
@@ -79,18 +83,23 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const { slug } = await params;
   const post = await getPost(slug);
 
-  const { allPosts: posts, categories } = await getBlogViewContext();
+  const { categoryCounts, tagCounts } = await getBlogViewContext();
 
   if (!post) notFound();
 
-  const { prevPost, nextPost } = await getAdjacentPosts(slug);
+  const [{ prevPost, nextPost }, relatedPosts] = await Promise.all([
+    getAdjacentPosts(slug),
+    getRelatedPosts(slug),
+  ]);
 
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.plaintext?.slice(0, 160),
-    image: post.image ? `${siteConfig.url}/images/${post.image}` : undefined,
+    image: post.image
+      ? `${siteConfig.url}/images/${post.image}`
+      : `${siteConfig.url}/og/${post.slug}/image.png`,
     datePublished: post.date?.toISOString(),
     author: {
       '@type': 'Person',
@@ -109,7 +118,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   };
 
   return (
-    <BlogLayout posts={posts} toc={post.toc} categories={categories}>
+    <BlogLayout tagCounts={tagCounts} toc={post.toc} categoryCounts={categoryCounts}>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -120,18 +129,16 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         {/* メタ情報 */}
         <PostMeta post={post} />
 
-        {/* サムネイル画像（オプション） */}
-        {post.image && (
-          <div className="relative w-full h-64 md:h-96 mb-6 md:mb-8 lg:mb-10 not-prose">
-            <Image
-              src={`/images/${post.image}`}
-              alt={post.title}
-              fill
-              className="object-cover rounded-lg"
-              priority
-            />
-          </div>
-        )}
+        {/* サムネイル画像 */}
+        <div className="relative w-full h-64 md:h-96 mb-6 md:mb-8 lg:mb-10 not-prose">
+          <Image
+            src={post.image ? `/images/${post.image}` : `/og/${post.slug}/image.png`}
+            alt={post.title}
+            fill
+            className="object-cover rounded-lg"
+            priority
+          />
+        </div>
 
         {/* 記事本文 */}
         <div className="mt-16 md:mt-20" dangerouslySetInnerHTML={{ __html: post.content }} />
@@ -168,6 +175,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           )}
         </div>
       </nav>
+      {/* 関連記事 */}
+      <RelatedPosts posts={relatedPosts} />
+
       <CopyButtonScript />
     </BlogLayout>
   );

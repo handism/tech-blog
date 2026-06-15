@@ -4,6 +4,7 @@ date: YYYY-MM-DD
 tags: [tag1, tag2]
 category: Category1
 image: site-image.webp
+draft: false
 ---
 
 ## H2

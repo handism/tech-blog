@@ -16,8 +16,7 @@ export const revalidate = 3600; // 1時間ごとに再検証
  */
 export async function GET() {
   const baseUrl = siteConfig.url;
-  const posts = await getAllPostMeta();
-  const { categories } = await getBlogViewContext();
+  const [posts, { categories }] = await Promise.all([getAllPostMeta(), getBlogViewContext()]);
   const tags = getAllTags(posts);
   const { totalPages } = paginatePosts(posts, 1, siteConfig.pagination.postsPerPage);
   const today = new Date().toISOString().split('T')[0];
@@ -37,6 +36,7 @@ export async function GET() {
     ...Array.from({ length: Math.max(0, totalPages - 1) }, (_, i) => ({
       loc: `${baseUrl}/blog/page/${i + 2}`,
     })),
+    { loc: `${baseUrl}/scraps`, lastmod: today },
   ]);
 
   return new Response(sitemap, {

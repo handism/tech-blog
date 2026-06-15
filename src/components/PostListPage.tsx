@@ -2,11 +2,12 @@
 import BlogLayout from '@/src/components/BlogLayout';
 import Pagination from '@/src/components/Pagination';
 import PostCardList from '@/src/components/PostCardList';
+import type { CategoryCount, TagCount } from '@/src/lib/post-taxonomy';
 import type { PostMeta } from '@/src/types/post';
 
 type PostListPageProps = {
-  allPosts: PostMeta[];
-  categories: string[];
+  tagCounts: TagCount[];
+  categoryCounts: CategoryCount[];
   posts: PostMeta[];
   heading?: string;
   emptyMessage?: string;
@@ -18,8 +19,8 @@ type PostListPageProps = {
  * 記事一覧系ページの共通表示。
  */
 export default function PostListPage({
-  allPosts,
-  categories,
+  tagCounts,
+  categoryCounts,
   posts,
   heading,
   emptyMessage,
@@ -27,7 +28,7 @@ export default function PostListPage({
   totalPages,
 }: PostListPageProps) {
   return (
-    <BlogLayout posts={allPosts} categories={categories}>
+    <BlogLayout tagCounts={tagCounts} categoryCounts={categoryCounts}>
       <div>
         {heading && <h1 className="text-3xl font-bold mb-6">{heading}</h1>}
 
