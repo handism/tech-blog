@@ -6,6 +6,7 @@ export const toolsMenuItems = [
   { href: '/tools/memphis', label: 'Memphis Generator', external: false },
   { href: '/tools/trimming', label: 'Image Trimmer', external: false },
   { href: 'https://handism.github.io/sauna-itta/', label: 'Sauna Itta', external: true },
+  { href: 'https://handism.github.io/sauna-simulator/', label: 'Sauna Simulator', external: true },
 ] as const;
 
 /**
