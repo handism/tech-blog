@@ -77,6 +77,7 @@ export default function SearchBox() {
 
   useEffect(() => {
     if (!debouncedQuery.trim()) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setTokenizedQuery('');
       return;
     }

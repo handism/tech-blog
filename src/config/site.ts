@@ -18,8 +18,22 @@ export const SKIN_STORAGE_KEY = 'skin';
  * ヘッダー Tools ドロップダウンのメニュー項目。
  */
 export const toolsMenuItems = [
+  // 画像処理
   { href: '/tools/memphis', label: 'Memphis Generator', external: false },
   { href: '/tools/trimming', label: 'Image Trimmer', external: false },
+  // データ変換
+  { href: '/tools/timezone', label: 'Timezone Converter', external: false },
+  { href: '/tools/json-formatter', label: 'JSON Formatter', external: false },
+  { href: '/tools/yaml-json', label: 'YAML ↔ JSON', external: false },
+  { href: '/tools/base64', label: 'Base64 Codec', external: false },
+  { href: '/tools/url-codec', label: 'URL Codec', external: false },
+  // エンジニアツール
+  { href: '/tools/regex-tester', label: 'Regex Tester', external: false },
+  { href: '/tools/hash-generator', label: 'Hash Generator', external: false },
+  { href: '/tools/color-converter', label: 'Color Converter', external: false },
+  { href: '/tools/jwt-decoder', label: 'JWT Decoder', external: false },
+  { href: '/tools/qr-code', label: 'QR Code Generator', external: false },
+  // 外部ツール
   { href: 'https://handism.github.io/sauna-itta/', label: 'Sauna Itta', external: true },
   { href: 'https://handism.github.io/sauna-simulator/', label: 'Sauna Simulator', external: true },
 ] as const;
