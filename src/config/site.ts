@@ -27,6 +27,10 @@ export const toolsMenuItems = [
   { href: '/tools/yaml-json', label: 'YAML ↔ JSON', external: false },
   { href: '/tools/base64', label: 'Base64 Codec', external: false },
   { href: '/tools/url-codec', label: 'URL Codec', external: false },
+  { href: '/tools/uuid', label: 'UUID Generator', external: false },
+  { href: '/tools/html-entity', label: 'HTML Entity Encoder / Decoder', external: false },
+  { href: '/tools/csv-json', label: 'CSV ↔ JSON', external: false },
+  { href: '/tools/password-generator', label: 'Password Generator', external: false },
   // エンジニアツール
   { href: '/tools/regex-tester', label: 'Regex Tester', external: false },
   { href: '/tools/hash-generator', label: 'Hash Generator', external: false },
