@@ -44,8 +44,8 @@ export function SkinSelector() {
 
   if (!isMounted) {
     return (
-      <button disabled className="rounded-full p-2 text-text">
-        <Palette className="h-5 w-5" />
+      <button disabled className="neo-btn w-9 h-9 text-text opacity-50 cursor-not-allowed">
+        <Palette className="h-4 w-4" />
       </button>
     );
   }
@@ -54,21 +54,21 @@ export function SkinSelector() {
     <div className="relative inline-flex items-center" ref={containerRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="rounded-full p-2 text-text transition hover:bg-card"
+        className="neo-btn w-9 h-9 text-text"
         aria-label="カラーテーマを選択"
         aria-expanded={isOpen}
         aria-haspopup="listbox"
       >
-        <Palette className="h-5 w-5" />
+        <Palette className="h-4 w-4" />
       </button>
 
       <div
         className={`
-          absolute right-0 mt-2 p-2
-          flex gap-1.5
-          rounded-md border border-border
-          bg-bg/95 backdrop-blur-md
-          shadow-xl shadow-black/20
+          absolute right-0 top-11 p-2
+          flex gap-2
+          rounded-xl border-2 border-border
+          bg-card
+          shadow-[3px_3px_0px_0px_var(--border)] dark:shadow-[3px_3px_0px_0px_var(--accent)]
           transition-all z-50
           ${isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}
         `}
@@ -78,8 +78,10 @@ export function SkinSelector() {
           <button
             key={skin.id}
             onClick={() => handleSelect(skin.id)}
-            className={`p-1 rounded-full transition-all hover:scale-110 ${
-              currentSkin === skin.id ? 'ring-2 ring-offset-1 ring-text/50 scale-110' : ''
+            className={`p-0.5 rounded-full border border-border transition-all hover:scale-110 active:scale-95 flex items-center justify-center ${
+              currentSkin === skin.id
+                ? 'border-2 border-text scale-110 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.8)] dark:shadow-[2px_2px_0px_0px_var(--accent)]'
+                : ''
             }`}
             aria-label={`${skin.label}テーマに切り替え`}
             aria-pressed={currentSkin === skin.id}

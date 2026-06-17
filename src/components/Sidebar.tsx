@@ -69,17 +69,19 @@ export default function Sidebar({ toc, categoryCounts, tagCounts }: SidebarProps
       <SearchBox />
       {/* カテゴリ一覧 */}
       {categoryCounts && categoryCounts.length > 0 && (
-        <div className="p-5 border border-border/60 rounded-3xl bg-card/70 backdrop-blur-md shadow-sm">
-          <h2 className="font-bold text-lg mb-4 text-text">カテゴリ</h2>
-          <ul className="space-y-2 text-sm">
+        <div className="neo-card p-5">
+          <h2 className="font-extrabold text-lg mb-4 text-text">カテゴリ</h2>
+          <ul className="space-y-2 text-sm font-bold">
             {categoryCounts.map(({ category, count }) => (
               <li key={category}>
                 <Link
                   href={`/blog/categories/${categoryToSlug(category)}`}
-                  className="flex justify-between items-center text-text/80 hover:text-accent hover:underline"
+                  className="flex justify-between items-center text-text/80 hover:text-accent hover:translate-x-1 transition-all duration-200"
                 >
                   <span>{category}</span>
-                  <span className="ml-2 text-xs text-text/50 tabular-nums">({count})</span>
+                  <span className="ml-2 text-xs text-text/50 tabular-nums border border-border px-1.5 py-0.5 rounded-md bg-secondary">
+                    ({count})
+                  </span>
                 </Link>
               </li>
             ))}
@@ -87,8 +89,8 @@ export default function Sidebar({ toc, categoryCounts, tagCounts }: SidebarProps
         </div>
       )}
 
-      <div className="p-5 border border-border/60 rounded-3xl bg-card/70 backdrop-blur-md shadow-sm">
-        <h2 className="font-bold text-lg mb-4 text-text">タグ</h2>
+      <div className="neo-card p-5">
+        <h2 className="font-extrabold text-lg mb-4 text-text">タグ</h2>
         <TagCloud tagCounts={tagCounts ?? []} />
       </div>
 
@@ -97,7 +99,7 @@ export default function Sidebar({ toc, categoryCounts, tagCounts }: SidebarProps
         <>
           {/* 1. PC用 */}
           <div className="hidden lg:block sticky top-28 z-10">
-            <div className="p-5 border border-border/60 rounded-3xl bg-card/70 backdrop-blur-md shadow-sm max-h-[calc(100vh-160px)] overflow-y-auto">
+            <div className="neo-card p-5 max-h-[calc(100vh-160px)] overflow-y-auto">
               {tocElements}
             </div>
           </div>
@@ -105,7 +107,7 @@ export default function Sidebar({ toc, categoryCounts, tagCounts }: SidebarProps
           {/* 2. スマホ用ボタン */}
           <button
             onClick={() => setIsOpen(true)}
-            className="text-text lg:hidden fixed bottom-18 right-6 z-40 w-12 h-12 bg-card border border-border rounded-full shadow-lg flex items-center justify-center hover:scale-110 active:scale-95 transition-all"
+            className="text-text lg:hidden fixed bottom-18 right-6 z-40 w-12 h-12 neo-btn flex items-center justify-center"
             aria-label="目次を開く"
           >
             <Menu className="h-5 w-5" />
@@ -116,11 +118,11 @@ export default function Sidebar({ toc, categoryCounts, tagCounts }: SidebarProps
             className={`lg:hidden fixed inset-0 z-50 transition-opacity duration-300 ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
           >
             <div
-              className="bg-bg absolute inset-0 backdrop-blur-sm"
+              className="bg-bg absolute inset-0 backdrop-blur-sm opacity-50"
               onClick={() => setIsOpen(false)}
             />
             <div
-              className={`fixed bottom-0 left-0 right-0 bg-card rounded-t-2xl p-6 max-h-[80vh] overflow-y-auto border-t border-border shadow-2xl transition-transform duration-300 ease-out ${isOpen ? 'translate-y-0' : 'translate-y-full'}`}
+              className={`fixed bottom-0 left-0 right-0 bg-card rounded-t-3xl p-6 max-h-[80vh] overflow-y-auto border-t-3 border-border shadow-2xl transition-transform duration-300 ease-out ${isOpen ? 'translate-y-0' : 'translate-y-full'}`}
             >
               {tocElements}
             </div>

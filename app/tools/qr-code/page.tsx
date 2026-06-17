@@ -17,6 +17,7 @@ export default function QrCodeGenerator() {
 
   useEffect(() => {
     if (input && canvasRef.current) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsLoading(true);
       QRCode.toCanvas(
         canvasRef.current,

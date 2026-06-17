@@ -20,11 +20,8 @@ export function ThemeToggle() {
   // マウント前はプレースホルダーを返す（サーバー/クライアント一致）
   if (!isMounted) {
     return (
-      <button
-        disabled
-        className="rounded-full p-2 text-text transition hover:bg-card opacity-50 cursor-not-allowed"
-      >
-        <Moon className="h-5 w-5" />
+      <button disabled className="neo-btn w-9 h-9 text-text opacity-50 cursor-not-allowed">
+        <Moon className="h-4 w-4" />
       </button>
     );
   }
@@ -34,10 +31,10 @@ export function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
-      className="rounded-full p-2 text-text transition hover:bg-card"
+      className="neo-btn w-9 h-9 text-text"
       aria-label={isDark ? 'ライトモードに切り替え' : 'ダークモードに切り替え'}
     >
-      {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+      {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
     </button>
   );
 }

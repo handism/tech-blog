@@ -1,15 +1,19 @@
 /* app/globals.css */
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700;800;900&family=Space+Grotesk:wght@400;500;700;800&display=swap');
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-bg: #fafafa;
+  --font-sans: 'Lexend', 'Space Grotesk', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'Space Grotesk', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --color-bg: #fdfcf7; /* 温かみのある極薄のパステルアイボリー */
   --color-background: var(--color-bg);
-  --color-card: rgba(255, 255, 255, 0.6); /* より透明度を高めてグラス風に */
-  --color-secondary: rgba(241, 245, 249, 0.6);
-  --color-text: #0f172a;
-  --color-border: rgba(226, 232, 240, 0.8);
+  --color-card: #ffffff;
+  --color-secondary: #f4f2ea;
+  --color-text: #000000;
+  --color-border: #000000;
   --color-accent: #10b981;
 
   --bg: var(--color-bg);
@@ -22,29 +26,116 @@
 }
 
 .dark {
-  --color-bg: #030712; /* 深い宇宙のような黒 (gray-950) */
+  --color-bg: #000000; /* 漆黒 */
   --color-background: var(--color-bg);
-  --color-card: rgba(30, 41, 59, 0.5); /* グラスモーフィズムのための透過 */
-  --color-secondary: rgba(51, 65, 85, 0.4);
-  --color-text: #f8fafc; /* より白く */
-  --color-border: rgba(51, 65, 85, 0.8);
+  --color-card: #121212; /* ソリッドダーク */
+  --color-secondary: #1a1a1a;
+  --color-text: #ffffff;
+  --color-border: #ffffff;
   --color-accent: #34d399;
 }
 
 /* =======================
-   スキン（カラーテーマ）
+   スキン（カラーテーマ） - ネオブルータリズム用に調整
    ======================= */
-[data-skin="ocean"]       { --color-accent: #0ea5e9; }
-[data-skin="ocean"].dark  { --color-accent: #38bdf8; }
+[data-skin='ocean'] {
+  --color-accent: #0ea5e9;
+}
+[data-skin='ocean'].dark {
+  --color-accent: #38bdf8;
+}
 
-[data-skin="sunset"]      { --color-accent: #f59e0b; }
-[data-skin="sunset"].dark { --color-accent: #fbbf24; }
+[data-skin='sunset'] {
+  --color-accent: #ea580c;
+}
+[data-skin='sunset'].dark {
+  --color-accent: #fbbf24;
+}
 
-[data-skin="purple"]      { --color-accent: #a855f7; }
-[data-skin="purple"].dark { --color-accent: #c084fc; }
+[data-skin='purple'] {
+  --color-accent: #8b5cf6;
+}
+[data-skin='purple'].dark {
+  --color-accent: #a78bfa;
+}
 
-[data-skin="rose"]        { --color-accent: #f43f5e; }
-[data-skin="rose"].dark   { --color-accent: #fb7185; }
+[data-skin='rose'] {
+  --color-accent: #e11d48;
+}
+[data-skin='rose'].dark {
+  --color-accent: #fb7185;
+}
+
+/* =======================
+   ネオ・ブルータリズム共通スタイル
+   ======================= */
+.neo-card {
+  border: 3px solid var(--color-border);
+  background-color: var(--color-card);
+  border-radius: 16px;
+  box-shadow: 5px 5px 0px 0px var(--color-border);
+  transition:
+    transform 0.15s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.neo-card-hover {
+  transition:
+    transform 0.15s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.neo-card-hover:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 8px 8px 0px 0px var(--color-border);
+}
+
+.neo-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-border);
+  background-color: var(--color-card);
+  border-radius: 10px;
+  box-shadow: 3px 3px 0px 0px var(--color-border);
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease,
+    background-color 0.15s ease;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.neo-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px 0px var(--color-border);
+}
+
+.neo-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 0px 0px var(--color-border);
+}
+
+/* ダークモードでは、影の色をアクセントカラーに変更して発光させる */
+.dark .neo-card {
+  box-shadow: 5px 5px 0px 0px var(--color-accent);
+}
+
+.dark .neo-card-hover:hover {
+  box-shadow: 8px 8px 0px 0px var(--color-accent);
+}
+
+.dark .neo-btn {
+  box-shadow: 3px 3px 0px 0px var(--color-accent);
+}
+
+.dark .neo-btn:hover {
+  box-shadow: 5px 5px 0px 0px var(--color-accent);
+}
+
+.dark .neo-btn:active {
+  box-shadow: 0px 0px 0px 0px var(--color-accent);
+}
 
 /* =======================
    フォーカス可視性
@@ -53,20 +144,20 @@ a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 [tabindex]:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
-  border-radius: 2px;
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 *,
 *::before,
 *::after {
   transition:
-    color 0.2s,
-    background-color 0.2s,
-    border-color 0.2s,
-    fill 0.2s,
-    stroke 0.2s;
+    color 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    fill 0.15s ease,
+    stroke 0.15s ease;
 }
 
 html {
@@ -78,7 +169,6 @@ body {
   overflow-x: hidden;
 }
 
-/* デスクトップのみ: スクロールバー表示時のレイアウトシフトを防ぐ */
 @media (min-width: 768px) {
   html {
     scrollbar-gutter: stable;
@@ -98,21 +188,21 @@ article.prose {
 }
 
 article.prose h1 {
-  @apply text-3xl font-bold mt-0 mb-2 tracking-tight;
+  @apply text-3xl font-extrabold mt-0 mb-4 tracking-tight;
 }
 
 article.prose h2 {
-  @apply text-2xl font-semibold mt-10 mb-4 tracking-tight;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 0.25rem;
+  @apply text-2xl font-bold mt-12 mb-6 tracking-tight;
+  border-bottom: 3px solid var(--border);
+  padding-bottom: 0.5rem;
 }
 
 article.prose h2 + p {
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
 }
 
 article.prose h3 {
-  @apply text-xl font-medium mt-8 mb-3;
+  @apply text-xl font-bold mt-10 mb-4;
 }
 
 article.prose h2 a,
@@ -122,13 +212,13 @@ article.prose h4 a {
 }
 
 article.prose h4 {
-  @apply text-base font-semibold mt-6 mb-2;
-  padding-left: 0.5rem;
-  border-left: 2px solid var(--border);
+  @apply text-base font-bold mt-8 mb-3;
+  padding-left: 0.75rem;
+  border-left: 4px solid var(--border);
 }
 
 article.prose p {
-  @apply mb-5 leading-relaxed text-base;
+  @apply mb-6 leading-relaxed text-base;
 }
 
 article.prose a {
@@ -137,34 +227,48 @@ article.prose a {
 }
 
 article.prose img {
-  @apply rounded-xl shadow-md my-8 mx-auto;
+  @apply rounded-2xl shadow-none my-8 mx-auto;
+  border: 3px solid var(--border);
   max-width: 100%;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+article.prose img:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 6px 6px 0px 0px var(--border);
+}
+
+.dark article.prose img:hover {
+  box-shadow: 6px 6px 0px 0px var(--color-accent);
 }
 
 article.prose .not-prose img {
   cursor: default;
 }
 
-article.prose img:hover {
-  opacity: 0.8;
-}
-
 article.prose .not-prose img:hover {
-  opacity: 1;
+  transform: none;
+  box-shadow: none;
 }
 
 article.prose blockquote {
   background-color: var(--card);
-  border-left-color: var(--border);
+  border: 3px solid var(--border);
   color: var(--text);
-  @apply border-l-4 pl-4 pr-4 py-3 my-6 rounded-r-lg italic;
+  box-shadow: 4px 4px 0px 0px var(--border);
+  @apply pl-6 pr-6 py-4 my-8 rounded-xl font-medium italic;
+}
+
+.dark article.prose blockquote {
+  box-shadow: 4px 4px 0px 0px var(--color-accent);
 }
 
 article.prose ul,
 article.prose ol {
-  @apply list-outside list-disc pl-6 space-y-1 mb-4;
+  @apply list-outside list-disc pl-6 space-y-1.5 mb-6;
 }
 
 article.prose ul ul,
@@ -195,13 +299,18 @@ article.prose code::after {
    サイドバー（TOC）
    ======================= */
 aside.toc-sidebar {
-  @apply w-64 sticky top-20 hidden lg:block;
+  @apply w-64 sticky top-24 hidden lg:block;
 }
 
 aside.toc-sidebar > div {
   background-color: var(--card);
-  border-color: var(--border);
-  @apply p-4 border rounded-lg;
+  border: 3px solid var(--border);
+  box-shadow: 4px 4px 0px 0px var(--border);
+  @apply p-5 rounded-2xl;
+}
+
+.dark aside.toc-sidebar > div {
+  box-shadow: 4px 4px 0px 0px var(--color-accent);
 }
 
 aside.toc-sidebar h2 {
@@ -218,12 +327,12 @@ aside.toc-sidebar li {
 }
 
 aside.toc-sidebar li.level-1 {
-  @apply border-l-2 border-accent/30;
+  @apply border-l-2 border-accent/40;
 }
 
 aside.toc-sidebar a {
   color: var(--text);
-  @apply hover:text-accent hover:underline transition-colors;
+  @apply hover:text-accent hover:underline transition-colors font-medium;
 }
 
 aside.toc-sidebar li.level-2 {
@@ -254,9 +363,10 @@ article.prose pre::-webkit-scrollbar-thumb {
    表（table）
    ======================= */
 article.prose table {
-  @apply border-collapse my-6 text-sm;
+  @apply border-collapse my-8 text-sm rounded-xl overflow-hidden;
+  border: 3px solid var(--border);
   background-color: var(--card);
-  border-color: var(--border);
+  box-shadow: 4px 4px 0px 0px var(--border);
   display: block;
   width: fit-content;
   max-width: 100%;
@@ -264,24 +374,28 @@ article.prose table {
   white-space: nowrap;
 }
 
+.dark article.prose table {
+  box-shadow: 4px 4px 0px 0px var(--color-accent);
+}
+
 article.prose thead {
-  background-color: var(--bg);
+  background-color: var(--secondary);
 }
 
 article.prose th {
-  @apply px-3 py-2 text-left font-semibold;
-  border-bottom: 2px solid var(--border);
+  @apply px-4 py-3 text-left font-bold;
+  border-bottom: 3px solid var(--border);
   color: var(--text);
 }
 
 article.prose td {
-  @apply px-3 py-2 align-top;
+  @apply px-4 py-3 align-top;
   border-bottom: 1px solid var(--border);
   color: var(--text);
 }
 
 article.prose tbody tr:hover {
-  background-color: color-mix(in srgb, var(--border) 20%, transparent);
+  background-color: color-mix(in srgb, var(--border) 10%, transparent);
 }
 
 article.prose table code {
@@ -293,13 +407,18 @@ article.prose table code {
    ======================= */
 pre.shiki {
   padding: 1.5rem 1rem 1rem;
-  border-radius: 0.5rem;
+  border: 3px solid var(--color-border);
+  box-shadow: 5px 5px 0px 0px var(--color-border);
+  border-radius: 12px;
   overflow-x: auto;
-  font-family:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
-    monospace;
+  font-family: var(--font-mono);
   font-size: 0.9rem;
   line-height: 1.6;
+  background-color: #111111 !important; /* Shikiテーマに合わせつつソリッドに */
+}
+
+.dark pre.shiki {
+  box-shadow: 5px 5px 0px 0px var(--color-accent);
 }
 
 code {
@@ -331,7 +450,7 @@ pre.shiki .line {
 
 pre.shiki {
   position: relative;
-  padding-top: 2rem;
+  padding-top: 2.5rem;
 }
 
 .copy-button {
@@ -363,11 +482,6 @@ pre.shiki:hover .copy-button {
   scale: 0.95;
 }
 
-pre.shiki {
-  position: relative;
-  padding-top: 2.5rem;
-}
-
 pre.shiki::before {
   content: attr(data-language);
   position: absolute;
@@ -384,9 +498,7 @@ pre.shiki::before {
 
 pre.shiki[data-filename]::before {
   content: attr(data-filename);
-  font-family:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
-    monospace;
+  font-family: var(--font-mono);
   text-transform: none;
   letter-spacing: 0;
   background: color-mix(in srgb, var(--color-card) 75%, #000);

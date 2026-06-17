@@ -77,7 +77,6 @@ export default function SearchBox() {
 
   useEffect(() => {
     if (!debouncedQuery.trim()) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setTokenizedQuery('');
       return;
     }
@@ -104,22 +103,25 @@ export default function SearchBox() {
         onChange={(e) => setQuery(e.target.value)}
         onFocus={handleFocus}
         onMouseEnter={handleFocus}
-        className="w-full border border-border/60 bg-card/60 backdrop-blur-md text-text placeholder:text-text/40 py-2.5 px-4 rounded-full focus:outline-none focus:ring-2 focus:ring-accent/50 shadow-inner transition-all"
+        className="w-full border-2 border-border bg-card text-text placeholder:text-text/50 py-2.5 px-4 rounded-xl shadow-[2px_2px_0px_0px_var(--border)] dark:shadow-[2px_2px_0px_0px_var(--accent)] focus:outline-none focus:translate-x-[-1px] focus:translate-y-[-1px] focus:shadow-[3px_3px_0px_0px_var(--border)] dark:focus:shadow-[3px_3px_0px_0px_var(--accent)] transition-all font-bold"
       />
       <ul
-        className={`mt-2 space-y-1 ${hasResults ? 'bg-card/80 backdrop-blur-md border border-border/60 rounded-2xl p-4 shadow-xl' : ''}`}
+        className={`mt-2 space-y-1 ${hasResults ? 'bg-card border-2 border-border rounded-xl p-4 shadow-[3px_3px_0px_0px_var(--border)] dark:shadow-[3px_3px_0px_0px_var(--accent)]' : ''}`}
       >
         {hasResults &&
           results.map(
             ({ post, titleIndices, snippet, snippetIndices, matchedTags, categoryIndices }) => (
-              <li key={post.slug}>
+              <li
+                key={post.slug}
+                className="border-b border-border/20 last:border-b-0 py-1.5 first:pt-0 last:pb-0"
+              >
                 <Link href={`/blog/posts/${post.slug}`} className="hover:underline block">
-                  <span>{highlightText(post.title, titleIndices)}</span>{' '}
-                  <span className="text-sm text-text/60">
+                  <span className="font-bold">{highlightText(post.title, titleIndices)}</span>{' '}
+                  <span className="text-xs text-text/60 font-semibold">
                     [{highlightText(post.category, categoryIndices)}]
                   </span>
                   {matchedTags.length > 0 && (
-                    <span className="block text-xs text-text/60 mt-0.5">
+                    <span className="block text-xs text-text/60 mt-0.5 font-bold">
                       {matchedTags.map(({ tag, indices }, i) => (
                         <span key={i} className="mr-1">
                           #{highlightText(tag, indices)}
@@ -137,7 +139,7 @@ export default function SearchBox() {
             )
           )}
         {debouncedQuery && results.length === 0 && (
-          <li className="text-sm text-text/60">検索結果が見つかりませんでした。</li>
+          <li className="text-sm text-text/60 p-2">検索結果が見つかりませんでした。</li>
         )}
       </ul>
     </div>

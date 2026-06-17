@@ -16,23 +16,25 @@ export default function ScrapCard({ scrap }: ScrapCardProps) {
     : null;
 
   return (
-    <article className="py-8 first:pt-0">
+    <article className="neo-card p-6 mb-6">
       {formattedDate && (
-        <time
-          dateTime={scrap.date?.toISOString()}
-          className="inline-flex items-center gap-1.5 text-base font-semibold text-accent mb-4 font-mono"
-        >
-          {formattedDate}
-        </time>
+        <div className="flex justify-between items-center mb-4 border-b border-border/20 pb-3">
+          <time
+            dateTime={scrap.date?.toISOString()}
+            className="inline-flex items-center gap-1.5 text-sm font-extrabold text-text border border-border px-2 py-0.5 rounded-md bg-secondary font-mono"
+          >
+            {formattedDate}
+          </time>
+        </div>
       )}
 
       <div
-        className="prose prose-sm dark:prose-invert max-w-none"
+        className="prose prose-sm dark:prose-invert max-w-none font-medium text-text/95"
         dangerouslySetInnerHTML={{ __html: scrap.content }}
       />
 
       {scrap.tags.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 mt-3">
+        <div className="flex flex-wrap gap-2 mt-4 pt-3 border-t border-border/10">
           {scrap.tags.map((tag) => (
             <TagLink key={tag} tag={tag} />
           ))}

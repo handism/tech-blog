@@ -98,6 +98,12 @@ draft: true          # 省略可
 - Prettier：行幅 100 文字、シングルクォート、インデント 2 スペース
 - TypeScript strict モード、パスエイリアス `@/*` → プロジェクトルート
 - スタイリングは Tailwind CSS 4、本文組版は Tailwind Typography
+- サイト全体で **ネオ・ブルータリズム (Neo-Brutalism)** デザインスタイルを採用：
+  - 共通クラス `.neo-card`, `.neo-card-hover`, `.neo-btn` を `app/globals.css` で定義。
+  - すべてのカード・ボタンに入力エリアに 2px〜4px の太線ボーダーとぼかしのないハードシャドウを適用。
+  - **発光するダークモード (Plan A)**: ライトモードは黒い影、ダークモードは極限の漆黒背景にスキンカラー (Emerald, Ocean, Sunset, Purple, Rose) で発光するネオンシャドウ。
+  - 見出し等のタイポグラフィには Google Fonts からインポートした **Lexend** と **Space Grotesk** を優先して割り当てる。
+
 
 ## 言語・コミュニケーション設定
 

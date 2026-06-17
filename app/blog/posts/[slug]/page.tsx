@@ -130,12 +130,12 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         <PostMeta post={post} />
 
         {/* サムネイル画像 */}
-        <div className="relative w-full h-64 md:h-96 mb-6 md:mb-8 lg:mb-10 not-prose">
+        <div className="relative w-full h-64 md:h-96 mb-6 md:mb-8 lg:mb-10 not-prose border-3 border-border rounded-2xl shadow-[5px_5px_0px_0px_var(--border)] dark:shadow-[5px_5px_0px_0px_var(--accent)] overflow-hidden">
           <Image
             src={post.image ? `/images/${post.image}` : `/og/${post.slug}/image.png`}
             alt={post.title}
             fill
-            className="object-cover rounded-lg"
+            className="object-cover"
             priority
           />
         </div>
@@ -146,16 +146,16 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       <ImageModal />
 
       {/* 前後の記事へのリンク */}
-      <nav className="mt-12 pt-8 border-t border-border">
+      <nav className="mt-12 pt-8 border-t-2 border-border">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* 前の記事 */}
           {prevPost ? (
             <Link
               href={`/blog/posts/${prevPost.slug}`}
-              className="block p-4 rounded-lg bg-card border border-border hover:bg-secondary transition-colors"
+              className="block p-4 neo-card neo-card-hover"
             >
-              <div className="text-sm text-text/60 mb-1">← 前の記事</div>
-              <div className="font-medium text-text">{prevPost.title}</div>
+              <div className="text-xs text-text/60 mb-1 font-bold">← 前の記事</div>
+              <div className="font-extrabold text-text leading-snug">{prevPost.title}</div>
             </Link>
           ) : (
             <div></div>
@@ -165,10 +165,10 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           {nextPost ? (
             <Link
               href={`/blog/posts/${nextPost.slug}`}
-              className="block p-4 rounded-lg bg-card border border-border hover:bg-secondary transition-colors md:text-right"
+              className="block p-4 neo-card neo-card-hover md:text-right"
             >
-              <div className="text-sm text-text/60 mb-1">次の記事 →</div>
-              <div className="font-medium text-text">{nextPost.title}</div>
+              <div className="text-xs text-text/60 mb-1 font-bold">次の記事 →</div>
+              <div className="font-extrabold text-text leading-snug">{nextPost.title}</div>
             </Link>
           ) : (
             <div></div>

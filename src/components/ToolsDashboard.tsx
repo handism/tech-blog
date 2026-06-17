@@ -73,20 +73,20 @@ export default function ToolsDashboard() {
     <div className="mx-auto w-full max-w-6xl px-4 py-8 md:py-12">
       {/* ヒーローヘッダー */}
       <div className="text-center max-w-2xl mx-auto mb-10 md:mb-14">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-semibold mb-4 border border-accent/20">
-          <Sparkles className="w-3.5 h-3.5" />
+        <div className="inline-flex items-center gap-2 px-3 py-1 border border-border rounded-lg bg-secondary text-text text-xs font-bold mb-4">
+          <Sparkles className="w-3.5 h-3.5 text-accent" />
           <span>Utilities</span>
         </div>
         <h1 className="text-3xl md:text-4xl font-extrabold text-text tracking-tight mb-4">
           Online Developer Tools
         </h1>
-        <p className="text-text/70 text-sm md:text-base leading-relaxed">
+        <p className="text-text/80 text-sm md:text-base leading-relaxed font-medium">
           開発やデザイン、日常のちょっとしたデータ変換作業をブラウザ上で素早く安全に行える便利ツール集です。
         </p>
       </div>
 
       {/* コントロールパネル (検索 ＆ フィルタ) */}
-      <div className="bg-card/40 backdrop-blur-md border border-border/60 rounded-3xl p-4 md:p-6 mb-10 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="neo-card p-5 md:p-6 mb-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
         {/* 検索入力 */}
         <div className="relative flex-1 max-w-md">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text/40" />
@@ -96,41 +96,44 @@ export default function ToolsDashboard() {
             placeholder="ツール名や説明から検索..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-bg/50 border border-border text-text placeholder-text/40 rounded-2xl focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent transition-all text-sm"
+            className="w-full pl-12 pr-4 py-3 bg-card border-2 border-border text-text placeholder-text/50 rounded-xl focus:outline-none focus:translate-x-[-1px] focus:translate-y-[-1px] focus:shadow-[3px_3px_0px_0px_var(--border)] dark:focus:shadow-[3px_3px_0px_0px_var(--accent)] transition-all text-sm font-bold"
           />
         </div>
 
         {/* カテゴリタブ */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0 scrollbar-none -mx-4 px-4 md:mx-0 md:px-0">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
-              className={`
-                px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap border transition-all flex items-center gap-1.5 cursor-pointer
-                ${
-                  selectedCategory === cat.id
-                    ? 'bg-accent border-accent text-white shadow-sm shadow-accent/20'
-                    : 'bg-bg/40 border-border text-text/80 hover:text-accent hover:border-accent/30 hover:bg-accent/5'
-                }
-              `}
-            >
-              <span>{cat.emoji}</span>
-              <span>{cat.name}</span>
-            </button>
-          ))}
+          {CATEGORIES.map((cat) => {
+            const isActive = selectedCategory === cat.id;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`
+                  px-4 py-2.5 rounded-xl text-xs font-extrabold whitespace-nowrap border-2 border-border transition-all flex items-center gap-1.5 cursor-pointer
+                  ${
+                    isActive
+                      ? 'bg-accent text-white translate-x-[2px] translate-y-[2px] shadow-none'
+                      : 'bg-card text-text shadow-[2.5px_2.5px_0px_0px_var(--border)] dark:shadow-[2.5px_2.5px_0px_0px_var(--accent)] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_var(--border)] dark:hover:shadow-[4px_4px_0px_0px_var(--accent)] active:translate-x-0 active:translate-y-0 active:shadow-none'
+                  }
+                `}
+              >
+                <span>{cat.emoji}</span>
+                <span>{cat.name}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
       {/* ツールリストグリッド */}
       {filteredTools.length === 0 ? (
-        <div className="text-center py-16 bg-card/20 backdrop-blur-sm border border-border/40 rounded-3xl">
-          <p className="text-text/60 mb-4 text-sm md:text-base">
+        <div className="text-center py-16 neo-card">
+          <p className="text-text/75 mb-4 text-sm md:text-base font-bold">
             条件に一致するツールが見つかりませんでした。
           </p>
           <button
             onClick={handleClearFilters}
-            className="px-5 py-2.5 bg-accent/15 hover:bg-accent/20 border border-accent/30 text-accent rounded-xl text-sm font-semibold transition-colors cursor-pointer"
+            className="neo-btn px-5 py-2.5 text-sm font-bold text-text"
           >
             検索条件をリセットする
           </button>
@@ -144,10 +147,10 @@ export default function ToolsDashboard() {
               const meta = categoryMeta[catKey];
               return (
                 <div key={catKey} className="space-y-4">
-                  <div className="flex items-center gap-2 border-b border-border/60 pb-2">
+                  <div className="flex items-center gap-2 border-b-3 border-border pb-2">
                     <span className="text-xl md:text-2xl">{meta.emoji}</span>
-                    <h2 className="text-lg md:text-xl font-bold text-text">{meta.name}</h2>
-                    <span className="text-xs bg-secondary text-text/60 px-2 py-0.5 rounded-full font-medium">
+                    <h2 className="text-lg md:text-xl font-extrabold text-text">{meta.name}</h2>
+                    <span className="text-xs border border-border bg-secondary text-text px-2 py-0.5 rounded-md font-bold">
                       {items.length}
                     </span>
                   </div>
@@ -176,10 +179,10 @@ export default function ToolsDashboard() {
 // ツール個別カードコンポーネント
 function ToolCard({ item }: { item: ToolItem }) {
   const CardContent = (
-    <div className="group relative h-full bg-card/45 hover:bg-card/75 backdrop-blur-md border border-border/70 hover:border-accent/40 rounded-2xl p-5 md:p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+    <div className="group relative h-full neo-card neo-card-hover p-5 md:p-6 flex flex-col justify-between overflow-hidden">
       <div>
         <div className="flex justify-between items-start mb-4">
-          <div className="flex items-center justify-center w-12 h-12 rounded-2xl bg-accent/10 text-2xl group-hover:scale-110 group-hover:bg-accent/15 transition-all duration-300">
+          <div className="flex items-center justify-center w-12 h-12 rounded-xl border-2 border-border bg-secondary text-2xl group-hover:rotate-6 transition-transform">
             {item.emoji}
           </div>
           {item.external && (
@@ -188,14 +191,16 @@ function ToolCard({ item }: { item: ToolItem }) {
             </span>
           )}
         </div>
-        <h3 className="text-base md:text-lg font-bold text-text group-hover:text-accent transition-colors flex items-center gap-1.5 mb-2">
+        <h3 className="text-base md:text-lg font-extrabold text-text group-hover:text-accent transition-colors flex items-center gap-1.5 mb-2">
           {item.label}
         </h3>
-        <p className="text-text/70 text-xs md:text-sm leading-relaxed mb-4">{item.description}</p>
+        <p className="text-text/80 text-xs md:text-sm leading-relaxed mb-4 font-medium">
+          {item.description}
+        </p>
       </div>
 
       <div className="mt-auto flex items-center justify-end">
-        <span className="text-xs font-semibold text-accent/80 group-hover:text-accent group-hover:translate-x-1 transition-all flex items-center gap-0.5">
+        <span className="text-xs font-extrabold text-text group-hover:text-accent group-hover:translate-x-1 transition-all flex items-center gap-0.5">
           {item.external ? '開く' : '使ってみる'} ➔
         </span>
       </div>
