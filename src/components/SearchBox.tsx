@@ -77,7 +77,9 @@ export default function SearchBox() {
 
   useEffect(() => {
     if (!debouncedQuery.trim()) {
-      setTokenizedQuery('');
+      Promise.resolve().then(() => {
+        setTokenizedQuery('');
+      });
       return;
     }
     let cancelled = false;
