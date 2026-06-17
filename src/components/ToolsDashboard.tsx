@@ -125,7 +125,9 @@ export default function ToolsDashboard() {
       {/* ツールリストグリッド */}
       {filteredTools.length === 0 ? (
         <div className="text-center py-16 bg-card/20 backdrop-blur-sm border border-border/40 rounded-3xl">
-          <p className="text-text/60 mb-4 text-sm md:text-base">条件に一致するツールが見つかりませんでした。</p>
+          <p className="text-text/60 mb-4 text-sm md:text-base">
+            条件に一致するツールが見つかりませんでした。
+          </p>
           <button
             onClick={handleClearFilters}
             className="px-5 py-2.5 bg-accent/15 hover:bg-accent/20 border border-accent/30 text-accent rounded-xl text-sm font-semibold transition-colors cursor-pointer"
@@ -189,9 +191,7 @@ function ToolCard({ item }: { item: ToolItem }) {
         <h3 className="text-base md:text-lg font-bold text-text group-hover:text-accent transition-colors flex items-center gap-1.5 mb-2">
           {item.label}
         </h3>
-        <p className="text-text/70 text-xs md:text-sm leading-relaxed mb-4">
-          {item.description}
-        </p>
+        <p className="text-text/70 text-xs md:text-sm leading-relaxed mb-4">{item.description}</p>
       </div>
 
       <div className="mt-auto flex items-center justify-end">
