@@ -37,6 +37,13 @@ export const toolsMenuItems = [
   { href: '/tools/color-converter', label: 'Color Converter', external: false },
   { href: '/tools/jwt-decoder', label: 'JWT Decoder', external: false },
   { href: '/tools/qr-code', label: 'QR Code Generator', external: false },
+  { href: '/tools/diff-viewer', label: 'Diff Viewer', external: false },
+  { href: '/tools/unix-timestamp', label: 'Unix Timestamp Converter', external: false },
+  { href: '/tools/cron', label: 'Cron Parser & Generator', external: false },
+  { href: '/tools/url-parser', label: 'URL Parser & Query Inspector', external: false },
+  { href: '/tools/sql-formatter', label: 'SQL Formatter', external: false },
+  { href: '/tools/text-case', label: 'Text Case Converter & Counter', external: false },
+  { href: '/tools/user-agent', label: 'User Agent Parser', external: false },
   // 外部ツール
   { href: 'https://handism.github.io/sauna-itta/', label: 'Sauna Itta', external: true },
   { href: 'https://handism.github.io/sauna-simulator/', label: 'Sauna Simulator', external: true },

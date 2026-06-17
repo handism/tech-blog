@@ -109,6 +109,7 @@ export default function Header() {
                   onMouseLeave={() => setIsOpen(false)}
                   className={`
                     absolute left-0 mt-2 w-48
+                    max-h-[80vh] overflow-y-auto
                     rounded-2xl border border-border
                     bg-bg/95 backdrop-blur-md
                     shadow-xl shadow-black/20
