@@ -99,6 +99,10 @@ draft: true          # 省略可
 - TypeScript strict モード、パスエイリアス `@/*` → プロジェクトルート
 - スタイリングは Tailwind CSS 4、本文組版は Tailwind Typography
 
+## 言語・コミュニケーション設定
+
+- ユーザーとの会話、および作成するドキュメント（`implementation_plan.md`、`walkthrough.md`、`task.md` などの計画・進捗管理用ファイルを含む）は、原則として**日本語**で記述・作成してください。
+
 ## ドキュメント管理ルール
 
 **`.claude/CLAUDE.md` と `README.md` は常に最新の状態を保つこと。** 新機能・ルーティング・テスト・アーキテクチャ・コードスタイルの変更時は両ファイルを同時に更新する。

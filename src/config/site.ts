@@ -15,38 +15,202 @@ export const DEFAULT_SKIN: SkinId = 'emerald';
 export const SKIN_STORAGE_KEY = 'skin';
 
 /**
- * ヘッダー Tools ドロップダウンのメニュー項目。
+ * 各ツールアイテムの定義インターフェース。
  */
-export const toolsMenuItems = [
+export interface ToolItem {
+  href: string;
+  label: string;
+  description: string;
+  emoji: string;
+  category: 'image' | 'convert' | 'dev' | 'external';
+  external?: boolean;
+}
+
+/**
+ * ヘッダー / 専用ページで利用するメニュー項目。
+ */
+export const toolsMenuItems: readonly ToolItem[] = [
   // 画像処理
-  { href: '/tools/memphis', label: 'Memphis Generator', external: false },
-  { href: '/tools/trimming', label: 'Image Trimmer', external: false },
+  {
+    href: '/tools/memphis',
+    label: 'Memphis Generator',
+    description: 'メンフィスパターンのモダンな幾何学背景を直感的に生成・カスタマイズ',
+    emoji: '🎨',
+    category: 'image',
+  },
+  {
+    href: '/tools/trimming',
+    label: 'Image Trimmer',
+    description: '画像を任意の縦横比やカスタムサイズでトリミング・リサイズ・保存',
+    emoji: '✂️',
+    category: 'image',
+  },
   // データ変換
-  { href: '/tools/timezone', label: 'Timezone Converter', external: false },
-  { href: '/tools/json-formatter', label: 'JSON Formatter', external: false },
-  { href: '/tools/yaml-json', label: 'YAML ↔ JSON', external: false },
-  { href: '/tools/base64', label: 'Base64 Codec', external: false },
-  { href: '/tools/url-codec', label: 'URL Codec', external: false },
-  { href: '/tools/uuid', label: 'UUID Generator', external: false },
-  { href: '/tools/html-entity', label: 'HTML Entity Encoder / Decoder', external: false },
-  { href: '/tools/csv-json', label: 'CSV ↔ JSON', external: false },
-  { href: '/tools/password-generator', label: 'Password Generator', external: false },
+  {
+    href: '/tools/timezone',
+    label: 'Timezone Converter',
+    description: '複数のタイムゾーンと現地時間を一覧比較・双方向変換',
+    emoji: '🌐',
+    category: 'convert',
+  },
+  {
+    href: '/tools/json-formatter',
+    label: 'JSON Formatter',
+    description: 'JSONデータをきれいに整形・ミニファイし、構文エラー箇所を検出',
+    emoji: '✨',
+    category: 'convert',
+  },
+  {
+    href: '/tools/yaml-json',
+    label: 'YAML ↔ JSON',
+    description: 'YAML形式とJSON形式のデータをブラウザ上で双方向に相互変換',
+    emoji: '🔄',
+    category: 'convert',
+  },
+  {
+    href: '/tools/base64',
+    label: 'Base64 Codec',
+    description: 'テキストやファイルのBase64エンコード・デコード処理',
+    emoji: '📦',
+    category: 'convert',
+  },
+  {
+    href: '/tools/url-codec',
+    label: 'URL Codec',
+    description: 'URLのクエリパラメータなどに用いる文字列のエンコード・デコード',
+    emoji: '🔗',
+    category: 'convert',
+  },
+  {
+    href: '/tools/uuid',
+    label: 'UUID Generator',
+    description: '開発や検証に使えるランダムなUUID (v4) を一括生成',
+    emoji: '🆔',
+    category: 'convert',
+  },
+  {
+    href: '/tools/html-entity',
+    label: 'HTML Entity Encoder / Decoder',
+    description: 'HTML特殊文字とエスケープシーケンスの相互変換',
+    emoji: '🔤',
+    category: 'convert',
+  },
+  {
+    href: '/tools/csv-json',
+    label: 'CSV ↔ JSON',
+    description: '表形式のCSVデータと構造化されたJSONデータを双方向に変換',
+    emoji: '📊',
+    category: 'convert',
+  },
+  {
+    href: '/tools/password-generator',
+    label: 'Password Generator',
+    description: '長さや使用文字種をカスタマイズして安全なランダムパスワードを生成',
+    emoji: '🔑',
+    category: 'convert',
+  },
   // エンジニアツール
-  { href: '/tools/regex-tester', label: 'Regex Tester', external: false },
-  { href: '/tools/hash-generator', label: 'Hash Generator', external: false },
-  { href: '/tools/color-converter', label: 'Color Converter', external: false },
-  { href: '/tools/jwt-decoder', label: 'JWT Decoder', external: false },
-  { href: '/tools/qr-code', label: 'QR Code Generator', external: false },
-  { href: '/tools/diff-viewer', label: 'Diff Viewer', external: false },
-  { href: '/tools/unix-timestamp', label: 'Unix Timestamp Converter', external: false },
-  { href: '/tools/cron', label: 'Cron Parser & Generator', external: false },
-  { href: '/tools/url-parser', label: 'URL Parser & Query Inspector', external: false },
-  { href: '/tools/sql-formatter', label: 'SQL Formatter', external: false },
-  { href: '/tools/text-case', label: 'Text Case Converter & Counter', external: false },
-  { href: '/tools/user-agent', label: 'User Agent Parser', external: false },
+  {
+    href: '/tools/regex-tester',
+    label: 'Regex Tester',
+    description: '正規表現パターンの一致確認とキャプチャグループのリアルタイムテスト',
+    emoji: '🔍',
+    category: 'dev',
+  },
+  {
+    href: '/tools/hash-generator',
+    label: 'Hash Generator',
+    description: 'MD5, SHA-1, SHA-256などの暗号ハッシュ値を瞬時に生成',
+    emoji: '🔒',
+    category: 'dev',
+  },
+  {
+    href: '/tools/color-converter',
+    label: 'Color Converter',
+    description: 'HEX, RGB, HSL, CMYKなどのカラーコードを相互に変換',
+    emoji: '🌈',
+    category: 'dev',
+  },
+  {
+    href: '/tools/jwt-decoder',
+    label: 'JWT Decoder',
+    description: 'JSON Web Token (JWT) のヘッダー、ペイロード、署名を解析・検証',
+    emoji: '🎫',
+    category: 'dev',
+  },
+  {
+    href: '/tools/qr-code',
+    label: 'QR Code Generator',
+    description: '任意のテキストやURLからカスタムカラーのQRコードを生成',
+    emoji: '📱',
+    category: 'dev',
+  },
+  {
+    href: '/tools/diff-viewer',
+    label: 'Diff Viewer',
+    description: '2つのテキストを並べて変更箇所を行単位・文字単位で視覚的に比較',
+    emoji: '🆚',
+    category: 'dev',
+  },
+  {
+    href: '/tools/unix-timestamp',
+    label: 'Unix Timestamp Converter',
+    description: 'Unixエポックミリ秒と人間が読める日時形式を双方向変換',
+    emoji: '⏰',
+    category: 'dev',
+  },
+  {
+    href: '/tools/cron',
+    label: 'Cron Parser & Generator',
+    description: 'Cron式から次の実行スケジュールを生成・自然言語でわかりやすく解説',
+    emoji: '📆',
+    category: 'dev',
+  },
+  {
+    href: '/tools/url-parser',
+    label: 'URL Parser & Query Inspector',
+    description: 'URLのホスト名、パス、クエリパラメータを個別に解析して一覧表示',
+    emoji: '🕵️',
+    category: 'dev',
+  },
+  {
+    href: '/tools/sql-formatter',
+    label: 'SQL Formatter',
+    description: '読みづらいSQLクエリをキーワードごとにきれいにインデント整形',
+    emoji: '🗄️',
+    category: 'dev',
+  },
+  {
+    href: '/tools/text-case',
+    label: 'Text Case Converter & Counter',
+    description: '大文字・小文字などの変換および文字数・行数のリアルタイムカウント',
+    emoji: '✍️',
+    category: 'dev',
+  },
+  {
+    href: '/tools/user-agent',
+    label: 'User Agent Parser',
+    description: 'ブラウザのUser Agent文字列からOSやブラウザ、デバイス情報を判定',
+    emoji: '💻',
+    category: 'dev',
+  },
   // 外部ツール
-  { href: 'https://handism.github.io/sauna-itta/', label: 'Sauna Itta', external: true },
-  { href: 'https://handism.github.io/sauna-simulator/', label: 'Sauna Simulator', external: true },
+  {
+    href: 'https://handism.github.io/sauna-itta/',
+    label: 'Sauna Itta',
+    description: 'サウナ活動を記録する個人ログアプリ（外部サイト）',
+    emoji: '🧖',
+    category: 'external',
+    external: true,
+  },
+  {
+    href: 'https://handism.github.io/sauna-simulator/',
+    label: 'Sauna Simulator',
+    description: 'サウナの温度変化やととのい度をシミュレーション（外部サイト）',
+    emoji: '♨️',
+    category: 'external',
+    external: true,
+  },
 ] as const;
 
 /**
