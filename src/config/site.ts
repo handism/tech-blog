@@ -194,6 +194,48 @@ export const toolsMenuItems: readonly ToolItem[] = [
     emoji: '💻',
     category: 'dev',
   },
+  {
+    href: '/tools/css-generator',
+    label: 'CSS Generator',
+    description: 'Glassmorphismや美しい極上の影（box-shadow）を直感的に生成',
+    emoji: '💎',
+    category: 'dev',
+  },
+  {
+    href: '/tools/color-contrast',
+    label: 'Color Contrast & Palette',
+    description: 'WCAGに基づいた色のコントラスト比判定と配色パレットの自動作成',
+    emoji: '🎨',
+    category: 'dev',
+  },
+  {
+    href: '/tools/keyboard-events',
+    label: 'Keyboard Event Visualizer',
+    description: '押したキーのJavaScriptイベントパラメータや仮想キーボード上の位置を表示',
+    emoji: '⌨️',
+    category: 'dev',
+  },
+  {
+    href: '/tools/bitwise',
+    label: 'Bitwise & Radix Converter',
+    description: '進数変換とビット操作（トグル切替）や基本的なビット演算の可視化',
+    emoji: '🔢',
+    category: 'dev',
+  },
+  {
+    href: '/tools/git-helper',
+    label: 'Git Command Helper',
+    description: 'やりたいことから最適なGitコマンドを生成しパラメータも動的入力',
+    emoji: '🌱',
+    category: 'dev',
+  },
+  {
+    href: '/tools/curl-converter',
+    label: 'Curl to Code Converter',
+    description: 'CurlリクエストをFetch、Axios、Python等マルチ言語のコードに相互変換',
+    emoji: '🚀',
+    category: 'dev',
+  },
   // 外部ツール
   {
     href: 'https://handism.github.io/sauna-itta/',
