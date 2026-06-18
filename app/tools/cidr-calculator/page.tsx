@@ -1,38 +1,19 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { Binary, Clipboard, Check } from 'lucide-react';
 
 export default function CidrCalculatorPage() {
   const [ipAddress, setIpAddress] = useState('192.168.1.1');
   const [prefix, setPrefix] = useState<number>(24);
-  const [error, setError] = useState('');
-
-  // 計算結果ステート
-  const [cidrNotation, setCidrNotation] = useState('');
-  const [subnetMask, setSubnetMask] = useState('');
-  const [wildcardMask, setWildcardMask] = useState('');
-  const [networkAddress, setNetworkAddress] = useState('');
-  const [broadcastAddress, setBroadcastAddress] = useState('');
-  const [ipRange, setIpRange] = useState('');
-  const [maxHosts, setMaxHosts] = useState<number>(0);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
-
-  // バイナリ表現用
-  const [ipBinary, setIpBinary] = useState<{ net: string; host: string }[]>([]);
-  const [maskBinary, setMaskBinary] = useState<{ net: string; host: string }[]>([]);
 
   const ipToLong = (ip: string): number => {
     return ip.split('.').reduce((acc, octet) => (acc << 8) + parseInt(octet, 10), 0) >>> 0;
   };
 
   const longToIp = (long: number): string => {
-    return [
-      (long >>> 24) & 255,
-      (long >>> 16) & 255,
-      (long >>> 8) & 255,
-      long & 255
-    ].join('.');
+    return [(long >>> 24) & 255, (long >>> 16) & 255, (long >>> 8) & 255, long & 255].join('.');
   };
 
   // 32文字のバイナリをオクテット境界（8ビットずつ）に分割して、ネット部・ホスト部のオブジェクト配列を返す
@@ -47,7 +28,7 @@ export default function CidrCalculatorPage() {
 
       // このオクテットにおけるネットワーク部とホスト部の長さを計算
       const octetNetLength = Math.max(0, Math.min(8, netLength - startIdx));
-      
+
       result.push({
         net: octetBin.slice(0, octetNetLength),
         host: octetBin.slice(octetNetLength),
@@ -60,23 +41,32 @@ export default function CidrCalculatorPage() {
   const validateIp = (ip: string): boolean => {
     const parts = ip.split('.');
     if (parts.length !== 4) return false;
-    return parts.every(part => {
+    return parts.every((part) => {
       const num = parseInt(part, 10);
       return !isNaN(num) && num >= 0 && num <= 255 && part === num.toString();
     });
   };
 
-  const calculateCidr = () => {
-    setError('');
-
+  // すべての計算結果をuseMemoで一括算出（Derived State）
+  const calculationResult = useMemo(() => {
     if (!validateIp(ipAddress)) {
-      setError('無効なIPアドレス形式です（例: 192.168.1.1）');
-      return;
+      return {
+        error: '無効なIPアドレス形式です（例: 192.168.1.1）',
+        cidrNotation: '',
+        subnetMask: '',
+        wildcardMask: '',
+        networkAddress: '',
+        broadcastAddress: '',
+        ipRange: '',
+        maxHosts: 0,
+        ipBinary: [],
+        maskBinary: [],
+      };
     }
 
     try {
       const ipLong = ipToLong(ipAddress);
-      
+
       // マスク計算
       const maskLong = prefix === 0 ? 0 : (~0 << (32 - prefix)) >>> 0;
       const wildcardLong = ~maskLong >>> 0;
@@ -85,40 +75,64 @@ export default function CidrCalculatorPage() {
       const networkLong = (ipLong & maskLong) >>> 0;
       const broadcastLong = (networkLong | wildcardLong) >>> 0;
 
-      // 各種値のフォーマット
-      setSubnetMask(longToIp(maskLong));
-      setWildcardMask(longToIp(wildcardLong));
-      setNetworkAddress(longToIp(networkLong));
-      setBroadcastAddress(longToIp(broadcastLong));
-      setCidrNotation(`${longToIp(networkLong)}/${prefix}`);
+      let range = '';
+      let hosts = 0;
 
       // IPレンジとホスト数計算
       if (prefix === 32) {
-        setIpRange(longToIp(ipLong));
-        setMaxHosts(1);
+        range = longToIp(ipLong);
+        hosts = 1;
       } else if (prefix === 31) {
-        setIpRange(`${longToIp(networkLong)} 〜 ${longToIp(broadcastLong)}`);
-        setMaxHosts(2);
+        range = `${longToIp(networkLong)} 〜 ${longToIp(broadcastLong)}`;
+        hosts = 2;
       } else {
         const firstIp = (networkLong + 1) >>> 0;
         const lastIp = (broadcastLong - 1) >>> 0;
-        setIpRange(`${longToIp(firstIp)} 〜 ${longToIp(lastIp)}`);
-        setMaxHosts(broadcastLong - networkLong - 1);
+        range = `${longToIp(firstIp)} 〜 ${longToIp(lastIp)}`;
+        hosts = broadcastLong - networkLong - 1;
       }
 
-      // バイナリ表現の構築
-      setIpBinary(splitBinary(ipLong, prefix));
-      setMaskBinary(splitBinary(maskLong, prefix));
-
+      return {
+        error: '',
+        cidrNotation: `${longToIp(networkLong)}/${prefix}`,
+        subnetMask: longToIp(maskLong),
+        wildcardMask: longToIp(wildcardLong),
+        networkAddress: longToIp(networkLong),
+        broadcastAddress: longToIp(broadcastLong),
+        ipRange: range,
+        maxHosts: hosts,
+        ipBinary: splitBinary(ipLong, prefix),
+        maskBinary: splitBinary(maskLong, prefix),
+      };
     } catch (e) {
       console.error(e);
-      setError('計算中にエラーが発生しました。');
+      return {
+        error: '計算中にエラーが発生しました。',
+        cidrNotation: '',
+        subnetMask: '',
+        wildcardMask: '',
+        networkAddress: '',
+        broadcastAddress: '',
+        ipRange: '',
+        maxHosts: 0,
+        ipBinary: [],
+        maskBinary: [],
+      };
     }
-  };
-
-  useEffect(() => {
-    calculateCidr();
   }, [ipAddress, prefix]);
+
+  const {
+    error,
+    cidrNotation,
+    subnetMask,
+    wildcardMask,
+    networkAddress,
+    broadcastAddress,
+    ipRange,
+    maxHosts,
+    ipBinary,
+    maskBinary,
+  } = calculationResult;
 
   const handleCopy = (text: string, key: string) => {
     navigator.clipboard.writeText(text);
@@ -260,7 +274,12 @@ export default function CidrCalculatorPage() {
                   { label: 'ネットワークアドレス', val: networkAddress, key: 'net' },
                   { label: 'ブロードキャストアドレス', val: broadcastAddress, key: 'broad' },
                   { label: 'ホストIPアドレス範囲', val: ipRange, key: 'range' },
-                  { label: '最大ホスト可能数', val: maxHosts.toLocaleString() + ' 台', key: 'hosts', raw: maxHosts.toString() },
+                  {
+                    label: '最大ホスト可能数',
+                    val: maxHosts.toLocaleString() + ' 台',
+                    key: 'hosts',
+                    raw: maxHosts.toString(),
+                  },
                 ].map((item) => (
                   <div key={item.key} className="flex justify-between items-center py-3">
                     <div className="min-w-0 pr-4">

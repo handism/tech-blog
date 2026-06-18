@@ -1,31 +1,28 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { Clipboard, Check, RefreshCw, Brackets } from 'lucide-react';
 
 export default function JsonToTsPage() {
-  const [inputJson, setInputJson] = useState('{\n  "id": 1,\n  "name": "Jane Doe",\n  "isActive": true,\n  "roles": ["admin", "editor"],\n  "profile": {\n    "age": 28,\n    "bio": "Software Engineer"\n  }\n}');
+  const [inputJson, setInputJson] = useState(
+    '{\n  "id": 1,\n  "name": "Jane Doe",\n  "isActive": true,\n  "roles": ["admin", "editor"],\n  "profile": {\n    "age": 28,\n    "bio": "Software Engineer"\n  }\n}'
+  );
   const [rootName, setRootName] = useState('User');
   const [outputFormat, setOutputFormat] = useState<'interface' | 'type' | 'zod'>('interface');
-  const [outputCode, setOutputCode] = useState('');
-  const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
 
-  useEffect(() => {
+  const { outputCode, error } = useMemo(() => {
     if (!inputJson.trim()) {
-      setOutputCode('');
-      setError('');
-      return;
+      return { outputCode: '', error: '' };
     }
 
     try {
       const parsed = JSON.parse(inputJson);
-      setError('');
       const generated = generateTypes(parsed, rootName || 'Root', outputFormat);
-      setOutputCode(generated);
+      return { outputCode: generated, error: '' };
     } catch (e: any) {
-      setError(`JSON解析エラー: ${e.message}`);
-      setOutputCode('');
+      return { outputCode: '', error: `JSON解析エラー: ${e.message}` };
     }
   }, [inputJson, rootName, outputFormat]);
 
@@ -40,11 +37,15 @@ export default function JsonToTsPage() {
       const parsed = JSON.parse(inputJson);
       setInputJson(JSON.stringify(parsed, null, 2));
     } catch (e: any) {
-      setError(`フォーマット失敗: ${e.message}`);
+      console.error(e);
     }
   };
 
-  function generateTypes(value: any, typeName: string, format: 'interface' | 'type' | 'zod'): string {
+  function generateTypes(
+    value: any,
+    typeName: string,
+    format: 'interface' | 'type' | 'zod'
+  ): string {
     const generatedTypes: string[] = [];
     const seenNames = new Set<string>();
 
@@ -56,7 +57,7 @@ export default function JsonToTsPage() {
       if (val === null) return 'null';
       if (Array.isArray(val)) {
         if (val.length === 0) return 'any[]';
-        const itemTypes = Array.from(new Set(val.map(item => resolveType(item, currentKey))));
+        const itemTypes = Array.from(new Set(val.map((item) => resolveType(item, currentKey))));
         if (itemTypes.length === 1) {
           return `${itemTypes[0]}[]`;
         }
@@ -77,7 +78,9 @@ export default function JsonToTsPage() {
       if (val === null) return 'z.null()';
       if (Array.isArray(val)) {
         if (val.length === 0) return 'z.array(z.any())';
-        const itemTypes = Array.from(new Set(val.map(item => resolveZod(item, currentKey, indent))));
+        const itemTypes = Array.from(
+          new Set(val.map((item) => resolveZod(item, currentKey, indent)))
+        );
         if (itemTypes.length === 1) {
           return `z.array(${itemTypes[0]})`;
         }
@@ -116,7 +119,7 @@ export default function JsonToTsPage() {
     function buildZod(obj: any, indent: string): string {
       const keys = Object.keys(obj);
       if (keys.length === 0) return 'z.object({})';
-      
+
       let output = 'z.object({\n';
       for (const key of keys) {
         const zodStr = resolveZod(obj[key], key, indent);
@@ -173,7 +176,10 @@ export default function JsonToTsPage() {
         {/* 入力パネル */}
         <div className="neo-card p-5 md:p-6 flex flex-col h-[600px]">
           <div className="flex justify-between items-center mb-4">
-            <label htmlFor="json-input" className="text-sm font-bold text-text flex items-center gap-2">
+            <label
+              htmlFor="json-input"
+              className="text-sm font-bold text-text flex items-center gap-2"
+            >
               <span>📥 JSON入力</span>
             </label>
             <button
@@ -239,7 +245,11 @@ export default function JsonToTsPage() {
                 className="absolute top-4 right-4 z-10 neo-btn p-2 bg-secondary text-text flex items-center justify-center"
                 title="コードをコピー"
               >
-                {copied ? <Check className="w-4 h-4 text-accent" /> : <Clipboard className="w-4 h-4" />}
+                {copied ? (
+                  <Check className="w-4 h-4 text-accent" />
+                ) : (
+                  <Clipboard className="w-4 h-4" />
+                )}
               </button>
             ) : null}
             <pre className="w-full h-full p-4 border-2 border-border rounded-xl font-mono text-sm bg-slate-950 text-slate-100 overflow-y-auto whitespace-pre">

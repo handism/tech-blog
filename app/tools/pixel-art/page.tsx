@@ -1,13 +1,25 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Palette, Trash2, Eye, EyeOff, Download, RefreshCw, PenTool, PaintBucket, Eraser } from 'lucide-react';
+import { Palette, Trash2, Eye, EyeOff, Download, PenTool, PaintBucket, Eraser } from 'lucide-react';
 
 const PRESET_COLORS = [
-  '#000000', '#ffffff', '#7f7f7f', '#c3c3c3',
-  '#ef4444', '#f97316', '#eab308', '#22c55e',
-  '#06b6d4', '#3b82f6', '#6366f1', '#a855f7',
-  '#ec4899', '#f43f5e', '#b45309', '#15803d'
+  '#000000',
+  '#ffffff',
+  '#7f7f7f',
+  '#c3c3c3',
+  '#ef4444',
+  '#f97316',
+  '#eab308',
+  '#22c55e',
+  '#06b6d4',
+  '#3b82f6',
+  '#6366f1',
+  '#a855f7',
+  '#ec4899',
+  '#f43f5e',
+  '#b45309',
+  '#15803d',
 ];
 
 type Tool = 'pencil' | 'eraser' | 'bucket';
@@ -17,9 +29,13 @@ export default function PixelArtPage() {
   const [selectedColor, setSelectedColor] = useState<string>('#ef4444');
   const [activeTool, setActiveTool] = useState<Tool>('pencil');
   const [showGridLines, setShowGridLines] = useState(true);
-  
+
   // 二次元配列グリッド (空文字は透明を表す)
-  const [grid, setGrid] = useState<string[][]>([]);
+  const [grid, setGrid] = useState<string[][]>(() =>
+    Array(16)
+      .fill(null)
+      .map(() => Array(16).fill(''))
+  );
   const isMouseDownRef = useRef(false);
 
   // グリッド初期化
@@ -29,10 +45,6 @@ export default function PixelArtPage() {
       .map(() => Array(size).fill(''));
     setGrid(newGrid);
   };
-
-  useEffect(() => {
-    initializeGrid(gridSize);
-  }, [gridSize]);
 
   // マウスイベント関連
   useEffect(() => {
@@ -67,7 +79,7 @@ export default function PixelArtPage() {
     const targetColor = grid[startY][startX];
     if (targetColor === replacementColor) return;
 
-    const newGrid = grid.map(row => [...row]);
+    const newGrid = grid.map((row) => [...row]);
     const queue: [number, number][] = [[startX, startY]];
 
     while (queue.length > 0) {
@@ -199,8 +211,11 @@ export default function PixelArtPage() {
                   <button
                     key={size}
                     onClick={() => {
-                      if (confirm('解像度を変更すると現在の絵がリセットされます。よろしいですか？')) {
+                      if (
+                        confirm('解像度を変更すると現在の絵がリセットされます。よろしいですか？')
+                      ) {
                         setGridSize(size);
+                        initializeGrid(size);
                       }
                     }}
                     className={`px-3 py-1.5 border-2 border-border rounded-xl text-xs font-extrabold cursor-pointer transition-all ${
@@ -221,7 +236,11 @@ export default function PixelArtPage() {
                 onClick={() => setShowGridLines(!showGridLines)}
                 className="neo-btn px-2.5 py-1.5 text-xs bg-secondary flex items-center gap-1"
               >
-                {showGridLines ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                {showGridLines ? (
+                  <EyeOff className="w-3.5 h-3.5" />
+                ) : (
+                  <Eye className="w-3.5 h-3.5" />
+                )}
                 {showGridLines ? '非表示' : '表示'}
               </button>
             </div>

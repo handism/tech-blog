@@ -1,7 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Ruler, Clipboard, Check } from 'lucide-react';
+
+type UnitType = 'px' | 'rem' | 'em' | 'vw' | 'vh' | '%';
 
 export default function CssUnitConverterPage() {
   const [baseFontSize, setBaseFontSize] = useState<number>(16);
@@ -19,23 +21,13 @@ export default function CssUnitConverterPage() {
 
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
-  // 指定された px 値から他の単位をすべて算出
-  const updateFromPx = (px: number) => {
-    if (isNaN(px)) return;
-    setRemVal(formatNumber(px / baseFontSize));
-    setEmVal(formatNumber(px / baseFontSize));
-    setVwVal(formatNumber((px / viewportWidth) * 100));
-    setVhVal(formatNumber((px / viewportHeight) * 100));
-    setPercentVal(formatNumber((px / parentWidth) * 100));
-  };
-
   const formatNumber = (num: number): string => {
     if (isNaN(num)) return '';
     // 小数点第4位まで表示し、不要な末尾の0は削除
     return parseFloat(num.toFixed(4)).toString();
   };
 
-  const handleInputChange = (value: string, unit: 'px' | 'rem' | 'em' | 'vw' | 'vh' | '%') => {
+  const handleInputChange = (value: string, unit: UnitType) => {
     if (value === '') {
       clearAllValues();
       return;
@@ -43,7 +35,6 @@ export default function CssUnitConverterPage() {
 
     const num = parseFloat(value);
     if (isNaN(num)) {
-      // 数値以外の入力のときはそのま表示を更新するのみ
       updateValState(value, unit);
       return;
     }
@@ -99,13 +90,39 @@ export default function CssUnitConverterPage() {
     setPercentVal('');
   };
 
-  // 基準値が変更されたときに現在の px 基準で再計算
-  useEffect(() => {
+  // 基準値が変更されたときに現在の px 基準で再計算するハンドラ
+  const handleBaseFontSizeChange = (val: number) => {
+    setBaseFontSize(val);
     const px = parseFloat(pxVal);
     if (!isNaN(px)) {
-      updateFromPx(px);
+      setRemVal(formatNumber(px / val));
+      setEmVal(formatNumber(px / val));
     }
-  }, [baseFontSize, viewportWidth, viewportHeight, parentWidth]);
+  };
+
+  const handleViewportWidthChange = (val: number) => {
+    setViewportWidth(val);
+    const px = parseFloat(pxVal);
+    if (!isNaN(px)) {
+      setVwVal(formatNumber((px / val) * 100));
+    }
+  };
+
+  const handleViewportHeightChange = (val: number) => {
+    setViewportHeight(val);
+    const px = parseFloat(pxVal);
+    if (!isNaN(px)) {
+      setVhVal(formatNumber((px / val) * 100));
+    }
+  };
+
+  const handleParentWidthChange = (val: number) => {
+    setParentWidth(val);
+    const px = parseFloat(pxVal);
+    if (!isNaN(px)) {
+      setPercentVal(formatNumber((px / val) * 100));
+    }
+  };
 
   const handleCopy = (text: string, key: string) => {
     if (!text) return;
@@ -115,12 +132,48 @@ export default function CssUnitConverterPage() {
   };
 
   const units = [
-    { key: 'px', label: 'ピクセル (px)', value: pxVal, suffix: 'px', desc: '基本となる物理サイズ（絶対単位）' },
-    { key: 'rem', label: 'ルート相対 (rem)', value: remVal, suffix: 'rem', desc: 'ルート要素 (<html>) のフォントサイズに対する相対サイズ' },
-    { key: 'em', label: '親要素相対 (em)', value: emVal, suffix: 'em', desc: '現在の要素または親要素のフォントサイズに対する相対サイズ' },
-    { key: 'vw', label: 'ビューポート幅 (vw)', value: vwVal, suffix: 'vw', desc: '画面幅（ビューポート幅）に対する割合 (1vw = 幅の1%)' },
-    { key: 'vh', label: 'ビューポート高 (vh)', value: vhVal, suffix: 'vh', desc: '画面高（ビューポート高）に対する割合 (1vh = 高さの1%)' },
-    { key: '%', label: 'パーセント (%)', value: percentVal, suffix: '%', desc: '親要素の幅やサイズに対する割合' },
+    {
+      key: 'px' as const,
+      label: 'ピクセル (px)',
+      value: pxVal,
+      suffix: 'px',
+      desc: '基本となる物理サイズ（絶対単位）',
+    },
+    {
+      key: 'rem' as const,
+      label: 'ルート相対 (rem)',
+      value: remVal,
+      suffix: 'rem',
+      desc: 'ルート要素 (<html>) のフォントサイズに対する相対サイズ',
+    },
+    {
+      key: 'em' as const,
+      label: '親要素相対 (em)',
+      value: emVal,
+      suffix: 'em',
+      desc: '現在の要素または親要素のフォントサイズに対する相対サイズ',
+    },
+    {
+      key: 'vw' as const,
+      label: 'ビューポート幅 (vw)',
+      value: vwVal,
+      suffix: 'vw',
+      desc: '画面幅（ビューポート幅）に対する割合 (1vw = 幅 of 1%)',
+    },
+    {
+      key: 'vh' as const,
+      label: 'ビューポート高 (vh)',
+      value: vhVal,
+      suffix: 'vh',
+      desc: '画面高（ビューポート高）に対する割合 (1vh = 高さ of 1%)',
+    },
+    {
+      key: '%' as const,
+      label: 'パーセント (%)',
+      value: percentVal,
+      suffix: '%',
+      desc: '親要素の幅やサイズに対する割合',
+    },
   ];
 
   return (
@@ -156,7 +209,7 @@ export default function CssUnitConverterPage() {
                   <input
                     type="number"
                     value={baseFontSize}
-                    onChange={(e) => setBaseFontSize(Math.max(1, Number(e.target.value)))}
+                    onChange={(e) => handleBaseFontSizeChange(Math.max(1, Number(e.target.value)))}
                     className="w-full px-3 py-2 bg-card border-2 border-border text-text rounded-xl font-bold focus:outline-none"
                   />
                   <span className="text-sm font-bold">px</span>
@@ -171,7 +224,7 @@ export default function CssUnitConverterPage() {
                   <input
                     type="number"
                     value={viewportWidth}
-                    onChange={(e) => setViewportWidth(Math.max(1, Number(e.target.value)))}
+                    onChange={(e) => handleViewportWidthChange(Math.max(1, Number(e.target.value)))}
                     className="w-full px-3 py-2 bg-card border-2 border-border text-text rounded-xl font-bold focus:outline-none"
                   />
                   <span className="text-sm font-bold">px</span>
@@ -186,7 +239,9 @@ export default function CssUnitConverterPage() {
                   <input
                     type="number"
                     value={viewportHeight}
-                    onChange={(e) => setViewportHeight(Math.max(1, Number(e.target.value)))}
+                    onChange={(e) =>
+                      handleViewportHeightChange(Math.max(1, Number(e.target.value)))
+                    }
                     className="w-full px-3 py-2 bg-card border-2 border-border text-text rounded-xl font-bold focus:outline-none"
                   />
                   <span className="text-sm font-bold">px</span>
@@ -201,7 +256,7 @@ export default function CssUnitConverterPage() {
                   <input
                     type="number"
                     value={parentWidth}
-                    onChange={(e) => setParentWidth(Math.max(1, Number(e.target.value)))}
+                    onChange={(e) => handleParentWidthChange(Math.max(1, Number(e.target.value)))}
                     className="w-full px-3 py-2 bg-card border-2 border-border text-text rounded-xl font-bold focus:outline-none"
                   />
                   <span className="text-sm font-bold">px</span>
@@ -235,7 +290,7 @@ export default function CssUnitConverterPage() {
                     <input
                       type="text"
                       value={unit.value}
-                      onChange={(e) => handleInputChange(e.target.value, unit.key as any)}
+                      onChange={(e) => handleInputChange(e.target.value, unit.key)}
                       className="w-full pl-4 pr-20 py-3 bg-card border-2 border-border text-text rounded-xl font-mono font-bold text-base focus:outline-none focus:translate-x-[-1px] focus:translate-y-[-1px] focus:shadow-[2px_2px_0px_0px_var(--border)] dark:focus:shadow-[2px_2px_0px_0px_var(--accent)] transition-all"
                       placeholder={`値を入力 (${unit.suffix})`}
                     />

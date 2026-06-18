@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Palette, Clipboard, Check, RefreshCw, Eye } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { Palette, Clipboard, Check, Eye } from 'lucide-react';
 
 export default function SvgEditorPage() {
   const [inputSvg, setInputSvg] = useState(
@@ -10,11 +10,9 @@ export default function SvgEditorPage() {
   <polygon points="50,9 61,35 89,35 66,51 75,78 50,61 25,78 34,51 11,35 39,35" fill="#10b981" stroke="#000000" stroke-width="3"/>
 </svg>`
   );
-  const [outputSvg, setOutputSvg] = useState('');
   const [fillColor, setFillColor] = useState('');
   const [strokeColor, setStrokeColor] = useState('');
   const [copied, setCopied] = useState(false);
-  const [sanitizedPreview, setSanitizedPreview] = useState('');
 
   // SVGプレビューの安全性を考慮したサニタイズ（簡易版）
   const sanitizeForPreview = (svgStr: string): string => {
@@ -42,16 +40,18 @@ export default function SvgEditorPage() {
     return res.trim();
   };
 
-  const handleProcess = () => {
+  const sanitizedPreview = useMemo(() => {
+    return sanitizeForPreview(inputSvg);
+  }, [inputSvg]);
+
+  const outputSvg = useMemo(() => {
     let currentSvg = inputSvg;
 
     // カラー置換の処理
     if (fillColor) {
-      // fill属性がすでにあれば置換、なければ追加されるケースは除き、基本属性を置換
       if (/fill="[^"]*"/i.test(currentSvg)) {
         currentSvg = currentSvg.replace(/fill="[^"]*"/gi, `fill="${fillColor}"`);
       } else {
-        // SVGタグの直後にデフォルトfillを差し込む簡易対応
         currentSvg = currentSvg.replace(/<svg([^>]+)>/i, `<svg$1 fill="${fillColor}">`);
       }
     }
@@ -64,19 +64,8 @@ export default function SvgEditorPage() {
       }
     }
 
-    const optimized = optimizeSvg(currentSvg);
-    setOutputSvg(optimized);
-  };
-
-  useEffect(() => {
-    handleProcess();
-    setSanitizedPreview(sanitizeForPreview(inputSvg));
-  }, [inputSvg]);
-
-  // カラー指定が変更されたら動的に出力コードも更新
-  useEffect(() => {
-    handleProcess();
-  }, [fillColor, strokeColor]);
+    return optimizeSvg(currentSvg);
+  }, [inputSvg, fillColor, strokeColor]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(outputSvg);
@@ -86,7 +75,7 @@ export default function SvgEditorPage() {
 
   const handleFormatInput = () => {
     // 入力を簡易インデント整形
-    let formatted = inputSvg
+    const formatted = inputSvg
       .trim()
       .replace(/>\s*</g, '>\n<') // 各タグで改行
       .replace(/ xmlns/g, '\n  xmlns') // 属性を整理
@@ -227,7 +216,11 @@ export default function SvgEditorPage() {
                   className="neo-btn p-1.5 bg-secondary text-text flex items-center justify-center"
                   title="最適化コードをコピー"
                 >
-                  {copied ? <Check className="w-4 h-4 text-accent" /> : <Clipboard className="w-4 h-4" />}
+                  {copied ? (
+                    <Check className="w-4 h-4 text-accent" />
+                  ) : (
+                    <Clipboard className="w-4 h-4" />
+                  )}
                 </button>
               )}
             </h3>

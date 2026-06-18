@@ -13,19 +13,54 @@ interface IconSize {
 }
 
 const ICON_SIZES: IconSize[] = [
-  { name: 'Favicon (Small)', filename: 'favicon-16x16.png', width: 16, height: 16, desc: 'ブラウザのタブ用' },
-  { name: 'Favicon (Medium)', filename: 'favicon-32x32.png', width: 32, height: 32, desc: 'ブックマークバーやデスクトップ用' },
-  { name: 'Favicon (Legacy)', filename: 'favicon-48x48.png', width: 48, height: 48, desc: '一部のWindows環境用' },
-  { name: 'Apple Touch Icon', filename: 'apple-touch-icon.png', width: 180, height: 180, desc: 'iOSのホーム画面に追加した時用' },
-  { name: 'Android Chrome (Small)', filename: 'android-chrome-192x192.png', width: 192, height: 192, desc: 'Androidホーム画面・PWA用' },
-  { name: 'Android Chrome (Large)', filename: 'android-chrome-512x512.png', width: 512, height: 512, desc: 'スプラッシュ画面・PWA用' },
+  {
+    name: 'Favicon (Small)',
+    filename: 'favicon-16x16.png',
+    width: 16,
+    height: 16,
+    desc: 'ブラウザのタブ用',
+  },
+  {
+    name: 'Favicon (Medium)',
+    filename: 'favicon-32x32.png',
+    width: 32,
+    height: 32,
+    desc: 'ブックマークバーやデスクトップ用',
+  },
+  {
+    name: 'Favicon (Legacy)',
+    filename: 'favicon-48x48.png',
+    width: 48,
+    height: 48,
+    desc: '一部のWindows環境用',
+  },
+  {
+    name: 'Apple Touch Icon',
+    filename: 'apple-touch-icon.png',
+    width: 180,
+    height: 180,
+    desc: 'iOSのホーム画面に追加した時用',
+  },
+  {
+    name: 'Android Chrome (Small)',
+    filename: 'android-chrome-192x192.png',
+    width: 192,
+    height: 192,
+    desc: 'Androidホーム画面・PWA用',
+  },
+  {
+    name: 'Android Chrome (Large)',
+    filename: 'android-chrome-512x512.png',
+    width: 512,
+    height: 512,
+    desc: 'スプラッシュ画面・PWA用',
+  },
 ];
 
 export default function FaviconGeneratorPage() {
   const [sourceImage, setSourceImage] = useState<string | null>(null);
   const [imageName, setImageName] = useState<string>('');
   const [generatedIcons, setGeneratedIcons] = useState<Record<string, string>>({}); // filename -> dataUrl
-  const [generating, setGenerating] = useState(false);
   const [copied, setCopied] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -45,7 +80,6 @@ export default function FaviconGeneratorPage() {
   };
 
   const generateAllIcons = (imgSrc: string) => {
-    setGenerating(true);
     const img = new Image();
     img.src = imgSrc;
     img.onload = () => {
@@ -87,7 +121,6 @@ export default function FaviconGeneratorPage() {
       });
 
       setGeneratedIcons(results);
-      setGenerating(false);
     };
   };
 
@@ -110,23 +143,23 @@ export default function FaviconGeneratorPage() {
 
     // PWA用のmanifest.jsonも同梱する親切設計
     const manifestJson = {
-      name: "My App",
-      short_name: "App",
+      name: 'My App',
+      short_name: 'App',
       icons: [
         {
-          src: "/android-chrome-192x192.png",
-          sizes: "192x192",
-          type: "image/png"
+          src: '/android-chrome-192x192.png',
+          sizes: '192x192',
+          type: 'image/png',
         },
         {
-          src: "/android-chrome-512x512.png",
-          sizes: "512x512",
-          type: "image/png"
-        }
+          src: '/android-chrome-512x512.png',
+          sizes: '512x512',
+          type: 'image/png',
+        },
       ],
-      theme_color: "#ffffff",
-      background_color: "#ffffff",
-      display: "standalone"
+      theme_color: '#ffffff',
+      background_color: '#ffffff',
+      display: 'standalone',
     };
     zip.file('site.webmanifest', JSON.stringify(manifestJson, null, 2));
 
@@ -222,7 +255,11 @@ export default function FaviconGeneratorPage() {
                   className="neo-btn p-1.5 bg-secondary text-text"
                   title="コードをコピー"
                 >
-                  {copied ? <Check className="w-4 h-4 text-accent" /> : <Clipboard className="w-4 h-4" />}
+                  {copied ? (
+                    <Check className="w-4 h-4 text-accent" />
+                  ) : (
+                    <Clipboard className="w-4 h-4" />
+                  )}
                 </button>
               </div>
               <pre className="p-3 border-2 border-border rounded-xl font-mono text-[11px] bg-slate-950 text-slate-100 overflow-x-auto whitespace-pre">
@@ -272,7 +309,9 @@ export default function FaviconGeneratorPage() {
                           <h3 className="text-sm font-extrabold text-text truncate">
                             {size.name} ({size.width}x{size.height})
                           </h3>
-                          <p className="text-xs font-semibold text-text/60 truncate">{size.filename}</p>
+                          <p className="text-xs font-semibold text-text/60 truncate">
+                            {size.filename}
+                          </p>
                           <p className="text-[10px] text-text/50 font-medium truncate mt-0.5">
                             {size.desc}
                           </p>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import {
   Grid,
   Plus,
@@ -24,36 +24,36 @@ export default function MarkdownTablePage() {
     ['バナナ', '100円', '12'],
   ]);
 
-  const [outputMarkdown, setOutputMarkdown] = useState('');
   const [importText, setImportText] = useState('');
   const [importError, setImportError] = useState('');
   const [copied, setCopied] = useState(false);
   const [showImport, setShowImport] = useState(false);
 
-  // テーブルデータからMarkdownを生成する処理
-  const generateMarkdown = () => {
+  // テーブルデータからMarkdownを生成する処理 (useMemo化)
+  const outputMarkdown = useMemo(() => {
     let md = '';
 
     // ヘッダー行
-    md += '| ' + headers.map(h => h.trim() || ' ').join(' | ') + ' |\n';
+    md += '| ' + headers.map((h) => h.trim() || ' ').join(' | ') + ' |\n';
 
     // セパレーター（アライメント指定）
-    md += '| ' + alignments.map(align => {
-      if (align === 'center') return ':---:';
-      if (align === 'right') return '---:';
-      return ':---';
-    }).join(' | ') + ' |\n';
+    md +=
+      '| ' +
+      alignments
+        .map((align) => {
+          if (align === 'center') return ':---:';
+          if (align === 'right') return '---:';
+          return ':---';
+        })
+        .join(' | ') +
+      ' |\n';
 
     // データ行
-    rows.forEach(row => {
-      md += '| ' + row.map(cell => cell.trim() || ' ').join(' | ') + ' |\n';
+    rows.forEach((row) => {
+      md += '| ' + row.map((cell) => cell.trim() || ' ').join(' | ') + ' |\n';
     });
 
-    setOutputMarkdown(md);
-  };
-
-  useEffect(() => {
-    generateMarkdown();
+    return md;
   }, [headers, alignments, rows]);
 
   // 行の追加
@@ -72,7 +72,7 @@ export default function MarkdownTablePage() {
   const handleAddColumn = () => {
     setHeaders([...headers, `列${headers.length + 1}`]);
     setAlignments([...alignments, 'left']);
-    setRows(rows.map(row => [...row, '']));
+    setRows(rows.map((row) => [...row, '']));
   };
 
   // 列の削除
@@ -80,7 +80,7 @@ export default function MarkdownTablePage() {
     if (headers.length <= 1) return;
     setHeaders(headers.filter((_, i) => i !== index));
     setAlignments(alignments.filter((_, i) => i !== index));
-    setRows(rows.map(row => row.filter((_, i) => i !== index)));
+    setRows(rows.map((row) => row.filter((_, i) => i !== index)));
   };
 
   // ヘッダー値の変更
@@ -127,8 +127,8 @@ export default function MarkdownTablePage() {
       const lines = importText
         .trim()
         .split('\n')
-        .map(l => l.trim())
-        .filter(l => l.startsWith('|') && l.endsWith('|'));
+        .map((l) => l.trim())
+        .filter((l) => l.startsWith('|') && l.endsWith('|'));
 
       if (lines.length < 2) {
         throw new Error('テーブル形式が正しくありません。行を | で囲んでください。');
@@ -138,7 +138,7 @@ export default function MarkdownTablePage() {
       const parsedHeaders = lines[0]
         .slice(1, -1)
         .split('|')
-        .map(s => s.trim());
+        .map((s) => s.trim());
 
       const numCols = parsedHeaders.length;
 
@@ -152,7 +152,7 @@ export default function MarkdownTablePage() {
         parsedAlignments = lines[1]
           .slice(1, -1)
           .split('|')
-          .map(s => {
+          .map((s) => {
             const trimmed = s.trim();
             const startColon = trimmed.startsWith(':');
             const endColon = trimmed.endsWith(':');
@@ -179,8 +179,9 @@ export default function MarkdownTablePage() {
       setRows(parsedRows.length > 0 ? parsedRows : [Array(numCols).fill('')]);
       setShowImport(false);
       setImportText('');
-    } catch (err: any) {
-      setImportError(`インポート失敗: ${err.message}`);
+    } catch (err: unknown) {
+      const errMsg = err instanceof Error ? err.message : String(err);
+      setImportError(`インポート失敗: ${errMsg}`);
     }
   };
 
@@ -258,9 +259,7 @@ export default function MarkdownTablePage() {
                     適用
                   </button>
                 </div>
-                {importError && (
-                  <p className="text-xs font-bold text-red-500">{importError}</p>
-                )}
+                {importError && <p className="text-xs font-bold text-red-500">{importError}</p>}
               </div>
             )}
 
@@ -273,7 +272,9 @@ export default function MarkdownTablePage() {
                       <th key={colIdx} className="p-2 border-r border-border/20 min-w-[120px]">
                         <div className="flex flex-col gap-1.5">
                           <div className="flex justify-between items-center">
-                            <span className="text-[10px] text-text/40 font-extrabold">列 {colIdx + 1}</span>
+                            <span className="text-[10px] text-text/40 font-extrabold">
+                              列 {colIdx + 1}
+                            </span>
                             <div className="flex items-center gap-1">
                               {/* アライメント変更 */}
                               <button
@@ -282,8 +283,12 @@ export default function MarkdownTablePage() {
                                 title="位置合わせ切り替え"
                               >
                                 {alignments[colIdx] === 'left' && <AlignLeft className="w-3 h-3" />}
-                                {alignments[colIdx] === 'center' && <AlignCenter className="w-3 h-3" />}
-                                {alignments[colIdx] === 'right' && <AlignRight className="w-3 h-3" />}
+                                {alignments[colIdx] === 'center' && (
+                                  <AlignCenter className="w-3 h-3" />
+                                )}
+                                {alignments[colIdx] === 'right' && (
+                                  <AlignRight className="w-3 h-3" />
+                                )}
                               </button>
                               {/* 列の削除 */}
                               <button
@@ -322,8 +327,8 @@ export default function MarkdownTablePage() {
                               alignments[colIdx] === 'center'
                                 ? 'text-center'
                                 : alignments[colIdx] === 'right'
-                                ? 'text-right'
-                                : 'text-left'
+                                  ? 'text-right'
+                                  : 'text-left'
                             }`}
                             placeholder="値"
                           />
@@ -357,7 +362,11 @@ export default function MarkdownTablePage() {
                   onClick={handleCopy}
                   className="neo-btn px-3 py-1 text-xs bg-accent text-white flex items-center gap-1 cursor-pointer"
                 >
-                  {copied ? <Check className="w-3.5 h-3.5" /> : <Clipboard className="w-3.5 h-3.5" />}
+                  {copied ? (
+                    <Check className="w-3.5 h-3.5" />
+                  ) : (
+                    <Clipboard className="w-3.5 h-3.5" />
+                  )}
                   コピー
                 </button>
               )}

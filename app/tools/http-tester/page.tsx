@@ -15,7 +15,9 @@ export default function HttpTesterPage() {
   const [headers, setHeaders] = useState<HeaderItem[]>([
     { id: '1', key: 'Content-Type', value: 'application/json' },
   ]);
-  const [reqBody, setReqBody] = useState('{\n  "title": "foo",\n  "body": "bar",\n  "userId": 1\n}');
+  const [reqBody, setReqBody] = useState(
+    '{\n  "title": "foo",\n  "body": "bar",\n  "userId": 1\n}'
+  );
 
   // レスポンス状態
   const [resStatus, setResStatus] = useState<number | null>(null);
@@ -105,10 +107,11 @@ export default function HttpTesterPage() {
       } catch {
         setResBody(text);
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error(err);
+      const errMsg = err instanceof Error ? err.message : String(err);
       setError(
-        `リクエスト失敗: ${err.message || err}\n※接続先のCORSポリシーによってブラウザ側で通信が遮断された可能性があります。`
+        `リクエスト失敗: ${errMsg}\n※接続先のCORSポリシーによってブラウザ側で通信が遮断された可能性があります。`
       );
     } finally {
       setLoading(false);
@@ -145,7 +148,8 @@ export default function HttpTesterPage() {
           <p>⚠️ CORS（オリジン間リソース共有）に関する重要なお知らせ</p>
           <p className="font-medium">
             本ツールは完全にブラウザ側（クライアントサイド）からリクエストを送信します。
-            リクエスト先サーバーが CORS を許可していない（`Access-Control-Allow-Origin` ヘッダーが未付与、または本サイトが許可されていない）場合、ブラウザセキュリティの制限によって通信がブロックされます。
+            リクエスト先サーバーが CORS を許可していない（`Access-Control-Allow-Origin`
+            ヘッダーが未付与、または本サイトが許可されていない）場合、ブラウザセキュリティの制限によって通信がブロックされます。
           </p>
         </div>
       </div>
@@ -176,7 +180,7 @@ export default function HttpTesterPage() {
             <div className="flex gap-3">
               <select
                 value={method}
-                onChange={(e) => setMethod(e.target.value as any)}
+                onChange={(e) => setMethod(e.target.value as typeof method)}
                 className="px-3 py-3 border-2 border-border rounded-xl font-bold bg-card text-text focus:outline-none cursor-pointer"
               >
                 <option value="GET">GET</option>
@@ -233,7 +237,9 @@ export default function HttpTesterPage() {
                   </div>
                 ))}
                 {headers.length === 0 && (
-                  <p className="text-xs font-medium text-text/50 py-2">ヘッダーは設定されていません。</p>
+                  <p className="text-xs font-medium text-text/50 py-2">
+                    ヘッダーは設定されていません。
+                  </p>
                 )}
               </div>
             </div>
@@ -292,7 +298,11 @@ export default function HttpTesterPage() {
                     className="absolute top-4 right-4 z-10 neo-btn p-2 bg-secondary text-text flex items-center justify-center"
                     title="コピー"
                   >
-                    {copied ? <Check className="w-4 h-4 text-accent" /> : <Clipboard className="w-4 h-4" />}
+                    {copied ? (
+                      <Check className="w-4 h-4 text-accent" />
+                    ) : (
+                      <Clipboard className="w-4 h-4" />
+                    )}
                   </button>
                   <div className="flex-1 grid grid-rows-3 gap-4 min-h-0">
                     {/* レスポンスヘッダー */}
@@ -306,7 +316,9 @@ export default function HttpTesterPage() {
                     </div>
                     {/* レスポンスボディ */}
                     <div className="row-span-2 border-2 border-border rounded-xl p-3 bg-slate-950 text-slate-100 overflow-y-auto">
-                      <span className="text-xs font-extrabold mb-1.5 text-slate-400 block">Body</span>
+                      <span className="text-xs font-extrabold mb-1.5 text-slate-400 block">
+                        Body
+                      </span>
                       <pre className="font-mono text-xs whitespace-pre-wrap">{resBody}</pre>
                     </div>
                   </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { Type, Clipboard, Check, Shuffle } from 'lucide-react';
 
 const LOREM_TEXTS = {
@@ -13,7 +13,69 @@ const LOREM_TEXTS = {
       'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.',
       'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae.',
     ],
-    words: ['lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit', 'sed', 'do', 'eiusmod', 'tempor', 'incididunt', 'ut', 'labore', 'et', 'dolore', 'magna', 'aliqua', 'enim', 'ad', 'minim', 'veniam', 'quis', 'nostrud', 'exercitation', 'ullamco', 'laboris', 'nisi', 'aliquip', 'ex', 'ea', 'commodo', 'consequat', 'duis', 'aute', 'irure', 'reprehenderit', 'voluptate', 'velit', 'esse', 'cillum', 'fugiat', 'nulla', 'pariatur', 'excepteur', 'sint', 'occaecat', 'cupidatat', 'non', 'proident', 'sunt', 'culpa', 'qui', 'officia', 'deserunt', 'mollit', 'anim', 'id', 'est', 'laborum'],
+    words: [
+      'lorem',
+      'ipsum',
+      'dolor',
+      'sit',
+      'amet',
+      'consectetur',
+      'adipiscing',
+      'elit',
+      'sed',
+      'do',
+      'eiusmod',
+      'tempor',
+      'incididunt',
+      'ut',
+      'labore',
+      'et',
+      'dolore',
+      'magna',
+      'aliqua',
+      'enim',
+      'ad',
+      'minim',
+      'veniam',
+      'quis',
+      'nostrud',
+      'exercitation',
+      'ullamco',
+      'laboris',
+      'nisi',
+      'aliquip',
+      'ex',
+      'ea',
+      'commodo',
+      'consequat',
+      'duis',
+      'aute',
+      'irure',
+      'reprehenderit',
+      'voluptate',
+      'velit',
+      'esse',
+      'cillum',
+      'fugiat',
+      'nulla',
+      'pariatur',
+      'excepteur',
+      'sint',
+      'occaecat',
+      'cupidatat',
+      'non',
+      'proident',
+      'sunt',
+      'culpa',
+      'qui',
+      'officia',
+      'deserunt',
+      'mollit',
+      'anim',
+      'id',
+      'est',
+      'laborum',
+    ],
   },
   neko: {
     name: '吾輩は猫である (夏目漱石)',
@@ -33,7 +95,7 @@ const LOREM_TEXTS = {
       'この書生というのは時々我々を捕えて煮て食うという話である。',
       'しかしその当時は何という考もなかった。',
       'ただ彼の手のひらに載せられてスーと持ち上げられた時、フワフワした感じがあった。',
-    ]
+    ],
   },
   melos: {
     name: '走れメロス (太宰治)',
@@ -52,24 +114,30 @@ const LOREM_TEXTS = {
       'メロスには無二の友があった。',
       'セリヌンティウスである。',
       '久しく逢わなかったのだから、訪ねて行くのが楽しみである。',
-    ]
-  }
+    ],
+  },
 };
 
 type TextType = keyof typeof LOREM_TEXTS;
 type UnitType = 'paragraphs' | 'sentences' | 'words' | 'list';
+
+// 決定論的な疑似乱数生成器 (シード値に基づく)
+function pseudoRandom(seed: number) {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
 
 export default function LoremIpsumPage() {
   const [textType, setTextType] = useState<TextType>('lorem');
   const [unit, setUnit] = useState<UnitType>('paragraphs');
   const [count, setCount] = useState<number>(3);
   const [htmlMarkup, setHtmlMarkup] = useState(false);
-  const [generatedText, setGeneratedText] = useState('');
   const [copied, setCopied] = useState(false);
+  const [trigger, setTrigger] = useState(0);
 
-  const generateText = () => {
+  const generatedText = useMemo(() => {
     const activeText = LOREM_TEXTS[textType];
-    let items: string[] = [];
+    const items: string[] = [];
 
     if (unit === 'paragraphs') {
       // パラグラフの生成
@@ -78,31 +146,33 @@ export default function LoremIpsumPage() {
         items.push(srcParas[i % srcParas.length]);
       }
       if (htmlMarkup) {
-        setGeneratedText(items.map(p => `<p>${p}</p>`).join('\n\n'));
+        return items.map((p) => `<p>${p}</p>`).join('\n\n');
       } else {
-        setGeneratedText(items.join('\n\n'));
+        return items.join('\n\n');
       }
     } else if (unit === 'sentences') {
       // 一文の生成
-      const srcSentences = 'sentences' in activeText
-        ? activeText.sentences
-        : activeText.paragraphs.flatMap(p => p.split(/(?<=[。\?\.])/)); // 簡易分割
-      
+      const srcSentences =
+        'sentences' in activeText
+          ? activeText.sentences
+          : activeText.paragraphs.flatMap((p) => p.split(/(?<=[。\?\.])/)); // 簡易分割
+
       for (let i = 0; i < count; i++) {
         items.push(srcSentences[i % srcSentences.length].trim());
       }
       const text = items.join(textType === 'lorem' ? ' ' : '');
       if (htmlMarkup) {
-        setGeneratedText(`<p>${text}</p>`);
+        return `<p>${text}</p>`;
       } else {
-        setGeneratedText(text);
+        return text;
       }
     } else if (unit === 'words') {
       // 単語または文字数の生成
       if (textType === 'lorem') {
         const srcWords = LOREM_TEXTS.lorem.words;
         for (let i = 0; i < count; i++) {
-          items.push(srcWords[Math.floor(Math.random() * srcWords.length)]);
+          const seed = trigger + i;
+          items.push(srcWords[Math.floor(pseudoRandom(seed) * srcWords.length)]);
         }
         // 文頭を大文字にする
         if (items.length > 0) {
@@ -110,9 +180,9 @@ export default function LoremIpsumPage() {
         }
         const text = items.join(' ') + '.';
         if (htmlMarkup) {
-          setGeneratedText(`<p>${text}</p>`);
+          return `<p>${text}</p>`;
         } else {
-          setGeneratedText(text);
+          return text;
         }
       } else {
         // 日本語の場合は「文字数」として扱う
@@ -127,32 +197,30 @@ export default function LoremIpsumPage() {
           text = text.slice(0, count - 1) + '。';
         }
         if (htmlMarkup) {
-          setGeneratedText(`<p>${text}</p>`);
+          return `<p>${text}</p>`;
         } else {
-          setGeneratedText(text);
+          return text;
         }
       }
     } else if (unit === 'list') {
       // 箇条書き
-      const srcSentences = 'sentences' in activeText
-        ? activeText.sentences
-        : activeText.paragraphs.flatMap(p => p.split(/(?<=[。\?\.])/));
-      
+      const srcSentences =
+        'sentences' in activeText
+          ? activeText.sentences
+          : activeText.paragraphs.flatMap((p) => p.split(/(?<=[。\?\.])/));
+
       for (let i = 0; i < count; i++) {
         items.push(srcSentences[i % srcSentences.length].trim().replace(/[。\.]$/, ''));
       }
 
       if (htmlMarkup) {
-        setGeneratedText(`<ul>\n${items.map(item => `  <li>${item}</li>`).join('\n')}\n</ul>`);
+        return `<ul>\n${items.map((item) => `  <li>${item}</li>`).join('\n')}\n</ul>`;
       } else {
-        setGeneratedText(items.map(item => `- ${item}`).join('\n'));
+        return items.map((item) => `- ${item}`).join('\n');
       }
     }
-  };
-
-  useEffect(() => {
-    generateText();
-  }, [textType, unit, count, htmlMarkup]);
+    return '';
+  }, [textType, unit, count, htmlMarkup, trigger]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(generatedText);
@@ -193,7 +261,6 @@ export default function LoremIpsumPage() {
                 onChange={(e) => {
                   const val = e.target.value as TextType;
                   setTextType(val);
-                  // 日本語素材でwords（単語）が選ばれていたら自動でparagraphs等に戻すことはせず、文字数として処理
                 }}
                 className="w-full px-3 py-2 border-2 border-border rounded-xl font-bold bg-card text-text focus:outline-none cursor-pointer text-sm"
               >
@@ -215,7 +282,7 @@ export default function LoremIpsumPage() {
                     onClick={() => {
                       setUnit(u);
                       if (u === 'words' && textType !== 'lorem' && count < 20) {
-                        setCount(100); // 日本語の文字数指定の場合は多めにデフォルトセット
+                        setCount(100);
                       }
                     }}
                     className={`px-2 py-2 rounded-lg border-2 border-border text-xs font-bold cursor-pointer transition-all ${
@@ -261,7 +328,7 @@ export default function LoremIpsumPage() {
 
             {/* 再生成ボタン */}
             <button
-              onClick={generateText}
+              onClick={() => setTrigger((t) => t + 1)}
               className="w-full neo-btn py-2.5 bg-secondary text-text text-sm flex items-center justify-center gap-1.5"
             >
               <Shuffle className="w-4 h-4" />
@@ -280,7 +347,11 @@ export default function LoremIpsumPage() {
                   onClick={handleCopy}
                   className="neo-btn px-4 py-1.5 text-xs bg-accent text-white flex items-center gap-1.5 cursor-pointer"
                 >
-                  {copied ? <Check className="w-3.5 h-3.5" /> : <Clipboard className="w-3.5 h-3.5" />}
+                  {copied ? (
+                    <Check className="w-3.5 h-3.5" />
+                  ) : (
+                    <Clipboard className="w-3.5 h-3.5" />
+                  )}
                   コピー
                 </button>
               )}

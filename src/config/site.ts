@@ -274,21 +274,24 @@ export const toolsMenuItems: readonly ToolItem[] = [
   {
     href: '/tools/http-tester',
     label: 'HTTP Request Tester',
-    description: '任意のAPIリクエストを送信し、レスポンスヘッダーやJSONデータをブラウザ上で即時テスト',
+    description:
+      '任意のAPIリクエストを送信し、レスポンスヘッダーやJSONデータをブラウザ上で即時テスト',
     emoji: '📡',
     category: 'dev',
   },
   {
     href: '/tools/lorem-ipsum',
     label: 'Lorem Ipsum & Dummy Text',
-    description: '段落数や文字数を指定して、レイアウト確認用のダミーテキスト（日本語・ラテン語）を瞬時に作成',
+    description:
+      '段落数や文字数を指定して、レイアウト確認用のダミーテキスト（日本語・ラテン語）を瞬時に作成',
     emoji: '✍️',
     category: 'dev',
   },
   {
     href: '/tools/markdown-table',
     label: 'Markdown Table Editor',
-    description: 'スプレッドシート風のGUIで行列を編集し、Markdown形式の表コードを動的に構築・パース',
+    description:
+      'スプレッドシート風のGUIで行列を編集し、Markdown形式の表コードを動的に構築・パース',
     emoji: '📋',
     category: 'dev',
   },
