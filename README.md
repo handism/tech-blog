@@ -101,6 +101,20 @@ bun run test:unit
 - `*.spec.ts` → Playwright E2E テスト
 - `*.test.ts` → Vitest ユニットテスト
 
+### 開発フローと品質保証 (Git Hooks)
+
+コミット時に自動でコード品質をチェックし、CIの破損を未然に防ぐ仕組みとして `simple-git-hooks` と `lint-staged` を導入しています。
+
+* **自動チェックの挙動**:
+  * コミット時にステージングされた `.ts`, `.tsx`, `.js`, `.jsx` ファイルに対して自動的に `eslint --fix` (コードスタイルの修正・Prettierによるフォーマット含む) が実行されます。
+  * プロジェクト全体に対して `bun run type-check` (`tsc --noEmit`) が実行され、型エラーがある場合はコミットがブロックされます。
+* **フックの設定**:
+  * `bun install` 時に自動的にフックが Git にインストールされます。
+  * 手動で再度フックを設定・更新したい場合は以下のコマンドを実行します：
+    ```bash
+    bunx simple-git-hooks
+    ```
+
 ### コンテンツの追加
 
 #### ブログ記事

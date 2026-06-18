@@ -10,7 +10,9 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:unit": "vitest run",
-    "analyze": "ANALYZE=true next build"
+    "analyze": "ANALYZE=true next build",
+    "type-check": "tsc --noEmit",
+    "prepare": "simple-git-hooks"
   },
   "dependencies": {
     "@shikijs/rehype": "^3.22.0",
@@ -58,11 +60,21 @@
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
+    "lint-staged": "^17.0.7",
     "postcss": "^8.4.32",
     "prettier": "^3.8.1",
     "serve": "^14.2.6",
+    "simple-git-hooks": "^2.13.1",
     "tailwindcss": "^4",
     "typescript": "5.9.3",
     "vitest": "^4.1.0"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged && bun run type-check"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ]
   }
 }
