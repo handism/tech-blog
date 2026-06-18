@@ -27,6 +27,14 @@
   - **Color Converter**（`/tools/color-converter`）：色の変換ツール
   - **JWT Decoder**（`/tools/jwt-decoder`）：JWT のデコード
   - **QR Code Generator**（`/tools/qr-code`）：QR コード生成
+  - **Neo-Brutalism UI Generator**（`/tools/neo-brutalism`）：ネオ・ブルータリズムスタイルの UI コード生成
+  - **Image Converter & Optimizer**（`/tools/image-optimizer`）：ブラウザ内画像圧縮・WebP変換
+  - **HTML to JSX Converter**（`/tools/html-to-jsx`）：HTMLをJSX/TSX形式に自動変換
+  - **Git Commit & Branch Helper**（`/tools/git-commit-helper`）：Conventional Commits準拠メッセージとブランチ名生成
+  - **Mock JSON Data Generator**（`/tools/json-generator`）：テスト用のダミーJSONデータの一括生成
+  - **Aspect Ratio Calculator**（`/tools/aspect-ratio`）：アスペクト比計算・解像度の双方向補完
+  - **HTTP Security Headers Generator**（`/tools/security-headers`）：各種サーバー用セキュリティヘッダー設定生成
+  - **CSS Cubic-Bezier Visualizer**（`/tools/cubic-bezier`）：イージング曲線の視覚化と transition コード生成
 - About・プライバシーポリシー・HTML Sitemap・RSS フィードページを提供
 - **Scraps**（`/scraps`）：Twitter/Mastodon 感覚で日々の気づきやエラー解決ログを短く残せる技術メモ欄。独立したネオ・ブルータリズム風のカード形式で表示されます。`scraps/` ディレクトリに Markdown を置くだけで公開される
 

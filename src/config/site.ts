@@ -32,6 +32,20 @@ export interface ToolItem {
 export const toolsMenuItems: readonly ToolItem[] = [
   // 画像処理
   {
+    href: '/tools/neo-brutalism',
+    label: 'Neo-Brutalism UI Generator',
+    description: 'ネオブルータリズム特有の太線ボーダーやハードシャドウ、発光ネオンを直感的に生成',
+    emoji: '🎨',
+    category: 'image',
+  },
+  {
+    href: '/tools/image-optimizer',
+    label: 'Image Converter & Optimizer',
+    description: 'ブラウザ上だけで画像のWebP変換、リサイズ、品質（画質）調整を安全・高速に実行',
+    emoji: '🖼️',
+    category: 'image',
+  },
+  {
     href: '/tools/memphis',
     label: 'Memphis Generator',
     description: 'メンフィスパターンのモダンな幾何学背景を直感的に生成・カスタマイズ',
@@ -67,6 +81,20 @@ export const toolsMenuItems: readonly ToolItem[] = [
     category: 'image',
   },
   // データ変換
+  {
+    href: '/tools/html-to-jsx',
+    label: 'HTML to JSX Converter',
+    description: '通常のHTMLコードをReact/Next.jsでそのまま使えるJSX/TSX形式に自動変換',
+    emoji: '🏷️',
+    category: 'convert',
+  },
+  {
+    href: '/tools/json-generator',
+    label: 'Mock JSON Data Generator',
+    description: 'UUID、名前、メールなどダミーデータのスキーマを定義し、テスト用JSONを一括生成',
+    emoji: '📊',
+    category: 'convert',
+  },
   {
     href: '/tools/timezone',
     label: 'Timezone Converter',
@@ -138,6 +166,34 @@ export const toolsMenuItems: readonly ToolItem[] = [
     category: 'convert',
   },
   // エンジニアツール
+  {
+    href: '/tools/git-commit-helper',
+    label: 'Git Commit & Branch Helper',
+    description: 'Conventional Commitsに準拠したコミットメッセージとGitコマンドの自動生成',
+    emoji: '🌱',
+    category: 'dev',
+  },
+  {
+    href: '/tools/aspect-ratio',
+    label: 'Aspect Ratio Calculator',
+    description: '画面解像度や画像サイズからアスペクト比を計算し、双方向で幅・高さを自動補完',
+    emoji: '📐',
+    category: 'dev',
+  },
+  {
+    href: '/tools/security-headers',
+    label: 'HTTP Security Headers Generator',
+    description: 'CSPやHSTSなどのセキュリティヘッダーを生成し、各種Webサーバー用の設定を出力',
+    emoji: '🔒',
+    category: 'dev',
+  },
+  {
+    href: '/tools/cubic-bezier',
+    label: 'CSS Cubic-Bezier Visualizer',
+    description: 'ドラッグや数値指定でイージングカーブを視覚的に編集し、トランジションコードを生成',
+    emoji: '📈',
+    category: 'dev',
+  },
   {
     href: '/tools/regex-tester',
     label: 'Regex Tester',
