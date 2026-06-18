@@ -19,7 +19,7 @@ interface BlogLayoutProps {
  */
 export default function BlogLayout({ children, toc, categoryCounts, tagCounts }: BlogLayoutProps) {
   return (
-    <div className="mx-auto max-w-6xl px-4 py-4">
+    <div className="mx-auto max-w-6xl px-4 pt-8 pb-16 md:pt-12 md:pb-24">
       <div className="grid gap-8 md:grid-cols-[2fr_1fr]">
         {/* メイン */}
         <main className="min-w-0">{children}</main>
