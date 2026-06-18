@@ -101,7 +101,7 @@ export default function ToolsDashboard() {
         </div>
 
         {/* カテゴリタブ */}
-        <div className="flex items-center gap-2 overflow-x-auto py-2 scrollbar-none -mx-4 px-4 md:mx-0 md:px-0">
+        <div className="flex items-center gap-2 overflow-x-auto md:overflow-x-visible py-2 scrollbar-none -mx-4 px-4 md:mx-0 md:px-0">
           {CATEGORIES.map((cat) => {
             const isActive = selectedCategory === cat.id;
             return (
