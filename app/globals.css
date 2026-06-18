@@ -226,7 +226,7 @@ article.prose a {
   word-break: break-word;
 }
 
-article.prose img {
+article.prose img:not(.not-prose img) {
   @apply rounded-2xl shadow-none my-8 mx-auto;
   border: 3px solid var(--border);
   max-width: 100%;
@@ -236,12 +236,12 @@ article.prose img {
     box-shadow 0.15s ease;
 }
 
-article.prose img:hover {
+article.prose img:not(.not-prose img):hover {
   transform: translate(-3px, -3px);
   box-shadow: 6px 6px 0px 0px var(--border);
 }
 
-.dark article.prose img:hover {
+.dark article.prose img:not(.not-prose img):hover {
   box-shadow: 6px 6px 0px 0px var(--color-accent);
 }
 
