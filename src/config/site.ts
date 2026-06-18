@@ -45,6 +45,27 @@ export const toolsMenuItems: readonly ToolItem[] = [
     emoji: '✂️',
     category: 'image',
   },
+  {
+    href: '/tools/favicon-generator',
+    label: 'Favicon & App Icon Generator',
+    description: 'アップロード画像から各サイズアイコンへリサイズ・ZIP一括生成',
+    emoji: '📲',
+    category: 'image',
+  },
+  {
+    href: '/tools/svg-editor',
+    label: 'SVG Path Visualizer & Optimizer',
+    description: 'SVGコードのプレビュー表示と、不要な属性や余白の簡易クリーンアップ',
+    emoji: '🎨',
+    category: 'image',
+  },
+  {
+    href: '/tools/pixel-art',
+    label: 'Pixel Art Canvas',
+    description: '16x16や32x32のグリッド上に直感的にドット絵を描き、PNG/SVGで保存',
+    emoji: '👾',
+    category: 'image',
+  },
   // データ変換
   {
     href: '/tools/timezone',
@@ -107,6 +128,13 @@ export const toolsMenuItems: readonly ToolItem[] = [
     label: 'Password Generator',
     description: '長さや使用文字種をカスタマイズして安全なランダムパスワードを生成',
     emoji: '🔑',
+    category: 'convert',
+  },
+  {
+    href: '/tools/json-to-ts',
+    label: 'JSON to TypeScript / Zod',
+    description: 'JSONオブジェクトからTypeScriptの型定義やZodのバリデーションスキーマを自動生成',
+    emoji: '🏷️',
     category: 'convert',
   },
   // エンジニアツール
@@ -234,6 +262,41 @@ export const toolsMenuItems: readonly ToolItem[] = [
     label: 'Curl to Code Converter',
     description: 'CurlリクエストをFetch、Axios、Python等マルチ言語のコードに相互変換',
     emoji: '🚀',
+    category: 'dev',
+  },
+  {
+    href: '/tools/css-unit',
+    label: 'CSS Unit Converter',
+    description: 'px, rem, em, vw, vh などのWeb開発で頻出する各種単位をリアルタイム相互変換',
+    emoji: '📏',
+    category: 'dev',
+  },
+  {
+    href: '/tools/http-tester',
+    label: 'HTTP Request Tester',
+    description: '任意のAPIリクエストを送信し、レスポンスヘッダーやJSONデータをブラウザ上で即時テスト',
+    emoji: '📡',
+    category: 'dev',
+  },
+  {
+    href: '/tools/lorem-ipsum',
+    label: 'Lorem Ipsum & Dummy Text',
+    description: '段落数や文字数を指定して、レイアウト確認用のダミーテキスト（日本語・ラテン語）を瞬時に作成',
+    emoji: '✍️',
+    category: 'dev',
+  },
+  {
+    href: '/tools/markdown-table',
+    label: 'Markdown Table Editor',
+    description: 'スプレッドシート風のGUIで行列を編集し、Markdown形式の表コードを動的に構築・パース',
+    emoji: '📋',
+    category: 'dev',
+  },
+  {
+    href: '/tools/cidr-calculator',
+    label: 'IP Subnet & CIDR Calculator',
+    description: 'IPアドレスとCIDRプレフィックスからサブネット範囲やホスト可能数を即時算出・可視化',
+    emoji: '🔢',
     category: 'dev',
   },
   // 外部ツール

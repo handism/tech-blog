@@ -1,0 +1,268 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { Ruler, Clipboard, Check } from 'lucide-react';
+
+export default function CssUnitConverterPage() {
+  const [baseFontSize, setBaseFontSize] = useState<number>(16);
+  const [viewportWidth, setViewportWidth] = useState<number>(1920);
+  const [viewportHeight, setViewportHeight] = useState<number>(1080);
+  const [parentWidth, setParentWidth] = useState<number>(800);
+
+  // 各単位の値の状態管理
+  const [pxVal, setPxVal] = useState<string>('16');
+  const [remVal, setRemVal] = useState<string>('1');
+  const [emVal, setEmVal] = useState<string>('1');
+  const [vwVal, setVwVal] = useState<string>('0.833');
+  const [vhVal, setVhVal] = useState<string>('1.481');
+  const [percentVal, setPercentVal] = useState<string>('2');
+
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
+
+  // 指定された px 値から他の単位をすべて算出
+  const updateFromPx = (px: number) => {
+    if (isNaN(px)) return;
+    setRemVal(formatNumber(px / baseFontSize));
+    setEmVal(formatNumber(px / baseFontSize));
+    setVwVal(formatNumber((px / viewportWidth) * 100));
+    setVhVal(formatNumber((px / viewportHeight) * 100));
+    setPercentVal(formatNumber((px / parentWidth) * 100));
+  };
+
+  const formatNumber = (num: number): string => {
+    if (isNaN(num)) return '';
+    // 小数点第4位まで表示し、不要な末尾の0は削除
+    return parseFloat(num.toFixed(4)).toString();
+  };
+
+  const handleInputChange = (value: string, unit: 'px' | 'rem' | 'em' | 'vw' | 'vh' | '%') => {
+    if (value === '') {
+      clearAllValues();
+      return;
+    }
+
+    const num = parseFloat(value);
+    if (isNaN(num)) {
+      // 数値以外の入力のときはそのま表示を更新するのみ
+      updateValState(value, unit);
+      return;
+    }
+
+    updateValState(value, unit);
+
+    let calculatedPx = 0;
+    switch (unit) {
+      case 'px':
+        calculatedPx = num;
+        break;
+      case 'rem':
+        calculatedPx = num * baseFontSize;
+        break;
+      case 'em':
+        calculatedPx = num * baseFontSize;
+        break;
+      case 'vw':
+        calculatedPx = (num / 100) * viewportWidth;
+        break;
+      case 'vh':
+        calculatedPx = (num / 100) * viewportHeight;
+        break;
+      case '%':
+        calculatedPx = (num / 100) * parentWidth;
+        break;
+    }
+
+    // 入力した単位以外の値を更新
+    if (unit !== 'px') setPxVal(formatNumber(calculatedPx));
+    if (unit !== 'rem') setRemVal(formatNumber(calculatedPx / baseFontSize));
+    if (unit !== 'em') setEmVal(formatNumber(calculatedPx / baseFontSize));
+    if (unit !== 'vw') setVwVal(formatNumber((calculatedPx / viewportWidth) * 100));
+    if (unit !== 'vh') setVhVal(formatNumber((calculatedPx / viewportHeight) * 100));
+    if (unit !== '%') setPercentVal(formatNumber((calculatedPx / parentWidth) * 100));
+  };
+
+  const updateValState = (value: string, unit: string) => {
+    if (unit === 'px') setPxVal(value);
+    if (unit === 'rem') setRemVal(value);
+    if (unit === 'em') setEmVal(value);
+    if (unit === 'vw') setVwVal(value);
+    if (unit === 'vh') setVhVal(value);
+    if (unit === '%') setPercentVal(value);
+  };
+
+  const clearAllValues = () => {
+    setPxVal('');
+    setRemVal('');
+    setEmVal('');
+    setVwVal('');
+    setVhVal('');
+    setPercentVal('');
+  };
+
+  // 基準値が変更されたときに現在の px 基準で再計算
+  useEffect(() => {
+    const px = parseFloat(pxVal);
+    if (!isNaN(px)) {
+      updateFromPx(px);
+    }
+  }, [baseFontSize, viewportWidth, viewportHeight, parentWidth]);
+
+  const handleCopy = (text: string, key: string) => {
+    if (!text) return;
+    navigator.clipboard.writeText(text);
+    setCopiedKey(key);
+    setTimeout(() => setCopiedKey(null), 2000);
+  };
+
+  const units = [
+    { key: 'px', label: 'ピクセル (px)', value: pxVal, suffix: 'px', desc: '基本となる物理サイズ（絶対単位）' },
+    { key: 'rem', label: 'ルート相対 (rem)', value: remVal, suffix: 'rem', desc: 'ルート要素 (<html>) のフォントサイズに対する相対サイズ' },
+    { key: 'em', label: '親要素相対 (em)', value: emVal, suffix: 'em', desc: '現在の要素または親要素のフォントサイズに対する相対サイズ' },
+    { key: 'vw', label: 'ビューポート幅 (vw)', value: vwVal, suffix: 'vw', desc: '画面幅（ビューポート幅）に対する割合 (1vw = 幅の1%)' },
+    { key: 'vh', label: 'ビューポート高 (vh)', value: vhVal, suffix: 'vh', desc: '画面高（ビューポート高）に対する割合 (1vh = 高さの1%)' },
+    { key: '%', label: 'パーセント (%)', value: percentVal, suffix: '%', desc: '親要素の幅やサイズに対する割合' },
+  ];
+
+  return (
+    <div className="mx-auto w-full max-w-6xl px-4 py-8 md:py-12">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+        <div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 border border-border rounded-lg bg-secondary text-text text-xs font-bold mb-3">
+            <Ruler className="w-3.5 h-3.5" />
+            <span>Design Utilities</span>
+          </div>
+          <h1 className="text-3xl md:text-4xl font-extrabold text-text tracking-tight">
+            CSS Unit Converter
+          </h1>
+          <p className="text-text/80 text-sm md:text-base font-medium mt-2">
+            px, rem, em, vw, vh などの各種CSS単位をリアルタイムに相互変換します。
+          </p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* 基準設定パネル */}
+        <div className="lg:col-span-1 space-y-6">
+          <div className="neo-card p-5 md:p-6">
+            <h2 className="text-lg font-bold text-text mb-4 border-b-2 border-border pb-2 flex items-center gap-2">
+              <span>⚙️ 基準値の設定</span>
+            </h2>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs font-extrabold text-text mb-1.5">
+                  Base Font Size (remの基準)
+                </label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="number"
+                    value={baseFontSize}
+                    onChange={(e) => setBaseFontSize(Math.max(1, Number(e.target.value)))}
+                    className="w-full px-3 py-2 bg-card border-2 border-border text-text rounded-xl font-bold focus:outline-none"
+                  />
+                  <span className="text-sm font-bold">px</span>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-extrabold text-text mb-1.5">
+                  Viewport Width (vwの基準)
+                </label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="number"
+                    value={viewportWidth}
+                    onChange={(e) => setViewportWidth(Math.max(1, Number(e.target.value)))}
+                    className="w-full px-3 py-2 bg-card border-2 border-border text-text rounded-xl font-bold focus:outline-none"
+                  />
+                  <span className="text-sm font-bold">px</span>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-extrabold text-text mb-1.5">
+                  Viewport Height (vhの基準)
+                </label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="number"
+                    value={viewportHeight}
+                    onChange={(e) => setViewportHeight(Math.max(1, Number(e.target.value)))}
+                    className="w-full px-3 py-2 bg-card border-2 border-border text-text rounded-xl font-bold focus:outline-none"
+                  />
+                  <span className="text-sm font-bold">px</span>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-extrabold text-text mb-1.5">
+                  Parent Element Width (%の基準)
+                </label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="number"
+                    value={parentWidth}
+                    onChange={(e) => setParentWidth(Math.max(1, Number(e.target.value)))}
+                    className="w-full px-3 py-2 bg-card border-2 border-border text-text rounded-xl font-bold focus:outline-none"
+                  />
+                  <span className="text-sm font-bold">px</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 変換器メインパネル */}
+        <div className="lg:col-span-2">
+          <div className="neo-card p-5 md:p-6">
+            <h2 className="text-lg font-bold text-text mb-6 border-b-2 border-border pb-2 flex items-center justify-between">
+              <span>🔄 相互変換 (任意の値を編集してください)</span>
+              <button
+                onClick={clearAllValues}
+                className="neo-btn px-3 py-1 text-xs text-text bg-secondary"
+              >
+                クリア
+              </button>
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {units.map((unit) => (
+                <div key={unit.key} className="space-y-1.5">
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs font-extrabold text-text">{unit.label}</span>
+                    <span className="text-[10px] text-text/60 font-medium">{unit.desc}</span>
+                  </div>
+                  <div className="relative flex items-center">
+                    <input
+                      type="text"
+                      value={unit.value}
+                      onChange={(e) => handleInputChange(e.target.value, unit.key as any)}
+                      className="w-full pl-4 pr-20 py-3 bg-card border-2 border-border text-text rounded-xl font-mono font-bold text-base focus:outline-none focus:translate-x-[-1px] focus:translate-y-[-1px] focus:shadow-[2px_2px_0px_0px_var(--border)] dark:focus:shadow-[2px_2px_0px_0px_var(--accent)] transition-all"
+                      placeholder={`値を入力 (${unit.suffix})`}
+                    />
+                    <div className="absolute right-2 flex items-center gap-1.5">
+                      <span className="text-xs font-extrabold text-text/50 bg-secondary px-2 py-1 border border-border rounded-lg select-none">
+                        {unit.suffix}
+                      </span>
+                      <button
+                        onClick={() => handleCopy(`${unit.value}${unit.suffix}`, unit.key)}
+                        disabled={!unit.value}
+                        className="p-1.5 border border-border rounded-lg bg-card hover:bg-secondary text-text disabled:opacity-40"
+                        title="コピー"
+                      >
+                        {copiedKey === unit.key ? (
+                          <Check className="w-3.5 h-3.5 text-accent" />
+                        ) : (
+                          <Clipboard className="w-3.5 h-3.5" />
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
