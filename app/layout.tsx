@@ -4,7 +4,8 @@ import './globals.css';
 import Footer from '@/src/components/Footer';
 import Header from '@/src/components/Header';
 import ScrollToTopButton from '@/src/components/ScrollToTopButton';
-import { siteConfig } from '@/src/config/site';
+import { ThemeDesignProvider } from '@/src/components/ThemeDesignProvider';
+import { DEFAULT_THEME, THEME_STORAGE_KEY, siteConfig } from '@/src/config/site';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { ThemeProvider } from 'next-themes';
@@ -47,17 +48,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ja" suppressHydrationWarning data-scroll-behavior="smooth">
       <body className={`${geistSans.className} bg-bg text-text antialiased relative min-h-screen`}>
-        {/* フラッシュ防止スクリプト: キー名は SKIN_STORAGE_KEY、フォールバック値は DEFAULT_SKIN と一致させること */}
+        {/* フラッシュ防止スクリプト(スキン): キー名は SKIN_STORAGE_KEY、フォールバック値は DEFAULT_SKIN と一致させること */}
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var s=localStorage.getItem('skin')||'emerald';document.documentElement.setAttribute('data-skin',s);}catch(e){}})();`,
           }}
         />
+        {/* フラッシュ防止スクリプト(デザインテーマ): キー名は THEME_STORAGE_KEY、フォールバック値は DEFAULT_THEME と一致させること */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('${THEME_STORAGE_KEY}')||'${DEFAULT_THEME}';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`,
+          }}
+        />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
-          <Header />
-          <div className="relative z-0">{children}</div>
-          <Footer />
-          <ScrollToTopButton />
+          <ThemeDesignProvider>
+            <Header />
+            <div className="relative z-0">{children}</div>
+            <Footer />
+            <ScrollToTopButton />
+          </ThemeDesignProvider>
         </ThemeProvider>
       </body>
     </html>

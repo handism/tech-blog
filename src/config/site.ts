@@ -1,5 +1,87 @@
 // src/config/site.ts
 /**
+ * デザインテーマ（スタイル全体）の定義。
+ */
+export const themeConfig = [
+  {
+    id: 'neo-brutalism',
+    label: 'Neo-Brutalism',
+    description: '太線ボーダー＋ハードシャドウ',
+    emoji: '⬛',
+    previewBg: '#fdfcf7',
+    previewCard: '#ffffff',
+    previewAccent: '#10b981',
+  },
+  {
+    id: 'glassmorphism',
+    label: 'Glassmorphism',
+    description: '半透明ブラーウィンドウ',
+    emoji: '🪟',
+    previewBg: 'linear-gradient(135deg,#667eea,#764ba2)',
+    previewCard: 'rgba(255,255,255,0.15)',
+    previewAccent: '#a78bfa',
+  },
+  {
+    id: 'minimal',
+    label: 'Minimal / Clean',
+    description: '余白多め・細線・フラット',
+    emoji: '○',
+    previewBg: '#ffffff',
+    previewCard: '#f9f9f9',
+    previewAccent: '#3b82f6',
+  },
+  {
+    id: 'retro',
+    label: 'Retro / Y2K',
+    description: 'ツートン＋ピクセルフォント',
+    emoji: '👾',
+    previewBg: '#ffff00',
+    previewCard: '#ff00ff',
+    previewAccent: '#0000ff',
+  },
+  {
+    id: 'cyberpunk',
+    label: 'Cyberpunk / Neon',
+    description: '漆黒＋ネオンカラー発光',
+    emoji: '⚡',
+    previewBg: '#000000',
+    previewCard: '#0a0a0a',
+    previewAccent: '#00ffff',
+  },
+  {
+    id: 'neumorphism',
+    label: 'Neumorphism',
+    description: 'ソフトな凸凹感・パステル',
+    emoji: '🌫️',
+    previewBg: '#e0e5ec',
+    previewCard: '#e0e5ec',
+    previewAccent: '#6c72cb',
+  },
+  {
+    id: 'japanese',
+    label: 'Japanese Traditional',
+    description: '和色（藍・紅梅・萌黄）',
+    emoji: '🌸',
+    previewBg: '#fdf6ec',
+    previewCard: '#fdf0e0',
+    previewAccent: '#c0392b',
+  },
+  {
+    id: 'editorial',
+    label: 'Paper / Editorial',
+    description: '雑誌・新聞ライク・セリフ体',
+    emoji: '📰',
+    previewBg: '#f5f0e8',
+    previewCard: '#ffffff',
+    previewAccent: '#2c3e50',
+  },
+] as const;
+
+export type ThemeId = (typeof themeConfig)[number]['id'];
+export const DEFAULT_THEME: ThemeId = 'neo-brutalism';
+export const THEME_STORAGE_KEY = 'design-theme';
+
+/**
  * スキン（カラーテーマ）の定義。
  */
 export const skinConfig = [

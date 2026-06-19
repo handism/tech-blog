@@ -65,6 +65,12 @@ export default function Header() {
               >
                 Policy
               </Link>
+              <Link
+                href="/settings"
+                className="px-3 py-1 border border-border rounded-md font-bold hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[2px_2px_0px_0px_var(--border)] dark:hover:shadow-[2px_2px_0px_0px_var(--accent)] active:translate-x-0 active:translate-y-0 active:shadow-none transition-all shrink-0"
+              >
+                ⚙️ Settings
+              </Link>
             </nav>
           </div>
 

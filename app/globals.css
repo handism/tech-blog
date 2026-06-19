@@ -1,5 +1,5 @@
 /* app/globals.css */
-@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700;800;900&family=Space+Grotesk:wght@400;500;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700;800;900&family=Space+Grotesk:wght@400;500;700;800&family=Noto+Serif+JP:wght@400;700&family=Press+Start+2P&family=Noto+Sans+JP:wght@400;700&display=swap');
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 @custom-variant dark (&:where(.dark, .dark *));
@@ -515,3 +515,460 @@ pre.shiki[data-filename]::before {
   }
 }
 
+/* =======================
+   デザインテーマ システム
+   data-theme 属性で切り替え。CSS変数を上書きするだけで
+   既存コンポーネント（.neo-card等）のスタイルが変わる。
+   ======================= */
+
+/* ── Glassmorphism ── */
+[data-theme='glassmorphism'] {
+  --color-bg: #1a1a2e;
+  --color-background: var(--color-bg);
+  --color-card: rgba(255, 255, 255, 0.1);
+  --color-secondary: rgba(255, 255, 255, 0.05);
+  --color-text: #f0f0ff;
+  --color-border: rgba(255, 255, 255, 0.25);
+  --color-accent: #a78bfa;
+  --theme-font-sans: 'Lexend', system-ui, sans-serif;
+  --theme-border-width: 1px;
+  --theme-shadow-offset: 0px;
+  --theme-border-radius: 20px;
+  --theme-card-backdrop: blur(12px);
+}
+[data-theme='glassmorphism'] .neo-card {
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.37),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+}
+[data-theme='glassmorphism'] .neo-card-hover:hover {
+  transform: translate(-2px, -4px);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.5),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+[data-theme='glassmorphism'] .neo-btn {
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background-color: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+}
+[data-theme='glassmorphism'] .neo-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+[data-theme='glassmorphism'] .neo-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+[data-theme='glassmorphism'] body {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background-attachment: fixed;
+}
+/* Glassmorphism は常にダーク調なので .dark を統合 */
+[data-theme='glassmorphism'].dark,
+[data-theme='glassmorphism'] {
+  --color-bg: #0f0f23;
+}
+
+/* ── Minimal / Clean ── */
+[data-theme='minimal'] {
+  --color-bg: #ffffff;
+  --color-background: var(--color-bg);
+  --color-card: #f9fafb;
+  --color-secondary: #f3f4f6;
+  --color-text: #111827;
+  --color-border: #e5e7eb;
+  --color-accent: #3b82f6;
+  --theme-font-sans: 'Lexend', system-ui, sans-serif;
+}
+[data-theme='minimal'].dark {
+  --color-bg: #111827;
+  --color-background: var(--color-bg);
+  --color-card: #1f2937;
+  --color-secondary: #374151;
+  --color-text: #f9fafb;
+  --color-border: #374151;
+  --color-accent: #60a5fa;
+}
+[data-theme='minimal'] .neo-card {
+  border: 1px solid var(--color-border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  border-radius: 12px;
+}
+[data-theme='minimal'] .neo-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+[data-theme='minimal'] .neo-btn {
+  border: 1px solid var(--color-border);
+  box-shadow: none;
+  border-radius: 8px;
+}
+[data-theme='minimal'] .neo-btn:hover {
+  transform: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  background-color: var(--color-secondary);
+}
+[data-theme='minimal'] .neo-btn:active {
+  transform: none;
+  box-shadow: none;
+}
+[data-theme='minimal'].dark .neo-card {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+[data-theme='minimal'].dark .neo-card-hover:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Retro / Y2K ── */
+[data-theme='retro'] {
+  --color-bg: #ffff00;
+  --color-background: var(--color-bg);
+  --color-card: #ffffff;
+  --color-secondary: #ff00ff;
+  --color-text: #000000;
+  --color-border: #000000;
+  --color-accent: #0000ff;
+  --theme-font-sans: 'Press Start 2P', monospace;
+  --theme-border-radius: 0px;
+}
+[data-theme='retro'].dark {
+  --color-bg: #000022;
+  --color-background: var(--color-bg);
+  --color-card: #000044;
+  --color-secondary: #000066;
+  --color-text: #00ff00;
+  --color-border: #00ff00;
+  --color-accent: #ff00ff;
+}
+[data-theme='retro'] body,
+[data-theme='retro'] html {
+  font-family: 'Press Start 2P', monospace;
+}
+[data-theme='retro'] .neo-card {
+  border: 4px solid var(--color-border);
+  box-shadow: 6px 6px 0px 0px var(--color-border);
+  border-radius: 0;
+}
+[data-theme='retro'] .neo-card-hover:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 10px 10px 0px 0px var(--color-border);
+}
+[data-theme='retro'] .neo-btn {
+  border: 3px solid var(--color-border);
+  box-shadow: 4px 4px 0px 0px var(--color-border);
+  border-radius: 0;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.6rem;
+}
+[data-theme='retro'] .neo-btn:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 7px 7px 0px 0px var(--color-border);
+}
+[data-theme='retro'] .neo-btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0px 0px 0px 0px var(--color-border);
+}
+[data-theme='retro'].dark .neo-card {
+  box-shadow: 6px 6px 0px 0px var(--color-accent);
+}
+[data-theme='retro'].dark .neo-card-hover:hover {
+  box-shadow: 10px 10px 0px 0px var(--color-accent);
+}
+[data-theme='retro'].dark .neo-btn {
+  box-shadow: 4px 4px 0px 0px var(--color-accent);
+}
+[data-theme='retro'].dark .neo-btn:hover {
+  box-shadow: 7px 7px 0px 0px var(--color-accent);
+}
+[data-theme='retro'].dark .neo-btn:active {
+  box-shadow: 0px 0px 0px 0px var(--color-accent);
+}
+
+/* ── Cyberpunk / Neon ── */
+[data-theme='cyberpunk'] {
+  --color-bg: #000000;
+  --color-background: var(--color-bg);
+  --color-card: #0a0a0a;
+  --color-secondary: #111111;
+  --color-text: #00ffff;
+  --color-border: #00ffff;
+  --color-accent: #ff00ff;
+}
+[data-theme='cyberpunk'].dark {
+  --color-bg: #000000;
+  --color-card: #050505;
+  --color-secondary: #0d0d0d;
+  --color-text: #00ffff;
+  --color-border: #00ffff;
+  --color-accent: #ff00ff;
+}
+[data-theme='cyberpunk'] .neo-card {
+  border: 2px solid var(--color-border);
+  box-shadow:
+    5px 5px 0px 0px var(--color-accent),
+    0 0 20px rgba(0, 255, 255, 0.15),
+    inset 0 0 20px rgba(0, 255, 255, 0.03);
+  border-radius: 4px;
+  background: linear-gradient(135deg, #0a0a0a 0%, #0d0d12 100%);
+}
+[data-theme='cyberpunk'] .neo-card-hover:hover {
+  transform: translate(-3px, -3px);
+  box-shadow:
+    8px 8px 0px 0px var(--color-accent),
+    0 0 40px rgba(0, 255, 255, 0.3),
+    0 0 80px rgba(255, 0, 255, 0.1);
+}
+[data-theme='cyberpunk'] .neo-btn {
+  border: 2px solid var(--color-border);
+  box-shadow:
+    3px 3px 0px 0px var(--color-accent),
+    0 0 10px rgba(0, 255, 255, 0.2);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--color-text);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+[data-theme='cyberpunk'] .neo-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow:
+    5px 5px 0px 0px var(--color-accent),
+    0 0 20px rgba(0, 255, 255, 0.4);
+}
+[data-theme='cyberpunk'] .neo-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow:
+    0px 0px 0px 0px var(--color-accent),
+    0 0 5px rgba(0, 255, 255, 0.1);
+}
+
+/* ── Neumorphism ── */
+[data-theme='neumorphism'] {
+  --color-bg: #e0e5ec;
+  --color-background: var(--color-bg);
+  --color-card: #e0e5ec;
+  --color-secondary: #d1d9e6;
+  --color-text: #3d4f6e;
+  --color-border: transparent;
+  --color-accent: #6c72cb;
+}
+[data-theme='neumorphism'].dark {
+  --color-bg: #2d3748;
+  --color-background: var(--color-bg);
+  --color-card: #2d3748;
+  --color-secondary: #364257;
+  --color-text: #e2e8f0;
+  --color-border: transparent;
+  --color-accent: #a78bfa;
+}
+[data-theme='neumorphism'] .neo-card {
+  border: none;
+  background: #e0e5ec;
+  border-radius: 20px;
+  box-shadow:
+    8px 8px 16px #b8bec9,
+    -8px -8px 16px #ffffff;
+}
+[data-theme='neumorphism'].dark .neo-card {
+  background: #2d3748;
+  box-shadow:
+    8px 8px 16px #232d3c,
+    -8px -8px 16px #374155;
+}
+[data-theme='neumorphism'] .neo-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    12px 12px 20px #b8bec9,
+    -12px -12px 20px #ffffff;
+}
+[data-theme='neumorphism'].dark .neo-card-hover:hover {
+  box-shadow:
+    12px 12px 20px #232d3c,
+    -12px -12px 20px #374155;
+}
+[data-theme='neumorphism'] .neo-btn {
+  border: none;
+  background: #e0e5ec;
+  border-radius: 12px;
+  box-shadow:
+    5px 5px 10px #b8bec9,
+    -5px -5px 10px #ffffff;
+}
+[data-theme='neumorphism'].dark .neo-btn {
+  background: #2d3748;
+  box-shadow:
+    5px 5px 10px #232d3c,
+    -5px -5px 10px #374155;
+}
+[data-theme='neumorphism'] .neo-btn:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    7px 7px 14px #b8bec9,
+    -7px -7px 14px #ffffff;
+}
+[data-theme='neumorphism'].dark .neo-btn:hover {
+  box-shadow:
+    7px 7px 14px #232d3c,
+    -7px -7px 14px #374155;
+}
+[data-theme='neumorphism'] .neo-btn:active {
+  transform: none;
+  box-shadow:
+    inset 4px 4px 8px #b8bec9,
+    inset -4px -4px 8px #ffffff;
+}
+[data-theme='neumorphism'].dark .neo-btn:active {
+  box-shadow:
+    inset 4px 4px 8px #232d3c,
+    inset -4px -4px 8px #374155;
+}
+
+/* ── Japanese Traditional ── */
+[data-theme='japanese'] {
+  --color-bg: #fdf6ec;
+  --color-background: var(--color-bg);
+  --color-card: #fdf0e0;
+  --color-secondary: #f5e6d3;
+  --color-text: #2c1810;
+  --color-border: #8b4513;
+  --color-accent: #c0392b;
+  --theme-font-sans: 'Noto Serif JP', 'Noto Sans JP', serif;
+}
+[data-theme='japanese'].dark {
+  --color-bg: #1a0f0a;
+  --color-background: var(--color-bg);
+  --color-card: #2a1810;
+  --color-secondary: #3a2520;
+  --color-text: #f5e6d3;
+  --color-border: #d2691e;
+  --color-accent: #e74c3c;
+}
+[data-theme='japanese'] body,
+[data-theme='japanese'] html {
+  font-family: 'Noto Serif JP', serif;
+}
+[data-theme='japanese'] .neo-card {
+  border: 2px solid var(--color-border);
+  box-shadow:
+    4px 4px 0px 0px var(--color-border),
+    0 0 0 1px rgba(139, 69, 19, 0.1);
+  border-radius: 4px;
+  background: var(--color-card);
+  position: relative;
+}
+[data-theme='japanese'] .neo-card::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  opacity: 0.3;
+  pointer-events: none;
+}
+[data-theme='japanese'] .neo-card-hover:hover {
+  transform: translate(-3px, -3px);
+  box-shadow:
+    7px 7px 0px 0px var(--color-border),
+    0 0 0 1px rgba(139, 69, 19, 0.15);
+}
+[data-theme='japanese'] .neo-btn {
+  border: 2px solid var(--color-border);
+  box-shadow: 3px 3px 0px 0px var(--color-border);
+  border-radius: 2px;
+  font-family: 'Noto Serif JP', serif;
+}
+[data-theme='japanese'] .neo-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px 0px var(--color-border);
+}
+[data-theme='japanese'] .neo-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 0px 0px var(--color-border);
+}
+[data-theme='japanese'].dark .neo-card {
+  box-shadow: 4px 4px 0px 0px var(--color-accent);
+}
+[data-theme='japanese'].dark .neo-card-hover:hover {
+  box-shadow: 7px 7px 0px 0px var(--color-accent);
+}
+[data-theme='japanese'].dark .neo-btn {
+  box-shadow: 3px 3px 0px 0px var(--color-accent);
+}
+[data-theme='japanese'].dark .neo-btn:hover {
+  box-shadow: 5px 5px 0px 0px var(--color-accent);
+}
+[data-theme='japanese'].dark .neo-btn:active {
+  box-shadow: 0px 0px 0px 0px var(--color-accent);
+}
+
+/* ── Paper / Editorial ── */
+[data-theme='editorial'] {
+  --color-bg: #f5f0e8;
+  --color-background: var(--color-bg);
+  --color-card: #ffffff;
+  --color-secondary: #ece8de;
+  --color-text: #1a1a1a;
+  --color-border: #1a1a1a;
+  --color-accent: #c0392b;
+  --theme-font-sans: 'Noto Serif JP', Georgia, serif;
+}
+[data-theme='editorial'].dark {
+  --color-bg: #1a1612;
+  --color-background: var(--color-bg);
+  --color-card: #242018;
+  --color-secondary: #2e2920;
+  --color-text: #f5f0e8;
+  --color-border: #8b7355;
+  --color-accent: #e74c3c;
+}
+[data-theme='editorial'] body,
+[data-theme='editorial'] html {
+  font-family: 'Noto Serif JP', Georgia, serif;
+}
+[data-theme='editorial'] .neo-card {
+  border: 1px solid var(--color-border);
+  box-shadow: none;
+  border-radius: 0;
+  border-top: 3px solid var(--color-border);
+}
+[data-theme='editorial'] .neo-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+[data-theme='editorial'] .neo-btn {
+  border: 1px solid var(--color-border);
+  box-shadow: none;
+  border-radius: 2px;
+  font-family: 'Noto Serif JP', Georgia, serif;
+  letter-spacing: 0.03em;
+}
+[data-theme='editorial'] .neo-btn:hover {
+  transform: none;
+  background-color: var(--color-text);
+  color: var(--color-bg);
+  box-shadow: none;
+}
+[data-theme='editorial'] .neo-btn:active {
+  transform: none;
+  box-shadow: none;
+}
+[data-theme='editorial'].dark .neo-card {
+  box-shadow: none;
+  border-top-color: var(--color-accent);
+}
+[data-theme='editorial'].dark .neo-card-hover:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+[data-theme='editorial'].dark .neo-btn:hover {
+  background-color: var(--color-secondary);
+  color: var(--color-text);
+}
