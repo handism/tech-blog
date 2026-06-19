@@ -2,39 +2,19 @@
 
 ## このブログについて
 
-- **ネオ・ブルータリズム (Neo-Brutalism)** スタイルに基づく、太い黒ボーダー、ぼかしのないハードシャドウ、ポップなカラーを特徴とするエッジの効いたデザイン
+- **8種類の多彩なデザインテーマ**: デフォルトの力強い **Neo-Brutalism（ネオ・ブルータリズム）** に加え、Glassmorphism、Minimal、Retro、Cyberpunk、Neumorphism、Japanese、Editorial といった幅広いスタイルにリアルタイムで切り替え可能
+- **豊富なスキンカラー**: Emerald、Ocean、Sunset、Purple、Rose のアクセントカラーとダークモードを組み合わせ、自分好みの外観にカスタマイズできます
 - 見出しフォントに **Lexend** および **Space Grotesk** を採用した、テックブログらしい力強いタイポグラフィ
-- **2つの顔を持つダークモード**: ライトモードではポップなパステル調、ダークモードではソリッドな漆黒背景にスキンカラーでネオン調に発光するハードシャドウが浮かび上がります
-- 触っていて気持ちいい **ダイナミックなアクション**: ボタンやカードがホバーで左上に浮き出し、クリック（アクティブ）で物理的に押し込まれるインタラクション
+- 触っていて気持ちいい **ダイナミックなアクション**: テーマごとの世界観に合わせて、ホバーやクリック時のインタラクションが最適化されています
 - SSG（静的サイト生成）に対応しているので軽快に動作するはず
 - サムネイル画像にも対応。比率は 16:9 がおすすめ
 - サイドバーありの 2 カラムレイアウトで、レスポンシブレイアウトに対応
 - 記事のデータソースは `Markdown ファイル` に対応
-- ヘッダーの Tools メニューから利用できるツールページを内蔵
-  - **Memphis Generator**（`/tools/memphis`）：Memphis 柄の背景画像をブラウザ上で生成・ダウンロード
-  - **Image Trimmer**（`/tools/trimming`）：ブラウザ上で画像をトリミング
-  - **Timezone Converter**（`/tools/timezone`）：タイムゾーン変換ツール
-  - **JSON Formatter**（`/tools/json-formatter`）：JSON を整形・圧縮・検証
-  - **YAML ↔ JSON**（`/tools/yaml-json`）：YAML と JSON の相互変換
-  - **Base64 Codec**（`/tools/base64`）：Base64 のエンコード / デコード
-  - **URL Codec**（`/tools/url-codec`）：URL のエンコード / デコード
-  - **UUID Generator**（`/tools/uuid`）：UUID v4 を生成
-  - **HTML Entity Encoder / Decoder**（`/tools/html-entity`）：HTML エンティティの変換
-  - **CSV ↔ JSON Converter**（`/tools/csv-json`）：CSV と JSON の相互変換
-  - **Password Generator**（`/tools/password-generator`）：ランダムパスワードを生成
-  - **Regex Tester**（`/tools/regex-tester`）：正規表現のテスト
-  - **Hash Generator**（`/tools/hash-generator`）：ハッシュを生成
-  - **Color Converter**（`/tools/color-converter`）：色の変換ツール
-  - **JWT Decoder**（`/tools/jwt-decoder`）：JWT のデコード
-  - **QR Code Generator**（`/tools/qr-code`）：QR コード生成
-  - **Neo-Brutalism UI Generator**（`/tools/neo-brutalism`）：ネオ・ブルータリズムスタイルの UI コード生成
-  - **Image Converter & Optimizer**（`/tools/image-optimizer`）：ブラウザ内画像圧縮・WebP変換
-  - **HTML to JSX Converter**（`/tools/html-to-jsx`）：HTMLをJSX/TSX形式に自動変換
-  - **Git Commit & Branch Helper**（`/tools/git-commit-helper`）：Conventional Commits準拠メッセージとブランチ名生成
-  - **Mock JSON Data Generator**（`/tools/json-generator`）：テスト用のダミーJSONデータの一括生成
-  - **Aspect Ratio Calculator**（`/tools/aspect-ratio`）：アスペクト比計算・解像度の双方向補完
-  - **HTTP Security Headers Generator**（`/tools/security-headers`）：各種サーバー用セキュリティヘッダー設定生成
-  - **CSS Cubic-Bezier Visualizer**（`/tools/cubic-bezier`）：イージング曲線の視覚化と transition コード生成
+- ヘッダーの Tools メニューから利用できるブラウザ完結型の便利ツール（全44種以上）を内蔵
+  - **🎨 画像処理**: Neo-Brutalism UI Generator, Image Converter & Optimizer, Memphis Generator, Image Trimmer, Favicon & App Icon Generator, SVG Path Visualizer & Optimizer, Pixel Art Canvas
+  - **🔄 データ変換**: HTML to JSX Converter, Mock JSON Data Generator, Timezone Converter, JSON Formatter, YAML ↔ JSON, Base64 Codec, URL Codec, UUID Generator, HTML Entity Encoder / Decoder, CSV ↔ JSON, Password Generator, JSON to TypeScript / Zod
+  - **🛠️ 開発者向けツール**: Git Commit & Branch Helper, Aspect Ratio Calculator, HTTP Security Headers Generator, CSS Cubic-Bezier Visualizer, Regex Tester, Hash Generator, Color Converter, JWT Decoder, QR Code Generator, Diff Viewer, Unix Timestamp Converter, Cron Parser & Generator, URL Parser & Query Inspector, SQL Formatter, Text Case Converter & Counter, User Agent Parser, CSS Generator, Color Contrast & Palette, Keyboard Event Visualizer, Bitwise & Radix Converter, Git Command Helper, Curl to Code Converter, CSS Unit Converter, HTTP Request Tester, Lorem Ipsum & Dummy Text, Markdown Table Editor, IP Subnet & CIDR Calculator
+  - **🧖 外部ツール**: Sauna Itta, Sauna Simulator
 - About・プライバシーポリシー・HTML Sitemap・RSS フィードページを提供
 - **Scraps**（`/scraps`）：Twitter/Mastodon 感覚で日々の気づきやエラー解決ログを短く残せる技術メモ欄。独立したネオ・ブルータリズム風のカード形式で表示されます。`scraps/` ディレクトリに Markdown を置くだけで公開される
 
@@ -46,7 +26,7 @@
 - **スタイリング**：Tailwind CSS 4
 - **マークダウン処理**：Remark + rehype（HTML 変換・見出し自動リンク・スラッグ生成・TOC 生成）
 - **シンタックスハイライト**：Shiki（github-dark テーマ）
-- **テーマ切り替え**：next-themes（ダークモード対応）
+- **テーマ切り替え**：next-themes（ダークモード・8種類のテーマ切り替え対応）
 - **検索機能**：Fuse.js（クライアント側全文検索）
 - **バリデーション**：Zod（frontmatter）
 - **ホスティング**：GitHub Pages
@@ -134,13 +114,14 @@ bun run test:unit
 
 - 設定ファイルは `src/config/site.ts`
 - サイトごとに必要な設定（サイト名・URL・著者名など）を変更してください
-- `skinConfig` 配列でスキン一覧（Emerald・Ocean・Sunset・Purple・Rose）を管理。`DEFAULT_SKIN` でデフォルト指定
+- `themeConfig` 配列でテーマ一覧を管理し、`DEFAULT_THEME` でデフォルトテーマを指定します
+- `skinConfig` 配列でスキン一覧（Emerald・Ocean・Sunset・Purple・Rose）を管理し、`DEFAULT_SKIN` でデフォルトスキンを指定します
 
 ### CSS 設定
 
 - グローバルの CSS は `app/globals.css` にまとめています
-- `:focus-visible` スタイルはアクセント色（emerald）で定義済みです
-- スキンは `data-skin` 属性で切り替え。`[data-skin="ocean"]` セレクタで `--color-accent` をオーバーライド
+- `:focus-visible` スタイルはアクセント色で定義済みです
+- テーマは `data-theme` 属性で、スキンは `data-skin` 属性で切り替え、対応するCSS変数がオーバーライドされる仕組みです
 
 ### 記事ページ設定
 
