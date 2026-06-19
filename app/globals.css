@@ -972,3 +972,151 @@ pre.shiki[data-filename]::before {
   background-color: var(--color-secondary);
   color: var(--color-text);
 }
+
+/* =======================
+   インラインハードシャドウ テーマ別上書き
+   コンポーネント内の shadow-[Npx_Npx_0px_0px_var(--border)] 等を
+   各テーマのスタイルに合わせて上書きする。
+   ======================= */
+
+/* Glassmorphism: ハードシャドウをソフトなブラーシャドウに */
+[data-theme='glassmorphism'] header,
+[data-theme='glassmorphism'] nav a,
+[data-theme='glassmorphism'] [class*='shadow-'] {
+  --tw-shadow: none;
+  --tw-shadow-colored: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25) !important;
+}
+[data-theme='glassmorphism'] .neo-card,
+[data-theme='glassmorphism'] .neo-card-hover:hover,
+[data-theme='glassmorphism'] .neo-btn,
+[data-theme='glassmorphism'] .neo-btn:hover,
+[data-theme='glassmorphism'] .neo-btn:active {
+  box-shadow: revert-layer;
+}
+
+/* Minimal: ハードシャドウをフラット/微細シャドウに */
+[data-theme='minimal'] [class*='shadow-'] {
+  --tw-shadow: none;
+  --tw-shadow-colored: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07) !important;
+}
+[data-theme='minimal'] .neo-card,
+[data-theme='minimal'] .neo-card-hover:hover,
+[data-theme='minimal'] .neo-btn,
+[data-theme='minimal'] .neo-btn:hover,
+[data-theme='minimal'] .neo-btn:active {
+  box-shadow: revert-layer;
+}
+[data-theme='minimal'] header {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Neumorphism: ハードシャドウをニューモーフィズムシャドウに */
+[data-theme='neumorphism'] [class*='shadow-'] {
+  --tw-shadow: none;
+  --tw-shadow-colored: none;
+  box-shadow: 5px 5px 10px #b8bec9, -5px -5px 10px #ffffff !important;
+}
+[data-theme='neumorphism'].dark [class*='shadow-'] {
+  box-shadow: 5px 5px 10px #232d3c, -5px -5px 10px #374155 !important;
+}
+[data-theme='neumorphism'] .neo-card,
+[data-theme='neumorphism'] .neo-card-hover:hover,
+[data-theme='neumorphism'] .neo-btn,
+[data-theme='neumorphism'] .neo-btn:hover,
+[data-theme='neumorphism'] .neo-btn:active,
+[data-theme='neumorphism'].dark .neo-card,
+[data-theme='neumorphism'].dark .neo-card-hover:hover,
+[data-theme='neumorphism'].dark .neo-btn,
+[data-theme='neumorphism'].dark .neo-btn:hover,
+[data-theme='neumorphism'].dark .neo-btn:active {
+  box-shadow: revert-layer;
+}
+
+/* Editorial: ハードシャドウを除去（フラット）*/
+[data-theme='editorial'] [class*='shadow-'] {
+  --tw-shadow: none;
+  --tw-shadow-colored: none;
+  box-shadow: none !important;
+}
+[data-theme='editorial'] .neo-card,
+[data-theme='editorial'] .neo-card-hover:hover,
+[data-theme='editorial'] .neo-btn,
+[data-theme='editorial'] .neo-btn:hover,
+[data-theme='editorial'] .neo-btn:active,
+[data-theme='editorial'].dark .neo-card,
+[data-theme='editorial'].dark .neo-card-hover:hover,
+[data-theme='editorial'].dark .neo-btn,
+[data-theme='editorial'].dark .neo-btn:hover,
+[data-theme='editorial'].dark .neo-btn:active {
+  box-shadow: revert-layer;
+}
+
+/* ヘッダー・ナビ・共通コンポーネントのボーダー調整 */
+/* Glassmorphism */
+[data-theme='glassmorphism'] header {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+}
+[data-theme='glassmorphism'] nav a {
+  box-shadow: none !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+[data-theme='glassmorphism'] nav a:hover {
+  box-shadow: 0 4px 12px rgba(167, 139, 250, 0.3) !important;
+  border-color: rgba(167, 139, 250, 0.6) !important;
+}
+
+/* Minimal */
+[data-theme='minimal'] nav a {
+  box-shadow: none !important;
+  border-color: var(--color-border) !important;
+}
+[data-theme='minimal'] nav a:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08) !important;
+}
+[data-theme='minimal'].dark nav a:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Neumorphism */
+[data-theme='neumorphism'] header {
+  border: none !important;
+  box-shadow: 8px 8px 16px #b8bec9, -8px -8px 16px #ffffff !important;
+}
+[data-theme='neumorphism'].dark header {
+  box-shadow: 8px 8px 16px #232d3c, -8px -8px 16px #374155 !important;
+}
+[data-theme='neumorphism'] nav a {
+  border: none !important;
+  box-shadow: 3px 3px 6px #b8bec9, -3px -3px 6px #ffffff !important;
+}
+[data-theme='neumorphism'].dark nav a {
+  box-shadow: 3px 3px 6px #232d3c, -3px -3px 6px #374155 !important;
+}
+[data-theme='neumorphism'] nav a:hover {
+  box-shadow: 5px 5px 10px #b8bec9, -5px -5px 10px #ffffff !important;
+}
+[data-theme='neumorphism'].dark nav a:hover {
+  box-shadow: 5px 5px 10px #232d3c, -5px -5px 10px #374155 !important;
+}
+
+/* Editorial */
+[data-theme='editorial'] header {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border-bottom: 3px solid var(--color-border) !important;
+}
+[data-theme='editorial'] nav a {
+  box-shadow: none !important;
+  border-radius: 2px !important;
+}
+[data-theme='editorial'] nav a:hover {
+  background-color: var(--color-text) !important;
+  color: var(--color-bg) !important;
+  box-shadow: none !important;
+}
