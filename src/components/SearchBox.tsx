@@ -6,6 +6,7 @@ import { preloadTokenizer, tokenizeForSearch } from '@/src/lib/kuromoji-tokenize
 import type { RangeTuple } from 'fuse.js';
 import type { PostMeta } from '@/src/types/post';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 
 /**
@@ -38,11 +39,13 @@ function highlightText(text: string, indices: readonly RangeTuple[]): React.Reac
  * 記事を検索する入力UI。
  */
 export default function SearchBox() {
+  const router = useRouter();
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const [tokenizedQuery, setTokenizedQuery] = useState('');
   const [posts, setPosts] = useState<PostMeta[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
 
   const handleFocus = async () => {
     preloadTokenizer();
@@ -66,10 +69,12 @@ export default function SearchBox() {
   );
 
   const hasResults = debouncedQuery.length > 0 && results.length > 0;
+  const showResultsContainer = debouncedQuery.length > 0;
 
   useEffect(() => {
     const timerId = window.setTimeout(() => {
       setDebouncedQuery(query);
+      setSelectedIndex(-1);
     }, 100);
 
     return () => window.clearTimeout(timerId);
@@ -91,6 +96,37 @@ export default function SearchBox() {
     };
   }, [debouncedQuery]);
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (results.length === 0) {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        setQuery('');
+        e.currentTarget.blur();
+      }
+      return;
+    }
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setSelectedIndex((prev) => (prev + 1) % results.length);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setSelectedIndex((prev) => (prev - 1 + results.length) % results.length);
+    } else if (e.key === 'Enter') {
+      if (selectedIndex >= 0 && selectedIndex < results.length) {
+        e.preventDefault();
+        const selectedPost = results[selectedIndex].post;
+        router.push(`/blog/posts/${selectedPost.slug}`);
+        setQuery('');
+        e.currentTarget.blur();
+      }
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      setQuery('');
+      e.currentTarget.blur();
+    }
+  };
+
   return (
     <div className="space-y-2">
       <label htmlFor="site-search" className="sr-only">
@@ -105,17 +141,24 @@ export default function SearchBox() {
         onChange={(e) => setQuery(e.target.value)}
         onFocus={handleFocus}
         onMouseEnter={handleFocus}
+        onKeyDown={handleKeyDown}
         className="w-full border-2 border-border bg-card text-text placeholder:text-text/50 py-2.5 px-4 rounded-xl shadow-[2px_2px_0px_0px_var(--border)] dark:shadow-[2px_2px_0px_0px_var(--accent)] focus:outline-none focus:translate-x-[-1px] focus:translate-y-[-1px] focus:shadow-[3px_3px_0px_0px_var(--border)] dark:focus:shadow-[3px_3px_0px_0px_var(--accent)] transition-all font-bold"
       />
       <ul
-        className={`mt-2 space-y-1 ${hasResults ? 'bg-card border-2 border-border rounded-xl p-4 shadow-[3px_3px_0px_0px_var(--border)] dark:shadow-[3px_3px_0px_0px_var(--accent)]' : ''}`}
+        className={`mt-2 space-y-1 ${showResultsContainer ? 'bg-card border-2 border-border rounded-xl p-4 shadow-[3px_3px_0px_0px_var(--border)] dark:shadow-[3px_3px_0px_0px_var(--accent)]' : ''}`}
       >
         {hasResults &&
           results.map(
-            ({ post, titleIndices, snippet, snippetIndices, matchedTags, categoryIndices }) => (
+            (
+              { post, titleIndices, snippet, snippetIndices, matchedTags, categoryIndices },
+              index
+            ) => (
               <li
                 key={post.slug}
-                className="border-b border-border/20 last:border-b-0 py-1.5 first:pt-0 last:pb-0"
+                className={`border-b border-border/20 last:border-b-0 py-1.5 first:pt-0 last:pb-0 px-2 rounded-lg transition-colors ${
+                  selectedIndex === index ? 'bg-secondary' : ''
+                }`}
+                onMouseEnter={() => setSelectedIndex(index)}
               >
                 <Link href={`/blog/posts/${post.slug}`} className="hover:underline block">
                   <span className="font-bold">{highlightText(post.title, titleIndices)}</span>{' '}
