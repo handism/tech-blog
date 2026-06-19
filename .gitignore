@@ -50,3 +50,6 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# Lighthouse CI (ローカル実行時の一時レポート)
+/.lighthouseci/
