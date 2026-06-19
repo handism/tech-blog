@@ -84,7 +84,11 @@ test.describe('ダークモード', () => {
     const html = page.locator('html');
     const before = await html.getAttribute('class');
     // ThemeToggle は aria-label="ダークモードに切り替え" or "ライトモードに切り替え"
-    await page.click('button[aria-label*="モードに切り替え"]');
+    await page
+      .locator('button[aria-label*="モードに切り替え"]')
+      .filter({ visible: true })
+      .first()
+      .click();
     const after = await html.getAttribute('class');
     expect(after).not.toBe(before);
   });
