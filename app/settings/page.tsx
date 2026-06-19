@@ -1,6 +1,7 @@
 // app/settings/page.tsx
 import { SkinSelector } from '@/src/components/SkinSelector';
 import { ThemeSelector } from '@/src/components/ThemeSelector';
+import { ThemeToggle } from '@/src/components/ThemeToggle';
 import { skinConfig, themeConfig } from '@/src/config/site';
 import type { Metadata } from 'next';
 
@@ -76,15 +77,31 @@ export default function SettingsPage() {
           </div>
           {/* 実際の切り替えは SkinSelector の既存ロジックを使用 */}
           <div className="flex flex-col gap-1 ml-2">
-            <p className="text-xs text-text opacity-50">
-              下のボタンまたはヘッダー右上の
-              <br />
-              パレットアイコンから変更できます
-            </p>
+            <p className="text-xs text-text opacity-50">下のボタンから変更できます</p>
             <div className="mt-1">
               <SkinSelector />
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* セクション3: ダークモード */}
+      <section aria-labelledby="darkmode-section-heading" className="mt-16">
+        <div className="mb-6">
+          <h2
+            id="darkmode-section-heading"
+            className="text-xl font-bold text-text mb-1 flex items-center gap-2"
+          >
+            <span>🌓</span>
+            ダークモード
+          </h2>
+          <p className="text-sm text-text opacity-60">
+            サイトのカラーモード（ライト / ダーク）を切り替えます。
+          </p>
+        </div>
+        <div className="neo-card p-6 inline-flex flex-wrap gap-4 items-center">
+          <ThemeToggle />
+          <span className="text-sm font-medium text-text">モードを切り替える</span>
         </div>
       </section>
     </main>

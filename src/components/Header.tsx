@@ -1,9 +1,8 @@
 // src/components/Header.tsx
 'use client';
 
-import { SkinSelector } from '@/src/components/SkinSelector';
-import { ThemeToggle } from '@/src/components/ThemeToggle';
 import { siteConfig } from '@/src/config/site';
+import { Settings } from 'lucide-react';
 import Link from 'next/link';
 
 /**
@@ -28,8 +27,13 @@ export default function Header() {
 
               {/* モバイル表示用のアイコン (md以上で非表示) */}
               <div className="flex items-center gap-2 md:hidden">
-                <SkinSelector />
-                <ThemeToggle />
+                <Link
+                  href="/settings"
+                  className="neo-btn w-9 h-9 flex items-center justify-center text-text"
+                  aria-label="Settings"
+                >
+                  <Settings className="h-4 w-4" />
+                </Link>
               </div>
             </div>
 
@@ -65,19 +69,18 @@ export default function Header() {
               >
                 Policy
               </Link>
-              <Link
-                href="/settings"
-                className="px-3 py-1 border border-border rounded-md font-bold hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[2px_2px_0px_0px_var(--border)] dark:hover:shadow-[2px_2px_0px_0px_var(--accent)] active:translate-x-0 active:translate-y-0 active:shadow-none transition-all shrink-0"
-              >
-                ⚙️ Settings
-              </Link>
             </nav>
           </div>
 
           {/* デスクトップ表示用のアイコン (md未満で非表示) */}
           <div className="hidden md:flex items-center gap-2">
-            <SkinSelector />
-            <ThemeToggle />
+            <Link
+              href="/settings"
+              className="neo-btn w-9 h-9 flex items-center justify-center text-text"
+              aria-label="Settings"
+            >
+              <Settings className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </header>
