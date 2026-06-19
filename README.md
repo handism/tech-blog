@@ -51,7 +51,6 @@
 - **バリデーション**：Zod（frontmatter）
 - **ホスティング**：GitHub Pages
 - **デプロイ**：GitHub Actions（`main` ブランチへのプッシュで自動デプロイ）
-- **E2E テスト**：Playwright
 - **ユニットテスト**：Vitest
 
 ## 使い方
@@ -91,13 +90,6 @@ bun run analyze
 
 ### テスト
 
-E2E テスト（Playwright）：
-
-```bash
-bun run test:e2e      # テスト実行（deployed site 対象）
-bun run test:e2e:ui   # インタラクティブ UI モードで実行
-```
-
 ユニットテスト（Vitest）：
 
 ```bash
@@ -106,7 +98,6 @@ bun run test:unit
 
 テストファイルは `tests/` ディレクトリ以下に配置します。
 
-- `*.spec.ts` → Playwright E2E テスト
 - `*.test.ts` → Vitest ユニットテスト
 
 ### 開発フローと品質保証 (Git Hooks)
