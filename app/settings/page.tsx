@@ -61,27 +61,9 @@ export default function SettingsPage() {
           </p>
         </div>
 
-        {/* スキン選択 – SkinSelector のドロップダウンではなくインラインで表示 */}
-        <div className="neo-card p-6 flex flex-wrap gap-4 items-center">
-          <div className="flex flex-wrap gap-4 items-end">
-            {skinConfig.map((skin) => (
-              <div key={skin.id} className="flex flex-col items-center gap-2">
-                <span
-                  className="block w-10 h-10 rounded-full border-2 border-border"
-                  style={{ backgroundColor: skin.lightColor }}
-                  aria-hidden="true"
-                />
-                <span className="text-xs text-text opacity-70 font-medium">{skin.label}</span>
-              </div>
-            ))}
-          </div>
-          {/* 実際の切り替えは SkinSelector の既存ロジックを使用 */}
-          <div className="flex flex-col gap-1 ml-2">
-            <p className="text-xs text-text opacity-50">下のボタンから変更できます</p>
-            <div className="mt-1">
-              <SkinSelector />
-            </div>
-          </div>
+        {/* スキン選択 */}
+        <div className="neo-card p-6 inline-block">
+          <SkinSelector />
         </div>
       </section>
 
@@ -99,9 +81,8 @@ export default function SettingsPage() {
             サイトのカラーモード（ライト / ダーク）を切り替えます。
           </p>
         </div>
-        <div className="neo-card p-6 inline-flex flex-wrap gap-4 items-center">
+        <div className="neo-card p-6 inline-block">
           <ThemeToggle />
-          <span className="text-sm font-medium text-text">モードを切り替える</span>
         </div>
       </section>
     </main>
