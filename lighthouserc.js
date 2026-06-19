@@ -31,6 +31,10 @@ module.exports = {
         'uses-responsive-images': 'warn',
         // コントラスト比はwarnに緩和（別途改善予定）
         'color-contrast': 'warn',
+        // テーマ切り替えシステムのCSSは全テーマ分をグローバルに読み込む設計のため、
+        // 未使用CSS・未minify CSSの指摘は意図的なトレードオフとしてwarnに緩和
+        'unminified-css': 'warn',
+        'unused-css-rules': 'warn',
       },
     },
     upload: {

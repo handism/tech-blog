@@ -61,24 +61,25 @@ export default function SettingsPage() {
         </div>
 
         {/* スキン選択 – SkinSelector のドロップダウンではなくインラインで表示 */}
-        <div className="neo-card p-6 inline-flex flex-wrap gap-4 items-center">
-          {skinConfig.map((skin) => (
-            <div key={skin.id} className="flex flex-col items-center gap-2">
-              <div
-                className="w-10 h-10 rounded-full border-2 border-border cursor-pointer hover:scale-110 transition-transform"
-                style={{ backgroundColor: skin.lightColor }}
-                title={skin.label}
-                aria-label={skin.label}
-              />
-              <span className="text-xs text-text opacity-70 font-medium">{skin.label}</span>
-            </div>
-          ))}
+        <div className="neo-card p-6 flex flex-wrap gap-4 items-center">
+          <div className="flex flex-wrap gap-4 items-end">
+            {skinConfig.map((skin) => (
+              <div key={skin.id} className="flex flex-col items-center gap-2">
+                <span
+                  className="block w-10 h-10 rounded-full border-2 border-border"
+                  style={{ backgroundColor: skin.lightColor }}
+                  aria-hidden="true"
+                />
+                <span className="text-xs text-text opacity-70 font-medium">{skin.label}</span>
+              </div>
+            ))}
+          </div>
           {/* 実際の切り替えは SkinSelector の既存ロジックを使用 */}
-          <div className="ml-4 flex flex-col gap-1">
+          <div className="flex flex-col gap-1 ml-2">
             <p className="text-xs text-text opacity-50">
-              ヘッダー右上のパレットアイコンからも
+              下のボタンまたはヘッダー右上の
               <br />
-              変更できます
+              パレットアイコンから変更できます
             </p>
             <div className="mt-1">
               <SkinSelector />

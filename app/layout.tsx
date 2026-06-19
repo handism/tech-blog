@@ -47,6 +47,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja" suppressHydrationWarning data-scroll-behavior="smooth">
+      <head>
+        {/* Google Fonts への preconnect でフォント読み込みを高速化 */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
       <body className={`${geistSans.className} bg-bg text-text antialiased relative min-h-screen`}>
         {/* フラッシュ防止スクリプト(スキン): キー名は SKIN_STORAGE_KEY、フォールバック値は DEFAULT_SKIN と一致させること */}
         <script
