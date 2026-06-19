@@ -154,7 +154,7 @@ export default function Sidebar({ toc, categoryCounts, tagCounts }: SidebarProps
           {/* 2. スマホ用ボタン */}
           <button
             onClick={() => setIsOpen(true)}
-            className="text-text lg:hidden fixed bottom-18 right-6 z-40 w-12 h-12 neo-btn flex items-center justify-center"
+            className="text-text lg:!hidden fixed bottom-18 right-6 z-40 w-12 h-12 neo-btn flex items-center justify-center"
             aria-label="目次を開く"
           >
             <Menu className="h-5 w-5" />
