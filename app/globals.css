@@ -863,12 +863,12 @@ html[data-theme='glassmorphism'] .dark .theme-btn:active,
 [data-theme='retro'] h4 { font-size: 0.85rem; line-height: 1.4; }
 [data-theme='retro'] h5, [data-theme='retro'] h6 { font-size: 0.75rem; line-height: 1.4; }
 
-[data-theme='retro'] header a[href="/"] {
+[data-theme='retro'] .site-header a[href="/"] {
   font-family: 'Press Start 2P', monospace;
   font-size: 1.1rem;
   letter-spacing: -0.05em;
 }
-[data-theme='retro'] header nav a {
+[data-theme='retro'] .site-header nav a {
   font-family: 'Press Start 2P', monospace;
   font-size: 0.6rem;
   letter-spacing: -0.05em;
@@ -1293,7 +1293,7 @@ html[data-theme='cyberpunk'] .dark .theme-btn:active,
    ======================= */
 
 /* Glassmorphism: ハードシャドウをソフトなブラーシャドウに */
-[data-theme='glassmorphism'] header,
+[data-theme='glassmorphism'] .site-header,
 [data-theme='glassmorphism'] nav a,
 [data-theme='glassmorphism'] [class*='shadow-'] {
   --tw-shadow: none;
@@ -1321,7 +1321,7 @@ html[data-theme='cyberpunk'] .dark .theme-btn:active,
 [data-theme='minimal'] .theme-btn:active {
   box-shadow: revert-layer;
 }
-[data-theme='minimal'] header {
+[data-theme='minimal'] .site-header {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
 }
 
@@ -1368,7 +1368,7 @@ html[data-theme='cyberpunk'] .dark .theme-btn:active,
 
 /* ヘッダー・ナビ・共通コンポーネントのボーダー調整 */
 /* Glassmorphism */
-[data-theme='glassmorphism'] header {
+[data-theme='glassmorphism'] .site-header {
   background-color: rgba(255, 255, 255, 0.08) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
@@ -1397,11 +1397,11 @@ html[data-theme='cyberpunk'] .dark .theme-btn:active,
 }
 
 /* Neumorphism */
-[data-theme='neumorphism'] header {
+[data-theme='neumorphism'] .site-header {
   border: none !important;
   box-shadow: 8px 8px 16px #b8bec9, -8px -8px 16px #ffffff !important;
 }
-[data-theme='neumorphism'].dark header {
+[data-theme='neumorphism'].dark .site-header {
   box-shadow: 8px 8px 16px #232d3c, -8px -8px 16px #374155 !important;
 }
 [data-theme='neumorphism'] nav a {
@@ -1419,7 +1419,7 @@ html[data-theme='cyberpunk'] .dark .theme-btn:active,
 }
 
 /* Editorial */
-[data-theme='editorial'] header {
+[data-theme='editorial'] .site-header {
   border-radius: 0 !important;
   box-shadow: none !important;
   border-bottom: 3px solid var(--color-border) !important;
