@@ -2,11 +2,14 @@
 'use client';
 
 import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 /**
  * クライアントサイドで Mermaid 記法を解析し、SVG図解を動的にレンダリングするコンポーネント。
  */
 export default function MermaidRenderer() {
+  const pathname = usePathname();
+
   useEffect(() => {
     const render = async () => {
       const elements = document.querySelectorAll('.mermaid');
@@ -43,7 +46,7 @@ export default function MermaidRenderer() {
     };
 
     render();
-  }, []);
+  }, [pathname]);
 
   return null;
 }

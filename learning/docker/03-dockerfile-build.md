@@ -67,16 +67,16 @@ CMD ["npm", "run", "dev"]
 
 ```mermaid
 graph TD
-  subgraph BuildStage [1. ビルド用ステージ (node:20)]
-    B_Base[ベース: node:20] --> B_Install[依存関係のインストール]
-    B_Install --> B_Build[ビルド実行 (Next.js/Vite等)]
-    B_Build --> B_Output[/app/out (HTML/CSS/JS)]
+  subgraph BuildStage ["1. ビルド用ステージ (node:20)"]
+    B_Base["ベース: node:20"] --> B_Install["依存関係のインストール"]
+    B_Install --> B_Build["ビルド実行 (Next.js/Vite等)"]
+    B_Build --> B_Output["/app/out (HTML/CSS/JS)"]
   end
 
-  subgraph ProductionStage [2. 本番用ステージ (nginx:alpine)]
-    P_Base[ベース: nginx:alpine] --> P_Copy[成果物のみをコピー]
+  subgraph ProductionStage ["2. 本番用ステージ (nginx:alpine)"]
+    P_Base["ベース: nginx:alpine"] --> P_Copy["成果物のみをコピー"]
     P_Output -->|COPY --from=build| P_Copy
-    P_Copy --> P_Run[Nginxで軽量配信]
+    P_Copy --> P_Run["Nginxで軽量配信"]
   end
 
   style BuildStage fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a

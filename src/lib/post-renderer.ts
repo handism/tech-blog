@@ -139,7 +139,7 @@ const processor = unified()
   .use(remarkGfm)
   .use(remarkExtractCodeFilename)
   .use(remarkMermaid)
-  .use(remarkRehype)
+  .use(remarkRehype, { allowDangerousHtml: true })
   .use(rehypeImageSize)
   .use(rehypeShiki, {
     theme: 'github-dark',
@@ -163,7 +163,7 @@ const processor = unified()
   .use(() => (tree, file) => {
     (file.data as { toc?: TocItem[] }).toc = generateTocFromHast(tree);
   })
-  .use(rehypeStringify);
+  .use(rehypeStringify, { allowDangerousHtml: true });
 
 /**
  * Markdown本文をHTMLとTOCへ変換する。

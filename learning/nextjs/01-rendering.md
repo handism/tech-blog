@@ -31,15 +31,15 @@ Next.js App Router では、コンポーネントはデフォルトで **Server 
 
 ```mermaid
 graph TD
-  subgraph Server [1. サーバー側の処理]
-    RSC[Server Components の実行] -->|データベース直接取得など| RSC_Exec[コンポーネントツリーの構築]
+  subgraph Server ["1. サーバー側の処理"]
+    RSC["Server Components の実行"] -->|データベース直接取得など| RSC_Exec["コンポーネントツリーの構築"]
     RSC_Exec -->|静的なHTMLを生成| HTML[初期HTML]
     RSC_Exec -->|仮想DOM情報などをシリアライズ| Payload[RSC Payload]
   end
 
-  subgraph Client [2. ブラウザ側の処理]
-    HTML -->|即座に描画| FastPaint[高速に初期画面を表示<br>(まだ動かない状態)]
-    Payload -->|JavaScriptのダウンロード & 実行| Hydration[ハイドレーション<br>(対話機能を有効化)]
+  subgraph Client ["2. ブラウザ側の処理"]
+    HTML -->|即座に描画| FastPaint["高速に初期画面を表示<br>(まだ動かない状態)"]
+    Payload -->|"JavaScriptのダウンロード & 実行"| Hydration["ハイドレーション<br>(対話機能を有効化)"]
     FastPaint -.->|イベント紐付け| Hydration
     Hydration --> Ready[完全に動作するページ]
   end

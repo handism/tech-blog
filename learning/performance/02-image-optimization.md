@@ -58,12 +58,12 @@ img {
 
 ```mermaid
 graph TD
-  subgraph Viewport [ブラウザの表示領域 (ファーストビュー)]
+  subgraph Viewport ["ブラウザの表示領域 (ファーストビュー)"]
     LCP_Img[ヒーロー画像 / LCP対象]
     LCP_Img -->|fetchpriority='high'| Fast[最優先で即時読み込み ⚡]
   end
 
-  subgraph Offscreen [画面外 (スクロールして見える位置)]
+  subgraph Offscreen ["画面外 (スクロールして見える位置)"]
     Sub_Img1[解説用イラスト]
     Sub_Img2[プロフィール画像]
     Sub_Img1 -->|loading='lazy'| Slow[見えそうになったら読み込む 🐢]
