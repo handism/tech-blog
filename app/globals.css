@@ -762,7 +762,7 @@ html:not([data-theme]) .dark pre.shiki {
   --color-text: #000000;
   --color-border: #000000;
   --color-accent: #0000ff;
-  --theme-font-sans: 'Press Start 2P', monospace;
+  --theme-font-sans: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --theme-border-radius: 0px;
 }
 [data-theme='retro'].dark {
@@ -776,7 +776,41 @@ html:not([data-theme]) .dark pre.shiki {
 }
 [data-theme='retro'] body,
 [data-theme='retro'] html {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.6;
+}
+[data-theme='retro'] h1,
+[data-theme='retro'] h2,
+[data-theme='retro'] h3,
+[data-theme='retro'] h4,
+[data-theme='retro'] h5,
+[data-theme='retro'] h6 {
   font-family: 'Press Start 2P', monospace;
+  letter-spacing: -0.05em;
+}
+[data-theme='retro'] h1 { font-size: 1.3rem; line-height: 1.4; }
+[data-theme='retro'] h2 { font-size: 1.1rem; line-height: 1.4; }
+[data-theme='retro'] h3 { font-size: 0.95rem; line-height: 1.4; }
+[data-theme='retro'] h4 { font-size: 0.85rem; line-height: 1.4; }
+[data-theme='retro'] h5, [data-theme='retro'] h6 { font-size: 0.75rem; line-height: 1.4; }
+
+[data-theme='retro'] header a[href="/"] {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 1.1rem;
+  letter-spacing: -0.05em;
+}
+[data-theme='retro'] header nav a {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.6rem;
+  letter-spacing: -0.05em;
+}
+[data-theme='retro'] .neo-card h2,
+[data-theme='retro'] .neo-card h3,
+[data-theme='retro'] aside h2,
+[data-theme='retro'] aside h3 {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.85rem;
 }
 [data-theme='retro'] .neo-card {
   border: 4px solid var(--color-border);
