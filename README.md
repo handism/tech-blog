@@ -25,7 +25,8 @@
 - **フロントエンド**：Next.js 16 + React 19
 - **言語**：TypeScript
 - **スタイリング**：Tailwind CSS 4
-- **マークダウン処理**：Remark + rehype（HTML 変換・見出し自動リンク・スラッグ生成・TOC 生成）
+- **マークダウン処理**：Remark + rehype（HTML 変換・見出し自動リンク・スラッグ生成・TOC 生成・Mermaidダイアグラムパース）
+- **図解・ダイアグラム描画**：Mermaid.js（クライアント側での動的SVGレンダリングに対応）
 - **シンタックスハイライト**：Shiki（github-dark テーマ）
 - **テーマ切り替え**：next-themes（ダークモード・8種類のテーマ切り替え対応）
 - **検索機能**：Fuse.js（クライアント側全文検索）
@@ -240,6 +241,16 @@ export function example() { }
 | --------- | --------- |
 | セル1     | セル2     |
 ```
+
+- **Mermaidダイアグラム (図解)**：
+
+````
+```mermaid
+graph TD
+  A[Client] -->|Docker CLI| B(Docker Daemon)
+```
+````
+
 
 ## SEO・アクセシビリティ
 
