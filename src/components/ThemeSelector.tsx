@@ -23,15 +23,15 @@ export function ThemeSelector() {
             onClick={() => setTheme(theme.id as ThemeId)}
             aria-pressed={isSelected}
             aria-label={`${theme.label}テーマに切り替え`}
-            className={`group relative flex flex-col rounded-2xl overflow-hidden text-left transition-all duration-200 focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 ${
+            className={`group relative flex flex-col neo-card neo-card-hover overflow-hidden text-left transition-all duration-200 focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 ${
               isSelected
                 ? 'ring-4 ring-accent ring-offset-2 ring-offset-bg scale-[1.02]'
-                : 'hover:scale-[1.02] hover:shadow-lg'
+                : 'hover:scale-[1.02]'
             }`}
           >
             {/* プレビューエリア */}
             <div
-              className="relative h-28 w-full flex items-center justify-center overflow-hidden"
+              className="relative h-28 w-full flex items-center justify-center overflow-hidden border-b border-border"
               style={{ background: theme.previewBg }}
             >
               {/* ミニカードプレビュー */}
@@ -82,7 +82,7 @@ export function ThemeSelector() {
             </div>
 
             {/* ラベルエリア */}
-            <div className="neo-card flex flex-col gap-0.5 px-3 py-2.5 rounded-t-none border-t-0 flex-1">
+            <div className="flex flex-col gap-0.5 px-3 py-2.5 bg-card flex-1">
               <div className="flex items-center gap-1.5">
                 <span className="text-base leading-none">{theme.emoji}</span>
                 <span className="text-xs font-bold text-text leading-tight">{theme.label}</span>
