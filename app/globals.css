@@ -1384,6 +1384,23 @@ html[data-theme='cyberpunk'] .dark .theme-btn:active,
   border-color: rgba(167, 139, 250, 0.6) !important;
 }
 
+[data-theme='glassmorphism'] .theme-toc-drawer {
+  background-color: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  border-top-width: 1px !important;
+}
+
+html[data-theme='glassmorphism'].dark .theme-toc-drawer,
+html[data-theme='glassmorphism'] .dark .theme-toc-drawer,
+.dark[data-theme='glassmorphism'] .theme-toc-drawer,
+[data-theme='glassmorphism'].dark .theme-toc-drawer,
+.dark [data-theme='glassmorphism'] .theme-toc-drawer {
+  background-color: rgba(15, 15, 35, 0.85) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
 /* Minimal */
 [data-theme='minimal'] nav a {
   box-shadow: none !important;

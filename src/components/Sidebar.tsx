@@ -173,7 +173,7 @@ export default function Sidebar({ toc, categoryCounts, tagCounts }: SidebarProps
               onClick={() => setIsOpen(false)}
             />
             <div
-              className={`fixed bottom-0 left-0 right-0 bg-card rounded-t-3xl p-6 max-h-[80vh] overflow-y-auto border-t-3 border-border shadow-2xl transition-transform duration-300 ease-out ${isOpen ? 'translate-y-0' : 'translate-y-full'}`}
+              className={`fixed bottom-0 left-0 right-0 bg-card rounded-t-3xl p-6 max-h-[80vh] overflow-y-auto border-t-3 border-border shadow-2xl transition-transform duration-300 ease-out theme-toc-drawer ${isOpen ? 'translate-y-0' : 'translate-y-full'}`}
             >
               <div className="flex justify-between items-center mb-4">
                 <h2 className="font-extrabold text-lg text-text">目次</h2>
