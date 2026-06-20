@@ -68,7 +68,7 @@
     "vitest": "^4.1.0"
   },
   "simple-git-hooks": {
-    "pre-commit": "npx lint-staged && bun run type-check"
+    "pre-commit": "npx lint-staged && npm run type-check"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
