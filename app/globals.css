@@ -576,73 +576,73 @@ html:not([data-theme]) pre.shiki {
 }
 
 /* ダークモード時の発光シャドウ (Neo-Brutalism) */
-.dark[data-theme='neo-brutalism'] .neo-card,
-.dark:not([data-theme]) .neo-card,
-.dark [data-theme='neo-brutalism'] .neo-card,
-.dark :not([data-theme]) .neo-card {
+html[data-theme='neo-brutalism'].dark .neo-card,
+html[data-theme='neo-brutalism'] .dark .neo-card,
+html:not([data-theme]).dark .neo-card,
+html:not([data-theme]) .dark .neo-card {
   box-shadow: 5px 5px 0px 0px var(--color-accent);
 }
 
-.dark[data-theme='neo-brutalism'] .neo-card-hover:hover,
-.dark:not([data-theme]) .neo-card-hover:hover,
-.dark [data-theme='neo-brutalism'] .neo-card-hover:hover,
-.dark :not([data-theme]) .neo-card-hover:hover {
+html[data-theme='neo-brutalism'].dark .neo-card-hover:hover,
+html[data-theme='neo-brutalism'] .dark .neo-card-hover:hover,
+html:not([data-theme]).dark .neo-card-hover:hover,
+html:not([data-theme]) .dark .neo-card-hover:hover {
   box-shadow: 8px 8px 0px 0px var(--color-accent);
 }
 
-.dark[data-theme='neo-brutalism'] .neo-btn,
-.dark:not([data-theme]) .neo-btn,
-.dark [data-theme='neo-brutalism'] .neo-btn,
-.dark :not([data-theme]) .neo-btn {
+html[data-theme='neo-brutalism'].dark .neo-btn,
+html[data-theme='neo-brutalism'] .dark .neo-btn,
+html:not([data-theme]).dark .neo-btn,
+html:not([data-theme]) .dark .neo-btn {
   box-shadow: 3px 3px 0px 0px var(--color-accent);
 }
 
-.dark[data-theme='neo-brutalism'] .neo-btn:hover,
-.dark:not([data-theme]) .neo-btn:hover,
-.dark [data-theme='neo-brutalism'] .neo-btn:hover,
-.dark :not([data-theme]) .neo-btn:hover {
+html[data-theme='neo-brutalism'].dark .neo-btn:hover,
+html[data-theme='neo-brutalism'] .dark .neo-btn:hover,
+html:not([data-theme]).dark .neo-btn:hover,
+html:not([data-theme]) .dark .neo-btn:hover {
   box-shadow: 5px 5px 0px 0px var(--color-accent);
 }
 
-.dark[data-theme='neo-brutalism'] .neo-btn:active,
-.dark:not([data-theme]) .neo-btn:active,
-.dark [data-theme='neo-brutalism'] .neo-btn:active,
-.dark :not([data-theme]) .neo-btn:active {
+html[data-theme='neo-brutalism'].dark .neo-btn:active,
+html[data-theme='neo-brutalism'] .dark .neo-btn:active,
+html:not([data-theme]).dark .neo-btn:active,
+html:not([data-theme]) .dark .neo-btn:active {
   box-shadow: 0px 0px 0px 0px var(--color-accent);
 }
 
-.dark[data-theme='neo-brutalism'] article.prose img:not(.not-prose img):hover,
-.dark:not([data-theme]) article.prose img:not(.not-prose img):hover,
-.dark [data-theme='neo-brutalism'] article.prose img:not(.not-prose img):hover,
-.dark :not([data-theme]) article.prose img:not(.not-prose img):hover {
+html[data-theme='neo-brutalism'].dark article.prose img:not(.not-prose img):hover,
+html[data-theme='neo-brutalism'] .dark article.prose img:not(.not-prose img):hover,
+html:not([data-theme]).dark article.prose img:not(.not-prose img):hover,
+html:not([data-theme]) .dark article.prose img:not(.not-prose img):hover {
   box-shadow: 6px 6px 0px 0px var(--color-accent);
 }
 
-.dark[data-theme='neo-brutalism'] article.prose blockquote,
-.dark:not([data-theme]) article.prose blockquote,
-.dark [data-theme='neo-brutalism'] article.prose blockquote,
-.dark :not([data-theme]) article.prose blockquote {
+html[data-theme='neo-brutalism'].dark article.prose blockquote,
+html[data-theme='neo-brutalism'] .dark article.prose blockquote,
+html:not([data-theme]).dark article.prose blockquote,
+html:not([data-theme]) .dark article.prose blockquote {
   box-shadow: 4px 4px 0px 0px var(--color-accent);
 }
 
-.dark[data-theme='neo-brutalism'] aside.toc-sidebar > div,
-.dark:not([data-theme]) aside.toc-sidebar > div,
-.dark [data-theme='neo-brutalism'] aside.toc-sidebar > div,
-.dark :not([data-theme]) aside.toc-sidebar > div {
+html[data-theme='neo-brutalism'].dark aside.toc-sidebar > div,
+html[data-theme='neo-brutalism'] .dark aside.toc-sidebar > div,
+html:not([data-theme]).dark aside.toc-sidebar > div,
+html:not([data-theme]) .dark aside.toc-sidebar > div {
   box-shadow: 4px 4px 0px 0px var(--color-accent);
 }
 
-.dark[data-theme='neo-brutalism'] article.prose table,
-.dark:not([data-theme]) article.prose table,
-.dark [data-theme='neo-brutalism'] article.prose table,
-.dark :not([data-theme]) article.prose table {
+html[data-theme='neo-brutalism'].dark article.prose table,
+html[data-theme='neo-brutalism'] .dark article.prose table,
+html:not([data-theme]).dark article.prose table,
+html:not([data-theme]) .dark article.prose table {
   box-shadow: 4px 4px 0px 0px var(--color-accent);
 }
 
-.dark[data-theme='neo-brutalism'] pre.shiki,
-.dark:not([data-theme]) pre.shiki,
-.dark [data-theme='neo-brutalism'] pre.shiki,
-.dark :not([data-theme]) pre.shiki {
+html[data-theme='neo-brutalism'].dark pre.shiki,
+html[data-theme='neo-brutalism'] .dark pre.shiki,
+html:not([data-theme]).dark pre.shiki,
+html:not([data-theme]) .dark pre.shiki {
   box-shadow: 5px 5px 0px 0px var(--color-accent);
 }
 
