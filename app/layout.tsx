@@ -68,7 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
           <ThemeDesignProvider>
             <Header />
-            <div className="relative z-0">{children}</div>
+            <div className="relative">{children}</div>
             <Footer />
             <ScrollToTopButton />
           </ThemeDesignProvider>

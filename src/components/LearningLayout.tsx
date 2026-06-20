@@ -179,7 +179,7 @@ export default function LearningLayout({
 
       {/* モバイル用：チャプタードロワー */}
       {isChapterDrawerOpen && (
-        <div className="lg:hidden fixed inset-0 z-50 flex" role="dialog" aria-modal="true">
+        <div className="lg:hidden fixed inset-0 z-[100] flex" role="dialog" aria-modal="true">
           <div
             className="bg-black/50 absolute inset-0 backdrop-blur-sm"
             onClick={() => setIsChapterDrawerOpen(false)}
@@ -207,7 +207,7 @@ export default function LearningLayout({
       {/* モバイル用：ページ内目次 (TOC) ドロワー */}
       {isTocDrawerOpen && hasToc && (
         <div
-          className="lg:hidden fixed inset-0 z-50 flex justify-end"
+          className="lg:hidden fixed inset-0 z-[100] flex justify-end"
           role="dialog"
           aria-modal="true"
         >

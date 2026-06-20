@@ -162,7 +162,7 @@ export default function Sidebar({ toc, categoryCounts, tagCounts }: SidebarProps
 
           {/* 3. スマホ用オーバーレイ */}
           <div
-            className={`lg:hidden fixed inset-0 z-50 transition-opacity duration-300 ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+            className={`lg:hidden fixed inset-0 z-[100] transition-opacity duration-300 ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
             role="dialog"
             aria-modal="true"
             aria-label="目次モーダル"
