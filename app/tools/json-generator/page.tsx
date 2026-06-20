@@ -173,7 +173,7 @@ export default function MockJsonGenerator() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* 左側：スキーマ定義 */}
         <div className="lg:col-span-6 space-y-6">
-          <div className="neo-card p-5 bg-card space-y-5">
+          <div className="theme-card p-5 bg-card space-y-5">
             <div className="flex justify-between items-center border-b-2 border-border pb-3">
               <h3 className="font-extrabold text-sm flex items-center gap-1.5">
                 <span>📋</span> スキーマ設計
@@ -268,14 +268,14 @@ export default function MockJsonGenerator() {
             <div className="flex gap-3 pt-2">
               <button
                 onClick={addField}
-                className="flex-1 neo-btn px-4 py-2.5 text-xs flex items-center justify-center gap-1.5 hover:text-accent"
+                className="flex-1 theme-btn px-4 py-2.5 text-xs flex items-center justify-center gap-1.5 hover:text-accent"
               >
                 <Plus className="w-4 h-4" />
                 <span>フィールドを追加</span>
               </button>
               <button
                 onClick={handleGenerate}
-                className="flex-1 neo-btn bg-accent text-white px-4 py-2.5 text-xs flex items-center justify-center gap-1.5 cursor-pointer"
+                className="flex-1 theme-btn bg-accent text-white px-4 py-2.5 text-xs flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <Play className="w-4 h-4 fill-white" />
                 <span>データを生成する</span>
@@ -286,7 +286,7 @@ export default function MockJsonGenerator() {
 
         {/* 右側：出力プレビュー */}
         <div className="lg:col-span-6 space-y-6">
-          <div className="neo-card p-5 bg-card flex flex-col h-[480px]">
+          <div className="theme-card p-5 bg-card flex flex-col h-[480px]">
             <div className="flex justify-between items-center border-b-2 border-border pb-3 mb-4">
               <h4 className="text-xs font-extrabold uppercase tracking-wider text-text/60">
                 JSON 出力プレビュー
@@ -295,7 +295,7 @@ export default function MockJsonGenerator() {
                 <div className="flex gap-2">
                   <button
                     onClick={handleCopy}
-                    className="neo-btn p-1.5 text-[10px] flex items-center gap-1 cursor-pointer"
+                    className="theme-btn p-1.5 text-[10px] flex items-center gap-1 cursor-pointer"
                   >
                     {copied ? (
                       <Check className="w-3.5 h-3.5 text-accent" />
@@ -306,7 +306,7 @@ export default function MockJsonGenerator() {
                   </button>
                   <button
                     onClick={handleDownload}
-                    className="neo-btn p-1.5 text-[10px] flex items-center gap-1 cursor-pointer"
+                    className="theme-btn p-1.5 text-[10px] flex items-center gap-1 cursor-pointer"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>DL</span>

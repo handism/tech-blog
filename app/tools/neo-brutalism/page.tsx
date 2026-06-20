@@ -116,7 +116,7 @@ export default function NeoBrutalismGenerator() {
 
   // CSSコード文字列の生成
   const cssCode = useMemo(() => {
-    return `.neo-card {
+    return `.theme-card {
   background-color: ${bgColor};
   color: ${textColor};
   border: ${borderWidth}px solid ${borderColor};
@@ -125,12 +125,12 @@ export default function NeoBrutalismGenerator() {
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.neo-card:hover {
+.theme-card:hover {
   transform: translate(-2px, -2px);
   box-shadow: ${shadowX + 2}px ${shadowY + 2}px 0px 0px ${shadowColor};
 }
 
-.neo-btn {
+.theme-btn {
   background-color: ${accentColor};
   border: ${Math.max(2, borderWidth - 1)}px solid ${borderColor};
   border-radius: ${Math.min(12, borderRadius)}px;
@@ -138,7 +138,7 @@ export default function NeoBrutalismGenerator() {
   transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
-.neo-btn:active {
+.theme-btn:active {
   transform: translate(${Math.max(2, shadowX - 2)}px, ${Math.max(2, shadowY - 2)}px);
   box-shadow: 0px 0px 0px 0px ${shadowColor};
 }`;
@@ -194,14 +194,14 @@ export default function NeoBrutalismGenerator() {
         {/* コントロールパネル */}
         <div className="lg:col-span-5 space-y-6">
           {/* パラメータ調整 */}
-          <div className="neo-card p-6 space-y-5">
+          <div className="theme-card p-6 space-y-5">
             <div className="flex justify-between items-center border-b-2 border-border pb-3">
               <h3 className="font-extrabold text-lg flex items-center gap-1.5">
                 <span>🛠️</span> パラメータ設定
               </h3>
               <button
                 onClick={resetParams}
-                className="neo-btn p-2 text-xs flex items-center gap-1 hover:text-accent"
+                className="theme-btn p-2 text-xs flex items-center gap-1 hover:text-accent"
                 title="リセット"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
@@ -324,7 +324,7 @@ export default function NeoBrutalismGenerator() {
           </div>
 
           {/* プリセット */}
-          <div className="neo-card p-6">
+          <div className="theme-card p-6">
             <h3 className="font-extrabold text-sm mb-3">🎨 プリセットスタイル</h3>
             <div className="flex flex-wrap gap-2">
               {PRESETS.map((preset) => (
@@ -343,7 +343,7 @@ export default function NeoBrutalismGenerator() {
         {/* プレビュー ＆ コード出力 */}
         <div className="lg:col-span-7 space-y-6">
           {/* プレビュー表示エリア */}
-          <div className="neo-card p-6 bg-[#eaeaea] dark:bg-[#222222] min-h-[300px] flex items-center justify-center relative">
+          <div className="theme-card p-6 bg-[#eaeaea] dark:bg-[#222222] min-h-[300px] flex items-center justify-center relative">
             <span className="absolute top-3 left-3 text-[10px] bg-black text-white px-2 py-0.5 rounded font-black uppercase tracking-widest opacity-60">
               Preview Area
             </span>
@@ -372,13 +372,13 @@ export default function NeoBrutalismGenerator() {
           {/* コード出力エリア */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* CSS */}
-            <div className="neo-card p-4 space-y-2 flex flex-col justify-between">
+            <div className="theme-card p-4 space-y-2 flex flex-col justify-between">
               <div>
                 <div className="flex justify-between items-center mb-2">
                   <h4 className="text-xs font-extrabold">Vanilla CSS</h4>
                   <button
                     onClick={() => handleCopy(cssCode, 'css')}
-                    className="neo-btn p-1.5 text-xs flex items-center gap-1"
+                    className="theme-btn p-1.5 text-xs flex items-center gap-1"
                   >
                     {copiedType === 'css' ? (
                       <Check className="w-3.5 h-3.5 text-accent" />
@@ -395,13 +395,13 @@ export default function NeoBrutalismGenerator() {
             </div>
 
             {/* Tailwind */}
-            <div className="neo-card p-4 space-y-2 flex flex-col justify-between">
+            <div className="theme-card p-4 space-y-2 flex flex-col justify-between">
               <div>
                 <div className="flex justify-between items-center mb-2">
                   <h4 className="text-xs font-extrabold">Tailwind HTML</h4>
                   <button
                     onClick={() => handleCopy(tailwindCode, 'tailwind')}
-                    className="neo-btn p-1.5 text-xs flex items-center gap-1"
+                    className="theme-btn p-1.5 text-xs flex items-center gap-1"
                   >
                     {copiedType === 'tailwind' ? (
                       <Check className="w-3.5 h-3.5 text-accent" />

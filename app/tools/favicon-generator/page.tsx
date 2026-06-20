@@ -206,7 +206,7 @@ export default function FaviconGeneratorPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* 左カラム: 画像アップロード & プレビュー */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="neo-card p-5 md:p-6 space-y-5">
+          <div className="theme-card p-5 md:p-6 space-y-5">
             <h2 className="text-lg font-bold text-text border-b-2 border-border pb-2">
               📤 画像のアップロード
             </h2>
@@ -247,12 +247,12 @@ export default function FaviconGeneratorPage() {
 
           {/* HTML記述コード */}
           {Object.keys(generatedIcons).length > 0 && (
-            <div className="neo-card p-5 md:p-6 space-y-3">
+            <div className="theme-card p-5 md:p-6 space-y-3">
               <div className="flex justify-between items-center">
                 <h3 className="text-sm font-bold text-text">📋 HTML &lt;head&gt; の設定</h3>
                 <button
                   onClick={copyHtmlCode}
-                  className="neo-btn p-1.5 bg-secondary text-text"
+                  className="theme-btn p-1.5 bg-secondary text-text"
                   title="コードをコピー"
                 >
                   {copied ? (
@@ -271,13 +271,13 @@ export default function FaviconGeneratorPage() {
 
         {/* 右カラム: 生成結果一覧 */}
         <div className="lg:col-span-7">
-          <div className="neo-card p-5 md:p-6 flex flex-col h-full min-h-[500px]">
+          <div className="theme-card p-5 md:p-6 flex flex-col h-full min-h-[500px]">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 border-b-2 border-border pb-3">
               <h2 className="text-lg font-bold text-text">✨ 生成結果プレビュー</h2>
               {Object.keys(generatedIcons).length > 0 && (
                 <button
                   onClick={downloadAllAsZip}
-                  className="neo-btn px-4 py-2 bg-accent text-white font-extrabold flex items-center gap-2 cursor-pointer"
+                  className="theme-btn px-4 py-2 bg-accent text-white font-extrabold flex items-center gap-2 cursor-pointer"
                 >
                   <Download className="w-4 h-4" />
                   ZIPで一括保存
@@ -319,7 +319,7 @@ export default function FaviconGeneratorPage() {
                       </div>
                       <button
                         onClick={() => downloadSingleIcon(size.filename, dataUrl)}
-                        className="neo-btn p-2 bg-secondary text-text shrink-0"
+                        className="theme-btn p-2 bg-secondary text-text shrink-0"
                         title="個別ダウンロード"
                       >
                         <Download className="w-4 h-4" />

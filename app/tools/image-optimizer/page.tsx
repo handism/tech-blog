@@ -212,7 +212,7 @@ export default function ImageOptimizer() {
               onDrop={handleDrop}
               onClick={triggerFileInput}
               className={`
-                neo-card p-10 bg-card hover:bg-secondary cursor-pointer border-dashed border-3 flex flex-col items-center justify-center text-center transition-colors
+                theme-card p-10 bg-card hover:bg-secondary cursor-pointer border-dashed border-3 flex flex-col items-center justify-center text-center transition-colors
                 ${dragActive ? 'bg-accent/10 border-accent' : 'border-border'}
               `}
             >
@@ -229,7 +229,7 @@ export default function ImageOptimizer() {
             </div>
           ) : (
             /* 画像情報 ＆ 設定パネル */
-            <div className="neo-card p-6 space-y-5">
+            <div className="theme-card p-6 space-y-5">
               <div className="flex justify-between items-center border-b-2 border-border pb-3">
                 <h3 className="font-extrabold text-sm flex items-center gap-1.5">
                   <span>⚙️</span> 最適化設定
@@ -330,7 +330,7 @@ export default function ImageOptimizer() {
               {/* 元画像 vs 最適化後 */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* 元画像カード */}
-                <div className="neo-card p-4 space-y-3 bg-card">
+                <div className="theme-card p-4 space-y-3 bg-card">
                   <span className="text-[10px] bg-secondary text-text font-black px-2 py-0.5 rounded border border-border">
                     Original
                   </span>
@@ -353,7 +353,7 @@ export default function ImageOptimizer() {
                 </div>
 
                 {/* 最適化後カード */}
-                <div className="neo-card p-4 space-y-3 bg-card border-accent shadow-[5px_5px_0px_0px_var(--color-accent)]">
+                <div className="theme-card p-4 space-y-3 bg-card border-accent shadow-[5px_5px_0px_0px_var(--color-accent)]">
                   <div className="flex justify-between items-center">
                     <span className="text-[10px] bg-accent text-white font-black px-2 py-0.5 rounded">
                       Optimized
@@ -404,7 +404,7 @@ export default function ImageOptimizer() {
 
               {/* ダウンロードエリア */}
               {optimized && (
-                <div className="neo-card p-6 bg-secondary flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="theme-card p-6 bg-secondary flex flex-col md:flex-row items-center justify-between gap-4">
                   <div className="flex items-center gap-2">
                     <span className="text-xs font-black bg-accent text-white px-2.5 py-1 rounded-lg">
                       準備完了
@@ -415,7 +415,7 @@ export default function ImageOptimizer() {
                   </div>
                   <button
                     onClick={handleDownload}
-                    className="w-full md:w-auto neo-btn bg-accent text-white px-6 py-3 text-sm font-extrabold flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full md:w-auto theme-btn bg-accent text-white px-6 py-3 text-sm font-extrabold flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <Download className="w-4 h-4" />
                     <span>最適化された画像を保存</span>
@@ -425,7 +425,7 @@ export default function ImageOptimizer() {
             </div>
           ) : (
             /* 画像未選択時のダミープレビュー表示 */
-            <div className="neo-card p-8 bg-secondary/30 border-dashed border-2 border-border/30 h-full flex flex-col items-center justify-center text-center">
+            <div className="theme-card p-8 bg-secondary/30 border-dashed border-2 border-border/30 h-full flex flex-col items-center justify-center text-center">
               <span className="text-4xl mb-3">🖼️</span>
               <h4 className="font-extrabold text-sm text-text/40 mb-1">プレビューエリア</h4>
               <p className="text-xs text-text/30 font-medium max-w-xs">

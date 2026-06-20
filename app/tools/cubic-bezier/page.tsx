@@ -75,14 +75,14 @@ export default function CubicBezierVisualizer() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* 左側：設定とグラフ */}
         <div className="lg:col-span-6 space-y-6">
-          <div className="neo-card p-5 bg-card space-y-5">
+          <div className="theme-card p-5 bg-card space-y-5">
             <div className="flex justify-between items-center border-b-2 border-border pb-3">
               <h3 className="font-extrabold text-sm flex items-center gap-1.5">
                 <span>📈</span> ベジェ曲線グラフ
               </h3>
               <button
                 onClick={resetAll}
-                className="neo-btn p-1.5 text-[10px] flex items-center gap-1 hover:text-accent"
+                className="theme-btn p-1.5 text-[10px] flex items-center gap-1 hover:text-accent"
               >
                 <RefreshCw className="w-3 h-3" />
                 <span>リセット</span>
@@ -259,14 +259,14 @@ export default function CubicBezierVisualizer() {
         {/* 右側：アニメーション ＆ コード */}
         <div className="lg:col-span-6 space-y-6">
           {/* アニメーションプレビュー */}
-          <div className="neo-card p-5 bg-card space-y-4">
+          <div className="theme-card p-5 bg-card space-y-4">
             <div className="flex justify-between items-center border-b-2 border-border pb-3">
               <h3 className="font-extrabold text-sm flex items-center gap-1.5">
                 <span>🏃</span> プレビュー比較
               </h3>
               <button
                 onClick={triggerAnimation}
-                className="neo-btn bg-accent text-white px-4 py-2 text-xs flex items-center gap-1.5 cursor-pointer"
+                className="theme-btn bg-accent text-white px-4 py-2 text-xs flex items-center gap-1.5 cursor-pointer"
               >
                 <Play className="w-3.5 h-3.5 fill-white" />
                 <span>再生する</span>
@@ -328,14 +328,14 @@ export default function CubicBezierVisualizer() {
           </div>
 
           {/* コード出力 */}
-          <div className="neo-card p-5 bg-card space-y-3">
+          <div className="theme-card p-5 bg-card space-y-3">
             <div className="flex justify-between items-center border-b-2 border-border pb-3">
               <h4 className="text-xs font-extrabold uppercase tracking-wider text-text/60">
                 CSS Transition コード
               </h4>
               <button
                 onClick={handleCopy}
-                className="neo-btn p-1.5 text-[10px] flex items-center gap-1 cursor-pointer"
+                className="theme-btn p-1.5 text-[10px] flex items-center gap-1 cursor-pointer"
               >
                 {copied ? (
                   <Check className="w-3.5 h-3.5 text-accent" />

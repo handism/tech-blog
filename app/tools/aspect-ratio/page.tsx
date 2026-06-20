@@ -128,14 +128,14 @@ export default function AspectRatioCalculator() {
         {/* 左側：設定 */}
         <div className="lg:col-span-6 space-y-6">
           {/* モード1：比率からサイズ計算 */}
-          <div className="neo-card p-5 bg-card space-y-4">
+          <div className="theme-card p-5 bg-card space-y-4">
             <div className="flex justify-between items-center border-b-2 border-border pb-3">
               <h3 className="font-extrabold text-sm flex items-center gap-1.5">
                 <span>📐</span> 比率からサイズを計算
               </h3>
               <button
                 onClick={resetAll}
-                className="neo-btn p-1.5 text-[10px] flex items-center gap-1 hover:text-accent"
+                className="theme-btn p-1.5 text-[10px] flex items-center gap-1 hover:text-accent"
               >
                 <RefreshCw className="w-3 h-3" />
                 <span>リセット</span>
@@ -220,7 +220,7 @@ export default function AspectRatioCalculator() {
         {/* 右側：サイズから比率 ＆ ビジュアルプレビュー */}
         <div className="lg:col-span-6 space-y-6">
           {/* モード2：サイズから比率 */}
-          <div className="neo-card p-5 bg-card space-y-4">
+          <div className="theme-card p-5 bg-card space-y-4">
             <h3 className="font-extrabold text-sm border-b-2 border-border pb-3 flex items-center gap-1.5">
               <span>🧮</span> サイズから比率（約分）を計算
             </h3>
@@ -256,7 +256,7 @@ export default function AspectRatioCalculator() {
           </div>
 
           {/* ビジュアルプレビュー */}
-          <div className="neo-card p-5 bg-[#eaeaea] dark:bg-[#222222] min-h-[220px] flex items-center justify-center relative">
+          <div className="theme-card p-5 bg-[#eaeaea] dark:bg-[#222222] min-h-[220px] flex items-center justify-center relative">
             <span className="absolute top-3 left-3 text-[10px] bg-black text-white px-2 py-0.5 rounded font-black uppercase tracking-widest opacity-60">
               Ratio Visualizer
             </span>
@@ -268,7 +268,7 @@ export default function AspectRatioCalculator() {
                   maxWidth: '80%',
                   maxHeight: '160px',
                 }}
-                className="w-full neo-card bg-card border-accent shadow-[4px_4px_0px_0px_var(--color-accent)] flex items-center justify-center p-3 text-center transition-all"
+                className="w-full theme-card bg-card border-accent shadow-[4px_4px_0px_0px_var(--color-accent)] flex items-center justify-center p-3 text-center transition-all"
               >
                 <div className="font-extrabold text-xs">
                   <div>

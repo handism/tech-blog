@@ -151,7 +151,7 @@ ${lines.join('\n')}`;
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* 左側：設定項目 */}
         <div className="lg:col-span-6 space-y-6">
-          <div className="neo-card p-5 bg-card space-y-5">
+          <div className="theme-card p-5 bg-card space-y-5">
             <h3 className="font-extrabold text-sm border-b-2 border-border pb-3">
               🛡️ セキュリティヘッダー設定
             </h3>
@@ -366,7 +366,7 @@ ${lines.join('\n')}`;
 
         {/* 右側：コード生成結果 */}
         <div className="lg:col-span-6 space-y-6">
-          <div className="neo-card p-5 bg-card flex flex-col h-[520px]">
+          <div className="theme-card p-5 bg-card flex flex-col h-[520px]">
             {/* タブメニュー */}
             <div className="flex justify-between items-center border-b-2 border-border pb-3 mb-4">
               <div className="flex gap-1">
@@ -390,7 +390,7 @@ ${lines.join('\n')}`;
 
               <button
                 onClick={handleCopy}
-                className="neo-btn p-1.5 text-[10px] flex items-center gap-1 cursor-pointer animate-none"
+                className="theme-btn p-1.5 text-[10px] flex items-center gap-1 cursor-pointer animate-none"
               >
                 {copied ? (
                   <Check className="w-3.5 h-3.5 text-accent" />

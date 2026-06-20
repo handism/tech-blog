@@ -103,14 +103,14 @@ export default function SvgEditorPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* 左カラム: SVGコード入力 */}
         <div className="lg:col-span-6 flex flex-col gap-6">
-          <div className="neo-card p-5 md:p-6 flex flex-col h-[400px]">
+          <div className="theme-card p-5 md:p-6 flex flex-col h-[400px]">
             <div className="flex justify-between items-center mb-4">
               <label htmlFor="svg-input" className="text-sm font-bold text-text">
                 📥 SVGコード入力
               </label>
               <button
                 onClick={handleFormatInput}
-                className="neo-btn px-2.5 py-1 text-xs bg-secondary"
+                className="theme-btn px-2.5 py-1 text-xs bg-secondary"
               >
                 簡易整形
               </button>
@@ -125,7 +125,7 @@ export default function SvgEditorPage() {
           </div>
 
           {/* カラー置換パネル */}
-          <div className="neo-card p-5 md:p-6 space-y-4">
+          <div className="theme-card p-5 md:p-6 space-y-4">
             <h3 className="text-sm font-bold text-text border-b border-border pb-1.5 flex items-center gap-1.5">
               🎨 カラー一括置換テスト
             </h3>
@@ -178,7 +178,7 @@ export default function SvgEditorPage() {
                   setFillColor('');
                   setStrokeColor('');
                 }}
-                className="w-full neo-btn py-1.5 text-xs bg-secondary"
+                className="w-full theme-btn py-1.5 text-xs bg-secondary"
               >
                 カラー設定をリセット
               </button>
@@ -189,7 +189,7 @@ export default function SvgEditorPage() {
         {/* 右カラム: プレビュー & 最適化結果 */}
         <div className="lg:col-span-6 flex flex-col gap-6">
           {/* プレビュー */}
-          <div className="neo-card p-5 md:p-6 flex flex-col h-[280px]">
+          <div className="theme-card p-5 md:p-6 flex flex-col h-[280px]">
             <h3 className="text-sm font-bold text-text border-b-2 border-border pb-2 flex items-center gap-1.5 mb-4">
               <Eye className="w-4 h-4" />
               <span>プレビュー表示</span>
@@ -207,13 +207,13 @@ export default function SvgEditorPage() {
           </div>
 
           {/* 最適化コード出力 */}
-          <div className="neo-card p-5 md:p-6 flex flex-col h-[280px] relative min-h-0">
+          <div className="theme-card p-5 md:p-6 flex flex-col h-[280px] relative min-h-0">
             <h3 className="text-sm font-bold text-text border-b-2 border-border pb-2 flex items-center justify-between mb-4">
               <span>⚡ 最適化結果 (圧縮コード)</span>
               {outputSvg && (
                 <button
                   onClick={handleCopy}
-                  className="neo-btn p-1.5 bg-secondary text-text flex items-center justify-center"
+                  className="theme-btn p-1.5 bg-secondary text-text flex items-center justify-center"
                   title="最適化コードをコピー"
                 >
                   {copied ? (

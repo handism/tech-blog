@@ -17,7 +17,7 @@ type PostCardProps = {
  */
 export default function PostCard({ post, priorityImage = false }: PostCardProps) {
   return (
-    <article className="group neo-card neo-card-hover overflow-hidden">
+    <article className="group theme-card theme-card-hover overflow-hidden">
       {/* サムネイル画像 */}
       {post.image ? (
         <Link href={`/blog/posts/${post.slug}`} className="block">

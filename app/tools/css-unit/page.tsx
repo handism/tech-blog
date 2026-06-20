@@ -196,7 +196,7 @@ export default function CssUnitConverterPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* 基準設定パネル */}
         <div className="lg:col-span-1 space-y-6">
-          <div className="neo-card p-5 md:p-6">
+          <div className="theme-card p-5 md:p-6">
             <h2 className="text-lg font-bold text-text mb-4 border-b-2 border-border pb-2 flex items-center gap-2">
               <span>⚙️ 基準値の設定</span>
             </h2>
@@ -268,12 +268,12 @@ export default function CssUnitConverterPage() {
 
         {/* 変換器メインパネル */}
         <div className="lg:col-span-2">
-          <div className="neo-card p-5 md:p-6">
+          <div className="theme-card p-5 md:p-6">
             <h2 className="text-lg font-bold text-text mb-6 border-b-2 border-border pb-2 flex items-center justify-between">
               <span>🔄 相互変換 (任意の値を編集してください)</span>
               <button
                 onClick={clearAllValues}
-                className="neo-btn px-3 py-1 text-xs text-text bg-secondary"
+                className="theme-btn px-3 py-1 text-xs text-text bg-secondary"
               >
                 クリア
               </button>

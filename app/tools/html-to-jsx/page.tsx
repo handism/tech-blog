@@ -167,12 +167,12 @@ export default function HtmlToJsx() {
         {/* コントロールバー */}
         <div className="flex flex-wrap gap-3 justify-between items-center bg-secondary p-4 rounded-xl border-2 border-border">
           <div className="flex gap-2">
-            <button onClick={loadSample} className="neo-btn px-4 py-2 text-xs hover:text-accent">
+            <button onClick={loadSample} className="theme-btn px-4 py-2 text-xs hover:text-accent">
               サンプルを読み込む
             </button>
             <button
               onClick={handleClear}
-              className="neo-btn px-4 py-2 text-xs text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20"
+              className="theme-btn px-4 py-2 text-xs text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20"
             >
               クリア
             </button>
@@ -181,7 +181,7 @@ export default function HtmlToJsx() {
           {jsxOutput && (
             <button
               onClick={handleCopy}
-              className="neo-btn bg-accent text-white px-5 py-2 text-xs flex items-center gap-1.5"
+              className="theme-btn bg-accent text-white px-5 py-2 text-xs flex items-center gap-1.5"
             >
               {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
               <span>{copied ? 'コピーしました！' : 'JSXコードをコピー'}</span>
@@ -192,7 +192,7 @@ export default function HtmlToJsx() {
         {/* 入出力エリア */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* HTML入力 */}
-          <div className="neo-card p-4 bg-card flex flex-col h-[450px]">
+          <div className="theme-card p-4 bg-card flex flex-col h-[450px]">
             <label
               htmlFor="html-input"
               className="text-xs font-extrabold mb-2 text-text/60 uppercase tracking-wider"
@@ -209,7 +209,7 @@ export default function HtmlToJsx() {
           </div>
 
           {/* JSX出力 */}
-          <div className="neo-card p-4 bg-card flex flex-col h-[450px] relative">
+          <div className="theme-card p-4 bg-card flex flex-col h-[450px] relative">
             <label
               htmlFor="jsx-output"
               className="text-xs font-extrabold mb-2 text-text/60 uppercase tracking-wider"
@@ -239,7 +239,7 @@ export default function HtmlToJsx() {
         </div>
 
         {/* 変換機能の説明/ヒント */}
-        <div className="neo-card p-5 space-y-3 bg-secondary">
+        <div className="theme-card p-5 space-y-3 bg-secondary">
           <h4 className="font-extrabold text-sm flex items-center gap-1.5 text-text">
             💡 変換のルールと仕様
           </h4>

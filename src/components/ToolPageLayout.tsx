@@ -29,7 +29,7 @@ export default function ToolPageLayout({
           ツール一覧に戻る
         </Link>
 
-        <div className="neo-card p-6 md:p-10 bg-card">
+        <div className="theme-card p-6 md:p-10 bg-card">
           {/* Header */}
           <div className="flex flex-col md:flex-row md:items-center gap-4 mb-10 border-b-3 border-border pb-8">
             <div className="flex items-center justify-center w-16 h-16 rounded-2xl border-3 border-border bg-secondary text-accent shadow-[4px_4px_0px_0px_var(--border)] dark:shadow-[4px_4px_0px_0px_var(--accent)]">

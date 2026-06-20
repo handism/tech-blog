@@ -86,7 +86,7 @@ export default function ToolsDashboard() {
       </div>
 
       {/* コントロールパネル (検索 ＆ フィルタ) */}
-      <div className="neo-card p-5 md:p-6 mb-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="theme-card p-5 md:p-6 mb-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
         {/* 検索入力 */}
         <div className="relative flex-1 max-w-md">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text/40" />
@@ -127,13 +127,13 @@ export default function ToolsDashboard() {
 
       {/* ツールリストグリッド */}
       {filteredTools.length === 0 ? (
-        <div className="text-center py-16 neo-card">
+        <div className="text-center py-16 theme-card">
           <p className="text-text/75 mb-4 text-sm md:text-base font-bold">
             条件に一致するツールが見つかりませんでした。
           </p>
           <button
             onClick={handleClearFilters}
-            className="neo-btn px-5 py-2.5 text-sm font-bold text-text"
+            className="theme-btn px-5 py-2.5 text-sm font-bold text-text"
           >
             検索条件をリセットする
           </button>
@@ -179,7 +179,7 @@ export default function ToolsDashboard() {
 // ツール個別カードコンポーネント
 function ToolCard({ item }: { item: ToolItem }) {
   const CardContent = (
-    <div className="group relative h-full neo-card neo-card-hover p-5 md:p-6 flex flex-col justify-between overflow-hidden">
+    <div className="group relative h-full theme-card theme-card-hover p-5 md:p-6 flex flex-col justify-between overflow-hidden">
       <div>
         <div className="flex justify-between items-start mb-4">
           <div className="flex items-center justify-center w-12 h-12 rounded-xl border-2 border-border bg-secondary text-2xl group-hover:rotate-6 transition-transform">

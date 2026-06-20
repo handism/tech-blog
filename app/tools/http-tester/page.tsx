@@ -157,19 +157,19 @@ export default function HttpTesterPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* リクエスト設定パネル */}
         <div className="lg:col-span-6 space-y-6">
-          <div className="neo-card p-5 md:p-6 space-y-5">
+          <div className="theme-card p-5 md:p-6 space-y-5">
             <div className="flex justify-between items-center border-b-2 border-border pb-2">
               <h2 className="text-lg font-bold">📡 リクエスト構成</h2>
               <div className="flex gap-2">
                 <button
                   onClick={() => handlePreset('get-todo')}
-                  className="neo-btn px-2.5 py-1 text-xs bg-secondary"
+                  className="theme-btn px-2.5 py-1 text-xs bg-secondary"
                 >
                   GETデモ
                 </button>
                 <button
                   onClick={() => handlePreset('post-todo')}
-                  className="neo-btn px-2.5 py-1 text-xs bg-secondary"
+                  className="theme-btn px-2.5 py-1 text-xs bg-secondary"
                 >
                   POSTデモ
                 </button>
@@ -204,7 +204,7 @@ export default function HttpTesterPage() {
                 <span className="text-sm font-bold">🔑 リクエストヘッダー</span>
                 <button
                   onClick={handleAddHeader}
-                  className="neo-btn p-1.5 bg-secondary text-text"
+                  className="theme-btn p-1.5 bg-secondary text-text"
                   title="ヘッダー行を追加"
                 >
                   <Plus className="w-4 h-4" />
@@ -261,7 +261,7 @@ export default function HttpTesterPage() {
             <button
               onClick={handleSend}
               disabled={loading}
-              className="w-full neo-btn py-3 bg-accent text-white font-extrabold cursor-pointer disabled:opacity-50"
+              className="w-full theme-btn py-3 bg-accent text-white font-extrabold cursor-pointer disabled:opacity-50"
             >
               {loading ? '送信中...' : 'リクエスト送信 🚀'}
             </button>
@@ -270,7 +270,7 @@ export default function HttpTesterPage() {
 
         {/* レスポンス結果パネル */}
         <div className="lg:col-span-6 space-y-6">
-          <div className="neo-card p-5 md:p-6 flex flex-col h-[520px]">
+          <div className="theme-card p-5 md:p-6 flex flex-col h-[520px]">
             <h2 className="text-lg font-bold text-text mb-4 border-b-2 border-border pb-2 flex items-center justify-between">
               <span>📥 レスポンス</span>
               {resStatus !== null && (
@@ -295,7 +295,7 @@ export default function HttpTesterPage() {
                 <div className="flex-1 flex flex-col min-h-0 relative">
                   <button
                     onClick={handleCopy}
-                    className="absolute top-4 right-4 z-10 neo-btn p-2 bg-secondary text-text flex items-center justify-center"
+                    className="absolute top-4 right-4 z-10 theme-btn p-2 bg-secondary text-text flex items-center justify-center"
                     title="コピー"
                   >
                     {copied ? (

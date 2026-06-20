@@ -205,7 +205,7 @@ export default function MarkdownTablePage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* 左カラム: エディタグリッド */}
         <div className="lg:col-span-8 flex flex-col gap-6">
-          <div className="neo-card p-5 md:p-6 space-y-6">
+          <div className="theme-card p-5 md:p-6 space-y-6">
             <div className="flex flex-wrap justify-between items-center gap-4 border-b-2 border-border pb-3">
               <h2 className="text-base font-bold flex items-center gap-2">
                 <span>📝 テーブル編集</span>
@@ -214,19 +214,19 @@ export default function MarkdownTablePage() {
               <div className="flex flex-wrap gap-2">
                 <button
                   onClick={handleAddRow}
-                  className="neo-btn px-2.5 py-1 text-xs bg-secondary flex items-center gap-1"
+                  className="theme-btn px-2.5 py-1 text-xs bg-secondary flex items-center gap-1"
                 >
                   <Plus className="w-3.5 h-3.5" /> 行追加
                 </button>
                 <button
                   onClick={handleAddColumn}
-                  className="neo-btn px-2.5 py-1 text-xs bg-secondary flex items-center gap-1"
+                  className="theme-btn px-2.5 py-1 text-xs bg-secondary flex items-center gap-1"
                 >
                   <Plus className="w-3.5 h-3.5" /> 列追加
                 </button>
                 <button
                   onClick={() => setShowImport(!showImport)}
-                  className="neo-btn px-2.5 py-1 text-xs bg-card flex items-center gap-1"
+                  className="theme-btn px-2.5 py-1 text-xs bg-card flex items-center gap-1"
                 >
                   <Import className="w-3.5 h-3.5" /> インポート
                 </button>
@@ -354,13 +354,13 @@ export default function MarkdownTablePage() {
 
         {/* 右カラム: エクスポート出力 */}
         <div className="lg:col-span-4">
-          <div className="neo-card p-5 md:p-6 flex flex-col h-full min-h-[400px]">
+          <div className="theme-card p-5 md:p-6 flex flex-col h-full min-h-[400px]">
             <div className="flex justify-between items-center mb-4 border-b-2 border-border pb-3">
               <h2 className="text-base font-bold text-text">⚡ Markdownエクスポート</h2>
               {outputMarkdown && (
                 <button
                   onClick={handleCopy}
-                  className="neo-btn px-3 py-1 text-xs bg-accent text-white flex items-center gap-1 cursor-pointer"
+                  className="theme-btn px-3 py-1 text-xs bg-accent text-white flex items-center gap-1 cursor-pointer"
                 >
                   {copied ? (
                     <Check className="w-3.5 h-3.5" />

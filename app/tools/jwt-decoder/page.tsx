@@ -61,7 +61,7 @@ export default function JwtDecoder() {
         </div>
 
         {/* デコード ボタン */}
-        <button onClick={handleDecode} className="neo-btn w-full py-3 px-4 text-base">
+        <button onClick={handleDecode} className="theme-btn w-full py-3 px-4 text-base">
           デコード
         </button>
 
@@ -93,7 +93,7 @@ export default function JwtDecoder() {
               <label className="block text-sm font-bold text-text">デコード済みペイロード</label>
               <button
                 onClick={copyToClipboard}
-                className="neo-btn px-3 py-1 text-xs shadow-[2px_2px_0px_0px_var(--border)]"
+                className="theme-btn px-3 py-1 text-xs shadow-[2px_2px_0px_0px_var(--border)]"
               >
                 コピー
               </button>

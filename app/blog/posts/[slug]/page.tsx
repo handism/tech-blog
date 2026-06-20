@@ -152,7 +152,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           {prevPost ? (
             <Link
               href={`/blog/posts/${prevPost.slug}`}
-              className="block p-4 neo-card neo-card-hover"
+              className="block p-4 theme-card theme-card-hover"
             >
               <div className="text-xs text-text/60 mb-1 font-bold">← 前の記事</div>
               <div className="font-extrabold text-text leading-snug">{prevPost.title}</div>
@@ -165,7 +165,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           {nextPost ? (
             <Link
               href={`/blog/posts/${nextPost.slug}`}
-              className="block p-4 neo-card neo-card-hover md:text-right"
+              className="block p-4 theme-card theme-card-hover md:text-right"
             >
               <div className="text-xs text-text/60 mb-1 font-bold">次の記事 →</div>
               <div className="font-extrabold text-text leading-snug">{nextPost.title}</div>

@@ -154,7 +154,7 @@ export default function RegexTester() {
         <div className="flex flex-wrap gap-4">
           <button
             onClick={handleTest}
-            className="neo-btn flex-1 py-3 text-base bg-accent text-white border-accent shadow-[3px_3px_0px_0px_var(--border)] dark:shadow-[3px_3px_0px_0px_var(--accent)]"
+            className="theme-btn flex-1 py-3 text-base bg-accent text-white border-accent shadow-[3px_3px_0px_0px_var(--border)] dark:shadow-[3px_3px_0px_0px_var(--accent)]"
           >
             マッチをテスト
           </button>
@@ -167,7 +167,7 @@ export default function RegexTester() {
               <h3 className="text-sm font-bold text-text">結果</h3>
               <button
                 onClick={() => copyToClipboard(output)}
-                className="neo-btn px-3 py-1 text-xs shadow-[2px_2px_0px_0px_var(--border)]"
+                className="theme-btn px-3 py-1 text-xs shadow-[2px_2px_0px_0px_var(--border)]"
               >
                 コピー
               </button>
@@ -192,7 +192,7 @@ export default function RegexTester() {
                 className="w-full px-4 py-3 border-2 border-border bg-card text-text rounded-xl focus:outline-none focus:ring-2 focus:ring-accent font-mono shadow-[2px_2px_0px_0px_var(--border)]"
               />
             </div>
-            <button onClick={handleReplace} className="neo-btn w-full py-3 text-base">
+            <button onClick={handleReplace} className="theme-btn w-full py-3 text-base">
               置換を実行
             </button>
             {replaced && (
@@ -201,7 +201,7 @@ export default function RegexTester() {
                   <h3 className="text-sm font-bold text-text">置換結果</h3>
                   <button
                     onClick={() => copyToClipboard(replaced)}
-                    className="neo-btn px-3 py-1 text-xs shadow-[2px_2px_0px_0px_var(--border)]"
+                    className="theme-btn px-3 py-1 text-xs shadow-[2px_2px_0px_0px_var(--border)]"
                   >
                     コピー
                   </button>

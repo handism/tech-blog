@@ -16,7 +16,7 @@ export default function ScrapCard({ scrap }: ScrapCardProps) {
     : null;
 
   return (
-    <article className="neo-card p-6 mb-6">
+    <article className="theme-card p-6 mb-6">
       {formattedDate && (
         <div className="flex justify-between items-center mb-4 border-b border-border/20 pb-3">
           <time

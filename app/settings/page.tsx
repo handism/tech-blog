@@ -62,7 +62,7 @@ export default function SettingsPage() {
         </div>
 
         {/* スキン選択 */}
-        <div className="neo-card p-6 inline-block">
+        <div className="theme-card p-6 inline-block">
           <SkinSelector />
         </div>
       </section>
@@ -81,7 +81,7 @@ export default function SettingsPage() {
             サイトのカラーモード（ライト / ダーク）を切り替えます。
           </p>
         </div>
-        <div className="neo-card p-6 inline-block">
+        <div className="theme-card p-6 inline-block">
           <ThemeToggle />
         </div>
       </section>

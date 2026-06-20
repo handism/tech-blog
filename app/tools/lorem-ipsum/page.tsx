@@ -248,7 +248,7 @@ export default function LoremIpsumPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* 左カラム: 設定パネル */}
         <div className="lg:col-span-4 space-y-6">
-          <div className="neo-card p-5 md:p-6 space-y-5">
+          <div className="theme-card p-5 md:p-6 space-y-5">
             <h2 className="text-base font-bold text-text border-b-2 border-border pb-2">
               ⚙️ ジェネレーター設定
             </h2>
@@ -329,7 +329,7 @@ export default function LoremIpsumPage() {
             {/* 再生成ボタン */}
             <button
               onClick={() => setTrigger((t) => t + 1)}
-              className="w-full neo-btn py-2.5 bg-secondary text-text text-sm flex items-center justify-center gap-1.5"
+              className="w-full theme-btn py-2.5 bg-secondary text-text text-sm flex items-center justify-center gap-1.5"
             >
               <Shuffle className="w-4 h-4" />
               ランダムに再生成
@@ -339,13 +339,13 @@ export default function LoremIpsumPage() {
 
         {/* 右カラム: 生成コード出力 */}
         <div className="lg:col-span-8">
-          <div className="neo-card p-5 md:p-6 flex flex-col h-full min-h-[480px]">
+          <div className="theme-card p-5 md:p-6 flex flex-col h-full min-h-[480px]">
             <div className="flex justify-between items-center mb-4 border-b-2 border-border pb-3">
               <h2 className="text-base font-bold text-text">✨ 生成されたダミーテキスト</h2>
               {generatedText && (
                 <button
                   onClick={handleCopy}
-                  className="neo-btn px-4 py-1.5 text-xs bg-accent text-white flex items-center gap-1.5 cursor-pointer"
+                  className="theme-btn px-4 py-1.5 text-xs bg-accent text-white flex items-center gap-1.5 cursor-pointer"
                 >
                   {copied ? (
                     <Check className="w-3.5 h-3.5" />

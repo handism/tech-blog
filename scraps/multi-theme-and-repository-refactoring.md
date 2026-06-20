@@ -15,17 +15,17 @@ tags: [CSS, Next.js, DesignSystem, Refactoring]
 
 ### 設計のポイント
 1. **抽象スタイルの定義**:
-   コンポーネントには個別のスタイルを直接書き込まず、`.neo-card` や `.neo-btn` といった抽象クラスを付与しておきます。
+   コンポーネントには個別のスタイルを直接書き込まず、`.theme-card` や `.theme-btn` といった抽象クラスを付与しておきます。
 2. **テーマ別の差分定義**:
    `app/globals.css` にて、テーマ別のセレクタで上書きします。
    ```css
    /* Neo-Brutalism */
-   [data-theme='neo-brutalism'] .neo-card {
+   [data-theme='neo-brutalism'] .theme-card {
      border: 3px solid var(--color-border);
      box-shadow: 5px 5px 0px 0px var(--color-border);
    }
    /* Glassmorphism */
-   [data-theme='glassmorphism'] .neo-card {
+   [data-theme='glassmorphism'] .theme-card {
      border: 1px solid rgba(255, 255, 255, 0.5);
      backdrop-filter: blur(12px);
    }

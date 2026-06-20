@@ -200,7 +200,7 @@ export default function PixelArtPage() {
         {/* 左カラム: ツール・色選択 */}
         <div className="lg:col-span-4 space-y-6">
           {/* キャンバス設定 */}
-          <div className="neo-card p-5 md:p-6 space-y-4">
+          <div className="theme-card p-5 md:p-6 space-y-4">
             <h2 className="text-sm font-bold text-text border-b border-border pb-1.5 flex items-center gap-1.5">
               <span>⚙️ キャンバス設定</span>
             </h2>
@@ -234,7 +234,7 @@ export default function PixelArtPage() {
               <span className="text-xs font-extrabold text-text/75">グリッド線</span>
               <button
                 onClick={() => setShowGridLines(!showGridLines)}
-                className="neo-btn px-2.5 py-1.5 text-xs bg-secondary flex items-center gap-1"
+                className="theme-btn px-2.5 py-1.5 text-xs bg-secondary flex items-center gap-1"
               >
                 {showGridLines ? (
                   <EyeOff className="w-3.5 h-3.5" />
@@ -247,7 +247,7 @@ export default function PixelArtPage() {
           </div>
 
           {/* ツールボックス */}
-          <div className="neo-card p-5 md:p-6 space-y-4">
+          <div className="theme-card p-5 md:p-6 space-y-4">
             <h2 className="text-sm font-bold text-text border-b border-border pb-1.5">
               🛠️ ツール選択
             </h2>
@@ -317,12 +317,12 @@ export default function PixelArtPage() {
         {/* 右カラム: キャンバス＆エクスポート */}
         <div className="lg:col-span-8 flex flex-col md:flex-row gap-6">
           {/* キャンバス */}
-          <div className="flex-1 neo-card p-5 md:p-6 flex flex-col items-center justify-center min-h-[400px]">
+          <div className="flex-1 theme-card p-5 md:p-6 flex flex-col items-center justify-center min-h-[400px]">
             <div className="flex justify-between w-full items-center mb-4 border-b border-border/10 pb-2">
               <span className="text-xs font-bold text-text/50">ドラッグして連続描画</span>
               <button
                 onClick={handleClear}
-                className="neo-btn px-2.5 py-1 text-xs bg-secondary text-red-500 flex items-center gap-1 border-red-200"
+                className="theme-btn px-2.5 py-1 text-xs bg-secondary text-red-500 flex items-center gap-1 border-red-200"
               >
                 <Trash2 className="w-3.5 h-3.5" /> 全消去
               </button>
@@ -369,7 +369,7 @@ export default function PixelArtPage() {
 
           {/* 保存パネル */}
           <div className="w-full md:w-48 flex flex-col gap-4">
-            <div className="neo-card p-5 md:p-6 flex flex-col justify-center h-full gap-4">
+            <div className="theme-card p-5 md:p-6 flex flex-col justify-center h-full gap-4">
               <h3 className="text-sm font-bold text-text border-b border-border pb-1.5 text-center">
                 💾 保存 / 出力
               </h3>
@@ -377,7 +377,7 @@ export default function PixelArtPage() {
               <button
                 onClick={exportAsPng}
                 disabled={grid.length === 0}
-                className="neo-btn py-3 bg-accent text-white flex flex-col items-center justify-center gap-1.5 cursor-pointer text-xs"
+                className="theme-btn py-3 bg-accent text-white flex flex-col items-center justify-center gap-1.5 cursor-pointer text-xs"
               >
                 <Download className="w-5 h-5" />
                 <span>PNG で保存</span>
@@ -387,7 +387,7 @@ export default function PixelArtPage() {
               <button
                 onClick={exportAsSvg}
                 disabled={grid.length === 0}
-                className="neo-btn py-3 bg-card text-text flex flex-col items-center justify-center gap-1.5 cursor-pointer text-xs"
+                className="theme-btn py-3 bg-card text-text flex flex-col items-center justify-center gap-1.5 cursor-pointer text-xs"
               >
                 <Download className="w-5 h-5" />
                 <span>SVG で保存</span>

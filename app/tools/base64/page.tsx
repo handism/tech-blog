@@ -78,10 +78,10 @@ export default function Base64Converter() {
 
         {/* ボタン */}
         <div className="flex flex-wrap gap-4">
-          <button onClick={handleEncode} className="neo-btn flex-1 min-w-[150px] py-3 text-base">
+          <button onClick={handleEncode} className="theme-btn flex-1 min-w-[150px] py-3 text-base">
             エンコード
           </button>
-          <button onClick={handleDecode} className="neo-btn flex-1 min-w-[150px] py-3 text-base">
+          <button onClick={handleDecode} className="theme-btn flex-1 min-w-[150px] py-3 text-base">
             デコード
           </button>
         </div>
@@ -93,7 +93,7 @@ export default function Base64Converter() {
               <label className="block text-sm font-bold text-text">出力</label>
               <button
                 onClick={copyToClipboard}
-                className="neo-btn px-3 py-1 text-xs shadow-[2px_2px_0px_0px_var(--border)]"
+                className="theme-btn px-3 py-1 text-xs shadow-[2px_2px_0px_0px_var(--border)]"
               >
                 コピー
               </button>

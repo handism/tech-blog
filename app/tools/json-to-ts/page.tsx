@@ -174,7 +174,7 @@ export default function JsonToTsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* 入力パネル */}
-        <div className="neo-card p-5 md:p-6 flex flex-col h-[600px]">
+        <div className="theme-card p-5 md:p-6 flex flex-col h-[600px]">
           <div className="flex justify-between items-center mb-4">
             <label
               htmlFor="json-input"
@@ -184,7 +184,7 @@ export default function JsonToTsPage() {
             </label>
             <button
               onClick={handleFormat}
-              className="neo-btn px-3 py-1 text-xs text-text flex items-center gap-1 bg-secondary"
+              className="theme-btn px-3 py-1 text-xs text-text flex items-center gap-1 bg-secondary"
             >
               <RefreshCw className="w-3 h-3" />
               整形
@@ -205,7 +205,7 @@ export default function JsonToTsPage() {
         </div>
 
         {/* 出力パネル */}
-        <div className="neo-card p-5 md:p-6 flex flex-col h-[600px]">
+        <div className="theme-card p-5 md:p-6 flex flex-col h-[600px]">
           <div className="space-y-4 mb-4">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-2">
@@ -242,7 +242,7 @@ export default function JsonToTsPage() {
             {outputCode ? (
               <button
                 onClick={handleCopy}
-                className="absolute top-4 right-4 z-10 neo-btn p-2 bg-secondary text-text flex items-center justify-center"
+                className="absolute top-4 right-4 z-10 theme-btn p-2 bg-secondary text-text flex items-center justify-center"
                 title="コードをコピー"
               >
                 {copied ? (

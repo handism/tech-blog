@@ -160,7 +160,7 @@ export default function CidrCalculatorPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* 左カラム: 入力パラメータ */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="neo-card p-5 md:p-6 space-y-5">
+          <div className="theme-card p-5 md:p-6 space-y-5">
             <h2 className="text-base font-bold text-text border-b-2 border-border pb-2">
               ⚙️ ネットワークパラメーター
             </h2>
@@ -211,7 +211,7 @@ export default function CidrCalculatorPage() {
 
           {/* バイナリ可視化パネル */}
           {!error && (
-            <div className="neo-card p-5 md:p-6 space-y-4">
+            <div className="theme-card p-5 md:p-6 space-y-4">
               <h3 className="text-sm font-bold text-text border-b border-border pb-1.5 flex items-center gap-1.5">
                 <span>🔢 バイナリ表現 (2進数)</span>
               </h3>
@@ -260,7 +260,7 @@ export default function CidrCalculatorPage() {
 
         {/* 右カラム: 計算結果 */}
         <div className="lg:col-span-7">
-          <div className="neo-card p-5 md:p-6 space-y-4 h-full">
+          <div className="theme-card p-5 md:p-6 space-y-4 h-full">
             <h2 className="text-base font-bold text-text border-b-2 border-border pb-2">
               📊 算出された結果
             </h2>
@@ -290,7 +290,7 @@ export default function CidrCalculatorPage() {
                     </div>
                     <button
                       onClick={() => handleCopy(item.raw || item.val, item.key)}
-                      className="neo-btn p-1.5 bg-secondary text-text shrink-0"
+                      className="theme-btn p-1.5 bg-secondary text-text shrink-0"
                       title="コピー"
                     >
                       {copiedKey === item.key ? (

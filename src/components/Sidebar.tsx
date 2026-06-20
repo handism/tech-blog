@@ -115,7 +115,7 @@ export default function Sidebar({ toc, categoryCounts, tagCounts }: SidebarProps
       <SearchBox />
       {/* カテゴリ一覧 */}
       {categoryCounts && categoryCounts.length > 0 && (
-        <div className="neo-card p-5">
+        <div className="theme-card p-5">
           <h2 className="font-extrabold text-lg mb-4 text-text">カテゴリ</h2>
           <ul className="space-y-2 text-sm font-bold">
             {categoryCounts.map(({ category, count }) => (
@@ -135,7 +135,7 @@ export default function Sidebar({ toc, categoryCounts, tagCounts }: SidebarProps
         </div>
       )}
 
-      <div className="neo-card p-5">
+      <div className="theme-card p-5">
         <h2 className="font-extrabold text-lg mb-4 text-text">タグ</h2>
         <TagCloud tagCounts={tagCounts ?? []} />
       </div>
@@ -145,7 +145,7 @@ export default function Sidebar({ toc, categoryCounts, tagCounts }: SidebarProps
         <>
           {/* 1. PC用 */}
           <div className="hidden lg:block sticky top-28 z-10">
-            <div className="neo-card p-5 max-h-[calc(100vh-160px)] overflow-y-auto">
+            <div className="theme-card p-5 max-h-[calc(100vh-160px)] overflow-y-auto">
               <h2 className="font-extrabold text-lg mb-4 text-text">目次</h2>
               {renderTocList()}
             </div>
@@ -154,7 +154,7 @@ export default function Sidebar({ toc, categoryCounts, tagCounts }: SidebarProps
           {/* 2. スマホ用ボタン */}
           <button
             onClick={() => setIsOpen(true)}
-            className="text-text lg:!hidden fixed bottom-18 right-6 z-40 w-12 h-12 neo-btn flex items-center justify-center"
+            className="text-text lg:!hidden fixed bottom-18 right-6 z-40 w-12 h-12 theme-btn flex items-center justify-center"
             aria-label="目次を開く"
           >
             <Menu className="h-5 w-5" />

@@ -73,14 +73,14 @@ export default function JsonFormatter() {
           <div className="flex flex-wrap gap-3">
             <button
               onClick={handleFormat}
-              className="neo-btn px-6 py-2 bg-accent text-white border-accent shadow-[3px_3px_0px_0px_var(--border)] dark:shadow-[3px_3px_0px_0px_var(--accent)]"
+              className="theme-btn px-6 py-2 bg-accent text-white border-accent shadow-[3px_3px_0px_0px_var(--border)] dark:shadow-[3px_3px_0px_0px_var(--accent)]"
             >
               整形
             </button>
-            <button onClick={handleMinify} className="neo-btn px-6 py-2">
+            <button onClick={handleMinify} className="theme-btn px-6 py-2">
               圧縮
             </button>
-            <button onClick={handleValidate} className="neo-btn px-6 py-2">
+            <button onClick={handleValidate} className="theme-btn px-6 py-2">
               検証
             </button>
           </div>
@@ -110,7 +110,7 @@ export default function JsonFormatter() {
               {output && (
                 <button
                   onClick={copyToClipboard}
-                  className="neo-btn px-3 py-1 text-xs shadow-[2px_2px_0px_0px_var(--border)]"
+                  className="theme-btn px-3 py-1 text-xs shadow-[2px_2px_0px_0px_var(--border)]"
                 >
                   コピー
                 </button>

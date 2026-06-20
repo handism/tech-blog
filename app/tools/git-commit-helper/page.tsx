@@ -129,14 +129,14 @@ export default function GitCommitHelper() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* 左側：フォーム入力 */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="neo-card p-6 space-y-4">
+          <div className="theme-card p-6 space-y-4">
             <div className="flex justify-between items-center border-b-2 border-border pb-3">
               <h3 className="font-extrabold text-sm flex items-center gap-1.5">
                 <span>📝</span> パラメータ入力
               </h3>
               <button
                 onClick={resetAll}
-                className="neo-btn p-2 text-xs flex items-center gap-1 hover:text-accent"
+                className="theme-btn p-2 text-xs flex items-center gap-1 hover:text-accent"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
                 <span>クリア</span>
@@ -244,7 +244,7 @@ export default function GitCommitHelper() {
         {/* 右側：成果物の表示 */}
         <div className="lg:col-span-7 space-y-6">
           {/* ブランチ名 */}
-          <div className="neo-card p-5 bg-card space-y-3">
+          <div className="theme-card p-5 bg-card space-y-3">
             <div className="flex justify-between items-center">
               <h4 className="text-xs font-extrabold uppercase tracking-wider text-text/60">
                 🌱 推奨ブランチ名
@@ -252,7 +252,7 @@ export default function GitCommitHelper() {
               {branchName && (
                 <button
                   onClick={() => handleCopy(branchName, 'branch')}
-                  className="neo-btn p-1.5 text-[10px] flex items-center gap-1 cursor-pointer"
+                  className="theme-btn p-1.5 text-[10px] flex items-center gap-1 cursor-pointer"
                 >
                   {copiedType === 'branch' ? (
                     <Check className="w-3 h-3 text-accent" />
@@ -275,7 +275,7 @@ export default function GitCommitHelper() {
           </div>
 
           {/* コミットメッセージプレビュー */}
-          <div className="neo-card p-5 bg-card space-y-3">
+          <div className="theme-card p-5 bg-card space-y-3">
             <div className="flex justify-between items-center">
               <h4 className="text-xs font-extrabold uppercase tracking-wider text-text/60">
                 💬 コミットメッセージ
@@ -283,7 +283,7 @@ export default function GitCommitHelper() {
               {fullCommitMessage && (
                 <button
                   onClick={() => handleCopy(fullCommitMessage, 'commit')}
-                  className="neo-btn p-1.5 text-[10px] flex items-center gap-1 cursor-pointer"
+                  className="theme-btn p-1.5 text-[10px] flex items-center gap-1 cursor-pointer"
                 >
                   {copiedType === 'commit' ? (
                     <Check className="w-3 h-3 text-accent" />
@@ -306,7 +306,7 @@ export default function GitCommitHelper() {
           </div>
 
           {/* Gitコマンド */}
-          <div className="neo-card p-5 bg-card space-y-3">
+          <div className="theme-card p-5 bg-card space-y-3">
             <div className="flex justify-between items-center">
               <h4 className="text-xs font-extrabold uppercase tracking-wider text-text/60">
                 🚀 Git コマンド (まとめて実行用)
@@ -314,7 +314,7 @@ export default function GitCommitHelper() {
               {gitCommands && (
                 <button
                   onClick={() => handleCopy(gitCommands, 'cmd')}
-                  className="neo-btn p-1.5 text-[10px] flex items-center gap-1 cursor-pointer"
+                  className="theme-btn p-1.5 text-[10px] flex items-center gap-1 cursor-pointer"
                 >
                   {copiedType === 'cmd' ? (
                     <Check className="w-3 h-3 text-accent" />

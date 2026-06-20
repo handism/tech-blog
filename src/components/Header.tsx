@@ -29,7 +29,7 @@ export default function Header() {
               <div className="flex items-center gap-2 md:hidden">
                 <Link
                   href="/settings"
-                  className="neo-btn w-9 h-9 flex items-center justify-center text-text"
+                  className="theme-btn w-9 h-9 flex items-center justify-center text-text"
                   aria-label="Settings"
                 >
                   <Settings className="h-4 w-4" />
@@ -76,7 +76,7 @@ export default function Header() {
           <div className="hidden md:flex items-center gap-2">
             <Link
               href="/settings"
-              className="neo-btn w-9 h-9 flex items-center justify-center text-text"
+              className="theme-btn w-9 h-9 flex items-center justify-center text-text"
               aria-label="Settings"
             >
               <Settings className="h-4 w-4" />
