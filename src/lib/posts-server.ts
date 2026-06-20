@@ -3,6 +3,7 @@ import { createPostMeta, parsePostSource } from '@/src/lib/post-parser';
 import { readAllPostSources, readPostSourceBySlug } from '@/src/lib/post-repository';
 import { renderPostMarkdown } from '@/src/lib/post-renderer';
 import type { Post, PostMeta } from '@/src/types/post';
+import { filterDrafts, sortByDate } from '@/src/lib/utils';
 import { cache } from 'react';
 
 /**
@@ -21,21 +22,14 @@ const _loadAndParseMeta = cache(async function _loadAndParseMeta(
  * 全記事のメタ情報を取得（一覧用）。
  */
 export const getAllPostMeta = cache(async function getAllPostMeta(): Promise<PostMeta[]> {
-  const isDev = process.env.NODE_ENV !== 'production';
   const sources = await readAllPostSources();
   const posts = sources.map(({ slug, raw }) => {
     const { data, content } = parsePostSource(raw);
     return createPostMeta(slug, data, content);
   });
 
-  // 本番ビルド時は draft: true の記事を除外する
-  const filtered = isDev ? posts : posts.filter((p) => !p.draft);
-
-  return filtered.sort((a, b) => {
-    if (!a.date) return 1;
-    if (!b.date) return -1;
-    return b.date.getTime() - a.date.getTime();
-  });
+  const filtered = filterDrafts(posts);
+  return sortByDate(filtered);
 });
 
 /**

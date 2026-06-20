@@ -1,6 +1,7 @@
 // src/lib/post-parser.ts
 import { siteConfig } from '@/src/config/site';
 import type { PostMeta } from '@/src/types/post';
+import { estimateReadingMinutes, zodDateSchema } from '@/src/lib/utils';
 import matter from 'gray-matter';
 import { z } from 'zod';
 
@@ -10,11 +11,7 @@ import { z } from 'zod';
  */
 const FrontmatterSchema = z.object({
   title: z.string().min(1).default(siteConfig.posts.defaultTitle),
-  date: z
-    .union([z.string(), z.date()])
-    .transform((v) => new Date(v))
-    .pipe(z.date())
-    .optional(),
+  date: zodDateSchema,
   tags: z.array(z.string()).default([]).catch([]),
   category: z.string().min(1).default(siteConfig.posts.defaultCategory),
   image: z.string().optional(),
@@ -83,15 +80,6 @@ export function markdownToPlaintext(markdown: string): string {
 }
 
 /**
- * 読了時間を計算する（日本語 600文字/分 を想定）。
- */
-function calculateReadingMinutes(plaintext: string): number {
-  const wordsPerMinute = 600;
-  const minutes = Math.ceil(plaintext.length / wordsPerMinute);
-  return Math.max(1, minutes);
-}
-
-/**
  * frontmatterと本文から一覧向けメタ情報を生成する。
  */
 export function createPostMeta(
@@ -108,7 +96,7 @@ export function createPostMeta(
     category: data.category,
     plaintext: plaintext.slice(0, 5000), // 検索用に長めに保持
     description: plaintext.slice(0, 200), // 一覧表示用
-    readingMinutes: calculateReadingMinutes(plaintext),
+    readingMinutes: estimateReadingMinutes(plaintext),
     image: data.image,
     draft: data.draft,
   };

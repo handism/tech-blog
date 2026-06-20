@@ -1,4 +1,6 @@
 // src/lib/utils.ts
+import { z } from 'zod';
+
 /**
  * テキストをURL向けのスラッグに変換する。
  */
@@ -58,3 +60,32 @@ export function estimateReadingMinutes(plaintext: string): number {
   const wordCount = (plaintext.match(/[a-zA-Z]+(?:['-][a-zA-Z]+)*/g) ?? []).length;
   return Math.max(1, Math.ceil(cjkCount / 600 + wordCount / 200));
 }
+
+/**
+ * 日付順に降順でソートする（日付がないものは末尾）。元の配列を変更しないようコピーする。
+ */
+export function sortByDate<T extends { date?: Date }>(items: T[]): T[] {
+  return [...items].sort((a, b) => {
+    if (!a.date) return 1;
+    if (!b.date) return -1;
+    return b.date.getTime() - a.date.getTime();
+  });
+}
+
+/**
+ * 開発環境以外では下書き（draft: true）を除外する。
+ */
+export function filterDrafts<T extends { draft?: boolean }>(items: T[]): T[] {
+  const isDev = process.env.NODE_ENV !== 'production';
+  return isDev ? items : items.filter((item) => !item.draft);
+}
+
+/**
+ * 共通のZod日付スキーマ。
+ * 文字列またはDate型を受け取り、Dateオブジェクトに変換して検証する。
+ */
+export const zodDateSchema = z
+  .union([z.string(), z.date()])
+  .transform((v) => new Date(v))
+  .pipe(z.date())
+  .optional();

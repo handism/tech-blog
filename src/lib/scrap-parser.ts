@@ -1,6 +1,7 @@
 // src/lib/scrap-parser.ts
 import { siteConfig } from '@/src/config/site';
 import { markdownToPlaintext } from '@/src/lib/post-parser';
+import { zodDateSchema } from '@/src/lib/utils';
 import type { ScrapMeta } from '@/src/types/scrap';
 import matter from 'gray-matter';
 import { z } from 'zod';
@@ -10,11 +11,7 @@ import { z } from 'zod';
  */
 const ScrapFrontmatterSchema = z.object({
   title: z.string().min(1).default(siteConfig.scraps.defaultTitle),
-  date: z
-    .union([z.string(), z.date()])
-    .transform((v) => new Date(v))
-    .pipe(z.date())
-    .optional(),
+  date: zodDateSchema,
   tags: z.array(z.string()).default([]).catch([]),
   draft: z.boolean().optional(),
 });
