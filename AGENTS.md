@@ -19,13 +19,13 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 
 ### コンテンツパイプライン
 
-コンテンツタイプは **ブログ記事**（`md/`）と **Scraps**（`scraps/`）の 2 種類。それぞれ独立した 4 層パイプラインを持つ。
+コンテンツタイプは **ブログ記事**（`md/`）、**Scraps**（`scraps/`）、および **学習ガイド**（`learning/`）の 3 種類。それぞれ独立したパイプラインを持つ。
 
 #### ブログ記事（`md/`）
 
 1. `src/lib/post-repository.ts` — ディスクから `.md` ファイルを読み込む
 2. `src/lib/post-parser.ts` — `gray-matter` で YAML フロントマターを抽出し、Zod でバリデーション。`markdownToPlaintext()` は export 済みで Scraps でも共用
-3. `src/lib/post-renderer.ts` — Remark/Rehype で HTML に変換（GFM・Shiki・TOC 生成）。` ```lang:filename ` 構文でコードブロック上部にファイル名を表示。**コンテンツ非依存のため Scraps も同じ関数を使用**
+3. `src/lib/post-renderer.ts` — Remark/Rehype で HTML に変換（GFM・Shiki・TOC 生成・Mermaidパース）。` ```lang:filename ` 構文でコードブロック上部にファイル名を表示。**コンテンツ非依存のため Scraps も同じ関数を使用**
 4. `src/lib/posts-server.ts` — React `cache()` でデータを集約し SSG に対応
 5. `app/` — Next.js App Router ページが `generateStaticParams()` で静的 HTML を生成
 
@@ -37,16 +37,25 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 4. `src/lib/scraps-server.ts` — React `cache()` でデータを集約し SSG に対応
 5. `app/scraps/` — `/scraps`（一覧）・`/scraps/[slug]`（詳細）の 2 ルート
 
+#### 学習ガイド（`learning/`）
+
+1. `src/lib/learning-repository.ts` — ディスクからコースごとのディレクトリを走査し、`meta.json` と `.md` ファイルを読み込む
+2. `src/lib/learning-parser.ts` — Zod スキーマ（`title / date / order / draft`）でバリデーション。`markdownToPlaintext()` は共用
+3. `src/lib/post-renderer.ts` — ブログ記事と共用（Mermaidコードブロックは Shiki をバイパスして生の HTML `div` に変換され、クライアントサイドで動的にSVG描画される）
+4. `src/lib/learning-server.ts` — React `cache()` でデータを集約し、`order` 昇順ソートと隣接チャプターを解決
+5. `app/learning/` — `/learning`（コース一覧）・`/learning/[course]`（ロードマップ）・`/learning/[course]/[slug]`（詳細）の 3 ルート。`generateStaticParams()` で静的 HTML を生成
+
 ### 主要ディレクトリ
 
 | パス              | 役割                                                             |
 | ----------------- | ---------------------------------------------------------------- |
 | `md/`             | ブログ記事（`draft/` は下書き・ビルド対象外）                    |
 | `scraps/`         | Scraps 記事（短い技術メモ・備忘録）                              |
+| `learning/`       | 学習ガイド記事（コースごとのフォルダと meta.json を含む構造）      |
 | `src/lib/`        | ビジネスロジック（パース・レンダリング・検索・ページネーション） |
 | `src/components/` | UI コンポーネント（サーバー・クライアント）                      |
 | `src/config/`     | サイト全体の設定（著者・ページネーション・スキン等）             |
-| `src/types/`      | TypeScript インターフェース（`post.ts`・`scrap.ts`）             |
+| `src/types/`      | TypeScript インターフェース（`post.ts`・`scrap.ts`・`learning.ts`） |
 | `public/images/`  | 記事カバー画像（16:9 比率、`.webp` 推奨）                        |
 | `tests/`          | テストファイル（ユニット: `*.test.ts`）        |
 
@@ -79,6 +88,27 @@ draft: true          # 省略可
 ```
 
 `category` / `image` / `readingMinutes` は不要（`ScrapMeta` 型 → `src/types/scrap.ts`）。
+
+#### 学習ガイド
+
+##### meta.json (コース設定)
+```json
+{
+  "title": "コースタイトル",
+  "description": "コースの説明文",
+  "emoji": "🐳"
+}
+```
+
+##### チャプター記事 (.md)
+```yaml
+---
+title: チャプターのタイトル
+date: YYYY-MM-DD      # 省略可
+order: 1             # コース内の並び順 (必須)
+draft: true          # 省略可
+---
+```
 
 ### 共有ユーティリティ
 

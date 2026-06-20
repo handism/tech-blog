@@ -51,6 +51,23 @@ function remarkExtractCodeFilename() {
 }
 
 /**
+ * Mermaidのコードブロックを検出し、Shikiをバイパスして
+ * 生の <div class="mermaid"> に置換する Remark プラグイン。
+ */
+function remarkMermaid() {
+  return (tree: Root) => {
+    visit(tree, 'code', (node: Code, index, parent) => {
+      if (node.lang === 'mermaid' && parent && typeof index === 'number') {
+        parent.children[index] = {
+          type: 'html',
+          value: `<div class="mermaid">${node.value}</div>`,
+        } as unknown as Code;
+      }
+    });
+  };
+}
+
+/**
  * Markdown 本文中の画像に対して、ビルド時にファイルの
  * 実寸を読み取り width / height / loading 属性を自動付与する Rehype プラグイン。
  * これにより、静的エクスポート環境でも CLS（レイアウトシフト）を防止できる。
@@ -121,6 +138,7 @@ const processor = unified()
   .use(remarkParse)
   .use(remarkGfm)
   .use(remarkExtractCodeFilename)
+  .use(remarkMermaid)
   .use(remarkRehype)
   .use(rehypeImageSize)
   .use(rehypeShiki, {

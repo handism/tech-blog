@@ -17,6 +17,7 @@
   - **🧖 外部ツール**: Sauna Itta, Sauna Simulator
 - About・プライバシーポリシー・HTML Sitemap・RSS フィードページを提供
 - **Scraps**（`/scraps`）：Twitter/Mastodon 感覚で日々の気づきやエラー解決ログを短く残せる技術メモ欄。独立したネオ・ブルータリズム風のカード形式で表示されます。`scraps/` ディレクトリに Markdown を置くだけで公開される
+- **学習ガイド**（`/learning`）：DockerやGitHubなどの各種仕組みを順序立てて（タイムライン状のロードマップ形式で）学べる体系的な学習コンテンツ。Mermaid.jsによる動的な図解ダイアグラム表示に対応しています。
 
 
 ## 技術スタック
@@ -106,6 +107,19 @@ bun run test:unit
 日々の気づきやエラー解決ログなど短いメモは `scraps` ディレクトリに Markdown ファイルとして配置します。
 ファイル名の命名規則：`kebab-case.md`
 
+#### 学習ガイド
+
+学習コンテンツは `learning` ディレクトリに、コースごとのディレクトリを切って配置します。
+各フォルダ内に設定ファイルである `meta.json` と、順序付けされたMarkdownファイルを配置します。
+```text
+learning/
+  └── [course-id]/
+        ├── meta.json        # コース設定
+        ├── 01-chapter.md    # 第1章
+        └── 02-chapter.md    # 第2章
+```
+ファイル名自体は任意ですが、Frontmatterでソート順を設定します。
+
 ### デプロイメント
 
 `main` ブランチへのプッシュにより、GitHub Actions ワークフローが自動実行され、`out` ディレクトリが GitHub Pages へデプロイされます。
@@ -161,6 +175,30 @@ tags: [tag1, tag2] # 省略時: []
 draft: true # true の場合、本番ビルド時に除外される（省略可）
 ---
 ```
+
+### 学習ガイド Frontmatter
+
+各コースフォルダ内に `meta.json` を配置してコース全体を設定します：
+
+```json
+{
+  "title": "コースのタイトル",
+  "description": "コースの説明文",
+  "emoji": "🐳"
+}
+```
+
+各チャプター（Markdown）の Frontmatter：
+
+```yaml
+---
+title: チャプタータイトル # 省略時: "No title"
+date: YYYY-MM-DD # 省略可
+order: 1 # コース内での並び順 (必須・数値)
+draft: true # true の場合、本番ビルド時に除外される（省略可）
+---
+```
+
 
 ### Markdown
 

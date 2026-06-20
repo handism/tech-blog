@@ -477,6 +477,10 @@ export const siteConfig = {
     dir: 'scraps',
     defaultTitle: 'No title',
   },
+  learning: {
+    dir: 'learning',
+    defaultTitle: 'No title',
+  },
   pagination: {
     postsPerPage: 10,
     scrapsPerPage: 20,
