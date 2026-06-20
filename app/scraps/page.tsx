@@ -1,6 +1,7 @@
 // app/scraps/page.tsx
 import ScrapListPage from '@/src/components/ScrapListPage';
 import { siteConfig } from '@/src/config/site';
+import { getBlogViewContext } from '@/src/lib/posts-view';
 import { getAllScraps } from '@/src/lib/scraps-server';
 import type { Metadata } from 'next';
 
@@ -14,5 +15,6 @@ export const metadata: Metadata = {
 
 export default async function ScrapsPage() {
   const scraps = await getAllScraps();
-  return <ScrapListPage scraps={scraps} />;
+  const { categoryCounts, tagCounts } = await getBlogViewContext();
+  return <ScrapListPage scraps={scraps} categoryCounts={categoryCounts} tagCounts={tagCounts} />;
 }
