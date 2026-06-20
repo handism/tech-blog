@@ -648,13 +648,13 @@ html:not([data-theme]) .dark pre.shiki {
 
 /* ── Glassmorphism ── */
 [data-theme='glassmorphism'] {
-  --color-bg: #1a1a2e;
+  --color-bg: #f1f5f9;
   --color-background: var(--color-bg);
-  --color-card: rgba(255, 255, 255, 0.1);
-  --color-secondary: rgba(255, 255, 255, 0.05);
-  --color-text: #f0f0ff;
-  --color-border: rgba(255, 255, 255, 0.25);
-  --color-accent: #a78bfa;
+  --color-card: rgba(255, 255, 255, 0.45);
+  --color-secondary: rgba(255, 255, 255, 0.25);
+  --color-text: #0f172a;
+  --color-border: rgba(255, 255, 255, 0.6);
+  --color-accent: #8b5cf6;
   --theme-font-sans: 'Lexend', system-ui, sans-serif;
   --theme-border-width: 1px;
   --theme-shadow-offset: 0px;
@@ -662,45 +662,113 @@ html:not([data-theme]) .dark pre.shiki {
   --theme-card-backdrop: blur(12px);
 }
 [data-theme='glassmorphism'] .neo-card {
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.45);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.37),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    0 8px 32px rgba(31, 38, 135, 0.05),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
   border-radius: 20px;
 }
 [data-theme='glassmorphism'] .neo-card-hover:hover {
   transform: translate(-2px, -4px);
   box-shadow:
-    0 16px 40px rgba(0, 0, 0, 0.5),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+    0 16px 40px rgba(31, 38, 135, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.3);
 }
 [data-theme='glassmorphism'] .neo-btn {
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background-color: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 16px rgba(31, 38, 135, 0.04);
   border-radius: 12px;
+  color: var(--color-text);
 }
 [data-theme='glassmorphism'] .neo-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 24px rgba(31, 38, 135, 0.08);
 }
 [data-theme='glassmorphism'] .neo-btn:active {
   transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px rgba(31, 38, 135, 0.04);
 }
 [data-theme='glassmorphism'] body {
+  background: linear-gradient(135deg, #e2e8f0 0%, #f1f5f9 50%, #f8fafc 100%);
+  background-attachment: fixed;
+}
+
+/* ダークモード */
+html[data-theme='glassmorphism'].dark,
+html[data-theme='glassmorphism'] .dark,
+.dark[data-theme='glassmorphism'],
+[data-theme='glassmorphism'].dark,
+.dark [data-theme='glassmorphism'] {
+  --color-bg: #0f0f23;
+  --color-background: var(--color-bg);
+  --color-card: rgba(255, 255, 255, 0.1);
+  --color-secondary: rgba(255, 255, 255, 0.05);
+  --color-text: #f0f0ff;
+  --color-border: rgba(255, 255, 255, 0.25);
+  --color-accent: #a78bfa;
+}
+
+html[data-theme='glassmorphism'].dark body,
+html[data-theme='glassmorphism'] .dark body,
+.dark[data-theme='glassmorphism'] body,
+[data-theme='glassmorphism'].dark body,
+.dark [data-theme='glassmorphism'] body {
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
   background-attachment: fixed;
 }
-/* Glassmorphism は常にダーク調なので .dark を統合 */
-[data-theme='glassmorphism'].dark,
-[data-theme='glassmorphism'] {
-  --color-bg: #0f0f23;
+
+html[data-theme='glassmorphism'].dark .neo-card,
+html[data-theme='glassmorphism'] .dark .neo-card,
+.dark[data-theme='glassmorphism'] .neo-card,
+[data-theme='glassmorphism'].dark .neo-card,
+.dark [data-theme='glassmorphism'] .neo-card {
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.37),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+html[data-theme='glassmorphism'].dark .neo-card-hover:hover,
+html[data-theme='glassmorphism'] .dark .neo-card-hover:hover,
+.dark[data-theme='glassmorphism'] .neo-card-hover:hover,
+[data-theme='glassmorphism'].dark .neo-card-hover:hover,
+.dark [data-theme='glassmorphism'] .neo-card-hover:hover {
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.5),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+html[data-theme='glassmorphism'].dark .neo-btn,
+html[data-theme='glassmorphism'] .dark .neo-btn,
+.dark[data-theme='glassmorphism'] .neo-btn,
+[data-theme='glassmorphism'].dark .neo-btn,
+.dark [data-theme='glassmorphism'] .neo-btn {
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+html[data-theme='glassmorphism'].dark .neo-btn:hover,
+html[data-theme='glassmorphism'] .dark .neo-btn:hover,
+.dark[data-theme='glassmorphism'] .neo-btn:hover,
+[data-theme='glassmorphism'].dark .neo-btn:hover,
+.dark [data-theme='glassmorphism'] .neo-btn:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme='glassmorphism'].dark .neo-btn:active,
+html[data-theme='glassmorphism'] .dark .neo-btn:active,
+.dark[data-theme='glassmorphism'] .neo-btn:active,
+[data-theme='glassmorphism'].dark .neo-btn:active,
+.dark [data-theme='glassmorphism'] .neo-btn:active {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* ── Minimal / Clean ── */
@@ -853,7 +921,68 @@ html:not([data-theme]) .dark pre.shiki {
 }
 
 /* ── Cyberpunk / Neon ── */
+/* ライトモード（イエローベース、黒文字、マゼンタのアクセント、黒ボタンに黄色文字） */
 [data-theme='cyberpunk'] {
+  --color-bg: #fcee0a;
+  --color-background: var(--color-bg);
+  --color-card: #ffffff;
+  --color-secondary: #f3f4f6;
+  --color-text: #000000;
+  --color-border: #000000;
+  --color-accent: #e60067;
+}
+
+[data-theme='cyberpunk'] body {
+  background-color: #fcee0a;
+}
+
+[data-theme='cyberpunk'] .neo-card {
+  border: 2px solid var(--color-border);
+  box-shadow:
+    5px 5px 0px 0px var(--color-accent),
+    0 0 15px rgba(230, 0, 103, 0.1);
+  border-radius: 4px;
+  background: #ffffff;
+}
+
+[data-theme='cyberpunk'] .neo-card-hover:hover {
+  transform: translate(-3px, -3px);
+  box-shadow:
+    8px 8px 0px 0px var(--color-accent),
+    0 0 25px rgba(230, 0, 103, 0.2);
+}
+
+[data-theme='cyberpunk'] .neo-btn {
+  border: 2px solid var(--color-border);
+  box-shadow:
+    3px 3px 0px 0px var(--color-accent);
+  border-radius: 4px;
+  background: #000000;
+  color: #fcee0a;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+[data-theme='cyberpunk'] .neo-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow:
+    5px 5px 0px 0px var(--color-accent);
+  background: #111111;
+  color: #ffffff;
+}
+
+[data-theme='cyberpunk'] .neo-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0px 0px 0px 0px var(--color-accent);
+}
+
+/* ダークモード */
+html[data-theme='cyberpunk'].dark,
+html[data-theme='cyberpunk'] .dark,
+.dark[data-theme='cyberpunk'],
+[data-theme='cyberpunk'].dark,
+.dark [data-theme='cyberpunk'] {
   --color-bg: #000000;
   --color-background: var(--color-bg);
   --color-card: #0a0a0a;
@@ -862,15 +991,20 @@ html:not([data-theme]) .dark pre.shiki {
   --color-border: #00ffff;
   --color-accent: #ff00ff;
 }
-[data-theme='cyberpunk'].dark {
-  --color-bg: #000000;
-  --color-card: #050505;
-  --color-secondary: #0d0d0d;
-  --color-text: #00ffff;
-  --color-border: #00ffff;
-  --color-accent: #ff00ff;
+
+html[data-theme='cyberpunk'].dark body,
+html[data-theme='cyberpunk'] .dark body,
+.dark[data-theme='cyberpunk'] body,
+[data-theme='cyberpunk'].dark body,
+.dark [data-theme='cyberpunk'] body {
+  background-color: #000000;
 }
-[data-theme='cyberpunk'] .neo-card {
+
+html[data-theme='cyberpunk'].dark .neo-card,
+html[data-theme='cyberpunk'] .dark .neo-card,
+.dark[data-theme='cyberpunk'] .neo-card,
+[data-theme='cyberpunk'].dark .neo-card,
+.dark [data-theme='cyberpunk'] .neo-card {
   border: 2px solid var(--color-border);
   box-shadow:
     5px 5px 0px 0px var(--color-accent),
@@ -879,14 +1013,24 @@ html:not([data-theme]) .dark pre.shiki {
   border-radius: 4px;
   background: linear-gradient(135deg, #0a0a0a 0%, #0d0d12 100%);
 }
-[data-theme='cyberpunk'] .neo-card-hover:hover {
+
+html[data-theme='cyberpunk'].dark .neo-card-hover:hover,
+html[data-theme='cyberpunk'] .dark .neo-card-hover:hover,
+.dark[data-theme='cyberpunk'] .neo-card-hover:hover,
+[data-theme='cyberpunk'].dark .neo-card-hover:hover,
+.dark [data-theme='cyberpunk'] .neo-card-hover:hover {
   transform: translate(-3px, -3px);
   box-shadow:
     8px 8px 0px 0px var(--color-accent),
     0 0 40px rgba(0, 255, 255, 0.3),
     0 0 80px rgba(255, 0, 255, 0.1);
 }
-[data-theme='cyberpunk'] .neo-btn {
+
+html[data-theme='cyberpunk'].dark .neo-btn,
+html[data-theme='cyberpunk'] .dark .neo-btn,
+.dark[data-theme='cyberpunk'] .neo-btn,
+[data-theme='cyberpunk'].dark .neo-btn,
+.dark [data-theme='cyberpunk'] .neo-btn {
   border: 2px solid var(--color-border);
   box-shadow:
     3px 3px 0px 0px var(--color-accent),
@@ -897,13 +1041,25 @@ html:not([data-theme]) .dark pre.shiki {
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
-[data-theme='cyberpunk'] .neo-btn:hover {
+
+html[data-theme='cyberpunk'].dark .neo-btn:hover,
+html[data-theme='cyberpunk'] .dark .neo-btn:hover,
+.dark[data-theme='cyberpunk'] .neo-btn:hover,
+[data-theme='cyberpunk'].dark .neo-btn:hover,
+.dark [data-theme='cyberpunk'] .neo-btn:hover {
   transform: translate(-2px, -2px);
   box-shadow:
     5px 5px 0px 0px var(--color-accent),
     0 0 20px rgba(0, 255, 255, 0.4);
+  background: transparent;
+  color: var(--color-text);
 }
-[data-theme='cyberpunk'] .neo-btn:active {
+
+html[data-theme='cyberpunk'].dark .neo-btn:active,
+html[data-theme='cyberpunk'] .dark .neo-btn:active,
+.dark[data-theme='cyberpunk'] .neo-btn:active,
+[data-theme='cyberpunk'].dark .neo-btn:active,
+.dark [data-theme='cyberpunk'] .neo-btn:active {
   transform: translate(3px, 3px);
   box-shadow:
     0px 0px 0px 0px var(--color-accent),
