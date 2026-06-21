@@ -1454,7 +1454,7 @@ html[data-theme='glassmorphism'] .dark .theme-toc-drawer,
 [data-theme='editorial'] .site-header {
   border-radius: 0 !important;
   box-shadow: none !important;
-  border-bottom: 3px solid var(--color-border) !important;
+  border: 1px solid var(--color-border) !important;
 }
 [data-theme='editorial'] nav a {
   box-shadow: none !important;
@@ -1928,7 +1928,8 @@ html[data-theme='synthwave'] .dark [class*='shadow-'],
 /* ヘッダー・ナビ・共通コンポーネントのボーダー調整 */
 /* Synthwave */
 [data-theme='synthwave'] .site-header {
-  border-bottom: 2px solid var(--color-border) !important;
+  border: 2px solid var(--color-border) !important;
+  border-radius: 8px !important;
   box-shadow: 4px 4px 0px 0px rgba(255, 0, 127, 0.15) !important;
 }
 html[data-theme='synthwave'].dark .site-header,
