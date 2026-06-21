@@ -75,6 +75,42 @@ export const themeConfig = [
     previewCard: '#ffffff',
     previewAccent: '#2c3e50',
   },
+  {
+    id: 'synthwave',
+    label: 'Synthwave / Outrun',
+    description: 'ネオンピンク＆シアン・紫グラデ',
+    emoji: '🌌',
+    previewBg: 'linear-gradient(135deg,#0d0d26,#1b1b4b)',
+    previewCard: '#1a0033',
+    previewAccent: '#ff007f',
+  },
+  {
+    id: 'terminal',
+    label: 'Terminal / Matrix',
+    description: 'グリーンモノクロ・CLIコンソール',
+    emoji: '📟',
+    previewBg: '#000000',
+    previewCard: '#050505',
+    previewAccent: '#00ff00',
+  },
+  {
+    id: 'nordic',
+    label: 'Nordic / Cozy',
+    description: 'セージグリーン＆アースカラー',
+    emoji: '🌲',
+    previewBg: '#edf2f0',
+    previewCard: '#ffffff',
+    previewAccent: '#2e5a44',
+  },
+  {
+    id: 'claymorphism',
+    label: 'Claymorphism',
+    description: 'ぷっくり粘土調・ポップ3D',
+    emoji: '🍮',
+    previewBg: '#e0f2fe',
+    previewCard: '#ffffff',
+    previewAccent: '#3b82f6',
+  },
 ] as const;
 
 export type ThemeId = (typeof themeConfig)[number]['id'];

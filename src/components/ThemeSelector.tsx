@@ -40,10 +40,16 @@ export function ThemeSelector() {
                 style={{
                   background: theme.previewCard,
                   border:
-                    theme.id === 'neumorphism'
+                    theme.id === 'neumorphism' ||
+                    theme.id === 'claymorphism' ||
+                    theme.id === 'nordic'
                       ? 'none'
                       : `2px solid ${theme.id === 'glassmorphism' ? 'rgba(255,255,255,0.3)' : theme.previewAccent}`,
                   backdropFilter: theme.id === 'glassmorphism' ? 'blur(8px)' : undefined,
+                  boxShadow:
+                    theme.id === 'claymorphism'
+                      ? '0 4px 10px rgba(3, 105, 161, 0.1), inset -3px -3px 5px rgba(3, 105, 161, 0.05)'
+                      : undefined,
                 }}
               >
                 {/* ヘッダーバー */}
