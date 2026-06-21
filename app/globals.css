@@ -489,6 +489,14 @@ html:not([data-theme]) {
   /* 変数はルート定義のものが引き継がれる */
 }
 
+/* ヘッダーのNeo-Brutalismスタイル */
+[data-theme='neo-brutalism'] .site-header,
+html:not([data-theme]) .site-header {
+  border: 3px solid var(--color-border);
+  border-radius: 16px;
+  box-shadow: 4px 4px 0px 0px var(--color-border);
+}
+
 /* カードとボタンのNeo-Brutalismスタイル */
 [data-theme='neo-brutalism'] .theme-card,
 html:not([data-theme]) .theme-card {
@@ -576,6 +584,13 @@ html:not([data-theme]) pre.shiki {
 }
 
 /* ダークモード時の発光シャドウ (Neo-Brutalism) */
+html[data-theme='neo-brutalism'].dark .site-header,
+html[data-theme='neo-brutalism'] .dark .site-header,
+html:not([data-theme]).dark .site-header,
+html:not([data-theme]) .dark .site-header {
+  box-shadow: 4px 4px 0px 0px var(--color-accent);
+}
+
 html[data-theme='neo-brutalism'].dark .theme-card,
 html[data-theme='neo-brutalism'] .dark .theme-card,
 html:not([data-theme]).dark .theme-card,
@@ -1948,7 +1963,7 @@ html[data-theme='synthwave'] .dark nav a:hover,
 
 /* Terminal */
 [data-theme='terminal'] .site-header {
-  border-bottom: 1px solid var(--color-border) !important;
+  border: 1px solid var(--color-border) !important;
   box-shadow: none !important;
   border-radius: 0px !important;
 }
