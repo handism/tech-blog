@@ -1453,13 +1453,13 @@ html[data-theme='glassmorphism'] .dark .theme-toc-drawer,
 
 /* ── Synthwave / Outrun ── */
 [data-theme='synthwave'] {
-  --color-bg: #1e133a;
+  --color-bg: #fae8ff;
   --color-background: var(--color-bg);
-  --color-card: #2d1f54;
-  --color-secondary: #3b2a6b;
-  --color-text: #ffdcf5;
+  --color-card: #ffffff;
+  --color-secondary: #fdf2f8;
+  --color-text: #2e1049;
   --color-border: #ff007f;
-  --color-accent: #00ffff;
+  --color-accent: #0ea5e9;
   --theme-font-sans: 'Orbitron', 'Space Grotesk', system-ui, sans-serif;
 }
 html[data-theme='synthwave'].dark,
@@ -1476,22 +1476,44 @@ html[data-theme='synthwave'] .dark,
   --color-accent: #00ffff;
 }
 [data-theme='synthwave'] body {
+  background: linear-gradient(135deg, #fdf2f8 0%, #fae8ff 100%) fixed;
+}
+html[data-theme='synthwave'].dark body,
+html[data-theme='synthwave'] .dark body,
+.dark[data-theme='synthwave'] body,
+[data-theme='synthwave'].dark body,
+.dark [data-theme='synthwave'] body {
   background: linear-gradient(135deg, #1e133a 0%, #0b071a 100%) fixed;
 }
 [data-theme='synthwave'] .theme-card {
   border: 2px solid var(--color-border);
   border-radius: 8px;
+  box-shadow: 4px 4px 0px 0px var(--color-border);
+  background-color: var(--color-card);
+}
+html[data-theme='synthwave'].dark .theme-card,
+html[data-theme='synthwave'] .dark .theme-card,
+.dark[data-theme='synthwave'] .theme-card,
+[data-theme='synthwave'].dark .theme-card,
+.dark [data-theme='synthwave'] .theme-card {
   box-shadow: 
     0 0 10px rgba(255, 0, 127, 0.4),
     0 0 20px rgba(255, 0, 127, 0.1);
-  background-color: var(--color-card);
 }
 [data-theme='synthwave'] .theme-card-hover:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px 0px var(--color-accent);
+  border-color: var(--color-accent);
+}
+html[data-theme='synthwave'].dark .theme-card-hover:hover,
+html[data-theme='synthwave'] .dark .theme-card-hover:hover,
+.dark[data-theme='synthwave'] .theme-card-hover:hover,
+[data-theme='synthwave'].dark .theme-card-hover:hover,
+.dark [data-theme='synthwave'] .theme-card-hover:hover {
   transform: translateY(-3px);
   box-shadow: 
     0 0 15px rgba(255, 0, 127, 0.6),
     0 0 30px rgba(0, 255, 255, 0.3);
-  border-color: var(--color-accent);
 }
 [data-theme='synthwave'] .theme-btn {
   border: 2px solid var(--color-border);
@@ -1501,20 +1523,44 @@ html[data-theme='synthwave'] .dark,
   font-family: 'Orbitron', sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  box-shadow: 0 0 8px rgba(255, 0, 127, 0.3);
+  box-shadow: 3px 3px 0px 0px var(--color-border);
 }
 [data-theme='synthwave'] .theme-btn:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px 0px var(--color-accent);
   border-color: var(--color-accent);
 }
+html[data-theme='synthwave'].dark .theme-btn:hover,
+html[data-theme='synthwave'] .dark .theme-btn:hover,
+.dark[data-theme='synthwave'] .theme-btn:hover,
+[data-theme='synthwave'].dark .theme-btn:hover,
+.dark [data-theme='synthwave'] .theme-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+}
 [data-theme='synthwave'] .theme-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0px 0px 0px 0px var(--color-border);
+}
+html[data-theme='synthwave'].dark .theme-btn:active,
+html[data-theme='synthwave'] .dark .theme-btn:active,
+.dark[data-theme='synthwave'] .theme-btn:active,
+[data-theme='synthwave'].dark .theme-btn:active,
+.dark [data-theme='synthwave'] .theme-btn:active {
   transform: scale(0.97);
+  box-shadow: 0 0 5px rgba(0, 255, 255, 0.2);
 }
 [data-theme='synthwave'] h1,
 [data-theme='synthwave'] h2,
 [data-theme='synthwave'] h3 {
   font-family: 'Orbitron', sans-serif;
+}
+html[data-theme='synthwave'].dark h1,
+html[data-theme='synthwave'].dark h2,
+html[data-theme='synthwave'].dark h3,
+html[data-theme='synthwave'] .dark h1,
+html[data-theme='synthwave'] .dark h2,
+html[data-theme='synthwave'] .dark h3 {
   text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
 }
 
@@ -1783,6 +1829,13 @@ html[data-theme='claymorphism'] .dark .theme-btn:active,
 [data-theme='synthwave'] [class*='shadow-'] {
   --tw-shadow: none;
   --tw-shadow-colored: none;
+  box-shadow: 4px 4px 0px 0px var(--color-border) !important;
+}
+html[data-theme='synthwave'].dark [class*='shadow-'],
+html[data-theme='synthwave'] .dark [class*='shadow-'],
+.dark[data-theme='synthwave'] [class*='shadow-'],
+[data-theme='synthwave'].dark [class*='shadow-'],
+.dark [data-theme='synthwave'] [class*='shadow-'] {
   box-shadow: 0 0 10px rgba(255, 0, 127, 0.4), 0 0 20px rgba(255, 0, 127, 0.1) !important;
 }
 [data-theme='synthwave'] .theme-card,
@@ -1861,14 +1914,35 @@ html[data-theme='claymorphism'] .dark .theme-btn:active,
 /* Synthwave */
 [data-theme='synthwave'] .site-header {
   border-bottom: 2px solid var(--color-border) !important;
+  box-shadow: 4px 4px 0px 0px rgba(255, 0, 127, 0.15) !important;
+}
+html[data-theme='synthwave'].dark .site-header,
+html[data-theme='synthwave'] .dark .site-header,
+.dark[data-theme='synthwave'] .site-header,
+[data-theme='synthwave'].dark .site-header,
+.dark [data-theme='synthwave'] .site-header {
   box-shadow: 0 0 15px rgba(255, 0, 127, 0.3) !important;
 }
 [data-theme='synthwave'] nav a {
   border: 1px solid var(--color-border) !important;
+  box-shadow: 2px 2px 0px 0px var(--color-border) !important;
+}
+html[data-theme='synthwave'].dark nav a,
+html[data-theme='synthwave'] .dark nav a,
+.dark[data-theme='synthwave'] nav a,
+[data-theme='synthwave'].dark nav a,
+.dark [data-theme='synthwave'] nav a {
   box-shadow: 0 0 5px rgba(255, 0, 127, 0.2) !important;
 }
 [data-theme='synthwave'] nav a:hover {
   border-color: var(--color-accent) !important;
+  box-shadow: 3px 3px 0px 0px var(--color-accent) !important;
+}
+html[data-theme='synthwave'].dark nav a:hover,
+html[data-theme='synthwave'] .dark nav a:hover,
+.dark[data-theme='synthwave'] nav a:hover,
+[data-theme='synthwave'].dark nav a:hover,
+.dark [data-theme='synthwave'] nav a:hover {
   box-shadow: 0 0 10px rgba(0, 255, 255, 0.5) !important;
 }
 
