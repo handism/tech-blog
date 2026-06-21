@@ -43,7 +43,7 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 2. `src/lib/learning-parser.ts` — Zod スキーマ（`title / date / order / draft`）でバリデーション。`markdownToPlaintext()` は共用
 3. `src/lib/post-renderer.ts` — ブログ記事と共用（Mermaidコードブロックは Shiki をバイパスして生の HTML `div` に変換され、クライアントサイドで動的にSVG描画される）
 4. `src/lib/learning-server.ts` — React `cache()` でデータを集約し、`order` 昇順ソートと隣接チャプターを解決
-5. `app/learning/` — `/learning`（コース一覧）・`/learning/[course]`（ロードマップ）・`/learning/[course]/[slug]`（詳細）の 3 ルート。`generateStaticParams()` で静的 HTML を生成
+5. `app/learning/` — `/learning`（コース一覧）・`/learning/[course]`（ロードマップ）・`/learning/[course]/[slug]`（詳細）の 3 ルート。`generateStaticParams()` で静的 HTML を生成。2026年6月に「システムデザイン」コースを新規追加。
 
 ### 主要ディレクトリ
 
