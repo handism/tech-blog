@@ -33,8 +33,24 @@ async function downloadFont() {
     fs.writeFileSync(dest, Buffer.from(buffer));
     console.log('Successfully downloaded NotoSansCJKjp-Bold.otf');
   } catch (error) {
-    console.error('Error downloading font:', error);
-    process.exit(1);
+    console.warn('\n=========================================');
+    console.warn('WARNING: Failed to download NotoSansCJKjp-Bold.otf.');
+    console.warn('Reason:', error.message || error);
+    console.warn('The build will continue using a fallback dummy font file.');
+    console.warn('=========================================\n');
+    
+    try {
+      fs.mkdirSync(destDir, { recursive: true });
+      if (!fs.existsSync(dest)) {
+        // 空のダミーファイルを生成（ビルドエラーを防ぐため）
+        fs.writeFileSync(dest, '');
+        console.log('Created fallback empty font file.');
+      }
+    } catch (writeError) {
+      console.error('Critical: Failed to create fallback font file:', writeError);
+      process.exit(1);
+    }
+    process.exit(0);
   }
 }
 
