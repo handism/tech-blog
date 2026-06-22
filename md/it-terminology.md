@@ -173,6 +173,8 @@ image: many-books.webp
 | `SLM (小規模言語モデル)`         | パラメータ数を抑え、エッジデバイスや軽量サーバーでも高速に動作するよう最適化したモデル。|
 | `Reranking (リランキング)`        | 検索クエリに対して初期取得したドキュメント候補を、別のモデル等で再評価し、並べ替える手法。 |
 | `関数呼び出し (Function Calling)` | LLMが指示を解釈し、特定の関数やAPIを呼び出すための引数を構造化データ（JSON等）で出力する機能。 |
+| `AGI`                            | 汎用人工知能 (Artificial General Intelligence)。人間のあらゆる知的作業を同等以上にこなせるAI。 |
+| `ASI`                            | 人工超知能 (Artificial Superintelligence)。人間の知能をあらゆる面で凌駕するAI。 |
 
 ### エンジニア文化 / スラング / プラクティス
 
