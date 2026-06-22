@@ -5,7 +5,7 @@ import rehypeShiki from '@shikijs/rehype';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeSlug from 'rehype-slug';
 import rehypeStringify from 'rehype-stringify';
-import type { Code, Root } from 'mdast';
+import type { Code, Root, HTML } from 'mdast';
 import type { Root as HastRoot } from 'hast';
 import remarkGfm from 'remark-gfm';
 import remarkParse from 'remark-parse';
@@ -26,20 +26,26 @@ type RenderedPost = {
 type ShikiOptions = { meta?: { __raw?: string }; lang?: string };
 
 /**
+ * Node が Code 型であるか判定する型ガード。
+ */
+function isCodeNode(node: Node): node is Code {
+  return node.type === 'code';
+}
+
+/**
  * コードブロックの言語指定からファイル名を分離するRemarkプラグイン。
  * 例: ```ts:filename.ts → lang="ts", meta に filename="filename.ts" を追加
  */
 function remarkExtractCodeFilename() {
   return (tree: Root) => {
     function walk(node: Node) {
-      if (node.type === 'code') {
-        const code = node as Code;
-        if (code.lang?.includes(':')) {
-          const colonIdx = code.lang.indexOf(':');
-          const filename = code.lang.slice(colonIdx + 1);
-          code.lang = code.lang.slice(0, colonIdx) || null;
+      if (isCodeNode(node)) {
+        if (node.lang?.includes(':')) {
+          const colonIdx = node.lang.indexOf(':');
+          const filename = node.lang.slice(colonIdx + 1);
+          node.lang = node.lang.slice(0, colonIdx) || null;
           const filenameMeta = `filename="${filename}"`;
-          code.meta = code.meta ? `${code.meta} ${filenameMeta}` : filenameMeta;
+          node.meta = node.meta ? `${node.meta} ${filenameMeta}` : filenameMeta;
         }
       }
       if ('children' in node) {
@@ -58,10 +64,11 @@ function remarkMermaid() {
   return (tree: Root) => {
     visit(tree, 'code', (node: Code, index, parent) => {
       if (node.lang === 'mermaid' && parent && typeof index === 'number') {
-        parent.children[index] = {
+        const htmlNode: HTML = {
           type: 'html',
           value: `<div class="mermaid">${node.value}</div>`,
-        } as unknown as Code;
+        };
+        parent.children[index] = htmlNode;
       }
     });
   };
