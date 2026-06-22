@@ -139,6 +139,7 @@
   justify-content: center;
   border: var(--theme-btn-border-width) solid var(--theme-btn-border-color);
   background-color: var(--theme-btn-bg);
+  background-image: var(--theme-btn-bg);
   border-radius: var(--theme-btn-radius);
   box-shadow: var(--theme-btn-shadow);
   font-family: var(--theme-btn-font-family);
@@ -159,6 +160,7 @@
   transform: var(--theme-btn-hover-transform);
   box-shadow: var(--theme-btn-hover-shadow);
   background-color: var(--theme-btn-hover-bg);
+  background-image: var(--theme-btn-hover-bg);
   color: var(--theme-btn-hover-color);
   border-color: var(--theme-btn-hover-border-color);
 }
@@ -167,6 +169,7 @@
   transform: var(--theme-btn-active-transform);
   box-shadow: var(--theme-btn-active-shadow);
   background-color: var(--theme-btn-active-bg);
+  background-image: var(--theme-btn-active-bg);
 }
 
 /* =======================
@@ -1038,6 +1041,10 @@ html[data-theme='cyberpunk'] .dark body,
 [data-theme='japanese'] body,
 [data-theme='japanese'] html {
   font-family: 'Noto Serif JP', serif;
+}
+
+[data-theme='japanese'] .theme-card {
+  position: relative;
 }
 
 [data-theme='japanese'] .theme-card::before {
