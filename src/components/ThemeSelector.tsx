@@ -4,6 +4,7 @@
 import { useThemeDesign } from '@/src/components/ThemeDesignProvider';
 import { themeConfig, type ThemeId } from '@/src/config/site';
 import { Check } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 /**
  * デザインテーマの選択 UI。
@@ -11,11 +12,19 @@ import { Check } from 'lucide-react';
  */
 export function ThemeSelector() {
   const { currentTheme, setTheme } = useThemeDesign();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsMounted(true), 0);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const effectiveTheme = isMounted ? currentTheme : null;
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
       {themeConfig.map((theme) => {
-        const isSelected = currentTheme === theme.id;
+        const isSelected = effectiveTheme === theme.id;
         return (
           <button
             key={theme.id}

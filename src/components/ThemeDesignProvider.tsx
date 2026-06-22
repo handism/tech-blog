@@ -19,22 +19,29 @@ const ThemeDesignContext = createContext<ThemeDesignContextValue>({
  * LocalStorage に保存し、html[data-theme] に反映する。
  */
 export function ThemeDesignProvider({ children }: { children: React.ReactNode }) {
-  const [currentTheme, setCurrentTheme] = useState<ThemeId>(() => {
-    // useState の初期化関数でクライアント側の保存値を取得
-    if (typeof window === 'undefined') return DEFAULT_THEME;
-    try {
-      const saved = localStorage.getItem(THEME_STORAGE_KEY) as ThemeId | null;
-      if (saved && themeConfig.some((t) => t.id === saved)) return saved;
-    } catch {
-      // ignore
-    }
-    return DEFAULT_THEME;
-  });
+  const [currentTheme, setCurrentTheme] = useState<ThemeId>(DEFAULT_THEME);
+  const [mounted, setMounted] = useState(false);
 
-  // DOM の data-theme 属性をテーマ変更に追従させる（DOM との同期のみ、副作用として正当）
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', currentTheme);
-  }, [currentTheme]);
+    const timer = setTimeout(() => {
+      setMounted(true);
+      try {
+        const saved = localStorage.getItem(THEME_STORAGE_KEY) as ThemeId | null;
+        if (saved && themeConfig.some((t) => t.id === saved)) {
+          setCurrentTheme(saved);
+        }
+      } catch {
+        // ignore
+      }
+    }, 0);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (mounted) {
+      document.documentElement.setAttribute('data-theme', currentTheme);
+    }
+  }, [currentTheme, mounted]);
 
   const setTheme = useCallback((themeId: ThemeId) => {
     setCurrentTheme(themeId);
