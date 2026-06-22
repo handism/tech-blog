@@ -2,7 +2,7 @@
 
 ## このブログについて
 
-- **8種類の多彩なデザインテーマ**: デフォルトの力強い **Neo-Brutalism（ネオ・ブルータリズム）** に加え、Glassmorphism、Minimal、Retro、Cyberpunk、Neumorphism、Japanese、Editorial といった幅広いスタイルにリアルタイムで切り替え可能
+- **12種類の多彩なデザインテーマ**: デフォルトの力強い **Neo-Brutalism（ネオ・ブルータリズム）** に加え、Glassmorphism、Minimal、Retro、Cyberpunk、Neumorphism、Japanese、Editorial、Synthwave、Terminal、Nordic、Claymorphism といった幅広いスタイルにリアルタイムで切り替え可能
 - **豊富なスキンカラー**: Emerald、Ocean、Sunset、Purple、Rose のアクセントカラーとダークモードを組み合わせ、自分好みの外観にカスタマイズできます
 - 見出しフォントに **Lexend** および **Space Grotesk** を採用した、テックブログらしい力強いタイポグラフィ
 - 触っていて気持ちいい **ダイナミックなアクション**: テーマごとの世界観に合わせて、ホバーやクリック時のインタラクションが最適化されています
@@ -10,14 +10,14 @@
 - サムネイル画像にも対応。比率は 16:9 がおすすめ
 - サイドバーありの 2 カラムレイアウトで、レスポンシブレイアウトに対応
 - 記事のデータソースは `Markdown ファイル` に対応
-- ヘッダーの Tools メニューから利用できるブラウザ完結型の便利ツール（全44種以上）を内蔵
+- ヘッダーの Tools メニューから利用できるブラウザ完結型の便利ツール（全48種）を内蔵
   - **🎨 画像処理**: Neo-Brutalism UI Generator, Image Converter & Optimizer, Memphis Generator, Image Trimmer, Favicon & App Icon Generator, SVG Path Visualizer & Optimizer, Pixel Art Canvas
   - **🔄 データ変換**: HTML to JSX Converter, Mock JSON Data Generator, Timezone Converter, JSON Formatter, YAML ↔ JSON, Base64 Codec, URL Codec, UUID Generator, HTML Entity Encoder / Decoder, CSV ↔ JSON, Password Generator, JSON to TypeScript / Zod
   - **🛠️ 開発者向けツール**: Git Commit & Branch Helper, Aspect Ratio Calculator, HTTP Security Headers Generator, CSS Cubic-Bezier Visualizer, Regex Tester, Hash Generator, Color Converter, JWT Decoder, QR Code Generator, Diff Viewer, Unix Timestamp Converter, Cron Parser & Generator, URL Parser & Query Inspector, SQL Formatter, Text Case Converter & Counter, User Agent Parser, CSS Generator, Color Contrast & Palette, Keyboard Event Visualizer, Bitwise & Radix Converter, Git Command Helper, Curl to Code Converter, CSS Unit Converter, HTTP Request Tester, Lorem Ipsum & Dummy Text, Markdown Table Editor, IP Subnet & CIDR Calculator
   - **🧖 外部ツール**: Sauna Itta, Sauna Simulator
 - About・プライバシーポリシー・HTML Sitemap・RSS フィードページを提供
 - **Scraps**（`/scraps`）：Twitter/Mastodon 感覚で日々の気づきやエラー解決ログを短く残せる技術メモ欄。独立したネオ・ブルータリズム風のカード形式で表示されます。`scraps/` ディレクトリに Markdown を置くだけで公開される
-- **学習ガイド**（`/learning`）：Docker、GitHub、Webセキュリティ、API設計、Linux & Bash、ネットワークの基本、CI/CDパイプライン、システムデザインなどの各種仕組みを順序立てて（タイムライン状のロードマップ形式で）学べる体系的な学習コンテンツ。Mermaid.jsによる動的な図解ダイアグラム表示に対応しています。
+- **学習ガイド**（`/learning`）：Docker、GitHub、Webセキュリティ、API設計、Linux & Bash、ネットワークの基本、CI/CDパイプライン、システムデザイン、Gitアドバンスド、AWSクラウド、フロントエンドテスト、モダンCSS、データベース、Next.js、パフォーマンス、React Hooks、TypeScript などの各種仕組みを順序立てて（タイムライン状のロードマップ形式で）学べる体系的な学習コンテンツ。Mermaid.jsによる動的な図解ダイアグラム表示に対応しています。
 
 
 ## 技術スタック
@@ -88,7 +88,7 @@ bun run test:unit
 
 * **自動チェックの挙動**:
   * コミット時にステージングされた `.ts`, `.tsx`, `.js`, `.jsx` ファイルに対して自動的に `eslint --fix` (コードスタイルの修正・Prettierによるフォーマット含む) が実行されます。
-  * プロジェクト全体に対して `npm run type-check` (`tsc --noEmit`) が実行され、型エラーがある場合はコミットがブロックされます。
+  * プロジェクト全体に対して `bun run type-check` (`tsc --noEmit`) が実行され、型エラーがある場合はコミットがブロックされます。
 * **フックの設定**:
   * `bun install` 時に自動的にフックが Git にインストールされます。
   * 手動で再度フックを設定・更新したい場合は以下のコマンドを実行します：
