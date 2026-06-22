@@ -3,12 +3,17 @@
 
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import { useTheme } from 'next-themes';
+import { useThemeDesign } from '@/src/components/ThemeDesignProvider';
 
 /**
  * クライアントサイドで Mermaid 記法を解析し、SVG図解を動的にレンダリングするコンポーネント。
+ * カラーモードやデザインテーマの変更を監視し、動的な再描画にも対応。
  */
 export default function MermaidRenderer() {
   const pathname = usePathname();
+  const { resolvedTheme } = useTheme();
+  const { currentTheme } = useThemeDesign();
 
   useEffect(() => {
     const render = async () => {
@@ -20,6 +25,7 @@ export default function MermaidRenderer() {
 
         // ダークモードかどうかの判定 (next-themes や global CSS 変数の data-theme に準拠)
         const isDark =
+          resolvedTheme === 'dark' ||
           document.documentElement.classList.contains('dark') ||
           document.documentElement.getAttribute('data-theme')?.includes('dark') ||
           document.documentElement.getAttribute('data-theme') === 'cyberpunk';
@@ -36,9 +42,24 @@ export default function MermaidRenderer() {
           },
         });
 
+        const nodesToRender: HTMLElement[] = [];
+        elements.forEach((el) => {
+          const htmlEl = el as HTMLElement;
+          // すでに描画されている場合、元のソースコードを復元する
+          let src = htmlEl.getAttribute('data-mermaid-src');
+          if (!src) {
+            src = htmlEl.textContent || '';
+            htmlEl.setAttribute('data-mermaid-src', src);
+          }
+          // 要素の中身を元の Mermaid 構文テキストに戻し、描画フラグをクリア
+          htmlEl.textContent = src;
+          htmlEl.removeAttribute('data-processed');
+          nodesToRender.push(htmlEl);
+        });
+
         // 描画実行
         await mermaid.run({
-          nodes: Array.from(elements) as HTMLElement[],
+          nodes: nodesToRender,
         });
       } catch (err) {
         console.error('Mermaid render error:', err);
@@ -46,7 +67,7 @@ export default function MermaidRenderer() {
     };
 
     render();
-  }, [pathname]);
+  }, [pathname, resolvedTheme, currentTheme]);
 
   return null;
 }
