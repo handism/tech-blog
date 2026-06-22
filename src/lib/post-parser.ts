@@ -54,8 +54,8 @@ export function markdownToPlaintext(markdown: string): string {
       .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
       // リンク（テキストは残す）
       .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
-      // インラインコード
-      .replace(/`[^`\n]+`/g, '')
+      // インラインコード（記号のみ除去しテキストは残す）
+      .replace(/`([^`\n]+)`/g, '$1')
       // 太字・斜体（テキストは残す）
       .replace(/\*\*([^*\n]+)\*\*/g, '$1')
       .replace(/__([^_\n]+)__/g, '$1')

@@ -35,7 +35,7 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 2. `src/lib/scrap-parser.ts` — 軽量な Zod スキーマ（`title / date / tags / draft` のみ）でバリデーション
 3. `src/lib/post-renderer.ts` — ブログ記事と共用（TOC は使用しない）
 4. `src/lib/scraps-server.ts` — React `cache()` でデータを集約し SSG に対応
-5. `app/scraps/` — `/scraps`（一覧）・`/scraps/[slug]`（詳細）の 2 ルート
+5. `app/scraps/` — `/scraps`（一覧・本文インライン展開）の 1 ルート
 
 #### 学習ガイド（`learning/`）
 

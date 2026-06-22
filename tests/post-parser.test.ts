@@ -134,8 +134,9 @@ title: テスト
     expect(meta.plaintext).not.toContain('`');
     expect(meta.plaintext).toContain('見出し');
     expect(meta.plaintext).toContain('太字');
-    // インラインコードはテキスト内容ごと除去される
-    expect(meta.plaintext).not.toContain('コード');
+    // インラインコードは記号のみ除去されテキストは残る
+    expect(meta.plaintext).toContain('コード');
+    expect(meta.plaintext).not.toContain('`');
     expect(meta.plaintext).toContain('リンク');
   });
 

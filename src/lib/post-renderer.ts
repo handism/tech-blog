@@ -91,7 +91,7 @@ function rehypeImageSize() {
 
       // 画像パスの特定
       let filePath = '';
-      if (src.startsWith('http')) return; // 外部画像はスキップ
+      if (src.startsWith('http') || src.startsWith('data:') || src.startsWith('//')) return; // 外部・データURLはスキップ
 
       if (src.startsWith('/')) {
         // ルート相対パス（/images/... など）
