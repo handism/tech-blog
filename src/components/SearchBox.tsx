@@ -142,51 +142,68 @@ export default function SearchBox() {
         onFocus={handleFocus}
         onMouseEnter={handleFocus}
         onKeyDown={handleKeyDown}
+        role="combobox"
+        aria-expanded={hasResults}
+        aria-autocomplete="list"
+        aria-controls="search-results-list"
+        aria-activedescendant={
+          selectedIndex >= 0 ? `search-result-item-${selectedIndex}` : undefined
+        }
         className="w-full border-2 border-border bg-card text-text placeholder:text-text/50 py-2.5 px-4 rounded-xl shadow-[2px_2px_0px_0px_var(--border)] dark:shadow-[2px_2px_0px_0px_var(--accent)] focus:outline-none focus:translate-x-[-1px] focus:translate-y-[-1px] focus:shadow-[3px_3px_0px_0px_var(--border)] dark:focus:shadow-[3px_3px_0px_0px_var(--accent)] transition-all font-bold"
       />
-      <ul
-        className={`mt-2 space-y-1 ${showResultsContainer ? 'bg-card border-2 border-border rounded-xl p-4 shadow-[3px_3px_0px_0px_var(--border)] dark:shadow-[3px_3px_0px_0px_var(--accent)]' : ''}`}
-      >
-        {hasResults &&
-          results.map(
-            (
-              { post, titleIndices, snippet, snippetIndices, matchedTags, categoryIndices },
-              index
-            ) => (
-              <li
-                key={post.slug}
-                className={`border-b border-border/20 last:border-b-0 py-1.5 first:pt-0 last:pb-0 px-2 rounded-lg transition-colors ${
-                  selectedIndex === index ? 'bg-secondary' : ''
-                }`}
-                onMouseEnter={() => setSelectedIndex(index)}
-              >
-                <Link href={`/blog/posts/${post.slug}`} className="hover:underline block">
-                  <span className="font-bold">{highlightText(post.title, titleIndices)}</span>{' '}
-                  <span className="text-xs text-text/60 font-semibold">
-                    [{highlightText(post.category, categoryIndices)}]
-                  </span>
-                  {matchedTags.length > 0 && (
-                    <span className="block text-xs text-text/60 mt-0.5 font-bold">
-                      {matchedTags.map(({ tag, indices }, i) => (
-                        <span key={i} className="mr-1">
-                          #{highlightText(tag, indices)}
-                        </span>
-                      ))}
+      {showResultsContainer && (
+        <ul
+          id="search-results-list"
+          role="listbox"
+          aria-label="検索結果候補"
+          className="mt-2 space-y-1 bg-card border-2 border-border rounded-xl p-4 shadow-[3px_3px_0px_0px_var(--border)] dark:shadow-[3px_3px_0px_0px_var(--accent)]"
+        >
+          {hasResults &&
+            results.map(
+              (
+                { post, titleIndices, snippet, snippetIndices, matchedTags, categoryIndices },
+                index
+              ) => (
+                <li
+                  key={post.slug}
+                  id={`search-result-item-${index}`}
+                  role="option"
+                  aria-selected={selectedIndex === index}
+                  className={`border-b border-border/20 last:border-b-0 py-1.5 first:pt-0 last:pb-0 px-2 rounded-lg transition-colors ${
+                    selectedIndex === index ? 'bg-secondary' : ''
+                  }`}
+                  onMouseEnter={() => setSelectedIndex(index)}
+                >
+                  <Link href={`/blog/posts/${post.slug}`} className="hover:underline block">
+                    <span className="font-bold">{highlightText(post.title, titleIndices)}</span>{' '}
+                    <span className="text-xs text-text/60 font-semibold">
+                      [{highlightText(post.category, categoryIndices)}]
                     </span>
-                  )}
-                  {snippet && (
-                    <span className="block text-xs text-text/60 mt-0.5 line-clamp-1">
-                      {highlightText(snippet, snippetIndices)}
-                    </span>
-                  )}
-                </Link>
-              </li>
-            )
+                    {matchedTags.length > 0 && (
+                      <span className="block text-xs text-text/60 mt-0.5 font-bold">
+                        {matchedTags.map(({ tag, indices }, i) => (
+                          <span key={i} className="mr-1">
+                            #{highlightText(tag, indices)}
+                          </span>
+                        ))}
+                      </span>
+                    )}
+                    {snippet && (
+                      <span className="block text-xs text-text/60 mt-0.5 line-clamp-1">
+                        {highlightText(snippet, snippetIndices)}
+                      </span>
+                    )}
+                  </Link>
+                </li>
+              )
+            )}
+          {debouncedQuery && results.length === 0 && (
+            <li role="option" aria-selected={false} className="text-sm text-text/60 p-2">
+              検索結果が見つかりませんでした。
+            </li>
           )}
-        {debouncedQuery && results.length === 0 && (
-          <li className="text-sm text-text/60 p-2">検索結果が見つかりませんでした。</li>
-        )}
-      </ul>
+        </ul>
+      )}
     </div>
   );
 }
