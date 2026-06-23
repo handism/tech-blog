@@ -3,6 +3,15 @@ title: Gitの内部オブジェクトモデル
 date: 2026-06-22
 order: 1
 draft: false
+quiz:
+  question: Gitの内部データベース（.git/objects/）に保存される基本オブジェクトのうち、「ファイル名」や「フォルダ階層」などのメタ情報を一切含まない、純粋なファイルの中身のみを記録するオブジェクトはどれでしょうか？
+  options:
+    - Tree オブジェクト
+    - Blob オブジェクト
+    - Commit オブジェクト
+    - Tag オブジェクト
+  correctIndex: 1
+  explanation: Blob (Binary Large Object) は、ファイル名やパーミッションなどのメタ情報を一切持たず、純粋なファイルデータの中身のみをハッシュ化して保存するオブジェクトです。ファイル名やディレクトリの階層構造は Tree オブジェクトが保持します。
 ---
 
 普段私たちが `git add` や `git commit` を実行するとき、裏側で何が起きているでしょうか？

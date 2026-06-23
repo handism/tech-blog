@@ -1,6 +1,13 @@
 // src/types/learning.ts
 import type { TocItem } from './post';
 
+export interface LearningQuiz {
+  question: string;
+  options: string[];
+  correctIndex: number;
+  explanation: string;
+}
+
 /**
  * 学習チャプター（講義）のメタ情報。
  */
@@ -12,6 +19,7 @@ export interface LearningPostMeta {
   order: number; // コース内の並び順 (1, 2, 3...)
   draft?: boolean; // 下書きフラグ
   plaintext?: string; // 検索・要約用テキスト
+  quiz?: LearningQuiz; // 確認クイズ
 }
 
 /**
