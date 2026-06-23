@@ -1,10 +1,11 @@
-// app/learning/[course]/page.tsx
 import { getCourse, getAllCourses } from '@/src/lib/learning-server';
 import { siteConfig } from '@/src/config/site';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ChevronRight, ArrowLeft } from 'lucide-react';
+import RoadmapProgressBar from '@/src/components/RoadmapProgressBar';
+import ChapterProgressCheck from '@/src/components/ChapterProgressCheck';
 
 type Props = {
   params: Promise<{ course: string }>;
@@ -82,6 +83,9 @@ export default async function CourseRoadmapPage({ params }: Props) {
         )}
       </div>
 
+      {/* 進捗プログレスバーの追加 */}
+      <RoadmapProgressBar courseId={course.id} totalChapters={course.chapters.length} />
+
       {/* ロードマップ・タイムライン */}
       <div className="theme-card p-6 border-3 rounded-2xl">
         <h2 className="text-xl font-black text-text mb-6 pb-3 border-b-2 border-border flex items-center gap-2">
@@ -98,7 +102,11 @@ export default async function CourseRoadmapPage({ params }: Props) {
               <div key={chapter.slug} className="relative">
                 {/* タイムラインの丸ポチ */}
                 <div className="absolute -left-[35px] top-1.5 w-6 h-6 rounded-full bg-card border-3 border-border flex items-center justify-center text-xs font-black text-text shadow-[2px_2px_0px_0px_var(--border)] dark:shadow-[2px_2px_0px_0px_var(--accent)]">
-                  {chapter.order}
+                  <ChapterProgressCheck
+                    courseId={course.id}
+                    chapterSlug={chapter.slug}
+                    order={chapter.order}
+                  />
                 </div>
 
                 {/* チャプターリンクカード */}

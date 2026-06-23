@@ -40,10 +40,11 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 #### 学習ガイド（`learning/`）
 
 1. `src/lib/learning-repository.ts` — ディスクからコースごとのディレクトリを走査し、`meta.json` と `.md` ファイルを読み込む
-2. `src/lib/learning-parser.ts` — Zod スキーマ（`title / date / order / draft`）でバリデーション。`markdownToPlaintext()` は共用
+2. `src/lib/learning-parser.ts` — Zod スキーマ（`title / date / order / draft / quiz`）でバリデーション。`markdownToPlaintext()` は共用
 3. `src/lib/post-renderer.ts` — ブログ記事と共用（Mermaidコードブロックは Shiki をバイパスして生の HTML `div` に変換され、クライアントサイドで動的にSVG描画される）
 4. `src/lib/learning-server.ts` — React `cache()` でデータを集約し、`order` 昇順ソートと隣接チャプターを解決
 5. `app/learning/` — `/learning`（コース一覧）・`/learning/[course]`（ロードマップ）・`/learning/[course]/[slug]`（詳細）の 3 ルート。`generateStaticParams()` で静的 HTML を生成。2026年6月に「システムデザイン」「Gitアドバンスド」「AWSクラウド」「フロントエンドテスト」「モダンCSS」などのコースを新規追加。
+6. クライアントサイドでの動的機能として、LocalStorageを利用した学習進捗管理（読了チェック）およびチャプター末尾の「理解度クイズ」インタラクティブコンポーネントを搭載。
 
 ### 主要ディレクトリ
 
@@ -56,6 +57,7 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 | `learning/`       | 学習ガイド記事（コースごとのフォルダと meta.json を含む構造）      |
 | `src/lib/`        | ビジネスロジック（パース・レンダリング・検索・ページネーション） |
 | `src/components/` | UI コンポーネント（サーバー・クライアント）                      |
+| `src/hooks/`      | 状態管理用のカスタムフック（学習進捗管理など）                   |
 | `src/config/`     | サイト全体の設定（著者・ページネーション・スキン等）             |
 | `src/types/`      | TypeScript インターフェース（`post.ts`・`scrap.ts`・`learning.ts`） |
 | `public/images/`  | 記事カバー画像（16:9 比率、`.webp` 推奨）                        |
@@ -109,6 +111,13 @@ title: チャプターのタイトル
 date: YYYY-MM-DD      # 省略可
 order: 1             # コース内の並び順 (必須)
 draft: true          # 省略可
+quiz:                # 確認クイズ (省略可)
+  question: "質問文"
+  options:
+    - "選択肢1"
+    - "選択肢2"
+  correctIndex: 0
+  explanation: "解説文"
 ---
 ```
 

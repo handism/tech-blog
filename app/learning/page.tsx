@@ -1,8 +1,8 @@
-// app/learning/page.tsx
 import { getAllCourses } from '@/src/lib/learning-server';
 import { siteConfig } from '@/src/config/site';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import CourseProgressBadge from '@/src/components/CourseProgressBadge';
 
 export const metadata: Metadata = {
   title: `学習ガイド | ${siteConfig.name}`,
@@ -54,6 +54,7 @@ export default async function LearningPage() {
                 <p className="text-sm text-text/70 leading-relaxed font-medium line-clamp-3">
                   {course.description}
                 </p>
+                <CourseProgressBadge courseId={course.id} totalChapters={course.chapters.length} />
               </div>
               <div className="mt-6 flex items-center text-sm font-black text-accent group-hover:translate-x-0.5 transition-transform duration-200">
                 学習を始める

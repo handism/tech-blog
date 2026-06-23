@@ -1,8 +1,8 @@
-// app/learning/[course]/[slug]/page.tsx
 import LearningLayout from '@/src/components/LearningLayout';
 import CopyButtonScript from '@/src/components/CopyButtonScript';
 import { ImageModal } from '@/src/components/ImageModal';
 import MermaidRenderer from '@/src/components/MermaidRenderer';
+import ChapterCompleteSection from '@/src/components/ChapterCompleteSection';
 import { siteConfig } from '@/src/config/site';
 import {
   getAdjacentChapters,
@@ -87,6 +87,10 @@ export default async function ChapterDetailPage({ params }: Props) {
         {/* 講義本文 */}
         <div className="mt-8" dangerouslySetInnerHTML={{ __html: post.content }} />
       </article>
+
+      {/* 理解度確認クイズ ＆ 読了進捗管理 */}
+      <ChapterCompleteSection courseId={courseId} chapterSlug={slug} quiz={post.quiz} />
+
       <ImageModal />
       <MermaidRenderer />
 

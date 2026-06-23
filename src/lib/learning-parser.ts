@@ -6,6 +6,13 @@ import type { LearningPostMeta } from '@/src/types/learning';
 import matter from 'gray-matter';
 import { z } from 'zod';
 
+const LearningQuizSchema = z.object({
+  question: z.string().min(1),
+  options: z.array(z.string()).min(2),
+  correctIndex: z.number().int().nonnegative(),
+  explanation: z.string().min(1),
+});
+
 /**
  * 学習記事 frontmatter のバリデーションスキーマ。
  */
@@ -17,6 +24,7 @@ const LearningFrontmatterSchema = z.object({
   date: zodDateSchema.optional(),
   order: z.number().int().default(1),
   draft: z.boolean().optional(),
+  quiz: LearningQuizSchema.optional(),
 });
 
 type ValidatedLearningFrontmatter = z.infer<typeof LearningFrontmatterSchema>;
@@ -56,5 +64,6 @@ export function createLearningMeta(
     order: data.order,
     draft: data.draft,
     plaintext: plaintext,
+    quiz: data.quiz,
   };
 }
