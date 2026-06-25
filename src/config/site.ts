@@ -351,6 +351,14 @@ export const toolsMenuItems: readonly ToolItem[] = [
     emoji: '👾',
     category: 'image',
   },
+  {
+    href: '/tools/svg-wave-blob',
+    label: 'SVG Wave & Blob Generator',
+    description:
+      '美しい波形（Wave）やアメーバ状の不定形シェイプ（Blob）を直感的に生成・カスタマイズしSVG出力',
+    emoji: '🌊',
+    category: 'image',
+  },
   // データ変換
   {
     href: '/tools/html-to-jsx',
@@ -648,6 +656,22 @@ export const toolsMenuItems: readonly ToolItem[] = [
     label: 'HTTP Status Code Explorer',
     description: 'すべてのHTTPステータスコード（100〜599）の意味や解説をクイック検索・検証',
     emoji: '📡',
+    category: 'dev',
+  },
+  {
+    href: '/tools/invisible-characters',
+    label: 'Invisible Character Detector',
+    description:
+      '全角スペースやゼロ幅スペースなどの不可視文字・特殊文字を検出し、ワンクリックで除去',
+    emoji: '🔍',
+    category: 'dev',
+  },
+  {
+    href: '/tools/flexbox-grid',
+    label: 'CSS Flexbox & Grid Playground',
+    description:
+      'FlexboxとCSS Gridのレイアウトプロパティを視覚的に操作し、HTML/CSSコードを自動生成',
+    emoji: '📐',
     category: 'dev',
   },
   // 外部ツール

@@ -61,6 +61,7 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 | `src/config/`     | サイト全体の設定（著者・ページネーション・スキン等）             |
 | `src/types/`      | TypeScript インターフェース（`post.ts`・`scrap.ts`・`learning.ts`） |
 | `public/images/`  | 記事カバー画像（16:9 比率、`.webp` 推奨）                        |
+| `app/tools/`      | オンライン便利ツール（`/tools`）および各ツールの個別ページルート（全51種） |
 | `tests/`          | テストファイル（ユニット: `*.test.ts`）        |
 
 ### フロントマターの形式

@@ -10,10 +10,10 @@
 - サムネイル画像にも対応。比率は 16:9 がおすすめ
 - サイドバーありの 2 カラムレイアウトで、レスポンシブレイアウトに対応
 - 記事のデータソースは `Markdown ファイル` に対応
-- ヘッダーの Tools メニューから利用できるブラウザ完結型の便利ツール（全48種）を内蔵
-  - **🎨 画像処理**: Neo-Brutalism UI Generator, Image Converter & Optimizer, Memphis Generator, Image Trimmer, Favicon & App Icon Generator, SVG Path Visualizer & Optimizer, Pixel Art Canvas
+- ヘッダーの Tools メニューから利用できるブラウザ完結型の便利ツール（全51種）を内蔵
+  - **🎨 画像処理**: Neo-Brutalism UI Generator, Image Converter & Optimizer, Memphis Generator, Image Trimmer, Favicon & App Icon Generator, SVG Path Visualizer & Optimizer, Pixel Art Canvas, SVG Wave & Blob Generator
   - **🔄 データ変換**: HTML to JSX Converter, Mock JSON Data Generator, Timezone Converter, JSON Formatter, YAML ↔ JSON, Base64 Codec, URL Codec, UUID Generator, HTML Entity Encoder / Decoder, CSV ↔ JSON, Password Generator, JSON to TypeScript / Zod
-  - **🛠️ 開発者向けツール**: Git Commit & Branch Helper, Aspect Ratio Calculator, HTTP Security Headers Generator, CSS Cubic-Bezier Visualizer, Regex Tester, Hash Generator, Color Converter, JWT Decoder, QR Code Generator, Diff Viewer, Unix Timestamp Converter, Cron Parser & Generator, URL Parser & Query Inspector, SQL Formatter, Text Case Converter & Counter, User Agent Parser, CSS Generator, Color Contrast & Palette, Keyboard Event Visualizer, Bitwise & Radix Converter, Git Command Helper, Curl to Code Converter, CSS Unit Converter, HTTP Request Tester, Lorem Ipsum & Dummy Text, Markdown Table Editor, IP Subnet & CIDR Calculator
+  - **🛠️ 開発者向けツール**: Git Commit & Branch Helper, Aspect Ratio Calculator, HTTP Security Headers Generator, CSS Cubic-Bezier Visualizer, Regex Tester, Hash Generator, Color Converter, JWT Decoder, QR Code Generator, Diff Viewer, Unix Timestamp Converter, Cron Parser & Generator, URL Parser & Query Inspector, SQL Formatter, Text Case Converter & Counter, User Agent Parser, CSS Generator, Color Contrast & Palette, Keyboard Event Visualizer, Bitwise & Radix Converter, Git Command Helper, Curl to Code Converter, CSS Unit Converter, HTTP Request Tester, Lorem Ipsum & Dummy Text, Markdown Table Editor, IP Subnet & CIDR Calculator, Invisible Character Detector, CSS Flexbox & Grid Playground
   - **🧖 外部ツール**: Sauna Itta, Sauna Simulator
 - About・プライバシーポリシー・HTML Sitemap・RSS フィードページを提供
 - **Scraps**（`/scraps`）：Twitter/Mastodon 感覚で日々の気づきやエラー解決ログを短く残せる技術メモ欄。独立したネオ・ブルータリズム風のカード形式で表示されます。`scraps/` ディレクトリに Markdown を置くだけで公開される
