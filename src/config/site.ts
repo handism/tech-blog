@@ -725,7 +725,7 @@ export const siteConfig = {
     defaultTitle: 'No title',
   },
   awsGallery: {
-    dir: 'aws-best-practice',
+    dir: 'aws-patterns',
     defaultTitle: 'No title',
   },
   pagination: {

@@ -69,7 +69,7 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
       {/* 戻るリンク */}
       <div>
         <Link
-          href="/aws-best-practices"
+          href="/aws-patterns"
           className="inline-flex items-center gap-1.5 text-sm font-black text-accent hover:underline group"
         >
           <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5" />
@@ -129,7 +129,7 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
               >
                 {}
                 <img
-                  src={`/aws-best-practices/${pattern.diagramFile}`}
+                  src={`/aws-patterns/${pattern.diagramFile}`}
                   alt={`${pattern.title} アーキテクチャ図`}
                   className="max-w-full max-h-[300px] object-contain transition-transform duration-300 group-hover:scale-102"
                 />
@@ -203,7 +203,7 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
 
                 {/* ダウンロードリンク */}
                 <a
-                  href={`/aws-best-practices/${pattern.templateFile}`}
+                  href={`/aws-patterns/${pattern.templateFile}`}
                   download={pattern.templateFile}
                   className="px-3 py-1.5 text-xs font-black border-2 border-border rounded-lg bg-accent text-white hover:opacity-95 transition-all flex items-center gap-1.5 shadow-[2px_2px_0px_0px_var(--border)] dark:shadow-[2px_2px_0px_0px_var(--accent)]"
                 >
@@ -240,7 +240,7 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
           <div className="relative max-w-full max-h-full flex items-center justify-center">
             {}
             <img
-              src={`/aws-best-practices/${pattern.diagramFile}`}
+              src={`/aws-patterns/${pattern.diagramFile}`}
               alt={`${pattern.title} アーキテクチャ図（拡大）`}
               className="max-w-[95vw] max-h-[90vh] object-contain select-none bg-white p-6 rounded-2xl border border-white/10 shadow-2xl"
               onClick={(e) => e.stopPropagation()} // 画像クリックでは閉じない

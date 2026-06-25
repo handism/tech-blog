@@ -1,4 +1,4 @@
-// app/aws-best-practices/page.tsx
+// app/aws-patterns/page.tsx
 import { getAllAwsPatternMetas } from '@/src/lib/aws-gallery-server';
 import { siteConfig } from '@/src/config/site';
 import type { Metadata } from 'next';
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description:
     'AWSのベストプラクティスに基づき設計された、CloudFormationテンプレート（IaC）およびアーキテクチャ図（Draw.io）のギャラリーカタログ。コンテナ、サーバーレス、高可用性構成など、実用的なインフラ定義コードをプレビュー・コピー・ダウンロードできます。',
   alternates: {
-    canonical: '/aws-best-practices',
+    canonical: '/aws-patterns',
   },
 };
 

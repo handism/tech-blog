@@ -1,4 +1,4 @@
-// app/aws-best-practices/[slug]/page.tsx
+// app/aws-patterns/[slug]/page.tsx
 import { notFound } from 'next/navigation';
 import { getAllAwsPatternMetas, getAwsPatternBySlug } from '@/src/lib/aws-gallery-server';
 import { siteConfig } from '@/src/config/site';
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${pattern.title} | AWSアーキテクチャ | ${siteConfig.name}`,
     description: pattern.description,
     alternates: {
-      canonical: `/aws-best-practices/${slug}`,
+      canonical: `/aws-patterns/${slug}`,
     },
   };
 }

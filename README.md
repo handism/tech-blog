@@ -18,7 +18,7 @@
 - About・プライバシーポリシー・HTML Sitemap・RSS フィードページを提供
 - **Scraps**（`/scraps`）：Twitter/Mastodon 感覚で日々の気づきやエラー解決ログを短く残せる技術メモ欄。独立したネオ・ブルータリズム風のカード形式で表示されます。`scraps/` ディレクトリに Markdown を置くだけで公開される
 - **学習ガイド**（`/learning`）：Docker、GitHub、Webセキュリティ、API設計、Linux & Bash、ネットワークの基本、CI/CDパイプライン、システムデザイン、Gitアドバンスド、AWSクラウド、フロントエンドテスト、モダンCSS、データベース、Next.js、パフォーマンス、React Hooks、TypeScript などの各種仕組みを順序立てて（タイムライン状のロードマップ形式で）学べる体系的な学習コンテンツ。Mermaid.jsによる動的な図解ダイアグラム表示に対応しているほか、LocalStorageを利用した読了進捗管理（進捗率・完了チェック）や、各チャプターの末尾で挑戦できるインタラクティブな「理解度クイズ」機能を搭載しています。
-- **AWS Patterns**（`/aws-best-practices`）：AWSのベストプラクティスに沿って設計された、13種類の実践的な CloudFormation テンプレート（IaC）とアーキテクチャ図（Draw.io）のギャラリーカタログ。ShikiによるYAMLコードプレビュー・コピー・ダウンロードや、SVG構成図を画面いっぱいに拡大表示するインタラクティブなライトボックス、デプロイ用CLIコマンド生成機能を備えています。
+- **AWS Patterns**（`/aws-patterns`）：AWSのベストプラクティスに沿って設計された、13種類の実践的な CloudFormation テンプレート（IaC）とアーキテクチャ図（Draw.io）のギャラリーカタログ。ShikiによるYAMLコードプレビュー・コピー・ダウンロードや、SVG構成図を画面いっぱいに拡大表示するインタラクティブなライトボックス、デプロイ用CLIコマンド生成機能を備えています。
 
 
 ## 技術スタック
@@ -124,12 +124,12 @@ learning/
 
 #### AWS Patterns（アーキテクチャテンプレート）
 
-AWSのアーキテクチャパターンおよびテンプレートは `aws-best-practice` ディレクトリ内で管理します。
-1. `aws-best-practice/gallery-meta.json` に新しいパターンの設定オブジェクトを追加します。
-2. `aws-best-practice/iac/` ディレクトリ配下に CloudFormation テンプレート（`.yaml`）を配置します。
-3. `aws-best-practice/img/` ディレクトリ配下にアーキテクチャ図の画像（`.drawio.svg`。図解画像がない場合は JSON 上で `diagramFile: null` に設定）を配置します。
+AWSのアーキテクチャパターンおよびテンプレートは `aws-patterns` ディレクトリ内で管理します。
+1. `aws-patterns/gallery-meta.json` に新しいパターンの設定オブジェクトを追加します。
+2. `aws-patterns/iac/` ディレクトリ配下に CloudFormation テンプレート（`.yaml`）を配置します。
+3. `aws-patterns/img/` ディレクトリ配下にアーキテクチャ図の画像（`.drawio.svg`。図解画像がない場合は JSON 上で `diagramFile: null` に設定）を配置します。
 
-ビルド時または開発サーバー起動時に、これらのファイルは自動的に `public/aws-best-practices/` 配下へ複製・同期されます。
+ビルド時または開発サーバー起動時に、これらのファイルは自動的に `public/aws-patterns/` 配下へ複製・同期されます。
 
 ### デプロイメント
 
@@ -220,7 +220,7 @@ quiz: # 確認クイズ (省略可)
 
 ### AWS Patterns メタデータフォーマット (gallery-meta.json)
 
-`aws-best-practice/gallery-meta.json` は全パターンの情報をオブジェクト配列として一括管理します。各オブジェクトのフォーマットは以下の通りです：
+`aws-patterns/gallery-meta.json` は全パターンの情報をオブジェクト配列として一括管理します。各オブジェクトのフォーマットは以下の通りです：
 
 ```json
 [

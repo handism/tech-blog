@@ -46,13 +46,13 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 5. `app/learning/` — `/learning`（コース一覧）・`/learning/[course]`（ロードマップ）・`/learning/[course]/[slug]`（詳細）の 3 ルート。`generateStaticParams()` で静的 HTML を生成。2026年6月に「システムデザイン」「Gitアドバンスド」「AWSクラウド」「フロントエンドテスト」「モダンCSS」などのコースを新規追加。
 6. クライアントサイドでの動的機能として、LocalStorageを利用した学習進捗管理（読了チェック）およびチャプター末尾の「理解度クイズ」インタラクティブコンポーネントを搭載。
 
-#### AWSアーキテクチャ・ギャラリー（`aws-best-practice/`）
+#### AWSアーキテクチャ・ギャラリー（`aws-patterns/`）
 
-1. `aws-best-practice/gallery-meta.json` — メタデータを一括管理（タイトル、概要、カテゴリ、使用サービス、ファイル名マッピング）
+1. `aws-patterns/gallery-meta.json` — メタデータを一括管理（タイトル、概要、カテゴリ、使用サービス、ファイル名マッピング）
 2. `src/types/aws-gallery.ts` — Zod スキーマ（`slug / title / description / category / templateFile / diagramFile / awsServices`）でバリデーション
-3. `src/lib/aws-gallery-repository.ts` — メタデータおよび `.yaml` テンプレートファイルの読み込み。同時にアセットを `/public/aws-best-practices/` に自動コピー
+3. `src/lib/aws-gallery-repository.ts` — メタデータおよび `.yaml` テンプレートファイルの読み込み。同時にアセットを `/public/aws-patterns/` に自動コピー
 4. `src/lib/aws-gallery-server.ts` — React `cache()` でデータを集約し、YAMLを Shiki によるハイライトHTMLに事前生成
-5. `app/aws-best-practices/` — `/aws-best-practices`（一覧）・`/aws-best-practices/[slug]`（詳細）ルート。`generateStaticParams()` で静的 HTML を生成
+5. `app/aws-patterns/` — `/aws-patterns`（一覧）・`/aws-patterns/[slug]`（詳細）ルート。`generateStaticParams()` で静的 HTML を生成
 
 ### 主要ディレクトリ
 
@@ -60,7 +60,7 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 | ----------------- | ---------------------------------------------------------------- |
 | `.agents/`        | エージェント用ガイダンス（rules, designs, workflows, skills等）   |
 | `.agents/designs/`| 12種類のデザインテーマごとの詳細設計書（`DESIGN_*.md`）          |
-| `aws-best-practice/`| AWSアーキテクチャパターン（CloudFormationテンプレート、Draw.io図、メタデータJSON） |
+| `aws-patterns/`   | AWSアーキテクチャパターン（CloudFormationテンプレート、Draw.io図、メタデータJSON） |
 | `md/`             | ブログ記事（`draft/` は下書き・ビルド対象外）                    |
 | `scraps/`         | Scraps 記事（短い技術メモ・備忘録）                              |
 | `learning/`       | 学習ガイド記事（コースごとのフォルダと meta.json を含む構造）      |

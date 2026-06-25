@@ -4,12 +4,12 @@ import path from 'path';
 import { AwsPatternMeta, AwsPatternMetaSchema } from '../types/aws-gallery';
 import { z } from 'zod';
 
-const awsDir = path.join(process.cwd(), 'aws-best-practice');
+const awsDir = path.join(process.cwd(), 'aws-patterns');
 const metaPath = path.join(awsDir, 'gallery-meta.json');
 const iacDir = path.join(awsDir, 'iac');
 const imgDir = path.join(awsDir, 'img');
 
-const publicDestDir = path.join(process.cwd(), 'public', 'aws-best-practices');
+const publicDestDir = path.join(process.cwd(), 'public', 'aws-patterns');
 
 /**
  * ファイルが必要な場合のみコピーを行う（更新日時比較）。
