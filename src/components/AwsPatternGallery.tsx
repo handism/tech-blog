@@ -121,7 +121,7 @@ export default function AwsPatternGallery({ patterns }: Props) {
               onClick={() => setSelectedCategory(cat)}
               className={`px-3.5 py-1 text-xs font-black border-2 border-border rounded-lg transition-all ${
                 selectedCategory === cat
-                  ? 'bg-accent text-white shadow-[2px_2px_0px_0px_var(--border)] dark:shadow-[2px_2px_0px_0px_var(--accent)] -translate-x-0.5 -translate-y-0.5'
+                  ? 'bg-accent text-white dark:text-neutral-900 shadow-[2px_2px_0px_0px_var(--border)] dark:shadow-[2px_2px_0px_0px_var(--accent)] -translate-x-0.5 -translate-y-0.5'
                   : 'bg-card text-text hover:bg-secondary'
               }`}
             >

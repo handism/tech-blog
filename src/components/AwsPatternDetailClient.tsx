@@ -117,7 +117,7 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-black text-text flex items-center gap-2">
                   <span className="flex h-2 w-2 rounded-full bg-accent" />
-                  アーキテクザ図 (Architecture Diagram)
+                  アーキテクチャ図 (Architecture Diagram)
                 </h3>
                 <span className="text-[10px] font-bold text-text/50">クリックで拡大表示</span>
               </div>
@@ -205,7 +205,7 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
                 <a
                   href={`/aws-patterns/${pattern.templateFile}`}
                   download={pattern.templateFile}
-                  className="px-3 py-1.5 text-xs font-black border-2 border-border rounded-lg bg-accent text-white hover:opacity-95 transition-all flex items-center gap-1.5 shadow-[2px_2px_0px_0px_var(--border)] dark:shadow-[2px_2px_0px_0px_var(--accent)]"
+                  className="px-3 py-1.5 text-xs font-black border-2 border-border rounded-lg bg-accent text-white dark:text-neutral-900 hover:opacity-95 transition-all flex items-center gap-1.5 shadow-[2px_2px_0px_0px_var(--border)] dark:shadow-[2px_2px_0px_0px_var(--accent)]"
                 >
                   <Download className="h-3.5 w-3.5" />
                   <span>DL</span>
