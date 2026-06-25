@@ -97,8 +97,11 @@ export const getAdjacentPosts = cache(async function getAdjacentPosts(
   const posts = await getAllPostMeta();
   const slugToIndex = new Map(posts.map((p, i) => [p.slug, i]));
   const currentIndex = slugToIndex.get(slug) ?? -1;
+  if (currentIndex === -1) {
+    return { prevPost: null, nextPost: null };
+  }
   return {
-    prevPost: currentIndex > 0 ? posts[currentIndex - 1] : null,
-    nextPost: currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null,
+    prevPost: currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null,
+    nextPost: currentIndex > 0 ? posts[currentIndex - 1] : null,
   };
 });
