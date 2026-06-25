@@ -436,6 +436,20 @@ export const toolsMenuItems: readonly ToolItem[] = [
     emoji: '🏷️',
     category: 'convert',
   },
+  {
+    href: '/tools/svg-to-css',
+    label: 'SVG to CSS Converter',
+    description: 'SVGコードをCSS背景画像用URL (Data URI/Base64) やJSX用に最適化・相互変換',
+    emoji: '🎨',
+    category: 'convert',
+  },
+  {
+    href: '/tools/json-diff',
+    label: 'JSON Diff Comparer',
+    description: '2つのJSONデータを構造的に比較し、キー順を正規化したうえで差分を色分け表示',
+    emoji: '🆚',
+    category: 'convert',
+  },
   // エンジニアツール
   {
     href: '/tools/git-commit-helper',
@@ -627,6 +641,13 @@ export const toolsMenuItems: readonly ToolItem[] = [
     label: 'IP Subnet & CIDR Calculator',
     description: 'IPアドレスとCIDRプレフィックスからサブネット範囲やホスト可能数を即時算出・可視化',
     emoji: '🔢',
+    category: 'dev',
+  },
+  {
+    href: '/tools/http-status',
+    label: 'HTTP Status Code Explorer',
+    description: 'すべてのHTTPステータスコード（100〜599）の意味や解説をクイック検索・検証',
+    emoji: '📡',
     category: 'dev',
   },
   // 外部ツール
