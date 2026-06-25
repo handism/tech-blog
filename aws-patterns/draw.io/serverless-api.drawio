@@ -1,0 +1,97 @@
+<mxfile host="app.diagrams.net" version="29.5.2">
+  <diagram name="Serverless API Architecture" id="serverless-api">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="800" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- AWS Cloud Container -->
+        <mxCell id="aws-cloud" value="AWS Cloud" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=14;fontStyle=1;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud;strokeColor=#AAB7B8;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#232F3E;dashed=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="60" width="1040" height="660" as="geometry"/>
+        </mxCell>
+
+        <!-- Region Container -->
+        <mxCell id="region" value="Region" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_region;strokeColor=#00A4A6;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#147EBA;dashed=1;" vertex="1" parent="aws-cloud">
+          <mxGeometry x="40" y="40" width="960" height="580" as="geometry"/>
+        </mxCell>
+
+        <!-- API Client -->
+        <mxCell id="api-client" value="API Client" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#232F3D;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.user;" vertex="1" parent="1">
+          <mxGeometry x="40" y="380" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Amazon API Gateway -->
+        <mxCell id="api-gateway" value="Amazon API Gateway&#xa;(Regional, X-Ray)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#E7157B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.api_gateway;" vertex="1" parent="region">
+          <mxGeometry x="120" y="200" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Lambda Function -->
+        <mxCell id="lambda-fn" value="Lambda Function&#xa;Python 3.13 ARM64&#xa;Reserved Concurrency: 10" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.lambda_function;" vertex="1" parent="region">
+          <mxGeometry x="360" y="200" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- IAM Role -->
+        <mxCell id="iam-role" value="IAM Role&#xa;(Least Privilege)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#DD344C;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.role;" vertex="1" parent="region">
+          <mxGeometry x="360" y="80" width="60" height="44" as="geometry"/>
+        </mxCell>
+
+        <!-- DynamoDB Table -->
+        <mxCell id="dynamodb" value="DynamoDB Table&#xa;PAY_PER_REQUEST&#xa;Encrypted, PITR, Streams" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#C925D1;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.dynamodb;" vertex="1" parent="region">
+          <mxGeometry x="600" y="160" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- CloudWatch Logs -->
+        <mxCell id="cloudwatch-logs" value="CloudWatch Logs&#xa;(7 days retention)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#759C3E;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.cloudwatch_2;" vertex="1" parent="region">
+          <mxGeometry x="600" y="320" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- DynamoDB Streams -->
+        <mxCell id="ddb-streams" value="DynamoDB Streams&#xa;(NEW_AND_OLD_IMAGES)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#C925D1;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.kinesis_data_streams;" vertex="1" parent="region">
+          <mxGeometry x="820" y="160" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Connections -->
+        <!-- API Client to API Gateway -->
+        <mxCell id="edge-client-api" value="HTTPS" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;" edge="1" parent="1" source="api-client" target="api-gateway">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- API Gateway to Lambda -->
+        <mxCell id="edge-api-lambda" value="Invoke (AWS_PROXY)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;" edge="1" parent="region" source="api-gateway" target="lambda-fn">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Lambda to DynamoDB -->
+        <mxCell id="edge-lambda-ddb" value="Read/Write" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;" edge="1" parent="region" source="lambda-fn" target="dynamodb">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Lambda to CloudWatch -->
+        <mxCell id="edge-lambda-cw" value="Logs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#545B64;fontSize=11;dashed=1;" edge="1" parent="region" source="lambda-fn" target="cloudwatch-logs">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- DynamoDB to Streams -->
+        <mxCell id="edge-ddb-streams" value="Stream" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#C925D1;fontSize=11;" edge="1" parent="region" source="dynamodb" target="ddb-streams">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- IAM Role to Lambda -->
+        <mxCell id="edge-iam-lambda" value="Attached" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#DD344C;fontSize=11;dashed=1;" edge="1" parent="region" source="iam-role" target="lambda-fn">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- API Gateway to CloudWatch -->
+        <mxCell id="edge-api-cw" value="Metrics &amp; Logs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#545B64;fontSize=11;dashed=1;" edge="1" parent="region" source="api-gateway" target="cloudwatch-logs">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Architecture Notes -->
+        <mxCell id="note-arch" value="Architecture Highlights:&#xa;- REST API (REGIONAL endpoint)&#xa;- Lambda ARM64 (cost-optimized)&#xa;- DynamoDB PITR (7-day backup)&#xa;- X-Ray tracing enabled&#xa;- CloudWatch metrics &amp; logs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F2FF;strokeColor=#0066CC;align=left;verticalAlign=top;fontSize=11;fontStyle=1;" vertex="1" parent="region">
+          <mxGeometry x="120" y="420" width="280" height="120" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -41,7 +41,7 @@
     "description": "Amazon Cognito、API Gateway、Lambda、DynamoDBを組み合わせ、テナント分離とセキュリティを考慮したマルチテナントSaaSの基盤を構築します。",
     "category": "SaaS",
     "templateFile": "multi-tenant-saas.yaml",
-    "diagramFile": null,
+    "diagramFile": "multi-tenant-saas.drawio.svg",
     "awsServices": ["Cognito", "API Gateway", "Lambda", "DynamoDB"]
   },
   {
@@ -50,7 +50,7 @@
     "description": "Amazon S3でコンテンツをホストし、Amazon CloudFront、Route 53、ACMを組み合わせてHTTPS対応の安全で高速な静的サイトを作成します。",
     "category": "Security & CDN",
     "templateFile": "s3-static-website.yaml",
-    "diagramFile": null,
+    "diagramFile": "s3-static-website.drawio.svg",
     "awsServices": ["S3", "CloudFront", "Route 53", "ACM"]
   },
   {
@@ -59,7 +59,7 @@
     "description": "API Gateway と AWS Lambda を連携させた、標準的な RESTful または HTTP API エンドポイントを瞬時にプロビジョニングする構成です。",
     "category": "Serverless",
     "templateFile": "serverless-api.yaml",
-    "diagramFile": null,
+    "diagramFile": "serverless-api.drawio.svg",
     "awsServices": ["API Gateway", "Lambda", "IAM"]
   },
   {
@@ -77,7 +77,7 @@
     "description": "プレゼンテーション層、アプリケーション層、データベース層をネットワーク的に分離し、堅牢なセキュリティと可用性を備えた 3 層構造を構築します。",
     "category": "Web Application",
     "templateFile": "three-tier-architecture.yaml",
-    "diagramFile": null,
+    "diagramFile": "three-tier-architecture.drawio.svg",
     "awsServices": ["EC2", "ALB", "RDS", "VPC", "Security Group"]
   },
   {
@@ -86,7 +86,7 @@
     "description": "Amazon VPC Lattice を使用して、異なるVPCやアカウントのサービス（ECS, Lambda, EC2）間で安全かつシンプルな相互通信（サービスメッシュ）を実現します。",
     "category": "Networking",
     "templateFile": "vpc-lattice-service-communication.yaml",
-    "diagramFile": null,
+    "diagramFile": "vpc-lattice-service-communication.drawio.svg",
     "awsServices": ["VPC Lattice", "ECS", "Lambda", "VPC"]
   },
   {
