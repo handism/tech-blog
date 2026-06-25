@@ -1,0 +1,574 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'AWS Account Factory Architecture - Automated account provisioning with Service Catalog, Organizations, and StackSets'
+
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - Label:
+          default: Portfolio Configuration
+        Parameters:
+          - PortfolioName
+          - PortfolioDescription
+      - Label:
+          default: Account Baseline Configuration
+        Parameters:
+          - BaselineStackSetName
+          - OrganizationId
+      - Label:
+          default: Tagging Configuration
+        Parameters:
+          - Environment
+          - CostCenter
+
+Parameters:
+  PortfolioName:
+    Type: String
+    Default: 'Account Factory Portfolio'
+    Description: Name of the Service Catalog portfolio
+
+  PortfolioDescription:
+    Type: String
+    Default: 'Automated AWS account provisioning with baseline configurations'
+    Description: Description of the Service Catalog portfolio
+
+  BaselineStackSetName:
+    Type: String
+    Default: 'AccountBaseline'
+    Description: Name of the StackSet for account baseline
+
+  OrganizationId:
+    Type: String
+    Description: AWS Organization ID (e.g., o-xxxxxxxxxx)
+    AllowedPattern: '^o-[a-z0-9]{10,32}$'
+
+  Environment:
+    Type: String
+    Default: production
+    AllowedValues:
+      - development
+      - staging
+      - production
+    Description: Environment type
+
+  CostCenter:
+    Type: String
+    Default: 'IT'
+    Description: Cost center for billing
+
+Resources:
+  # S3 Bucket for CloudFormation templates
+  TemplateBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub 'account-factory-templates-${AWS::AccountId}'
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Enabled
+      LifecycleConfiguration:
+        Rules:
+          - Id: DeleteOldVersions
+            Status: Enabled
+            NoncurrentVersionExpirationInDays: 90
+      Tags:
+        - Key: Name
+          Value: !Sub '${AWS::StackName}-templates'
+        - Key: Environment
+          Value: !Ref Environment
+
+  TemplateBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref TemplateBucket
+      PolicyDocument:
+        Statement:
+          - Sid: AllowServiceCatalogRead
+            Effect: Allow
+            Principal:
+              Service: servicecatalog.amazonaws.com
+            Action:
+              - s3:GetObject
+            Resource: !Sub '${TemplateBucket.Arn}/*'
+
+  # DynamoDB table for account metadata
+  AccountMetadataTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub '${AWS::StackName}-accounts'
+      BillingMode: PAY_PER_REQUEST
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      SSESpecification:
+        SSEEnabled: true
+      AttributeDefinitions:
+        - AttributeName: AccountId
+          AttributeType: S
+        - AttributeName: AccountEmail
+          AttributeType: S
+      KeySchema:
+        - AttributeName: AccountId
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: EmailIndex
+          KeySchema:
+            - AttributeName: AccountEmail
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+      Tags:
+        - Key: Name
+          Value: !Sub '${AWS::StackName}-metadata'
+        - Key: Environment
+          Value: !Ref Environment
+
+  # SNS Topic for notifications
+  AccountProvisioningTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: !Sub '${AWS::StackName}-notifications'
+      DisplayName: Account Factory Notifications
+      KmsMasterKeyId: alias/aws/sns
+      Tags:
+        - Key: Name
+          Value: !Sub '${AWS::StackName}-topic'
+        - Key: Environment
+          Value: !Ref Environment
+
+  # CloudWatch Log Group
+  AccountFactoryLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aws/account-factory/${AWS::StackName}'
+      RetentionInDays: 30
+      KmsKeyId: !GetAtt LogEncryptionKey.Arn
+
+  # KMS Key for CloudWatch Logs
+  LogEncryptionKey:
+    Type: AWS::KMS::Key
+    Properties:
+      Description: KMS key for Account Factory logs
+      EnableKeyRotation: true
+      KeyPolicy:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: Enable IAM User Permissions
+            Effect: Allow
+            Principal:
+              AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+            Action: 'kms:*'
+            Resource: '*'
+          - Sid: Allow CloudWatch Logs
+            Effect: Allow
+            Principal:
+              Service: !Sub 'logs.${AWS::Region}.amazonaws.com'
+            Action:
+              - 'kms:Encrypt'
+              - 'kms:Decrypt'
+              - 'kms:ReEncrypt*'
+              - 'kms:GenerateDataKey*'
+              - 'kms:CreateGrant'
+              - 'kms:DescribeKey'
+            Resource: '*'
+            Condition:
+              ArnLike:
+                'kms:EncryptionContext:aws:logs:arn': !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:*'
+
+  LogEncryptionKeyAlias:
+    Type: AWS::KMS::Alias
+    Properties:
+      AliasName: !Sub 'alias/${AWS::StackName}-logs'
+      TargetKeyId: !Ref LogEncryptionKey
+
+  # IAM Role for Lambda
+  AccountProvisioningLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${AWS::StackName}-lambda-role'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: AccountFactoryPermissions
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - organizations:CreateAccount
+                  - organizations:DescribeCreateAccountStatus
+                  - organizations:DescribeAccount
+                  - organizations:ListAccounts
+                  - organizations:TagResource
+                  - organizations:MoveAccount
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                  - dynamodb:GetItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:Query
+                Resource:
+                  - !GetAtt AccountMetadataTable.Arn
+                  - !Sub '${AccountMetadataTable.Arn}/index/*'
+              - Effect: Allow
+                Action:
+                  - sns:Publish
+                Resource: !Ref AccountProvisioningTopic
+              - Effect: Allow
+                Action:
+                  - cloudformation:CreateStackSet
+                  - cloudformation:CreateStackInstances
+                  - cloudformation:DescribeStackSet
+                  - cloudformation:DescribeStackInstance
+                Resource: !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stackset/${BaselineStackSetName}:*'
+              - Effect: Allow
+                Action:
+                  - sts:AssumeRole
+                Resource: !Sub 'arn:aws:iam::*:role/OrganizationAccountAccessRole'
+      Tags:
+        - Key: Name
+          Value: !Sub '${AWS::StackName}-lambda-role'
+
+  # Lambda Function for account provisioning
+  AccountProvisioningFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub '${AWS::StackName}-provisioning'
+      Runtime: python3.12
+      Handler: index.handler
+      Role: !GetAtt AccountProvisioningLambdaRole.Arn
+      Timeout: 900
+      MemorySize: 512
+      Environment:
+        Variables:
+          METADATA_TABLE: !Ref AccountMetadataTable
+          SNS_TOPIC_ARN: !Ref AccountProvisioningTopic
+          ORGANIZATION_ID: !Ref OrganizationId
+          STACKSET_NAME: !Ref BaselineStackSetName
+      Code:
+        ZipFile: |
+          import json
+          import boto3
+          import os
+          from datetime import datetime
+          
+          orgs = boto3.client('organizations')
+          dynamodb = boto3.resource('dynamodb')
+          sns = boto3.client('sns')
+          
+          def handler(event, context):
+              print(f"Event: {json.dumps(event)}")
+              
+              table = dynamodb.Table(os.environ['METADATA_TABLE'])
+              
+              # Extract account details from event
+              account_name = event.get('AccountName')
+              account_email = event.get('AccountEmail')
+              ou_id = event.get('OrganizationalUnitId', None)
+              
+              try:
+                  # Create account
+                  response = orgs.create_account(
+                      Email=account_email,
+                      AccountName=account_name
+                  )
+                  
+                  request_id = response['CreateAccountStatus']['Id']
+                  
+                  # Store metadata
+                  table.put_item(
+                      Item={
+                          'AccountId': request_id,
+                          'AccountEmail': account_email,
+                          'AccountName': account_name,
+                          'Status': 'IN_PROGRESS',
+                          'CreatedAt': datetime.utcnow().isoformat(),
+                          'RequestId': request_id
+                      }
+                  )
+                  
+                  # Send notification
+                  sns.publish(
+                      TopicArn=os.environ['SNS_TOPIC_ARN'],
+                      Subject='Account Provisioning Started',
+                      Message=f'Account provisioning started for {account_name} ({account_email})'
+                  )
+                  
+                  return {
+                      'statusCode': 200,
+                      'body': json.dumps({
+                          'RequestId': request_id,
+                          'Status': 'IN_PROGRESS'
+                      })
+                  }
+                  
+              except Exception as e:
+                  print(f"Error: {str(e)}")
+                  return {
+                      'statusCode': 500,
+                      'body': json.dumps({'error': str(e)})
+                  }
+      Tags:
+        - Key: Name
+          Value: !Sub '${AWS::StackName}-provisioning'
+
+  # Lambda Function for account status check
+  AccountStatusCheckFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub '${AWS::StackName}-status-check'
+      Runtime: python3.12
+      Handler: index.handler
+      Role: !GetAtt AccountProvisioningLambdaRole.Arn
+      Timeout: 300
+      MemorySize: 256
+      Environment:
+        Variables:
+          METADATA_TABLE: !Ref AccountMetadataTable
+          SNS_TOPIC_ARN: !Ref AccountProvisioningTopic
+      Code:
+        ZipFile: |
+          import json
+          import boto3
+          import os
+          
+          orgs = boto3.client('organizations')
+          dynamodb = boto3.resource('dynamodb')
+          sns = boto3.client('sns')
+          
+          def handler(event, context):
+              table = dynamodb.Table(os.environ['METADATA_TABLE'])
+              
+              for record in event['Records']:
+                  request_id = record['dynamodb']['Keys']['AccountId']['S']
+                  
+                  try:
+                      response = orgs.describe_create_account_status(
+                          CreateAccountRequestId=request_id
+                      )
+                      
+                      status = response['CreateAccountStatus']['State']
+                      
+                      if status == 'SUCCEEDED':
+                          account_id = response['CreateAccountStatus']['AccountId']
+                          
+                          table.update_item(
+                              Key={'AccountId': request_id},
+                              UpdateExpression='SET #status = :status, ActualAccountId = :account_id',
+                              ExpressionAttributeNames={'#status': 'Status'},
+                              ExpressionAttributeValues={
+                                  ':status': 'SUCCEEDED',
+                                  ':account_id': account_id
+                              }
+                          )
+                          
+                          sns.publish(
+                              TopicArn=os.environ['SNS_TOPIC_ARN'],
+                              Subject='Account Provisioning Completed',
+                              Message=f'Account {account_id} provisioned successfully'
+                          )
+                      
+                  except Exception as e:
+                      print(f"Error checking status: {str(e)}")
+              
+              return {'statusCode': 200}
+      Tags:
+        - Key: Name
+          Value: !Sub '${AWS::StackName}-status-check'
+
+  # EventBridge Rule for periodic status checks
+  AccountStatusCheckRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: !Sub '${AWS::StackName}-status-check'
+      Description: Periodic check for account provisioning status
+      ScheduleExpression: 'rate(5 minutes)'
+      State: ENABLED
+      Targets:
+        - Arn: !GetAtt AccountStatusCheckFunction.Arn
+          Id: StatusCheckTarget
+
+  AccountStatusCheckPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref AccountStatusCheckFunction
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt AccountStatusCheckRule.Arn
+
+  # Service Catalog Portfolio
+  AccountFactoryPortfolio:
+    Type: AWS::ServiceCatalog::Portfolio
+    Properties:
+      DisplayName: !Ref PortfolioName
+      Description: !Ref PortfolioDescription
+      ProviderName: 'Platform Engineering Team'
+      Tags:
+        - Key: Name
+          Value: !Ref PortfolioName
+        - Key: Environment
+          Value: !Ref Environment
+
+  # IAM Role for Service Catalog Launch
+  ServiceCatalogLaunchRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${AWS::StackName}-sc-launch-role'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: servicecatalog.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess
+      Tags:
+        - Key: Name
+          Value: !Sub '${AWS::StackName}-sc-launch-role'
+
+  # Service Catalog Product - Account Vending Machine
+  AccountVendingProduct:
+    Type: AWS::ServiceCatalog::CloudFormationProduct
+    Properties:
+      Name: 'AWS Account Vending Machine'
+      Description: 'Provision a new AWS account with baseline configurations'
+      Owner: 'Platform Engineering Team'
+      Distributor: 'Cloud Center of Excellence'
+      SupportDescription: 'Contact platform-engineering@example.com for support'
+      SupportEmail: 'platform-engineering@example.com'
+      ProvisioningArtifactParameters:
+        - Name: 'v1.0'
+          Description: 'Initial version with baseline configurations'
+          Info:
+            LoadTemplateFromURL: !Sub 'https://${TemplateBucket.RegionalDomainName}/account-template.yaml'
+          Type: CLOUD_FORMATION_TEMPLATE
+      Tags:
+        - Key: Name
+          Value: 'Account Vending Machine'
+
+  # Associate Product with Portfolio
+  PortfolioProductAssociation:
+    Type: AWS::ServiceCatalog::PortfolioProductAssociation
+    Properties:
+      PortfolioId: !Ref AccountFactoryPortfolio
+      ProductId: !Ref AccountVendingProduct
+
+  # Launch Constraint
+  LaunchConstraint:
+    Type: AWS::ServiceCatalog::LaunchRoleConstraint
+    Properties:
+      PortfolioId: !Ref AccountFactoryPortfolio
+      ProductId: !Ref AccountVendingProduct
+      RoleArn: !GetAtt ServiceCatalogLaunchRole.Arn
+
+  # CloudWatch Dashboard
+  AccountFactoryDashboard:
+    Type: AWS::CloudWatch::Dashboard
+    Properties:
+      DashboardName: !Sub '${AWS::StackName}-dashboard'
+      DashboardBody: !Sub |
+        {
+          "widgets": [
+            {
+              "type": "metric",
+              "properties": {
+                "metrics": [
+                  ["AWS/Lambda", "Invocations", {"stat": "Sum", "label": "Provisioning Invocations"}],
+                  [".", "Errors", {"stat": "Sum", "label": "Provisioning Errors"}],
+                  [".", "Duration", {"stat": "Average", "label": "Avg Duration"}]
+                ],
+                "period": 300,
+                "stat": "Average",
+                "region": "${AWS::Region}",
+                "title": "Account Provisioning Metrics",
+                "yAxis": {
+                  "left": {
+                    "min": 0
+                  }
+                }
+              }
+            },
+            {
+              "type": "log",
+              "properties": {
+                "query": "SOURCE '${AccountFactoryLogGroup}'\n| fields @timestamp, @message\n| sort @timestamp desc\n| limit 20",
+                "region": "${AWS::Region}",
+                "title": "Recent Provisioning Logs"
+              }
+            }
+          ]
+        }
+
+  # CloudWatch Alarms
+  ProvisioningErrorAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub '${AWS::StackName}-provisioning-errors'
+      AlarmDescription: Alert when account provisioning errors occur
+      MetricName: Errors
+      Namespace: AWS/Lambda
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      Dimensions:
+        - Name: FunctionName
+          Value: !Ref AccountProvisioningFunction
+      AlarmActions:
+        - !Ref AccountProvisioningTopic
+
+Outputs:
+  PortfolioId:
+    Description: Service Catalog Portfolio ID
+    Value: !Ref AccountFactoryPortfolio
+    Export:
+      Name: !Sub '${AWS::StackName}-PortfolioId'
+
+  ProductId:
+    Description: Service Catalog Product ID
+    Value: !Ref AccountVendingProduct
+    Export:
+      Name: !Sub '${AWS::StackName}-ProductId'
+
+  TemplateBucketName:
+    Description: S3 Bucket for CloudFormation templates
+    Value: !Ref TemplateBucket
+    Export:
+      Name: !Sub '${AWS::StackName}-TemplateBucket'
+
+  MetadataTableName:
+    Description: DynamoDB table for account metadata
+    Value: !Ref AccountMetadataTable
+    Export:
+      Name: !Sub '${AWS::StackName}-MetadataTable'
+
+  ProvisioningFunctionArn:
+    Description: Lambda function ARN for account provisioning
+    Value: !GetAtt AccountProvisioningFunction.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-ProvisioningFunction'
+
+  NotificationTopicArn:
+    Description: SNS topic ARN for notifications
+    Value: !Ref AccountProvisioningTopic
+    Export:
+      Name: !Sub '${AWS::StackName}-NotificationTopic'
+
+  DashboardURL:
+    Description: CloudWatch Dashboard URL
+    Value: !Sub 'https://console.aws.amazon.com/cloudwatch/home?region=${AWS::Region}#dashboards:name=${AWS::StackName}-dashboard'

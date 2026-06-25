@@ -1,0 +1,330 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'MCP Server - Model Context Protocol Server on AWS with API Gateway, Lambda, DynamoDB, and S3'
+
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues: [dev, staging, prod]
+    Description: Environment name
+  
+  LogRetentionDays:
+    Type: Number
+    Default: 30
+    AllowedValues: [1, 3, 5, 7, 14, 30, 60, 90]
+    Description: CloudWatch Logs retention period in days
+
+Resources:
+  # S3 Bucket for Model Artifacts
+  ModelArtifactsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub 'mcp-server-artifacts-${AWS::AccountId}-${AWS::Region}'
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      LifecycleConfiguration:
+        Rules:
+          - Id: DeleteOldVersions
+            Status: Enabled
+            ExpirationInDays: 90
+      VersioningConfiguration:
+        Status: Enabled
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: System
+          Value: MCPServer
+
+  # DynamoDB Table for Session Management
+  SessionTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub 'mcp-sessions-${Environment}'
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: sessionId
+          AttributeType: S
+        - AttributeName: userId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: sessionId
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: UserIdIndex
+          KeySchema:
+            - AttributeName: userId
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+      TimeToLiveSpecification:
+        AttributeName: ttl
+        Enabled: true
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      SSESpecification:
+        SSEEnabled: true
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: System
+          Value: MCPServer
+
+  # Lambda Execution Role
+  MCPLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub 'mcp-lambda-role-${Environment}'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: MCPLambdaPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:GetItem
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:Query
+                  - dynamodb:DeleteItem
+                Resource:
+                  - !GetAtt SessionTable.Arn
+                  - !Sub '${SessionTable.Arn}/index/*'
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                Resource: !Sub '${ModelArtifactsBucket.Arn}/*'
+
+  # Lambda Function for MCP Processing
+  MCPFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Sub 'mcp-processor-${Environment}'
+      Runtime: python3.12
+      Handler: index.lambda_handler
+      Role: !GetAtt MCPLambdaRole.Arn
+      Architectures:
+        - arm64
+      MemorySize: 512
+      Timeout: 30
+      Environment:
+        Variables:
+          SESSION_TABLE: !Ref SessionTable
+          ARTIFACTS_BUCKET: !Ref ModelArtifactsBucket
+          ENVIRONMENT: !Ref Environment
+      Code:
+        ZipFile: |
+          import json
+          import os
+          import boto3
+          from datetime import datetime, timedelta
+          
+          dynamodb = boto3.resource('dynamodb')
+          s3 = boto3.client('s3')
+          table = dynamodb.Table(os.environ['SESSION_TABLE'])
+          
+          def lambda_handler(event, context):
+              try:
+                  body = json.loads(event.get('body', '{}'))
+                  action = body.get('action', 'unknown')
+                  
+                  if action == 'create_session':
+                      return create_session(body)
+                  elif action == 'get_context':
+                      return get_context(body)
+                  elif action == 'update_context':
+                      return update_context(body)
+                  else:
+                      return response(400, {'error': 'Invalid action'})
+              except Exception as e:
+                  return response(500, {'error': str(e)})
+          
+          def create_session(body):
+              import uuid
+              session_id = str(uuid.uuid4())
+              user_id = body.get('userId', 'anonymous')
+              ttl = int((datetime.now() + timedelta(hours=24)).timestamp())
+              
+              table.put_item(Item={
+                  'sessionId': session_id,
+                  'userId': user_id,
+                  'context': {},
+                  'createdAt': datetime.now().isoformat(),
+                  'ttl': ttl
+              })
+              
+              return response(200, {'sessionId': session_id})
+          
+          def get_context(body):
+              session_id = body.get('sessionId')
+              result = table.get_item(Key={'sessionId': session_id})
+              return response(200, result.get('Item', {}))
+          
+          def update_context(body):
+              session_id = body.get('sessionId')
+              context = body.get('context', {})
+              
+              table.update_item(
+                  Key={'sessionId': session_id},
+                  UpdateExpression='SET context = :ctx, updatedAt = :updated',
+                  ExpressionAttributeValues={
+                      ':ctx': context,
+                      ':updated': datetime.now().isoformat()
+                  }
+              )
+              
+              return response(200, {'message': 'Context updated'})
+          
+          def response(status_code, body):
+              return {
+                  'statusCode': status_code,
+                  'headers': {
+                      'Content-Type': 'application/json',
+                      'Access-Control-Allow-Origin': '*'
+                  },
+                  'body': json.dumps(body)
+              }
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: System
+          Value: MCPServer
+
+  # CloudWatch Log Group
+  MCPLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${MCPFunction}'
+      RetentionInDays: !Ref LogRetentionDays
+
+  # API Gateway REST API
+  MCPRestApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: !Sub 'mcp-api-${Environment}'
+      Description: MCP Server REST API
+      EndpointConfiguration:
+        Types:
+          - REGIONAL
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: System
+          Value: MCPServer
+
+  # API Gateway Resource
+  MCPResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref MCPRestApi
+      ParentId: !GetAtt MCPRestApi.RootResourceId
+      PathPart: mcp
+
+  # API Gateway Method
+  MCPMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref MCPRestApi
+      ResourceId: !Ref MCPResource
+      HttpMethod: POST
+      AuthorizationType: NONE
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${MCPFunction.Arn}/invocations'
+      MethodResponses:
+        - StatusCode: 200
+
+  # Lambda Permission for API Gateway
+  MCPLambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref MCPFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${MCPRestApi}/*/*'
+
+  # API Gateway Deployment
+  MCPDeployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn: MCPMethod
+    Properties:
+      RestApiId: !Ref MCPRestApi
+
+  # API Gateway Stage
+  MCPStage:
+    Type: AWS::ApiGateway::Stage
+    Properties:
+      RestApiId: !Ref MCPRestApi
+      DeploymentId: !Ref MCPDeployment
+      StageName: !Ref Environment
+      TracingEnabled: true
+      MethodSettings:
+        - ResourcePath: '/*'
+          HttpMethod: '*'
+          LoggingLevel: INFO
+          DataTraceEnabled: true
+          MetricsEnabled: true
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: System
+          Value: MCPServer
+
+  # CloudWatch Alarm for Lambda Errors
+  MCPErrorAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: !Sub 'mcp-lambda-errors-${Environment}'
+      AlarmDescription: Alert when Lambda function errors exceed threshold
+      MetricName: Errors
+      Namespace: AWS/Lambda
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 5
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: FunctionName
+          Value: !Ref MCPFunction
+
+Outputs:
+  ApiEndpoint:
+    Description: MCP API Gateway endpoint URL
+    Value: !Sub 'https://${MCPRestApi}.execute-api.${AWS::Region}.amazonaws.com/${Environment}/mcp'
+    Export:
+      Name: !Sub '${AWS::StackName}-ApiEndpoint'
+
+  SessionTableName:
+    Description: DynamoDB Session Table Name
+    Value: !Ref SessionTable
+    Export:
+      Name: !Sub '${AWS::StackName}-SessionTable'
+
+  ArtifactsBucketName:
+    Description: S3 Artifacts Bucket Name
+    Value: !Ref ModelArtifactsBucket
+    Export:
+      Name: !Sub '${AWS::StackName}-ArtifactsBucket'
+
+  LambdaFunctionArn:
+    Description: MCP Lambda Function ARN
+    Value: !GetAtt MCPFunction.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-LambdaArn'

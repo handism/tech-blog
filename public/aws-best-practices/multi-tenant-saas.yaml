@@ -1,0 +1,518 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Multi-tenant SaaS Architecture with tenant isolation and best practices'
+
+Parameters:
+  Environment:
+    Type: String
+    Default: prod
+    AllowedValues:
+      - dev
+      - prod
+    Description: Environment name
+
+  TenantIsolationModel:
+    Type: String
+    Default: pool
+    AllowedValues:
+      - pool
+      - silo
+    Description: Tenant isolation model (pool=shared resources, silo=dedicated resources)
+
+Resources:
+  # Cognito User Pool for tenant user authentication
+  TenantUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: !Sub '${AWS::StackName}-tenant-users'
+      AutoVerifiedAttributes:
+        - email
+      Schema:
+        - Name: email
+          Required: true
+          Mutable: false
+        - Name: tenant_id
+          AttributeDataType: String
+          Mutable: false
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 12
+          RequireUppercase: true
+          RequireLowercase: true
+          RequireNumbers: true
+          RequireSymbols: true
+      AccountRecoverySetting:
+        RecoveryMechanisms:
+          - Name: verified_email
+            Priority: 1
+
+  TenantUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      UserPoolId: !Ref TenantUserPool
+      GenerateSecret: false
+      ExplicitAuthFlows:
+        - ALLOW_USER_SRP_AUTH
+        - ALLOW_REFRESH_TOKEN_AUTH
+      PreventUserExistenceErrors: ENABLED
+
+  # DynamoDB Table for tenant metadata
+  TenantMetadataTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: tenant_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: tenant_id
+          KeyType: HASH
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      SSESpecification:
+        SSEEnabled: true
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+
+  # DynamoDB Table for tenant data with tenant_id partition
+  TenantDataTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: tenant_id
+          AttributeType: S
+        - AttributeName: item_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: tenant_id
+          KeyType: HASH
+        - AttributeName: item_id
+          KeyType: RANGE
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      SSESpecification:
+        SSEEnabled: true
+
+  # S3 Bucket for tenant data with prefix-based isolation
+  TenantDataBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      LifecycleConfiguration:
+        Rules:
+          - Id: TransitionToIA
+            Status: Enabled
+            Transitions:
+              - TransitionInDays: 90
+                StorageClass: INTELLIGENT_TIERING
+      VersioningConfiguration:
+        Status: Enabled
+
+  # Lambda Execution Role with tenant isolation policies
+  TenantApiRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: TenantDataAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:GetItem
+                  - dynamodb:PutItem
+                  - dynamodb:Query
+                  - dynamodb:UpdateItem
+                  - dynamodb:DeleteItem
+                Resource: 
+                  - !GetAtt TenantDataTable.Arn
+                  - !GetAtt TenantMetadataTable.Arn
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:DeleteObject
+                Resource: !Sub '${TenantDataBucket.Arn}/*'
+
+  # Lambda Function for tenant API with ARM64
+  TenantApiFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Runtime: python3.13
+      Handler: index.handler
+      Architectures:
+        - arm64
+      MemorySize: 256
+      Timeout: 30
+      Role: !GetAtt TenantApiRole.Arn
+      Environment:
+        Variables:
+          TENANT_DATA_TABLE: !Ref TenantDataTable
+          TENANT_METADATA_TABLE: !Ref TenantMetadataTable
+          TENANT_BUCKET: !Ref TenantDataBucket
+          ISOLATION_MODEL: !Ref TenantIsolationModel
+      Code:
+        ZipFile: |
+          import json
+          import os
+          import boto3
+          from datetime import datetime
+          
+          dynamodb = boto3.resource('dynamodb')
+          data_table = dynamodb.Table(os.environ['TENANT_DATA_TABLE'])
+          metadata_table = dynamodb.Table(os.environ['TENANT_METADATA_TABLE'])
+          
+          def handler(event, context):
+              try:
+                  # Extract tenant_id from JWT claims
+                  claims = event.get('requestContext', {}).get('authorizer', {}).get('claims', {})
+                  tenant_id = claims.get('custom:tenant_id')
+                  
+                  if not tenant_id:
+                      return {
+                          'statusCode': 403,
+                          'body': json.dumps({'error': 'Tenant ID not found'})
+                      }
+                  
+                  method = event['httpMethod']
+                  
+                  if method == 'GET':
+                      response = data_table.query(
+                          KeyConditionExpression='tenant_id = :tid',
+                          ExpressionAttributeValues={':tid': tenant_id}
+                      )
+                      return {
+                          'statusCode': 200,
+                          'headers': {'Content-Type': 'application/json'},
+                          'body': json.dumps(response['Items'])
+                      }
+                  
+                  elif method == 'POST':
+                      body = json.loads(event['body'])
+                      item = {
+                          'tenant_id': tenant_id,
+                          'item_id': body['item_id'],
+                          'data': body.get('data', ''),
+                          'timestamp': datetime.utcnow().isoformat()
+                      }
+                      data_table.put_item(Item=item)
+                      return {
+                          'statusCode': 201,
+                          'headers': {'Content-Type': 'application/json'},
+                          'body': json.dumps(item)
+                      }
+                  
+                  return {
+                      'statusCode': 405,
+                      'body': json.dumps({'error': 'Method not allowed'})
+                  }
+              
+              except Exception as e:
+                  return {
+                      'statusCode': 500,
+                      'body': json.dumps({'error': str(e)})
+                  }
+      LoggingConfig:
+        LogGroup: !Ref TenantApiLogGroup
+
+  TenantApiLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      RetentionInDays: 30
+
+  # Lambda Function for tenant onboarding
+  TenantOnboardingFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Runtime: python3.13
+      Handler: index.handler
+      Architectures:
+        - arm64
+      MemorySize: 256
+      Timeout: 60
+      Role: !GetAtt TenantOnboardingRole.Arn
+      Environment:
+        Variables:
+          TENANT_METADATA_TABLE: !Ref TenantMetadataTable
+          USER_POOL_ID: !Ref TenantUserPool
+      Code:
+        ZipFile: |
+          import json
+          import os
+          import boto3
+          from datetime import datetime
+          import uuid
+          
+          dynamodb = boto3.resource('dynamodb')
+          metadata_table = dynamodb.Table(os.environ['TENANT_METADATA_TABLE'])
+          cognito = boto3.client('cognito-idp')
+          
+          def handler(event, context):
+              try:
+                  body = json.loads(event['body'])
+                  tenant_id = str(uuid.uuid4())
+                  
+                  # Create tenant metadata
+                  tenant_metadata = {
+                      'tenant_id': tenant_id,
+                      'tenant_name': body['tenant_name'],
+                      'tier': body.get('tier', 'standard'),
+                      'status': 'active',
+                      'created_at': datetime.utcnow().isoformat()
+                  }
+                  metadata_table.put_item(Item=tenant_metadata)
+                  
+                  return {
+                      'statusCode': 201,
+                      'headers': {'Content-Type': 'application/json'},
+                      'body': json.dumps({
+                          'tenant_id': tenant_id,
+                          'message': 'Tenant created successfully'
+                      })
+                  }
+              
+              except Exception as e:
+                  return {
+                      'statusCode': 500,
+                      'body': json.dumps({'error': str(e)})
+                  }
+      LoggingConfig:
+        LogGroup: !Ref TenantOnboardingLogGroup
+
+  TenantOnboardingRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: TenantOnboardingAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                  - dynamodb:GetItem
+                Resource: !GetAtt TenantMetadataTable.Arn
+              - Effect: Allow
+                Action:
+                  - cognito-idp:AdminCreateUser
+                  - cognito-idp:AdminSetUserPassword
+                Resource: !GetAtt TenantUserPool.Arn
+
+  TenantOnboardingLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      RetentionInDays: 30
+
+  # API Gateway REST API
+  TenantApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: !Sub '${AWS::StackName}-tenant-api'
+      Description: Multi-tenant SaaS API
+      EndpointConfiguration:
+        Types:
+          - REGIONAL
+
+  # Cognito Authorizer
+  ApiAuthorizer:
+    Type: AWS::ApiGateway::Authorizer
+    Properties:
+      Name: CognitoAuthorizer
+      Type: COGNITO_USER_POOLS
+      RestApiId: !Ref TenantApi
+      IdentitySource: method.request.header.Authorization
+      ProviderARNs:
+        - !GetAtt TenantUserPool.Arn
+
+  # API Resources
+  DataResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref TenantApi
+      ParentId: !GetAtt TenantApi.RootResourceId
+      PathPart: data
+
+  OnboardingResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref TenantApi
+      ParentId: !GetAtt TenantApi.RootResourceId
+      PathPart: onboarding
+
+  # API Methods for tenant data
+  DataMethodGet:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref TenantApi
+      ResourceId: !Ref DataResource
+      HttpMethod: GET
+      AuthorizationType: COGNITO_USER_POOLS
+      AuthorizerId: !Ref ApiAuthorizer
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Sub 'arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${TenantApiFunction.Arn}/invocations'
+
+  DataMethodPost:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref TenantApi
+      ResourceId: !Ref DataResource
+      HttpMethod: POST
+      AuthorizationType: COGNITO_USER_POOLS
+      AuthorizerId: !Ref ApiAuthorizer
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Sub 'arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${TenantApiFunction.Arn}/invocations'
+
+  # API Method for tenant onboarding
+  OnboardingMethodPost:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref TenantApi
+      ResourceId: !Ref OnboardingResource
+      HttpMethod: POST
+      AuthorizationType: NONE
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Sub 'arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${TenantOnboardingFunction.Arn}/invocations'
+
+  # API Deployment
+  ApiDeployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn:
+      - DataMethodGet
+      - DataMethodPost
+      - OnboardingMethodPost
+    Properties:
+      RestApiId: !Ref TenantApi
+
+  # API Stage
+  ApiStage:
+    Type: AWS::ApiGateway::Stage
+    Properties:
+      RestApiId: !Ref TenantApi
+      DeploymentId: !Ref ApiDeployment
+      StageName: !Ref Environment
+      TracingEnabled: true
+      MethodSettings:
+        - ResourcePath: '/*'
+          HttpMethod: '*'
+          LoggingLevel: INFO
+          DataTraceEnabled: false
+          MetricsEnabled: true
+          ThrottlingBurstLimit: 500
+          ThrottlingRateLimit: 100
+
+  # Lambda Permissions
+  TenantApiInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref TenantApiFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub 'arn:${AWS::Partition}:execute-api:${AWS::Region}:${AWS::AccountId}:${TenantApi}/*/*'
+
+  OnboardingApiInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref TenantOnboardingFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub 'arn:${AWS::Partition}:execute-api:${AWS::Region}:${AWS::AccountId}:${TenantApi}/*/*'
+
+  # CloudWatch Alarms
+  TenantApiErrorAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmDescription: Alert when tenant API errors exceed threshold
+      MetricName: Errors
+      Namespace: AWS/Lambda
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 10
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: FunctionName
+          Value: !Ref TenantApiFunction
+
+  ApiGatewayErrorAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmDescription: Alert when API Gateway 5xx errors exceed threshold
+      MetricName: 5XXError
+      Namespace: AWS/ApiGateway
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 10
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: ApiName
+          Value: !Sub '${AWS::StackName}-tenant-api'
+
+Outputs:
+  ApiEndpoint:
+    Description: Tenant API endpoint URL
+    Value: !Sub 'https://${TenantApi}.execute-api.${AWS::Region}.amazonaws.com/${Environment}'
+    Export:
+      Name: !Sub '${AWS::StackName}-ApiEndpoint'
+
+  UserPoolId:
+    Description: Cognito User Pool ID for tenant authentication
+    Value: !Ref TenantUserPool
+    Export:
+      Name: !Sub '${AWS::StackName}-UserPoolId'
+
+  UserPoolClientId:
+    Description: Cognito User Pool Client ID
+    Value: !Ref TenantUserPoolClient
+    Export:
+      Name: !Sub '${AWS::StackName}-UserPoolClientId'
+
+  TenantMetadataTableName:
+    Description: DynamoDB table for tenant metadata
+    Value: !Ref TenantMetadataTable
+    Export:
+      Name: !Sub '${AWS::StackName}-MetadataTable'
+
+  TenantDataTableName:
+    Description: DynamoDB table for tenant data
+    Value: !Ref TenantDataTable
+    Export:
+      Name: !Sub '${AWS::StackName}-DataTable'
+
+  TenantDataBucketName:
+    Description: S3 bucket for tenant data
+    Value: !Ref TenantDataBucket
+    Export:
+      Name: !Sub '${AWS::StackName}-DataBucket'

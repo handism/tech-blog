@@ -724,6 +724,10 @@ export const siteConfig = {
     dir: 'learning',
     defaultTitle: 'No title',
   },
+  awsGallery: {
+    dir: 'aws-best-practice',
+    defaultTitle: 'No title',
+  },
   pagination: {
     postsPerPage: 10,
     scrapsPerPage: 20,

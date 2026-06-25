@@ -1,0 +1,306 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'VPC Lattice Service Communication Pattern - Best Practices'
+
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues: [dev, staging, prod]
+
+Resources:
+  # VPC for Service A
+  ServiceAVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-service-a-vpc
+
+  ServiceAPrivateSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref ServiceAVPC
+      CidrBlock: 10.0.1.0/24
+      AvailabilityZone: !Select [0, !GetAZs '']
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-service-a-private-subnet
+
+  # VPC for Service B
+  ServiceBVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.1.0.0/16
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-service-b-vpc
+
+  ServiceBPrivateSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref ServiceBVPC
+      CidrBlock: 10.1.1.0/24
+      AvailabilityZone: !Select [0, !GetAZs '']
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-service-b-private-subnet
+
+  # Security Groups
+  ServiceASecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for Service A
+      VpcId: !Ref ServiceAVPC
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-service-a-sg
+
+  ServiceBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for Service B
+      VpcId: !Ref ServiceBVPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 10.0.0.0/16
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-service-b-sg
+
+  # VPC Lattice Service Network
+  ServiceNetwork:
+    Type: AWS::VpcLattice::ServiceNetwork
+    Properties:
+      AuthType: AWS_IAM
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-service-network
+        - Key: Environment
+          Value: !Ref Environment
+
+  # VPC Lattice Service for Service B
+  ServiceBLatticeService:
+    Type: AWS::VpcLattice::Service
+    Properties:
+      AuthType: AWS_IAM
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-service-b
+        - Key: Environment
+          Value: !Ref Environment
+
+  # Target Group for Service B
+  ServiceBTargetGroup:
+    Type: AWS::VpcLattice::TargetGroup
+    Properties:
+      Type: INSTANCE
+      Config:
+        Port: 443
+        Protocol: HTTPS
+        VpcIdentifier: !Ref ServiceBVPC
+        HealthCheck:
+          Enabled: true
+          Protocol: HTTPS
+          Path: /health
+          HealthCheckIntervalSeconds: 30
+          HealthCheckTimeoutSeconds: 5
+          HealthyThresholdCount: 2
+          UnhealthyThresholdCount: 2
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-service-b-tg
+        - Key: Environment
+          Value: !Ref Environment
+
+  # Listener for Service B
+  ServiceBListener:
+    Type: AWS::VpcLattice::Listener
+    Properties:
+      ServiceIdentifier: !Ref ServiceBLatticeService
+      Protocol: HTTPS
+      Port: 443
+      DefaultAction:
+        Forward:
+          TargetGroups:
+            - TargetGroupIdentifier: !Ref ServiceBTargetGroup
+              Weight: 100
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-service-b-listener
+
+  # Associate Service B with Service Network
+  ServiceNetworkServiceAssociation:
+    Type: AWS::VpcLattice::ServiceNetworkServiceAssociation
+    Properties:
+      ServiceIdentifier: !Ref ServiceBLatticeService
+      ServiceNetworkIdentifier: !Ref ServiceNetwork
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-service-b-association
+
+  # Associate Service A VPC with Service Network
+  ServiceAVPCAssociation:
+    Type: AWS::VpcLattice::ServiceNetworkVpcAssociation
+    Properties:
+      VpcIdentifier: !Ref ServiceAVPC
+      ServiceNetworkIdentifier: !Ref ServiceNetwork
+      SecurityGroupIds:
+        - !Ref ServiceASecurityGroup
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-service-a-vpc-association
+
+  # Associate Service B VPC with Service Network
+  ServiceBVPCAssociation:
+    Type: AWS::VpcLattice::ServiceNetworkVpcAssociation
+    Properties:
+      VpcIdentifier: !Ref ServiceBVPC
+      ServiceNetworkIdentifier: !Ref ServiceNetwork
+      SecurityGroupIds:
+        - !Ref ServiceBSecurityGroup
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-service-b-vpc-association
+
+  # CloudWatch Log Group for Access Logs
+  AccessLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/vpclattice/${Environment}-service-network
+      RetentionInDays: 7
+      KmsKeyId: !GetAtt LogEncryptionKey.Arn
+
+  # KMS Key for Log Encryption
+  LogEncryptionKey:
+    Type: AWS::KMS::Key
+    Properties:
+      Description: KMS key for VPC Lattice access logs encryption
+      EnableKeyRotation: true
+      KeyPolicy:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: Enable IAM User Permissions
+            Effect: Allow
+            Principal:
+              AWS: !Sub arn:aws:iam::${AWS::AccountId}:root
+            Action: kms:*
+            Resource: '*'
+          - Sid: Allow CloudWatch Logs
+            Effect: Allow
+            Principal:
+              Service: !Sub logs.${AWS::Region}.amazonaws.com
+            Action:
+              - kms:Encrypt
+              - kms:Decrypt
+              - kms:ReEncrypt*
+              - kms:GenerateDataKey*
+              - kms:CreateGrant
+              - kms:DescribeKey
+            Resource: '*'
+            Condition:
+              ArnLike:
+                kms:EncryptionContext:aws:logs:arn: !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/vpclattice/${Environment}-service-network
+
+  LogEncryptionKeyAlias:
+    Type: AWS::KMS::Alias
+    Properties:
+      AliasName: !Sub alias/${Environment}-vpclattice-logs
+      TargetKeyId: !Ref LogEncryptionKey
+
+  # Access Log Subscription
+  AccessLogSubscription:
+    Type: AWS::VpcLattice::AccessLogSubscription
+    Properties:
+      ResourceIdentifier: !Ref ServiceNetwork
+      DestinationArn: !GetAtt AccessLogGroup.Arn
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-access-logs
+
+  # IAM Role for Service A to invoke Service B
+  ServiceAInvokeRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy
+      Policies:
+        - PolicyName: VPCLatticeInvokePolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - vpc-lattice-svcs:Invoke
+                Resource: !GetAtt ServiceBLatticeService.Arn
+      Tags:
+        - Key: Name
+          Value: !Sub ${Environment}-service-a-role
+
+Outputs:
+  ServiceNetworkId:
+    Description: VPC Lattice Service Network ID
+    Value: !Ref ServiceNetwork
+    Export:
+      Name: !Sub ${Environment}-ServiceNetworkId
+
+  ServiceNetworkArn:
+    Description: VPC Lattice Service Network ARN
+    Value: !GetAtt ServiceNetwork.Arn
+    Export:
+      Name: !Sub ${Environment}-ServiceNetworkArn
+
+  ServiceBLatticeServiceId:
+    Description: VPC Lattice Service B ID
+    Value: !Ref ServiceBLatticeService
+    Export:
+      Name: !Sub ${Environment}-ServiceBLatticeServiceId
+
+  ServiceBLatticeServiceArn:
+    Description: VPC Lattice Service B ARN
+    Value: !GetAtt ServiceBLatticeService.Arn
+    Export:
+      Name: !Sub ${Environment}-ServiceBLatticeServiceArn
+
+  ServiceBTargetGroupId:
+    Description: Target Group ID for Service B
+    Value: !Ref ServiceBTargetGroup
+    Export:
+      Name: !Sub ${Environment}-ServiceBTargetGroupId
+
+  ServiceAVPCId:
+    Description: Service A VPC ID
+    Value: !Ref ServiceAVPC
+    Export:
+      Name: !Sub ${Environment}-ServiceAVPCId
+
+  ServiceBVPCId:
+    Description: Service B VPC ID
+    Value: !Ref ServiceBVPC
+    Export:
+      Name: !Sub ${Environment}-ServiceBVPCId
+
+  ServiceAInvokeRoleArn:
+    Description: IAM Role ARN for Service A to invoke Service B
+    Value: !GetAtt ServiceAInvokeRole.Arn
+    Export:
+      Name: !Sub ${Environment}-ServiceAInvokeRoleArn
