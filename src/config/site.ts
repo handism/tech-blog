@@ -264,6 +264,15 @@ export const themeConfig = [
     previewCard: '#ffffff',
     previewAccent: '#10b981',
   },
+  {
+    id: 'hekireki',
+    label: 'Hekireki',
+    description: 'デジタルジャーナル・グリッド・フラット（青天の霹靂）',
+    emoji: '🌩️',
+    previewBg: '#e8eaed',
+    previewCard: '#ffffff',
+    previewAccent: '#006bb3',
+  },
 ] as const;
 
 export type ThemeId = (typeof themeConfig)[number]['id'];

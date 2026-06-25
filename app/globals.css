@@ -2396,6 +2396,61 @@ html[data-theme='synthwave'] .dark nav a:hover,
   --color-accent: #34d399;
 }
 
+/* ── Hekireki ── */
+[data-theme='hekireki'] {
+  --color-bg: #e8eaed; /* Neutral background (Cool Light Gray) */
+  --color-background: var(--color-bg);
+  --color-card: #ffffff;
+  --color-secondary: #f0f2f5;
+  --color-text: #202124; /* Charcoal */
+  --color-border: #202124;
+  --color-accent: #006bb3; /* Deep Ocean Blue */
+  --color-on-accent: #e8eaed;
+  --color-code: #FF9600; /* Vibrant Orange */
+
+  --theme-font-sans: "Noto Sans JP", "Avenir", "Helvetica Neue", "Helvetica", "Arial", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo", "游ゴシック", "Yu Gothic", "ＭＳ Ｐゴシック", sans-serif;
+  --theme-font-mono: Consolas, Menlo, Monaco, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", Meiryo, monospace;
+
+  /* Card layout settings */
+  --theme-card-border-width: 1px;
+  --theme-card-border-color: #ccc;
+  --theme-card-radius: 8px; /* {rounded.lg} */
+  --theme-card-shadow: none; /* flat design */
+  --theme-card-hover-transform: none;
+  --theme-card-hover-shadow: none;
+
+  /* Buttons & nav */
+  --theme-btn-border-width: 1px;
+  --theme-btn-border-color: var(--color-accent);
+  --theme-btn-radius: 5px; /* {rounded.md} */
+  --theme-btn-bg: var(--color-accent);
+  --theme-btn-color: var(--color-on-accent);
+  --theme-btn-shadow: none;
+  --theme-btn-hover-transform: none;
+  --theme-btn-hover-shadow: none;
+  --theme-btn-hover-bg: var(--color-on-accent);
+  --theme-btn-hover-color: var(--color-accent);
+  --theme-btn-hover-border-color: var(--color-accent);
+  --theme-btn-active-transform: none;
+  --theme-btn-active-shadow: none;
+}
+
+[data-theme='hekireki'].dark {
+  --color-bg: #202124; /* Charcoal background */
+  --color-card: #2d2e31;
+  --color-secondary: #35363a;
+  --color-text: #e8eaed; /* Cool Light Gray text */
+  --color-border: #e8eaed;
+}
+
+[data-theme='hekireki'] body,
+[data-theme='hekireki'] html {
+  font-family: var(--theme-font-sans);
+  font-size: 16px;
+  line-height: 1.7;
+  letter-spacing: 0.05rem;
+}
+
 /* =======================
    インラインハードシャドウ テーマ別上書き (新規テーマ分)
    ======================= */
@@ -2608,6 +2663,20 @@ html[data-theme='synthwave'] .dark nav a:hover,
 [data-theme='bento'] .theme-btn,
 [data-theme='bento'] .theme-btn:hover,
 [data-theme='bento'] .theme-btn:active {
+  box-shadow: revert-layer;
+}
+
+/* Hekireki */
+[data-theme='hekireki'] [class*='shadow-'] {
+  --tw-shadow: none;
+  --tw-shadow-colored: none;
+  box-shadow: none !important;
+}
+[data-theme='hekireki'] .theme-card,
+[data-theme='hekireki'] .theme-card-hover:hover,
+[data-theme='hekireki'] .theme-btn,
+[data-theme='hekireki'] .theme-btn:hover,
+[data-theme='hekireki'] .theme-btn:active {
   box-shadow: revert-layer;
 }
 
@@ -2878,4 +2947,232 @@ html[data-theme='synthwave'] .dark nav a:hover,
 }
 [data-theme='bento'] nav a:hover {
   background-color: var(--color-secondary) !important;
+}
+
+/* ── Hekireki ── */
+[data-theme='hekireki'] .site-header {
+  background-color: var(--color-accent) !important;
+  color: var(--color-on-accent) !important;
+  border: none !important;
+  border-radius: 0px !important;
+  padding: 1rem !important;
+}
+
+[data-theme='hekireki'] .site-header a,
+[data-theme='hekireki'] .site-header span,
+[data-theme='hekireki'] .site-header svg {
+  color: var(--color-on-accent) !important;
+}
+
+[data-theme='hekireki'] nav a {
+  border: 1px solid var(--color-on-accent) !important;
+  border-radius: 5px !important;
+  color: var(--color-on-accent) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+[data-theme='hekireki'] nav a:hover {
+  background-color: var(--color-on-accent) !important;
+  color: var(--color-accent) !important;
+}
+
+[data-theme='hekireki'] footer {
+  background-color: var(--color-accent) !important;
+  color: var(--color-on-accent) !important;
+  border-top: none !important;
+  padding: 1.5rem 0 !important;
+  margin-top: 2rem !important;
+}
+[data-theme='hekireki'] footer a,
+[data-theme='hekireki'] footer p {
+  color: var(--color-on-accent) !important;
+  opacity: 0.8;
+}
+[data-theme='hekireki'] footer a:hover {
+  opacity: 1;
+}
+
+/* Headings */
+[data-theme='hekireki'] h1,
+[data-theme='hekireki'] h2,
+[data-theme='hekireki'] h3,
+[data-theme='hekireki'] h4 {
+  font-family: var(--theme-font-sans);
+}
+
+[data-theme='hekireki'] article.prose h1 {
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  border: none !important;
+  padding: 0 !important;
+  margin-top: 2rem !important;
+}
+
+[data-theme='hekireki'] article.prose h2 {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  border-left: 5px solid var(--color-accent) !important;
+  border-bottom: 1px solid var(--color-border) !important;
+  padding-left: 0.8rem !important;
+  padding-bottom: 0.3rem !important;
+  margin-top: 3rem !important;
+  border-right: none !important;
+  border-top: none !important;
+  background: none !important;
+}
+
+[data-theme='hekireki'] article.prose h3 {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  border-left: 2px solid var(--color-accent) !important;
+  padding-left: 0.6rem !important;
+  margin-top: 3rem !important;
+  border-bottom: none !important;
+  border-right: none !important;
+  border-top: none !important;
+  background: none !important;
+}
+
+[data-theme='hekireki'] article.prose h4 {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  margin-top: 3rem !important;
+  border: none !important;
+  padding: 0 !important;
+  background: none !important;
+}
+
+/* Article Elements */
+[data-theme='hekireki'] article.prose blockquote {
+  border: 1px solid var(--color-border) !important;
+  border-left-width: 5px !important;
+  background-color: var(--color-card) !important;
+  padding: 1rem !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+}
+
+[data-theme='hekireki'] pre.shiki {
+  border: 1px solid var(--color-border) !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+}
+
+[data-theme='hekireki'] article.prose table {
+  border: 1px solid var(--color-border) !important;
+  border-collapse: collapse !important;
+  width: 100% !important;
+}
+
+[data-theme='hekireki'] article.prose th {
+  background-color: var(--color-accent) !important;
+  color: var(--color-on-accent) !important;
+  border: 1px dashed var(--color-border) !important;
+  padding: 0.5rem !important;
+}
+
+[data-theme='hekireki'] article.prose td {
+  border: 1px dashed var(--color-border) !important;
+  padding: 0.5rem !important;
+}
+
+[data-theme='hekireki'] article.prose code:not(pre code) {
+  color: var(--color-code) !important;
+  background-color: var(--color-secondary) !important;
+  padding: 0.2rem 0.4rem !important;
+  border-radius: 3px !important;
+}
+
+/* Card border overrides */
+[data-theme='hekireki'] article.group.theme-card,
+[data-theme='hekireki'] div.aspect-video.not-prose {
+  border-width: 1px !important;
+  border-color: #ccc !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+[data-theme='hekireki'] .theme-card .border-b-3 {
+  border-bottom-width: 1px !important;
+  border-bottom-color: #ccc !important;
+}
+
+/* Post list card hover effect */
+[data-theme='hekireki'] .theme-card-hover:hover {
+  transform: translateY(-2px) !important;
+  border-color: var(--color-accent) !important;
+}
+
+/* Thumbnail mix-blend-mode on hover */
+[data-theme='hekireki'] .theme-card img {
+  transition: transform 0.5s ease, filter 0.3s ease, mix-blend-mode 0.3s ease !important;
+}
+
+[data-theme='hekireki'] .theme-card:hover img {
+  mix-blend-mode: multiply !important;
+}
+
+[data-theme='hekireki'].dark .theme-card:hover img {
+  mix-blend-mode: screen !important;
+}
+
+/* Tags styling */
+[data-theme='hekireki'] a[href^='/blog/tags/'] {
+  background-color: var(--color-accent) !important;
+  color: var(--color-on-accent) !important;
+  border: none !important;
+  border-radius: 3px !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+[data-theme='hekireki'] a[href^='/blog/tags/']:hover {
+  opacity: 0.9;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Scroll button styling */
+[data-theme='hekireki'] button[aria-label='トップへ戻る'] {
+  background-color: var(--color-accent) !important;
+  color: var(--color-on-accent) !important;
+  border-radius: 5px !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+[data-theme='hekireki'] button[aria-label='トップへ戻る'] svg {
+  color: var(--color-on-accent) !important;
+}
+
+/* Post navigation styling (prev/next links) */
+[data-theme='hekireki'] nav.mt-12.pt-8 {
+  border-top-width: 1px !important;
+  border-top-color: var(--color-border) !important;
+}
+
+[data-theme='hekireki'] nav.mt-12.pt-8 a.theme-card-hover {
+  background-color: var(--color-accent) !important;
+  border-radius: 5px !important;
+  border: none !important;
+  color: var(--color-on-accent) !important;
+  padding: 0.5rem 1rem !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+[data-theme='hekireki'] nav.mt-12.pt-8 a.theme-card-hover div {
+  color: var(--color-on-accent) !important;
+}
+
+[data-theme='hekireki'] nav.mt-12.pt-8 a.theme-card-hover:hover {
+  background-color: var(--color-on-accent) !important;
+  color: var(--color-accent) !important;
+  border: 1px solid var(--color-accent) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+[data-theme='hekireki'] nav.mt-12.pt-8 a.theme-card-hover:hover div {
+  color: var(--color-accent) !important;
 }
