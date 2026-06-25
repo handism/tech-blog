@@ -1,0 +1,119 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" version="29.5.3">
+  <diagram name="VPC Lattice Service Communication" id="vpc-lattice-diagram">
+    <mxGraphModel dx="1158" dy="748" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="aws-cloud" parent="1" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud;strokeColor=#AAB7B8;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#AAB7B8;dashed=0;" value="" vertex="1">
+          <mxGeometry height="720" width="1080" x="40" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="service-network" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=14;fontStyle=1;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.vpc_lattice_service_network;" value="VPC Lattice Service Network" vertex="1">
+          <mxGeometry height="78" width="78" x="520" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="vpc-a" parent="1" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=1;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_vpc;strokeColor=#248814;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#AAB7B8;dashed=0;" value="Service A VPC&#xa;10.0.0.0/16" vertex="1">
+          <mxGeometry height="280" width="360" x="80" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="subnet-a" parent="vpc-a" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=11;fontStyle=0;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_security_group;grStroke=0;strokeColor=#147EBA;fillColor=#E6F2F8;verticalAlign=top;align=left;spacingLeft=30;fontColor=#147EBA;dashed=0;" value="Private Subnet&#xa;10.0.1.0/24" vertex="1">
+          <mxGeometry height="220" width="320" x="20" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ec2-a" parent="subnet-a" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.ec2_instance;" value="Service A&#xa;(EC2 Instance)" vertex="1">
+          <mxGeometry height="78" width="78" x="121" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="sg-a" parent="subnet-a" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#F78E04;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.security_group;" value="Security Group A" vertex="1">
+          <mxGeometry height="48" width="40" x="20" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="vpc-b" parent="1" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=1;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_vpc;strokeColor=#248814;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#AAB7B8;dashed=0;" value="Service B VPC&#xa;10.1.0.0/16" vertex="1">
+          <mxGeometry height="280" width="360" x="720" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="subnet-b" parent="vpc-b" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=11;fontStyle=0;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_security_group;grStroke=0;strokeColor=#147EBA;fillColor=#E6F2F8;verticalAlign=top;align=left;spacingLeft=30;fontColor=#147EBA;dashed=0;" value="Private Subnet&#xa;10.1.1.0/24" vertex="1">
+          <mxGeometry height="220" width="320" x="20" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ec2-b" parent="subnet-b" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.ec2_instance;" value="Service B&#xa;(EC2 Instance)" vertex="1">
+          <mxGeometry height="78" width="78" x="121" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="sg-b" parent="subnet-b" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#F78E04;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.security_group;" value="Security Group B" vertex="1">
+          <mxGeometry height="48" width="40" x="20" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lattice-service" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.vpc_lattice_service;" value="VPC Lattice Service" vertex="1">
+          <mxGeometry height="78" width="78" x="820" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="target-group" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.target_group;" value="Target Group" vertex="1">
+          <mxGeometry height="78" width="78" x="820" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="cloudwatch" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#759C3E;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.cloudwatch_2;" value="CloudWatch Logs" vertex="1">
+          <mxGeometry height="78" width="78" x="520" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="kms" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#DD344C;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.kms;" value="KMS Key" vertex="1">
+          <mxGeometry height="78" width="78" x="360" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="iam-role" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#DD344C;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.role;" value="IAM Role" vertex="1">
+          <mxGeometry height="44" width="78" x="220" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="conn-a-network" edge="1" parent="1" source="vpc-a" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#8C4FFF;strokeWidth=2;fontSize=11;fontColor=#232F3E;dashed=1;" target="service-network" value="VPC Association">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn-b-network" edge="1" parent="1" source="vpc-b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#8C4FFF;strokeWidth=2;fontSize=11;fontColor=#232F3E;dashed=1;" target="service-network" value="VPC Association">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn-service-network" edge="1" parent="1" source="lattice-service" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#8C4FFF;strokeWidth=2;fontSize=11;fontColor=#232F3E;dashed=1;" target="service-network" value="Service Association">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn-tg-ec2" edge="1" parent="1" source="target-group" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#147EBA;strokeWidth=2;fontSize=11;fontColor=#232F3E;" target="ec2-b" value="Health Check">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn-service-tg" edge="1" parent="1" source="lattice-service" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#8C4FFF;strokeWidth=2;fontSize=11;fontColor=#232F3E;" target="target-group" value="Forward">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn-a-b" edge="1" parent="1" source="ec2-a" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#ED7100;strokeWidth=3;fontSize=12;fontColor=#232F3E;fontStyle=1;" target="ec2-b" value="HTTPS Request&#xa;(via VPC Lattice)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="440" />
+              <mxPoint x="559" y="440" />
+              <mxPoint x="559" y="260" />
+              <mxPoint x="860" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="conn-network-cw" edge="1" parent="1" source="service-network" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#759C3E;strokeWidth=2;fontSize=11;fontColor=#232F3E;" target="cloudwatch" value="Access Logs">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn-cw-kms" edge="1" parent="1" source="cloudwatch" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#DD344C;strokeWidth=2;fontSize=11;fontColor=#232F3E;" target="kms" value="Encryption">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="conn-iam-ec2" edge="1" parent="1" source="iam-role" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#DD344C;strokeWidth=2;fontSize=11;fontColor=#232F3E;dashed=1;" target="ec2-a" value="Attached">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="legend" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;align=left;verticalAlign=top;fontSize=12;fontStyle=1;" value="Legend" vertex="1">
+          <mxGeometry height="120" width="100" x="80" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-traffic" edge="1" parent="1" style="endArrow=classic;html=1;strokeColor=#ED7100;strokeWidth=3;fontSize=11;fontColor=#232F3E;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="90" y="510" as="sourcePoint" />
+            <mxPoint x="160" y="510" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend-traffic-label" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#333333;" value="Traffic Flow" vertex="1">
+          <mxGeometry height="20" width="80" x="90" y="515" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-assoc" edge="1" parent="1" style="endArrow=classic;html=1;strokeColor=#8C4FFF;strokeWidth=2;fontSize=11;fontColor=#232F3E;dashed=1;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="90" y="545" as="sourcePoint" />
+            <mxPoint x="160" y="545" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend-assoc-label" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#333333;" value="Association" vertex="1">
+          <mxGeometry height="20" width="80" x="90" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-data" edge="1" parent="1" style="endArrow=classic;html=1;strokeColor=#147EBA;strokeWidth=2;fontSize=11;fontColor=#232F3E;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="90" y="575" as="sourcePoint" />
+            <mxPoint x="160" y="575" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend-data-label" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=10;fontColor=#333333;" value="Data Flow" vertex="1">
+          <mxGeometry height="20" width="80" x="90" y="580" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,332 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" version="29.5.6">
+  <diagram name="ページ-1" id="3v-xYBYBjSGf5zZIs5ll">
+    <mxGraphModel dx="2722" dy="2558" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="Baseline Configuration" vertex="1">
+          <mxGeometry height="329" width="742" x="8" y="991" as="geometry" />
+        </mxCell>
+        <mxCell id="3" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="Newly Provisioned Accounts" vertex="1">
+          <mxGeometry height="128" width="1093" x="547" y="1394" as="geometry" />
+        </mxCell>
+        <mxCell id="4" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="Management Account" vertex="1">
+          <mxGeometry height="1160" width="1946" x="770" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="5" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="AWS Organizations" vertex="1">
+          <mxGeometry height="530" width="583" x="1026" y="765" as="geometry" />
+        </mxCell>
+        <mxCell id="6" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="Monitoring &amp; Notifications" vertex="1">
+          <mxGeometry height="530" width="469" x="2227" y="765" as="geometry" />
+        </mxCell>
+        <mxCell id="7" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="Storage &amp; Data" vertex="1">
+          <mxGeometry height="152" width="577" x="1630" y="765" as="geometry" />
+        </mxCell>
+        <mxCell id="8" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="Orchestration Layer" vertex="1">
+          <mxGeometry height="329" width="1271" x="1416" y="362" as="geometry" />
+        </mxCell>
+        <mxCell id="9" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="Service Catalog" vertex="1">
+          <mxGeometry height="329" width="249" x="1148" y="185" as="geometry" />
+        </mxCell>
+        <mxCell id="10" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="Service Catalog&#xa;Portfolio&#xa;Account Factory" vertex="1">
+          <mxGeometry height="102" width="176" x="1184" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="11" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="Product&#xa;Account Vending&#xa;Machine" vertex="1">
+          <mxGeometry height="102" width="179" x="1183" y="387" as="geometry" />
+        </mxCell>
+        <mxCell id="12" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="Lambda Function&#xa;Account Provisioning" vertex="1">
+          <mxGeometry height="78" width="208" x="1832" y="588" as="geometry" />
+        </mxCell>
+        <mxCell id="13" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="Lambda Function&#xa;Status Check" vertex="1">
+          <mxGeometry height="78" width="183" x="2199" y="588" as="geometry" />
+        </mxCell>
+        <mxCell id="14" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="EventBridge Rule&#xa;Periodic Status Check" vertex="1">
+          <mxGeometry height="78" width="214" x="2183" y="399" as="geometry" />
+        </mxCell>
+        <mxCell id="15" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="S3 Bucket&#xa;CloudFormation&#xa;Templates" vertex="1">
+          <mxGeometry height="102" width="174" x="1665" y="790" as="geometry" />
+        </mxCell>
+        <mxCell id="16" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="DynamoDB Table&#xa;Account Metadata" vertex="1">
+          <mxGeometry height="78" width="189" x="1921" y="802" as="geometry" />
+        </mxCell>
+        <mxCell id="17" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="SNS Topic&#xa;Notifications" vertex="1">
+          <mxGeometry height="78" width="151" x="2366" y="1192" as="geometry" />
+        </mxCell>
+        <mxCell id="18" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="CloudWatch&#xa;Dashboard &amp;amp; Logs" vertex="1">
+          <mxGeometry height="78" width="187" x="2472" y="802" as="geometry" />
+        </mxCell>
+        <mxCell id="19" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="CloudWatch Alarm&#xa;Error Detection" vertex="1">
+          <mxGeometry height="78" width="191" x="2469" y="1028" as="geometry" />
+        </mxCell>
+        <mxCell id="20" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="AWS Organizations&#xa;Account Creation" vertex="1">
+          <mxGeometry height="78" width="192" x="1261" y="802" as="geometry" />
+        </mxCell>
+        <mxCell id="21" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="Root OU" vertex="1">
+          <mxGeometry height="54" width="118" x="1321" y="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="22" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="Workload OU" vertex="1">
+          <mxGeometry height="54" width="152" x="1304" y="1204" as="geometry" />
+        </mxCell>
+        <mxCell id="23" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="Account 1&#xa;Development" vertex="1">
+          <mxGeometry height="78" width="154" x="623" y="1419" as="geometry" />
+        </mxCell>
+        <mxCell id="24" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="Account 2&#xa;Production" vertex="1">
+          <mxGeometry height="78" width="137" x="860" y="1419" as="geometry" />
+        </mxCell>
+        <mxCell id="25" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="Account 3&#xa;Sandbox" vertex="1">
+          <mxGeometry height="78" width="131" x="1117" y="1419" as="geometry" />
+        </mxCell>
+        <mxCell id="26" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="CloudFormation&#xa;StackSet&#xa;Account Baseline" vertex="1">
+          <mxGeometry height="102" width="182" x="247" y="1016" as="geometry" />
+        </mxCell>
+        <mxCell id="27" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="Baseline Stack&#xa;VPC, Security, IAM" vertex="1">
+          <mxGeometry height="78" width="191" x="43" y="1192" as="geometry" />
+        </mxCell>
+        <mxCell id="28" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="Baseline Stack&#xa;VPC, Security, IAM" vertex="1">
+          <mxGeometry height="78" width="191" x="284" y="1192" as="geometry" />
+        </mxCell>
+        <mxCell id="29" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="Baseline Stack&#xa;VPC, Security, IAM" vertex="1">
+          <mxGeometry height="78" width="191" x="524" y="1192" as="geometry" />
+        </mxCell>
+        <mxCell id="30" parent="1" style="whiteSpace=wrap;strokeWidth=2;" value="Platform Engineer&#xa;End User" vertex="1">
+          <mxGeometry height="78" width="190" x="1177" y="8" as="geometry" />
+        </mxCell>
+        <mxCell id="31" edge="1" parent="1" source="30" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="10" value="1. Request Account">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="32" edge="1" parent="1" source="10" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="11" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="33" edge="1" parent="1" source="11" style="curved=1;startArrow=none;endArrow=block;exitX=0.69;exitY=1;entryX=0.5;entryY=0;" target="12" value="2. Trigger">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1324" y="514" />
+              <mxPoint x="1935" y="551" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="34" edge="1" parent="1" source="12" style="curved=1;startArrow=none;endArrow=block;exitX=0;exitY=0.78;entryX=0;entryY=0.09;" target="20" value="3. Create Account">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1626" y="691" />
+              <mxPoint x="1129" y="728" />
+              <mxPoint x="1129" y="765" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="35" edge="1" parent="1" source="12" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.28;entryY=0;" target="16" value="4. Store Metadata">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1935" y="765" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="36" edge="1" parent="1" source="12" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.73;entryX=0.04;entryY=0;" target="17" value="5. Notify">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2307" y="691" />
+              <mxPoint x="2307" y="1155" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="37" edge="1" parent="1" source="20" style="curved=1;startArrow=none;endArrow=block;exitX=0;exitY=0.85;entryX=0.19;entryY=0;" target="23" value="6. Provision">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1088" y="917" />
+              <mxPoint x="1088" y="1320" />
+              <mxPoint x="623" y="1357" />
+              <mxPoint x="623" y="1394" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="38" edge="1" parent="1" source="20" style="curved=1;startArrow=none;endArrow=block;exitX=0.21;exitY=1;entryX=0.16;entryY=0;" target="24" value="6. Provision">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1247" y="917" />
+              <mxPoint x="1247" y="1320" />
+              <mxPoint x="851" y="1357" />
+              <mxPoint x="851" y="1394" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="39" edge="1" parent="1" source="20" style="curved=1;startArrow=none;endArrow=block;exitX=0.86;exitY=1;entryX=0.14;entryY=0;" target="25" value="6. Provision">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1492" y="917" />
+              <mxPoint x="1492" y="1320" />
+              <mxPoint x="1105" y="1357" />
+              <mxPoint x="1105" y="1394" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="40" edge="1" parent="1" source="14" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="13" value="7. Periodic Check">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="41" edge="1" parent="1" source="13" style="curved=1;startArrow=none;endArrow=block;exitX=0;exitY=0.67;entryX=0.77;entryY=0;" target="20" value="8. Check Status">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1848" y="691" />
+              <mxPoint x="1457" y="728" />
+              <mxPoint x="1457" y="765" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="42" edge="1" parent="1" source="13" style="curved=1;startArrow=none;endArrow=block;exitX=0;exitY=0.97;entryX=0.81;entryY=0;" target="16" value="9. Update">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2132" y="691" />
+              <mxPoint x="2132" y="765" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="43" edge="1" parent="1" source="13" style="curved=1;startArrow=none;endArrow=block;exitX=0.94;exitY=1;entryX=0.44;entryY=0;" target="17" value="10. Notify Success">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2424" y="691" />
+              <mxPoint x="2424" y="1155" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="44" edge="1" parent="1" source="12" style="curved=1;startArrow=none;endArrow=block;exitX=0;exitY=0.7;entryX=1;entryY=0.39;" target="26" value="11. Deploy Baseline">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1506" y="691" />
+              <mxPoint x="936" y="728" />
+              <mxPoint x="936" y="991" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="45" edge="1" parent="1" source="26" style="curved=1;startArrow=none;endArrow=block;exitX=0;exitY=0.89;entryX=0.5;entryY=0;" target="27" value="12. Deploy">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="138" y="1155" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="46" edge="1" parent="1" source="26" style="curved=1;startArrow=none;endArrow=block;exitX=0.63;exitY=1;entryX=0.5;entryY=0;" target="28" value="12. Deploy">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="379" y="1155" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="47" edge="1" parent="1" source="26" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.78;entryX=0.5;entryY=0;" target="29" value="12. Deploy">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="620" y="1155" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="48" edge="1" parent="1" source="27" style="curved=1;dashed=1;dashPattern=2 3;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.42;entryY=0;" target="23" value="Applied to">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="138" y="1320" />
+              <mxPoint x="680" y="1357" />
+              <mxPoint x="680" y="1394" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="49" edge="1" parent="1" source="28" style="curved=1;dashed=1;dashPattern=2 3;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.41;entryY=0;" target="24" value="Applied to">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="379" y="1320" />
+              <mxPoint x="908" y="1357" />
+              <mxPoint x="908" y="1394" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="50" edge="1" parent="1" source="29" style="curved=1;dashed=1;dashPattern=2 3;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.4;entryY=0;" target="25" value="Applied to">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="620" y="1320" />
+              <mxPoint x="1161" y="1357" />
+              <mxPoint x="1161" y="1394" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="51" edge="1" parent="1" source="11" style="curved=1;startArrow=none;endArrow=block;exitX=0.46;exitY=1;entryX=0.5;entryY=0;" target="15" value="Read Templates">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1262" y="514" />
+              <mxPoint x="1262" y="691" />
+              <mxPoint x="1752" y="728" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="52" edge="1" parent="1" source="12" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.65;entryX=0.37;entryY=0;" target="18" value="Write Logs">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2517" y="691" />
+              <mxPoint x="2517" y="765" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="53" edge="1" parent="1" source="13" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.73;entryX=0.63;entryY=0;" target="18" value="Write Logs">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2612" y="691" />
+              <mxPoint x="2612" y="765" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="54" edge="1" parent="1" source="18" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="19" value="Trigger">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="55" edge="1" parent="1" source="19" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.92;entryY=0;" target="17" value="Alert">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2565" y="1155" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="56" edge="1" parent="1" source="20" style="curved=1;startArrow=none;endArrow=block;exitX=0.56;exitY=1;entryX=0.5;entryY=0;" target="21" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1380" y="917" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="57" edge="1" parent="1" source="21" style="curved=1;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="22" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="58" edge="1" parent="1" source="22" style="curved=1;dashed=1;dashPattern=2 3;startArrow=none;endArrow=block;exitX=0.02;exitY=1;entryX=0.86;entryY=0;" target="23" value="Move to OU">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1207" y="1295" />
+              <mxPoint x="1207" y="1320" />
+              <mxPoint x="790" y="1357" />
+              <mxPoint x="790" y="1394" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="59" edge="1" parent="1" source="22" style="curved=1;dashed=1;dashPattern=2 3;startArrow=none;endArrow=block;exitX=0.5;exitY=1;entryX=0.9;entryY=0;" target="24" value="Move to OU">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1380" y="1320" />
+              <mxPoint x="1018" y="1357" />
+              <mxPoint x="1018" y="1394" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="60" edge="1" parent="1" source="22" style="curved=1;dashed=1;dashPattern=2 3;startArrow=none;endArrow=block;exitX=1;exitY=0.95;entryX=1;entryY=0.36;" target="25" value="Move to OU">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1579" y="1295" />
+              <mxPoint x="1579" y="1394" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

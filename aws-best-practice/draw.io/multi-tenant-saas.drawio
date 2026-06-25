@@ -1,0 +1,136 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Multi-tenant SaaS Architecture" id="multi-tenant-saas">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        
+        <!-- AWS Cloud Container -->
+        <mxCell id="aws-cloud" value="AWS Cloud" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=14;fontStyle=1;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud;strokeColor=#AAB7B8;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#232F3E;dashed=0;" vertex="1" parent="1">
+          <mxGeometry x="80" y="80" width="1240" height="740" as="geometry"/>
+        </mxCell>
+
+        <!-- Region Container -->
+        <mxCell id="region" value="Region" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_region;strokeColor=#00A4A6;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#147EBA;dashed=1;" vertex="1" parent="aws-cloud">
+          <mxGeometry x="40" y="40" width="1160" height="660" as="geometry"/>
+        </mxCell>
+
+        <!-- Tenant Users -->
+        <mxCell id="tenant-users" value="Tenant Users" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#232F3D;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.users;" vertex="1" parent="1">
+          <mxGeometry x="40" y="360" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Amazon Cognito -->
+        <mxCell id="cognito" value="Amazon Cognito&#xa;User Pool" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#DD344C;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.cognito;" vertex="1" parent="region">
+          <mxGeometry x="80" y="260" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- API Gateway -->
+        <mxCell id="api-gateway" value="Amazon API Gateway&#xa;(Regional)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#E7157B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.api_gateway;" vertex="1" parent="region">
+          <mxGeometry x="280" y="260" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Lambda - Tenant API -->
+        <mxCell id="lambda-api" value="Lambda Function&#xa;(Tenant API)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.lambda_function;" vertex="1" parent="region">
+          <mxGeometry x="480" y="180" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Lambda - Onboarding -->
+        <mxCell id="lambda-onboarding" value="Lambda Function&#xa;(Onboarding)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.lambda_function;" vertex="1" parent="region">
+          <mxGeometry x="480" y="340" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- DynamoDB - Tenant Metadata -->
+        <mxCell id="dynamodb-metadata" value="DynamoDB&#xa;(Tenant Metadata)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#C925D1;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.dynamodb;" vertex="1" parent="region">
+          <mxGeometry x="720" y="340" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- DynamoDB - Tenant Data -->
+        <mxCell id="dynamodb-data" value="DynamoDB&#xa;(Tenant Data)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#C925D1;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.dynamodb;" vertex="1" parent="region">
+          <mxGeometry x="720" y="180" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- S3 Bucket -->
+        <mxCell id="s3-bucket" value="Amazon S3&#xa;(Tenant Data)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#7AA116;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.s3_bucket;" vertex="1" parent="region">
+          <mxGeometry x="720" y="80" width="60" height="62" as="geometry"/>
+        </mxCell>
+
+        <!-- CloudWatch -->
+        <mxCell id="cloudwatch" value="Amazon CloudWatch&#xa;(Logs &amp; Metrics)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#F34482;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.cloudwatch;" vertex="1" parent="region">
+          <mxGeometry x="920" y="260" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Connections -->
+        <!-- Users to Cognito -->
+        <mxCell id="edge-users-cognito" value="Authenticate" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;" edge="1" parent="1" source="tenant-users" target="cognito">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Users to API Gateway -->
+        <mxCell id="edge-users-api" value="HTTPS" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;" edge="1" parent="1" source="tenant-users" target="api-gateway">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Cognito to API Gateway -->
+        <mxCell id="edge-cognito-api" value="JWT Token" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;dashed=1;" edge="1" parent="region" source="cognito" target="api-gateway">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- API Gateway to Lambda API -->
+        <mxCell id="edge-api-lambda-api" value="Invoke" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;" edge="1" parent="region" source="api-gateway" target="lambda-api">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- API Gateway to Lambda Onboarding -->
+        <mxCell id="edge-api-lambda-onboarding" value="Invoke" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;" edge="1" parent="region" source="api-gateway" target="lambda-onboarding">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Lambda API to DynamoDB Data -->
+        <mxCell id="edge-lambda-api-dynamodb-data" value="Query/Put&#xa;(tenant_id)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;" edge="1" parent="region" source="lambda-api" target="dynamodb-data">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Lambda API to S3 -->
+        <mxCell id="edge-lambda-api-s3" value="Get/Put&#xa;(prefix isolation)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;" edge="1" parent="region" source="lambda-api" target="s3-bucket">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Lambda Onboarding to DynamoDB Metadata -->
+        <mxCell id="edge-lambda-onboarding-dynamodb-metadata" value="PutItem" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;" edge="1" parent="region" source="lambda-onboarding" target="dynamodb-metadata">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Lambda Onboarding to Cognito -->
+        <mxCell id="edge-lambda-onboarding-cognito" value="Create User" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;" edge="1" parent="region" source="lambda-onboarding" target="cognito">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Lambda to CloudWatch -->
+        <mxCell id="edge-lambda-api-cloudwatch" value="Logs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;strokeColor=#545B64;fontSize=11;dashed=1;" edge="1" parent="region" source="lambda-api" target="cloudwatch">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="edge-lambda-onboarding-cloudwatch" value="Logs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;strokeColor=#545B64;fontSize=11;dashed=1;" edge="1" parent="region" source="lambda-onboarding" target="cloudwatch">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- API Gateway to CloudWatch -->
+        <mxCell id="edge-api-cloudwatch" value="Logs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1;strokeColor=#545B64;fontSize=11;dashed=1;" edge="1" parent="region" source="api-gateway" target="cloudwatch">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Tenant Isolation Note -->
+        <mxCell id="isolation-note" value="Tenant Isolation:&#xa;- Cognito custom:tenant_id attribute&#xa;- DynamoDB partition key (tenant_id)&#xa;- S3 prefix-based isolation&#xa;- IAM policy enforcement" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF4E6;strokeColor=#D79B00;align=left;verticalAlign=top;fontSize=11;fontStyle=1;" vertex="1" parent="region">
+          <mxGeometry x="80" y="480" width="260" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- Architecture Pattern Note -->
+        <mxCell id="pattern-note" value="Architecture Pattern:&#xa;- Pool model (shared resources)&#xa;- Serverless (cost-optimized)&#xa;- ARM64 Lambda (20% cost savings)&#xa;- Pay-per-request DynamoDB" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F2FF;strokeColor=#0066CC;align=left;verticalAlign=top;fontSize=11;fontStyle=1;" vertex="1" parent="region">
+          <mxGeometry x="400" y="480" width="260" height="120" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

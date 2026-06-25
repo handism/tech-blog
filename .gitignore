@@ -53,3 +53,6 @@ node_modules/
 
 # Lighthouse CI (ローカル実行時の一時レポート)
 /.lighthouseci/
+
+# AWS Best Practices auto-generated public assets
+/public/aws-best-practices/

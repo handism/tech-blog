@@ -1,0 +1,119 @@
+[
+  {
+    "slug": "container-orchestration",
+    "title": "Amazon ECS コンテナオーケストレーション",
+    "description": "Amazon ECS/Fargateを使用した、安全でスケーラブルなコンテナデプロイ環境のテンプレートです。マルチAZ対応、ALBによる負荷分散、最小特権のIAMロールが自動的にセットアップされます。",
+    "category": "Containers",
+    "templateFile": "container-orchestration.yaml",
+    "diagramFile": "container-orchestration.drawio.svg",
+    "awsServices": ["ECS", "Fargate", "VPC", "ALB", "IAM"]
+  },
+  {
+    "slug": "cost-optimized-serverless",
+    "title": "コスト最適化サーバーレスアーキテクチャ",
+    "description": "API Gateway、Lambda、DynamoDB、S3を使用し、ARM64アーキテクチャやライフサイクルポリシーなどを適用してコストを最小化したサーバーレス構成です。",
+    "category": "Serverless",
+    "templateFile": "cost-optimized-serverless.yaml",
+    "diagramFile": "cost-optimized-serverless.drawio.svg",
+    "awsServices": ["API Gateway", "Lambda", "DynamoDB", "S3", "CloudWatch"]
+  },
+  {
+    "slug": "ha-pattern",
+    "title": "高可用性 Web アプリケーションパターン",
+    "description": "マルチAZにまたがるVPC、ALB、EC2、Auto Scalingを使用した、耐障害性に優れた伝統的な高可用性インフラストラクチャです。",
+    "category": "High Availability",
+    "templateFile": "ha-pattern.yaml",
+    "diagramFile": "ha-pattern.drawio.svg",
+    "awsServices": ["EC2", "ALB", "Auto Scaling", "VPC", "CloudWatch"]
+  },
+  {
+    "slug": "langfuse-on-aws",
+    "title": "Langfuse LLM 可観測性プラットフォーム",
+    "description": "LLMアプリケーションの可観測性・分析プラットフォームである Langfuse を、Amazon ECS/Fargate と RDS PostgreSQL を用いてAWS上に安全にデプロイします。",
+    "category": "Observability",
+    "templateFile": "langfuse-on-aws.yaml",
+    "diagramFile": "langfuse-on-aws.drawio.svg",
+    "awsServices": ["ECS", "Fargate", "RDS", "ElastiCache", "ALB", "VPC"]
+  },
+  {
+    "slug": "multi-tenant-saas",
+    "title": "マルチテナント SaaS アーキテクチャ",
+    "description": "Amazon Cognito、API Gateway、Lambda、DynamoDBを組み合わせ、テナント分離とセキュリティを考慮したマルチテナントSaaSの基盤を構築します。",
+    "category": "SaaS",
+    "templateFile": "multi-tenant-saas.yaml",
+    "diagramFile": null,
+    "awsServices": ["Cognito", "API Gateway", "Lambda", "DynamoDB"]
+  },
+  {
+    "slug": "s3-static-website",
+    "title": "S3 & CloudFront 静的ウェブサイトホスティング",
+    "description": "Amazon S3でコンテンツをホストし、Amazon CloudFront、Route 53、ACMを組み合わせてHTTPS対応の安全で高速な静的サイトを作成します。",
+    "category": "Security & CDN",
+    "templateFile": "s3-static-website.yaml",
+    "diagramFile": null,
+    "awsServices": ["S3", "CloudFront", "Route 53", "ACM"]
+  },
+  {
+    "slug": "serverless-api",
+    "title": "標準サーバーレス API アーキテクチャ",
+    "description": "API Gateway と AWS Lambda を連携させた、標準的な RESTful または HTTP API エンドポイントを瞬時にプロビジョニングする構成です。",
+    "category": "Serverless",
+    "templateFile": "serverless-api.yaml",
+    "diagramFile": null,
+    "awsServices": ["API Gateway", "Lambda", "IAM"]
+  },
+  {
+    "slug": "streaming-architecture",
+    "title": "リアルタイムデータストリーミングアーキテクチャ",
+    "description": "Amazon Kinesis Data Streams、Kinesis Data Firehose、S3、Lambdaを組み合わせ、大量のイベントデータをリアルタイムで収集・加工・保存するパイプラインです。",
+    "category": "Analytics",
+    "templateFile": "streaming-architecture.yaml",
+    "diagramFile": "streaming-architecture.drawio.svg",
+    "awsServices": ["Kinesis Data Streams", "Kinesis Data Firehose", "S3", "Lambda"]
+  },
+  {
+    "slug": "three-tier-architecture",
+    "title": "古典的 3 層ウェブアプリケーション",
+    "description": "プレゼンテーション層、アプリケーション層、データベース層をネットワーク的に分離し、堅牢なセキュリティと可用性を備えた 3 層構造を構築します。",
+    "category": "Web Application",
+    "templateFile": "three-tier-architecture.yaml",
+    "diagramFile": null,
+    "awsServices": ["EC2", "ALB", "RDS", "VPC", "Security Group"]
+  },
+  {
+    "slug": "vpc-lattice-service-communication",
+    "title": "VPC Lattice サービス間通信",
+    "description": "Amazon VPC Lattice を使用して、異なるVPCやアカウントのサービス（ECS, Lambda, EC2）間で安全かつシンプルな相互通信（サービスメッシュ）を実現します。",
+    "category": "Networking",
+    "templateFile": "vpc-lattice-service-communication.yaml",
+    "diagramFile": null,
+    "awsServices": ["VPC Lattice", "ECS", "Lambda", "VPC"]
+  },
+  {
+    "slug": "high-availability-architecture",
+    "title": "高可用マルチAZデータベース＆Web構成",
+    "description": "マルチAZ配置 of RDS、Auto Scaling EC2、VPC構成により、シングルポイント障害を排除した安全な高可用インフラテンプレートです。",
+    "category": "High Availability",
+    "templateFile": "high-availability-architecture.yaml",
+    "diagramFile": "high-availability-architecture.drawio.svg",
+    "awsServices": ["EC2", "ALB", "RDS", "Auto Scaling", "VPC"]
+  },
+  {
+    "slug": "mcp-server",
+    "title": "MCP サーバー on AWS (ECS/App Runner)",
+    "description": "Model Context Protocol (MCP) サーバーを AWS 上（ECS Fargate または AWS App Runner）にデプロイし、LLMエージェントとプライベートリソースを安全に連携させます。",
+    "category": "AI & Integration",
+    "templateFile": "mcp-server.yaml",
+    "diagramFile": "mcp-server.drawio.svg",
+    "awsServices": ["ECS", "Fargate", "App Runner", "VPC", "IAM"]
+  },
+  {
+    "slug": "account-factory",
+    "title": "マルチアカウント構造（アカウントファクトリ）",
+    "description": "AWS Control Tower や AWS Organizations、CloudFormation を活用し、安全なセキュリティガードレールと初期設定を施した AWS アカウントを自動発行します。",
+    "category": "Governance",
+    "templateFile": "account-factory.yaml",
+    "diagramFile": "account-factory.drawio.svg",
+    "awsServices": ["Organizations", "Control Tower", "CloudFormation", "IAM"]
+  }
+]

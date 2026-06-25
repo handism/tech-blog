@@ -1,0 +1,108 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" version="29.5.2">
+  <diagram name="ページ-1" id="FLWgXD3OdRrUF0DnMZ8T">
+    <mxGraphModel dx="3474" dy="2243" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" parent="1" style="whiteSpace=wrap;strokeWidth=2;verticalAlign=top;" value="Serverless API" vertex="1">
+          <mxGeometry height="300" width="1555" x="8" y="8" as="geometry" />
+        </mxCell>
+        <mxCell id="3" parent="2" style="whiteSpace=wrap;strokeWidth=2;" value="API Client" vertex="1">
+          <mxGeometry height="54" width="130" x="46" y="137" as="geometry" />
+        </mxCell>
+        <mxCell id="4" parent="2" style="whiteSpace=wrap;strokeWidth=2;" value="API Gateway REST API&#xa;Regional, X-Ray Enabled" vertex="1">
+          <mxGeometry height="78" width="233" x="296" y="125" as="geometry" />
+        </mxCell>
+        <mxCell id="5" parent="2" style="whiteSpace=wrap;strokeWidth=2;" value="Lambda Function&#xa;Python 3.13, ARM64" vertex="1">
+          <mxGeometry height="78" width="202" x="651" y="77" as="geometry" />
+        </mxCell>
+        <mxCell id="6" parent="2" style="whiteSpace=wrap;strokeWidth=2;" value="DynamoDB Table&#xa;PAY_PER_REQUEST&#xa;Encrypted, PITR" vertex="1">
+          <mxGeometry height="102" width="192" x="1010" y="43" as="geometry" />
+        </mxCell>
+        <mxCell id="7" parent="2" style="whiteSpace=wrap;strokeWidth=2;" value="CloudWatch Logs&#xa;7 days retention" vertex="1">
+          <mxGeometry height="78" width="181" x="1016" y="195" as="geometry" />
+        </mxCell>
+        <mxCell id="8" parent="2" style="whiteSpace=wrap;strokeWidth=2;" value="DynamoDB Streams" vertex="1">
+          <mxGeometry height="54" width="198" x="1328" y="67" as="geometry" />
+        </mxCell>
+        <mxCell id="9" edge="1" parent="2" source="3" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="4" value="HTTPS">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="10" edge="1" parent="2" source="4" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.1;entryX=0;entryY=0.5;" target="5" value="Invoke">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="591" y="116" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="11" edge="1" parent="2" source="5" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.34;entryX=0;entryY=0.5;" target="6" value="Read/Write">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="931" y="94" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="12" edge="1" parent="2" source="5" style="curved=1;dashed=1;dashPattern=2 3;startArrow=none;endArrow=block;exitX=1;exitY=1;entryX=0;entryY=0.18;" target="7" value="Logs">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="931" y="186" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="13" edge="1" parent="2" source="6" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="8" value="Stream">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="14" edge="1" parent="2" source="4" style="curved=1;dashed=1;dashPattern=2 3;startArrow=none;endArrow=block;exitX=0.83;exitY=1;entryX=0;entryY=0.64;" target="7" value="Logs &amp; Metrics">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="591" y="255" />
+              <mxPoint x="931" y="255" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="15" parent="1" style="whiteSpace=wrap;strokeWidth=2;verticalAlign=top;" value="S3 Static Website" vertex="1">
+          <mxGeometry height="148" width="1561" x="1613" y="84" as="geometry" />
+        </mxCell>
+        <mxCell id="16" parent="15" style="whiteSpace=wrap;strokeWidth=2;" value="User/Browser" vertex="1">
+          <mxGeometry height="54" width="157" x="46" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="17" parent="15" style="whiteSpace=wrap;strokeWidth=2;" value="CloudFront Distribution&#xa;HTTP/2+3, IPv6" vertex="1">
+          <mxGeometry height="78" width="228" x="324" y="43" as="geometry" />
+        </mxCell>
+        <mxCell id="18" parent="15" style="whiteSpace=wrap;strokeWidth=2;" value="Origin Access Control&#xa;SigV4" vertex="1">
+          <mxGeometry height="78" width="211" x="693" y="43" as="geometry" />
+        </mxCell>
+        <mxCell id="19" parent="15" style="whiteSpace=wrap;strokeWidth=2;" value="S3 Content Bucket&#xa;Encrypted, Versioned" vertex="1">
+          <mxGeometry height="78" width="212" x="1054" y="43" as="geometry" />
+        </mxCell>
+        <mxCell id="20" parent="15" style="whiteSpace=wrap;strokeWidth=2;" value="S3 Log Bucket&#xa;Access Logs" vertex="1">
+          <mxGeometry height="78" width="159" x="1372" y="43" as="geometry" />
+        </mxCell>
+        <mxCell id="21" edge="1" parent="15" source="16" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="17" value="HTTPS">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="22" edge="1" parent="15" source="17" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="18" value="OAC Auth">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="23" edge="1" parent="15" source="18" style="curved=1;startArrow=none;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="19" value="GetObject">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="24" edge="1" parent="15" source="19" style="curved=1;dashed=1;dashPattern=2 3;startArrow=none;endArrow=block;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="20" value="Logs">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
