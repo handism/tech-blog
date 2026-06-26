@@ -2338,6 +2338,11 @@ html[data-theme='synthwave'] .dark nav a:hover,
   --theme-btn-hover-shadow: 4px 4px 0px rgba(255,255,255,0.25);
 }
 
+[data-theme='illustration'].dark .bg-accent,
+[data-theme='illustration'].dark .bg-accent * {
+  color: #000000 !important;
+}
+
 /* ── Dashboard UI ── */
 [data-theme='dashboard'] {
   --color-bg: #f8fafc;
