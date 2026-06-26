@@ -389,14 +389,30 @@ article.prose table {
   border: 1px solid var(--border);
   box-shadow: none;
   display: block;
-  width: fit-content;
-  max-width: 100%;
+  width: 100%;
   overflow-x: auto;
   white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
 }
 
 .dark article.prose table {
   box-shadow: none;
+}
+
+/* =======================
+   Mermaid ダイアグラム
+   ======================= */
+article.prose .mermaid {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+article.prose .mermaid svg {
+  max-width: 100% !important;
+  height: auto !important;
 }
 
 article.prose thead {

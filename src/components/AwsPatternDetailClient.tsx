@@ -78,9 +78,9 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
       </div>
 
       {/* 2カラムレイアウト */}
-      <div className="grid gap-6 lg:grid-cols-12 items-start">
+      <div className="grid gap-6 lg:grid-cols-12 items-start w-full">
         {/* 左カラム (メタデータ、構成図、コマンド) */}
-        <div className="lg:col-span-5 space-y-6">
+        <div className="lg:col-span-5 space-y-6 min-w-0 w-full">
           {/* 基本情報カード */}
           <div className="theme-card p-6 border-2 border-border rounded-2xl shadow-[4px_4px_0px_0px_var(--border)] dark:shadow-[4px_4px_0px_0px_var(--accent)] space-y-4">
             <span className="inline-block text-xs font-black px-2.5 py-0.5 bg-secondary text-text border-2 border-border rounded-md">
@@ -170,8 +170,8 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
         </div>
 
         {/* 右カラム (YAMLコードプレビュー・Shiki事前レンダリングHTML) */}
-        <div className="lg:col-span-7">
-          <div className="theme-card border-2 border-border rounded-2xl shadow-[4px_4px_0px_0px_var(--border)] dark:shadow-[4px_4px_0px_0px_var(--accent)] overflow-hidden flex flex-col max-h-[500px] lg:max-h-[820px]">
+        <div className="lg:col-span-7 min-w-0 w-full">
+          <div className="theme-card border-2 border-border rounded-2xl shadow-[4px_4px_0px_0px_var(--border)] dark:shadow-[4px_4px_0px_0px_var(--accent)] overflow-hidden flex flex-col max-h-[500px] lg:max-h-[820px] min-w-0 w-full">
             {/* コントロールヘッダー */}
             <div className="px-6 py-4 bg-secondary border-b-2 border-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center gap-2 shrink-0">
