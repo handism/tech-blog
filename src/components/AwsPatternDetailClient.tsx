@@ -86,7 +86,7 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
             <span className="inline-block text-xs font-black px-2.5 py-0.5 bg-secondary text-text border-2 border-border rounded-md">
               {pattern.category}
             </span>
-            <h1 className="text-2xl md:text-3xl font-black text-text leading-tight">
+            <h1 className="text-2xl md:text-3xl font-black text-text leading-tight break-words">
               {pattern.title}
             </h1>
             <p className="text-sm text-text/70 leading-relaxed font-medium">
@@ -114,7 +114,7 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
           {/* アーキテクチャ図カード */}
           {pattern.diagramFile && (
             <div className="theme-card p-6 border-2 border-border rounded-2xl shadow-[4px_4px_0px_0px_var(--border)] dark:shadow-[4px_4px_0px_0px_var(--accent)] space-y-4">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <h3 className="text-sm font-black text-text flex items-center gap-2">
                   <span className="flex h-2 w-2 rounded-full bg-accent" />
                   アーキテクチャ図 (Architecture Diagram)
@@ -171,9 +171,9 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
 
         {/* 右カラム (YAMLコードプレビュー・Shiki事前レンダリングHTML) */}
         <div className="lg:col-span-7">
-          <div className="theme-card border-2 border-border rounded-2xl shadow-[4px_4px_0px_0px_var(--border)] dark:shadow-[4px_4px_0px_0px_var(--accent)] overflow-hidden flex flex-col max-h-[820px]">
+          <div className="theme-card border-2 border-border rounded-2xl shadow-[4px_4px_0px_0px_var(--border)] dark:shadow-[4px_4px_0px_0px_var(--accent)] overflow-hidden flex flex-col max-h-[500px] lg:max-h-[820px]">
             {/* コントロールヘッダー */}
-            <div className="px-6 py-4 bg-secondary border-b-2 border-border flex items-center justify-between gap-4">
+            <div className="px-6 py-4 bg-secondary border-b-2 border-border flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center gap-2 shrink-0">
                 <span className="flex h-3 w-3 rounded-full bg-red-500" />
                 <span className="flex h-3 w-3 rounded-full bg-yellow-500" />
@@ -214,7 +214,7 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
             </div>
 
             {/* コードスクロールプレビュー (Shikiによる出力) */}
-            <div className="p-4 overflow-y-auto font-mono text-sm leading-relaxed bg-[#0d1117] text-[#c9d1d9] flex-1 scrollbar-thin">
+            <div className="p-4 overflow-auto font-mono text-sm leading-relaxed bg-[#0d1117] text-[#c9d1d9] flex-1 scrollbar-thin">
               <div
                 className="aws-code-preview prose prose-invert max-w-none"
                 dangerouslySetInnerHTML={{ __html: pattern.htmlCode }}
