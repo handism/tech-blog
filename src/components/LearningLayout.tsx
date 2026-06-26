@@ -221,7 +221,7 @@ export default function LearningLayout({
         <>
           <button
             onClick={() => setIsTocDrawerOpen(true)}
-            className="text-text lg:!hidden fixed bottom-18 right-6 z-40 w-12 h-12 theme-btn flex items-center justify-center"
+            className="text-text lg:!hidden fixed bottom-20 right-6 z-40 w-12 h-12 theme-btn flex items-center justify-center"
             aria-label="目次を開く"
           >
             <Menu className="h-5 w-5" />
