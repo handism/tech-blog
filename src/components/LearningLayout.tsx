@@ -1,11 +1,12 @@
 // src/components/LearningLayout.tsx
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import type { TocItem } from '@/src/types/post';
 import type { LearningPostMeta, LearningCourseMeta } from '@/src/types/learning';
-import { BookOpen, ChevronRight, X, Menu } from 'lucide-react';
+import { BookOpen, ChevronRight, X } from 'lucide-react';
+import MobileToc from '@/src/components/MobileToc';
 
 interface LearningLayoutProps {
   children: React.ReactNode;
@@ -23,31 +24,9 @@ export default function LearningLayout({
   toc,
 }: LearningLayoutProps) {
   const [isChapterDrawerOpen, setIsChapterDrawerOpen] = useState(false);
-  const [isTocDrawerOpen, setIsTocDrawerOpen] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const hasToc = !!(toc && toc.length > 0);
-
-  // モーダルオープン時のフォーカス移動とキーボード Esc キーでのクローズ
-  useEffect(() => {
-    if (!isTocDrawerOpen) return;
-
-    if (closeButtonRef.current) {
-      closeButtonRef.current.focus();
-    }
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setIsTocDrawerOpen(false);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isTocDrawerOpen]);
 
   // IntersectionObserverによるTOCのハイライト
   useEffect(() => {
@@ -104,7 +83,7 @@ export default function LearningLayout({
     </nav>
   );
 
-  const renderTocList = (onItemClick?: () => void) => (
+  const renderTocList = () => (
     <ul className="space-y-2 text-sm font-bold">
       {toc?.map((item) => {
         const indent = (item.level - 1) * 16;
@@ -113,7 +92,6 @@ export default function LearningLayout({
           <li key={item.id} style={{ paddingLeft: `${indent}px` }}>
             <a
               href={`#${item.id}`}
-              onClick={onItemClick}
               className={`block hover:text-accent hover:underline transition-all duration-200 ${
                 isActive ? 'text-accent font-extrabold translate-x-1' : 'text-text/80 font-medium'
               }`}
@@ -216,47 +194,8 @@ export default function LearningLayout({
         </div>
       )}
 
-      {/* モバイル用：ページ内目次 (TOC) ドロワー */}
-      {hasToc && (
-        <>
-          <button
-            onClick={() => setIsTocDrawerOpen(true)}
-            className="text-text lg:!hidden fixed bottom-20 right-6 z-40 w-12 h-12 theme-btn flex items-center justify-center"
-            aria-label="目次を開く"
-          >
-            <Menu className="h-5 w-5" />
-          </button>
-
-          <div
-            className={`lg:hidden fixed inset-0 z-[100] transition-opacity duration-300 ${isTocDrawerOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
-            role="dialog"
-            aria-modal="true"
-            aria-label="目次モーダル"
-            aria-hidden={!isTocDrawerOpen}
-          >
-            <div
-              className="bg-bg absolute inset-0 backdrop-blur-sm opacity-50"
-              onClick={() => setIsTocDrawerOpen(false)}
-            />
-            <div
-              className={`fixed bottom-0 left-0 right-0 bg-card rounded-t-3xl p-6 max-h-[80vh] overflow-y-auto border-t-3 border-border shadow-2xl transition-transform duration-300 ease-out theme-toc-drawer ${isTocDrawerOpen ? 'translate-y-0' : 'translate-y-full'}`}
-            >
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="font-extrabold text-lg text-text">目次</h2>
-                <button
-                  ref={closeButtonRef}
-                  onClick={() => setIsTocDrawerOpen(false)}
-                  className="p-2 text-text/50 hover:text-text focus:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-lg"
-                  aria-label="目次を閉じる"
-                >
-                  ✕
-                </button>
-              </div>
-              {renderTocList(() => setIsTocDrawerOpen(false))}
-            </div>
-          </div>
-        </>
-      )}
+      {/* モバイル用：ページ内目次 (TOC) */}
+      <MobileToc toc={toc} />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 // src/components/BlogLayout.tsx
 import Sidebar from '@/src/components/Sidebar';
+import MobileToc from '@/src/components/MobileToc';
 import type { CategoryCount, TagCount } from '@/src/lib/post-taxonomy';
 import { TocItem } from '@/src/types/post';
 import { ReactNode } from 'react';
@@ -29,6 +30,9 @@ export default function BlogLayout({ children, toc, categoryCounts, tagCounts }:
           <Sidebar toc={toc} categoryCounts={categoryCounts} tagCounts={tagCounts} />
         </aside>
       </div>
+
+      {/* モバイル用TOC */}
+      <MobileToc toc={toc} />
     </div>
   );
 }
