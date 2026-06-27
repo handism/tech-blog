@@ -3,7 +3,8 @@ import { createPostMeta, parsePostSource } from '@/src/lib/post-parser';
 import { readAllPostSources, readPostSourceBySlug } from '@/src/lib/post-repository';
 import { renderPostMarkdown } from '@/src/lib/post-renderer';
 import type { Post, PostMeta } from '@/src/types/post';
-import { filterDrafts, isVisibleInEnv, sortByDate } from '@/src/lib/utils';
+import { isVisibleInEnv } from '@/src/lib/utils';
+import { processMetadataList } from '@/src/lib/server-utils';
 import { cache } from 'react';
 
 /**
@@ -23,13 +24,10 @@ const _loadAndParseMeta = cache(async function _loadAndParseMeta(
  */
 export const getAllPostMeta = cache(async function getAllPostMeta(): Promise<PostMeta[]> {
   const sources = await readAllPostSources();
-  const posts = sources.map(({ slug, raw }) => {
+  return processMetadataList(sources, (slug, raw) => {
     const { data, content } = parsePostSource(raw);
     return createPostMeta(slug, data, content);
   });
-
-  const filtered = filterDrafts(posts);
-  return sortByDate(filtered);
 });
 
 /**

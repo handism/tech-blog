@@ -4,6 +4,7 @@ import { readAllScrapSources } from '@/src/lib/scrap-repository';
 import { renderPostMarkdown } from '@/src/lib/post-renderer';
 import type { Scrap, ScrapMeta } from '@/src/types/scrap';
 import { filterDrafts, sortByDate } from '@/src/lib/utils';
+import { processMetadataList } from '@/src/lib/server-utils';
 import { cache } from 'react';
 
 /**
@@ -11,12 +12,10 @@ import { cache } from 'react';
  */
 export const getAllScrapMeta = cache(async function getAllScrapMeta(): Promise<ScrapMeta[]> {
   const sources = await readAllScrapSources();
-  const scraps = sources.map(({ slug, raw }) => {
+  return processMetadataList(sources, (slug, raw) => {
     const { data, content } = parseScrapSource(raw);
     return createScrapMeta(slug, data, content);
   });
-  const filtered = filterDrafts(scraps);
-  return sortByDate(filtered);
 });
 
 /**

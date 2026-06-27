@@ -1,6 +1,6 @@
 // src/lib/scrap-parser.ts
 import { siteConfig } from '@/src/config/site';
-import { markdownToPlaintext } from '@/src/lib/post-parser';
+import { markdownToPlaintext } from '@/src/lib/markdown-utils';
 import { parseFrontmatter, zodDateSchema } from '@/src/lib/utils';
 import type { ScrapMeta } from '@/src/types/scrap';
 import { z } from 'zod';

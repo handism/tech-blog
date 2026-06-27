@@ -1,8 +1,8 @@
-// src/lib/aws-gallery-repository.ts
 import fs from 'fs/promises';
 import path from 'path';
 import { AwsPatternMeta, AwsPatternMetaSchema } from '../types/aws-gallery';
 import { z } from 'zod';
+import { fileExists } from './server-utils';
 
 const awsDir = path.join(/*turbopackIgnore: true*/ process.cwd(), 'aws-patterns');
 const metaPath = path.join(/*turbopackIgnore: true*/ awsDir, 'gallery-meta.json');
@@ -10,18 +10,6 @@ const iacDir = path.join(/*turbopackIgnore: true*/ awsDir, 'iac');
 const imgDir = path.join(/*turbopackIgnore: true*/ awsDir, 'img');
 
 const publicDestDir = path.join(/*turbopackIgnore: true*/ process.cwd(), 'public', 'aws-patterns');
-
-/**
- * ファイルが存在するかどうか判定するヘルパー。
- */
-async function fileExists(filePath: string): Promise<boolean> {
-  try {
-    await fs.access(filePath);
-    return true;
-  } catch {
-    return false;
-  }
-}
 
 /**
  * ファイルが必要な場合のみコピーを行う（更新日時比較）。
