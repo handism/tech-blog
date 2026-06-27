@@ -3551,10 +3551,11 @@ html[data-theme='chalkboard'] .dark body {
 @keyframes holo-shimmer {
   /* background-position アニメーションは Skia Graphite（Chrome新GPUバックエンド）で
      background-clip: text と干渉して文字が消えるバグがあるため、
-     filter: hue-rotate() ベースに変更。色相回転でホログラフィック感を表現。 */
+     filter: hue-rotate() ベースに変更。色相回転でホログラフィック感を表現。
+     色相回転は ±30° の控えめな往復で、過度に目立たないようにしている。 */
   0%   { filter: hue-rotate(0deg) brightness(1); }
-  50%  { filter: hue-rotate(180deg) brightness(1.15); }
-  100% { filter: hue-rotate(360deg) brightness(1); }
+  50%  { filter: hue-rotate(30deg) brightness(1.06); }
+  100% { filter: hue-rotate(0deg) brightness(1); }
 }
 
 [data-theme='holographic'] {
