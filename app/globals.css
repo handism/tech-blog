@@ -3617,11 +3617,28 @@ html[data-theme='chalkboard'] .dark body {
   [data-theme='holographic'] h1,
   [data-theme='holographic'] h2,
   [data-theme='holographic'] h3 {
+    /* レンダリング領域を最適化して、背景の余分な広がりとバグを防ぐ */
+    width: fit-content;
+    max-width: 100%;
+
+    /* 背景グラデーションの設定 */
     background: linear-gradient(135deg, #c084fc, #818cf8, #38bdf8, #c084fc);
     background-size: 200% auto;
+
+    /* クリップ処理（backgroundプロパティより後に記述） */
     -webkit-background-clip: text;
     background-clip: text;
+
+    /* テキスト透過処理 */
     -webkit-text-fill-color: transparent;
+    color: transparent;
+
+    /* ハードウェアアクセラレーションを強制し、GPU描画バグとチラつきを防ぐ */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: background-position;
+
+    /* アニメーション */
     animation: holo-shimmer 4s linear infinite;
   }
 
