@@ -1,7 +1,8 @@
 'use client';
 
+import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useState, useMemo } from 'react';
-import { Terminal, Search, Copy, Check, Sparkles, AlertTriangle, ShieldCheck } from 'lucide-react';
+import { Terminal, Search, Copy, Check, AlertTriangle, ShieldCheck } from 'lucide-react';
 
 interface Param {
   key: string;
@@ -296,22 +297,12 @@ export default function GitHelper() {
   };
 
   return (
-    <div className="min-h-screen bg-bg text-text py-12 px-4 md:px-8">
+    <ToolPageLayout
+      title="Git Command Helper"
+      description="開発中によく直面するGit操作のユースケース（やりたいこと）を選び、パラメータを入力して、最適なコマンドを安全かつ迅速に生成します。"
+      icon={Terminal}
+    >
       <div className="max-w-6xl mx-auto">
-        {/* ヘッダー */}
-        <div className="flex flex-col items-center text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-semibold mb-4 border border-accent/20">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Developer Helper</span>
-          </div>
-          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-3">
-            Git Command Helper
-          </h1>
-          <p className="text-text/70 text-sm md:text-base max-w-xl">
-            開発中によく直面するGit操作のユースケース（やりたいこと）を選び、パラメータを入力して、最適なコマンドを安全かつ迅速に生成します。
-          </p>
-        </div>
-
         {/* 検索・コントロールバー */}
         <div className="bg-card border border-border/70 rounded-3xl p-4 md:p-6 mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="relative flex-1 w-full max-w-md">
@@ -476,6 +467,6 @@ export default function GitHelper() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   );
 }

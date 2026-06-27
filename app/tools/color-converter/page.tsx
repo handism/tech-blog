@@ -1,5 +1,6 @@
 'use client';
 
+import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { Palette } from 'lucide-react';
 import { useState } from 'react';
 
@@ -135,161 +136,150 @@ export default function ColorConverter() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-rose-100 dark:from-slate-900 dark:to-slate-800 p-4">
-      <div className="max-w-6xl mx-auto">
-        <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg p-6 md:p-8">
-          <div className="flex items-center gap-3 mb-8">
-            <Palette className="w-8 h-8 text-pink-600 dark:text-pink-400" />
-            <h1 className="text-3xl font-bold text-slate-900 dark:text-white">色コード変換</h1>
+    <ToolPageLayout title="色コード変換" icon={Palette}>
+      <div className="space-y-6">
+        {/* カラープレビュー */}
+        <div className="flex justify-center">
+          <div
+            className="w-48 h-48 rounded-lg shadow-lg border-4 border-slate-200 dark:border-slate-600 transition"
+            style={{ backgroundColor: color.hex }}
+          />
+        </div>
+
+        {/* HEX 入力 */}
+        <div className="bg-slate-50 dark:bg-slate-700 p-6 rounded-lg">
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">HEX コード</h2>
+          <div className="flex gap-3">
+            <input
+              type="text"
+              value={input}
+              onChange={handleHexChange}
+              placeholder="#RRGGBB"
+              className="flex-1 px-4 py-2 border border-slate-300 dark:border-slate-500 dark:bg-slate-600 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 font-mono text-lg"
+            />
+            <button
+              onClick={() => copyToClipboard(color.hex)}
+              className="px-4 py-2 bg-slate-300 dark:bg-slate-600 hover:bg-slate-400 dark:hover:bg-slate-500 text-slate-800 dark:text-white rounded-lg transition"
+            >
+              コピー
+            </button>
           </div>
+        </div>
 
-          <div className="space-y-6">
-            {/* カラープレビュー */}
-            <div className="flex justify-center">
-              <div
-                className="w-48 h-48 rounded-lg shadow-lg border-4 border-slate-200 dark:border-slate-600 transition"
-                style={{ backgroundColor: color.hex }}
-              />
-            </div>
+        {/* RGB 入力 */}
+        <div className="bg-slate-50 dark:bg-slate-700 p-6 rounded-lg">
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">RGB</h2>
+          <div className="grid grid-cols-3 gap-4">
+            {(['r', 'g', 'b'] as const).map((channel) => (
+              <div key={channel}>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                  {channel.toUpperCase()}
+                </label>
+                <div className="flex gap-2 items-center">
+                  <input
+                    type="number"
+                    min="0"
+                    max="255"
+                    value={color.rgb[channel]}
+                    onChange={(e) => handleRgbChange(channel, Number(e.target.value))}
+                    className="w-20 px-3 py-2 border border-slate-300 dark:border-slate-500 dark:bg-slate-600 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+                  />
+                  <input
+                    type="range"
+                    min="0"
+                    max="255"
+                    value={color.rgb[channel]}
+                    onChange={(e) => handleRgbChange(channel, Number(e.target.value))}
+                    className="flex-1"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 p-3 bg-white dark:bg-slate-600 rounded border border-slate-200 dark:border-slate-500 font-mono text-sm text-slate-900 dark:text-white">
+            rgb({color.rgb.r}, {color.rgb.g}, {color.rgb.b})
+          </div>
+        </div>
 
-            {/* HEX 入力 */}
-            <div className="bg-slate-50 dark:bg-slate-700 p-6 rounded-lg">
-              <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
-                HEX コード
-              </h2>
-              <div className="flex gap-3">
+        {/* HSL 入力 */}
+        <div className="bg-slate-50 dark:bg-slate-700 p-6 rounded-lg">
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">HSL</h2>
+          <div className="grid grid-cols-3 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                H (0-360)
+              </label>
+              <div className="flex gap-2 items-center">
                 <input
-                  type="text"
-                  value={input}
-                  onChange={handleHexChange}
-                  placeholder="#RRGGBB"
-                  className="flex-1 px-4 py-2 border border-slate-300 dark:border-slate-500 dark:bg-slate-600 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 font-mono text-lg"
+                  type="number"
+                  min="0"
+                  max="360"
+                  value={color.hsl.h}
+                  onChange={(e) => handleHslChange('h', Number(e.target.value))}
+                  className="w-20 px-3 py-2 border border-slate-300 dark:border-slate-500 dark:bg-slate-600 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
                 />
-                <button
-                  onClick={() => copyToClipboard(color.hex)}
-                  className="px-4 py-2 bg-slate-300 dark:bg-slate-600 hover:bg-slate-400 dark:hover:bg-slate-500 text-slate-800 dark:text-white rounded-lg transition"
-                >
-                  コピー
-                </button>
+                <input
+                  type="range"
+                  min="0"
+                  max="360"
+                  value={color.hsl.h}
+                  onChange={(e) => handleHslChange('h', Number(e.target.value))}
+                  className="flex-1"
+                />
               </div>
             </div>
-
-            {/* RGB 入力 */}
-            <div className="bg-slate-50 dark:bg-slate-700 p-6 rounded-lg">
-              <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">RGB</h2>
-              <div className="grid grid-cols-3 gap-4">
-                {(['r', 'g', 'b'] as const).map((channel) => (
-                  <div key={channel}>
-                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                      {channel.toUpperCase()}
-                    </label>
-                    <div className="flex gap-2 items-center">
-                      <input
-                        type="number"
-                        min="0"
-                        max="255"
-                        value={color.rgb[channel]}
-                        onChange={(e) => handleRgbChange(channel, Number(e.target.value))}
-                        className="w-20 px-3 py-2 border border-slate-300 dark:border-slate-500 dark:bg-slate-600 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-                      />
-                      <input
-                        type="range"
-                        min="0"
-                        max="255"
-                        value={color.rgb[channel]}
-                        onChange={(e) => handleRgbChange(channel, Number(e.target.value))}
-                        className="flex-1"
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-4 p-3 bg-white dark:bg-slate-600 rounded border border-slate-200 dark:border-slate-500 font-mono text-sm text-slate-900 dark:text-white">
-                rgb({color.rgb.r}, {color.rgb.g}, {color.rgb.b})
+            <div>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                S (0-100)
+              </label>
+              <div className="flex gap-2 items-center">
+                <input
+                  type="number"
+                  min="0"
+                  max="100"
+                  value={color.hsl.s}
+                  onChange={(e) => handleHslChange('s', Number(e.target.value))}
+                  className="w-20 px-3 py-2 border border-slate-300 dark:border-slate-500 dark:bg-slate-600 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+                />
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={color.hsl.s}
+                  onChange={(e) => handleHslChange('s', Number(e.target.value))}
+                  className="flex-1"
+                />
               </div>
             </div>
-
-            {/* HSL 入力 */}
-            <div className="bg-slate-50 dark:bg-slate-700 p-6 rounded-lg">
-              <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">HSL</h2>
-              <div className="grid grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                    H (0-360)
-                  </label>
-                  <div className="flex gap-2 items-center">
-                    <input
-                      type="number"
-                      min="0"
-                      max="360"
-                      value={color.hsl.h}
-                      onChange={(e) => handleHslChange('h', Number(e.target.value))}
-                      className="w-20 px-3 py-2 border border-slate-300 dark:border-slate-500 dark:bg-slate-600 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-                    />
-                    <input
-                      type="range"
-                      min="0"
-                      max="360"
-                      value={color.hsl.h}
-                      onChange={(e) => handleHslChange('h', Number(e.target.value))}
-                      className="flex-1"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                    S (0-100)
-                  </label>
-                  <div className="flex gap-2 items-center">
-                    <input
-                      type="number"
-                      min="0"
-                      max="100"
-                      value={color.hsl.s}
-                      onChange={(e) => handleHslChange('s', Number(e.target.value))}
-                      className="w-20 px-3 py-2 border border-slate-300 dark:border-slate-500 dark:bg-slate-600 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-                    />
-                    <input
-                      type="range"
-                      min="0"
-                      max="100"
-                      value={color.hsl.s}
-                      onChange={(e) => handleHslChange('s', Number(e.target.value))}
-                      className="flex-1"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                    L (0-100)
-                  </label>
-                  <div className="flex gap-2 items-center">
-                    <input
-                      type="number"
-                      min="0"
-                      max="100"
-                      value={color.hsl.l}
-                      onChange={(e) => handleHslChange('l', Number(e.target.value))}
-                      className="w-20 px-3 py-2 border border-slate-300 dark:border-slate-500 dark:bg-slate-600 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-                    />
-                    <input
-                      type="range"
-                      min="0"
-                      max="100"
-                      value={color.hsl.l}
-                      onChange={(e) => handleHslChange('l', Number(e.target.value))}
-                      className="flex-1"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 p-3 bg-white dark:bg-slate-600 rounded border border-slate-200 dark:border-slate-500 font-mono text-sm text-slate-900 dark:text-white">
-                hsl({color.hsl.h}, {color.hsl.s}%, {color.hsl.l}%)
+            <div>
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                L (0-100)
+              </label>
+              <div className="flex gap-2 items-center">
+                <input
+                  type="number"
+                  min="0"
+                  max="100"
+                  value={color.hsl.l}
+                  onChange={(e) => handleHslChange('l', Number(e.target.value))}
+                  className="w-20 px-3 py-2 border border-slate-300 dark:border-slate-500 dark:bg-slate-600 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
+                />
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={color.hsl.l}
+                  onChange={(e) => handleHslChange('l', Number(e.target.value))}
+                  className="flex-1"
+                />
               </div>
             </div>
+          </div>
+          <div className="mt-4 p-3 bg-white dark:bg-slate-600 rounded border border-slate-200 dark:border-slate-500 font-mono text-sm text-slate-900 dark:text-white">
+            hsl({color.hsl.h}, {color.hsl.s}%, {color.hsl.l}%)
           </div>
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   );
 }

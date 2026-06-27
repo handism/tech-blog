@@ -1,7 +1,8 @@
 'use client';
 
+import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useState, useMemo } from 'react';
-import { Terminal, Copy, Check, Sparkles, Send } from 'lucide-react';
+import { Terminal, Copy, Check, Send } from 'lucide-react';
 
 interface ParsedCurl {
   url: string;
@@ -268,23 +269,12 @@ export default function CurlConverter() {
   };
 
   return (
-    <div className="min-h-screen bg-bg text-text py-12 px-4 md:px-8">
+    <ToolPageLayout
+      title="Curl to Code Converter"
+      description="APIリクエストで用いる `curl` コマンドを入力するだけで、JavaScript, Python, Goなどのコードに安全にローカルで相互変換します。"
+      icon={Terminal}
+    >
       <div className="max-w-6xl mx-auto">
-        {/* ヘッダー */}
-        <div className="flex flex-col items-center text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-semibold mb-4 border border-accent/20">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Developer Codec</span>
-          </div>
-          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-3">
-            Curl to Code Converter
-          </h1>
-          <p className="text-text/70 text-sm md:text-base max-w-xl">
-            APIリクエストで用いる `curl` コマンドを入力するだけで、JavaScript, Python,
-            Goなどのコードに安全にローカルで相互変換します。
-          </p>
-        </div>
-
         {/* コントロール/サンプル */}
         <div className="bg-card border border-border/70 rounded-3xl p-4 md:p-6 mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <span className="text-xs font-bold text-text/60">サンプルを読み込む:</span>
@@ -401,6 +391,6 @@ export default function CurlConverter() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   );
 }

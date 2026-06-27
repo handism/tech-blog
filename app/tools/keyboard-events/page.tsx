@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { Keyboard, Trash2, ShieldAlert, Sparkles } from 'lucide-react';
+import ToolPageLayout from '@/src/components/ToolPageLayout';
+import { useState, useEffect } from 'react';
+import { Keyboard, Trash2, ShieldAlert } from 'lucide-react';
 
 interface KeyHistoryItem {
   key: string;
@@ -18,7 +19,7 @@ export default function KeyboardEvents() {
   const [currentEvent, setCurrentEvent] = useState<KeyHistoryItem | null>(null);
   const [history, setHistory] = useState<KeyHistoryItem[]>([]);
   const [activeCodes, setActiveCodes] = useState<Set<string>>(new Set());
-  const visualizerRef = useRef<HTMLDivElement>(null);
+  /* const visualizerRef = useRef<HTMLDivElement>(null); */
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -191,22 +192,12 @@ export default function KeyboardEvents() {
   ];
 
   return (
-    <div className="min-h-screen bg-bg text-text py-12 px-4 md:px-8" ref={visualizerRef}>
+    <ToolPageLayout
+      title="Keyboard Event Visualizer"
+      description="キーボードを押すと、JavaScriptのイベント情報や入力パラメータをリアルタイムで美しく可視化します。"
+      icon={Keyboard}
+    >
       <div className="max-w-6xl mx-auto">
-        {/* ヘッダー */}
-        <div className="flex flex-col items-center text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-semibold mb-4 border border-accent/20">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Interactive Tester</span>
-          </div>
-          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-3">
-            Keyboard Event Visualizer
-          </h1>
-          <p className="text-text/70 text-sm md:text-base max-w-xl">
-            キーボードを押すと、JavaScriptのイベント情報や入力パラメータをリアルタイムで美しく可視化します。
-          </p>
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* 左側: メインイベント表示 (7列) */}
           <div className="lg:col-span-7 flex flex-col gap-6">
@@ -401,6 +392,6 @@ export default function KeyboardEvents() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   );
 }

@@ -1,7 +1,8 @@
 'use client';
 
+import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useState, useRef } from 'react';
-import { Upload, Download, Check, Clipboard, Sparkles } from 'lucide-react';
+import { Upload, Download, Check, Clipboard } from 'lucide-react';
 import JSZip from 'jszip';
 
 interface IconSize {
@@ -187,22 +188,11 @@ export default function FaviconGeneratorPage() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-8 md:py-12">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 border border-border rounded-lg bg-secondary text-text text-xs font-bold mb-3">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Image Utilities</span>
-          </div>
-          <h1 className="text-3xl md:text-4xl font-extrabold text-text tracking-tight">
-            Favicon & App Icon Generator
-          </h1>
-          <p className="text-text/80 text-sm md:text-base font-medium mt-2">
-            1枚のオリジナル画像から、主要なすべてのファビコンサイズを一括生成し、PWA用マニフェストと共にZIPでまとめてダウンロードできます。
-          </p>
-        </div>
-      </div>
-
+    <ToolPageLayout
+      title="Favicon & App Icon Generator"
+      description="1枚のオリジナル画像から、主要なすべてのファビコンサイズを一括生成し、PWA用マニフェストと共にZIPでまとめてダウンロードできます。"
+      icon={Upload}
+    >
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* 左カラム: 画像アップロード & プレビュー */}
         <div className="lg:col-span-5 space-y-6">
@@ -337,6 +327,6 @@ export default function FaviconGeneratorPage() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   );
 }

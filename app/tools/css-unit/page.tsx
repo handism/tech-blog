@@ -1,5 +1,6 @@
 'use client';
 
+import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useState } from 'react';
 import { Ruler, Clipboard, Check } from 'lucide-react';
 
@@ -177,22 +178,11 @@ export default function CssUnitConverterPage() {
   ];
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-8 md:py-12">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 border border-border rounded-lg bg-secondary text-text text-xs font-bold mb-3">
-            <Ruler className="w-3.5 h-3.5" />
-            <span>Design Utilities</span>
-          </div>
-          <h1 className="text-3xl md:text-4xl font-extrabold text-text tracking-tight">
-            CSS Unit Converter
-          </h1>
-          <p className="text-text/80 text-sm md:text-base font-medium mt-2">
-            px, rem, em, vw, vh などの各種CSS単位をリアルタイムに相互変換します。
-          </p>
-        </div>
-      </div>
-
+    <ToolPageLayout
+      title="CSS Unit Converter"
+      description="px, rem, em, vw, vh などの各種CSS単位をリアルタイムに相互変換します。"
+      icon={Ruler}
+    >
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* 基準設定パネル */}
         <div className="lg:col-span-1 space-y-6">
@@ -318,6 +308,6 @@ export default function CssUnitConverterPage() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   );
 }

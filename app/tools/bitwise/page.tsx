@@ -1,7 +1,8 @@
 'use client';
 
+import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useState } from 'react';
-import { ToggleLeft, Hash, Cpu, Sparkles, AlertCircle } from 'lucide-react';
+import { ToggleLeft, Hash, Cpu, AlertCircle } from 'lucide-react';
 
 export default function Bitwise() {
   // 32bit 符号なし整数をベース状態として管理
@@ -112,22 +113,12 @@ export default function Bitwise() {
   const notAResult = ~valA >>> 0;
 
   return (
-    <div className="min-h-screen bg-bg text-text py-12 px-4 md:px-8">
+    <ToolPageLayout
+      title="Bitwise & Radix Converter"
+      description="2進数・8進数・10進数・16進数のリアルタイム双方向変換と、32bitの各ビット列のインタラクティブな編集、および基本的なビット演算を可視化します。"
+      icon={ToggleLeft}
+    >
       <div className="max-w-6xl mx-auto">
-        {/* ヘッダー */}
-        <div className="flex flex-col items-center text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-semibold mb-4 border border-accent/20">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>Developer Math</span>
-          </div>
-          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mb-3">
-            Bitwise & Radix Converter
-          </h1>
-          <p className="text-text/70 text-sm md:text-base max-w-xl">
-            2進数・8進数・10進数・16進数のリアルタイム双方向変換と、32bitの各ビット列のインタラクティブな編集、および基本的なビット演算を可視化します。
-          </p>
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           {/* 左側: 進数変換＆ビット編集 (7列) */}
           <div className="lg:col-span-7 flex flex-col gap-6">
@@ -367,6 +358,6 @@ export default function Bitwise() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   );
 }

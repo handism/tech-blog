@@ -1,6 +1,7 @@
 // app/tools/memphis/page.tsx
 'use client';
 
+import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { siteConfig } from '@/src/config/site';
 import { Image as ImageIcon } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -291,15 +292,11 @@ export default function MemphisGenerator() {
   // =====================
 
   return (
-    <div className="flex flex-col items-center p-5 min-h-screen max-w-6xl mx-auto">
-      <header className="mb-12 text-center">
-        <h1 className="text-4xl font-extrabold flex items-center justify-center gap-3 tracking-tight text-text">
-          <ImageIcon className="w-10 h-10 text-accent" />
-          Memphis Generator
-        </h1>
-        <p className="mt-2 font-medium text-text/70">80年代風のカラフルな背景画像を生成</p>
-      </header>
-
+    <ToolPageLayout
+      title="Memphis Generator"
+      description="80年代風のカラフルな背景画像を生成します"
+      icon={ImageIcon}
+    >
       <main className="w-full rounded-3xl bg-card border border-border p-5 shadow-lg">
         {/* Controls */}
         <div className="grid gap-8 md:grid-cols-2">
@@ -384,6 +381,6 @@ export default function MemphisGenerator() {
           </button>
         </div>
       </main>
-    </div>
+    </ToolPageLayout>
   );
 }

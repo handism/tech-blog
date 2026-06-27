@@ -1,5 +1,6 @@
 'use client';
 
+import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { Terminal, Copy, Info, Check } from 'lucide-react';
 import { useState, useMemo } from 'react';
 
@@ -309,232 +310,219 @@ export default function CronGenerator() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-100 dark:from-slate-900 dark:to-slate-800 p-4 md:p-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-white dark:bg-slate-950 rounded-3xl shadow-xl border border-slate-150 dark:border-slate-800 p-6 md:p-8">
-          {/* Header */}
-          <div className="flex items-center gap-3 mb-8">
-            <Terminal className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
-            <div>
-              <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white">
-                Cron Parser & Generator
-              </h1>
-              <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-                定期実行プログラム（Cron）のスケジュール確認、日本語翻訳、生成を行うことができます。
-              </p>
-            </div>
+    <ToolPageLayout
+      title="Cron Parser & Generator"
+      description="定期実行プログラム（Cron）のスケジュール確認、日本語翻訳、生成を行うことができます。"
+      icon={Terminal}
+    >
+      {/* Header */}
+
+      <div className="space-y-8">
+        {/* Cron Expression Input Area */}
+        <div className="bg-slate-50 dark:bg-slate-900 p-6 rounded-2xl border border-slate-100 dark:border-slate-850">
+          <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
+            Cron式 (5フィールド)
+          </label>
+
+          <div className="flex flex-col sm:flex-row gap-3">
+            <input
+              type="text"
+              value={cronInput}
+              onChange={(e) => handleManualInput(e.target.value)}
+              placeholder="分 時 日 月 曜日 (例: */10 * * * *)"
+              className="flex-1 px-4 py-3 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 dark:text-white rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none font-mono text-lg font-bold tracking-wide"
+            />
+
+            <button
+              onClick={handleCopy}
+              className="flex items-center justify-center gap-1.5 px-6 py-3 font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition"
+            >
+              {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              {copied ? 'コピー完了' : 'コピー'}
+            </button>
           </div>
 
-          <div className="space-y-8">
-            {/* Cron Expression Input Area */}
-            <div className="bg-slate-50 dark:bg-slate-900 p-6 rounded-2xl border border-slate-100 dark:border-slate-850">
-              <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
-                Cron式 (5フィールド)
-              </label>
+          {/* Japanese Explanation Panel */}
+          <div className="mt-4 flex items-start gap-2.5 bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-150/45 dark:border-emerald-900/30 p-4 rounded-xl">
+            <Info className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+            <div className="text-sm">
+              <span className="font-bold text-emerald-800 dark:text-emerald-400 block text-xs uppercase tracking-wider mb-1">
+                スケジュールの意味（日本語訳）
+              </span>
+              <span className="font-semibold text-slate-800 dark:text-slate-200 text-base">
+                {explanation}
+              </span>
+            </div>
+          </div>
+        </div>
 
-              <div className="flex flex-col sm:flex-row gap-3">
-                <input
-                  type="text"
-                  value={cronInput}
-                  onChange={(e) => handleManualInput(e.target.value)}
-                  placeholder="分 時 日 月 曜日 (例: */10 * * * *)"
-                  className="flex-1 px-4 py-3 bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-800 dark:text-white rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none font-mono text-lg font-bold tracking-wide"
-                />
+        {/* Visual Builder Option */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-bold text-slate-900 dark:text-white">GUIでCron式を生成</h2>
 
-                <button
-                  onClick={handleCopy}
-                  className="flex items-center justify-center gap-1.5 px-6 py-3 font-bold bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition"
-                >
-                  {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                  {copied ? 'コピー完了' : 'コピー'}
-                </button>
-              </div>
-
-              {/* Japanese Explanation Panel */}
-              <div className="mt-4 flex items-start gap-2.5 bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-150/45 dark:border-emerald-900/30 p-4 rounded-xl">
-                <Info className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
-                <div className="text-sm">
-                  <span className="font-bold text-emerald-800 dark:text-emerald-400 block text-xs uppercase tracking-wider mb-1">
-                    スケジュールの意味（日本語訳）
-                  </span>
-                  <span className="font-semibold text-slate-800 dark:text-slate-200 text-base">
-                    {explanation}
-                  </span>
-                </div>
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
+            {/* Presets */}
+            <div className="md:col-span-6 bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-850 flex items-center justify-between flex-wrap gap-3">
+              <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+                プリセット設定
+              </span>
+              <select
+                value={preset}
+                onChange={(e) => handlePresetChange(e.target.value)}
+                className="px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-800 dark:text-white"
+              >
+                <option value="custom">カスタム（個別編集）</option>
+                <option value="every-min">毎分 (* * * * *)</option>
+                <option value="every-5min">5分ごと (*/5 * * * *)</option>
+                <option value="every-hour">毎時 0分に実行 (0 * * * *)</option>
+                <option value="daily-midnight">毎日 深夜0:00に実行 (0 0 * * *)</option>
+                <option value="weekly-sunday">毎週 日曜日 深夜0:00に実行 (0 0 * * 0)</option>
+                <option value="monthly-1st">毎月 1日 深夜0:00に実行 (0 0 1 * *)</option>
+              </select>
             </div>
 
-            {/* Visual Builder Option */}
-            <div className="space-y-4">
-              <h2 className="text-lg font-bold text-slate-900 dark:text-white">
-                GUIでCron式を生成
-              </h2>
-
-              <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
-                {/* Presets */}
-                <div className="md:col-span-6 bg-slate-50 dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-850 flex items-center justify-between flex-wrap gap-3">
-                  <span className="text-sm font-semibold text-slate-700 dark:text-slate-300">
-                    プリセット設定
-                  </span>
-                  <select
-                    value={preset}
-                    onChange={(e) => handlePresetChange(e.target.value)}
-                    className="px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-800 dark:text-white"
-                  >
-                    <option value="custom">カスタム（個別編集）</option>
-                    <option value="every-min">毎分 (* * * * *)</option>
-                    <option value="every-5min">5分ごと (*/5 * * * *)</option>
-                    <option value="every-hour">毎時 0分に実行 (0 * * * *)</option>
-                    <option value="daily-midnight">毎日 深夜0:00に実行 (0 0 * * *)</option>
-                    <option value="weekly-sunday">毎週 日曜日 深夜0:00に実行 (0 0 * * 0)</option>
-                    <option value="monthly-1st">毎月 1日 深夜0:00に実行 (0 0 1 * *)</option>
-                  </select>
-                </div>
-
-                {/* Min Selector */}
-                <div className="md:col-span-1 flex flex-col bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-100 dark:border-slate-850">
-                  <span className="text-xs text-slate-500 font-bold mb-1.5">分</span>
-                  <input
-                    type="text"
-                    value={genMin}
-                    onChange={(e) => updateVisualField('min', e.target.value)}
-                    className="w-full px-2 py-1 bg-white dark:bg-slate-800 border dark:border-slate-700 dark:text-white rounded text-sm font-mono text-center"
-                    placeholder="*"
-                  />
-                  <span className="text-[10px] text-slate-400 text-center mt-1">0 - 59</span>
-                </div>
-
-                {/* Hour Selector */}
-                <div className="md:col-span-1 flex flex-col bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-100 dark:border-slate-850">
-                  <span className="text-xs text-slate-500 font-bold mb-1.5">時</span>
-                  <input
-                    type="text"
-                    value={genHour}
-                    onChange={(e) => updateVisualField('hour', e.target.value)}
-                    className="w-full px-2 py-1 bg-white dark:bg-slate-800 border dark:border-slate-700 dark:text-white rounded text-sm font-mono text-center"
-                    placeholder="*"
-                  />
-                  <span className="text-[10px] text-slate-400 text-center mt-1">0 - 23</span>
-                </div>
-
-                {/* Dom Selector */}
-                <div className="md:col-span-1 flex flex-col bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-100 dark:border-slate-850">
-                  <span className="text-xs text-slate-500 font-bold mb-1.5">日</span>
-                  <input
-                    type="text"
-                    value={genDom}
-                    onChange={(e) => updateVisualField('dom', e.target.value)}
-                    className="w-full px-2 py-1 bg-white dark:bg-slate-800 border dark:border-slate-700 dark:text-white rounded text-sm font-mono text-center"
-                    placeholder="*"
-                  />
-                  <span className="text-[10px] text-slate-400 text-center mt-1">1 - 31</span>
-                </div>
-
-                {/* Month Selector */}
-                <div className="md:col-span-1 flex flex-col bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-100 dark:border-slate-850">
-                  <span className="text-xs text-slate-500 font-bold mb-1.5">月</span>
-                  <input
-                    type="text"
-                    value={genMonth}
-                    onChange={(e) => updateVisualField('month', e.target.value)}
-                    className="w-full px-2 py-1 bg-white dark:bg-slate-800 border dark:border-slate-700 dark:text-white rounded text-sm font-mono text-center"
-                    placeholder="*"
-                  />
-                  <span className="text-[10px] text-slate-400 text-center mt-1">1 - 12</span>
-                </div>
-
-                {/* Day of week Selector */}
-                <div className="md:col-span-2 flex flex-col bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-100 dark:border-slate-850">
-                  <span className="text-xs text-slate-500 font-bold mb-1.5">曜日</span>
-                  <input
-                    type="text"
-                    value={genDow}
-                    onChange={(e) => updateVisualField('dow', e.target.value)}
-                    className="w-full px-2 py-1 bg-white dark:bg-slate-800 border dark:border-slate-700 dark:text-white rounded text-sm font-mono text-center"
-                    placeholder="*"
-                  />
-                  <span className="text-[10px] text-slate-400 text-center mt-1">0-6 (0=日)</span>
-                </div>
-              </div>
+            {/* Min Selector */}
+            <div className="md:col-span-1 flex flex-col bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-100 dark:border-slate-850">
+              <span className="text-xs text-slate-500 font-bold mb-1.5">分</span>
+              <input
+                type="text"
+                value={genMin}
+                onChange={(e) => updateVisualField('min', e.target.value)}
+                className="w-full px-2 py-1 bg-white dark:bg-slate-800 border dark:border-slate-700 dark:text-white rounded text-sm font-mono text-center"
+                placeholder="*"
+              />
+              <span className="text-[10px] text-slate-400 text-center mt-1">0 - 59</span>
             </div>
 
-            {/* Run Prediction Panel */}
-            <div className="space-y-4">
-              <h2 className="text-lg font-bold text-slate-900 dark:text-white">
-                今後の実行予定スケジュール (JST)
-              </h2>
-
-              <div className="bg-slate-950 text-slate-200 border border-slate-800 p-5 rounded-2xl font-mono text-sm leading-relaxed">
-                {predictions.error ? (
-                  <span className="text-red-400 font-semibold">{predictions.error}</span>
-                ) : (
-                  <ul className="space-y-2">
-                    {predictions.dates.map((date, idx) => (
-                      <li key={idx} className="flex items-center gap-2">
-                        <span className="text-emerald-500 select-none">▶</span>
-                        <span className="text-slate-500">[{idx + 1}]</span>
-                        <span className="text-slate-150">
-                          {date.toLocaleString('ja-JP', { weekday: 'short' })}
-                        </span>
-                        <span className="text-white font-bold">{date.toLocaleString('ja-JP')}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
+            {/* Hour Selector */}
+            <div className="md:col-span-1 flex flex-col bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-100 dark:border-slate-850">
+              <span className="text-xs text-slate-500 font-bold mb-1.5">時</span>
+              <input
+                type="text"
+                value={genHour}
+                onChange={(e) => updateVisualField('hour', e.target.value)}
+                className="w-full px-2 py-1 bg-white dark:bg-slate-800 border dark:border-slate-700 dark:text-white rounded text-sm font-mono text-center"
+                placeholder="*"
+              />
+              <span className="text-[10px] text-slate-400 text-center mt-1">0 - 23</span>
             </div>
 
-            {/* Cron Cheat Sheet */}
-            <div className="bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-850 p-6 rounded-2xl">
-              <h3 className="font-bold text-slate-850 dark:text-white mb-3 text-sm">
-                Cron式 記述ガイド
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-600 dark:text-slate-400">
-                <div>
-                  <h4 className="font-bold text-slate-850 dark:text-slate-300 mb-1">
-                    各フィールドの並び順:
-                  </h4>
-                  <p className="font-mono text-slate-900 dark:text-slate-250 bg-slate-200/55 dark:bg-slate-800 p-2 rounded">
-                    分 時 日 月 曜日
-                    <br />* * * * *
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-850 dark:text-slate-300 mb-1">
-                    主要な記号の意味:
-                  </h4>
-                  <ul className="list-disc list-inside space-y-1">
-                    <li>
-                      <code className="bg-slate-200 dark:bg-slate-800 px-1 rounded font-bold font-mono">
-                        *
-                      </code>{' '}
-                      : すべての値（毎分、毎時など）
-                    </li>
-                    <li>
-                      <code className="bg-slate-200 dark:bg-slate-800 px-1 rounded font-bold font-mono">
-                        /
-                      </code>{' '}
-                      : 間隔の指定（例: <code className="font-mono">*/5</code> = 5ごと）
-                    </li>
-                    <li>
-                      <code className="bg-slate-200 dark:bg-slate-800 px-1 rounded font-bold font-mono">
-                        ,
-                      </code>{' '}
-                      : 複数指定（例: <code className="font-mono">1,3,5</code> = 1と3と5）
-                    </li>
-                    <li>
-                      <code className="bg-slate-200 dark:bg-slate-800 px-1 rounded font-bold font-mono">
-                        -
-                      </code>{' '}
-                      : 範囲指定（例: <code className="font-mono">1-5</code> = 1から5まで）
-                    </li>
-                  </ul>
-                </div>
-              </div>
+            {/* Dom Selector */}
+            <div className="md:col-span-1 flex flex-col bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-100 dark:border-slate-850">
+              <span className="text-xs text-slate-500 font-bold mb-1.5">日</span>
+              <input
+                type="text"
+                value={genDom}
+                onChange={(e) => updateVisualField('dom', e.target.value)}
+                className="w-full px-2 py-1 bg-white dark:bg-slate-800 border dark:border-slate-700 dark:text-white rounded text-sm font-mono text-center"
+                placeholder="*"
+              />
+              <span className="text-[10px] text-slate-400 text-center mt-1">1 - 31</span>
+            </div>
+
+            {/* Month Selector */}
+            <div className="md:col-span-1 flex flex-col bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-100 dark:border-slate-850">
+              <span className="text-xs text-slate-500 font-bold mb-1.5">月</span>
+              <input
+                type="text"
+                value={genMonth}
+                onChange={(e) => updateVisualField('month', e.target.value)}
+                className="w-full px-2 py-1 bg-white dark:bg-slate-800 border dark:border-slate-700 dark:text-white rounded text-sm font-mono text-center"
+                placeholder="*"
+              />
+              <span className="text-[10px] text-slate-400 text-center mt-1">1 - 12</span>
+            </div>
+
+            {/* Day of week Selector */}
+            <div className="md:col-span-2 flex flex-col bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-100 dark:border-slate-850">
+              <span className="text-xs text-slate-500 font-bold mb-1.5">曜日</span>
+              <input
+                type="text"
+                value={genDow}
+                onChange={(e) => updateVisualField('dow', e.target.value)}
+                className="w-full px-2 py-1 bg-white dark:bg-slate-800 border dark:border-slate-700 dark:text-white rounded text-sm font-mono text-center"
+                placeholder="*"
+              />
+              <span className="text-[10px] text-slate-400 text-center mt-1">0-6 (0=日)</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Run Prediction Panel */}
+        <div className="space-y-4">
+          <h2 className="text-lg font-bold text-slate-900 dark:text-white">
+            今後の実行予定スケジュール (JST)
+          </h2>
+
+          <div className="bg-slate-950 text-slate-200 border border-slate-800 p-5 rounded-2xl font-mono text-sm leading-relaxed">
+            {predictions.error ? (
+              <span className="text-red-400 font-semibold">{predictions.error}</span>
+            ) : (
+              <ul className="space-y-2">
+                {predictions.dates.map((date, idx) => (
+                  <li key={idx} className="flex items-center gap-2">
+                    <span className="text-emerald-500 select-none">▶</span>
+                    <span className="text-slate-500">[{idx + 1}]</span>
+                    <span className="text-slate-150">
+                      {date.toLocaleString('ja-JP', { weekday: 'short' })}
+                    </span>
+                    <span className="text-white font-bold">{date.toLocaleString('ja-JP')}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+
+        {/* Cron Cheat Sheet */}
+        <div className="bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-850 p-6 rounded-2xl">
+          <h3 className="font-bold text-slate-850 dark:text-white mb-3 text-sm">
+            Cron式 記述ガイド
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-600 dark:text-slate-400">
+            <div>
+              <h4 className="font-bold text-slate-850 dark:text-slate-300 mb-1">
+                各フィールドの並び順:
+              </h4>
+              <p className="font-mono text-slate-900 dark:text-slate-250 bg-slate-200/55 dark:bg-slate-800 p-2 rounded">
+                分 時 日 月 曜日
+                <br />* * * * *
+              </p>
+            </div>
+            <div>
+              <h4 className="font-bold text-slate-850 dark:text-slate-300 mb-1">
+                主要な記号の意味:
+              </h4>
+              <ul className="list-disc list-inside space-y-1">
+                <li>
+                  <code className="bg-slate-200 dark:bg-slate-800 px-1 rounded font-bold font-mono">
+                    *
+                  </code>{' '}
+                  : すべての値（毎分、毎時など）
+                </li>
+                <li>
+                  <code className="bg-slate-200 dark:bg-slate-800 px-1 rounded font-bold font-mono">
+                    /
+                  </code>{' '}
+                  : 間隔の指定（例: <code className="font-mono">*/5</code> = 5ごと）
+                </li>
+                <li>
+                  <code className="bg-slate-200 dark:bg-slate-800 px-1 rounded font-bold font-mono">
+                    ,
+                  </code>{' '}
+                  : 複数指定（例: <code className="font-mono">1,3,5</code> = 1と3と5）
+                </li>
+                <li>
+                  <code className="bg-slate-200 dark:bg-slate-800 px-1 rounded font-bold font-mono">
+                    -
+                  </code>{' '}
+                  : 範囲指定（例: <code className="font-mono">1-5</code> = 1から5まで）
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   );
 }

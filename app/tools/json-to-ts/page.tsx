@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
+import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useState, useMemo } from 'react';
-import { Clipboard, Check, RefreshCw, Brackets } from 'lucide-react';
+import { Clipboard, Check, RefreshCw } from 'lucide-react';
 
 export default function JsonToTsPage() {
   const [inputJson, setInputJson] = useState(
@@ -156,22 +157,11 @@ export default function JsonToTsPage() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-8 md:py-12">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 border border-border rounded-lg bg-secondary text-text text-xs font-bold mb-3">
-            <Brackets className="w-3.5 h-3.5" />
-            <span>JSON Utilities</span>
-          </div>
-          <h1 className="text-3xl md:text-4xl font-extrabold text-text tracking-tight">
-            JSON to TypeScript / Zod
-          </h1>
-          <p className="text-text/80 text-sm md:text-base font-medium mt-2">
-            JSONオブジェクトからTypeScriptの型定義やZodバリデーションスキーマを瞬時に自動生成します。
-          </p>
-        </div>
-      </div>
-
+    <ToolPageLayout
+      title="JSON to TypeScript / Zod"
+      description="JSONオブジェクトからTypeScriptの型定義やZodバリデーションスキーマを瞬時に自動生成します。"
+      icon={Clipboard}
+    >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* 入力パネル */}
         <div className="theme-card p-5 md:p-6 flex flex-col h-[600px]">
@@ -258,6 +248,6 @@ export default function JsonToTsPage() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolPageLayout>
   );
 }

@@ -1,8 +1,9 @@
 // app/tools/trimming/page.tsx
 'use client';
 
+import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { siteConfig } from '@/src/config/site';
-import { Download, Maximize, Crop, FileImage } from 'lucide-react';
+import { Download, Maximize, FileImage } from 'lucide-react';
 import React, { useState, useCallback, useEffect } from 'react';
 import Cropper, { Area, Point } from 'react-easy-crop';
 
@@ -156,15 +157,11 @@ export default function ImageTrimmingApp() {
   };
 
   return (
-    <div className="flex flex-col items-center p-5 min-h-screen max-w-6xl mx-auto">
-      <header className="mb-8 text-center">
-        <h1 className="text-4xl font-extrabold flex items-center justify-center gap-3 tracking-tight text-text">
-          <Crop className="w-10 h-10 text-accent" />
-          Image Trimmer
-        </h1>
-        <p className="mt-2 font-medium text-text/70">ドラッグ＆ドロップで素早くトリミング</p>
-      </header>
-
+    <ToolPageLayout
+      title="Image Trimmer"
+      description="ドラッグ＆ドロップで素早くトリミング"
+      icon={Download}
+    >
       <main className="w-full max-w-5xl bg-card rounded-3xl shadow-lg overflow-hidden border border-border">
         {image ? (
           <div className="flex flex-col lg:flex-row">
@@ -299,6 +296,6 @@ export default function ImageTrimmingApp() {
           </div>
         )}
       </main>
-    </div>
+    </ToolPageLayout>
   );
 }
