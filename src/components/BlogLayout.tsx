@@ -1,6 +1,7 @@
 // src/components/BlogLayout.tsx
 import Sidebar from '@/src/components/Sidebar';
 import MobileToc from '@/src/components/MobileToc';
+import MermaidRenderer from '@/src/components/MermaidRenderer';
 import type { CategoryCount, TagCount } from '@/src/lib/post-taxonomy';
 import type { TocItem } from '@/src/types/post';
 import { ReactNode } from 'react';
@@ -33,6 +34,9 @@ export default function BlogLayout({ children, toc, categoryCounts, tagCounts }:
 
       {/* モバイル用TOC */}
       <MobileToc toc={toc} />
+
+      {/* Mermaidの動的レンダリング */}
+      <MermaidRenderer />
     </div>
   );
 }
