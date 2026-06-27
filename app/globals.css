@@ -3131,6 +3131,11 @@ html[data-theme='luxury'] .dark,
   transform: none !important;
 }
 
+[data-theme='hekireki'] a[href^='/blog/tags/'] span {
+  color: var(--color-on-accent) !important;
+  opacity: 0.7 !important;
+}
+
 [data-theme='hekireki'] a[href^='/blog/tags/']:hover {
   opacity: 0.9;
   transform: none !important;
