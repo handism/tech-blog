@@ -10,6 +10,9 @@ export default function Footer() {
     <footer className="py-8 border-t border-border mt-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-text/60 mb-4">
+          <Link href="/about" className="hover:text-accent transition-colors">
+            About
+          </Link>
           <Link href="/sitemap" className="hover:text-accent transition-colors">
             Sitemap
           </Link>
@@ -19,9 +22,6 @@ export default function Footer() {
           <a href="/rss.xml" className="hover:text-accent transition-colors">
             RSS
           </a>
-          <Link href="/about" className="hover:text-accent transition-colors">
-            About
-          </Link>
         </nav>
         <p className="text-center text-sm text-text/60">
           &copy; {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
