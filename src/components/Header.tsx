@@ -4,11 +4,21 @@
 import { siteConfig } from '@/src/config/site';
 import { Settings } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+const navItems = [
+  { href: '/scraps', label: 'Scraps' },
+  { href: '/learning', label: 'Learning' },
+  { href: '/aws-patterns', label: 'AWS Patterns' },
+  { href: '/tools', label: 'Tools' },
+];
 
 /**
  * サイト全体のヘッダー。
  */
 export default function Header() {
+  const pathname = usePathname() || '';
+
   return (
     <div className="pt-4 px-2 md:px-4 sticky top-0 z-50">
       <header className="site-header mx-auto w-full max-w-6xl bg-card transition-all">
@@ -39,30 +49,22 @@ export default function Header() {
 
             {/* ナビゲーションメニュー */}
             <nav className="flex items-center gap-x-2 gap-y-2 text-sm overflow-x-auto md:overflow-x-visible whitespace-nowrap md:whitespace-normal pb-1 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 scrollbar-none">
-              <Link
-                href="/scraps"
-                className="px-3 py-1 border border-border rounded-md font-bold hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[2px_2px_0px_0px_var(--border)] dark:hover:shadow-[2px_2px_0x_0px_var(--accent)] active:translate-x-0 active:translate-y-0 active:shadow-none transition-all shrink-0"
-              >
-                Scraps
-              </Link>
-              <Link
-                href="/learning"
-                className="px-3 py-1 border border-border rounded-md font-bold hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[2px_2px_0px_0px_var(--border)] dark:hover:shadow-[2px_2px_0px_0px_var(--accent)] active:translate-x-0 active:translate-y-0 active:shadow-none transition-all shrink-0"
-              >
-                Learning
-              </Link>
-              <Link
-                href="/aws-patterns"
-                className="px-3 py-1 border border-border rounded-md font-bold hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[2px_2px_0px_0px_var(--border)] dark:hover:shadow-[2px_2px_0px_0px_var(--accent)] active:translate-x-0 active:translate-y-0 active:shadow-none transition-all shrink-0"
-              >
-                AWS Patterns
-              </Link>
-              <Link
-                href="/tools"
-                className="px-3 py-1 border border-border rounded-md font-bold hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[2px_2px_0px_0px_var(--border)] dark:hover:shadow-[2px_2px_0px_0px_var(--accent)] active:translate-x-0 active:translate-y-0 active:shadow-none transition-all shrink-0"
-              >
-                Tools
-              </Link>
+              {navItems.map((item) => {
+                const isActive = pathname.startsWith(item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`theme-btn px-3 py-1 text-sm font-bold transition-all shrink-0 ${
+                      isActive
+                        ? 'bg-accent text-white dark:text-black font-extrabold hover:bg-accent hover:text-white dark:hover:text-black'
+                        : 'text-text opacity-85 hover:opacity-100'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
             </nav>
           </div>
 
