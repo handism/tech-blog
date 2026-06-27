@@ -1,5 +1,5 @@
 /* app/globals.css */
-@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700;800;900&family=Space+Grotesk:wght@400;500;700;800&family=Noto+Serif+JP:wght@400;700&family=Press+Start+2P&family=Noto+Sans+JP:wght@400;700&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700;800;900&family=Space+Grotesk:wght@400;500;700;800&family=Noto+Serif+JP:wght@400;700&family=Press+Start+2P&family=Noto+Sans+JP:wght@400;700&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Caveat:wght@400;600;700&family=Cinzel:wght@400;600;700&family=Bebas+Neue&family=Outfit:wght@300;400;500;700&family=Roboto+Mono:wght@300;400;500;700&display=swap');
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 @custom-variant dark (&:where(.dark, .dark *));
@@ -3177,6 +3177,874 @@ html[data-theme='luxury'] .dark,
   transform: none !important;
 }
 
+
 [data-theme='hekireki'] nav.mt-12.pt-8 a.theme-card-hover:hover div {
   color: var(--color-accent) !important;
 }
+
+
+/* ═══════════════════════════════════════════════════════
+   ── Blueprint ──
+   設計図・青写真・CADグリッド・技術的精密感
+   ═══════════════════════════════════════════════════════ */
+[data-theme='blueprint'] {
+  --color-bg: #e8f0ff;
+  --color-background: var(--color-bg);
+  --color-card: #d0e0ff;
+  --color-secondary: #bcd0f0;
+  --color-text: #0a1628;
+  --color-border: rgba(10, 40, 100, 0.5);
+  --color-accent: #1a4fa0;
+  --font-sans: 'Roboto Mono', 'Space Grotesk', monospace;
+
+  --theme-card-border-width: 1px;
+  --theme-card-border-color: rgba(10, 40, 100, 0.4);
+  --theme-card-bg: rgba(208, 224, 255, 0.8);
+  --theme-card-radius: 4px;
+  --theme-card-shadow: 0 0 0 1px rgba(10, 40, 100, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  --theme-card-hover-transform: translateY(-2px);
+  --theme-card-hover-shadow: 0 4px 16px rgba(10, 40, 100, 0.2), 0 0 0 1px rgba(10, 40, 100, 0.3);
+  --theme-card-hover-border-color: rgba(10, 40, 100, 0.7);
+
+  --theme-btn-border-width: 1px;
+  --theme-btn-border-color: rgba(10, 40, 100, 0.5);
+  --theme-btn-bg: rgba(208, 224, 255, 0.7);
+  --theme-btn-radius: 2px;
+  --theme-btn-font-family: 'Roboto Mono', monospace;
+  --theme-btn-letter-spacing: 0.05em;
+  --theme-btn-hover-transform: translateY(-1px);
+  --theme-btn-hover-shadow: 0 4px 12px rgba(10, 40, 100, 0.15);
+  --theme-btn-active-transform: translateY(0);
+}
+
+[data-theme='blueprint'] body {
+  background-color: #ccdaf5;
+  background-image:
+    linear-gradient(rgba(10, 40, 100, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 40, 100, 0.12) 1px, transparent 1px),
+    linear-gradient(rgba(10, 40, 100, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 40, 100, 0.06) 1px, transparent 1px);
+  background-size: 80px 80px, 80px 80px, 20px 20px, 20px 20px;
+  background-attachment: fixed;
+}
+
+[data-theme='blueprint'] h1,
+[data-theme='blueprint'] h2,
+[data-theme='blueprint'] h3 {
+  font-family: 'Roboto Mono', monospace;
+  letter-spacing: 0.03em;
+}
+
+[data-theme='blueprint'] .site-header {
+  border: 1px solid rgba(10, 40, 100, 0.4);
+  border-radius: 2px;
+  background: rgba(208, 224, 255, 0.85);
+  backdrop-filter: blur(8px);
+}
+
+[data-theme='blueprint'] article.prose h2 {
+  border-bottom: 1px dashed rgba(10, 40, 100, 0.5);
+  padding-bottom: 0.5rem;
+}
+
+[data-theme='blueprint'] article.prose h4 {
+  border-left: 3px solid rgba(10, 40, 100, 0.5);
+  padding-left: 0.75rem;
+}
+
+[data-theme='blueprint'] article.prose blockquote {
+  border-left: 3px solid rgba(10, 40, 100, 0.5);
+  border-radius: 2px;
+  background: rgba(208, 224, 255, 0.4);
+}
+
+[data-theme='blueprint'] pre.shiki {
+  border: 1px solid rgba(10, 40, 100, 0.4);
+  border-radius: 2px;
+}
+
+/* Blueprint ダークモード */
+html[data-theme='blueprint'].dark,
+html[data-theme='blueprint'] .dark {
+  --color-bg: #040d1e;
+  --color-background: var(--color-bg);
+  --color-card: #081530;
+  --color-secondary: #0c1e40;
+  --color-text: #c8deff;
+  --color-border: rgba(96, 165, 250, 0.5);
+  --color-accent: #60a5fa;
+
+  --theme-card-border-color: rgba(96, 165, 250, 0.3);
+  --theme-card-bg: rgba(8, 21, 48, 0.9);
+  --theme-card-shadow: 0 0 0 1px rgba(96, 165, 250, 0.15), 0 0 20px rgba(96, 165, 250, 0.05);
+  --theme-card-hover-shadow: 0 4px 20px rgba(96, 165, 250, 0.2), 0 0 0 1px rgba(96, 165, 250, 0.4);
+  --theme-card-hover-border-color: rgba(96, 165, 250, 0.6);
+
+  --theme-btn-border-color: rgba(96, 165, 250, 0.4);
+  --theme-btn-bg: rgba(8, 21, 48, 0.8);
+  --theme-btn-color: #c8deff;
+  --theme-btn-hover-shadow: 0 4px 16px rgba(96, 165, 250, 0.2);
+}
+
+html[data-theme='blueprint'].dark body,
+html[data-theme='blueprint'] .dark body {
+  background-color: #040d1e;
+  background-image:
+    linear-gradient(rgba(96, 165, 250, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(96, 165, 250, 0.12) 1px, transparent 1px),
+    linear-gradient(rgba(96, 165, 250, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(96, 165, 250, 0.06) 1px, transparent 1px);
+  background-size: 80px 80px, 80px 80px, 20px 20px, 20px 20px;
+  background-attachment: fixed;
+}
+
+html[data-theme='blueprint'].dark .site-header,
+html[data-theme='blueprint'] .dark .site-header {
+  border-color: rgba(96, 165, 250, 0.3);
+  background: rgba(8, 21, 48, 0.9);
+  box-shadow: 0 0 30px rgba(96, 165, 250, 0.08);
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   ── Steampunk ──
+   真鍮・歯車・重厚なヴィンテージ機械感
+   ═══════════════════════════════════════════════════════ */
+[data-theme='steampunk'] {
+  --color-bg: #2a1a0a;
+  --color-background: var(--color-bg);
+  --color-card: #3d2512;
+  --color-secondary: #4e3018;
+  --color-text: #e8c99a;
+  --color-border: #8b6535;
+  --color-accent: #c8872a;
+  --font-sans: 'Cinzel', 'Noto Serif JP', serif;
+
+  --theme-card-border-width: 2px;
+  --theme-card-border-color: #7a5522;
+  --theme-card-bg: #3d2512;
+  --theme-card-radius: 6px;
+  --theme-card-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(200, 135, 42, 0.2);
+  --theme-card-hover-transform: translateY(-2px);
+  --theme-card-hover-shadow: 4px 4px 16px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(200, 135, 42, 0.3);
+  --theme-card-hover-border-color: #c8872a;
+
+  --theme-btn-border-width: 2px;
+  --theme-btn-border-color: #8b6535;
+  --theme-btn-bg: linear-gradient(180deg, #5a3a18 0%, #3d2512 100%);
+  --theme-btn-radius: 4px;
+  --theme-btn-font-family: 'Cinzel', serif;
+  --theme-btn-letter-spacing: 0.08em;
+  --theme-btn-color: #e8c99a;
+  --theme-btn-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(200, 135, 42, 0.2);
+  --theme-btn-hover-transform: translateY(-1px);
+  --theme-btn-hover-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(200, 135, 42, 0.3);
+  --theme-btn-hover-bg: linear-gradient(180deg, #6e4820 0%, #4e3018 100%);
+  --theme-btn-hover-color: #f5d9a8;
+  --theme-btn-hover-border-color: #c8872a;
+  --theme-btn-active-transform: translateY(1px);
+  --theme-btn-active-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme='steampunk'] body {
+  background: radial-gradient(ellipse at top, #2a1a0a 0%, #1a0f07 100%);
+  background-attachment: fixed;
+}
+
+[data-theme='steampunk'] h1,
+[data-theme='steampunk'] h2,
+[data-theme='steampunk'] h3 {
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.06em;
+  color: #d4aa6a;
+}
+
+[data-theme='steampunk'] .site-header {
+  border: 2px solid #7a5522;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #4e3018 0%, #3d2512 100%);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(200, 135, 42, 0.15);
+}
+
+[data-theme='steampunk'] article.prose h2 {
+  border-bottom: 2px solid #7a5522;
+  color: #d4aa6a;
+}
+
+[data-theme='steampunk'] article.prose h4 {
+  border-left: 4px solid #c8872a;
+  padding-left: 0.75rem;
+  color: #c8872a;
+}
+
+[data-theme='steampunk'] article.prose blockquote {
+  border-left: 4px solid #8b6535;
+  border-radius: 4px;
+  background: rgba(61, 37, 18, 0.8);
+  color: #d4aa6a;
+}
+
+[data-theme='steampunk'] pre.shiki {
+  border: 2px solid #7a5522;
+  border-radius: 4px;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme='steampunk'] aside.toc-sidebar > div {
+  border: 2px solid #7a5522;
+  border-radius: 4px;
+  background: #3d2512;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Steampunk ダークモード */
+html[data-theme='steampunk'].dark,
+html[data-theme='steampunk'] .dark {
+  --color-bg: #100808;
+  --color-background: var(--color-bg);
+  --color-card: #1f1005;
+  --color-secondary: #2a1808;
+  --color-text: #f0d5a8;
+  --color-border: #a07040;
+  --color-accent: #e09840;
+
+  --theme-card-shadow: 2px 2px 12px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(224, 152, 64, 0.15);
+  --theme-card-hover-shadow: 4px 4px 20px rgba(0, 0, 0, 0.8), 0 0 20px rgba(200, 135, 42, 0.1);
+  --theme-card-hover-border-color: #e09840;
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   ── Chalkboard ──
+   黒板＆チョーク・手書き風のやわらかいタッチ
+   ═══════════════════════════════════════════════════════ */
+[data-theme='chalkboard'] {
+  --color-bg: #2d4a3e;
+  --color-background: var(--color-bg);
+  --color-card: #243d32;
+  --color-secondary: #1e3327;
+  --color-text: #f0ece0;
+  --color-border: rgba(240, 236, 224, 0.5);
+  --color-accent: #f0e68c;
+  --font-sans: 'Caveat', 'Noto Sans JP', cursive;
+
+  --theme-card-border-width: 2px;
+  --theme-card-border-color: rgba(240, 236, 224, 0.35);
+  --theme-card-bg: rgba(36, 61, 50, 0.9);
+  --theme-card-radius: 8px;
+  --theme-card-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(240, 236, 224, 0.08);
+  --theme-card-hover-transform: translateY(-3px) rotate(-0.3deg);
+  --theme-card-hover-shadow: 4px 8px 20px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(240, 236, 224, 0.15);
+  --theme-card-hover-border-color: rgba(240, 236, 224, 0.65);
+
+  --theme-btn-border-width: 2px;
+  --theme-btn-border-color: rgba(240, 236, 224, 0.5);
+  --theme-btn-bg: rgba(36, 61, 50, 0.8);
+  --theme-btn-radius: 6px;
+  --theme-btn-font-family: 'Caveat', cursive;
+  --theme-btn-font-weight: 700;
+  --theme-btn-letter-spacing: 0.05em;
+  --theme-btn-color: #f0ece0;
+  --theme-btn-hover-transform: translateY(-1px) rotate(0.3deg);
+  --theme-btn-hover-border-color: rgba(240, 230, 140, 0.8);
+  --theme-btn-hover-color: #f0e68c;
+}
+
+[data-theme='chalkboard'] body {
+  background-color: #2d4a3e;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 28px,
+      rgba(240, 236, 224, 0.04) 28px,
+      rgba(240, 236, 224, 0.04) 29px
+    );
+  background-attachment: fixed;
+}
+
+[data-theme='chalkboard'] h1,
+[data-theme='chalkboard'] h2,
+[data-theme='chalkboard'] h3,
+[data-theme='chalkboard'] h4 {
+  font-family: 'Caveat', cursive;
+  letter-spacing: 0.04em;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='chalkboard'] .site-header {
+  border: 2px solid rgba(240, 236, 224, 0.3);
+  border-radius: 6px;
+  background: rgba(36, 61, 50, 0.95);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(240, 236, 224, 0.06);
+}
+
+[data-theme='chalkboard'] article.prose h2 {
+  border-bottom: 2px dashed rgba(240, 236, 224, 0.35);
+  padding-bottom: 0.5rem;
+}
+
+[data-theme='chalkboard'] article.prose h4 {
+  border-left: 4px solid rgba(240, 230, 140, 0.7);
+  padding-left: 0.75rem;
+}
+
+[data-theme='chalkboard'] article.prose blockquote {
+  border-left: 4px solid rgba(240, 230, 140, 0.7);
+  border-radius: 6px;
+  background: rgba(30, 51, 39, 0.8);
+  font-style: italic;
+}
+
+[data-theme='chalkboard'] pre.shiki {
+  border: 2px dashed rgba(240, 236, 224, 0.3);
+  border-radius: 6px;
+  background: rgba(30, 51, 39, 0.9) !important;
+}
+
+[data-theme='chalkboard'] aside.toc-sidebar > div {
+  border: 2px solid rgba(240, 236, 224, 0.3);
+  border-radius: 6px;
+  background: rgba(36, 61, 50, 0.9);
+}
+
+/* Chalkboard ダークモード */
+html[data-theme='chalkboard'].dark,
+html[data-theme='chalkboard'] .dark {
+  --color-bg: #141f1b;
+  --color-background: var(--color-bg);
+  --color-card: #0f1812;
+  --color-secondary: #0a130e;
+  --color-text: #f5f2e8;
+  --color-border: rgba(240, 236, 224, 0.4);
+  --color-accent: #f0e68c;
+
+  --theme-card-border-color: rgba(240, 236, 224, 0.25);
+  --theme-card-bg: rgba(15, 24, 18, 0.9);
+  --theme-card-hover-shadow: 4px 8px 24px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(240, 236, 224, 0.12);
+}
+
+html[data-theme='chalkboard'].dark body,
+html[data-theme='chalkboard'] .dark body {
+  background-color: #141f1b;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 28px,
+      rgba(240, 236, 224, 0.03) 28px,
+      rgba(240, 236, 224, 0.03) 29px
+    );
+  background-attachment: fixed;
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   ── Holographic ──
+   オーロラ・クリスタル・プリズム発光・虹色グラデーション
+   ═══════════════════════════════════════════════════════ */
+@keyframes holo-shift {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+@keyframes holo-shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+[data-theme='holographic'] {
+  --color-bg: #0c0818;
+  --color-background: var(--color-bg);
+  --color-card: rgba(255, 255, 255, 0.06);
+  --color-secondary: rgba(255, 255, 255, 0.04);
+  --color-text: #e8e0ff;
+  --color-border: rgba(168, 85, 247, 0.35);
+  --color-accent: #a855f7;
+  --font-sans: 'Outfit', 'Lexend', sans-serif;
+
+  --theme-card-border-width: 1px;
+  --theme-card-border-color: rgba(168, 85, 247, 0.3);
+  --theme-card-bg: rgba(255, 255, 255, 0.06);
+  --theme-card-backdrop: blur(16px) saturate(1.5);
+  --theme-card-webkit-backdrop: blur(16px) saturate(1.5);
+  --theme-card-radius: 16px;
+  --theme-card-shadow:
+    0 4px 24px rgba(168, 85, 247, 0.12),
+    0 0 0 1px rgba(168, 85, 247, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  --theme-card-hover-transform: translateY(-4px);
+  --theme-card-hover-shadow:
+    0 12px 40px rgba(168, 85, 247, 0.25),
+    0 0 0 1px rgba(168, 85, 247, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  --theme-card-hover-border-color: rgba(168, 85, 247, 0.6);
+
+  --theme-btn-border-width: 1px;
+  --theme-btn-border-color: rgba(168, 85, 247, 0.4);
+  --theme-btn-bg: rgba(168, 85, 247, 0.15);
+  --theme-btn-radius: 10px;
+  --theme-btn-font-family: 'Outfit', sans-serif;
+  --theme-btn-color: #e8e0ff;
+  --theme-btn-shadow: 0 4px 16px rgba(168, 85, 247, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --theme-btn-hover-transform: translateY(-2px);
+  --theme-btn-hover-shadow: 0 8px 24px rgba(168, 85, 247, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  --theme-btn-hover-bg: rgba(168, 85, 247, 0.25);
+  --theme-btn-hover-border-color: rgba(168, 85, 247, 0.7);
+  --theme-btn-active-transform: translateY(0);
+  --theme-btn-active-shadow: 0 2px 8px rgba(168, 85, 247, 0.15);
+}
+
+[data-theme='holographic'] body {
+  background: #0c0818;
+  background-image:
+    radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(59, 130, 246, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 0%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+
+[data-theme='holographic'] h1,
+[data-theme='holographic'] h2,
+[data-theme='holographic'] h3 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  background: linear-gradient(135deg, #c084fc, #818cf8, #38bdf8, #c084fc);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: holo-shimmer 4s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-theme='holographic'] h1,
+  [data-theme='holographic'] h2,
+  [data-theme='holographic'] h3 {
+    animation: none;
+    background: linear-gradient(135deg, #c084fc, #818cf8);
+  }
+}
+
+[data-theme='holographic'] .site-header {
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px) saturate(1.5);
+  -webkit-backdrop-filter: blur(16px) saturate(1.5);
+  box-shadow: 0 4px 24px rgba(168, 85, 247, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+[data-theme='holographic'] article.prose h2 {
+  border-bottom: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+[data-theme='holographic'] article.prose blockquote {
+  border-left: 3px solid rgba(168, 85, 247, 0.6);
+  border-radius: 8px;
+  background: rgba(168, 85, 247, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+[data-theme='holographic'] pre.shiki {
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.08);
+}
+
+[data-theme='holographic'] aside.toc-sidebar > div {
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+}
+
+/* Holographic ライトモード */
+html:not(.dark) [data-theme='holographic'],
+[data-theme='holographic']:not(.dark):not(html) {
+  --color-bg: #f0eaff;
+  --color-background: var(--color-bg);
+  --color-card: rgba(255, 255, 255, 0.75);
+  --color-secondary: rgba(240, 234, 255, 0.6);
+  --color-text: #1e0a3c;
+  --color-border: rgba(168, 85, 247, 0.4);
+  --color-accent: #7c3aed;
+}
+
+/* Holographic ダークモード（デフォルトがダーク基調なので強化） */
+html[data-theme='holographic'].dark,
+html[data-theme='holographic'] .dark {
+  --color-bg: #060412;
+  --color-background: var(--color-bg);
+  --color-card: rgba(255, 255, 255, 0.05);
+  --color-text: #f0e8ff;
+  --color-accent: #c084fc;
+
+  --theme-card-shadow:
+    0 4px 24px rgba(192, 132, 252, 0.15),
+    0 0 0 1px rgba(192, 132, 252, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --theme-card-hover-shadow:
+    0 12px 40px rgba(192, 132, 252, 0.3),
+    0 0 0 1px rgba(192, 132, 252, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+html[data-theme='holographic'].dark body,
+html[data-theme='holographic'] .dark body {
+  background: #060412;
+  background-image:
+    radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 0%, rgba(236, 72, 153, 0.12) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   ── Bauhaus ──
+   三原色×幾何学・モダニズムの原点
+   ═══════════════════════════════════════════════════════ */
+[data-theme='bauhaus'] {
+  --color-bg: #f5f5f0;
+  --color-background: var(--color-bg);
+  --color-card: #ffffff;
+  --color-secondary: #ebebeb;
+  --color-text: #1a1a1a;
+  --color-border: #1a1a1a;
+  --color-accent: #e63329;
+  --font-sans: 'Bebas Neue', 'Space Grotesk', sans-serif;
+
+  --theme-card-border-width: 2px;
+  --theme-card-border-color: #1a1a1a;
+  --theme-card-bg: #ffffff;
+  --theme-card-radius: 0px;
+  --theme-card-shadow: none;
+  --theme-card-hover-transform: none;
+  --theme-card-hover-shadow: none;
+  --theme-card-hover-border-color: #e63329;
+  --theme-card-hover-bg: #ffffff;
+
+  --theme-btn-border-width: 3px;
+  --theme-btn-border-color: #1a1a1a;
+  --theme-btn-bg: transparent;
+  --theme-btn-radius: 0px;
+  --theme-btn-font-family: 'Bebas Neue', sans-serif;
+  --theme-btn-letter-spacing: 0.12em;
+  --theme-btn-font-weight: 400;
+  --theme-btn-color: #1a1a1a;
+  --theme-btn-hover-transform: none;
+  --theme-btn-hover-bg: #1a1a1a;
+  --theme-btn-hover-color: #f5f5f0;
+  --theme-btn-hover-border-color: #1a1a1a;
+  --theme-btn-active-bg: #e63329;
+  --theme-btn-active-shadow: none;
+}
+
+[data-theme='bauhaus'] body {
+  background: #f5f5f0;
+}
+
+[data-theme='bauhaus'] h1,
+[data-theme='bauhaus'] h2,
+[data-theme='bauhaus'] h3,
+[data-theme='bauhaus'] h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.1em;
+  font-weight: 400;
+}
+
+[data-theme='bauhaus'] h1 { font-size: 3.5rem; line-height: 1; }
+[data-theme='bauhaus'] h2 { font-size: 2.5rem; line-height: 1.1; }
+
+[data-theme='bauhaus'] .site-header {
+  border: 3px solid #1a1a1a;
+  border-radius: 0;
+  background: #f5f5f0;
+  box-shadow: none;
+}
+
+[data-theme='bauhaus'] article.prose h2 {
+  border-bottom: 3px solid #1a1a1a;
+  padding-bottom: 0.25rem;
+}
+
+[data-theme='bauhaus'] article.prose h4 {
+  border-left: 6px solid #e63329;
+  padding-left: 0.75rem;
+}
+
+[data-theme='bauhaus'] article.prose blockquote {
+  border-left: 6px solid #f5c400;
+  border-radius: 0;
+  background: transparent;
+  font-style: normal;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.05em;
+}
+
+[data-theme='bauhaus'] article.prose table {
+  border: 2px solid #1a1a1a;
+}
+
+[data-theme='bauhaus'] article.prose th {
+  background: #1a1a1a;
+  color: #f5f5f0;
+  border-bottom: none;
+}
+
+[data-theme='bauhaus'] pre.shiki {
+  border: 2px solid #1a1a1a;
+  border-radius: 0;
+  border-left: 6px solid #2563eb;
+}
+
+[data-theme='bauhaus'] aside.toc-sidebar > div {
+  border: 2px solid #1a1a1a;
+  border-radius: 0;
+  border-top: 6px solid #e63329;
+}
+
+/* Bauhaus ダークモード */
+html[data-theme='bauhaus'].dark,
+html[data-theme='bauhaus'] .dark {
+  --color-bg: #0f0f0f;
+  --color-background: var(--color-bg);
+  --color-card: #1a1a1a;
+  --color-secondary: #252525;
+  --color-text: #f5f5f0;
+  --color-border: #f5f5f0;
+  --color-accent: #ff4438;
+
+  --theme-card-border-color: #f5f5f0;
+  --theme-card-bg: #1a1a1a;
+  --theme-card-hover-border-color: #ff4438;
+
+  --theme-btn-border-color: #f5f5f0;
+  --theme-btn-color: #f5f5f0;
+  --theme-btn-hover-bg: #f5f5f0;
+  --theme-btn-hover-color: #0f0f0f;
+}
+
+html[data-theme='bauhaus'].dark body,
+html[data-theme='bauhaus'] .dark body {
+  background: #0f0f0f;
+}
+
+html[data-theme='bauhaus'].dark .site-header,
+html[data-theme='bauhaus'] .dark .site-header {
+  background: #0f0f0f;
+  border-color: #f5f5f0;
+}
+
+html[data-theme='bauhaus'].dark article.prose th,
+html[data-theme='bauhaus'] .dark article.prose th {
+  background: #f5f5f0;
+  color: #0f0f0f;
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   ── Glitch Art ──
+   RGBズレ・スキャンライン・デジタルな崩壊表現
+   ═══════════════════════════════════════════════════════ */
+@keyframes glitch-rgb {
+  0%, 100% {
+    text-shadow: -2px 0 #ff0090, 2px 0 #00fff0;
+  }
+  25% {
+    text-shadow: 2px 0 #ff0090, -2px 0 #00fff0;
+  }
+  50% {
+    text-shadow: -2px 2px #ff0090, 2px -2px #00fff0;
+  }
+  75% {
+    text-shadow: 2px -2px #ff0090, -2px 2px #00fff0;
+  }
+}
+
+@keyframes glitch-border {
+  0%, 90%, 100% { clip-path: none; opacity: 1; }
+  92% { clip-path: inset(20% 0 50% 0); opacity: 0.8; transform: translateX(-2px); }
+  94% { clip-path: inset(60% 0 10% 0); opacity: 0.8; transform: translateX(2px); }
+  96% { clip-path: inset(40% 0 30% 0); opacity: 0.8; transform: translateX(-1px); }
+  98% { clip-path: none; opacity: 1; transform: none; }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+[data-theme='glitch'] {
+  --color-bg: #050508;
+  --color-background: var(--color-bg);
+  --color-card: #0a0a12;
+  --color-secondary: #0f0f1a;
+  --color-text: #e0e0ff;
+  --color-border: rgba(255, 0, 144, 0.4);
+  --color-accent: #ff0090;
+  --font-sans: 'Share Tech Mono', monospace;
+
+  --theme-card-border-width: 1px;
+  --theme-card-border-color: rgba(255, 0, 144, 0.3);
+  --theme-card-bg: #0a0a12;
+  --theme-card-radius: 2px;
+  --theme-card-shadow: 0 0 10px rgba(255, 0, 144, 0.1), 0 0 30px rgba(0, 255, 240, 0.05);
+  --theme-card-hover-transform: translateY(-2px);
+  --theme-card-hover-shadow:
+    0 0 20px rgba(255, 0, 144, 0.25),
+    0 0 40px rgba(0, 255, 240, 0.1),
+    -2px 0 rgba(255, 0, 144, 0.15),
+    2px 0 rgba(0, 255, 240, 0.15);
+  --theme-card-hover-border-color: rgba(255, 0, 144, 0.7);
+
+  --theme-btn-border-width: 1px;
+  --theme-btn-border-color: rgba(255, 0, 144, 0.5);
+  --theme-btn-bg: rgba(10, 10, 18, 0.9);
+  --theme-btn-radius: 0px;
+  --theme-btn-font-family: 'Share Tech Mono', monospace;
+  --theme-btn-letter-spacing: 0.1em;
+  --theme-btn-color: #ff0090;
+  --theme-btn-shadow: 0 0 8px rgba(255, 0, 144, 0.2);
+  --theme-btn-hover-transform: translateY(-1px);
+  --theme-btn-hover-shadow: 0 0 16px rgba(255, 0, 144, 0.4), 0 0 8px rgba(0, 255, 240, 0.2);
+  --theme-btn-hover-bg: rgba(255, 0, 144, 0.1);
+  --theme-btn-hover-color: #ff40b0;
+  --theme-btn-hover-border-color: rgba(255, 0, 144, 0.9);
+  --theme-btn-active-transform: translateY(0);
+  --theme-btn-active-shadow: 0 0 4px rgba(255, 0, 144, 0.2);
+}
+
+[data-theme='glitch'] body {
+  background-color: #050508;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 255, 240, 0.015) 2px,
+      rgba(0, 255, 240, 0.015) 4px
+    );
+  background-attachment: fixed;
+}
+
+[data-theme='glitch'] h1,
+[data-theme='glitch'] h2,
+[data-theme='glitch'] h3 {
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #e0e0ff;
+  animation: glitch-rgb 6s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-theme='glitch'] h1,
+  [data-theme='glitch'] h2,
+  [data-theme='glitch'] h3 {
+    animation: none;
+    text-shadow: -1px 0 #ff0090, 1px 0 #00fff0;
+  }
+}
+
+[data-theme='glitch'] .site-header {
+  border: 1px solid rgba(255, 0, 144, 0.4);
+  border-radius: 0;
+  background: rgba(10, 10, 18, 0.95);
+  box-shadow: 0 0 20px rgba(255, 0, 144, 0.1), 0 0 40px rgba(0, 255, 240, 0.05);
+}
+
+[data-theme='glitch'] article.prose h2 {
+  border-bottom: 1px solid rgba(255, 0, 144, 0.4);
+  box-shadow: 0 1px 0 rgba(0, 255, 240, 0.2);
+}
+
+[data-theme='glitch'] article.prose h4 {
+  border-left: 3px solid #ff0090;
+  padding-left: 0.75rem;
+  box-shadow: -4px 0 rgba(0, 255, 240, 0.3);
+}
+
+[data-theme='glitch'] article.prose blockquote {
+  border-left: 3px solid #00fff0;
+  border-radius: 0;
+  background: rgba(0, 255, 240, 0.04);
+  box-shadow: -4px 0 rgba(255, 0, 144, 0.1);
+}
+
+[data-theme='glitch'] pre.shiki {
+  border: 1px solid rgba(255, 0, 144, 0.3);
+  border-radius: 0;
+  box-shadow: 0 0 20px rgba(255, 0, 144, 0.08), inset 0 0 20px rgba(0, 0, 0, 0.5);
+  animation: glitch-border 8s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-theme='glitch'] pre.shiki {
+    animation: none;
+  }
+}
+
+[data-theme='glitch'] article.prose table {
+  border: 1px solid rgba(255, 0, 144, 0.3);
+  box-shadow: 0 0 10px rgba(255, 0, 144, 0.08);
+}
+
+[data-theme='glitch'] article.prose th {
+  background: rgba(255, 0, 144, 0.1);
+  border-bottom: 1px solid rgba(255, 0, 144, 0.4);
+  color: #ff0090;
+}
+
+[data-theme='glitch'] aside.toc-sidebar > div {
+  border: 1px solid rgba(255, 0, 144, 0.3);
+  border-radius: 0;
+  background: rgba(10, 10, 18, 0.9);
+  box-shadow: 0 0 20px rgba(255, 0, 144, 0.08);
+}
+
+/* Glitch Art ライトモード（暗めの設定） */
+html:not(.dark) [data-theme='glitch'] {
+  --color-bg: #0d0d1a;
+  --color-background: var(--color-bg);
+  --color-card: #13131f;
+  --color-text: #d8d8ff;
+}
+
+/* Glitch Art ダークモード */
+html[data-theme='glitch'].dark,
+html[data-theme='glitch'] .dark {
+  --color-bg: #010103;
+  --color-background: var(--color-bg);
+  --color-card: #050510;
+  --color-text: #f0f0ff;
+  --color-accent: #ff40b0;
+
+  --theme-card-shadow:
+    0 0 15px rgba(255, 0, 144, 0.15),
+    0 0 40px rgba(0, 255, 240, 0.07);
+  --theme-card-hover-shadow:
+    0 0 25px rgba(255, 0, 144, 0.35),
+    0 0 60px rgba(0, 255, 240, 0.15);
+}
+
+html[data-theme='glitch'].dark body,
+html[data-theme='glitch'] .dark body {
+  background-color: #010103;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 255, 240, 0.02) 2px,
+      rgba(0, 255, 240, 0.02) 4px
+    );
+}
+
+html[data-theme='glitch'].dark .site-header,
+html[data-theme='glitch'] .dark .site-header {
+  box-shadow: 0 0 30px rgba(255, 0, 144, 0.15), 0 0 60px rgba(0, 255, 240, 0.08);
+}
+
