@@ -168,8 +168,8 @@ export const themeConfig = [
     label: 'Luxury / Gold',
     description: '高級感・極細ゴールドボーダー・洗練された余白',
     emoji: '⚜️',
-    previewBg: '#050505',
-    previewCard: '#0d0d0d',
+    previewBg: '#fbfaf7',
+    previewCard: '#ffffff',
     previewAccent: '#dfb76c',
   },
   {
