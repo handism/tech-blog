@@ -25,6 +25,14 @@ export function ThemeSelector() {
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
       {themeConfig.map((theme) => {
         const isSelected = effectiveTheme === theme.id;
+        // as const による TypeScript の厳密な型推論エラーを回避するためのキャスト用定義
+        const meta = theme as {
+          readonly hasBorder?: boolean;
+          readonly previewBorderColor?: string;
+          readonly previewBackdropFilter?: string;
+          readonly previewCardShadow?: string;
+        };
+
         return (
           <button
             key={theme.id}
@@ -49,16 +57,11 @@ export function ThemeSelector() {
                 style={{
                   background: theme.previewCard,
                   border:
-                    theme.id === 'neumorphism' ||
-                    theme.id === 'claymorphism' ||
-                    theme.id === 'nordic'
+                    meta.hasBorder === false
                       ? 'none'
-                      : `2px solid ${theme.id === 'glassmorphism' ? 'rgba(255,255,255,0.3)' : theme.previewAccent}`,
-                  backdropFilter: theme.id === 'glassmorphism' ? 'blur(8px)' : undefined,
-                  boxShadow:
-                    theme.id === 'claymorphism'
-                      ? '0 4px 10px rgba(3, 105, 161, 0.1), inset -3px -3px 5px rgba(3, 105, 161, 0.05)'
-                      : undefined,
+                      : `2px solid ${meta.previewBorderColor || theme.previewAccent}`,
+                  backdropFilter: meta.previewBackdropFilter,
+                  boxShadow: meta.previewCardShadow,
                 }}
               >
                 {/* ヘッダーバー */}

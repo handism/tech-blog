@@ -20,6 +20,8 @@ export const themeConfig = [
     previewBg: 'linear-gradient(135deg,#667eea,#764ba2)',
     previewCard: 'rgba(255,255,255,0.15)',
     previewAccent: '#a78bfa',
+    previewBorderColor: 'rgba(255,255,255,0.3)',
+    previewBackdropFilter: 'blur(8px)',
   },
   {
     id: 'minimal',
@@ -56,6 +58,7 @@ export const themeConfig = [
     previewBg: '#e0e5ec',
     previewCard: '#e0e5ec',
     previewAccent: '#6c72cb',
+    hasBorder: false,
   },
   {
     id: 'japanese',
@@ -101,6 +104,7 @@ export const themeConfig = [
     previewBg: '#edf2f0',
     previewCard: '#ffffff',
     previewAccent: '#2e5a44',
+    hasBorder: false,
   },
   {
     id: 'claymorphism',
@@ -110,6 +114,9 @@ export const themeConfig = [
     previewBg: '#e0f2fe',
     previewCard: '#ffffff',
     previewAccent: '#3b82f6',
+    hasBorder: false,
+    previewCardShadow:
+      '0 4px 10px rgba(3, 105, 161, 0.1), inset -3px -3px 5px rgba(3, 105, 161, 0.05)',
   },
   {
     id: 'flat',
