@@ -43,7 +43,25 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 2. `src/lib/learning-parser.ts` — Zod スキーマ（`title / date / order / draft / quiz`）でバリデーション。`markdownToPlaintext()` は共用
 3. `src/lib/post-renderer.ts` — ブログ記事と共用（Mermaidコードブロックは Shiki をバイパスして生の HTML `div` に変換され、クライアントサイドで動的にSVG描画される）
 4. `src/lib/learning-server.ts` — React `cache()` でデータを集約し、`order` 昇順ソートと隣接チャプターを解決
-5. `app/learning/` — `/learning`（コース一覧）・`/learning/[course]`（ロードマップ）・`/learning/[course]/[slug]`（詳細）の 3 ルート。`generateStaticParams()` で静的 HTML を生成。2026年6月に「システムデザイン」「Gitアドバンスド」「AWSクラウド」「フロントエンドテスト」「モダンCSS」などのコースを新規追加。
+5. `app/learning/` — `/learning`（コース一覧）・`/learning/[course]`（ロードマップ）・`/learning/[course]/[slug]`（詳細）の 3 ルート。`generateStaticParams()` で静的 HTML を生成。
+   - 提供中の全17コース:
+     - `docker` (Docker)
+     - `github` (GitHub)
+     - `web-security` (Webセキュリティ)
+     - `api-design` (API設計)
+     - `linux-bash` (Linux & Bash)
+     - `network-basics` (ネットワークの基本)
+     - `cicd-pipeline` (CI/CDパイプライン)
+     - `system-design` (システムデザイン)
+     - `git-advanced` (Gitアドバンスド)
+     - `cloud-aws` (AWSクラウド)
+     - `frontend-testing` (フロントエンドテスト)
+     - `modern-css` (モダンCSS)
+     - `database` (データベース)
+     - `nextjs` (Next.js)
+     - `performance` (パフォーマンス)
+     - `react-hooks` (React Hooks)
+     - `typescript` (TypeScript)
 6. クライアントサイドでの動的機能として、LocalStorageを利用した学習進捗管理（読了チェック）およびチャプター末尾の「理解度クイズ」インタラクティブコンポーネントを搭載。
 
 #### AWSアーキテクチャ・ギャラリー（`aws-patterns/`）
@@ -53,6 +71,17 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 3. `src/lib/aws-gallery-repository.ts` — メタデータおよび `.yaml` テンプレートファイルの読み込み。同時にアセットを `/public/aws-patterns/` に自動コピー
 4. `src/lib/aws-gallery-server.ts` — React `cache()` でデータを集約し、YAMLを Shiki によるハイライトHTMLに事前生成
 5. `app/aws-patterns/` — `/aws-patterns`（一覧）・`/aws-patterns/[slug]`（詳細）ルート。`generateStaticParams()` で静的 HTML を生成
+
+#### 日本語検索パイプライン
+
+1. `scripts/copy-kuromoji-dict.js` — ビルド/起動時に `node_modules/kuromoji/dict` から `public/dict/` に辞書バイナリファイルをコピー
+2. `src/lib/kuromoji-tokenizer.ts` — `kuromoji` を用いて、日本語テキストを単語（トークン）のスペース区切り形式に分解するシングルトン・トークナイザー（辞書の動的読み込みとキャッシュを行う）
+3. `src/components/SearchBox.tsx` — クライアントサイドで記事データ（タイトル、本文、タグ、カテゴリ等）をトークナイズし、`Fuse.js` を用いて全文検索を実行
+
+#### 静的OGP画像生成パイプライン
+
+1. `scripts/download-fonts.js` — ビルド/起動時に OGP 画像で使用する日本語フォント（`NotoSansCJKjp-Bold.otf`）を Google Fonts の GitHub リポジトリから `public/fonts/` に自動ダウンロードする（失敗した場合は空のダミーファイルを置いてビルドエラーを防ぐ）
+2. `app/og/[slug]/image.png/route.tsx` — Next.js 16 の `ImageResponse` と `generateStaticParams()` を用いて、SSG（`output: 'export'`）環境でもビルド時に全ブログ記事の OGP 画像を静的 PNG ファイルとして事前生成・出力する
 
 ### 主要ディレクトリ
 

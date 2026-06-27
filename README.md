@@ -2,7 +2,7 @@
 
 ## このブログについて
 
-- **30種類の多彩なデザインテーマ**: デフォルトの力強い **Neo-Brutalism（ネオ・ブルータリズム）** に加え、Glassmorphism、Minimal、Retro、Cyberpunk、Neumorphism、Japanese、Editorial、Synthwave、Terminal、Nordic、Claymorphism、Bento、Hekireki といった幅広いスタイルにリアルタイムで切り替え可能
+- **36種類の多彩なデザインテーマ**: デフォルトの力強い **Neo-Brutalism（ネオ・ブルータリズム）** に加え、Glassmorphism, Minimal, Retro, Cyberpunk, Neumorphism, Japanese, Editorial, Synthwave, Terminal, Nordic, Claymorphism, Bento, Hekireki, Chalkboard, Holographic, Bauhaus, Glitch Art, Blueprint, Steampunk といった幅広いスタイル（全36種）にリアルタイムで切り替え可能
 - **豊富なスキンカラー**: Emerald、Ocean、Sunset、Purple、Rose のアクセントカラーとダークモードを組み合わせ、自分好みの外観にカスタマイズできます
 - 見出しフォントに **Lexend** および **Space Grotesk** を採用した、テックブログらしい力強いタイポグラフィ
 - 触っていて気持ちいい **ダイナミックなアクション**: テーマごとの世界観に合わせて、ホバーやクリック時のインタラクションが最適化されています
@@ -10,11 +10,11 @@
 - サムネイル画像にも対応。比率は 16:9 がおすすめ
 - サイドバーありの 2 カラムレイアウトで、レスポンシブレイアウトに対応
 - 記事のデータソースは `Markdown ファイル` に対応
-- ヘッダーの Tools メニューから利用できるブラウザ完結型の便利ツール（全51種）を内蔵
-  - **🎨 画像処理**: Neo-Brutalism UI Generator, Image Converter & Optimizer, Memphis Generator, Image Trimmer, Favicon & App Icon Generator, SVG Path Visualizer & Optimizer, Pixel Art Canvas, SVG Wave & Blob Generator
-  - **🔄 データ変換**: HTML to JSX Converter, Mock JSON Data Generator, Timezone Converter, JSON Formatter, YAML ↔ JSON, Base64 Codec, URL Codec, UUID Generator, HTML Entity Encoder / Decoder, CSV ↔ JSON, Password Generator, JSON to TypeScript / Zod
-  - **🛠️ 開発者向けツール**: Git Commit & Branch Helper, Aspect Ratio Calculator, HTTP Security Headers Generator, CSS Cubic-Bezier Visualizer, Regex Tester, Hash Generator, Color Converter, JWT Decoder, QR Code Generator, Diff Viewer, Unix Timestamp Converter, Cron Parser & Generator, URL Parser & Query Inspector, SQL Formatter, Text Case Converter & Counter, User Agent Parser, CSS Generator, Color Contrast & Palette, Keyboard Event Visualizer, Bitwise & Radix Converter, Git Command Helper, Curl to Code Converter, CSS Unit Converter, HTTP Request Tester, Lorem Ipsum & Dummy Text, Markdown Table Editor, IP Subnet & CIDR Calculator, Invisible Character Detector, CSS Flexbox & Grid Playground
-  - **🧖 外部ツール**: Sauna Itta, Sauna Simulator
+- ヘッダーの Tools メニューから利用できるブラウザ完結型の便利ツール（全54種）を内蔵
+  - **🎨 画像処理**: Neo-Brutalism UI Generator, Image Converter & Optimizer, Memphis Generator, Image Trimmer, Favicon & App Icon Generator, SVG Path Visualizer & Optimizer, Pixel Art Canvas, SVG Wave & Blob Generator (8種)
+  - **🔄 データ変換**: HTML to JSX Converter, Mock JSON Data Generator, Timezone Converter, JSON Formatter, YAML ↔ JSON, Base64 Codec, URL Codec, UUID Generator, HTML Entity Encoder / Decoder, CSV ↔ JSON, Password Generator, JSON to TypeScript / Zod, SVG to CSS Converter, JSON Diff Comparer (14種)
+  - **🛠️ 開発者向けツール**: Git Commit & Branch Helper, Aspect Ratio Calculator, HTTP Security Headers Generator, CSS Cubic-Bezier Visualizer, Regex Tester, Hash Generator, Color Converter, JWT Decoder, QR Code Generator, Diff Viewer, Unix Timestamp Converter, Cron Parser & Generator, URL Parser & Query Inspector, SQL Formatter, Text Case Converter & Counter, User Agent Parser, CSS Generator, Color Contrast & Palette, Keyboard Event Visualizer, Bitwise & Radix Converter, Git Command Helper, Curl to Code Converter, CSS Unit Converter, HTTP Request Tester, Lorem Ipsum & Dummy Text, Markdown Table Editor, IP Subnet & CIDR Calculator, HTTP Status Code Explorer, Invisible Character Detector, CSS Flexbox & Grid Playground (30種)
+  - **🧖 外部ツール**: Sauna Itta, Sauna Simulator (2種)
 - About・プライバシーポリシー・HTML Sitemap・RSS フィードページを提供
 - **Scraps**（`/scraps`）：Twitter/Mastodon 感覚で日々の気づきやエラー解決ログを短く残せる技術メモ欄。独立したネオ・ブルータリズム風のカード形式で表示されます。`scraps/` ディレクトリに Markdown を置くだけで公開される
 - **学習ガイド**（`/learning`）：Docker、GitHub、Webセキュリティ、API設計、Linux & Bash、ネットワークの基本、CI/CDパイプライン、システムデザイン、Gitアドバンスド、AWSクラウド、フロントエンドテスト、モダンCSS、データベース、Next.js、パフォーマンス、React Hooks、TypeScript などの各種仕組みを順序立てて（タイムライン状のロードマップ形式で）学べる体系的な学習コンテンツ。Mermaid.jsによる動的な図解ダイアグラム表示に対応しているほか、LocalStorageを利用した読了進捗管理（進捗率・完了チェック）や、各チャプターの末尾で挑戦できるインタラクティブな「理解度クイズ」機能を搭載しています。
@@ -29,8 +29,8 @@
 - **マークダウン処理**：Remark + rehype（HTML 変換・見出し自動リンク・スラッグ生成・TOC 生成・Mermaidダイアグラムパース）
 - **図解・ダイアグラム描画**：Mermaid.js（クライアント側での動的SVGレンダリングに対応）
 - **シンタックスハイライト**：Shiki（github-dark テーマ）
-- **テーマ切り替え**：next-themes（ダークモード・30種類のテーマ切り替え対応）
-- **検索機能**：Fuse.js（クライアント側全文検索）
+- **テーマ切り替え**：next-themes（ダークモード・36種類のテーマ切り替え対応）
+- **検索機能**：kuromoji（日本語形態素解析） + Fuse.js（クライアント側全文検索）
 - **バリデーション**：Zod（frontmatter）
 - **ホスティング**：GitHub Pages
 - **デプロイ**：GitHub Actions（`main` ブランチへのプッシュで自動デプロイ）
@@ -296,3 +296,5 @@ graph TD
 - 検索結果でタイトル・本文スニペットに加え、マッチしたタグ・カテゴリもハイライト表示
 - キーボードナビゲーション対応（ドロップダウンメニュー・フォーカスリング）
 - `ThemeToggle` に `aria-label` を設定
+- `kuromoji` による日本語形態素解析により、日本語の文脈に沿った柔軟かつ高精度な検索ヒットを実現
+- SSG（静的サイト生成）環境でありながら、ビルド時に全記事のOGP画像を自動で静的画像ファイル（PNG）として事前生成し、適切なOGPタグを付与
