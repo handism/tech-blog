@@ -125,7 +125,7 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
               {/* 画像コンテナ */}
               <div
                 onClick={() => setIsLightboxOpen(true)}
-                className="relative border-2 border-border rounded-xl overflow-hidden bg-white/90 p-4 cursor-zoom-in hover:border-accent group transition-colors flex items-center justify-center min-h-[220px]"
+                className="relative border-2 border-border rounded-xl overflow-hidden bg-white/90 dark:bg-neutral-900/90 p-4 cursor-zoom-in hover:border-accent group transition-colors flex items-center justify-center min-h-[220px]"
               >
                 {}
                 <img
@@ -242,7 +242,7 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
             <img
               src={`/aws-patterns/${pattern.diagramFile}`}
               alt={`${pattern.title} アーキテクチャ図（拡大）`}
-              className="max-w-[95vw] max-h-[90vh] object-contain select-none bg-white p-6 rounded-2xl border border-white/10 shadow-2xl"
+              className="max-w-[95vw] max-h-[90vh] object-contain select-none bg-white dark:bg-neutral-900 p-6 rounded-2xl border border-white/10 shadow-2xl"
               onClick={(e) => e.stopPropagation()} // 画像クリックでは閉じない
             />
           </div>
