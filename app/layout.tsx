@@ -5,13 +5,7 @@ import Footer from '@/src/components/Footer';
 import Header from '@/src/components/Header';
 import ScrollToTopButton from '@/src/components/ScrollToTopButton';
 import { ThemeDesignProvider } from '@/src/components/ThemeDesignProvider';
-import {
-  DEFAULT_SKIN,
-  DEFAULT_THEME,
-  SKIN_STORAGE_KEY,
-  THEME_STORAGE_KEY,
-  siteConfig,
-} from '@/src/config/site';
+import { DEFAULT_THEME, THEME_STORAGE_KEY, siteConfig } from '@/src/config/site';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import { ThemeProvider } from 'next-themes';
@@ -59,12 +53,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className={`${geistSans.className} bg-bg text-text antialiased relative min-h-screen`}>
-        {/* フラッシュ防止スクリプト(スキン): キー名は SKIN_STORAGE_KEY、フォールバック値は DEFAULT_SKIN と一致させること */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var s=localStorage.getItem('${SKIN_STORAGE_KEY}')||'${DEFAULT_SKIN}';document.documentElement.setAttribute('data-skin',s);}catch(e){}})();`,
-          }}
-        />
         {/* フラッシュ防止スクリプト(デザインテーマ): キー名は THEME_STORAGE_KEY、フォールバック値は DEFAULT_THEME と一致させること */}
         <script
           dangerouslySetInnerHTML={{

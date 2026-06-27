@@ -69,36 +69,7 @@
   --color-accent: #34d399;
 }
 
-/* =======================
-   スキン（カラーテーマ） - ネオブルータリズム用に調整
-   ======================= */
-[data-skin='ocean'] {
-  --color-accent: #0ea5e9;
-}
-[data-skin='ocean'].dark {
-  --color-accent: #38bdf8;
-}
 
-[data-skin='sunset'] {
-  --color-accent: #ea580c;
-}
-[data-skin='sunset'].dark {
-  --color-accent: #fbbf24;
-}
-
-[data-skin='purple'] {
-  --color-accent: #8b5cf6;
-}
-[data-skin='purple'].dark {
-  --color-accent: #a78bfa;
-}
-
-[data-skin='rose'] {
-  --color-accent: #e11d48;
-}
-[data-skin='rose'].dark {
-  --color-accent: #fb7185;
-}
 
 /* =======================
    共通コンポーネント基本スタイル（プレーン）

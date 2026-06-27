@@ -1,8 +1,7 @@
 // app/settings/page.tsx
-import { SkinSelector } from '@/src/components/SkinSelector';
 import { ThemeSelector } from '@/src/components/ThemeSelector';
 import { ThemeToggle } from '@/src/components/ThemeToggle';
-import { skinConfig, themeConfig } from '@/src/config/site';
+import { themeConfig } from '@/src/config/site';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -43,28 +42,6 @@ export default function SettingsPage() {
           </p>
         </div>
         <ThemeSelector />
-      </section>
-
-      {/* セクション2: アクセントカラー */}
-      <section aria-labelledby="skin-section-heading">
-        <div className="mb-6">
-          <h2
-            id="skin-section-heading"
-            className="text-xl font-bold text-text mb-1 flex items-center gap-2"
-          >
-            <span>🌈</span>
-            アクセントカラー
-          </h2>
-          <p className="text-sm text-text opacity-60">
-            {skinConfig.length}
-            色のアクセントカラーから選択。リンク・ボタン・ハイライトの色が変わります。
-          </p>
-        </div>
-
-        {/* スキン選択 */}
-        <div className="theme-card p-6 inline-block">
-          <SkinSelector />
-        </div>
       </section>
 
       {/* セクション3: ダークモード */}

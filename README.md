@@ -140,13 +140,12 @@ AWSのアーキテクチャパターンおよびテンプレートは `aws-patte
 - 設定ファイルは `src/config/site.ts`
 - サイトごとに必要な設定（サイト名・URL・著者名など）を変更してください
 - `themeConfig` 配列でテーマ一覧を管理し、`DEFAULT_THEME` でデフォルトテーマを指定します
-- `skinConfig` 配列でスキン一覧（Emerald・Ocean・Sunset・Purple・Rose）を管理し、`DEFAULT_SKIN` でデフォルトスキンを指定します
 
 ### CSS 設定
 
 - グローバルの CSS は `app/globals.css` にまとめています
 - `:focus-visible` スタイルはアクセント色で定義済みです
-- テーマは `data-theme` 属性で、スキンは `data-skin` 属性で切り替え、対応するCSS変数がオーバーライドされる仕組みです
+- テーマは `data-theme` 属性で切り替え、対応するCSS変数がオーバーライドされる仕組みです
 
 ### 記事ページ設定
 
@@ -297,4 +296,3 @@ graph TD
 - 検索結果でタイトル・本文スニペットに加え、マッチしたタグ・カテゴリもハイライト表示
 - キーボードナビゲーション対応（ドロップダウンメニュー・フォーカスリング）
 - `ThemeToggle` に `aria-label` を設定
-- `SkinSelector` は `role="group"` + 各ボタンに `aria-pressed` / `aria-label` を設定
