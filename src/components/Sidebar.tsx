@@ -2,12 +2,13 @@
 'use client';
 import ProfileCard from '@/src/components/ProfileCard';
 import TagCloud from '@/src/components/TagCloud';
+import TocList from '@/src/components/TocList';
+import { useTocObserver } from '@/src/hooks/useTocObserver';
 import type { CategoryCount, TagCount } from '@/src/lib/post-taxonomy';
 import { categoryToSlug } from '@/src/lib/utils';
 import type { TocItem } from '@/src/types/post';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
 
 const SearchBox = dynamic(() => import('@/src/components/SearchBox'), {
   ssr: false,
@@ -29,57 +30,8 @@ type SidebarProps = {
  * 記事一覧・カテゴリ・目次を表示するサイドバー。
  */
 export default function Sidebar({ toc, categoryCounts, tagCounts }: SidebarProps) {
-  const [activeId, setActiveId] = useState<string | null>(null);
+  const activeId = useTocObserver(toc);
   const hasToc = !!(toc && toc.length > 0);
-
-  // IntersectionObserverによるTOCのハイライト
-  useEffect(() => {
-    if (!toc || toc.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        });
-      },
-      {
-        rootMargin: '-80px 0px -70% 0px',
-      }
-    );
-
-    toc.forEach((item) => {
-      const el = document.getElementById(item.id);
-      if (el) observer.observe(el);
-    });
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [toc]);
-
-  const renderTocList = () => (
-    <ul className="space-y-2 text-sm font-bold">
-      {toc?.map((item) => {
-        const indent = (item.level - 1) * 16;
-        const isActive = activeId === item.id;
-        return (
-          <li key={item.id} style={{ paddingLeft: `${indent}px` }}>
-            <a
-              href={`#${item.id}`}
-              className={`block hover:text-accent hover:underline transition-all duration-200 ${
-                isActive ? 'text-accent font-extrabold translate-x-1' : 'text-text/80 font-medium'
-              }`}
-            >
-              {isActive && <span className="inline-block mr-1.5 text-accent animate-pulse">●</span>}
-              {item.text}
-            </a>
-          </li>
-        );
-      })}
-    </ul>
-  );
 
   return (
     <div className="space-y-6 h-full">
@@ -117,7 +69,7 @@ export default function Sidebar({ toc, categoryCounts, tagCounts }: SidebarProps
         <div className="hidden lg:block sticky top-28 z-10">
           <div className="theme-card p-5 max-h-[calc(100vh-160px)] overflow-y-auto">
             <h2 className="font-extrabold text-lg mb-4 text-text">目次</h2>
-            {renderTocList()}
+            <TocList toc={toc} activeId={activeId} />
           </div>
         </div>
       )}

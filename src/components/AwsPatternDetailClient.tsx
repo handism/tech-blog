@@ -5,41 +5,21 @@ import { useState, useEffect } from 'react';
 import { Copy, Check, Download, ArrowLeft, Terminal, ZoomIn, X, Cpu } from 'lucide-react';
 import Link from 'next/link';
 import type { AwsPattern } from '@/src/types/aws-gallery';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 type Props = {
   pattern: AwsPattern;
 };
 
 export default function AwsPatternDetailClient({ pattern }: Props) {
-  const [copied, setCopied] = useState(false);
-  const [copiedCmd, setCopiedCmd] = useState(false);
+  const { copied: copiedCode, copy: copyCode } = useCopyToClipboard();
+  const { copied: copiedCmd, copy: copyCmd } = useCopyToClipboard();
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-
-  // クリップボードコピー処理
-  const handleCopyCode = async () => {
-    try {
-      await navigator.clipboard.writeText(pattern.yamlCode);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy code: ', err);
-    }
-  };
 
   const deployCmd = `aws cloudformation create-stack \\
   --stack-name ${pattern.slug}-stack \\
   --template-body file://${pattern.templateFile} \\
   --capabilities CAPABILITY_IAM`;
-
-  const handleCopyCmd = async () => {
-    try {
-      await navigator.clipboard.writeText(deployCmd);
-      setCopiedCmd(true);
-      setTimeout(() => setCopiedCmd(false), 2000);
-    } catch (err) {
-      console.error('Failed to copy command: ', err);
-    }
-  };
 
   // ライトボックスが開いているときにスクロールをロックする
   useEffect(() => {
@@ -127,7 +107,6 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
                 onClick={() => setIsLightboxOpen(true)}
                 className="relative border-2 border-border rounded-xl overflow-hidden bg-white/90 dark:bg-neutral-900/90 p-4 cursor-zoom-in hover:border-accent group transition-colors flex items-center justify-center min-h-[220px]"
               >
-                {}
                 <img
                   src={`/aws-patterns/${pattern.diagramFile}`}
                   alt={`${pattern.title} アーキテクチャ図`}
@@ -155,7 +134,7 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
                 {deployCmd}
               </pre>
               <button
-                onClick={handleCopyCmd}
+                onClick={() => copyCmd(deployCmd)}
                 className="absolute right-3.5 top-3.5 p-2 bg-neutral-800 text-neutral-300 hover:text-white rounded-lg transition-colors border border-neutral-700/50"
                 title="コマンドをコピー"
               >
@@ -185,10 +164,10 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
               <div className="flex items-center gap-2 shrink-0">
                 {/* コピーボタン */}
                 <button
-                  onClick={handleCopyCode}
+                  onClick={() => copyCode(pattern.yamlCode)}
                   className="px-3 py-1.5 text-xs font-black border-2 border-border rounded-lg bg-card text-text hover:bg-secondary transition-all active:translate-y-0 active:shadow-none flex items-center gap-1.5 shadow-[2px_2px_0px_0px_var(--border)]"
                 >
-                  {copied ? (
+                  {copiedCode ? (
                     <>
                       <Check className="h-3.5 w-3.5 text-accent" />
                       <span>コピー完了</span>
@@ -238,7 +217,6 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
             <X className="h-6 w-6" />
           </button>
           <div className="relative max-w-full max-h-full flex items-center justify-center">
-            {}
             <img
               src={`/aws-patterns/${pattern.diagramFile}`}
               alt={`${pattern.title} アーキテクチャ図（拡大）`}

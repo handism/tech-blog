@@ -1,12 +1,14 @@
 // src/components/LearningLayout.tsx
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import type { TocItem } from '@/src/types/post';
 import type { LearningPostMeta, LearningCourseMeta } from '@/src/types/learning';
 import { BookOpen, ChevronRight, X } from 'lucide-react';
 import MobileToc from '@/src/components/MobileToc';
+import TocList from '@/src/components/TocList';
+import { useTocObserver } from '@/src/hooks/useTocObserver';
 
 interface LearningLayoutProps {
   children: React.ReactNode;
@@ -24,36 +26,9 @@ export default function LearningLayout({
   toc,
 }: LearningLayoutProps) {
   const [isChapterDrawerOpen, setIsChapterDrawerOpen] = useState(false);
-  const [activeId, setActiveId] = useState<string | null>(null);
+  const activeId = useTocObserver(toc);
 
   const hasToc = !!(toc && toc.length > 0);
-
-  // IntersectionObserverによるTOCのハイライト
-  useEffect(() => {
-    if (!toc || toc.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        });
-      },
-      {
-        rootMargin: '-80px 0px -70% 0px',
-      }
-    );
-
-    toc.forEach((item) => {
-      const el = document.getElementById(item.id);
-      if (el) observer.observe(el);
-    });
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [toc]);
 
   const renderChapterList = (onItemClick?: () => void) => (
     <nav className="space-y-1">
@@ -81,28 +56,6 @@ export default function LearningLayout({
         );
       })}
     </nav>
-  );
-
-  const renderTocList = () => (
-    <ul className="space-y-2 text-sm font-bold">
-      {toc?.map((item) => {
-        const indent = (item.level - 1) * 16;
-        const isActive = activeId === item.id;
-        return (
-          <li key={item.id} style={{ paddingLeft: `${indent}px` }}>
-            <a
-              href={`#${item.id}`}
-              className={`block hover:text-accent hover:underline transition-all duration-200 ${
-                isActive ? 'text-accent font-extrabold translate-x-1' : 'text-text/80 font-medium'
-              }`}
-            >
-              {isActive && <span className="inline-block mr-1.5 text-accent animate-pulse">●</span>}
-              {item.text}
-            </a>
-          </li>
-        );
-      })}
-    </ul>
   );
 
   return (
@@ -160,7 +113,7 @@ export default function LearningLayout({
                 <h3 className="font-extrabold text-sm mb-4 text-text uppercase tracking-wider">
                   ページ内目次
                 </h3>
-                {renderTocList()}
+                <TocList toc={toc} activeId={activeId} />
               </div>
             </div>
           )}

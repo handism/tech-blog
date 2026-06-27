@@ -17,6 +17,11 @@ const CATEGORIES = [
 
 type CategoryId = (typeof CATEGORIES)[number]['id'];
 
+// CATEGORIES から動的にカテゴリメタ情報を生成
+const categoryMeta = Object.fromEntries(
+  CATEGORIES.filter((c) => c.id !== 'all').map((c) => [c.id, { name: c.name, emoji: c.emoji }])
+) as Record<Exclude<CategoryId, 'all'>, { name: string; emoji: string }>;
+
 export default function ToolsDashboard() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('all');
@@ -40,12 +45,9 @@ export default function ToolsDashboard() {
 
   // カテゴリごとにツールをグルーピング
   const groupedTools = useMemo(() => {
-    const groups: Record<string, ToolItem[]> = {
-      image: [],
-      convert: [],
-      dev: [],
-      external: [],
-    };
+    const groups = Object.fromEntries(
+      CATEGORIES.filter((c) => c.id !== 'all').map((c) => [c.id, [] as ToolItem[]])
+    ) as Record<Exclude<CategoryId, 'all'>, ToolItem[]>;
 
     filteredTools.forEach((tool) => {
       if (groups[tool.category]) {
@@ -55,14 +57,6 @@ export default function ToolsDashboard() {
 
     return groups;
   }, [filteredTools]);
-
-  // カテゴリ別のタイトル情報
-  const categoryMeta: Record<string, { name: string; emoji: string }> = {
-    image: { name: '画像処理', emoji: '🎨' },
-    convert: { name: 'データ変換', emoji: '🔄' },
-    dev: { name: '開発者向けツール', emoji: '🛠️' },
-    external: { name: '外部ツール', emoji: '🧖' },
-  };
 
   const handleClearFilters = () => {
     setSearchQuery('');
@@ -144,7 +138,7 @@ export default function ToolsDashboard() {
           {selectedCategory === 'all' ? (
             Object.entries(groupedTools).map(([catKey, items]) => {
               if (items.length === 0) return null;
-              const meta = categoryMeta[catKey];
+              const meta = categoryMeta[catKey as Exclude<CategoryId, 'all'>];
               return (
                 <div key={catKey} className="space-y-4">
                   <div className="flex items-center gap-2 border-b-3 border-border pb-2">

@@ -1,28 +1,31 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useIsClient } from './useIsClient';
 
 type ProgressData = Record<string, Record<string, boolean>>;
 
 export function useLearningProgress() {
   const [progress, setProgress] = useState<ProgressData>({});
   const [isLoaded, setIsLoaded] = useState(false);
+  const isClient = useIsClient();
 
   // クライアントサイドでのマウント時にLocalStorageから読み込む
   useEffect(() => {
-    const timer = setTimeout(() => {
-      const saved = localStorage.getItem('learning-progress');
-      if (saved) {
-        try {
-          setProgress(JSON.parse(saved));
-        } catch (e) {
-          console.error('Failed to parse learning progress:', e);
-        }
+    if (!isClient) return;
+
+    const saved = localStorage.getItem('learning-progress');
+    if (saved) {
+      try {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setProgress(JSON.parse(saved));
+      } catch (e) {
+        console.error('Failed to parse learning progress:', e);
       }
-      setIsLoaded(true);
-    }, 0);
-    return () => clearTimeout(timer);
-  }, []);
+    }
+
+    setIsLoaded(true);
+  }, [isClient]);
 
   const toggleComplete = (courseId: string, chapterSlug: string) => {
     const currentCourseProgress = progress[courseId] || {};

@@ -1,0 +1,28 @@
+# リファクタリング TODOリスト
+
+- [x] 1. 共通フック・コンポーネントの新規作成
+  - [x] `src/hooks/useIsClient.ts` の新規作成
+  - [x] `src/hooks/useCopyToClipboard.ts` の新規作成
+  - [x] `src/hooks/useTocObserver.ts` の新規作成
+  - [x] `src/components/TocList.tsx` の新規作成
+- [x] 2. データパースおよびリポジトリのリファクタリング
+  - [x] `src/lib/utils.ts` への `parseFrontmatter` ヘルパー追加
+  - [x] `src/lib/post-parser.ts` の `parseFrontmatter` 適用
+  - [x] `src/lib/scrap-parser.ts` の `parseFrontmatter` 適用
+  - [x] `src/lib/learning-parser.ts` の `parseFrontmatter` 適用
+  - [x] `src/lib/learning-repository.ts` での `meta.json` への Zod バリデーション実装
+- [x] 3. UIコンポーネントのリファクタリング (DRY化)
+  - [x] `src/components/Sidebar.tsx` への `useTocObserver` と `TocList` の適用
+  - [x] `src/components/LearningLayout.tsx` への `useTocObserver` と `TocList` の適用
+  - [x] `src/components/AwsPatternDetailClient.tsx` への `useCopyToClipboard` の適用と `{}` の削除
+  - [x] `src/components/ToolsDashboard.tsx` への `CATEGORIES` と `categoryMeta` の共通化
+  - [x] `src/components/ThemeToggle.tsx` のループ化と `useIsClient` の適用
+  - [x] `src/components/Footer.tsx` のリンク配列ループ化
+  - [x] `src/components/BlogLayout.tsx` の `import type` の修正
+- [x] 4. 状態管理のクリーンアップ
+  - [x] `src/hooks/useLearningProgress.ts` での `setTimeout` の `useIsClient` 置き換え
+  - [x] `src/components/ChapterProgressCheck.tsx` での `setTimeout` の `useIsClient` 置き換え
+- [x] 5. 品質検証
+  - [x] `bun run type-check` のテスト実行
+  - [x] `bun run lint` のチェック実行
+  - [x] `bun run test:unit` のテスト実行

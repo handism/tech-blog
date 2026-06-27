@@ -3,9 +3,16 @@ import { siteConfig } from '@/src/config/site';
 import { catchEnoent } from '@/src/lib/utils';
 import fs from 'fs/promises';
 import path from 'path';
+import { z } from 'zod';
 import type { LearningCourseMeta } from '../types/learning';
 
 const learningDir = path.join(/*turbopackIgnore: true*/ process.cwd(), siteConfig.learning.dir);
+
+const CourseMetaJsonSchema = z.object({
+  title: z.string().optional(),
+  description: z.string().optional(),
+  emoji: z.string().optional(),
+});
 
 export interface LearningSource {
   course: string;
@@ -36,7 +43,9 @@ export async function readCourseMeta(courseId: string): Promise<LearningCourseMe
   return catchEnoent(
     (async () => {
       const raw = await fs.readFile(metaPath, 'utf-8');
-      const data = JSON.parse(raw);
+      const parsed = JSON.parse(raw);
+      const result = CourseMetaJsonSchema.safeParse(parsed);
+      const data = result.success ? result.data : {};
       return {
         id: courseId,
         title: data.title || courseId,

@@ -1,7 +1,7 @@
 'use client';
 
 import { useLearningProgress } from '@/src/hooks/useLearningProgress';
-import { useEffect, useState } from 'react';
+import { useIsClient } from '@/src/hooks/useIsClient';
 import { Check } from 'lucide-react';
 
 interface Props {
@@ -12,14 +12,7 @@ interface Props {
 
 export default function ChapterProgressCheck({ courseId, chapterSlug, order }: Props) {
   const { isCompleted, isLoaded } = useLearningProgress();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setMounted(true);
-    }, 0);
-    return () => clearTimeout(timer);
-  }, []);
+  const mounted = useIsClient();
 
   if (!mounted || !isLoaded) {
     return <>{order}</>;

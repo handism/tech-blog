@@ -1,9 +1,8 @@
 // src/lib/scrap-parser.ts
 import { siteConfig } from '@/src/config/site';
 import { markdownToPlaintext } from '@/src/lib/post-parser';
-import { zodDateSchema } from '@/src/lib/utils';
+import { parseFrontmatter, zodDateSchema } from '@/src/lib/utils';
 import type { ScrapMeta } from '@/src/types/scrap';
-import matter from 'gray-matter';
 import { z } from 'zod';
 
 /**
@@ -27,12 +26,7 @@ type ParsedScrapSource = {
  * スクラップのMarkdown文字列をfrontmatterと本文に分解する。
  */
 export function parseScrapSource(raw: string): ParsedScrapSource {
-  const { data, content } = matter(raw);
-  const result = ScrapFrontmatterSchema.safeParse(data);
-  return {
-    data: result.success ? result.data : ScrapFrontmatterSchema.parse({}),
-    content,
-  };
+  return parseFrontmatter(raw, ScrapFrontmatterSchema);
 }
 
 /**

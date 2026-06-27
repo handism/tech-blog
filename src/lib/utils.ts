@@ -1,5 +1,22 @@
 // src/lib/utils.ts
+import matter from 'gray-matter';
 import { z } from 'zod';
+
+/**
+ * フロントマターのパースとバリデーションを行う共通ヘルパー。
+ */
+export function parseFrontmatter<T>(
+  raw: string,
+  schema: z.ZodType<T>
+): { data: T; content: string } {
+  const { data, content } = matter(raw);
+  const result = schema.safeParse(data);
+  if (!result.success) {
+    console.warn('Frontmatter parse failed:', result.error.flatten());
+    return { data: schema.parse({}), content };
+  }
+  return { data: result.data, content };
+}
 
 /**
  * テキストをURL向けのスラッグに変換する。

@@ -2,7 +2,7 @@
 import Sidebar from '@/src/components/Sidebar';
 import MobileToc from '@/src/components/MobileToc';
 import type { CategoryCount, TagCount } from '@/src/lib/post-taxonomy';
-import { TocItem } from '@/src/types/post';
+import type { TocItem } from '@/src/types/post';
 import { ReactNode } from 'react';
 
 /**

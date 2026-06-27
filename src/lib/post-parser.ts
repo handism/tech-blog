@@ -1,8 +1,7 @@
 // src/lib/post-parser.ts
 import { siteConfig } from '@/src/config/site';
 import type { PostMeta } from '@/src/types/post';
-import { estimateReadingMinutes, zodDateSchema } from '@/src/lib/utils';
-import matter from 'gray-matter';
+import { estimateReadingMinutes, parseFrontmatter, zodDateSchema } from '@/src/lib/utils';
 import { z } from 'zod';
 
 /**
@@ -30,12 +29,7 @@ type ParsedPostSource = {
  * frontmatterは Zod でバリデーションし、不正な値はデフォルト値にフォールバックする。
  */
 export function parsePostSource(raw: string): ParsedPostSource {
-  const { data, content } = matter(raw);
-  const result = FrontmatterSchema.safeParse(data);
-  return {
-    data: result.success ? result.data : FrontmatterSchema.parse({}),
-    content,
-  };
+  return parseFrontmatter(raw, FrontmatterSchema);
 }
 
 /**
