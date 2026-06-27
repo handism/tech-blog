@@ -3633,20 +3633,15 @@ html[data-theme='chalkboard'] .dark body {
     -webkit-text-fill-color: transparent;
     color: transparent;
 
-    /* ハードウェアアクセラレーションを強制し、GPU描画バグとチラつきを防ぐ */
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    will-change: background-position;
+    /* 【Skia Graphite バグ対策】
+       Chrome の新 GPU バックエンド "Skia Graphite" では、
+       will-change / transform: translateZ(0) / backface-visibility で
+       合成レイヤーを強制すると -webkit-background-clip: text が消えるバグがある。
+       これらを除去することで合成レイヤーを作らず、クリップが正常に描画される。 */
 
-    /* 【超重要】ChromeのChrome固有バグ対策:
-       親要素の backdrop-filter が作るスタッキングコンテキストと
-       -webkit-background-clip: text が干渉し、グラデーション背景が
-       透明になって文字が見えなくなるバグを防ぐ。
-       backdrop-filter: none を自身に設定することで干渉を断ち切る。 */
+    /* 親要素の backdrop-filter との干渉を防ぐ */
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-
-    /* 親要素の backdrop-filter との表示干渉（塗りつぶしバグ）を回避するためのスタッキングコンテキスト分離 */
     isolation: isolate;
     position: relative;
     z-index: 1;
