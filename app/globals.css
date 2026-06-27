@@ -3610,20 +3610,28 @@ html[data-theme='chalkboard'] .dark body {
 [data-theme='holographic'] h3 {
   font-family: 'Outfit', sans-serif;
   font-weight: 700;
-  background: linear-gradient(135deg, #c084fc, #818cf8, #38bdf8, #c084fc);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: holo-shimmer 4s linear infinite;
+  color: #c084fc; /* background-clip: text 非対応環境向けのフォールバック色 */
 }
 
-@media (prefers-reduced-motion: reduce) {
+@supports (-webkit-background-clip: text) or (background-clip: text) {
   [data-theme='holographic'] h1,
   [data-theme='holographic'] h2,
   [data-theme='holographic'] h3 {
-    animation: none;
-    background: linear-gradient(135deg, #c084fc, #818cf8);
+    background: linear-gradient(135deg, #c084fc, #818cf8, #38bdf8, #c084fc);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: holo-shimmer 4s linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-theme='holographic'] h1,
+    [data-theme='holographic'] h2,
+    [data-theme='holographic'] h3 {
+      animation: none;
+      background: linear-gradient(135deg, #c084fc, #818cf8);
+    }
   }
 }
 
