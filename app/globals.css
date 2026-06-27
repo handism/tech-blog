@@ -3638,6 +3638,11 @@ html[data-theme='chalkboard'] .dark body {
     backface-visibility: hidden;
     will-change: background-position;
 
+    /* 【超重要】親要素の backdrop-filter との表示干渉（塗りつぶしバグ）を回避するためのスタッキングコンテキスト分離 */
+    isolation: isolate;
+    position: relative;
+    z-index: 1;
+
     /* アニメーション */
     animation: holo-shimmer 4s linear infinite;
   }
