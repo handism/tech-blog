@@ -3617,46 +3617,13 @@ html[data-theme='chalkboard'] .dark body {
   [data-theme='holographic'] h1,
   [data-theme='holographic'] h2,
   [data-theme='holographic'] h3 {
-    /* レンダリング領域を最適化して、背景の余分な広がりとバグを防ぐ */
     width: fit-content;
     max-width: 100%;
-
-    /* 背景グラデーションの設定 */
-    background: linear-gradient(135deg, #c084fc, #818cf8, #38bdf8, #c084fc);
-    background-size: 200% auto;
-
-    /* クリップ処理（backgroundプロパティより後に記述） */
+    background: linear-gradient(135deg, #c084fc, #818cf8, #38bdf8);
     -webkit-background-clip: text;
     background-clip: text;
-
-    /* テキスト透過処理 */
     -webkit-text-fill-color: transparent;
     color: transparent;
-
-    /* 【Skia Graphite バグ対策】
-       Chrome の新 GPU バックエンド "Skia Graphite" では、
-       will-change / transform: translateZ(0) / backface-visibility で
-       合成レイヤーを強制すると -webkit-background-clip: text が消えるバグがある。
-       これらを除去することで合成レイヤーを作らず、クリップが正常に描画される。 */
-
-    /* 親要素の backdrop-filter との干渉を防ぐ */
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    isolation: isolate;
-    position: relative;
-    z-index: 1;
-
-    /* アニメーション */
-    animation: holo-shimmer 4s linear infinite;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    [data-theme='holographic'] h1,
-    [data-theme='holographic'] h2,
-    [data-theme='holographic'] h3 {
-      animation: none;
-      background: linear-gradient(135deg, #c084fc, #818cf8);
-    }
   }
 }
 
