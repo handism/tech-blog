@@ -15,7 +15,7 @@ import { imageSizeFromFile } from 'image-size/fromFile';
 import { visit } from 'unist-util-visit';
 import type { Element } from 'hast';
 import path from 'path';
-import fs from 'fs';
+import fs from 'fs/promises';
 
 type RenderedPost = {
   html: string;
@@ -75,41 +75,42 @@ function rehypeImageSize() {
       const src = node.properties?.src;
       if (typeof src !== 'string') return;
 
-      // 画像パスの特定
-      let filePath = '';
       if (src.startsWith('http') || src.startsWith('data:') || src.startsWith('//')) return; // 外部・データURLはスキップ
 
+      // 画像の候補パスを特定
+      const filePaths: string[] = [];
       if (src.startsWith('/')) {
-        // ルート相対パス（/images/... など）
-        filePath = path.join(process.cwd(), 'public', src);
+        filePaths.push(path.join(process.cwd(), 'public', src));
       } else {
-        // 相対パス（../../public/... など）
-        // まずは public ディレクトリを基準に解決を試みる
-        const resolvedPath = path.join(
-          process.cwd(),
-          'public',
-          src.replace(/^(\.\.\/)+public\//, '')
-        );
-        if (fs.existsSync(resolvedPath)) {
-          filePath = resolvedPath;
-        }
+        filePaths.push(path.join(process.cwd(), 'public', src.replace(/^(\.\.\/)+public\//, '')));
       }
-
-      if (!filePath || !fs.existsSync(filePath)) return;
 
       tasks.push(
         (async () => {
+          let foundPath = '';
+          for (const fp of filePaths) {
+            try {
+              await fs.access(fp);
+              foundPath = fp;
+              break;
+            } catch {
+              // 存在しない場合は次を試す
+            }
+          }
+
+          if (!foundPath) return;
+
           try {
-            const dimensions = await imageSizeFromFile(filePath);
+            const dimensions = await imageSizeFromFile(foundPath);
             if (dimensions.width && dimensions.height) {
               node.properties.width = dimensions.width;
               node.properties.height = dimensions.height;
 
-              // アスペクト比を維持しつつレスポンシブ対応するためのスタイル（Next.js の Image に擬似的に近づける）
+              // アスペクト比を維持しつつレスポンシブ対応するためのスタイル
               node.properties.style = `max-width: 100%; height: auto; ${node.properties.style || ''}`;
             }
           } catch (e) {
-            console.warn(`Failed to get size for image: ${filePath}`, e);
+            console.warn(`Failed to get size for image: ${foundPath}`, e);
           }
           // 遅延読み込みを設定
           if (!node.properties.loading) {

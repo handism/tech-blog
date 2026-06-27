@@ -80,7 +80,7 @@ export const getCourse = cache(async function getCourse(
 /**
  * 単一の学習チャプターを取得する。
  */
-export async function getLearningPost(
+export const getLearningPost = cache(async function getLearningPost(
   courseId: string,
   slug: string
 ): Promise<LearningPost | null> {
@@ -97,7 +97,7 @@ export async function getLearningPost(
     content: htmlContent,
     toc,
   };
-}
+});
 
 /**
  * 指定されたチャプターの前後のチャプターを取得する。

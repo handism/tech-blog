@@ -45,7 +45,7 @@ export const getPostMetaBySlug = cache(async function getPostMetaBySlug(
 /**
  * 単記事取得（詳細ページ用）- サーバー側のみ
  */
-export async function getPost(slug: string): Promise<Post | null> {
+export const getPost = cache(async function getPost(slug: string): Promise<Post | null> {
   const parsed = await _loadAndParseMeta(slug);
   if (!parsed) return null;
 
@@ -59,7 +59,7 @@ export async function getPost(slug: string): Promise<Post | null> {
     content: htmlContent,
     toc,
   };
-}
+});
 
 /**
  * 指定スラッグに関連する記事を最大3件取得する。

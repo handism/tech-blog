@@ -97,6 +97,8 @@ export default function SearchBox() {
   }, [debouncedQuery]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.nativeEvent.isComposing) return;
+
     if (results.length === 0) {
       if (e.key === 'Escape') {
         e.preventDefault();
