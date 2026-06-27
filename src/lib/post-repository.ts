@@ -3,7 +3,7 @@ import { siteConfig } from '@/src/config/site';
 import path from 'path';
 import { createMarkdownRepository } from './markdown-repository';
 
-const postsDir = path.join(process.cwd(), siteConfig.posts.dir);
+const postsDir = path.join(/*turbopackIgnore: true*/ process.cwd(), siteConfig.posts.dir);
 const repo = createMarkdownRepository(postsDir);
 
 type PostSource = {

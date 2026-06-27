@@ -3,7 +3,7 @@ import { siteConfig } from '@/src/config/site';
 import path from 'path';
 import { createMarkdownRepository } from './markdown-repository';
 
-const scrapsDir = path.join(process.cwd(), siteConfig.scraps.dir);
+const scrapsDir = path.join(/*turbopackIgnore: true*/ process.cwd(), siteConfig.scraps.dir);
 const repo = createMarkdownRepository(scrapsDir);
 
 type ScrapSource = {

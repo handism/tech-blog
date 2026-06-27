@@ -25,14 +25,14 @@ export function createMarkdownRepository(dirPath: string): MarkdownRepository {
       return Promise.all(
         markdownFiles.map(async (file) => {
           const slug = file.name.replace(/\.md$/, '');
-          const fullPath = path.join(dirPath, file.name);
+          const fullPath = path.join(/*turbopackIgnore: true*/ dirPath, file.name);
           const raw = await fs.readFile(fullPath, 'utf8');
           return { slug, raw };
         })
       );
     },
     async readSourceBySlug(slug: string) {
-      const fullPath = path.join(dirPath, `${slug}.md`);
+      const fullPath = path.join(/*turbopackIgnore: true*/ dirPath, `${slug}.md`);
       try {
         const raw = await fs.readFile(fullPath, 'utf8');
         return { slug, raw };

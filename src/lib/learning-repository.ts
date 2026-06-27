@@ -4,7 +4,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import type { LearningCourseMeta } from '../types/learning';
 
-const learningDir = path.join(process.cwd(), siteConfig.learning.dir);
+const learningDir = path.join(/*turbopackIgnore: true*/ process.cwd(), siteConfig.learning.dir);
 
 export interface LearningSource {
   course: string;
@@ -33,7 +33,7 @@ export async function getCourseIds(): Promise<string[]> {
  * 特定コースのメタデータ (meta.json) を読み込む。
  */
 export async function readCourseMeta(courseId: string): Promise<LearningCourseMeta | null> {
-  const metaPath = path.join(learningDir, courseId, 'meta.json');
+  const metaPath = path.join(/*turbopackIgnore: true*/ learningDir, courseId, 'meta.json');
   try {
     const raw = await fs.readFile(metaPath, 'utf-8');
     const data = JSON.parse(raw);
@@ -64,14 +64,14 @@ export async function readAllCourseMetas(): Promise<LearningCourseMeta[]> {
  * 指定されたコース内の全Markdownファイルの生データを取得する。
  */
 export async function readLearningSourcesByCourse(courseId: string): Promise<LearningSource[]> {
-  const courseDir = path.join(learningDir, courseId);
+  const courseDir = path.join(/*turbopackIgnore: true*/ learningDir, courseId);
   try {
     const files = await fs.readdir(courseDir, { withFileTypes: true });
     const markdownFiles = files.filter((dirent) => dirent.isFile() && dirent.name.endsWith('.md'));
     return Promise.all(
       markdownFiles.map(async (file) => {
         const slug = file.name.replace(/\.md$/, '');
-        const fullPath = path.join(courseDir, file.name);
+        const fullPath = path.join(/*turbopackIgnore: true*/ courseDir, file.name);
         const raw = await fs.readFile(fullPath, 'utf8');
         return { course: courseId, slug, raw };
       })
@@ -102,7 +102,7 @@ export async function readLearningSource(
   courseId: string,
   slug: string
 ): Promise<LearningSource | null> {
-  const fullPath = path.join(learningDir, courseId, `${slug}.md`);
+  const fullPath = path.join(/*turbopackIgnore: true*/ learningDir, courseId, `${slug}.md`);
   try {
     const raw = await fs.readFile(fullPath, 'utf8');
     return { course: courseId, slug, raw };
