@@ -3638,7 +3638,15 @@ html[data-theme='chalkboard'] .dark body {
     backface-visibility: hidden;
     will-change: background-position;
 
-    /* 【超重要】親要素の backdrop-filter との表示干渉（塗りつぶしバグ）を回避するためのスタッキングコンテキスト分離 */
+    /* 【超重要】ChromeのChrome固有バグ対策:
+       親要素の backdrop-filter が作るスタッキングコンテキストと
+       -webkit-background-clip: text が干渉し、グラデーション背景が
+       透明になって文字が見えなくなるバグを防ぐ。
+       backdrop-filter: none を自身に設定することで干渉を断ち切る。 */
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+
+    /* 親要素の backdrop-filter との表示干渉（塗りつぶしバグ）を回避するためのスタッキングコンテキスト分離 */
     isolation: isolate;
     position: relative;
     z-index: 1;
