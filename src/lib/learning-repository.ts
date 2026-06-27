@@ -1,5 +1,6 @@
 // src/lib/learning-repository.ts
 import { siteConfig } from '@/src/config/site';
+import { catchEnoent } from '@/src/lib/utils';
 import fs from 'fs/promises';
 import path from 'path';
 import type { LearningCourseMeta } from '../types/learning';
@@ -16,17 +17,15 @@ export interface LearningSource {
  * コースIDの一覧（ディレクトリ名）を取得する。
  */
 export async function getCourseIds(): Promise<string[]> {
-  try {
-    const entries = await fs.readdir(learningDir, { withFileTypes: true });
-    return entries
-      .filter((entry) => entry.isDirectory() && !entry.name.startsWith('.'))
-      .map((entry) => entry.name);
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
-      return [];
-    }
-    throw error;
-  }
+  return catchEnoent(
+    (async () => {
+      const entries = await fs.readdir(learningDir, { withFileTypes: true });
+      return entries
+        .filter((entry) => entry.isDirectory() && !entry.name.startsWith('.'))
+        .map((entry) => entry.name);
+    })(),
+    []
+  );
 }
 
 /**
@@ -34,21 +33,19 @@ export async function getCourseIds(): Promise<string[]> {
  */
 export async function readCourseMeta(courseId: string): Promise<LearningCourseMeta | null> {
   const metaPath = path.join(/*turbopackIgnore: true*/ learningDir, courseId, 'meta.json');
-  try {
-    const raw = await fs.readFile(metaPath, 'utf-8');
-    const data = JSON.parse(raw);
-    return {
-      id: courseId,
-      title: data.title || courseId,
-      description: data.description || '',
-      emoji: data.emoji || '📖',
-    };
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
-      return null;
-    }
-    throw error;
-  }
+  return catchEnoent(
+    (async () => {
+      const raw = await fs.readFile(metaPath, 'utf-8');
+      const data = JSON.parse(raw);
+      return {
+        id: courseId,
+        title: data.title || courseId,
+        description: data.description || '',
+        emoji: data.emoji || '📖',
+      };
+    })(),
+    null
+  );
 }
 
 /**
@@ -65,23 +62,23 @@ export async function readAllCourseMetas(): Promise<LearningCourseMeta[]> {
  */
 export async function readLearningSourcesByCourse(courseId: string): Promise<LearningSource[]> {
   const courseDir = path.join(/*turbopackIgnore: true*/ learningDir, courseId);
-  try {
-    const files = await fs.readdir(courseDir, { withFileTypes: true });
-    const markdownFiles = files.filter((dirent) => dirent.isFile() && dirent.name.endsWith('.md'));
-    return Promise.all(
-      markdownFiles.map(async (file) => {
-        const slug = file.name.replace(/\.md$/, '');
-        const fullPath = path.join(/*turbopackIgnore: true*/ courseDir, file.name);
-        const raw = await fs.readFile(fullPath, 'utf8');
-        return { course: courseId, slug, raw };
-      })
-    );
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
-      return [];
-    }
-    throw error;
-  }
+  return catchEnoent(
+    (async () => {
+      const files = await fs.readdir(courseDir, { withFileTypes: true });
+      const markdownFiles = files.filter(
+        (dirent) => dirent.isFile() && dirent.name.endsWith('.md')
+      );
+      return Promise.all(
+        markdownFiles.map(async (file) => {
+          const slug = file.name.replace(/\.md$/, '');
+          const fullPath = path.join(/*turbopackIgnore: true*/ courseDir, file.name);
+          const raw = await fs.readFile(fullPath, 'utf8');
+          return { course: courseId, slug, raw };
+        })
+      );
+    })(),
+    []
+  );
 }
 
 /**
@@ -103,13 +100,11 @@ export async function readLearningSource(
   slug: string
 ): Promise<LearningSource | null> {
   const fullPath = path.join(/*turbopackIgnore: true*/ learningDir, courseId, `${slug}.md`);
-  try {
-    const raw = await fs.readFile(fullPath, 'utf8');
-    return { course: courseId, slug, raw };
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
-      return null;
-    }
-    throw error;
-  }
+  return catchEnoent(
+    (async () => {
+      const raw = await fs.readFile(fullPath, 'utf8');
+      return { course: courseId, slug, raw };
+    })(),
+    null
+  );
 }

@@ -1,5 +1,5 @@
 // src/lib/aws-gallery-repository.ts
-import fs from 'fs';
+import fs from 'fs/promises';
 import path from 'path';
 import { AwsPatternMeta, AwsPatternMetaSchema } from '../types/aws-gallery';
 import { z } from 'zod';
@@ -12,28 +12,43 @@ const imgDir = path.join(/*turbopackIgnore: true*/ awsDir, 'img');
 const publicDestDir = path.join(/*turbopackIgnore: true*/ process.cwd(), 'public', 'aws-patterns');
 
 /**
+ * ファイルが存在するかどうか判定するヘルパー。
+ */
+async function fileExists(filePath: string): Promise<boolean> {
+  try {
+    await fs.access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
  * ファイルが必要な場合のみコピーを行う（更新日時比較）。
  */
-function ensureAssetCopied(srcFile: string, destName: string) {
-  if (!fs.existsSync(srcFile)) {
+async function ensureAssetCopied(srcFile: string, destName: string): Promise<void> {
+  if (!(await fileExists(srcFile))) {
     return;
   }
-  if (!fs.existsSync(publicDestDir)) {
-    fs.mkdirSync(publicDestDir, { recursive: true });
-  }
+  await fs.mkdir(publicDestDir, { recursive: true });
   const destFile = path.join(/*turbopackIgnore: true*/ publicDestDir, destName);
 
   let shouldCopy = true;
-  if (fs.existsSync(destFile)) {
-    const srcStat = fs.statSync(srcFile);
-    const destStat = fs.statSync(destFile);
-    if (srcStat.mtimeMs <= destStat.mtimeMs) {
-      shouldCopy = false;
+  if (await fileExists(destFile)) {
+    try {
+      const srcStat = await fs.stat(srcFile);
+      const destStat = await fs.stat(destFile);
+      if (srcStat.mtimeMs <= destStat.mtimeMs) {
+        shouldCopy = false;
+      }
+    } catch {
+      // stat取得でエラーがあった場合は念のためコピーする
+      shouldCopy = true;
     }
   }
 
   if (shouldCopy) {
-    fs.copyFileSync(srcFile, destFile);
+    await fs.copyFile(srcFile, destFile);
   }
 }
 
@@ -42,28 +57,32 @@ function ensureAssetCopied(srcFile: string, destName: string) {
  * 同時に必要なアセット（YAML、画像）を public 領域へ自動コピーします。
  */
 export async function readAllPatternMetas(): Promise<AwsPatternMeta[]> {
-  if (!fs.existsSync(metaPath)) {
+  if (!(await fileExists(metaPath))) {
     return [];
   }
 
-  const raw = fs.readFileSync(metaPath, 'utf-8');
+  const raw = await fs.readFile(metaPath, 'utf-8');
   const parsed = JSON.parse(raw);
 
   const ArraySchema = z.array(AwsPatternMetaSchema);
   const metas = ArraySchema.parse(parsed);
 
   // ビルド/開発時に必要なアセットを自動コピー
-  for (const meta of metas) {
-    // YAMLファイルのコピー
-    const yamlSrc = path.join(/*turbopackIgnore: true*/ iacDir, meta.templateFile);
-    ensureAssetCopied(yamlSrc, meta.templateFile);
+  await Promise.all(
+    metas.flatMap((meta) => {
+      const tasks: Promise<void>[] = [];
+      // YAMLファイルのコピー
+      const yamlSrc = path.join(/*turbopackIgnore: true*/ iacDir, meta.templateFile);
+      tasks.push(ensureAssetCopied(yamlSrc, meta.templateFile));
 
-    // 画像（SVG）ファイルのコピー
-    if (meta.diagramFile) {
-      const imgSrc = path.join(/*turbopackIgnore: true*/ imgDir, meta.diagramFile);
-      ensureAssetCopied(imgSrc, meta.diagramFile);
-    }
-  }
+      // 画像（SVG）ファイルのコピー
+      if (meta.diagramFile) {
+        const imgSrc = path.join(/*turbopackIgnore: true*/ imgDir, meta.diagramFile);
+        tasks.push(ensureAssetCopied(imgSrc, meta.diagramFile));
+      }
+      return tasks;
+    })
+  );
 
   return metas;
 }
@@ -81,8 +100,8 @@ export async function readPatternMetaBySlug(slug: string): Promise<AwsPatternMet
  */
 export async function readYamlCode(templateFile: string): Promise<string> {
   const yamlPath = path.join(/*turbopackIgnore: true*/ iacDir, templateFile);
-  if (!fs.existsSync(yamlPath)) {
+  if (!(await fileExists(yamlPath))) {
     throw new Error(`CloudFormation template file not found: ${yamlPath}`);
   }
-  return fs.readFileSync(yamlPath, 'utf-8');
+  return fs.readFile(yamlPath, 'utf-8');
 }

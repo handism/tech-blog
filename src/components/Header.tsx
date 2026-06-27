@@ -14,6 +14,19 @@ const navItems = [
 ];
 
 /**
+ * 設定画面への遷移リンクボタン。
+ */
+const SettingsButton = () => (
+  <Link
+    href="/settings"
+    className="theme-btn w-9 h-9 flex items-center justify-center text-text"
+    aria-label="Settings"
+  >
+    <Settings className="h-4 w-4" />
+  </Link>
+);
+
+/**
  * サイト全体のヘッダー。
  */
 export default function Header() {
@@ -37,13 +50,7 @@ export default function Header() {
 
               {/* モバイル表示用のアイコン (md以上で非表示) */}
               <div className="flex items-center gap-2 md:hidden">
-                <Link
-                  href="/settings"
-                  className="theme-btn w-9 h-9 flex items-center justify-center text-text"
-                  aria-label="Settings"
-                >
-                  <Settings className="h-4 w-4" />
-                </Link>
+                <SettingsButton />
               </div>
             </div>
 
@@ -70,13 +77,7 @@ export default function Header() {
 
           {/* デスクトップ表示用のアイコン (md未満で非表示) */}
           <div className="hidden md:flex items-center gap-2">
-            <Link
-              href="/settings"
-              className="theme-btn w-9 h-9 flex items-center justify-center text-text"
-              aria-label="Settings"
-            >
-              <Settings className="h-4 w-4" />
-            </Link>
+            <SettingsButton />
           </div>
         </div>
       </header>

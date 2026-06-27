@@ -30,7 +30,7 @@ export async function getBlogViewContext(): Promise<BlogViewContext> {
   const tagCounts = getTagsWithCount(allPosts);
 
   // クライアントに渡すデータから plaintext を除去して軽量化
-  const lightPosts = allPosts.map(({ plaintext: _plaintext, ...rest }) => rest) as PostMeta[];
+  const lightPosts: PostMeta[] = allPosts.map(({ plaintext: _plaintext, ...rest }) => rest);
 
   return { allPosts: lightPosts, categories, categoryCounts, tagCounts };
 }

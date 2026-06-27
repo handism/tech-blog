@@ -63,7 +63,7 @@ export function createLearningMeta(
     date: data.date,
     order: data.order,
     draft: data.draft,
-    plaintext: plaintext,
+    plaintext,
     quiz: data.quiz,
   };
 }

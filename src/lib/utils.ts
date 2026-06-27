@@ -37,16 +37,12 @@ function hashString(value: string): number {
 /**
  * タグ名をURL向けのスラッグに変換する。
  */
-export function tagToSlug(tag: string): string {
-  return toSlug(tag);
-}
+export const tagToSlug = toSlug;
 
 /**
  * カテゴリ名をURL向けのスラッグに変換する。
  */
-export function categoryToSlug(category: string): string {
-  return toSlug(category);
-}
+export const categoryToSlug = toSlug;
 
 /**
  * プレーンテキストから読了時間（分）を推定する。
@@ -81,6 +77,15 @@ export function filterDrafts<T extends { draft?: boolean }>(items: T[]): T[] {
 }
 
 /**
+ * 現在の環境（開発環境か本番環境か）に応じて、対象のアイテムが表示可能かどうか判定する。
+ * 本番環境では下書き（draft: true）のアイテムは表示不可とする。
+ */
+export function isVisibleInEnv(item: { draft?: boolean }): boolean {
+  const isDev = process.env.NODE_ENV !== 'production';
+  return isDev || !item.draft;
+}
+
+/**
  * 共通のZod日付スキーマ。
  * 文字列またはDate型を受け取り、Dateオブジェクトに変換して検証する。
  */
@@ -89,3 +94,18 @@ export const zodDateSchema = z
   .transform((v) => new Date(v))
   .pipe(z.date())
   .optional();
+
+/**
+ * 非同期処理を実行し、ENOENT（ファイル・ディレクトリ未存在）エラーが発生した場合は指定したフォールバック値を返し、
+ * それ以外のエラーはそのまま再スローするヘルパー。
+ */
+export async function catchEnoent<T>(promise: Promise<T>, fallback: T): Promise<T> {
+  try {
+    return await promise;
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
+      return fallback;
+    }
+    throw error;
+  }
+}

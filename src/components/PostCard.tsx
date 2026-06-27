@@ -19,33 +19,18 @@ export default function PostCard({ post, priorityImage = false }: PostCardProps)
   return (
     <article className="group theme-card theme-card-hover overflow-hidden">
       {/* サムネイル画像 */}
-      {post.image ? (
-        <Link href={`/blog/posts/${post.slug}`} className="block">
-          <div className="relative w-full h-56 bg-secondary border-b-3 border-border overflow-hidden">
-            <Image
-              src={`/images/${post.image}`}
-              alt={post.title}
-              fill
-              priority={priorityImage}
-              className="object-cover group-hover:scale-105 group-focus-within:scale-105 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
-          </div>
-        </Link>
-      ) : (
-        <Link href={`/blog/posts/${post.slug}`} className="block">
-          <div className="relative w-full h-56 bg-secondary border-b-3 border-border overflow-hidden">
-            <Image
-              src={`/og/${post.slug}/image.png`}
-              alt={post.title}
-              fill
-              priority={priorityImage}
-              className="object-cover group-hover:scale-105 group-focus-within:scale-105 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
-          </div>
-        </Link>
-      )}
+      <Link href={`/blog/posts/${post.slug}`} className="block">
+        <div className="relative w-full h-56 bg-secondary border-b-3 border-border overflow-hidden">
+          <Image
+            src={post.image ? `/images/${post.image}` : `/og/${post.slug}/image.png`}
+            alt={post.title}
+            fill
+            priority={priorityImage}
+            className="object-cover group-hover:scale-105 group-focus-within:scale-105 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        </div>
+      </Link>
 
       <div className="p-6">
         {/* タイトル */}

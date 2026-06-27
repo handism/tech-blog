@@ -8,7 +8,7 @@ import {
 } from '@/src/lib/learning-repository';
 import { renderPostMarkdown } from '@/src/lib/post-renderer';
 import type { LearningCourse, LearningPost, LearningPostMeta } from '@/src/types/learning';
-import { filterDrafts } from '@/src/lib/utils';
+import { filterDrafts, isVisibleInEnv } from '@/src/lib/utils';
 import { cache } from 'react';
 
 /**
@@ -88,8 +88,7 @@ export async function getLearningPost(
   if (!parsed) return null;
 
   // 本番ビルド時は draft: true の記事へのアクセスを拒否する
-  const isDev = process.env.NODE_ENV !== 'production';
-  if (!isDev && parsed.meta.draft) return null;
+  if (!isVisibleInEnv(parsed.meta)) return null;
 
   const { html: htmlContent, toc } = await renderPostMarkdown(parsed.content);
 

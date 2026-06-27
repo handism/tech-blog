@@ -3,7 +3,7 @@ import { createPostMeta, parsePostSource } from '@/src/lib/post-parser';
 import { readAllPostSources, readPostSourceBySlug } from '@/src/lib/post-repository';
 import { renderPostMarkdown } from '@/src/lib/post-renderer';
 import type { Post, PostMeta } from '@/src/types/post';
-import { filterDrafts, sortByDate } from '@/src/lib/utils';
+import { filterDrafts, isVisibleInEnv, sortByDate } from '@/src/lib/utils';
 import { cache } from 'react';
 
 /**
@@ -50,8 +50,7 @@ export async function getPost(slug: string): Promise<Post | null> {
   if (!parsed) return null;
 
   // 本番ビルド時は draft: true の記事へのアクセスを拒否する
-  const isDev = process.env.NODE_ENV !== 'production';
-  if (!isDev && parsed.meta.draft) return null;
+  if (!isVisibleInEnv(parsed.meta)) return null;
 
   const { html: htmlContent, toc } = await renderPostMarkdown(parsed.content);
 

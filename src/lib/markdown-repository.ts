@@ -1,4 +1,5 @@
 // src/lib/markdown-repository.ts
+import { catchEnoent } from './utils';
 import fs from 'fs/promises';
 import path from 'path';
 
@@ -33,15 +34,13 @@ export function createMarkdownRepository(dirPath: string): MarkdownRepository {
     },
     async readSourceBySlug(slug: string) {
       const fullPath = path.join(/*turbopackIgnore: true*/ dirPath, `${slug}.md`);
-      try {
-        const raw = await fs.readFile(fullPath, 'utf8');
-        return { slug, raw };
-      } catch (error) {
-        if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
-          return null;
-        }
-        throw error;
-      }
+      return catchEnoent(
+        (async () => {
+          const raw = await fs.readFile(fullPath, 'utf8');
+          return { slug, raw };
+        })(),
+        null
+      );
     },
   };
 }

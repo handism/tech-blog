@@ -10,7 +10,6 @@ import type { Root as HastRoot } from 'hast';
 import remarkGfm from 'remark-gfm';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
-import type { Node } from 'unist';
 import { unified } from 'unified';
 import { imageSizeFromFile } from 'image-size/fromFile';
 import { visit } from 'unist-util-visit';
@@ -26,33 +25,20 @@ type RenderedPost = {
 type ShikiOptions = { meta?: { __raw?: string }; lang?: string };
 
 /**
- * Node が Code 型であるか判定する型ガード。
- */
-function isCodeNode(node: Node): node is Code {
-  return node.type === 'code';
-}
-
-/**
  * コードブロックの言語指定からファイル名を分離するRemarkプラグイン。
  * 例: ```ts:filename.ts → lang="ts", meta に filename="filename.ts" を追加
  */
 function remarkExtractCodeFilename() {
   return (tree: Root) => {
-    function walk(node: Node) {
-      if (isCodeNode(node)) {
-        if (node.lang?.includes(':')) {
-          const colonIdx = node.lang.indexOf(':');
-          const filename = node.lang.slice(colonIdx + 1);
-          node.lang = node.lang.slice(0, colonIdx) || null;
-          const filenameMeta = `filename="${filename}"`;
-          node.meta = node.meta ? `${node.meta} ${filenameMeta}` : filenameMeta;
-        }
+    visit(tree, 'code', (node: Code) => {
+      if (node.lang?.includes(':')) {
+        const colonIdx = node.lang.indexOf(':');
+        const filename = node.lang.slice(colonIdx + 1);
+        node.lang = node.lang.slice(0, colonIdx) || null;
+        const filenameMeta = `filename="${filename}"`;
+        node.meta = node.meta ? `${node.meta} ${filenameMeta}` : filenameMeta;
       }
-      if ('children' in node) {
-        (node as { children: Node[] }).children.forEach(walk);
-      }
-    }
-    walk(tree);
+    });
   };
 }
 
