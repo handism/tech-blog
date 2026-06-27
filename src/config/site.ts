@@ -386,7 +386,7 @@ export const themeConfig = [
 ] as const;
 
 export type ThemeId = (typeof themeConfig)[number]['id'];
-export const DEFAULT_THEME: ThemeId = 'neo-brutalism';
+export const DEFAULT_THEME: ThemeId = 'holographic';
 export const THEME_STORAGE_KEY = 'design-theme';
 
 /**
