@@ -1,212 +1,223 @@
 <mxfile host="app.diagrams.net" version="29.5.2">
   <diagram name="Account Factory Architecture" id="account-factory">
-    <mxGraphModel dx="1400" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
       <root>
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
 
-        <!-- AWS Cloud Container (Background) -->
-        <mxCell id="aws-cloud" value="AWS Cloud" style="sketch=0;points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud;strokeColor=#AAB7B8;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#232F3E;fontStyle=1;fontSize=14;container=0;collapsible=0;recursiveResize=0;pointerEvents=0;" vertex="1" parent="1">
-          <mxGeometry x="140" y="140" width="1220" height="960"/>
+        <!-- Platform Engineer (outside AWS Cloud) -->
+        <mxCell id="user-engineer" value="Platform Engineer" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#232F3D;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.user;" vertex="1" parent="1">
+          <mxGeometry x="30" y="380" width="60" height="60" as="geometry"/>
         </mxCell>
 
-        <!-- Region Container (Background) -->
-        <mxCell id="region" value="Region (ap-northeast-1)" style="sketch=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_region;strokeColor=#00A4A6;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#147EBA;fontSize=12;dashed=1;container=0;collapsible=0;recursiveResize=0;pointerEvents=0;" vertex="1" parent="1">
-          <mxGeometry x="180" y="180" width="1140" height="880"/>
+        <!-- AWS Cloud Container -->
+        <mxCell id="aws-cloud" value="AWS Cloud" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=14;fontStyle=1;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud;strokeColor=#AAB7B8;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#232F3E;dashed=0;" vertex="1" parent="1">
+          <mxGeometry x="130" y="40" width="1220" height="810" as="geometry"/>
         </mxCell>
 
-        <!-- Management Account (Background) -->
-        <mxCell id="mgmt-account" value="Management Account" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=1;shape=mxgraph.aws4.group;strokeColor=#879196;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#232F3E;dashed=0;container=0;collapsible=0;recursiveResize=0;pointerEvents=0;" vertex="1" parent="1">
-          <mxGeometry x="210" y="240" width="680" height="800"/>
+        <!-- Management Account label -->
+        <mxCell id="mgmt-label" value="Management Account" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];rotatable=0;fontSize=13;fontStyle=1;fontColor=#232F3E;" vertex="1" parent="aws-cloud">
+          <mxGeometry x="20" y="10" width="220" height="30" as="geometry"/>
         </mxCell>
 
-        <!-- Orchestration Layer (Background) -->
-        <mxCell id="orch-layer" value="Orchestration Layer" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=11;fontStyle=0;shape=mxgraph.aws4.group;strokeColor=#FF4F8B;fillColor=#FFF0F5;verticalAlign=top;align=left;spacingLeft=30;fontColor=#232F3E;dashed=0;container=0;collapsible=0;recursiveResize=0;pointerEvents=0;" vertex="1" parent="1">
-          <mxGeometry x="370" y="380" width="480" height="260"/>
+        <!-- Region Container -->
+        <mxCell id="region" value="Region (ap-northeast-1)" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_region;strokeColor=#00A4A6;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#147EBA;dashed=1;" vertex="1" parent="aws-cloud">
+          <mxGeometry x="20" y="50" width="1180" height="740" as="geometry"/>
         </mxCell>
 
-        <!-- Storage & Data Layer (Background) -->
-        <mxCell id="storage-layer" value="Storage &amp; Data" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=11;fontStyle=0;shape=mxgraph.aws4.group;strokeColor=#3F8624;fillColor=#F4FBF4;verticalAlign=top;align=left;spacingLeft=30;fontColor=#232F3E;dashed=0;container=0;collapsible=0;recursiveResize=0;pointerEvents=0;" vertex="1" parent="1">
-          <mxGeometry x="370" y="670" width="480" height="150"/>
+        <!-- ===== Service Catalog Layer ===== -->
+        <!-- Service Catalog Portfolio -->
+        <mxCell id="sc-portfolio" value="Service Catalog&#xa;Portfolio&#xa;(Account Factory)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#E7157B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.service_catalog;" vertex="1" parent="region">
+          <mxGeometry x="80" y="80" width="60" height="60" as="geometry"/>
         </mxCell>
 
-        <!-- Monitoring & Notifications (Background) -->
-        <mxCell id="monitor-layer" value="Monitoring &amp; Notifications" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=11;fontStyle=0;shape=mxgraph.aws4.group;strokeColor=#E7157B;fillColor=#FFF5F5;verticalAlign=top;align=left;spacingLeft=30;fontColor=#232F3E;dashed=0;container=0;collapsible=0;recursiveResize=0;pointerEvents=0;" vertex="1" parent="1">
-          <mxGeometry x="370" y="850" width="480" height="160"/>
+        <!-- Service Catalog Product (Account Vending Machine) -->
+        <mxCell id="sc-product" value="Service Catalog&#xa;Product&#xa;(Vending Machine)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#E7157B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.service_catalog;" vertex="1" parent="region">
+          <mxGeometry x="260" y="80" width="60" height="60" as="geometry"/>
         </mxCell>
 
-        <!-- Root OU (Background) -->
-        <mxCell id="root-ou" value="Root OU" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=11;fontStyle=0;shape=mxgraph.aws4.group;strokeColor=#FF4F8B;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#232F3E;dashed=1;container=0;collapsible=0;recursiveResize=0;pointerEvents=0;" vertex="1" parent="1">
-          <mxGeometry x="960" y="330" width="320" height="90"/>
+        <!-- IAM Role for Service Catalog Launch -->
+        <mxCell id="sc-launch-role" value="IAM Launch Role&#xa;(SC Launch)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#DD344C;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.role;" vertex="1" parent="region">
+          <mxGeometry x="260" y="230" width="60" height="44" as="geometry"/>
         </mxCell>
 
-        <!-- Workload OU (Background) -->
-        <mxCell id="workload-ou" value="Workload OU" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=11;fontStyle=0;shape=mxgraph.aws4.group;strokeColor=#FF4F8B;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#232F3E;dashed=1;container=0;collapsible=0;recursiveResize=0;pointerEvents=0;" vertex="1" parent="1">
-          <mxGeometry x="960" y="440" width="320" height="90"/>
+        <!-- ===== Lambda Layer ===== -->
+        <!-- Lambda Provisioning Function -->
+        <mxCell id="lambda-provision" value="Lambda&#xa;AccountProvisioning&#xa;(Python 3.12, 512MB)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.lambda_function;" vertex="1" parent="region">
+          <mxGeometry x="480" y="80" width="60" height="60" as="geometry"/>
         </mxCell>
 
-        <!-- Baseline Configurations (Background) -->
-        <mxCell id="baseline-config" value="Baseline Configurations (StackSet)" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=11;fontStyle=0;shape=mxgraph.aws4.group;strokeColor=#545B64;fillColor=#F8F9FA;verticalAlign=top;align=left;spacingLeft=30;fontColor=#232F3E;dashed=0;container=0;collapsible=0;recursiveResize=0;pointerEvents=0;" vertex="1" parent="1">
-          <mxGeometry x="960" y="560" width="320" height="150"/>
+        <!-- Lambda Status Check Function -->
+        <mxCell id="lambda-status" value="Lambda&#xa;StatusCheck&#xa;(Python 3.12, 256MB)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.lambda_function;" vertex="1" parent="region">
+          <mxGeometry x="480" y="340" width="60" height="60" as="geometry"/>
         </mxCell>
 
-        <!-- Newly Provisioned Accounts (Background) -->
-        <mxCell id="new-accounts" value="Newly Provisioned Accounts" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=1;shape=mxgraph.aws4.group;strokeColor=#879196;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#232F3E;dashed=0;container=0;collapsible=0;recursiveResize=0;pointerEvents=0;" vertex="1" parent="1">
-          <mxGeometry x="960" y="740" width="320" height="300"/>
-        </mxCell>
-
-        <!-- Member Accounts (Backgrounds) -->
-        <mxCell id="account-dev" value="Account 1&#xa;(Development)" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=10;fontStyle=0;shape=mxgraph.aws4.group;strokeColor=#AAB7B8;fillColor=#F2F3F4;verticalAlign=top;align=left;spacingLeft=20;fontColor=#232F3E;dashed=0;container=0;collapsible=0;recursiveResize=0;pointerEvents=0;" vertex="1" parent="1">
-          <mxGeometry x="975" y="800" width="80" height="200"/>
-        </mxCell>
-
-        <mxCell id="account-prod" value="Account 2&#xa;(Production)" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=10;fontStyle=0;shape=mxgraph.aws4.group;strokeColor=#AAB7B8;fillColor=#F2F3F4;verticalAlign=top;align=left;spacingLeft=20;fontColor=#232F3E;dashed=0;container=0;collapsible=0;recursiveResize=0;pointerEvents=0;" vertex="1" parent="1">
-          <mxGeometry x="1080" y="800" width="80" height="200"/>
-        </mxCell>
-
-        <mxCell id="account-sandbox" value="Account 3&#xa;(Sandbox)" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=10;fontStyle=0;shape=mxgraph.aws4.group;strokeColor=#AAB7B8;fillColor=#F2F3F4;verticalAlign=top;align=left;spacingLeft=20;fontColor=#232F3E;dashed=0;container=0;collapsible=0;recursiveResize=0;pointerEvents=0;" vertex="1" parent="1">
-          <mxGeometry x="1185" y="800" width="80" height="200"/>
-        </mxCell>
-
-        <!-- Absolute Positioned Active Elements (Parent = 1) -->
-        <!-- Platform Engineer -->
-        <mxCell id="engineer" value="Platform Engineer&#xa;/ End User" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#232F3D;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.user;" vertex="1" parent="1">
-          <mxGeometry x="370" y="10" width="60" height="60"/>
-        </mxCell>
-
-        <!-- Service Catalog -->
-        <mxCell id="service-catalog" value="Service Catalog&#xa;Portfolio" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.service_catalog;" vertex="1" parent="1">
-          <mxGeometry x="270" y="300" width="60" height="60"/>
-        </mxCell>
-
-        <!-- Lambda (Provisioning) -->
-        <mxCell id="lambda-provisioning" value="Lambda Function&#xa;(Provisioning)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.lambda_function;" vertex="1" parent="1">
-          <mxGeometry x="420" y="520" width="60" height="60"/>
-        </mxCell>
-
-        <!-- Lambda (Status Check) -->
-        <mxCell id="lambda-status" value="Lambda Function&#xa;(Status Check)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.lambda_function;" vertex="1" parent="1">
-          <mxGeometry x="720" y="520" width="60" height="60"/>
+        <!-- IAM Role for Lambda -->
+        <mxCell id="lambda-role" value="IAM Role&#xa;(Least Privilege)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#DD344C;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.role;" vertex="1" parent="region">
+          <mxGeometry x="480" y="240" width="60" height="44" as="geometry"/>
         </mxCell>
 
         <!-- EventBridge Rule -->
-        <mxCell id="eventbridge" value="EventBridge Rule&#xa;(Status Checker)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#FF4F8B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.eventbridge;" vertex="1" parent="1">
-          <mxGeometry x="720" y="420" width="60" height="60"/>
+        <mxCell id="eventbridge" value="EventBridge Rule&#xa;(rate: 5 minutes)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#E7157B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.eventbridge;" vertex="1" parent="region">
+          <mxGeometry x="260" y="350" width="60" height="60" as="geometry"/>
         </mxCell>
 
-        <!-- S3 Templates -->
-        <mxCell id="s3-templates" value="S3 Bucket&#xa;(CFn Templates)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#7AA116;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.s3_bucket;" vertex="1" parent="1">
-          <mxGeometry x="450" y="720" width="60" height="62"/>
+        <!-- ===== Data/Integration Layer ===== -->
+        <!-- DynamoDB Table -->
+        <mxCell id="dynamodb" value="DynamoDB&#xa;Account Metadata&#xa;(PAY_PER_REQUEST, PITR, SSE)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#C925D1;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.dynamodb;" vertex="1" parent="region">
+          <mxGeometry x="720" y="180" width="60" height="60" as="geometry"/>
         </mxCell>
 
-        <!-- DynamoDB Metadata -->
-        <mxCell id="ddb-metadata" value="DynamoDB Table&#xa;(Account Metadata)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#C925D1;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.dynamodb;" vertex="1" parent="1">
-          <mxGeometry x="720" y="720" width="60" height="60"/>
+        <!-- S3 Bucket for CFn Templates -->
+        <mxCell id="s3-templates" value="S3 Bucket&#xa;CFn Templates&#xa;(AES256, Versioning)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#7AA116;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.s3_bucket;" vertex="1" parent="region">
+          <mxGeometry x="720" y="60" width="60" height="60" as="geometry"/>
         </mxCell>
 
-        <!-- SNS Notifications -->
-        <mxCell id="sns-notifications" value="SNS Topic&#xa;(Notifications)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#FF4F8B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.sns;" vertex="1" parent="1">
-          <mxGeometry x="450" y="900" width="60" height="60"/>
+        <!-- SNS Topic -->
+        <mxCell id="sns-topic" value="SNS Topic&#xa;Provisioning&#xa;Notifications (KMS)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#E7157B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.sns;" vertex="1" parent="region">
+          <mxGeometry x="720" y="340" width="60" height="60" as="geometry"/>
         </mxCell>
 
-        <!-- CloudWatch Logs & Alarms -->
-        <mxCell id="cloudwatch" value="CloudWatch&#xa;(Logs &amp; Alarms)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#E7157B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.cloudwatch_2;" vertex="1" parent="1">
-          <mxGeometry x="720" y="900" width="60" height="60"/>
+        <!-- KMS Key -->
+        <mxCell id="kms-key" value="KMS Key&#xa;(Log Encryption&#xa;Auto Rotation)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#DD344C;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.key_management_service;" vertex="1" parent="region">
+          <mxGeometry x="960" y="480" width="60" height="60" as="geometry"/>
         </mxCell>
 
-        <!-- AWS Organizations Active Icon -->
-        <mxCell id="organizations" value="AWS Organizations" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#FF4F8B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=1;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.organizations;" vertex="1" parent="1">
-          <mxGeometry x="980" y="240" width="60" height="60"/>
+        <!-- CloudWatch Log Group -->
+        <mxCell id="cw-logs" value="CloudWatch Logs&#xa;/aws/account-factory&#xa;(30 days, KMS)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#759C3E;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.cloudwatch_2;" vertex="1" parent="region">
+          <mxGeometry x="720" y="480" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- CloudWatch Dashboard & Alarm -->
+        <mxCell id="cw-alarm" value="CloudWatch&#xa;Dashboard &amp; Alarm&#xa;(Provisioning Errors)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#759C3E;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.cloudwatch_alarm;" vertex="1" parent="region">
+          <mxGeometry x="960" y="340" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- ===== AWS Organizations (Global) ===== -->
+        <!-- Organizations -->
+        <mxCell id="organizations" value="AWS Organizations&#xa;(Multi-Account)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#E7157B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.organizations;" vertex="1" parent="region">
+          <mxGeometry x="960" y="80" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- New Account (provisioned) -->
+        <mxCell id="new-account" value="New AWS Account&#xa;(Provisioned)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F2FF;strokeColor=#0066CC;align=center;verticalAlign=middle;fontSize=12;fontStyle=1;" vertex="1" parent="region">
+          <mxGeometry x="1080" y="200" width="60" height="60" as="geometry"/>
         </mxCell>
 
         <!-- CloudFormation StackSet -->
-        <mxCell id="stackset" value="CloudFormation&#xa;StackSet" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#E7157B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.cloudformation;" vertex="1" parent="1">
-          <mxGeometry x="1090" y="610" width="60" height="60"/>
+        <mxCell id="cfn-stackset" value="CloudFormation&#xa;StackSet&#xa;(Account Baseline)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#E7157B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.cloudformation;" vertex="1" parent="region">
+          <mxGeometry x="960" y="200" width="60" height="60" as="geometry"/>
         </mxCell>
 
-        <!-- Baseline Stacks inside accounts -->
-        <mxCell id="baseline-stack-1" value="Baseline&#xa;Stack" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#E7157B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=10;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.cloudformation;" vertex="1" parent="1">
-          <mxGeometry x="990" y="870" width="50" height="50"/>
-        </mxCell>
+        <!-- ===== Edges / Connections ===== -->
 
-        <mxCell id="baseline-stack-2" value="Baseline&#xa;Stack" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#E7157B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=10;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.cloudformation;" vertex="1" parent="1">
-          <mxGeometry x="1095" y="870" width="50" height="50"/>
-        </mxCell>
-
-        <mxCell id="baseline-stack-3" value="Baseline&#xa;Stack" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#E7157B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=10;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.cloudformation;" vertex="1" parent="1">
-          <mxGeometry x="1200" y="870" width="50" height="50"/>
-        </mxCell>
-
-        <!-- Connections (Edges) -->
-        <!-- User to Service Catalog -->
-        <mxCell id="edge-user-sc" value="1. Request Account" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="engineer" target="service-catalog">
+        <!-- Platform Engineer to Service Catalog Portfolio -->
+        <mxCell id="edge-user-sc" value="Provision Request" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;" edge="1" parent="1" source="user-engineer" target="sc-portfolio">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- Service Catalog to Lambda (Provisioning) -->
-        <mxCell id="edge-sc-lambda" value="2. Trigger Launch" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="service-catalog" target="lambda-provisioning">
+        <!-- Service Catalog Portfolio to Product -->
+        <mxCell id="edge-sc-product" value="Contains" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#E7157B;fontSize=11;" edge="1" parent="region" source="sc-portfolio" target="sc-product">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- Lambda (Provisioning) to S3 Templates -->
-        <mxCell id="edge-lambda-s3" value="Read Templates" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=1;strokeColor=#3F8624;dashed=1;fontSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="lambda-provisioning" target="s3-templates">
+        <!-- SC Launch Role to Product -->
+        <mxCell id="edge-launch-role-product" value="Launch Constraint" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#DD344C;fontSize=11;dashed=1;" edge="1" parent="region" source="sc-launch-role" target="sc-product">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- Lambda (Provisioning) to Organizations -->
-        <mxCell id="edge-lambda-org" value="3. Create Account" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#FF4F8B;fontSize=10;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" edge="1" parent="1" source="lambda-provisioning" target="organizations">
+        <!-- Service Catalog Product to Lambda Provision -->
+        <mxCell id="edge-product-lambda" value="Invoke" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;" edge="1" parent="region" source="sc-product" target="lambda-provision">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- Lambda (Provisioning) to DynamoDB -->
-        <mxCell id="edge-lambda-ddb" value="4. Store Metadata" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#C925D1;fontSize=10;exitX=1;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="lambda-provisioning" target="ddb-metadata">
+        <!-- SC Product reads S3 template -->
+        <mxCell id="edge-sc-s3" value="Load Template" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#7AA116;fontSize=11;dashed=1;" edge="1" parent="region" source="sc-product" target="s3-templates">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- Lambda (Provisioning) to SNS Topic -->
-        <mxCell id="edge-lambda-sns" value="5. Notify Launch" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#FF4F8B;fontSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="lambda-provisioning" target="sns-notifications">
+        <!-- Lambda IAM Role to both Lambdas -->
+        <mxCell id="edge-iam-provision" value="Attached" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#DD344C;fontSize=11;dashed=1;" edge="1" parent="region" source="lambda-role" target="lambda-provision">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- Organizations to Member Accounts (Creation) -->
-        <mxCell id="edge-org-provision" value="6. Provision" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#FF4F8B;fontSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="organizations" target="new-accounts">
+        <mxCell id="edge-iam-status" value="Attached" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#DD344C;fontSize=11;dashed=1;" edge="1" parent="region" source="lambda-role" target="lambda-status">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- EventBridge to Status Checker Lambda -->
-        <mxCell id="edge-eb-checker" value="7. Trigger Poll" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="eventbridge" target="lambda-status">
+        <!-- Lambda Provision to Organizations (CreateAccount) -->
+        <mxCell id="edge-lambda-orgs" value="CreateAccount" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;" edge="1" parent="region" source="lambda-provision" target="organizations">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- Status Checker to Organizations -->
-        <mxCell id="edge-checker-org" value="8. Check Status" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#FF4F8B;fontSize=10;exitX=1;exitY=0;entryX=0;entryY=0.5;" edge="1" parent="1" source="lambda-status" target="organizations">
+        <!-- Lambda Provision to DynamoDB (PutItem) -->
+        <mxCell id="edge-lambda-ddb" value="PutItem&#xa;(metadata)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;" edge="1" parent="region" source="lambda-provision" target="dynamodb">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- Status Checker to DynamoDB -->
-        <mxCell id="edge-checker-ddb" value="9. Update Status" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#C925D1;fontSize=10;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="lambda-status" target="ddb-metadata">
+        <!-- Lambda Provision to SNS -->
+        <mxCell id="edge-lambda-sns" value="Publish&#xa;(notification)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;" edge="1" parent="region" source="lambda-provision" target="sns-topic">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- Status Checker to SNS Topic -->
-        <mxCell id="edge-checker-sns" value="10. Notify Success" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#FF4F8B;fontSize=10;exitX=0;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="lambda-status" target="sns-notifications">
+        <!-- Lambda Provision to CFn StackSet -->
+        <mxCell id="edge-lambda-stackset" value="CreateStackInstances" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;" edge="1" parent="region" source="lambda-provision" target="cfn-stackset">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- Lambda (Provisioning) to StackSet -->
-        <mxCell id="edge-lambda-stackset" value="11. Deploy Baseline" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#FF4F8B;fontSize=10;exitX=1;exitY=0.75;entryX=0;entryY=0.5;" edge="1" parent="1" source="lambda-provisioning" target="stackset">
+        <!-- EventBridge to Lambda Status Check -->
+        <mxCell id="edge-eb-status" value="Trigger (5 min)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#E7157B;fontSize=11;" edge="1" parent="region" source="eventbridge" target="lambda-status">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
 
-        <!-- StackSet to Member Accounts (Baseline stacks) -->
-        <mxCell id="edge-stackset-member-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#FF4F8B;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="stackset" target="baseline-stack-1">
+        <!-- Lambda Status to Organizations (DescribeStatus) -->
+        <mxCell id="edge-status-orgs" value="DescribeAccountStatus" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;" edge="1" parent="region" source="lambda-status" target="organizations">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
-        <mxCell id="edge-stackset-member-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#FF4F8B;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="stackset" target="baseline-stack-2">
+
+        <!-- Lambda Status to DynamoDB (UpdateItem) -->
+        <mxCell id="edge-status-ddb" value="UpdateItem&#xa;(status)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;" edge="1" parent="region" source="lambda-status" target="dynamodb">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
-        <mxCell id="edge-stackset-member-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeWidth=2;strokeColor=#FF4F8B;dashed=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="stackset" target="baseline-stack-3">
+
+        <!-- Lambda Status to SNS -->
+        <mxCell id="edge-status-sns" value="Publish&#xa;(completed)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#545B64;fontSize=11;dashed=1;" edge="1" parent="region" source="lambda-status" target="sns-topic">
           <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Organizations to New Account -->
+        <mxCell id="edge-orgs-account" value="Provisions" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#0066CC;fontSize=11;" edge="1" parent="region" source="organizations" target="new-account">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- CFn StackSet to New Account (baseline) -->
+        <mxCell id="edge-stackset-account" value="Apply Baseline" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#E7157B;fontSize=11;" edge="1" parent="region" source="cfn-stackset" target="new-account">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- CloudWatch Logs from Lambda -->
+        <mxCell id="edge-lambda-cw" value="Logs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#759C3E;fontSize=11;dashed=1;" edge="1" parent="region" source="lambda-provision" target="cw-logs">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- KMS encrypts CloudWatch Logs -->
+        <mxCell id="edge-kms-cw" value="Encrypt Logs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#DD344C;fontSize=11;dashed=1;" edge="1" parent="region" source="kms-key" target="cw-logs">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- CloudWatch Alarm to SNS -->
+        <mxCell id="edge-alarm-sns" value="Alert on Error" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#759C3E;fontSize=11;dashed=1;" edge="1" parent="region" source="cw-alarm" target="sns-topic">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- CloudWatch Logs to Alarm -->
+        <mxCell id="edge-cw-alarm" value="Monitor" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#759C3E;fontSize=11;dashed=1;" edge="1" parent="region" source="cw-logs" target="cw-alarm">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Architecture Notes -->
+        <mxCell id="note-arch" value="Architecture Highlights:&#xa;- Service Catalog で自己サービス型アカウント発行&#xa;- Organizations.CreateAccount → Lambda で自動化&#xa;- EventBridge で 5 分ごとにステータスポーリング&#xa;- DynamoDB でアカウントメタデータ永続化&#xa;- S3 に CFn テンプレートを格納（暗号化 + バージョニング）&#xa;- SNS で完了/エラー通知&#xa;- KMS でログ暗号化（自動ローテーション）&#xa;- CloudWatch でエラーアラーム + ダッシュボード" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F2FF;strokeColor=#0066CC;align=left;verticalAlign=top;fontSize=11;fontStyle=1;" vertex="1" parent="region">
+          <mxGeometry x="60" y="570" width="440" height="140" as="geometry"/>
         </mxCell>
 
       </root>
