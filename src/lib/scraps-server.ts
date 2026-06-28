@@ -12,7 +12,7 @@ import { cache } from 'react';
  */
 export const getAllScrapMeta = cache(async function getAllScrapMeta(): Promise<ScrapMeta[]> {
   const sources = await readAllScrapSources();
-  return processMetadataList(sources, (slug, raw) => {
+  return await processMetadataList(sources, async (slug, raw) => {
     const { data, content } = parseScrapSource(raw);
     return createScrapMeta(slug, data, content);
   });

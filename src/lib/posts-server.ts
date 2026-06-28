@@ -16,7 +16,7 @@ const _loadAndParseMeta = cache(async function _loadAndParseMeta(
   const source = await readPostSourceBySlug(slug);
   if (!source) return null;
   const { data, content } = parsePostSource(source.raw);
-  return { meta: createPostMeta(slug, data, content), content };
+  return { meta: await createPostMeta(slug, data, content), content };
 });
 
 /**
@@ -24,9 +24,9 @@ const _loadAndParseMeta = cache(async function _loadAndParseMeta(
  */
 export const getAllPostMeta = cache(async function getAllPostMeta(): Promise<PostMeta[]> {
   const sources = await readAllPostSources();
-  return processMetadataList(sources, (slug, raw) => {
+  return await processMetadataList(sources, async (slug, raw) => {
     const { data, content } = parsePostSource(raw);
-    return createPostMeta(slug, data, content);
+    return await createPostMeta(slug, data, content);
   });
 });
 

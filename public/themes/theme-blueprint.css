@@ -1,0 +1,123 @@
+── Blueprint ──
+   設計図・青写真・CADグリッド・技術的精密感
+   ═══════════════════════════════════════════════════════ */
+[data-theme='blueprint'] {
+  --color-bg: #e8f0ff;
+  --color-background: var(--color-bg);
+  --color-card: #d0e0ff;
+  --color-secondary: #bcd0f0;
+  --color-text: #0a1628;
+  --color-border: rgba(10, 40, 100, 0.5);
+  --color-accent: #1a4fa0;
+  --font-sans: 'Roboto Mono', 'Space Grotesk', monospace;
+
+  --theme-card-border-width: 1px;
+  --theme-card-border-color: rgba(10, 40, 100, 0.4);
+  --theme-card-bg: rgba(208, 224, 255, 0.8);
+  --theme-card-radius: 4px;
+  --theme-card-shadow: 0 0 0 1px rgba(10, 40, 100, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  --theme-card-hover-transform: translateY(-2px);
+  --theme-card-hover-shadow: 0 4px 16px rgba(10, 40, 100, 0.2), 0 0 0 1px rgba(10, 40, 100, 0.3);
+  --theme-card-hover-border-color: rgba(10, 40, 100, 0.7);
+
+  --theme-btn-border-width: 1px;
+  --theme-btn-border-color: rgba(10, 40, 100, 0.5);
+  --theme-btn-bg: rgba(208, 224, 255, 0.7);
+  --theme-btn-radius: 2px;
+  --theme-btn-font-family: 'Roboto Mono', monospace;
+  --theme-btn-letter-spacing: 0.05em;
+  --theme-btn-hover-transform: translateY(-1px);
+  --theme-btn-hover-shadow: 0 4px 12px rgba(10, 40, 100, 0.15);
+  --theme-btn-active-transform: translateY(0);
+}
+
+[data-theme='blueprint'] body {
+  background-color: #ccdaf5;
+  background-image:
+    linear-gradient(rgba(10, 40, 100, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 40, 100, 0.12) 1px, transparent 1px),
+    linear-gradient(rgba(10, 40, 100, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 40, 100, 0.06) 1px, transparent 1px);
+  background-size: 80px 80px, 80px 80px, 20px 20px, 20px 20px;
+  background-attachment: fixed;
+}
+
+[data-theme='blueprint'] h1,
+[data-theme='blueprint'] h2,
+[data-theme='blueprint'] h3 {
+  font-family: 'Roboto Mono', monospace;
+  letter-spacing: 0.03em;
+}
+
+[data-theme='blueprint'] .site-header {
+  border: 1px solid rgba(10, 40, 100, 0.4);
+  border-radius: 2px;
+  background: rgba(208, 224, 255, 0.85);
+  backdrop-filter: blur(8px);
+}
+
+[data-theme='blueprint'] article.prose h2 {
+  border-bottom: 1px dashed rgba(10, 40, 100, 0.5);
+  padding-bottom: 0.5rem;
+}
+
+[data-theme='blueprint'] article.prose h4 {
+  border-left: 3px solid rgba(10, 40, 100, 0.5);
+  padding-left: 0.75rem;
+}
+
+[data-theme='blueprint'] article.prose blockquote {
+  border-left: 3px solid rgba(10, 40, 100, 0.5);
+  border-radius: 2px;
+  background: rgba(208, 224, 255, 0.4);
+}
+
+[data-theme='blueprint'] pre.shiki {
+  border: 1px solid rgba(10, 40, 100, 0.4);
+  border-radius: 2px;
+}
+
+/* Blueprint ダークモード */
+html[data-theme='blueprint'].dark,
+html[data-theme='blueprint'] .dark {
+  --color-bg: #040d1e;
+  --color-background: var(--color-bg);
+  --color-card: #081530;
+  --color-secondary: #0c1e40;
+  --color-text: #c8deff;
+  --color-border: rgba(96, 165, 250, 0.5);
+  --color-accent: #60a5fa;
+
+  --theme-card-border-color: rgba(96, 165, 250, 0.3);
+  --theme-card-bg: rgba(8, 21, 48, 0.9);
+  --theme-card-shadow: 0 0 0 1px rgba(96, 165, 250, 0.15), 0 0 20px rgba(96, 165, 250, 0.05);
+  --theme-card-hover-shadow: 0 4px 20px rgba(96, 165, 250, 0.2), 0 0 0 1px rgba(96, 165, 250, 0.4);
+  --theme-card-hover-border-color: rgba(96, 165, 250, 0.6);
+
+  --theme-btn-border-color: rgba(96, 165, 250, 0.4);
+  --theme-btn-bg: rgba(8, 21, 48, 0.8);
+  --theme-btn-color: #c8deff;
+  --theme-btn-hover-shadow: 0 4px 16px rgba(96, 165, 250, 0.2);
+}
+
+html[data-theme='blueprint'].dark body,
+html[data-theme='blueprint'] .dark body {
+  background-color: #040d1e;
+  background-image:
+    linear-gradient(rgba(96, 165, 250, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(96, 165, 250, 0.12) 1px, transparent 1px),
+    linear-gradient(rgba(96, 165, 250, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(96, 165, 250, 0.06) 1px, transparent 1px);
+  background-size: 80px 80px, 80px 80px, 20px 20px, 20px 20px;
+  background-attachment: fixed;
+}
+
+html[data-theme='blueprint'].dark .site-header,
+html[data-theme='blueprint'] .dark .site-header {
+  border-color: rgba(96, 165, 250, 0.3);
+  background: rgba(8, 21, 48, 0.9);
+  box-shadow: 0 0 30px rgba(96, 165, 250, 0.08);
+}
+
+
+/* ═══════════════════════════════════════════════════════

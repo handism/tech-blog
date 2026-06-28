@@ -1,0 +1,85 @@
+/* ── Y2K Cyber ── */
+[data-theme='y2k'] {
+  --color-bg: #e0f2fe;
+  --color-background: var(--color-bg);
+  --color-card: rgba(255, 255, 255, 0.4);
+  --color-secondary: #bae6fd;
+  --color-text: #0369a1;
+  --color-border: #38bdf8;
+  --color-accent: #ff007f;
+  --theme-font-sans: 'Space Grotesk', system-ui, sans-serif;
+
+  --theme-card-border-width: 1px;
+  --theme-card-border-color: rgba(56, 189, 248, 0.4);
+  --theme-card-radius: 12px;
+  --theme-card-shadow: 0 8px 32px rgba(3, 105, 161, 0.05), inset 0 0 0 1px rgba(255,255,255,0.4);
+  --theme-card-backdrop: blur(8px);
+  --theme-card-webkit-backdrop: blur(8px);
+  --theme-card-hover-transform: translateY(-2px);
+  --theme-card-hover-shadow: 0 12px 40px rgba(3, 105, 161, 0.1), 0 0 10px rgba(255, 0, 127, 0.2);
+
+  --theme-btn-border-width: 1px;
+  --theme-btn-border-color: var(--color-border);
+  --theme-btn-radius: 8px;
+  --theme-btn-bg: rgba(255, 255, 255, 0.5);
+  --theme-btn-color: var(--color-text);
+  --theme-btn-shadow: 0 4px 10px rgba(3, 105, 161, 0.04);
+  --theme-btn-hover-transform: translateY(-1px);
+  --theme-btn-hover-shadow: 0 0 12px rgba(255, 0, 127, 0.4);
+  --theme-btn-hover-bg: var(--color-accent);
+  --theme-btn-hover-color: #ffffff;
+  --theme-btn-active-transform: translateY(1px);
+}
+[data-theme='y2k'].dark {
+  --color-bg: #0c1e2f;
+  --color-card: rgba(15, 23, 42, 0.6);
+  --color-secondary: #0f2d4a;
+  --color-text: #bae6fd;
+  --color-border: #ff007f;
+  --color-accent: #00ffff;
+  --theme-card-border-color: rgba(255, 0, 127, 0.4);
+}
+[data-theme='y2k'] body {
+  background: linear-gradient(135deg, #e0f2fe 0%, #f0fdf4 100%) fixed;
+}
+[data-theme='y2k'].dark body {
+  background: linear-gradient(135deg, #0c1e2f 0%, #111827 100%) fixed;
+}
+
+[data-theme='y2k'] [class*='shadow-'] {
+  --tw-shadow: none;
+  --tw-shadow-colored: none;
+  box-shadow: 0 4px 16px rgba(3, 105, 161, 0.05) !important;
+}
+[data-theme='y2k'] .theme-card,
+[data-theme='y2k'] .theme-card-hover:hover,
+[data-theme='y2k'] .theme-btn,
+[data-theme='y2k'] .theme-btn:hover,
+[data-theme='y2k'] .theme-btn:active {
+  box-shadow: revert-layer;
+}
+
+/* Modern Japanese */
+[data-theme='y2k'] .site-header {
+  border: 1px solid rgba(56, 189, 248, 0.3) !important;
+  border-radius: 12px !important;
+  background-color: rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  box-shadow: 0 4px 15px rgba(3, 105, 161, 0.05) !important;
+}
+[data-theme='y2k'].dark .site-header {
+  background-color: rgba(15, 23, 42, 0.5) !important;
+  border-color: rgba(255, 0, 127, 0.3) !important;
+}
+[data-theme='y2k'] .site-header nav a {
+  border: 1px solid rgba(56, 189, 248, 0.2) !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+[data-theme='y2k'] .site-header nav a:hover {
+  border-color: var(--color-accent) !important;
+  box-shadow: 0 0 8px rgba(255, 0, 127, 0.3) !important;
+}
+
+/* Dark UI */

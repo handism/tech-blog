@@ -1,0 +1,75 @@
+[data-theme='three-d'] {
+  --color-bg: #f1f5f9;
+  --color-background: var(--color-bg);
+  --color-card: #ffffff;
+  --color-secondary: #e2e8f0;
+  --color-text: #0f172a;
+  --color-border: #cbd5e1;
+  --color-accent: #0ea5e9;
+  --theme-font-sans: 'Space Grotesk', system-ui, sans-serif;
+
+  --theme-card-border-width: 1px;
+  --theme-card-radius: 12px;
+  --theme-card-shadow: 0 8px 0px 0px #cbd5e1, 0 12px 16px rgba(0,0,0,0.06);
+  --theme-card-hover-transform: translateY(-2px);
+  --theme-card-hover-shadow: 0 10px 0px 0px #cbd5e1, 0 16px 20px rgba(0,0,0,0.08);
+
+  --theme-btn-border-width: 1px;
+  --theme-btn-radius: 8px;
+  --theme-btn-shadow: 0 4px 0px 0px #0284c7;
+  --theme-btn-bg: var(--color-accent);
+  --theme-btn-color: #ffffff;
+  --theme-btn-hover-transform: translateY(-1px);
+  --theme-btn-hover-shadow: 0 5px 0px 0px #0284c7;
+  --theme-btn-active-transform: translateY(4px);
+  --theme-btn-active-shadow: 0 0px 0px 0px #0284c7;
+}
+[data-theme='three-d'].dark {
+  --color-bg: #090d16;
+  --color-card: #111827;
+  --color-secondary: #1f2937;
+  --color-text: #f9fafb;
+  --color-border: #374151;
+  --color-accent: #38bdf8;
+  --theme-card-shadow: 0 8px 0px 0px #1f2937, 0 12px 16px rgba(0,0,0,0.4);
+  --theme-card-hover-shadow: 0 10px 0px 0px #1f2937, 0 16px 20px rgba(0,0,0,0.5);
+  --theme-btn-shadow: 0 4px 0px 0px #0369a1;
+  --theme-btn-hover-shadow: 0 5px 0px 0px #0369a1;
+}
+
+/* ── Sketch / Handdrawn ── */
+[data-theme='three-d'] [class*='shadow-'] {
+  --tw-shadow: none;
+  --tw-shadow-colored: none;
+  box-shadow: 0 6px 0px 0px #cbd5e1 !important;
+}
+[data-theme='three-d'].dark [class*='shadow-'] {
+  box-shadow: 0 6px 0px 0px #1f2937 !important;
+}
+[data-theme='three-d'] .theme-card,
+[data-theme='three-d'] .theme-card-hover:hover,
+[data-theme='three-d'] .theme-btn,
+[data-theme='three-d'] .theme-btn:hover,
+[data-theme='three-d'] .theme-btn:active {
+  box-shadow: revert-layer;
+}
+
+/* Illustration */
+[data-theme='three-d'] .site-header {
+  border: 1px solid var(--color-border) !important;
+  box-shadow: 0 6px 0px 0px #cbd5e1 !important;
+  border-radius: 12px !important;
+}
+[data-theme='three-d'].dark .site-header {
+  box-shadow: 0 6px 0px 0px #1f2937 !important;
+}
+[data-theme='three-d'] .site-header nav a {
+  border: 1px solid var(--color-border) !important;
+  box-shadow: 0 3px 0px 0px #cbd5e1 !important;
+  border-radius: 8px !important;
+}
+[data-theme='three-d'].dark .site-header nav a {
+  box-shadow: 0 3px 0px 0px #1f2937 !important;
+}
+
+/* Illustration */

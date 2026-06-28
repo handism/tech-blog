@@ -15,7 +15,8 @@ import type { PostMeta } from '@/src/types/post';
 const postSearchOptions: IFuseOptions<PostMeta> = {
   keys: [
     { name: 'title', weight: 0.6 },
-    { name: 'plaintext', weight: 0.5 },
+    { name: 'description', weight: 0.5 },
+    { name: 'keywords', weight: 0.5 },
     { name: 'tags', weight: 0.5 },
     { name: 'category', weight: 0.4 },
   ],
@@ -68,7 +69,7 @@ export function searchPostsWithMatches(searcher: Fuse<PostMeta>, keyword: string
     const tagMatches: FuseResultMatch[] = [];
     for (const m of result.matches ?? []) {
       if (m.key === 'title') titleMatch = m;
-      else if (m.key === 'plaintext') textMatch = m;
+      else if (m.key === 'description') textMatch = m;
       else if (m.key === 'category') categoryMatch = m;
       else if (m.key === 'tags') tagMatches.push(m);
     }
@@ -77,16 +78,19 @@ export function searchPostsWithMatches(searcher: Fuse<PostMeta>, keyword: string
     let snippetIndices: readonly RangeTuple[] = [];
 
     if (textMatch && textMatch.indices.length > 0) {
-      const plaintext = result.item.plaintext ?? '';
+      const description = result.item.description ?? '';
       const [start] = textMatch.indices[0];
       const from = Math.max(0, start - 30);
-      const to = Math.min(plaintext.length, from + 100);
+      const to = Math.min(description.length, from + 100);
       // from > 0 のとき先頭に「…」(1文字) を付与するため、元インデックスを 1 だけオフセットする
       const offset = from > 0 ? 1 : 0;
-      snippet = (from > 0 ? '…' : '') + plaintext.slice(from, to);
+      snippet = (from > 0 ? '…' : '') + description.slice(from, to);
       snippetIndices = textMatch.indices
         .filter(([s, e]: RangeTuple) => s >= from && e <= to)
         .map(([s, e]: RangeTuple) => [s - from + offset, e - from + offset] as RangeTuple);
+    } else {
+      const description = result.item.description ?? '';
+      snippet = description.length > 100 ? description.slice(0, 100) + '…' : description;
     }
 
     return {

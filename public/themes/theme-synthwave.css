@@ -1,0 +1,141 @@
+/* ── Synthwave / Outrun ── */
+[data-theme='synthwave'] {
+  --color-bg: #fae8ff;
+  --color-background: var(--color-bg);
+  --color-card: #ffffff;
+  --color-secondary: #fdf2f8;
+  --color-text: #2e1049;
+  --color-border: #ff007f;
+  --color-accent: #0ea5e9;
+  --theme-font-sans: 'Orbitron', 'Space Grotesk', system-ui, sans-serif;
+
+  --theme-card-border-width: 2px;
+  --theme-card-radius: 8px;
+  --theme-card-shadow: 4px 4px 0px 0px var(--color-border);
+  --theme-card-bg: var(--color-card);
+  --theme-card-hover-transform: translate(-2px, -2px);
+  --theme-card-hover-shadow: 6px 6px 0px 0px var(--color-accent);
+  --theme-card-hover-border-color: var(--color-accent);
+
+  --theme-btn-border-width: 2px;
+  --theme-btn-radius: 6px;
+  --theme-btn-shadow: 3px 3px 0px 0px var(--color-border);
+  --theme-btn-bg: linear-gradient(135deg, #ff007f 0%, #7f00ff 100%);
+  --theme-btn-color: #ffffff;
+  --theme-btn-font-family: 'Orbitron', sans-serif;
+  --theme-btn-text-transform: uppercase;
+  --theme-btn-letter-spacing: 0.05em;
+  --theme-btn-hover-transform: translate(-1px, -1px);
+  --theme-btn-hover-shadow: 4px 4px 0px 0px var(--color-accent);
+  --theme-btn-hover-border-color: var(--color-accent);
+  --theme-btn-hover-bg: linear-gradient(135deg, #ff007f 0%, #7f00ff 100%);
+  --theme-btn-hover-color: #ffffff;
+  --theme-btn-active-transform: translate(2px, 2px);
+  --theme-btn-active-shadow: 0px 0px 0px 0px var(--color-border);
+}
+
+html[data-theme='synthwave'].dark,
+html[data-theme='synthwave'] .dark,
+.dark[data-theme='synthwave'],
+[data-theme='synthwave'].dark,
+.dark [data-theme='synthwave'] {
+  --color-bg: #0b071a;
+  --color-background: var(--color-bg);
+  --color-card: #150f2e;
+  --color-secondary: #1f1742;
+  --color-text: #ffffff;
+  --color-border: #ff007f;
+  --color-accent: #00ffff;
+
+  --theme-card-shadow: 0 0 10px rgba(255, 0, 127, 0.4), 0 0 20px rgba(255, 0, 127, 0.1);
+  --theme-card-hover-shadow: 0 0 15px rgba(255, 0, 127, 0.6), 0 0 30px rgba(0, 255, 255, 0.3);
+  --theme-btn-hover-transform: scale(1.03);
+  --theme-btn-hover-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+  --theme-btn-active-transform: scale(0.97);
+  --theme-btn-active-shadow: 0 0 5px rgba(0, 255, 255, 0.2);
+}
+
+[data-theme='synthwave'] body {
+  background: linear-gradient(135deg, #fdf2f8 0%, #fae8ff 100%) fixed;
+}
+
+html[data-theme='synthwave'].dark body,
+html[data-theme='synthwave'] .dark body,
+.dark[data-theme='synthwave'] body,
+[data-theme='synthwave'].dark body,
+.dark [data-theme='synthwave'] body {
+  background: linear-gradient(135deg, #1e133a 0%, #0b071a 100%) fixed;
+}
+
+[data-theme='synthwave'] h1,
+[data-theme='synthwave'] h2,
+[data-theme='synthwave'] h3 {
+  font-family: 'Orbitron', sans-serif;
+}
+
+html[data-theme='synthwave'].dark h1,
+html[data-theme='synthwave'].dark h2,
+html[data-theme='synthwave'].dark h3,
+html[data-theme='synthwave'] .dark h1,
+html[data-theme='synthwave'] .dark h2,
+html[data-theme='synthwave'] .dark h3 {
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+}
+
+[data-theme='synthwave'] [class*='shadow-'] {
+  --tw-shadow: none;
+  --tw-shadow-colored: none;
+  box-shadow: 4px 4px 0px 0px var(--color-border) !important;
+}
+html[data-theme='synthwave'].dark [class*='shadow-'],
+html[data-theme='synthwave'] .dark [class*='shadow-'],
+.dark[data-theme='synthwave'] [class*='shadow-'],
+[data-theme='synthwave'].dark [class*='shadow-'],
+.dark [data-theme='synthwave'] [class*='shadow-'] {
+  box-shadow: 0 0 10px rgba(255, 0, 127, 0.4), 0 0 20px rgba(255, 0, 127, 0.1) !important;
+}
+[data-theme='synthwave'] .theme-card,
+[data-theme='synthwave'] .theme-card-hover:hover,
+[data-theme='synthwave'] .theme-btn,
+[data-theme='synthwave'] .theme-btn:hover,
+[data-theme='synthwave'] .theme-btn:active {
+  box-shadow: revert-layer;
+}
+
+/* Terminal */
+[data-theme='synthwave'] .site-header {
+  border: 2px solid var(--color-border) !important;
+  border-radius: 8px !important;
+  box-shadow: 4px 4px 0px 0px rgba(255, 0, 127, 0.15) !important;
+}
+html[data-theme='synthwave'].dark .site-header,
+html[data-theme='synthwave'] .dark .site-header,
+.dark[data-theme='synthwave'] .site-header,
+[data-theme='synthwave'].dark .site-header,
+.dark [data-theme='synthwave'] .site-header {
+  box-shadow: 0 0 15px rgba(255, 0, 127, 0.3) !important;
+}
+[data-theme='synthwave'] .site-header nav a {
+  border: 1px solid var(--color-border) !important;
+  box-shadow: 2px 2px 0px 0px var(--color-border) !important;
+}
+html[data-theme='synthwave'].dark .site-header nav a,
+html[data-theme='synthwave'] .dark .site-header nav a,
+.dark[data-theme='synthwave'] .site-header nav a,
+[data-theme='synthwave'].dark .site-header nav a,
+.dark [data-theme='synthwave'] .site-header nav a {
+  box-shadow: 0 0 5px rgba(255, 0, 127, 0.2) !important;
+}
+[data-theme='synthwave'] .site-header nav a:hover {
+  border-color: var(--color-accent) !important;
+  box-shadow: 3px 3px 0px 0px var(--color-accent) !important;
+}
+html[data-theme='synthwave'].dark .site-header nav a:hover,
+html[data-theme='synthwave'] .dark .site-header nav a:hover,
+.dark[data-theme='synthwave'] .site-header nav a:hover,
+[data-theme='synthwave'].dark .site-header nav a:hover,
+.dark [data-theme='synthwave'] .site-header nav a:hover {
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5) !important;
+}
+
+/* Terminal */

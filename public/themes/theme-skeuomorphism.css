@@ -1,0 +1,85 @@
+/* ── Skeuomorphism ── */
+[data-theme='skeuomorphism'] {
+  --color-bg: #e5e7eb;
+  --color-background: var(--color-bg);
+  --color-card: linear-gradient(180deg, #ffffff 0%, #f3f4f6 100%);
+  --color-secondary: #d1d5db;
+  --color-text: #374151;
+  --color-border: #9ca3af;
+  --color-accent: #4b5563;
+  --theme-font-sans: system-ui, sans-serif;
+
+  --theme-card-border-width: 1px;
+  --theme-card-border-color: #d1d5db;
+  --theme-card-radius: 12px;
+  --theme-card-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  --theme-card-hover-transform: translateY(-2px);
+  --theme-card-hover-shadow: 0 15px 30px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+  --theme-btn-border-width: 1px;
+  --theme-btn-border-color: #9ca3af;
+  --theme-btn-radius: 8px;
+  --theme-btn-bg: linear-gradient(180deg, #ffffff 0%, #e5e7eb 100%);
+  --theme-btn-color: #1f2937;
+  --theme-btn-shadow: 0 2px 4px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.8);
+  --theme-btn-hover-transform: translateY(-1px);
+  --theme-btn-hover-shadow: 0 4px 8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.8);
+  --theme-btn-active-transform: translateY(1px);
+  --theme-btn-active-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+[data-theme='skeuomorphism'].dark {
+  --color-bg: #1f2937;
+  --color-background: var(--color-bg);
+  --color-card: linear-gradient(180deg, #374151 0%, #1f2937 100%);
+  --color-secondary: #111827;
+  --color-text: #f3f4f6;
+  --color-border: #4b5563;
+  --color-accent: #9ca3af;
+  --theme-card-border-color: #4b5563;
+  --theme-card-shadow: 0 10px 25px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --theme-card-hover-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  --theme-btn-bg: linear-gradient(180deg, #374151 0%, #1f2937 100%);
+  --theme-btn-border-color: #4b5563;
+  --theme-btn-color: #f3f4f6;
+  --theme-btn-shadow: 0 2px 4px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+
+[data-theme='skeuomorphism'] [class*='shadow-'] {
+  --tw-shadow: none;
+  --tw-shadow-colored: none;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.8) !important;
+}
+[data-theme='skeuomorphism'].dark [class*='shadow-'] {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1) !important;
+}
+[data-theme='skeuomorphism'] .theme-card,
+[data-theme='skeuomorphism'] .theme-card-hover:hover,
+[data-theme='skeuomorphism'] .theme-btn,
+[data-theme='skeuomorphism'] .theme-btn:hover,
+[data-theme='skeuomorphism'] .theme-btn:active {
+  box-shadow: revert-layer;
+}
+
+/* Brutalism */
+[data-theme='skeuomorphism'] .site-header {
+  border: 1px solid var(--color-border) !important;
+  background: linear-gradient(180deg, #ffffff 0%, #f3f4f6 100%) !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+  border-radius: 12px !important;
+}
+[data-theme='skeuomorphism'].dark .site-header {
+  background: linear-gradient(180deg, #374151 0%, #1f2937 100%) !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+[data-theme='skeuomorphism'] .site-header nav a {
+  border: 1px solid var(--color-border) !important;
+  background: linear-gradient(180deg, #ffffff 0%, #e5e7eb 100%) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+  border-radius: 6px !important;
+}
+[data-theme='skeuomorphism'].dark .site-header nav a {
+  background: linear-gradient(180deg, #374151 0%, #1f2937 100%) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Brutalism */

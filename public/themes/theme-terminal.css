@@ -1,0 +1,99 @@
+/* ── Terminal / Matrix ── */
+[data-theme='terminal'] {
+  --color-bg: #fbf5e6;
+  --color-background: var(--color-bg);
+  --color-card: #f2e9d3;
+  --color-secondary: #e6dac0;
+  --color-text: #7c4f00;
+  --color-border: #7c4f00;
+  --color-accent: #c67c00;
+  --theme-font-sans: 'Share Tech Mono', ui-monospace, monospace;
+
+  --theme-card-border-width: 1px;
+  --theme-card-radius: 0px !important;
+  --theme-card-shadow: none;
+  --theme-card-bg: var(--color-card);
+  --theme-card-hover-transform: none;
+  --theme-card-hover-shadow: 0 0 10px var(--color-border);
+  --theme-card-hover-bg: var(--color-secondary);
+
+  --theme-btn-border-width: 1px;
+  --theme-btn-radius: 0px !important;
+  --theme-btn-bg: transparent;
+  --theme-btn-color: var(--color-text);
+  --theme-btn-font-family: 'Share Tech Mono', monospace;
+  --theme-btn-shadow: none;
+  --theme-btn-hover-transform: none;
+  --theme-btn-hover-shadow: none;
+  --theme-btn-hover-bg: var(--color-text);
+  --theme-btn-hover-color: var(--color-bg);
+  --theme-btn-active-transform: none;
+  --theme-btn-active-shadow: inset 0 0 5px var(--color-border);
+}
+
+html[data-theme='terminal'].dark,
+html[data-theme='terminal'] .dark,
+.dark[data-theme='terminal'],
+[data-theme='terminal'].dark,
+.dark [data-theme='terminal'] {
+  --color-bg: #000000;
+  --color-background: var(--color-bg);
+  --color-card: #050505;
+  --color-secondary: #0f0f0f;
+  --color-text: #00ff00;
+  --color-border: #00ff00;
+  --color-accent: #008800;
+}
+
+[data-theme='terminal'] body,
+[data-theme='terminal'] html {
+  font-family: 'Share Tech Mono', ui-monospace, monospace;
+}
+
+[data-theme='terminal'] h1,
+[data-theme='terminal'] h2,
+[data-theme='terminal'] h3,
+[data-theme='terminal'] h4 {
+  font-family: 'Share Tech Mono', monospace;
+}
+
+[data-theme='terminal'] article.prose h2::after {
+  content: ' _';
+  animation: terminal-blink 1s step-end infinite;
+}
+
+@keyframes terminal-blink {
+  from, to { color: transparent }
+  50% { color: var(--color-text) }
+}
+
+[data-theme='terminal'] [class*='shadow-'] {
+  --tw-shadow: none;
+  --tw-shadow-colored: none;
+  box-shadow: none !important;
+}
+[data-theme='terminal'] .theme-card,
+[data-theme='terminal'] .theme-card-hover:hover,
+[data-theme='terminal'] .theme-btn,
+[data-theme='terminal'] .theme-btn:hover,
+[data-theme='terminal'] .theme-btn:active {
+  box-shadow: revert-layer;
+}
+
+/* Nordic */
+[data-theme='terminal'] .site-header {
+  border: 1px solid var(--color-border) !important;
+  box-shadow: none !important;
+  border-radius: 0px !important;
+}
+[data-theme='terminal'] .site-header nav a {
+  border: 1px solid var(--color-border) !important;
+  box-shadow: none !important;
+  border-radius: 0px !important;
+}
+[data-theme='terminal'] .site-header nav a:hover {
+  background-color: var(--color-text) !important;
+  color: var(--color-bg) !important;
+}
+
+/* Nordic */

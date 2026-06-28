@@ -1,0 +1,87 @@
+/* ── Nordic / Cozy ── */
+[data-theme='nordic'] {
+  --color-bg: #edf2f0;
+  --color-background: var(--color-bg);
+  --color-card: #ffffff;
+  --color-secondary: #e2e9e6;
+  --color-text: #2f3e46;
+  --color-border: transparent;
+  --color-accent: #2e5a44;
+  --theme-font-sans: 'Lexend', 'Noto Sans JP', system-ui, sans-serif;
+
+  --theme-card-border-width: 0px;
+  --theme-card-border-color: transparent;
+  --theme-card-radius: 24px;
+  --theme-card-bg: var(--color-card);
+  --theme-card-shadow: 0 4px 20px rgba(47, 62, 70, 0.05);
+  --theme-card-hover-transform: translateY(-4px);
+  --theme-card-hover-shadow: 0 12px 30px rgba(47, 62, 70, 0.1);
+
+  --theme-btn-border-width: 0px;
+  --theme-btn-border-color: transparent;
+  --theme-btn-radius: 14px;
+  --theme-btn-bg: var(--color-card);
+  --theme-btn-color: var(--color-text);
+  --theme-btn-shadow: 0 2px 10px rgba(47, 62, 70, 0.05);
+  --theme-btn-hover-bg: var(--color-secondary);
+  --theme-btn-hover-shadow: 0 6px 15px rgba(47, 62, 70, 0.08);
+  --theme-btn-hover-transform: translateY(-1px);
+  --theme-btn-active-transform: translateY(0);
+  --theme-btn-active-shadow: 0 2px 5px rgba(47, 62, 70, 0.05);
+}
+
+html[data-theme='nordic'].dark,
+html[data-theme='nordic'] .dark,
+.dark[data-theme='nordic'],
+[data-theme='nordic'].dark,
+.dark [data-theme='nordic'] {
+  --color-bg: #121c17;
+  --color-background: var(--color-bg);
+  --color-card: #1c2a23;
+  --color-secondary: #27372f;
+  --color-text: #ecefe6;
+  --color-border: transparent;
+  --color-accent: #a3e635;
+
+  --theme-card-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --theme-card-hover-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme='nordic'] [class*='shadow-'] {
+  --tw-shadow: none;
+  --tw-shadow-colored: none;
+  box-shadow: 0 4px 20px rgba(47, 62, 70, 0.06) !important;
+}
+[data-theme='nordic'].dark [class*='shadow-'] {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+[data-theme='nordic'] .theme-card,
+[data-theme='nordic'] .theme-card-hover:hover,
+[data-theme='nordic'] .theme-btn,
+[data-theme='nordic'] .theme-btn:hover,
+[data-theme='nordic'] .theme-btn:active,
+[data-theme='nordic'].dark .theme-card,
+[data-theme='nordic'].dark .theme-card-hover:hover,
+[data-theme='nordic'].dark .theme-btn,
+[data-theme='nordic'].dark .theme-btn:hover,
+[data-theme='nordic'].dark .theme-btn:active {
+  box-shadow: revert-layer;
+}
+
+/* Claymorphism */
+[data-theme='nordic'] .site-header {
+  border: none !important;
+  box-shadow: 0 4px 20px rgba(47, 62, 70, 0.05) !important;
+}
+[data-theme='nordic'].dark .site-header {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
+}
+[data-theme='nordic'] .site-header nav a {
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(47, 62, 70, 0.04) !important;
+}
+[data-theme='nordic'] .site-header nav a:hover {
+  background-color: var(--color-secondary) !important;
+}
+
+/* Claymorphism */

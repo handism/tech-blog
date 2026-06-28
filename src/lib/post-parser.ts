@@ -3,6 +3,7 @@ import { siteConfig } from '@/src/config/site';
 import type { PostMeta } from '@/src/types/post';
 import { estimateReadingMinutes, parseFrontmatter, zodDateSchema } from '@/src/lib/utils';
 import { markdownToPlaintext } from '@/src/lib/markdown-utils';
+import { tokenizeForSearch } from '@/src/lib/kuromoji-tokenizer';
 import { z } from 'zod';
 
 /**
@@ -40,18 +41,21 @@ export function parsePostSource(raw: string): ParsedPostSource {
 /**
  * frontmatterと本文から一覧向けメタ情報を生成する。
  */
-export function createPostMeta(
+export async function createPostMeta(
   slug: string,
   data: ValidatedFrontmatter,
   content: string
-): PostMeta {
+): Promise<PostMeta> {
   const plaintext = markdownToPlaintext(content);
+  // ビルド/サーバー時なので常に形態素解析を完了するのを待つ (waitLoad = true)
+  const keywords = await tokenizeForSearch(plaintext, true);
   return {
     slug,
     title: data.title,
     date: data.date,
     tags: data.tags,
     category: data.category,
+    keywords,
     plaintext: plaintext.slice(0, 5000), // 検索用に長めに保持
     description: plaintext.slice(0, 200), // 一覧表示用
     readingMinutes: estimateReadingMinutes(plaintext),

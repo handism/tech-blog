@@ -1,0 +1,36 @@
+/* ── Dashboard UI ── */
+[data-theme='dashboard'] {
+  --color-bg: #f8fafc;
+  --color-background: var(--color-bg);
+  --color-card: #ffffff;
+  --color-secondary: #f1f5f9;
+  --color-text: #334155;
+  --color-border: #cbd5e1;
+  --color-accent: #3b82f6;
+  --theme-font-sans: 'Inter', system-ui, sans-serif;
+
+  --theme-card-border-width: 1px;
+  --theme-card-radius: 8px;
+  --theme-card-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  --theme-card-hover-transform: none;
+  --theme-card-hover-shadow: 0 4px 6px rgba(0,0,0,0.05);
+
+  --theme-btn-border-width: 1px;
+  --theme-btn-border-color: #cbd5e1;
+  --theme-btn-radius: 6px;
+  --theme-btn-bg: #ffffff;
+  --theme-btn-color: #334155;
+  --theme-btn-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  --theme-btn-hover-transform: none;
+  --theme-btn-hover-shadow: none;
+  --theme-btn-hover-bg: #f8fafc;
+  --theme-btn-active-transform: translateY(0);
+}
+[data-theme='dashboard'].dark {
+  --color-bg: #090d16;
+  --color-card: #111827;
+  --color-secondary: #1f2937;
+  --color-text: #cbd5e1;
+  --color-border: #374151;
+  --color-accent: #3b82f6;
+}

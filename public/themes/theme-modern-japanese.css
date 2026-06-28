@@ -1,0 +1,69 @@
+[data-theme='modern-japanese'] {
+  --color-bg: #f5f2eb;
+  --color-background: var(--color-bg);
+  --color-card: #faf8f5;
+  --color-secondary: #e6dfd5;
+  --color-text: #1c1c1c;
+  --color-border: #1c1c1c;
+  --color-accent: #d93333;
+  --theme-font-sans: 'Noto Serif JP', serif;
+
+  --theme-card-border-width: 1px;
+  --theme-card-radius: 0px;
+  --theme-card-shadow: none;
+  --theme-card-hover-transform: none;
+  --theme-card-hover-shadow: 0 0 0 1px var(--color-accent);
+
+  --theme-btn-border-width: 1px;
+  --theme-btn-radius: 0px;
+  --theme-btn-bg: transparent;
+  --theme-btn-color: var(--color-text);
+  --theme-btn-shadow: none;
+  --theme-btn-hover-transform: none;
+  --theme-btn-hover-shadow: none;
+  --theme-btn-hover-bg: var(--color-text);
+  --theme-btn-hover-color: var(--color-bg);
+  --theme-btn-active-transform: none;
+}
+[data-theme='modern-japanese'].dark {
+  --color-bg: #121212;
+  --color-card: #1c1c1c;
+  --color-secondary: #262626;
+  --color-text: #e6dfd5;
+  --color-border: #e6dfd5;
+  --color-accent: #f87171;
+}
+[data-theme='modern-japanese'] body {
+  background-color: var(--color-bg);
+  font-family: 'Noto Serif JP', serif;
+}
+
+[data-theme='modern-japanese'] [class*='shadow-'] {
+  --tw-shadow: none;
+  --tw-shadow-colored: none;
+  box-shadow: none !important;
+}
+[data-theme='modern-japanese'] .theme-card,
+[data-theme='modern-japanese'] .theme-card-hover:hover,
+[data-theme='modern-japanese'] .theme-btn,
+[data-theme='modern-japanese'] .theme-btn:hover,
+[data-theme='modern-japanese'] .theme-btn:active {
+  box-shadow: revert-layer;
+}
+
+/* Organic */
+[data-theme='modern-japanese'] .site-header {
+  border: 1px solid var(--color-border) !important;
+  border-radius: 0px !important;
+  box-shadow: none !important;
+}
+[data-theme='modern-japanese'] .site-header nav a {
+  border: 1px solid transparent !important;
+  border-radius: 0px !important;
+  box-shadow: none !important;
+}
+[data-theme='modern-japanese'] .site-header nav a:hover {
+  border-color: var(--color-border) !important;
+}
+
+/* Organic */

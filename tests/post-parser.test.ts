@@ -103,7 +103,7 @@ title: テスト
 });
 
 describe('createPostMeta', () => {
-  it('スラッグ・frontmatter・本文からメタ情報を生成する', () => {
+  it('スラッグ・frontmatter・本文からメタ情報を生成する', async () => {
     const { data } = parsePostSource(`---
 title: タイトル
 date: 2024-03-01
@@ -112,7 +112,7 @@ category: Frontend
 ---
 本文テキスト
 `);
-    const meta = createPostMeta('my-slug', data, '本文テキスト');
+    const meta = await createPostMeta('my-slug', data, '本文テキスト');
     expect(meta.slug).toBe('my-slug');
     expect(meta.title).toBe('タイトル');
     expect(meta.tags).toEqual(['React', 'Blog']);
@@ -122,13 +122,13 @@ category: Frontend
     expect(meta.readingMinutes).toBe(1);
   });
 
-  it('plaintext にマークダウン記法が含まれない', () => {
+  it('plaintext にマークダウン記法が含まれない', async () => {
     const { data } = parsePostSource(`---
 title: テスト
 ---
 `);
     const markdown = `## 見出し\n**太字** と \`コード\` と [リンク](https://example.com)`;
-    const meta = createPostMeta('slug', data, markdown);
+    const meta = await createPostMeta('slug', data, markdown);
     expect(meta.plaintext).not.toContain('##');
     expect(meta.plaintext).not.toContain('**');
     expect(meta.plaintext).not.toContain('`');
@@ -140,13 +140,13 @@ title: テスト
     expect(meta.plaintext).toContain('リンク');
   });
 
-  it('コードブロックをplaintextから除去する', () => {
+  it('コードブロックをplaintextから除去する', async () => {
     const { data } = parsePostSource(`---
 title: テスト
 ---
 `);
     const markdown = 'テキスト\n```js\nconst x = 1;\n```\n続き';
-    const meta = createPostMeta('slug', data, markdown);
+    const meta = await createPostMeta('slug', data, markdown);
     expect(meta.plaintext).not.toContain('const x = 1');
     expect(meta.plaintext).toContain('テキスト');
     expect(meta.plaintext).toContain('続き');

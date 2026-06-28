@@ -69,8 +69,34 @@ export default async function AwsBestPracticeDetailPage({ params }: Props) {
     notFound();
   }
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    headline: pattern.title,
+    description: pattern.description,
+    author: {
+      '@type': 'Person',
+      name: siteConfig.author,
+      url: siteConfig.url,
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${siteConfig.url}/aws-patterns/${slug}`,
+    },
+    subjectOf: {
+      '@type': 'SoftwareSourceCode',
+      name: pattern.templateFile,
+      programmingLanguage: 'YAML',
+      codeSampleType: 'Infrastructure as Code',
+    },
+  };
+
   return (
     <div className="mx-auto max-w-6xl px-4 pt-12 pb-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <AwsPatternDetailClient pattern={pattern} />
     </div>
   );

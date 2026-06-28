@@ -1,0 +1,66 @@
+/* ── Organic ── */
+[data-theme='organic'] {
+  --color-bg: #f4f6f0;
+  --color-background: var(--color-bg);
+  --color-card: #ffffff;
+  --color-secondary: #e6ebdd;
+  --color-text: #2d4230;
+  --color-border: #8f9f8b;
+  --color-accent: #2d5a27;
+  --theme-font-sans: 'Lexend', system-ui, sans-serif;
+
+  --theme-card-border-width: 1px;
+  --theme-card-border-color: #e6ebdd;
+  --theme-card-radius: 40px 25px 35px 20px / 25px 35px 20px 40px;
+  --theme-card-shadow: 0 8px 24px rgba(45, 90, 39, 0.03);
+  --theme-card-hover-transform: translateY(-2px) scale(1.005);
+  --theme-card-hover-shadow: 0 12px 30px rgba(45, 90, 39, 0.06);
+
+  --theme-btn-border-width: 0px;
+  --theme-btn-radius: 30px;
+  --theme-btn-bg: var(--color-accent);
+  --theme-btn-color: #ffffff;
+  --theme-btn-shadow: 0 4px 10px rgba(45, 90, 39, 0.1);
+  --theme-btn-hover-transform: translateY(-1px);
+  --theme-btn-hover-bg: #22441d;
+  --theme-btn-hover-shadow: 0 6px 15px rgba(45, 90, 39, 0.15);
+  --theme-btn-active-transform: translateY(0);
+}
+[data-theme='organic'].dark {
+  --color-bg: #141c15;
+  --color-card: #1d261e;
+  --color-secondary: #273328;
+  --color-text: #e6ebdd;
+  --color-border: #4d5f4c;
+  --color-accent: #82c476;
+}
+
+[data-theme='organic'] [class*='shadow-'] {
+  --tw-shadow: none;
+  --tw-shadow-colored: none;
+  box-shadow: 0 6px 20px rgba(45, 90, 39, 0.02) !important;
+}
+[data-theme='organic'] .theme-card,
+[data-theme='organic'] .theme-card-hover:hover,
+[data-theme='organic'] .theme-btn,
+[data-theme='organic'] .theme-btn:hover,
+[data-theme='organic'] .theme-btn:active {
+  box-shadow: revert-layer;
+}
+
+/* Isometric */
+[data-theme='organic'] .site-header {
+  border: 1px solid #e6ebdd !important;
+  border-radius: 30px !important;
+  box-shadow: 0 8px 24px rgba(45, 90, 39, 0.02) !important;
+}
+[data-theme='organic'] .site-header nav a {
+  border: none !important;
+  border-radius: 20px !important;
+  box-shadow: 0 2px 6px rgba(45, 90, 39, 0.02) !important;
+}
+[data-theme='organic'] .site-header nav a:hover {
+  background-color: var(--color-secondary) !important;
+}
+
+/* Isometric */

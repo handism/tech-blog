@@ -17,6 +17,7 @@ export type PostMeta = {
   date?: Date;
   tags: string[];
   category: string;
+  keywords?: string;
   plaintext?: string;
   description: string;
   readingMinutes: number;

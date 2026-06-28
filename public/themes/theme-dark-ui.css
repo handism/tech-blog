@@ -1,0 +1,50 @@
+/* ── Dark UI Only ── */
+[data-theme='dark-ui'] {
+  --color-bg: #030712;
+  --color-background: var(--color-bg);
+  --color-card: #111827;
+  --color-secondary: #1f2937;
+  --color-text: #f9fafb;
+  --color-border: #374151;
+  --color-accent: #38bdf8;
+  --theme-font-sans: 'Inter', system-ui, sans-serif;
+
+  --theme-card-border-width: 1px;
+  --theme-card-border-color: #1f2937;
+  --theme-card-radius: 8px;
+  --theme-card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --theme-card-hover-transform: translateY(-2px);
+  --theme-card-hover-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 0 10px rgba(56, 189, 248, 0.15);
+
+  --theme-btn-border-width: 1px;
+  --theme-btn-border-color: #374151;
+  --theme-btn-radius: 6px;
+  --theme-btn-bg: #1f2937;
+  --theme-btn-color: #f9fafb;
+  --theme-btn-shadow: none;
+  --theme-btn-hover-transform: translateY(-1px);
+  --theme-btn-hover-bg: #374151;
+  --theme-btn-hover-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+  --theme-btn-active-transform: translateY(0);
+}
+[data-theme='dark-ui'] body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+[data-theme='dark-ui'] .site-header {
+  border: 1px solid #1f2937 !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4) !important;
+  border-radius: 8px !important;
+}
+[data-theme='dark-ui'] .site-header nav a {
+  border: 1px solid transparent !important;
+  box-shadow: none !important;
+  border-radius: 6px !important;
+}
+[data-theme='dark-ui'] .site-header nav a:hover {
+  border-color: var(--color-border) !important;
+  background-color: var(--color-secondary) !important;
+}
+
+/* Modern Japanese */

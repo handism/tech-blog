@@ -1,0 +1,122 @@
+/* ── Glassmorphism ── */
+[data-theme='glassmorphism'] {
+  --color-bg: #f1f5f9;
+  --color-background: var(--color-bg);
+  --color-card: rgba(255, 255, 255, 0.45);
+  --color-secondary: rgba(255, 255, 255, 0.25);
+  --color-text: #0f172a;
+  --color-border: rgba(255, 255, 255, 0.6);
+  --color-accent: #8b5cf6;
+  --theme-font-sans: 'Lexend', system-ui, sans-serif;
+
+  --theme-card-border-width: 1px;
+  --theme-card-border-color: rgba(255, 255, 255, 0.5);
+  --theme-card-bg: rgba(255, 255, 255, 0.45);
+  --theme-card-backdrop: blur(12px);
+  --theme-card-webkit-backdrop: blur(12px);
+  --theme-card-shadow: 0 8px 32px rgba(31, 38, 135, 0.05), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  --theme-card-radius: 20px;
+  --theme-card-hover-transform: translate(-2px, -4px);
+  --theme-card-hover-shadow: 0 16px 40px rgba(31, 38, 135, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+
+  --theme-btn-border-color: rgba(255, 255, 255, 0.5);
+  --theme-btn-bg: rgba(255, 255, 255, 0.5);
+  --theme-btn-radius: 12px;
+  --theme-btn-shadow: 0 4px 16px rgba(31, 38, 135, 0.04);
+  --theme-btn-color: var(--color-text);
+  --theme-btn-hover-transform: translateY(-2px);
+  --theme-btn-hover-shadow: 0 8px 24px rgba(31, 38, 135, 0.08);
+  --theme-btn-active-transform: translateY(0);
+  --theme-btn-active-shadow: 0 2px 8px rgba(31, 38, 135, 0.04);
+}
+
+[data-theme='glassmorphism'] body {
+  background: linear-gradient(135deg, #e2e8f0 0%, #f1f5f9 50%, #f8fafc 100%);
+  background-attachment: fixed;
+}
+
+/* ダークモード */
+html[data-theme='glassmorphism'].dark,
+html[data-theme='glassmorphism'] .dark,
+.dark[data-theme='glassmorphism'],
+[data-theme='glassmorphism'].dark,
+.dark [data-theme='glassmorphism'] {
+  --color-bg: #0f0f23;
+  --color-background: var(--color-bg);
+  --color-card: rgba(255, 255, 255, 0.1);
+  --color-secondary: rgba(255, 255, 255, 0.05);
+  --color-text: #f0f0ff;
+  --color-border: rgba(255, 255, 255, 0.25);
+  --color-accent: #a78bfa;
+
+  --theme-card-border-color: rgba(255, 255, 255, 0.25);
+  --theme-card-bg: rgba(255, 255, 255, 0.1);
+  --theme-card-shadow: 0 8px 32px rgba(0, 0, 0, 0.37), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  --theme-card-hover-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+
+  --theme-btn-border-color: rgba(255, 255, 255, 0.25);
+  --theme-btn-bg: rgba(255, 255, 255, 0.12);
+  --theme-btn-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  --theme-btn-hover-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  --theme-btn-active-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+html[data-theme='glassmorphism'].dark body,
+html[data-theme='glassmorphism'] .dark body,
+.dark[data-theme='glassmorphism'] body,
+[data-theme='glassmorphism'].dark body,
+.dark [data-theme='glassmorphism'] body {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background-attachment: fixed;
+}
+
+[data-theme='glassmorphism'] .site-header,
+[data-theme='glassmorphism'] .site-header nav a,
+[data-theme='glassmorphism'] [class*='shadow-'] {
+  --tw-shadow: none;
+  --tw-shadow-colored: none;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25) !important;
+}
+[data-theme='glassmorphism'] .theme-card,
+[data-theme='glassmorphism'] .theme-card-hover:hover,
+[data-theme='glassmorphism'] .theme-btn,
+[data-theme='glassmorphism'] .theme-btn:hover,
+[data-theme='glassmorphism'] .theme-btn:active {
+  box-shadow: revert-layer;
+}
+
+/* Minimal: ハードシャドウをフラット/微細シャドウに */
+[data-theme='glassmorphism'] .site-header {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+}
+[data-theme='glassmorphism'] .site-header nav a {
+  box-shadow: none !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+[data-theme='glassmorphism'] .site-header nav a:hover {
+  box-shadow: 0 4px 12px rgba(167, 139, 250, 0.3) !important;
+  border-color: rgba(167, 139, 250, 0.6) !important;
+}
+
+[data-theme='glassmorphism'] .theme-toc-drawer {
+  background-color: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  border-top-width: 1px !important;
+}
+
+html[data-theme='glassmorphism'].dark .theme-toc-drawer,
+html[data-theme='glassmorphism'] .dark .theme-toc-drawer,
+.dark[data-theme='glassmorphism'] .theme-toc-drawer,
+[data-theme='glassmorphism'].dark .theme-toc-drawer,
+.dark [data-theme='glassmorphism'] .theme-toc-drawer {
+  background-color: rgba(15, 15, 35, 0.85) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Minimal */

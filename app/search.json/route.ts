@@ -10,5 +10,7 @@ export const dynamic = 'force-static';
  */
 export async function GET() {
   const allPosts = await getAllPostMeta();
-  return NextResponse.json(allPosts);
+  // plaintext は容量が大きいため、クライアントサイド検索インデックスからは完全に除外する
+  const serializedPosts = allPosts.map(({ plaintext, ...rest }) => rest);
+  return NextResponse.json(serializedPosts);
 }

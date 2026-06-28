@@ -73,8 +73,38 @@ export default async function ChapterDetailPage({ params }: Props) {
 
   const { prevChapter, nextChapter } = adjacent;
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'TechArticle',
+    headline: post.title,
+    description: post.plaintext?.slice(0, 160),
+    datePublished: post.date ? new Date(post.date).toISOString() : undefined,
+    author: {
+      '@type': 'Person',
+      name: siteConfig.author,
+      url: siteConfig.url,
+    },
+    isPartOf: {
+      '@type': 'Course',
+      name: course.title,
+      description: course.description,
+      provider: {
+        '@type': 'Person',
+        name: siteConfig.author,
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${siteConfig.url}/learning/${courseId}/${slug}`,
+    },
+  };
+
   return (
     <LearningLayout course={course} chapters={chapters} currentSlug={slug} toc={post.toc}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <article className="prose dark:prose-invert max-w-none">
         {/* チャプター見出し */}
         <div className="mb-8">

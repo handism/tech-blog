@@ -1,0 +1,136 @@
+デザインテーマ システム
+   CSS変数を上書きするだけで既存コンポーネントのスタイルが変わる。
+   ======================= */
+
+/* ── Neo-Brutalism (デフォルト) ── */
+[data-theme='neo-brutalism'],
+html:not([data-theme]) {
+  --theme-card-border-width: 3px;
+  --theme-card-radius: 16px;
+  --theme-card-shadow: 5px 5px 0px 0px var(--color-border);
+  --theme-card-hover-transform: translate(-3px, -3px);
+  --theme-card-hover-shadow: 8px 8px 0px 0px var(--color-border);
+
+  --theme-btn-border-width: 2px;
+  --theme-btn-radius: 10px;
+  --theme-btn-shadow: 3px 3px 0px 0px var(--color-border);
+  --theme-btn-font-weight: 700;
+  --theme-btn-hover-transform: translate(-2px, -2px);
+  --theme-btn-hover-shadow: 5px 5px 0px 0px var(--color-border);
+  --theme-btn-active-transform: translate(3px, 3px);
+  --theme-btn-active-shadow: 0px 0px 0px 0px var(--color-border);
+}
+
+/* ヘッダーのNeo-Brutalismスタイル */
+[data-theme='neo-brutalism'] .site-header,
+html:not([data-theme]) .site-header {
+  border: 3px solid var(--color-border);
+  border-radius: 16px;
+  box-shadow: 4px 4px 0px 0px var(--color-border);
+}
+
+/* 記事本文要素のNeo-Brutalismスタイル */
+[data-theme='neo-brutalism'] article.prose h2,
+html:not([data-theme]) article.prose h2 {
+  border-bottom: 3px solid var(--border);
+}
+
+[data-theme='neo-brutalism'] article.prose h4,
+html:not([data-theme]) article.prose h4 {
+  border-left: 4px solid var(--border);
+}
+
+[data-theme='neo-brutalism'] article.prose img:not(.not-prose img),
+html:not([data-theme]) article.prose img:not(.not-prose img) {
+  border: 3px solid var(--border);
+}
+
+[data-theme='neo-brutalism'] article.prose img:not(.not-prose img):hover,
+html:not([data-theme]) article.prose img:not(.not-prose img):hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 6px 6px 0px 0px var(--border);
+}
+
+[data-theme='neo-brutalism'] article.prose blockquote,
+html:not([data-theme]) article.prose blockquote {
+  border: 3px solid var(--border);
+  box-shadow: 4px 4px 0px 0px var(--border);
+  border-radius: 16px;
+}
+
+[data-theme='neo-brutalism'] aside.toc-sidebar > div,
+html:not([data-theme]) aside.toc-sidebar > div {
+  border: 3px solid var(--border);
+  box-shadow: 4px 4px 0px 0px var(--border);
+}
+
+[data-theme='neo-brutalism'] article.prose table,
+html:not([data-theme]) article.prose table {
+  border: 3px solid var(--border);
+  box-shadow: 4px 4px 0px 0px var(--border);
+}
+
+[data-theme='neo-brutalism'] article.prose th,
+html:not([data-theme]) article.prose th {
+  border-bottom: 3px solid var(--border);
+}
+
+[data-theme='neo-brutalism'] pre.shiki,
+html:not([data-theme]) pre.shiki {
+  border: 3px solid var(--color-border);
+  box-shadow: 5px 5px 0px 0px var(--color-border);
+}
+
+/* ダークモード時の発光シャドウ (Neo-Brutalism) */
+html[data-theme='neo-brutalism'].dark,
+html[data-theme='neo-brutalism'] .dark,
+html:not([data-theme]).dark,
+html:not([data-theme]) .dark {
+  --theme-card-shadow: 5px 5px 0px 0px var(--color-accent);
+  --theme-card-hover-shadow: 8px 8px 0px 0px var(--color-accent);
+  --theme-btn-shadow: 3px 3px 0px 0px var(--color-accent);
+  --theme-btn-hover-shadow: 5px 5px 0px 0px var(--color-accent);
+  --theme-btn-active-shadow: 0px 0px 0px 0px var(--color-accent);
+}
+
+html[data-theme='neo-brutalism'].dark .site-header,
+html[data-theme='neo-brutalism'] .dark .site-header,
+html:not([data-theme]).dark .site-header,
+html:not([data-theme]) .dark .site-header {
+  box-shadow: 4px 4px 0px 0px var(--color-accent);
+}
+
+html[data-theme='neo-brutalism'].dark article.prose img:not(.not-prose img):hover,
+html[data-theme='neo-brutalism'] .dark article.prose img:not(.not-prose img):hover,
+html:not([data-theme]).dark article.prose img:not(.not-prose img):hover,
+html:not([data-theme]) .dark article.prose img:not(.not-prose img):hover {
+  box-shadow: 6px 6px 0px 0px var(--color-accent);
+}
+
+html[data-theme='neo-brutalism'].dark article.prose blockquote,
+html[data-theme='neo-brutalism'] .dark article.prose blockquote,
+html:not([data-theme]).dark article.prose blockquote,
+html:not([data-theme]) .dark article.prose blockquote {
+  box-shadow: 4px 4px 0px 0px var(--color-accent);
+}
+
+html[data-theme='neo-brutalism'].dark aside.toc-sidebar > div,
+html[data-theme='neo-brutalism'] .dark aside.toc-sidebar > div,
+html:not([data-theme]).dark aside.toc-sidebar > div,
+html:not([data-theme]) .dark aside.toc-sidebar > div {
+  box-shadow: 4px 4px 0px 0px var(--color-accent);
+}
+
+html[data-theme='neo-brutalism'].dark article.prose table,
+html[data-theme='neo-brutalism'] .dark article.prose table,
+html:not([data-theme]).dark article.prose table,
+html:not([data-theme]) .dark article.prose table {
+  box-shadow: 4px 4px 0px 0px var(--color-accent);
+}
+
+html[data-theme='neo-brutalism'].dark pre.shiki,
+html[data-theme='neo-brutalism'] .dark pre.shiki,
+html:not([data-theme]).dark pre.shiki,
+html:not([data-theme]) .dark pre.shiki {
+  box-shadow: 5px 5px 0px 0px var(--color-accent);
+}

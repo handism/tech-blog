@@ -1,0 +1,79 @@
+[data-theme='illustration'] {
+  --color-bg: #fafafa;
+  --color-background: var(--color-bg);
+  --color-card: #ffffff;
+  --color-secondary: #f0f0f0;
+  --color-text: #000000;
+  --color-border: #000000;
+  --color-accent: #000000;
+  --theme-font-sans: 'Space Grotesk', system-ui, sans-serif;
+
+  --theme-card-border-width: 2px;
+  --theme-card-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  --theme-card-shadow: 5px 5px 0px rgba(0,0,0,0.15);
+  --theme-card-hover-transform: translate(-2px, -2px);
+  --theme-card-hover-shadow: 7px 7px 0px rgba(0,0,0,0.2);
+
+  --theme-btn-border-width: 2px;
+  --theme-btn-radius: 120px 20px 100px 20px/20px 100px 20px 120px;
+  --theme-btn-shadow: 3px 3px 0px rgba(0,0,0,0.15);
+  --theme-btn-bg: transparent;
+  --theme-btn-color: #000000;
+  --theme-btn-hover-transform: translate(-1px, -1px);
+  --theme-btn-hover-shadow: 4px 4px 0px rgba(0,0,0,0.25);
+  --theme-btn-active-transform: translate(2px, 2px);
+}
+[data-theme='illustration'].dark {
+  --color-bg: #121212;
+  --color-card: #1e1e1e;
+  --color-secondary: #2a2a2a;
+  --color-text: #ffffff;
+  --color-border: #ffffff;
+  --color-accent: #ffffff;
+  --theme-card-shadow: 5px 5px 0px rgba(255,255,255,0.15);
+  --theme-card-hover-shadow: 7px 7px 0px rgba(255,255,255,0.2);
+  --theme-btn-color: #ffffff;
+  --theme-btn-shadow: 3px 3px 0px rgba(255,255,255,0.15);
+  --theme-btn-hover-shadow: 4px 4px 0px rgba(255,255,255,0.25);
+}
+
+[data-theme='illustration'].dark .bg-accent,
+[data-theme='illustration'].dark .bg-accent * {
+  color: #000000 !important;
+}
+
+[data-theme='illustration'] [class*='shadow-'] {
+  --tw-shadow: none;
+  --tw-shadow-colored: none;
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.15) !important;
+}
+[data-theme='illustration'].dark [class*='shadow-'] {
+  box-shadow: 4px 4px 0px rgba(255,255,255,0.15) !important;
+}
+[data-theme='illustration'] .theme-card,
+[data-theme='illustration'] .theme-card-hover:hover,
+[data-theme='illustration'] .theme-btn,
+[data-theme='illustration'] .theme-btn:hover,
+[data-theme='illustration'] .theme-btn:active {
+  box-shadow: revert-layer;
+}
+
+/* Bento */
+[data-theme='illustration'] .site-header {
+  border: 2px solid var(--color-border) !important;
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px !important;
+  box-shadow: 4px 4px 0px rgba(0,0,0,0.15) !important;
+}
+[data-theme='illustration'].dark .site-header {
+  box-shadow: 4px 4px 0px rgba(255,255,255,0.15) !important;
+}
+[data-theme='illustration'] .site-header nav a {
+  border: 2px solid var(--color-border) !important;
+  border-radius: 120px 20px 100px 20px/20px 100px 20px 120px !important;
+  box-shadow: 2px 2px 0px rgba(0,0,0,0.15) !important;
+}
+[data-theme='illustration'].dark .site-header nav a {
+  box-shadow: 2px 2px 0px rgba(255,255,255,0.15) !important;
+}
+
+/* Bento */

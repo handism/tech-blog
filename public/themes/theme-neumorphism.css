@@ -1,0 +1,93 @@
+/* ── Neumorphism ── */
+[data-theme='neumorphism'] {
+  --color-bg: #e0e5ec;
+  --color-background: var(--color-bg);
+  --color-card: #e0e5ec;
+  --color-secondary: #d1d9e6;
+  --color-text: #3d4f6e;
+  --color-border: transparent;
+  --color-accent: #6c72cb;
+
+  --theme-card-border-width: 0px;
+  --theme-card-border-color: transparent;
+  --theme-card-bg: #e0e5ec;
+  --theme-card-radius: 20px;
+  --theme-card-shadow: 8px 8px 16px #b8bec9, -8px -8px 16px #ffffff;
+  --theme-card-hover-transform: translateY(-2px);
+  --theme-card-hover-shadow: 12px 12px 20px #b8bec9, -12px -12px 20px #ffffff;
+
+  --theme-btn-border-width: 0px;
+  --theme-btn-border-color: transparent;
+  --theme-btn-bg: #e0e5ec;
+  --theme-btn-radius: 12px;
+  --theme-btn-shadow: 5px 5px 10px #b8bec9, -5px -5px 10px #ffffff;
+  --theme-btn-hover-transform: translateY(-1px);
+  --theme-btn-hover-shadow: 7px 7px 14px #b8bec9, -7px -7px 14px #ffffff;
+  --theme-btn-hover-bg: #e0e5ec;
+  --theme-btn-active-transform: none;
+  --theme-btn-active-shadow: inset 4px 4px 8px #b8bec9, inset -4px -4px 8px #ffffff;
+}
+
+[data-theme='neumorphism'].dark {
+  --color-bg: #2d3748;
+  --color-background: var(--color-bg);
+  --color-card: #2d3748;
+  --color-secondary: #364257;
+  --color-text: #e2e8f0;
+  --color-border: transparent;
+  --color-accent: #a78bfa;
+
+  --theme-card-bg: #2d3748;
+  --theme-card-shadow: 8px 8px 16px #232d3c, -8px -8px 16px #374155;
+  --theme-card-hover-shadow: 12px 12px 20px #232d3c, -12px -12px 20px #374155;
+
+  --theme-btn-bg: #2d3748;
+  --theme-btn-shadow: 5px 5px 10px #232d3c, -5px -5px 10px #374155;
+  --theme-btn-hover-shadow: 7px 7px 14px #232d3c, -7px -7px 14px #374155;
+  --theme-btn-active-shadow: inset 4px 4px 8px #232d3c, inset -4px -4px 8px #374155;
+}
+
+[data-theme='neumorphism'] [class*='shadow-'] {
+  --tw-shadow: none;
+  --tw-shadow-colored: none;
+  box-shadow: 5px 5px 10px #b8bec9, -5px -5px 10px #ffffff !important;
+}
+[data-theme='neumorphism'].dark [class*='shadow-'] {
+  box-shadow: 5px 5px 10px #232d3c, -5px -5px 10px #374155 !important;
+}
+[data-theme='neumorphism'] .theme-card,
+[data-theme='neumorphism'] .theme-card-hover:hover,
+[data-theme='neumorphism'] .theme-btn,
+[data-theme='neumorphism'] .theme-btn:hover,
+[data-theme='neumorphism'] .theme-btn:active,
+[data-theme='neumorphism'].dark .theme-card,
+[data-theme='neumorphism'].dark .theme-card-hover:hover,
+[data-theme='neumorphism'].dark .theme-btn,
+[data-theme='neumorphism'].dark .theme-btn:hover,
+[data-theme='neumorphism'].dark .theme-btn:active {
+  box-shadow: revert-layer;
+}
+
+/* Editorial: ハードシャドウを除去（フラット）*/
+[data-theme='neumorphism'] .site-header {
+  border: none !important;
+  box-shadow: 8px 8px 16px #b8bec9, -8px -8px 16px #ffffff !important;
+}
+[data-theme='neumorphism'].dark .site-header {
+  box-shadow: 8px 8px 16px #232d3c, -8px -8px 16px #374155 !important;
+}
+[data-theme='neumorphism'] .site-header nav a {
+  border: none !important;
+  box-shadow: 3px 3px 6px #b8bec9, -3px -3px 6px #ffffff !important;
+}
+[data-theme='neumorphism'].dark .site-header nav a {
+  box-shadow: 3px 3px 6px #232d3c, -3px -3px 6px #374155 !important;
+}
+[data-theme='neumorphism'] .site-header nav a:hover {
+  box-shadow: 5px 5px 10px #b8bec9, -5px -5px 10px #ffffff !important;
+}
+[data-theme='neumorphism'].dark .site-header nav a:hover {
+  box-shadow: 5px 5px 10px #232d3c, -5px -5px 10px #374155 !important;
+}
+
+/* Editorial */

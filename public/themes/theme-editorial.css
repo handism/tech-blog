@@ -1,0 +1,85 @@
+/* ── Paper / Editorial ── */
+[data-theme='editorial'] {
+  --color-bg: #f5f0e8;
+  --color-background: var(--color-bg);
+  --color-card: #ffffff;
+  --color-secondary: #ece8de;
+  --color-text: #1a1a1a;
+  --color-border: #1a1a1a;
+  --color-accent: #c0392b;
+  --theme-font-sans: 'Noto Serif JP', Georgia, serif;
+
+  --theme-card-border-width: 1px;
+  --theme-card-radius: 0;
+  --theme-card-shadow: none;
+  --theme-card-hover-transform: translateY(-2px);
+  --theme-card-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  --theme-btn-border-width: 1px;
+  --theme-btn-radius: 2px;
+  --theme-btn-shadow: none;
+  --theme-btn-font-family: 'Noto Serif JP', Georgia, serif;
+  --theme-btn-letter-spacing: 0.03em;
+  --theme-btn-hover-transform: none;
+  --theme-btn-hover-shadow: none;
+  --theme-btn-hover-bg: var(--color-text);
+  --theme-btn-hover-color: var(--color-bg);
+  --theme-btn-active-transform: none;
+  --theme-btn-active-shadow: none;
+}
+
+[data-theme='editorial'].dark {
+  --color-bg: #1a1612;
+  --color-background: var(--color-bg);
+  --color-card: #242018;
+  --color-secondary: #2e2920;
+  --color-text: #f5f0e8;
+  --color-border: #8b7355;
+  --color-accent: #e74c3c;
+
+  --theme-card-shadow: none;
+  --theme-card-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --theme-btn-hover-bg: var(--color-secondary);
+  --theme-btn-hover-color: var(--color-text);
+}
+
+[data-theme='editorial'] body,
+[data-theme='editorial'] html {
+  font-family: 'Noto Serif JP', Georgia, serif;
+}
+
+[data-theme='editorial'] [class*='shadow-'] {
+  --tw-shadow: none;
+  --tw-shadow-colored: none;
+  box-shadow: none !important;
+}
+[data-theme='editorial'] .theme-card,
+[data-theme='editorial'] .theme-card-hover:hover,
+[data-theme='editorial'] .theme-btn,
+[data-theme='editorial'] .theme-btn:hover,
+[data-theme='editorial'] .theme-btn:active,
+[data-theme='editorial'].dark .theme-card,
+[data-theme='editorial'].dark .theme-card-hover:hover,
+[data-theme='editorial'].dark .theme-btn,
+[data-theme='editorial'].dark .theme-btn:hover,
+[data-theme='editorial'].dark .theme-btn:active {
+  box-shadow: revert-layer;
+}
+
+/* Synthwave */
+[data-theme='editorial'] .site-header {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: 1px solid var(--color-border) !important;
+}
+[data-theme='editorial'] .site-header nav a {
+  box-shadow: none !important;
+  border-radius: 2px !important;
+}
+[data-theme='editorial'] .site-header nav a:hover {
+  background-color: var(--color-text) !important;
+  color: var(--color-bg) !important;
+  box-shadow: none !important;
+}
+
+/* Synthwave */

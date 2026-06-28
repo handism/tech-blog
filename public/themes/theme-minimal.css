@@ -1,0 +1,71 @@
+/* ── Minimal / Clean ── */
+[data-theme='minimal'] {
+  --color-bg: #ffffff;
+  --color-background: var(--color-bg);
+  --color-card: #f9fafb;
+  --color-secondary: #f3f4f6;
+  --color-text: #111827;
+  --color-border: #e5e7eb;
+  --color-accent: #3b82f6;
+  --theme-font-sans: 'Lexend', system-ui, sans-serif;
+
+  --theme-card-border-width: 1px;
+  --theme-card-border-color: var(--color-border);
+  --theme-card-radius: 12px;
+  --theme-card-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --theme-card-hover-transform: translateY(-2px);
+  --theme-card-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+
+  --theme-btn-border-width: 1px;
+  --theme-btn-border-color: var(--color-border);
+  --theme-btn-radius: 8px;
+  --theme-btn-shadow: none;
+  --theme-btn-hover-transform: none;
+  --theme-btn-hover-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --theme-btn-hover-bg: var(--color-secondary);
+  --theme-btn-active-transform: none;
+  --theme-btn-active-shadow: none;
+}
+
+[data-theme='minimal'].dark {
+  --color-bg: #111827;
+  --color-background: var(--color-bg);
+  --color-card: #1f2937;
+  --color-secondary: #374151;
+  --color-text: #f9fafb;
+  --color-border: #374151;
+  --color-accent: #60a5fa;
+
+  --theme-card-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --theme-card-hover-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme='minimal'] [class*='shadow-'] {
+  --tw-shadow: none;
+  --tw-shadow-colored: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07) !important;
+}
+[data-theme='minimal'] .theme-card,
+[data-theme='minimal'] .theme-card-hover:hover,
+[data-theme='minimal'] .theme-btn,
+[data-theme='minimal'] .theme-btn:hover,
+[data-theme='minimal'] .theme-btn:active {
+  box-shadow: revert-layer;
+}
+[data-theme='minimal'] .site-header {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Neumorphism: ハードシャドウをニューモーフィズムシャドウに */
+[data-theme='minimal'] .site-header nav a {
+  box-shadow: none !important;
+  border-color: var(--color-border) !important;
+}
+[data-theme='minimal'] .site-header nav a:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08) !important;
+}
+[data-theme='minimal'].dark .site-header nav a:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Neumorphism */

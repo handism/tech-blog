@@ -63,7 +63,12 @@ export function ThemeDesignProvider({ children }: { children: React.ReactNode })
 
   const value = useMemo(() => ({ currentTheme, setTheme }), [currentTheme, setTheme]);
 
-  return <ThemeDesignContext.Provider value={value}>{children}</ThemeDesignContext.Provider>;
+  return (
+    <ThemeDesignContext.Provider value={value}>
+      <link rel="stylesheet" href={`/themes/theme-${currentTheme}.css`} precedence="default" />
+      {children}
+    </ThemeDesignContext.Provider>
+  );
 }
 
 /**

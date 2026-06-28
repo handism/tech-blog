@@ -1,0 +1,126 @@
+/* ── Claymorphism ── */
+[data-theme='claymorphism'] {
+  --color-bg: #e0f2fe;
+  --color-background: var(--color-bg);
+  --color-card: #ffffff;
+  --color-secondary: #f0f9ff;
+  --color-text: #0369a1;
+  --color-border: transparent;
+  --color-accent: #3b82f6;
+  --theme-font-sans: 'Lexend', 'Noto Sans JP', system-ui, sans-serif;
+
+  --theme-card-border-width: 0px;
+  --theme-card-border-color: transparent;
+  --theme-card-radius: 24px;
+  --theme-card-bg: var(--color-card);
+  --theme-card-shadow: 10px 10px 20px rgba(3, 105, 161, 0.08), inset -8px -8px 12px rgba(3, 105, 161, 0.04), inset 8px 8px 12px rgba(255, 255, 255, 0.8);
+  --theme-card-hover-transform: scale(1.02) translateY(-2px);
+  --theme-card-hover-shadow: 14px 14px 28px rgba(3, 105, 161, 0.12), inset -8px -8px 12px rgba(3, 105, 161, 0.06), inset 8px 8px 12px rgba(255, 255, 255, 0.9);
+
+  --theme-btn-border-width: 0px;
+  --theme-btn-border-color: transparent;
+  --theme-btn-radius: 16px;
+  --theme-btn-bg: var(--color-card);
+  --theme-btn-color: var(--color-text);
+  --theme-btn-shadow: 6px 6px 12px rgba(3, 105, 161, 0.06), inset -4px -4px 6px rgba(3, 105, 161, 0.03), inset 4px 4px 6px rgba(255, 255, 255, 0.7);
+  --theme-btn-hover-bg: var(--color-secondary);
+  --theme-btn-hover-shadow: 8px 8px 16px rgba(3, 105, 161, 0.1), inset -4px -4px 6px rgba(3, 105, 161, 0.04), inset 4px 4px 6px rgba(255, 255, 255, 0.8);
+  --theme-btn-hover-transform: translateY(-1px);
+  --theme-btn-active-transform: translateY(1px);
+  --theme-btn-active-shadow: inset 4px 4px 8px rgba(3, 105, 161, 0.1), inset -4px -4px 8px rgba(255, 255, 255, 0.6);
+}
+
+html[data-theme='claymorphism'].dark,
+html[data-theme='claymorphism'] .dark,
+.dark[data-theme='claymorphism'],
+[data-theme='claymorphism'].dark,
+.dark [data-theme='claymorphism'] {
+  --color-bg: #0c1e2f;
+  --color-background: var(--color-bg);
+  --color-card: #172a3a;
+  --color-secondary: #1f364a;
+  --color-text: #bae6fd;
+  --color-border: transparent;
+  --color-accent: #3b82f6;
+
+  --theme-card-shadow: 10px 10px 20px rgba(0, 0, 0, 0.4), inset -8px -8px 12px rgba(0, 0, 0, 0.3), inset 8px 8px 12px rgba(255, 255, 255, 0.05);
+  --theme-card-hover-shadow: 14px 14px 28px rgba(0, 0, 0, 0.5), inset -8px -8px 12px rgba(0, 0, 0, 0.3), inset 8px 8px 12px rgba(255, 255, 255, 0.08);
+  --theme-btn-shadow: 6px 6px 12px rgba(0, 0, 0, 0.3), inset -4px -4px 6px rgba(0, 0, 0, 0.2), inset 4px 4px 6px rgba(255, 255, 255, 0.05);
+  --theme-btn-hover-shadow: 8px 8px 16px rgba(0, 0, 0, 0.4), inset -4px -4px 6px rgba(0, 0, 0, 0.2), inset 4px 4px 6px rgba(255, 255, 255, 0.08);
+  --theme-btn-active-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.4), inset -4px -4px 8px rgba(255, 255, 255, 0.05);
+}
+
+[data-theme='claymorphism'] body {
+  background: radial-gradient(circle at top left, #e0f2fe, #f0f9ff 100%) fixed;
+}
+
+html[data-theme='claymorphism'].dark body,
+html[data-theme='claymorphism'] .dark body,
+.dark[data-theme='claymorphism'] body,
+[data-theme='claymorphism'].dark body,
+.dark [data-theme='claymorphism'] body {
+  background: radial-gradient(circle at top left, #0a192f, #0c1e2f 100%) fixed;
+}
+
+/* =======================
+   インラインハードシャドウ テーマ別上書き
+   ======================= */
+
+/* Glassmorphism: ハードシャドウをソフトなブラーシャドウに */
+[data-theme='claymorphism'] [class*='shadow-'] {
+  --tw-shadow: none;
+  --tw-shadow-colored: none;
+  box-shadow: 
+    10px 10px 20px rgba(3, 105, 161, 0.08),
+    inset -8px -8px 12px rgba(3, 105, 161, 0.04),
+    inset 8px 8px 12px rgba(255, 255, 255, 0.8) !important;
+}
+[data-theme='claymorphism'].dark [class*='shadow-'] {
+  box-shadow: 
+    10px 10px 20px rgba(0, 0, 0, 0.4),
+    inset -8px -8px 12px rgba(0, 0, 0, 0.3),
+    inset 8px 8px 12px rgba(255, 255, 255, 0.05) !important;
+}
+[data-theme='claymorphism'] .theme-card,
+[data-theme='claymorphism'] .theme-card-hover:hover,
+[data-theme='claymorphism'] .theme-btn,
+[data-theme='claymorphism'] .theme-btn:hover,
+[data-theme='claymorphism'] .theme-btn:active,
+[data-theme='claymorphism'].dark .theme-card,
+[data-theme='claymorphism'].dark .theme-card-hover:hover,
+[data-theme='claymorphism'].dark .theme-btn,
+[data-theme='claymorphism'].dark .theme-btn:hover,
+[data-theme='claymorphism'].dark .theme-btn:active {
+  box-shadow: revert-layer;
+}
+
+/* ヘッダー・ナビ・共通コンポーネントのボーダー調整 */
+/* Glassmorphism */
+[data-theme='claymorphism'] .site-header {
+  border: none !important;
+  box-shadow: 
+    0 10px 25px rgba(3, 105, 161, 0.05),
+    inset 0 -4px 6px rgba(3, 105, 161, 0.02) !important;
+}
+[data-theme='claymorphism'].dark .site-header {
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.3),
+    inset 0 -4px 6px rgba(0, 0, 0, 0.2) !important;
+}
+[data-theme='claymorphism'] .site-header nav a {
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: 
+    2px 2px 5px rgba(3, 105, 161, 0.05),
+    inset -2px -2px 3px rgba(3, 105, 161, 0.02),
+    inset 2px 2px 3px rgba(255, 255, 255, 0.7) !important;
+}
+[data-theme='claymorphism'].dark .site-header nav a {
+  box-shadow: 
+    2px 2px 5px rgba(0, 0, 0, 0.3),
+    inset -2px -2px 3px rgba(0, 0, 0, 0.2),
+    inset 2px 2px 3px rgba(255, 255, 255, 0.05) !important;
+}
+[data-theme='claymorphism'] .site-header nav a:hover {
+  background-color: var(--color-secondary) !important;
+}

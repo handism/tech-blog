@@ -8,6 +8,8 @@
     "start": "serve out",
     "lint": "eslint",
     "test:unit": "vitest run",
+    "test:vrt": "playwright test",
+    "test:vrt:update": "playwright test --update-snapshots",
     "analyze": "ANALYZE=true next build",
     "type-check": "tsc --noEmit",
     "prepare": "simple-git-hooks"
@@ -42,6 +44,7 @@
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^16.1.6",
+    "@playwright/test": "^1.61.1",
     "@tailwindcss/postcss": "^4.1.18",
     "@tailwindcss/typography": "^0.5.19",
     "@types/js-yaml": "^4.0.9",

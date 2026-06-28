@@ -13,7 +13,12 @@ function getTokenizer(): Promise<Tokenizer<IpadicFeatures>> {
     tokenizerPromise = import('kuromoji').then(
       (kuromoji) =>
         new Promise<Tokenizer<IpadicFeatures>>((resolve, reject) => {
-          kuromoji.builder({ dicPath: '/kuromoji/dict' }).build((err, tokenizer) => {
+          const isServer = typeof window === 'undefined';
+          const dicPath = isServer
+            ? (process.cwd() + '/public/kuromoji/dict').replace(/\\/g, '/')
+            : '/kuromoji/dict';
+
+          kuromoji.builder({ dicPath }).build((err, tokenizer) => {
             if (err) {
               tokenizerPromise = null;
               reject(err);
@@ -48,8 +53,20 @@ function tokenizeFallback(text: string): string {
  * 形態素解析エンジン（kuromoji）がロード済みの場合は内容語を抽出し、基本形に正規化する。
  * まだロードが完了していない、または失敗した場合は、軽量な簡易分かち書きフォールバックで即時応答する。
  */
-export async function tokenizeForSearch(text: string): Promise<string> {
+export async function tokenizeForSearch(text: string, waitLoad = false): Promise<string> {
   if (!text.trim()) return text;
+
+  const isServer = typeof window === 'undefined';
+  const shouldWait = waitLoad || isServer;
+
+  if (shouldWait && !activeTokenizer) {
+    try {
+      await getTokenizer();
+    } catch (e) {
+      console.warn('Failed to load kuromoji tokenizer, using fallback:', e);
+      return tokenizeFallback(text);
+    }
+  }
 
   // すでにロード済みの場合はそれを使用
   if (activeTokenizer) {
