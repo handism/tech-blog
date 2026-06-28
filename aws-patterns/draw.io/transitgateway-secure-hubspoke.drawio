@@ -26,23 +26,23 @@
         </mxCell>
         
         <!-- IGW inside Hub VPC -->
-        <mxCell id="igw" value="Internet Gateway" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#8C4FFF;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.internet_gateway;" vertex="1" parent="hub-vpc">
-          <mxGeometry x="110" y="60" width="80" height="80" as="geometry"/>
+        <mxCell id="igw" value="Internet Gateway" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.internet_gateway;" vertex="1" parent="hub-vpc">
+          <mxGeometry x="120" y="70" width="60" height="60" as="geometry"/>
         </mxCell>
         
         <!-- Network Firewall inside Hub VPC -->
-        <mxCell id="firewall" value="AWS Network&#xa;Firewall" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#DD344C;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.waf;" vertex="1" parent="hub-vpc">
-          <mxGeometry x="110" y="200" width="80" height="80" as="geometry"/>
+        <mxCell id="firewall" value="AWS Network&#xa;Firewall" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#DD344C;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.waf;" vertex="1" parent="hub-vpc">
+          <mxGeometry x="120" y="210" width="60" height="60" as="geometry"/>
         </mxCell>
         
         <!-- TGW Attachment inside Hub VPC -->
-        <mxCell id="hub-tgw-att" value="TGW Attachment" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#8C4FFF;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.privatelink;" vertex="1" parent="hub-vpc">
-          <mxGeometry x="110" y="340" width="80" height="80" as="geometry"/>
+        <mxCell id="hub-tgw-att" value="TGW Attachment" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.privatelink;" vertex="1" parent="hub-vpc">
+          <mxGeometry x="120" y="350" width="60" height="60" as="geometry"/>
         </mxCell>
         
         <!-- Transit Gateway -->
-        <mxCell id="tgw" value="Transit Gateway" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#8C4FFF;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.transit_gateway;" vertex="1" parent="region">
-          <mxGeometry x="460" y="260" width="80" height="80" as="geometry"/>
+        <mxCell id="tgw" value="Transit Gateway" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.transit_gateway;" vertex="1" parent="region">
+          <mxGeometry x="470" y="270" width="60" height="60" as="geometry"/>
         </mxCell>
         
         <!-- Spoke VPC 1 (App VPC) -->
@@ -51,13 +51,13 @@
         </mxCell>
         
         <!-- TGW Attachment inside Spoke VPC 1 -->
-        <mxCell id="spoke1-tgw-att" value="TGW Attachment" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#8C4FFF;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.privatelink;" vertex="1" parent="spoke-vpc1">
-          <mxGeometry x="30" y="70" width="80" height="80" as="geometry"/>
+        <mxCell id="spoke1-tgw-att" value="TGW Attachment" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.privatelink;" vertex="1" parent="spoke-vpc1">
+          <mxGeometry x="40" y="80" width="60" height="60" as="geometry"/>
         </mxCell>
         
         <!-- App Instances inside Spoke VPC 1 -->
-        <mxCell id="spoke1-app" value="EC2 Instances&#xa;(App Tier)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.ec2_instance;" vertex="1" parent="spoke-vpc1">
-          <mxGeometry x="170" y="70" width="80" height="80" as="geometry"/>
+        <mxCell id="spoke1-app" value="EC2 Instances&#xa;(App Tier)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.ec2_instance;" vertex="1" parent="spoke-vpc1">
+          <mxGeometry x="180" y="80" width="60" height="60" as="geometry"/>
         </mxCell>
         
         <!-- Spoke VPC 2 (Database) -->
@@ -66,13 +66,13 @@
         </mxCell>
         
         <!-- TGW Attachment inside Spoke VPC 2 -->
-        <mxCell id="spoke2-tgw-att" value="TGW Attachment" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#8C4FFF;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.privatelink;" vertex="1" parent="spoke-vpc2">
-          <mxGeometry x="30" y="70" width="80" height="80" as="geometry"/>
+        <mxCell id="spoke2-tgw-att" value="TGW Attachment" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.privatelink;" vertex="1" parent="spoke-vpc2">
+          <mxGeometry x="40" y="80" width="60" height="60" as="geometry"/>
         </mxCell>
         
         <!-- RDS Database inside Spoke VPC 2 -->
-        <mxCell id="spoke2-db" value="Aurora RDS&#xa;(Database Tier)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#C925D1;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.rds;" vertex="1" parent="spoke-vpc2">
-          <mxGeometry x="170" y="70" width="80" height="80" as="geometry"/>
+        <mxCell id="spoke2-db" value="Aurora RDS&#xa;(Database Tier)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#C925D1;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.rds;" vertex="1" parent="spoke-vpc2">
+          <mxGeometry x="180" y="80" width="60" height="60" as="geometry"/>
         </mxCell>
         
         <!-- Connections -->
@@ -81,7 +81,7 @@
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="100" y="240"/>
-              <mxPoint x="100" y="240"/>
+              <mxPoint x="100" y="160"/>
             </Array>
           </mxGeometry>
         </mxCell>

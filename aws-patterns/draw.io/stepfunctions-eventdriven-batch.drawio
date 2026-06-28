@@ -21,43 +21,43 @@
         </mxCell>
         
         <!-- S3 Bucket -->
-        <mxCell id="s3" value="S3 Bucket&#xa;(Upload Documents)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#7AA116;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.s3_bucket;" vertex="1" parent="region">
-          <mxGeometry x="120" y="80" width="80" height="80" as="geometry"/>
+        <mxCell id="s3" value="S3 Bucket&#xa;(Upload Documents)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#7AA116;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.s3_bucket;" vertex="1" parent="region">
+          <mxGeometry x="120" y="90" width="60" height="62" as="geometry"/>
         </mxCell>
         
         <!-- EventBridge -->
-        <mxCell id="eventbridge" value="EventBridge&#xa;(S3 Event Rule)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#E7157B;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.eventbridge;" vertex="1" parent="region">
-          <mxGeometry x="120" y="280" width="80" height="80" as="geometry"/>
+        <mxCell id="eventbridge" value="EventBridge&#xa;(S3 Event Rule)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#E7157B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.eventbridge;" vertex="1" parent="region">
+          <mxGeometry x="120" y="290" width="60" height="60" as="geometry"/>
         </mxCell>
         
         <!-- S3 Trigger Lambda -->
-        <mxCell id="lambda-trigger" value="Lambda&#xa;(S3 Event Handler)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda_function;" vertex="1" parent="region">
-          <mxGeometry x="360" y="280" width="80" height="80" as="geometry"/>
+        <mxCell id="lambda-trigger" value="Lambda&#xa;(S3 Event Handler)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.lambda_function;" vertex="1" parent="region">
+          <mxGeometry x="360" y="290" width="60" height="60" as="geometry"/>
         </mxCell>
         
         <!-- Step Functions State Machine -->
-        <mxCell id="step-functions" value="Step Functions&#xa;(Batch Orchestrator)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#E7157B;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.step_functions;" vertex="1" parent="region">
-          <mxGeometry x="600" y="280" width="80" height="80" as="geometry"/>
+        <mxCell id="step-functions" value="Step Functions&#xa;(Batch Orchestrator)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#E7157B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.step_functions;" vertex="1" parent="region">
+          <mxGeometry x="600" y="290" width="60" height="60" as="geometry"/>
         </mxCell>
         
         <!-- Task Processor Lambda -->
-        <mxCell id="lambda-processor" value="Lambda&#xa;(File Processor)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#ED7100;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.lambda_function;" vertex="1" parent="region">
-          <mxGeometry x="840" y="280" width="80" height="80" as="geometry"/>
+        <mxCell id="lambda-processor" value="Lambda&#xa;(File Processor)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.lambda_function;" vertex="1" parent="region">
+          <mxGeometry x="840" y="290" width="60" height="60" as="geometry"/>
         </mxCell>
         
         <!-- Job Status Table (DynamoDB) -->
-        <mxCell id="dynamodb" value="DynamoDB&#xa;(Job Status Table)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#C925D1;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.dynamodb;" vertex="1" parent="region">
-          <mxGeometry x="600" y="80" width="80" height="80" as="geometry"/>
+        <mxCell id="dynamodb" value="DynamoDB&#xa;(Job Status Table)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#C925D1;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.dynamodb;" vertex="1" parent="region">
+          <mxGeometry x="600" y="90" width="60" height="60" as="geometry"/>
         </mxCell>
         
         <!-- Dead Letter Queue (SQS) -->
-        <mxCell id="sqs-dlq" value="SQS Queue&#xa;(Job DLQ)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#E7157B;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.sqs;" vertex="1" parent="region">
-          <mxGeometry x="600" y="480" width="80" height="80" as="geometry"/>
+        <mxCell id="sqs-dlq" value="SQS Queue&#xa;(Job DLQ)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#E7157B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.sqs;" vertex="1" parent="region">
+          <mxGeometry x="600" y="490" width="60" height="60" as="geometry"/>
         </mxCell>
         
         <!-- CloudWatch Logs -->
-        <mxCell id="cloudwatch" value="CloudWatch&#xa;Logs" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#759C3E;strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.cloudwatch_2;" vertex="1" parent="region">
-          <mxGeometry x="840" y="480" width="80" height="80" as="geometry"/>
+        <mxCell id="cloudwatch" value="CloudWatch&#xa;Logs" style="sketch=0;outlineConnect=0;fontColor=#232F3E;fillColor=#759C3E;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;shape=mxgraph.aws4.cloudwatch_2;" vertex="1" parent="region">
+          <mxGeometry x="840" y="490" width="60" height="60" as="geometry"/>
         </mxCell>
         
         <!-- Connections -->
@@ -95,7 +95,7 @@
         <mxCell id="conn7" value="Read File" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;fontColor=#545B64;" edge="1" parent="region" source="lambda-processor" target="s3">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="880" y="200"/>
+              <mxPoint x="870" y="200"/>
               <mxPoint x="230" y="200"/>
               <mxPoint x="230" y="120"/>
             </Array>
