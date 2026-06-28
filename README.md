@@ -2,7 +2,7 @@
 
 ## このブログについて
 
-- **36種類の多彩なデザインテーマ**: デフォルトの幻想的な **Holographic（ホログラフィック）** に加え、Glassmorphism, Minimal, Retro, Cyberpunk, Neumorphism, Japanese, Editorial, Synthwave, Terminal, Nordic, Claymorphism, Bento, Hekireki, Chalkboard, Neo-Brutalism（ネオ・ブルータリズム）, Bauhaus, Glitch Art, Blueprint, Steampunk といった幅広いスタイル（全36種）にリアルタイムで切り替え可能
+- **36種類の多彩なデザインテーマ**: デフォルトの落ち着いた信頼感のある **Paper / Editorial（エディトリアル）** に加え、Glassmorphism, Minimal, Retro, Cyberpunk, Neumorphism, Japanese, Holographic（ホログラフィック）, Synthwave, Terminal, Nordic, Claymorphism, Bento, Hekireki, Chalkboard, Neo-Brutalism（ネオ・ブルータリズム）, Bauhaus, Glitch Art, Blueprint, Steampunk といった幅広いスタイル（全36種）にリアルタイムで切り替え可能
 - **豊富なスキンカラー**: Emerald、Ocean、Sunset、Purple、Rose のアクセントカラーとダークモードを組み合わせ、自分好みの外観にカスタマイズできます
 - 見出しフォントに **Lexend** および **Space Grotesk** を採用した、テックブログらしい力強いタイポグラフィ
 - 触っていて気持ちいい **ダイナミックなアクション**: テーマごとの世界観に合わせて、ホバーやクリック時のインタラクションが最適化されています
