@@ -1,13 +1,13 @@
 ---
-title: Claude Code、Copilot Proを経てGemini（Antigravity）へ至る、個人開発のAIアシスタント変遷記
+title: Claude Code、Copilot Proを経てGoogle AI Pro（Antigravity）へ至る、個人開発のAIアシスタント変遷記
 date: 2026-06-28
-tags: [AI, Claude Code, GitHub Copilot, Gemini, Antigravity]
+tags: [AI, Claude Code, GitHub Copilot, Google AI Pro, Antigravity]
 category: AI
 image: ai-coding-assistant-journey.png
 ---
 
 個人開発におけるAIコーディングアシスタントの進化スピードは凄まじく、開発スタイルもそれに合わせて激変し続けています。  
-本記事では、私がこれまでに渡り歩いてきた **Claude Code** から **GitHub Copilot Pro**、そして現在愛用している **Gemini（Antigravity）** に至るまでの課金と活用の変遷、さらに各ツールの具体的な設定や活用方法のノウハウを1つのストーリーとしてまとめました。
+本記事では、私がこれまでに渡り歩いてきた **Claude Code** から **GitHub Copilot Pro**、そして現在愛用している **Google AI Pro（Antigravity）** に至るまでの課金と活用の変遷、さらに各ツールの具体的な設定や活用方法のノウハウを1つのストーリーとしてまとめました。
 
 ---
 
@@ -102,12 +102,12 @@ CLI上でのモデル切り替えは以下のコマンドで行います。
 
 ---
 
-## 3. 現在地：Gemini課金と「Antigravity」による新境地
+## 3. 現在地：Google AI Pro課金と「Antigravity」による新境地
 
-そして現在、私は **Gemini Advanced（Gemini API）** に課金し、Google DeepMindチームの開発した強力なAIコーディングアシスタント **Antigravity** を愛用した個人開発にたどり着いています。
+そして現在、私は **Google AI Pro** に課金し、Google DeepMindチームの開発した強力なAIコーディングアシスタント **Antigravity** を愛用した個人開発にたどり着いています。
 
-### なぜGeminiなのか？
-Geminiを選択した最大の理由は、**圧倒的なコンテキストウィンドウの広さ** と **高い推論能力** です。  
+### なぜGoogle AI Proなのか？
+Google AI Pro（Gemini）を選択した最大の理由は、**圧倒的なコンテキストウィンドウの広さ** と **高い推論能力** です。  
 大規模なコードベースや詳細なドキュメント、実行ログを丸ごとコンテキストに放り込んでも破綻せず、正確に全体像を把握した上で対話ができる点は、これまでのどのツールよりも個人開発を快適にしてくれました。
 
 ### パートナーとしての「Antigravity」の魅力
@@ -134,6 +134,6 @@ Antigravityは、ただのコード書き出しツールではなく、真のペ
 
 * **Claude Code**: 自律開発の楽しさと可能性を教えてくれた先駆者（ただしコストと制限の工夫が必要）。
 * **GitHub Copilot Pro**: 圧倒的な手軽さと安心の無制限モデルで開発を支えるインフラ。
-* **Gemini & Antigravity**: 巨大なコンテキストを背景に、強固なプランニングとタスク管理で「壊さない開発」を実現する現在の最強パートナー。
+* **Google AI Pro & Antigravity**: 巨大なコンテキストを背景に、強固なプランニングとタスク管理で「壊さない開発」を実現する現在の最強パートナー。
 
 AIコーディングツールはそれぞれ一長一短があります。しかし、その時々の最先端の頭脳とシステムを自分の開発スタイルに合わせて最適化していくプロセスそのものが、現代の個人開発の醍醐味であると感じています。
