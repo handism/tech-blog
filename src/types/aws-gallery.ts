@@ -25,4 +25,5 @@ export type AwsPatternMeta = z.infer<typeof AwsPatternMetaSchema>;
 export type AwsPattern = AwsPatternMeta & {
   yamlCode: string;
   htmlCode: string; // ShikiでシンタックスハイライトされたHTML
+  resources: { type: string; count: number }[];
 };

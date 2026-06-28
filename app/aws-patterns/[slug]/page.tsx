@@ -31,11 +31,32 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {};
   }
 
+  const ogImageUrl = `${siteConfig.url}/og/aws/${slug}/image.png`;
+
   return {
     title: `${pattern.title} | AWSアーキテクチャ | ${siteConfig.name}`,
     description: pattern.description,
     alternates: {
       canonical: `/aws-patterns/${slug}`,
+    },
+    openGraph: {
+      title: `${pattern.title} | AWSアーキテクチャ | ${siteConfig.name}`,
+      description: pattern.description,
+      url: `${siteConfig.url}/aws-patterns/${slug}`,
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: pattern.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${pattern.title} | AWSアーキテクチャ | ${siteConfig.name}`,
+      description: pattern.description,
+      images: [ogImageUrl],
     },
   };
 }

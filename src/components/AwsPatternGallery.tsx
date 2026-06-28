@@ -5,6 +5,7 @@ import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { Search, Filter, Cpu, Tag, ArrowRight, FileCode } from 'lucide-react';
 import type { AwsPatternMeta } from '@/src/types/aws-gallery';
+import { getServiceBadgeStyle } from '@/src/lib/aws-gallery-helpers';
 
 type Props = {
   patterns: AwsPatternMeta[];
@@ -197,13 +198,13 @@ export default function AwsPatternGallery({ patterns }: Props) {
                   {pattern.awsServices.slice(0, 4).map((srv) => (
                     <span
                       key={srv}
-                      className="text-[11px] font-bold px-2 py-0.5 bg-secondary text-text/80 rounded"
+                      className={`text-[11px] font-bold px-2 py-0.5 border rounded-md transition-colors ${getServiceBadgeStyle(srv)}`}
                     >
                       {srv}
                     </span>
                   ))}
                   {pattern.awsServices.length > 4 && (
-                    <span className="text-[10px] font-bold px-1.5 py-0.5 bg-secondary text-text/50 rounded">
+                    <span className="text-[10px] font-bold px-1.5 py-0.5 bg-secondary text-text/50 rounded border border-border/10">
                       +{pattern.awsServices.length - 4}
                     </span>
                   )}

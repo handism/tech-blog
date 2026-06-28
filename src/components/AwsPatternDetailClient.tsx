@@ -2,10 +2,22 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Copy, Check, Download, ArrowLeft, Terminal, ZoomIn, X, Cpu } from 'lucide-react';
+import {
+  Copy,
+  Check,
+  Download,
+  ArrowLeft,
+  Terminal,
+  ZoomIn,
+  X,
+  Cpu,
+  Maximize2,
+  Minimize2,
+} from 'lucide-react';
 import Link from 'next/link';
 import type { AwsPattern } from '@/src/types/aws-gallery';
 import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import { getServiceBadgeStyle } from '@/src/lib/aws-gallery-helpers';
 
 type Props = {
   pattern: AwsPattern;
@@ -15,15 +27,16 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
   const { copied: copiedCode, copy: copyCode } = useCopyToClipboard();
   const { copied: copiedCmd, copy: copyCmd } = useCopyToClipboard();
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [isCodeMaximized, setIsCodeMaximized] = useState(false);
 
-  const deployCmd = `aws cloudformation create-stack \\
+  const deployCmd = `aws cloudformation deploy \\
+  --template-file ${pattern.templateFile} \\
   --stack-name ${pattern.slug}-stack \\
-  --template-body file://${pattern.templateFile} \\
-  --capabilities CAPABILITY_IAM`;
+  --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM`;
 
-  // ライトボックスが開いているときにスクロールをロックする
+  // ライトボックスやコード最大化が開いているときにスクロールをロックする
   useEffect(() => {
-    if (isLightboxOpen) {
+    if (isLightboxOpen || isCodeMaximized) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
@@ -31,13 +44,14 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
     return () => {
       document.body.style.overflow = 'unset';
     };
-  }, [isLightboxOpen]);
+  }, [isLightboxOpen, isCodeMaximized]);
 
-  // Escキーでライトボックスを閉じる
+  // Escキーでライトボックスやコード最大化を閉じる
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setIsLightboxOpen(false);
+        setIsCodeMaximized(false);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -82,13 +96,42 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
                 {pattern.awsServices.map((srv) => (
                   <span
                     key={srv}
-                    className="text-xs font-bold px-2.5 py-1 bg-secondary text-text/80 rounded-lg border border-border/5"
+                    className={`text-xs font-bold px-2.5 py-1 border rounded-lg transition-colors ${getServiceBadgeStyle(srv)}`}
                   >
                     {srv}
                   </span>
                 ))}
               </div>
             </div>
+
+            {/* 構築されるリソース一覧 */}
+            {pattern.resources && pattern.resources.length > 0 && (
+              <div className="pt-4 border-t border-border/10">
+                <h2 className="text-xs font-black text-text/50 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+                  <span className="flex h-2 w-2 rounded-full bg-accent" />
+                  構築される主要リソース ({pattern.resources.length}種):
+                </h2>
+                <div className="grid gap-2 sm:grid-cols-2 max-h-[160px] overflow-y-auto pr-1 scrollbar-thin">
+                  {pattern.resources.map((res) => {
+                    const displayName = res.type.replace('AWS::', '').replace(/::/g, ' ');
+                    return (
+                      <div
+                        key={res.type}
+                        className="flex items-center justify-between text-xs p-2 bg-secondary border border-border/10 rounded-lg hover:border-border/30 transition-colors"
+                        title={res.type}
+                      >
+                        <span className="font-bold text-text truncate max-w-[130px] sm:max-w-none">
+                          {displayName}
+                        </span>
+                        <span className="px-2 py-0.5 bg-accent/10 text-accent font-black border border-accent/20 rounded-md">
+                          {res.count}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* アーキテクチャ図カード */}
@@ -189,6 +232,15 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
                   <Download className="h-3.5 w-3.5" />
                   <span>DL</span>
                 </a>
+
+                {/* 最大化ボタン */}
+                <button
+                  onClick={() => setIsCodeMaximized(true)}
+                  className="p-1.5 border-2 border-border rounded-lg bg-card text-text hover:bg-secondary transition-all shadow-[2px_2px_0px_0px_var(--border)] flex items-center justify-center shrink-0"
+                  title="全画面表示"
+                >
+                  <Maximize2 className="h-4 w-4" />
+                </button>
               </div>
             </div>
 
@@ -222,6 +274,59 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
               alt={`${pattern.title} アーキテクチャ図（拡大）`}
               className="max-w-[95vw] max-h-[90vh] object-contain select-none bg-white dark:bg-neutral-900 p-6 rounded-2xl border border-white/10 shadow-2xl"
               onClick={(e) => e.stopPropagation()} // 画像クリックでは閉じない
+            />
+          </div>
+        </div>
+      )}
+
+      {/* コード全画面表示モーダル */}
+      {isCodeMaximized && (
+        <div className="fixed inset-0 z-100 bg-[#0d1117] flex flex-col p-4 md:p-8 animate-fade-in">
+          {/* ヘッダー部分 */}
+          <div className="flex items-center justify-between pb-4 border-b border-neutral-800 shrink-0">
+            <div className="flex items-center gap-2">
+              <span className="flex h-3 w-3 rounded-full bg-red-500" />
+              <span className="flex h-3 w-3 rounded-full bg-yellow-500" />
+              <span className="flex h-3 w-3 rounded-full bg-green-500" />
+              <span className="text-sm font-black text-neutral-300 ml-2 font-mono">
+                {pattern.templateFile}
+              </span>
+            </div>
+            <div className="flex items-center gap-3">
+              {/* コピーボタン */}
+              <button
+                onClick={() => copyCode(pattern.yamlCode)}
+                className="px-3.5 py-1.5 text-xs font-black border border-neutral-700 rounded-lg bg-neutral-800 text-neutral-200 hover:bg-neutral-700 transition-colors flex items-center gap-1.5"
+              >
+                {copiedCode ? (
+                  <>
+                    <Check className="h-3.5 w-3.5 text-accent" />
+                    <span>コピー完了</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="h-3.5 w-3.5" />
+                    <span>コピー</span>
+                  </>
+                )}
+              </button>
+
+              {/* 閉じるボタン */}
+              <button
+                onClick={() => setIsCodeMaximized(false)}
+                className="p-1.5 bg-neutral-800 text-neutral-300 hover:text-white rounded-lg transition-colors border border-neutral-700"
+                title="閉じる"
+              >
+                <Minimize2 className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+
+          {/* コードブロック */}
+          <div className="flex-1 overflow-auto p-4 font-mono text-sm leading-relaxed text-[#c9d1d9] scrollbar-thin">
+            <div
+              className="aws-code-preview prose prose-invert max-w-none"
+              dangerouslySetInnerHTML={{ __html: pattern.htmlCode }}
             />
           </div>
         </div>
