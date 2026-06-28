@@ -19,20 +19,28 @@ const ThemeDesignContext = createContext<ThemeDesignContextValue>({
  * LocalStorage に保存し、html[data-theme] に反映する。
  */
 export function ThemeDesignProvider({ children }: { children: React.ReactNode }) {
-  const [currentTheme, setCurrentTheme] = useState<ThemeId>(DEFAULT_THEME);
+  const [currentTheme, setCurrentTheme] = useState<ThemeId>(() => {
+    if (typeof window !== 'undefined') {
+      const themeAttr = document.documentElement.getAttribute('data-theme') as ThemeId | null;
+      if (themeAttr && themeConfig.some((t) => t.id === themeAttr)) {
+        return themeAttr;
+      }
+      try {
+        const saved = localStorage.getItem(THEME_STORAGE_KEY) as ThemeId | null;
+        if (saved && themeConfig.some((t) => t.id === saved)) {
+          return saved;
+        }
+      } catch {
+        // ignore
+      }
+    }
+    return DEFAULT_THEME;
+  });
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setMounted(true);
-      try {
-        const saved = localStorage.getItem(THEME_STORAGE_KEY) as ThemeId | null;
-        if (saved && themeConfig.some((t) => t.id === saved)) {
-          setCurrentTheme(saved);
-        }
-      } catch {
-        // ignore
-      }
     }, 0);
     return () => clearTimeout(timer);
   }, []);

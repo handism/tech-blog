@@ -125,44 +125,48 @@ function rehypeImageSize() {
 }
 
 /**
- * Markdownレンダリング用プロセッサ（モジュールレベルでシングルトン化）。
+ * Markdownレンダリング用プロセッサを作成する。
+ * 各実行ごとに独立したプロセッサインスタンスを生成し、並行処理時の競合を防ぐ。
  * TOC は VFile の data フィールド経由で受け渡す。
  */
-const processor = unified()
-  .use(remarkParse)
-  .use(remarkGfm)
-  .use(remarkExtractCodeFilename)
-  .use(remarkMermaid)
-  .use(remarkRehype, { allowDangerousHtml: true })
-  .use(rehypeImageSize)
-  .use(rehypeShiki, {
-    theme: 'github-dark',
-    transformers: [
-      {
-        name: 'add-language-title',
-        pre(node) {
-          const lang = this.options.lang;
-          if (lang) node.properties['data-language'] = lang;
-          const rawMeta = (this.options as ShikiOptions).meta?.__raw ?? '';
-          const filenameMatch = rawMeta.match(/filename="([^"]+)"/);
-          if (filenameMatch) {
-            node.properties['data-filename'] = filenameMatch[1];
-          }
+function createProcessor() {
+  return unified()
+    .use(remarkParse)
+    .use(remarkGfm)
+    .use(remarkExtractCodeFilename)
+    .use(remarkMermaid)
+    .use(remarkRehype, { allowDangerousHtml: true })
+    .use(rehypeImageSize)
+    .use(rehypeShiki, {
+      theme: 'github-dark',
+      transformers: [
+        {
+          name: 'add-language-title',
+          pre(node) {
+            const lang = this.options.lang;
+            if (lang) node.properties['data-language'] = lang;
+            const rawMeta = (this.options as ShikiOptions).meta?.__raw ?? '';
+            const filenameMatch = rawMeta.match(/filename="([^"]+)"/);
+            if (filenameMatch) {
+              node.properties['data-filename'] = filenameMatch[1];
+            }
+          },
         },
-      },
-    ],
-  })
-  .use(rehypeSlug)
-  .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
-  .use(() => (tree, file) => {
-    (file.data as { toc?: TocItem[] }).toc = generateTocFromHast(tree);
-  })
-  .use(rehypeStringify, { allowDangerousHtml: true });
+      ],
+    })
+    .use(rehypeSlug)
+    .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
+    .use(() => (tree, file) => {
+      (file.data as { toc?: TocItem[] }).toc = generateTocFromHast(tree);
+    })
+    .use(rehypeStringify, { allowDangerousHtml: true });
+}
 
 /**
  * Markdown本文をHTMLとTOCへ変換する。
  */
 export async function renderPostMarkdown(content: string): Promise<RenderedPost> {
+  const processor = createProcessor();
   const result = await processor.process(content);
   const toc = (result.data as { toc?: TocItem[] }).toc ?? [];
 

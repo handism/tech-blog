@@ -62,6 +62,34 @@ export default function SearchBox() {
     }
   };
 
+  useEffect(() => {
+    const idleCallback =
+      typeof window !== 'undefined' && 'requestIdleCallback' in window
+        ? window.requestIdleCallback
+        : (cb: () => void) => window.setTimeout(cb, 1000);
+
+    let cancelled = false;
+    idleCallback(() => {
+      if (cancelled) return;
+      preloadTokenizer();
+      if (posts.length > 0 || isLoading) return;
+
+      fetch('/search.json')
+        .then((res) => res.json())
+        .then((data) => {
+          if (!cancelled) setPosts(data);
+        })
+        .catch((e) => {
+          console.error('Failed to pre-fetch search index:', e);
+        });
+    });
+
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const searcher = useMemo(() => createPostSearcher(posts), [posts]);
   const results = useMemo(
     () => searchPostsWithMatches(searcher, tokenizedQuery),
