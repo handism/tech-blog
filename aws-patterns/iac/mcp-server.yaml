@@ -116,7 +116,7 @@ Resources:
     Type: AWS::Lambda::Function
     Properties:
       FunctionName: !Sub 'mcp-processor-${Environment}'
-      Runtime: python3.12
+      Runtime: python3.13
       Handler: index.lambda_handler
       Role: !GetAtt MCPLambdaRole.Arn
       Architectures:
@@ -133,7 +133,7 @@ Resources:
           import json
           import os
           import boto3
-          from datetime import datetime, timedelta
+          from datetime import datetime, timedelta, timezone
           
           dynamodb = boto3.resource('dynamodb')
           s3 = boto3.client('s3')
@@ -159,13 +159,13 @@ Resources:
               import uuid
               session_id = str(uuid.uuid4())
               user_id = body.get('userId', 'anonymous')
-              ttl = int((datetime.now() + timedelta(hours=24)).timestamp())
+              ttl = int((datetime.now(timezone.utc) + timedelta(hours=24)).timestamp())
               
               table.put_item(Item={
                   'sessionId': session_id,
                   'userId': user_id,
                   'context': {},
-                  'createdAt': datetime.now().isoformat(),
+                  'createdAt': datetime.now(timezone.utc).isoformat(),
                   'ttl': ttl
               })
               
@@ -185,7 +185,7 @@ Resources:
                   UpdateExpression='SET context = :ctx, updatedAt = :updated',
                   ExpressionAttributeValues={
                       ':ctx': context,
-                      ':updated': datetime.now().isoformat()
+                      ':updated': datetime.now(timezone.utc).isoformat()
                   }
               )
               

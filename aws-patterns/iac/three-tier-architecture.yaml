@@ -411,6 +411,20 @@ Resources:
           Value: ThreeTierASG
           PropagateAtLaunch: true
 
+  # Secrets Manager for DB Password
+  DBPasswordSecret:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      Description: RDS database master password
+      GenerateSecretString:
+        SecretStringTemplate: '{"username": "admin"}'
+        GenerateStringKey: password
+        PasswordLength: 16
+        ExcludeCharacters: '"@/\'
+      Tags:
+        - Key: Name
+          Value: !Sub '${AWS::StackName}-db-password'
+
   # RDS Subnet Group
   DBSubnetGroup:
     Type: AWS::RDS::DBSubnetGroup
@@ -436,7 +450,7 @@ Resources:
       StorageType: gp3
       StorageEncrypted: true
       MasterUsername: !Ref DBUsername
-      MasterUserPassword: '{{resolve:secretsmanager:ThreeTierDBPassword:SecretString:password}}'
+      MasterUserPassword: !Sub '{{resolve:secretsmanager:${DBPasswordSecret}:SecretString:password}}'
       DBSubnetGroupName: !Ref DBSubnetGroup
       VPCSecurityGroups:
         - !Ref RDSSecurityGroup

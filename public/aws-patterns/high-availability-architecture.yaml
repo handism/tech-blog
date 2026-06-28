@@ -702,10 +702,8 @@ Resources:
           ViewerProtocolPolicy: redirect-to-https
           AllowedMethods: [GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE]
           CachedMethods: [GET, HEAD, OPTIONS]
-          ForwardedValues:
-            QueryString: true
-            Cookies:
-              Forward: all
+          CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad # CachingDisabled
+          OriginRequestPolicyId: 216adef6-5c7f-47e4-b989-5492eafa07d3 # AllViewer
           Compress: true
         CacheBehaviors:
           - PathPattern: /static/*
@@ -713,14 +711,8 @@ Resources:
             ViewerProtocolPolicy: redirect-to-https
             AllowedMethods: [GET, HEAD, OPTIONS]
             CachedMethods: [GET, HEAD, OPTIONS]
-            ForwardedValues:
-              QueryString: false
-              Cookies:
-                Forward: none
+            CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6 # CachingOptimized
             Compress: true
-            DefaultTTL: 86400
-            MaxTTL: 31536000
-            MinTTL: 0
         PriceClass: PriceClass_All
         ViewerCertificate:
           CloudFrontDefaultCertificate: true

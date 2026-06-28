@@ -309,7 +309,7 @@ Resources:
       ImageScanningConfiguration:
         ScanOnPush: true
       EncryptionConfiguration:
-        EncryptionType: AES256
+        EncryptionType: KMS
       LifecyclePolicy:
         LifecyclePolicyText: |
           {
@@ -347,8 +347,18 @@ Resources:
             Principal:
               Service: ecs-tasks.amazonaws.com
             Action: sts:AssumeRole
-      ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/CloudWatchLogsFullAccess
+      Policies:
+        - PolicyName: ECSExecPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ssmmessages:CreateControlChannel
+                  - ssmmessages:CreateDataChannel
+                  - ssmmessages:OpenControlChannel
+                  - ssmmessages:OpenDataChannel
+                Resource: '*'
 
   # ECS Task Definition
   TaskDefinition:

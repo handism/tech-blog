@@ -19,7 +19,7 @@
   },
   {
     "slug": "ha-pattern",
-    "title": "高可用性 Web アプリケーションパターン",
+    "title": "標準3層 Web アプリケーション構成（EC2 & RDS）",
     "description": "マルチAZにまたがるVPC、ALB、EC2、Auto Scalingを使用した、耐障害性に優れた伝統的な高可用性インフラストラクチャです。",
     "category": "High Availability",
     "templateFile": "ha-pattern.yaml",
@@ -91,7 +91,7 @@
   },
   {
     "slug": "high-availability-architecture",
-    "title": "高可用マルチAZデータベース＆Web構成",
+    "title": "高可用エンタープライズ構成（Aurora, Redis & CDN）",
     "description": "マルチAZ配置 of RDS、Auto Scaling EC2、VPC構成により、シングルポイント障害を排除した安全な高可用インフラテンプレートです。",
     "category": "High Availability",
     "templateFile": "high-availability-architecture.yaml",
@@ -100,12 +100,12 @@
   },
   {
     "slug": "mcp-server",
-    "title": "MCP サーバー on AWS (ECS/App Runner)",
-    "description": "Model Context Protocol (MCP) サーバーを AWS 上（ECS Fargate または AWS App Runner）にデプロイし、LLMエージェントとプライベートリソースを安全に連携させます。",
+    "title": "MCP サーバー on AWS (Serverless)",
+    "description": "Model Context Protocol (MCP) サーバーを AWS 上（API Gateway と AWS Lambda）にサーバーレスでデプロイし、LLMエージェントとプライベートリソースを安全に連携させます。",
     "category": "AI & Integration",
     "templateFile": "mcp-server.yaml",
     "diagramFile": "mcp-server.drawio.svg",
-    "awsServices": ["ECS", "Fargate", "App Runner", "VPC", "IAM"]
+    "awsServices": ["API Gateway", "Lambda", "DynamoDB", "S3", "IAM"]
   },
   {
     "slug": "account-factory",

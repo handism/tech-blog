@@ -94,7 +94,7 @@ Resources:
   ApiFunction:
     Type: AWS::Lambda::Function
     Properties:
-      Runtime: python3.12
+      Runtime: python3.13
       Handler: index.handler
       Role: !GetAtt LambdaExecutionRole.Arn
       Architectures:

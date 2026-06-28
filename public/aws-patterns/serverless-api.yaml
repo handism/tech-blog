@@ -34,7 +34,7 @@ Resources:
           import json
           import os
           import boto3
-          from datetime import datetime
+          from datetime import datetime, timezone
           
           dynamodb = boto3.resource('dynamodb')
           table = dynamodb.Table(os.environ['TABLE_NAME'])
@@ -56,7 +56,7 @@ Resources:
                       item = {
                           'id': body['id'],
                           'data': body.get('data', ''),
-                          'timestamp': datetime.utcnow().isoformat()
+                          'timestamp': datetime.now(timezone.utc).isoformat()
                       }
                       table.put_item(Item=item)
                       return {
@@ -171,6 +171,9 @@ Resources:
           DataTraceEnabled: true
           MetricsEnabled: true
 
+  # NOTE: AWS::ApiGateway::Account represents the APIGateway global account settings per region.
+  # If you already have active APIGateway CloudWatch roles set up in this region, this resource might fail deployment.
+  # You can safely comment out or omit this resource in that case.
   ApiGatewayAccount:
     Type: AWS::ApiGateway::Account
     Properties:
