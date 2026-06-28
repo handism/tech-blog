@@ -1,0 +1,291 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Multi-VPC Hub and Spoke Architecture using AWS Transit Gateway and AWS Network Firewall.'
+
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - prod
+    Description: Environment name
+
+Resources:
+  # 1. AWS Transit Gateway
+  TransitGateway:
+    Type: AWS::EC2::TransitGateway
+    Properties:
+      Description: 'Transit Gateway for Hub and Spoke routing control'
+      AutoAcceptSharedAttachments: enable
+      DefaultRouteTableAssociation: disable
+      DefaultRouteTablePropagation: disable
+      Tags:
+        - Key: Name
+          Value: !Sub 'hub-spoke-tgw-${Environment}'
+
+  # TGW Route Tables
+  SpokeRouteTable:
+    Type: AWS::EC2::TransitGatewayRouteTable
+    Properties:
+      TransitGatewayId: !Ref TransitGateway
+      Tags:
+        - Key: Name
+          Value: !Sub 'spoke-tgw-rt-${Environment}'
+
+  HubRouteTable:
+    Type: AWS::EC2::TransitGatewayRouteTable
+    Properties:
+      TransitGatewayId: !Ref TransitGateway
+      Tags:
+        - Key: Name
+          Value: !Sub 'hub-tgw-rt-${Environment}'
+
+  # 2. Hub VPC (Inspection & Egress VPC)
+  HubVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      Tags:
+        - Key: Name
+          Value: !Sub 'hub-vpc-${Environment}'
+
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: !Sub 'hub-igw-${Environment}'
+
+  VPCGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref HubVPC
+      InternetGatewayId: !Ref InternetGateway
+
+  # Hub VPC Subnets
+  PublicSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref HubVPC
+      CidrBlock: 10.0.1.0/24
+      AvailabilityZone: !Select [0, !GetAZs '']
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub 'hub-public-subnet-${Environment}'
+
+  InspectionSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref HubVPC
+      CidrBlock: 10.0.2.0/24
+      AvailabilityZone: !Select [0, !GetAZs '']
+      Tags:
+        - Key: Name
+          Value: !Sub 'hub-inspection-subnet-${Environment}'
+
+  TgwSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref HubVPC
+      CidrBlock: 10.0.3.0/24
+      AvailabilityZone: !Select [0, !GetAZs '']
+      Tags:
+        - Key: Name
+          Value: !Sub 'hub-tgw-subnet-${Environment}'
+
+  # 3. AWS Network Firewall in Hub VPC
+  FirewallRuleGroup:
+    Type: AWS::NetworkFirewall::RuleGroup
+    Properties:
+      RuleGroupName: !Sub 'egress-rules-${Environment}'
+      Type: STATEFUL
+      Capacity: 100
+      RuleGroup:
+        RulesSource:
+          StatefulRules:
+            - Action: DROP
+              Header:
+                Destination: any
+                DestinationPort: any
+                Direction: ANY
+                Protocol: HTTP
+                Source: any
+                SourcePort: any
+              RuleOptions:
+                - Name: sid
+                  Value: '1'
+                - Name: msg
+                  Value: '"Drop HTTP cleartext traffic"'
+
+  FirewallPolicy:
+    Type: AWS::NetworkFirewall::FirewallPolicy
+    Properties:
+      FirewallPolicyName: !Sub 'inspection-policy-${Environment}'
+      FirewallPolicy:
+        StatelessDefaultActions:
+          - 'aws:forward_to_sfe'
+        StatelessFragmentDefaultActions:
+          - 'aws:forward_to_sfe'
+        StatefulRuleGroupReferences:
+          - ResourceArn: !Ref FirewallRuleGroup
+
+  NetworkFirewall:
+    Type: AWS::NetworkFirewall::Firewall
+    Properties:
+      FirewallName: !Sub 'inspection-fw-${Environment}'
+      FirewallPolicyArn: !Ref FirewallPolicy
+      VpcId: !Ref HubVPC
+      SubnetMappings:
+        - SubnetId: !Ref InspectionSubnet
+
+  # 4. Spoke VPC 1 (App VPC)
+  SpokeVPC1:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.1.0.0/16
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      Tags:
+        - Key: Name
+          Value: !Sub 'spoke-vpc1-${Environment}'
+
+  Spoke1AppSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref SpokeVPC1
+      CidrBlock: 10.1.1.0/24
+      AvailabilityZone: !Select [0, !GetAZs '']
+      Tags:
+        - Key: Name
+          Value: !Sub 'spoke1-app-subnet-${Environment}'
+
+  Spoke1TgwSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref SpokeVPC1
+      CidrBlock: 10.1.2.0/24
+      AvailabilityZone: !Select [0, !GetAZs '']
+      Tags:
+        - Key: Name
+          Value: !Sub 'spoke1-tgw-subnet-${Environment}'
+
+  # 5. Spoke VPC 2 (Db VPC)
+  SpokeVPC2:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.2.0.0/16
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      Tags:
+        - Key: Name
+          Value: !Sub 'spoke-vpc2-${Environment}'
+
+  Spoke2DbSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref SpokeVPC2
+      CidrBlock: 10.2.1.0/24
+      AvailabilityZone: !Select [0, !GetAZs '']
+      Tags:
+        - Key: Name
+          Value: !Sub 'spoke2-db-subnet-${Environment}'
+
+  Spoke2TgwSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref SpokeVPC2
+      CidrBlock: 10.2.2.0/24
+      AvailabilityZone: !Select [0, !GetAZs '']
+      Tags:
+        - Key: Name
+          Value: !Sub 'spoke2-tgw-subnet-${Environment}'
+
+  # 6. Transit Gateway Attachments
+  HubAttachment:
+    Type: AWS::EC2::TransitGatewayAttachment
+    Properties:
+      TransitGatewayId: !Ref TransitGateway
+      VpcId: !Ref HubVPC
+      SubnetIds:
+        - !Ref TgwSubnet
+      Tags:
+        - Key: Name
+          Value: !Sub 'hub-tgw-attachment-${Environment}'
+
+  Spoke1Attachment:
+    Type: AWS::EC2::TransitGatewayAttachment
+    Properties:
+      TransitGatewayId: !Ref TransitGateway
+      VpcId: !Ref SpokeVPC1
+      SubnetIds:
+        - !Ref Spoke1TgwSubnet
+      Tags:
+        - Key: Name
+          Value: !Sub 'spoke1-tgw-attachment-${Environment}'
+
+  Spoke2Attachment:
+    Type: AWS::EC2::TransitGatewayAttachment
+    Properties:
+      TransitGatewayId: !Ref TransitGateway
+      VpcId: !Ref SpokeVPC2
+      SubnetIds:
+        - !Ref Spoke2TgwSubnet
+      Tags:
+        - Key: Name
+          Value: !Sub 'spoke2-tgw-attachment-${Environment}'
+
+  # 7. Transit Gateway Routing Associations & Propagations
+  Spoke1Association:
+    Type: AWS::EC2::TransitGatewayRouteTableAssociation
+    Properties:
+      TransitGatewayRouteTableId: !Ref SpokeRouteTable
+      TransitGatewayAttachmentId: !Ref Spoke1Attachment
+
+  Spoke2Association:
+    Type: AWS::EC2::TransitGatewayRouteTableAssociation
+    Properties:
+      TransitGatewayRouteTableId: !Ref SpokeRouteTable
+      TransitGatewayAttachmentId: !Ref Spoke2Attachment
+
+  HubAssociation:
+    Type: AWS::EC2::TransitGatewayRouteTableAssociation
+    Properties:
+      TransitGatewayRouteTableId: !Ref HubRouteTable
+      TransitGatewayAttachmentId: !Ref HubAttachment
+
+  # Propagate routes so Spoke traffic routes back
+  Spoke1Propagation:
+    Type: AWS::EC2::TransitGatewayRouteTablePropagation
+    Properties:
+      TransitGatewayRouteTableId: !Ref HubRouteTable
+      TransitGatewayAttachmentId: !Ref Spoke1Attachment
+
+  Spoke2Propagation:
+    Type: AWS::EC2::TransitGatewayRouteTablePropagation
+    Properties:
+      TransitGatewayRouteTableId: !Ref HubRouteTable
+      TransitGatewayAttachmentId: !Ref Spoke2Attachment
+
+  # Route from Spokes to Hub (Default Egress via Hub Inspection)
+  SpokeDefaultRoute:
+    Type: AWS::EC2::TransitGatewayRoute
+    Properties:
+      TransitGatewayRouteTableId: !Ref SpokeRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      TransitGatewayAttachmentId: !Ref HubAttachment
+
+Outputs:
+  TransitGatewayId:
+    Description: Transit Gateway ID
+    Value: !Ref TransitGateway
+    Export:
+      Name: !Sub '${AWS::StackName}-TGW-ID'
+
+  InspectionFWName:
+    Description: Network Firewall Name
+    Value: !Ref NetworkFirewall
+    Export:
+      Name: !Sub '${AWS::StackName}-FW-Name'

@@ -1,0 +1,412 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Event-driven serverless batch processing workflow with AWS Step Functions, EventBridge, SQS, DynamoDB, S3, and Lambda.'
+
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - prod
+    Description: Environment name
+
+Resources:
+  # 1. S3 Bucket for Batch Files
+  BatchDataBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub 'eventdriven-batch-data-${AWS::AccountId}-${AWS::Region}-${Environment}'
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      NotificationConfiguration:
+        EventBridgeConfiguration:
+          EventBridgeEnabled: true
+
+  # 2. DynamoDB Job Status Table
+  JobStatusTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub 'batch-job-status-${Environment}'
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: jobId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: jobId
+          KeyType: HASH
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      SSESpecification:
+        SSEEnabled: true
+
+  # 3. SQS Dead Letter Queue & Main Queue for Batch Tasks
+  JobDLQ:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub 'batch-job-dlq-${Environment}'
+      KmsMasterKeyId: alias/aws/sqs
+
+  JobQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub 'batch-job-queue-${Environment}'
+      KmsMasterKeyId: alias/aws/sqs
+      VisibilityTimeout: 180
+      RedrivePolicy:
+        deadLetterTargetArn: !GetAtt JobDLQ.Arn
+        maxReceiveCount: 3
+
+  # 4. S3 Trigger Lambda & Task Processor Lambda Roles
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: BatchServicesAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:GetItem
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                Resource: !GetAtt JobStatusTable.Arn
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:ListBucket
+                Resource:
+                  - !GetAtt BatchDataBucket.Arn
+                  - !Sub '${BatchDataBucket.Arn}/*'
+              - Effect: Allow
+                Action:
+                  - sqs:ReceiveMessage
+                  - sqs:DeleteMessage
+                  - sqs:GetQueueAttributes
+                Resource: !GetAtt JobQueue.Arn
+              - Effect: Allow
+                Action:
+                  - states:StartExecution
+                Resource: !Sub 'arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:BatchStateMachine-${Environment}'
+
+  # 5. S3 Event Receiver Lambda Function
+  S3TriggerFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Runtime: python3.13
+      Handler: index.handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Architectures:
+        - arm64
+      MemorySize: 128
+      Timeout: 30
+      Environment:
+        Variables:
+          STATE_MACHINE_ARN: !Sub 'arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:BatchStateMachine-${Environment}'
+      Code:
+        ZipFile: |
+          import json
+          import os
+          import uuid
+          import boto3
+          
+          sfn = boto3.client('stepfunctions')
+          
+          def handler(event, context):
+              # Parse EventBridge S3 Notification event
+              detail = event.get('detail', {})
+              bucket_name = detail.get('bucket', {}).get('name')
+              object_key = detail.get('object', {}).get('key')
+              
+              if not bucket_name or not object_key:
+                  return {
+                      'statusCode': 400,
+                      'body': 'Bucket or object key missing in event'
+                  }
+                  
+              job_id = str(uuid.uuid4())
+              
+              # Start Step Functions Execution
+              input_payload = {
+                  'jobId': job_id,
+                  'bucket': bucket_name,
+                  'key': object_key
+              }
+              
+              response = sfn.start_execution(
+                  stateMachineArn=os.environ['STATE_MACHINE_ARN'],
+                  name=f"job-{job_id}",
+                  input=json.dumps(input_payload)
+              )
+              
+              return {
+                  'statusCode': 200,
+                  'body': json.dumps({
+                      'message': 'Workflow triggered successfully',
+                      'jobId': job_id,
+                      'executionArn': response['executionArn']
+                  })
+              }
+
+  S3TriggerFunctionLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${S3TriggerFunction}'
+      RetentionInDays: 7
+
+  # 6. Task Processor Lambda Function (Processes file content)
+  TaskProcessorFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Runtime: python3.13
+      Handler: index.handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Architectures:
+        - arm64
+      MemorySize: 256
+      Timeout: 120
+      Code:
+        ZipFile: |
+          import json
+          import boto3
+          
+          s3 = boto3.client('s3')
+          
+          def handler(event, context):
+              bucket = event.get('bucket')
+              key = event.get('key')
+              job_id = event.get('jobId')
+              
+              try:
+                  # Read S3 object (Simulation of file processing)
+                  response = s3.get_object(Bucket=bucket, Key=key)
+                  file_content = response['Body'].read().decode('utf-8')
+                  lines_count = len(file_content.splitlines())
+                  
+                  return {
+                      'status': 'SUCCESS',
+                      'linesProcessed': lines_count,
+                      'message': f"Processed file {key} successfully."
+                  }
+              except Exception as e:
+                  raise Exception(f"Failed to process file {key}: {str(e)}")
+
+  TaskProcessorFunctionLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${TaskProcessorFunction}'
+      RetentionInDays: 7
+
+  # 7. IAM Role for Step Functions State Machine
+  StepFunctionsExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: states.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: StepFunctionsPermissions
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - lambda:InvokeFunction
+                Resource: !GetAtt TaskProcessorFunction.Arn
+              - Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                Resource: !GetAtt JobStatusTable.Arn
+              - Effect: Allow
+                Action:
+                  - sqs:SendMessage
+                Resource: !GetAtt JobDLQ.Arn
+
+  # 8. Step Functions State Machine Definition
+  BatchStateMachine:
+    Type: AWS::StepFunctions::StateMachine
+    Properties:
+      StateMachineName: !Sub 'BatchStateMachine-${Environment}'
+      RoleArn: !GetAtt StepFunctionsExecutionRole.Arn
+      DefinitionString: !Sub |
+        {
+          "Comment": "Event-Driven Batch Processing Workflow",
+          "StartAt": "InitJobStatus",
+          "States": {
+            "InitJobStatus": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::dynamodb:putItem",
+              "Parameters": {
+                "TableName": "${JobStatusTable}",
+                "Item": {
+                  "jobId": {"S.$": "$.jobId"},
+                  "status": {"S": "PROCESSING"},
+                  "bucket": {"S.$": "$.bucket"},
+                  "key": {"S.$": "$.key"},
+                  "startedAt": {"S.$": "$$.Execution.StartTime"}
+                }
+              },
+              "Next": "ProcessFile",
+              "ResultPath": "$.initResult"
+            },
+            "ProcessFile": {
+              "Type": "Task",
+              "Resource": "${TaskProcessorFunction.Arn}",
+              "Retry": [
+                {
+                  "ErrorEquals": ["States.ALL"],
+                  "IntervalSeconds": 5,
+                  "MaxAttempts": 3,
+                  "BackoffRate": 2.0
+                }
+              ],
+              "Catch": [
+                {
+                  "ErrorEquals": ["States.ALL"],
+                  "Next": "JobFailed",
+                  "ResultPath": "$.errorInfo"
+                }
+              ],
+              "Next": "JobSucceeded",
+              "ResultPath": "$.processResult"
+            },
+            "JobSucceeded": {
+              "Type": "Task",
+              "Resource": "arn:aws:states:::dynamodb:updateItem",
+              "Parameters": {
+                "TableName": "${JobStatusTable}",
+                "Key": {
+                  "jobId": {"S.$": "$.jobId"}
+                },
+                "UpdateExpression": "SET #s = :status, completedAt = :time, processedCount = :processed",
+                "ExpressionAttributeNames": {
+                  "#s": "status"
+                },
+                "ExpressionAttributeValues": {
+                  ":status": {"S": "COMPLETED"},
+                  ":time": {"S.$": "$$.State.EnteredTime"},
+                  ":processed": {"N.$": "States.Format('{}', $.processResult.linesProcessed)"}
+                }
+              },
+              "End": true
+            },
+            "JobFailed": {
+              "Type": "Parallel",
+              "Branches": [
+                {
+                  "StartAt": "UpdateDynamoDBFailed",
+                  "States": {
+                    "UpdateDynamoDBFailed": {
+                      "Type": "Task",
+                      "Resource": "arn:aws:states:::dynamodb:updateItem",
+                      "Parameters": {
+                        "TableName": "${JobStatusTable}",
+                        "Key": {
+                          "jobId": {"S.$": "$.jobId"}
+                        },
+                        "UpdateExpression": "SET #s = :status, errorMsg = :error, completedAt = :time",
+                        "ExpressionAttributeNames": {
+                          "#s": "status"
+                        },
+                        "ExpressionAttributeValues": {
+                          ":status": {"S": "FAILED"},
+                          ":error": {"S.$": "$.errorInfo.Cause"},
+                          ":time": {"S.$": "$$.State.EnteredTime"}
+                        }
+                      },
+                      "End": true
+                    }
+                  }
+                },
+                {
+                  "StartAt": "SendToDLQ",
+                  "States": {
+                    "SendToDLQ": {
+                      "Type": "Task",
+                      "Resource": "arn:aws:states:::sqs:sendMessage",
+                      "Parameters": {
+                        "QueueUrl": "${JobDLQ}",
+                        "MessageBody": {
+                          "jobId.$": "$.jobId",
+                          "bucket.$": "$.bucket",
+                          "key.$": "$.key",
+                          "errorInfo.$": "$.errorInfo"
+                        }
+                      },
+                      "End": true
+                    }
+                  }
+                }
+              ],
+              "End": true
+            }
+          }
+        }
+
+  # 9. EventBridge Rule for S3 Events
+  S3EventRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: !Sub 's3-batch-trigger-${Environment}'
+      Description: Triggers Batch Workflow when files are uploaded to S3
+      EventPattern:
+        source:
+          - aws.s3
+        detail-type:
+          - Object Created
+        detail:
+          bucket:
+            name:
+              - !Ref BatchDataBucket
+      Targets:
+        - Arn: !GetAtt S3TriggerFunction.Arn
+          Id: S3TriggerFunctionTarget
+
+  # Permission for EventBridge to invoke S3TriggerFunction
+  PermissionForEventBridgeToInvokeLambda:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref S3TriggerFunction
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt S3EventRule.Arn
+
+Outputs:
+  BucketName:
+    Description: S3 Bucket for Uploading Batch Files
+    Value: !Ref BatchDataBucket
+    Export:
+      Name: !Sub '${AWS::StackName}-BatchDataBucket'
+
+  JobStatusTableName:
+    Description: DynamoDB Table for Job Tracking
+    Value: !Ref JobStatusTable
+    Export:
+      Name: !Sub '${AWS::StackName}-JobStatusTable'
+
+  StateMachineArn:
+    Description: Step Functions State Machine ARN
+    Value: !Ref BatchStateMachine
+    Export:
+      Name: !Sub '${AWS::StackName}-StateMachineArn'

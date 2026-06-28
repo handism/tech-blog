@@ -115,5 +115,32 @@
     "templateFile": "account-factory.yaml",
     "diagramFile": "account-factory.drawio.svg",
     "awsServices": ["Organizations", "Control Tower", "CloudFormation", "IAM"]
+  },
+  {
+    "slug": "bedrock-rag-serverless",
+    "title": "Amazon Bedrock を用いたサーバーレス RAG 構成",
+    "description": "Amazon Bedrock (Claude) と Amazon OpenSearch Serverless (ベクトルストア) を組み合わせ、セキュアに社内ナレッジなどを活用したAI検索・推論を行えるサーバーレスのRAGインフラ構成です。",
+    "category": "AI & Integration",
+    "templateFile": "bedrock-rag-serverless.yaml",
+    "diagramFile": "bedrock-rag-serverless.drawio.svg",
+    "awsServices": ["Bedrock", "OpenSearch Serverless", "Lambda", "S3", "IAM", "Cognito"]
+  },
+  {
+    "slug": "stepfunctions-eventdriven-batch",
+    "title": "イベント駆動型サーバーレスバッチ構成",
+    "description": "Amazon EventBridge のイベントや S3 へのファイルを契機に AWS Step Functions が起動し、Lambda や SQS と連携して安全かつ堅牢に処理を行うサーバーレスバッチ構成です。",
+    "category": "Serverless",
+    "templateFile": "stepfunctions-eventdriven-batch.yaml",
+    "diagramFile": "stepfunctions-eventdriven-batch.drawio.svg",
+    "awsServices": ["Step Functions", "EventBridge", "Lambda", "SQS", "DynamoDB", "S3"]
+  },
+  {
+    "slug": "transitgateway-secure-hubspoke",
+    "title": "Transit Gateway と Network Firewall によるマルチVPC構成",
+    "description": "AWS Transit Gateway をハブとし、複数のVPC（Spoke VPC）やオンプレミスと接続しながら、AWS Network Firewall によって安全にトラフィックを集中検査・制御する境界セキュリティ構成です。",
+    "category": "Networking",
+    "templateFile": "transitgateway-secure-hubspoke.yaml",
+    "diagramFile": "transitgateway-secure-hubspoke.drawio.svg",
+    "awsServices": ["Transit Gateway", "VPC", "Network Firewall", "Route 53", "IAM"]
   }
 ]

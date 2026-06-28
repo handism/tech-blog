@@ -1,0 +1,353 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Serverless RAG Architecture with Amazon Bedrock and OpenSearch Serverless'
+
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - prod
+    Description: Environment name
+
+Resources:
+  # 1. S3 Bucket for Knowledge Base Documents
+  KBDataBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub 'bedrock-kb-docs-${AWS::AccountId}-${AWS::Region}-${Environment}'
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Enabled
+
+  # 2. AWS OpenSearch Serverless Collection (Vector Store)
+  OpenSearchSecurityPolicy:
+    Type: AWS::OpenSearchServerless::SecurityPolicy
+    Properties:
+      Name: !Sub 'kb-sec-${Environment}'
+      Type: encryption
+      Description: Encryption policy for Bedrock KB collection
+      Policy: !Sub >
+        {
+          "Rules": [
+            {
+              "ResourceType": "collection",
+              "Resource": [
+                "collection/kb-collection"
+              ]
+            }
+          ],
+          "AWSOwnedKey": true
+        }
+
+  OpenSearchNetworkPolicy:
+    Type: AWS::OpenSearchServerless::SecurityPolicy
+    Properties:
+      Name: !Sub 'kb-net-${Environment}'
+      Type: network
+      Description: Network policy for Bedrock KB collection
+      Policy: !Sub >
+        [
+          {
+            "Rules": [
+              {
+                "ResourceType": "collection",
+                "Resource": [
+                  "collection/kb-collection"
+                ]
+              },
+              {
+                "ResourceType": "dashboard",
+                "Resource": [
+                  "collection/kb-collection"
+                ]
+              }
+            ],
+            "AllowFromPublic": true
+          }
+        ]
+
+  VectorCollection:
+    Type: AWS::OpenSearchServerless::Collection
+    DependsOn:
+      - OpenSearchSecurityPolicy
+      - OpenSearchNetworkPolicy
+    Properties:
+      Name: kb-collection
+      Type: VECTORSEARCH
+      Description: Vector store for Amazon Bedrock Knowledge Base
+
+  # OpenSearch Serverless Access Policy (Grants access to Bedrock KB Role and Lambda)
+  OpenSearchAccessPolicy:
+    Type: AWS::OpenSearchServerless::AccessPolicy
+    Properties:
+      Name: !Sub 'kb-access-${Environment}'
+      Type: data
+      Description: Data access policy for Bedrock KB collection
+      Policy: !Sub >
+        [
+          {
+            "Rules": [
+              {
+                "ResourceType": "collection",
+                "Resource": [
+                  "collection/kb-collection"
+                ],
+                "Permission": [
+                  "aoss:CreateCollectionItems",
+                  "aoss:DeleteCollectionItems",
+                  "aoss:UpdateCollectionItems",
+                  "aoss:DescribeCollectionItems"
+                ]
+              },
+              {
+                "ResourceType": "index",
+                "Resource": [
+                  "index/kb-collection/*"
+                ],
+                "Permission": [
+                  "aoss:CreateIndex",
+                  "aoss:DeleteIndex",
+                  "aoss:UpdateIndex",
+                  "aoss:DescribeIndex",
+                  "aoss:ReadDocument",
+                  "aoss:WriteDocument"
+                ]
+              }
+            ],
+            "Principal": [
+              "${BedrockKBRole.Arn}",
+              "${LambdaExecutionRole.Arn}"
+            ]
+          }
+        ]
+
+  # 3. IAM Role for Amazon Bedrock Knowledge Base
+  BedrockKBRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: bedrock.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: BedrockModelAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - bedrock:InvokeModel
+                Resource:
+                  - !Sub 'arn:aws:bedrock:${AWS::Region}::foundation-model/amazon.titan-embed-text-v2:0'
+                  - !Sub 'arn:aws:bedrock:${AWS::Region}::foundation-model/anthropic.claude-3-5-sonnet-20240620-v1:0'
+        - PolicyName: S3Access
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:ListBucket
+                Resource:
+                  - !GetAtt KBDataBucket.Arn
+                  - !Sub '${KBDataBucket.Arn}/*'
+        - PolicyName: OpenSearchAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - aoss:APIAccessAll
+                Resource: !GetAtt VectorCollection.Arn
+
+  # 4. Lambda Execution Role (Access to S3, Bedrock, and OpenSearch Serverless)
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: BedrockRAGAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - bedrock:Retrieve
+                  - bedrock:RetrieveAndGenerate
+                  - bedrock:InvokeModel
+                Resource: '*'
+        - PolicyName: OpenSearchAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - aoss:APIAccessAll
+                Resource: !GetAtt VectorCollection.Arn
+
+  # 5. Query Processor Lambda Function
+  QueryProcessorFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Runtime: python3.13
+      Handler: index.handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Architectures:
+        - arm64
+      MemorySize: 256
+      Timeout: 60
+      Environment:
+        Variables:
+          AOSS_ENDPOINT: !GetAtt VectorCollection.CollectionEndpoint
+          MODEL_ID: 'anthropic.claude-3-5-sonnet-20240620-v1:0'
+      Code:
+        ZipFile: |
+          import json
+          import os
+          import boto3
+          
+          bedrock_agent = boto3.client('bedrock-agent-runtime')
+          
+          def handler(event, context):
+              try:
+                  body = json.loads(event.get('body', '{}'))
+                  query = body.get('query', '')
+                  kb_id = os.environ.get('KNOWLEDGE_BASE_ID', '')
+                  
+                  if not query:
+                      return {
+                          'statusCode': 400,
+                          'body': json.dumps({'error': 'Query parameter is required'})
+                      }
+                      
+                  # Retrieve and Generate using Bedrock Knowledge Base
+                  response = bedrock_agent.retrieve_and_generate(
+                      input={'text': query},
+                      retrieveAndGenerateConfiguration={
+                          'type': 'KNOWLEDGE_BASE',
+                          'knowledgeBaseConfiguration': {
+                              'knowledgeBaseId': kb_id,
+                              'modelArn': f"arn:aws:bedrock:{boto3.Session().region_name}::foundation-model/{os.environ['MODEL_ID']}"
+                          }
+                      }
+                  )
+                  
+                  output_text = response['output']['text']
+                  citations = response.get('citations', [])
+                  
+                  return {
+                      'statusCode': 200,
+                      'headers': {
+                          'Content-Type': 'application/json',
+                          'Access-Control-Allow-Origin': '*'
+                      },
+                      'body': json.dumps({
+                          'answer': output_text,
+                          'citations': citations
+                      })
+                  }
+              except Exception as e:
+                  return {
+                      'statusCode': 500,
+                      'body': json.dumps({'error': str(e)})
+                  }
+
+  QueryProcessorLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${QueryProcessorFunction}'
+      RetentionInDays: 14
+
+  # 6. API Gateway for HTTP Client access
+  RAGApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: !Sub '${AWS::StackName}-rag-api'
+      Description: API Gateway for Bedrock RAG Server
+      EndpointConfiguration:
+        Types:
+          - REGIONAL
+
+  RAGApiResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref RAGApi
+      ParentId: !GetAtt RAGApi.RootResourceId
+      PathPart: query
+
+  RAGApiMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      RestApiId: !Ref RAGApi
+      ResourceId: !Ref RAGApiResource
+      HttpMethod: POST
+      AuthorizationType: NONE
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Sub 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${QueryProcessorFunction.Arn}/invocations'
+
+  RAGApiDeployment:
+    Type: AWS::ApiGateway::Deployment
+    DependsOn: RAGApiMethod
+    Properties:
+      RestApiId: !Ref RAGApi
+
+  RAGApiStage:
+    Type: AWS::ApiGateway::Stage
+    Properties:
+      RestApiId: !Ref RAGApi
+      DeploymentId: !Ref RAGApiDeployment
+      StageName: !Ref Environment
+      MethodSettings:
+        - ResourcePath: '/*'
+          HttpMethod: '*'
+          LoggingLevel: ERROR
+          MetricsEnabled: true
+
+  LambdaPermissionForRAGApi:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref QueryProcessorFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${RAGApi}/*'
+
+Outputs:
+  KBDataBucketName:
+    Description: S3 Bucket for Knowledge Base documents
+    Value: !Ref KBDataBucket
+    Export:
+      Name: !Sub '${AWS::StackName}-KBDataBucketName'
+
+  VectorCollectionEndpoint:
+    Description: OpenSearch Serverless collection endpoint
+    Value: !GetAtt VectorCollection.CollectionEndpoint
+    Export:
+      Name: !Sub '${AWS::StackName}-VectorCollectionEndpoint'
+
+  ApiEndpoint:
+    Description: API Gateway Endpoint for RAG queries
+    Value: !Sub 'https://${RAGApi}.execute-api.${AWS::Region}.amazonaws.com/${Environment}/query'
+    Export:
+      Name: !Sub '${AWS::StackName}-RAGApiEndpoint'

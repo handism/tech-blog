@@ -71,6 +71,27 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 3. `src/lib/aws-gallery-repository.ts` — メタデータおよび `.yaml` テンプレートファイルの読み込み。同時にアセットを `/public/aws-patterns/` に自動コピー
 4. `src/lib/aws-gallery-server.ts` — React `cache()` でデータを集約し、YAMLを Shiki によるハイライトHTMLに事前生成
 5. `app/aws-patterns/` — `/aws-patterns`（一覧）・`/aws-patterns/[slug]`（詳細）ルート。`generateStaticParams()` で静的 HTML を生成
+   - 提供中の全16パターン（カテゴリ別）:
+     - `bedrock-rag-serverless` (AI & Integration) ★新規
+     - `mcp-server` (AI & Integration)
+     - `cost-optimized-serverless` / `serverless-api` (Serverless)
+     - `stepfunctions-eventdriven-batch` (Serverless) ★新規
+     - `streaming-architecture` (Analytics)
+     - `container-orchestration` (Containers)
+     - `ha-pattern` / `high-availability-architecture` (High Availability)
+     - `three-tier-architecture` (Web Application)
+     - `s3-static-website` (Security & CDN)
+     - `langfuse-on-aws` (Observability)
+     - `multi-tenant-saas` (SaaS)
+     - `vpc-lattice-service-communication` / `transitgateway-secure-hubspoke` (Networking) ★新規
+     - `account-factory` (Governance)
+
+> **SVGエクスポート注意**: `drawio` CLI で SVG 出力する際、`--embed-diagram` オプションを付けるとプロセスがハングする事象が確認されています。このオプションは**除外**して使用すること。
+> ```bash
+> drawio --export --format svg --svg-theme light --border 10 \
+>   --output "aws-patterns/img/<name>.drawio.svg" \
+>   "aws-patterns/draw.io/<name>.drawio"
+> ```
 
 #### 日本語検索パイプライン
 
