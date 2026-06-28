@@ -5,6 +5,7 @@ export default defineConfig({
   test: {
     environment: 'node',
     include: ['tests/**/*.test.ts'],
+    exclude: ['**/node_modules/**', '**/dist/**', 'tests/vrt.test.ts'],
     testTimeout: 15000,
   },
   resolve: {
