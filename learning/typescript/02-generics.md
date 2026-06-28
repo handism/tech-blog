@@ -3,6 +3,15 @@ title: ジェネリクス（Generics）と型安全性
 date: 2026-06-20
 order: 2
 draft: false
+quiz:
+  question: "ジェネリクスにおいて、型パラメータ（例: T）が特定のプロパティを持っていることを保証（制約）するために使用するキーワードはどれでしょうか？"
+  options:
+    - "implements"
+    - "extends"
+    - "keyof"
+    - "typeof"
+  correctIndex: 1
+  explanation: "`<T extends { id: string }>` のように `extends` キーワードを使用することで、ジェネリクスの型パラメータに対して「指定した型を満たさなければならない」という制約を追加できます。"
 ---
 
 TypeScriptでコンポーネントや関数を設計するとき、特定の型に依存せず、かつ型安全性を保ったまま再利用したいケースが多々あります。

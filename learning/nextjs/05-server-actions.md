@@ -3,6 +3,15 @@ title: Server Actions と安全なデータ更新
 date: 2026-06-21
 order: 5
 draft: false
+quiz:
+  question: "Server Actions でデータを更新した後に、呼び出し元ページのキャッシュを破棄し、画面に最新のデータを再描画（再検証）させるためのNext.jsの関数はどれでしょうか？"
+  options:
+    - "revalidatePath"
+    - "refreshPage"
+    - "updateCache"
+    - "useActionState"
+  correctIndex: 0
+  explanation: "Server Actions でデータベースなどを更新した後は、`revalidatePath('/todos')` や `revalidateTag('tag')` を呼び出してキャッシュを破棄（オンデマンド再検証）させることで、画面へ最新データを即座に反映します。"
 ---
 
 Next.js App Router では、APIルート（`/api/route.ts`）を個別に定義することなく、サーバー上で実行される非同期関数をクライアントコンポーネントから直接呼び出す仕組みである **「Server Actions（サーバーアクション）」** が提供されています。

@@ -3,6 +3,15 @@ title: 実用的な Utility Types と Mapped Types
 date: 2026-06-20
 order: 3
 draft: false
+quiz:
+  question: "既存のオブジェクト型 T から、指定した一部のキー K を「取り除いた（除外した）」新しい型を作るユーティリティ型はどれでしょうか？"
+  options:
+    - "Omit<T, K>"
+    - "Pick<T, K>"
+    - "Exclude<T, U>"
+    - "Partial<T>"
+  correctIndex: 0
+  explanation: "`Omit<T, K>` は型 `T` からプロパティキー `K` を除外した型を生成します。対義語として、指定したキーだけを抽出する場合は `Pick<T, K>` を使用します。"
 ---
 
 TypeScriptでは、既存の型をベースに新しい型を動的につくり出すための「型ユーティリティ」が標準で多数用意されています。これらを **Utility Types（ユーティリティ型）** と呼びます。

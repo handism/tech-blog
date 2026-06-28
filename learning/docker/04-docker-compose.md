@@ -3,6 +3,15 @@ title: Docker Composeによる複数コンテナの管理
 date: 2026-06-20
 order: 4
 draft: false
+quiz:
+  question: "Docker Compose において、定義されたサービス群をバックグラウンド（デタッチモード）で起動させるための正しいコマンドはどれでしょうか？"
+  options:
+    - "docker compose up -d"
+    - "docker compose start -b"
+    - "docker compose run --background"
+    - "docker compose daemon"
+  correctIndex: 0
+  explanation: "`docker compose up` に `-d` フラグを追加して実行することで、複数のコンテナがバックグラウンドで起動し、現在のターミナルの操作権限を維持したままサービスを稼働させることができます。"
 ---
 
 実際のWebシステム開発では、Webサーバー、アプリケーション（API）、データベースなど、複数のコンテナを協調させて動かすことがほとんどです。

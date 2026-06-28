@@ -3,6 +3,15 @@ title: useMemo と useCallback による最適化
 date: 2026-06-21
 order: 3
 draft: false
+quiz:
+  question: "子コンポーネントにPropsとして関数を渡す際、再レンダリングごとに新しい関数の参照が作られてしまうのを防ぐ（関数の同一性を維持する）ためのフックはどれでしょうか？"
+  options:
+    - "useMemo"
+    - "useCallback"
+    - "useRef"
+    - "useContext"
+  correctIndex: 1
+  explanation: "`useCallback` は、依存配列の値が変わらない限り、渡された関数のインスタンス（参照）をメモ化して再利用します。これに対し、関数の「計算結果の値」をメモ化する場合は `useMemo` を使用します。"
 ---
 
 Reactアプリケーションの規模が大きくなると、コンポーネントの不要な再レンダリングによるパフォーマンス低下が問題になることがあります。本章では、再レンダリングを最適化するための強力なフックである **`useMemo`** と **`useCallback`**、および **`React.memo`** の正しい使い方とアンチパターンを学びます。

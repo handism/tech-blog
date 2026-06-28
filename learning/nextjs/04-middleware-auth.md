@@ -3,6 +3,15 @@ title: Middleware によるルーティング・認証制御
 date: 2026-06-21
 order: 4
 draft: false
+quiz:
+  question: "Next.js の Middleware (middleware.ts) は、どのタイミングで実行されるコードでしょうか？"
+  options:
+    - "ブラウザ側で JavaScript が完全にロードされた直後"
+    - "静的ビルド (next build) を実行しているビルドプロセス中"
+    - "リクエストがサーバーまたはエッジに到達し、特定のページやAPIにルーティングされる直前"
+    - "データベースのデータ更新（UPDATE / INSERT）が発生した直後"
+  correctIndex: 2
+  explanation: "Middleware は、ユーザーからのリクエストが Next.js サーバーまたはエッジ（Vercelなど）に到達し、実際のページやAPIハンドラーにルーティングされる「直前」に実行されるため、高速な認証チェックやリダイレクト制御が可能です。"
 ---
 
 Next.js App Router を用いたアプリケーション構築において、特定のルート（ダッシュボードやマイページなど）へのアクセスを制限する「認証ゲート（ログインチェック）」や、IP・地域制限を実装する際に欠かせないのが **Middleware（ミドルウェア）** です。本章では、Middleware の仕組みとセキュアな認証制御の設計について解説します。

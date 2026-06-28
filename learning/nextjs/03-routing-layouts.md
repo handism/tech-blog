@@ -3,6 +3,15 @@ title: ルーティングとレイアウト（Layouts & Templates）
 date: 2026-06-20
 order: 3
 draft: false
+quiz:
+  question: "Next.js 15以降において、レイアウトやページコンポーネントで受け取る params や searchParams から値を安全に取得するための正しいアプローチはどれでしょうか？"
+  options:
+    - "params.slug のように同期的に直接プロパティへアクセスする"
+    - "useParams() フックをサーバーコンポーネントの中で呼び出す"
+    - "await params のように非同期処理（Promiseの解決）を行ってから取得する"
+    - "params は自動的にグローバルコンテキストに格納されるため、そこから取得する"
+  correctIndex: 2
+  explanation: "Next.js 15以降、レイアウトやページが受け取る params や searchParams の型が Promise に変更されました。そのため、同期的なアクセスは警告・エラーになり、`await params` を用いて非同期で解決する必要があります。"
 ---
 
 Next.js App Routerでは、ファイルシステムをベースとした直感的なルーティングと、状態を維持できる入れ子（ネスト）状のレイアウトシステムが採用されています。

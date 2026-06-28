@@ -3,6 +3,15 @@ title: 高度な型システム（Conditional, Mapped Types）
 date: 2026-06-21
 order: 4
 draft: false
+quiz:
+  question: "Mapped Types で、マッピング対象のプロパティから readonly や ? (オプショナル) などの修飾子を「取り除く」ために使用するプレフィックス記号はどれでしょうか？"
+  options:
+    - "+"
+    - "-"
+    - "!"
+    - "~"
+  correctIndex: 1
+  explanation: "Mapped Types では、`-readonly` や `-?` のように `-` 記号を修飾子の前に付与することで、既存の型から readonly 属性やオプショナル属性を剥ぎ取った必須プロパティの型を新しく構築できます。"
 ---
 
 TypeScriptの型システムは「静的な型定義」に留まらず、プログラムの論理に基づいて柔軟に型を変化・生成させることができる「プログラミング言語」のような機能を持っています。本章では、型安全性を極限まで高めるための高度な機能である **`Conditional Types`**、**`Mapped Types`**、および **`Template Literal Types`** を解説します。

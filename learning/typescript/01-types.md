@@ -3,6 +3,15 @@ title: なぜTypeScriptが必要なのか？型消去の仕組み
 date: 2026-06-20
 order: 1
 draft: false
+quiz:
+  question: "type CustomType = string | number のように、指定した複数の型のうち「いずれか一つ」であることを表現する型を何と呼ぶでしょうか？"
+  options:
+    - "ユニオン型 (Union Types)"
+    - "インターセクション型 (Intersection Types)"
+    - "リテラル型 (Literal Types)"
+    - "タプル型 (Tuple Types)"
+  correctIndex: 0
+  explanation: "パイプ記号 `|` で複数の型を結合したものは「ユニオン型（共用体型）」と呼ばれ、記述された型のいずれか一つになり得ることを表現します。"
 ---
 
 現在、多くのWeb開発の現場で JavaScript に代わって **TypeScript（タイプスクリプト）** が標準として採用されています。

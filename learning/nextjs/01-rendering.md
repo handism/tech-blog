@@ -3,6 +3,15 @@ title: Server Components と Client Components
 date: 2026-06-20
 order: 1
 draft: false
+quiz:
+  question: "Next.js App Router でコンポーネントを定義する際、デフォルトの実行場所はどこになるでしょうか？"
+  options:
+    - "サーバー側のみ"
+    - "クライアント側（ブラウザ）のみ"
+    - "サーバー側とクライアント側の両方で同時に実行される"
+    - "CDNのキャッシュサーバー上のみ"
+  correctIndex: 0
+  explanation: "Next.js App Router では、コンポーネントはデフォルトで「Server Components」となり、サーバー側でのみ実行されます。クライアント側にJavaScriptが送信されないため、バンドルサイズをゼロに抑えることができます。"
 ---
 
 Next.js App Router の最大の特徴は、Reactの最新機能である **React Server Components (RSC)** に完全対応している点です。

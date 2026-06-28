@@ -3,6 +3,15 @@ title: Dockerの基本概念とアーキテクチャ
 date: 2026-06-20
 order: 1
 draft: false
+quiz:
+  question: "Docker クライアント（CLI）からの API リクエストを受け取り、イメージのビルド、コンテナの実行、ボリューム管理などの実処理を行うバックグラウンドプロセスを何と呼ぶでしょうか？"
+  options:
+    - "Docker Daemon (dockerd)"
+    - "Docker Compose"
+    - "Docker Hub / Registry"
+    - "Docker Desktop"
+  correctIndex: 0
+  explanation: "Docker Daemon (dockerd) は、Dockerホスト上で動作する常駐プロセスであり、クライアントからのリクエストを受け取ってコンテナやイメージなどのライフサイクル管理を実際に行う中心的な存在です。"
 ---
 
 Dockerは、アプリケーションを開発・デプロイ・実行するためのオープンソースのプラットフォームです。
