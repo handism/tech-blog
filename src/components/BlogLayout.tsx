@@ -27,7 +27,7 @@ export default function BlogLayout({ children, toc, categoryCounts, tagCounts }:
         <main className="min-w-0">{children}</main>
 
         {/* サイドバー */}
-        <aside className="relative">
+        <aside className="relative flex flex-col">
           <Sidebar toc={toc} categoryCounts={categoryCounts} tagCounts={tagCounts} />
         </aside>
       </div>
