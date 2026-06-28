@@ -168,11 +168,11 @@ input:focus-visible,
 
 html {
   scroll-behavior: auto;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 @media (min-width: 768px) {
