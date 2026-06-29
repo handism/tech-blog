@@ -397,7 +397,7 @@ export const themeConfig = [
 ] as const;
 
 export type ThemeId = (typeof themeConfig)[number]['id'];
-export const DEFAULT_THEME: ThemeId = 'editorial';
+export const DEFAULT_THEME: ThemeId = 'flat-pop';
 export const THEME_STORAGE_KEY = 'design-theme';
 
 /**
