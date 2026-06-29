@@ -785,6 +785,46 @@ export const toolsMenuItems: readonly ToolItem[] = [
     emoji: '🧮',
     category: 'dev',
   },
+  {
+    href: '/tools/pomodoro',
+    label: 'Pomodoro Focus Timer',
+    description:
+      '25分の作業と5分の休憩を繰り返す、テーマ連動・音響効果付きポモドーロ・フォーカスタイマー',
+    emoji: '⏱️',
+    category: 'dev',
+  },
+  {
+    href: '/tools/css-gradient',
+    label: 'CSS Gradient & Mesh Generator',
+    description:
+      '美しいグラデーションや複雑なメッシュグラデーションを直感的に生成し、サイト全体にプレビュー可能',
+    emoji: '🎨',
+    category: 'image',
+  },
+  {
+    href: '/tools/markdown-editor',
+    label: 'Markdown Live Editor',
+    description:
+      'Markdownの入力から本サイトの各テーマに応じたスタイルでリアルタイムプレビュー・PDF出力',
+    emoji: '📝',
+    category: 'dev',
+  },
+  {
+    href: '/tools/placeholder-generator',
+    label: 'SVG Placeholder Generator',
+    description:
+      'モックアップ作成に便利な指定サイズ・指定テキストのダミー画像（SVG / PNG）を一瞬で生成',
+    emoji: '🖼️',
+    category: 'image',
+  },
+  {
+    href: '/tools/utm-builder',
+    label: 'UTM Campaign URL Builder',
+    description:
+      'Google Analyticsなどのアクセス解析用キャンペーンURLパラメータを正確に組み立て、QRコードを自動生成',
+    emoji: '🔗',
+    category: 'dev',
+  },
   // 外部ツール
   {
     href: 'https://handism.github.io/sauna-itta/',
