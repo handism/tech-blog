@@ -124,10 +124,11 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <article className="prose dark:prose-invert max-w-none">
-        <h1>{post.title}</h1>
-
-        {/* メタ情報 */}
-        <PostMeta post={post} className="mt-4 mb-8" />
+        <header className="post-header mb-8 pb-4">
+          <h1>{post.title}</h1>
+          {/* メタ情報 */}
+          <PostMeta post={post} className="mt-4" />
+        </header>
 
         {/* サムネイル画像 */}
         <div className="relative w-full aspect-video mb-6 md:mb-8 lg:mb-10 not-prose border-3 border-border rounded-2xl shadow-[5px_5px_0px_0px_var(--border)] dark:shadow-[5px_5px_0px_0px_var(--accent)] overflow-hidden">

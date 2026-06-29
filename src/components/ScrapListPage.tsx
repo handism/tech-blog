@@ -16,7 +16,7 @@ export default function ScrapListPage({ scraps, categoryCounts, tagCounts }: Scr
   return (
     <BlogLayout categoryCounts={categoryCounts} tagCounts={tagCounts}>
       <div className="max-w-none">
-        <header className="mb-10">
+        <header className="page-header mb-10">
           <h1 className="text-3xl md:text-4xl font-bold text-text">Scraps</h1>
           <p className="text-sm text-text/60 mt-2">日々の気づきやエラー解決ログを短く残すメモ帳</p>
         </header>

@@ -66,7 +66,7 @@ export default function ToolsDashboard() {
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8 md:py-12">
       {/* ヒーローヘッダー */}
-      <div className="text-center max-w-2xl mx-auto mb-10 md:mb-14">
+      <div className="page-header text-center max-w-2xl mx-auto mb-10 md:mb-14">
         <div className="inline-flex items-center gap-2 px-3 py-1 border border-border rounded-lg bg-secondary text-text text-xs font-bold mb-4">
           <Sparkles className="w-3.5 h-3.5 text-accent" />
           <span>Utilities</span>

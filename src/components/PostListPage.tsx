@@ -30,7 +30,11 @@ export default function PostListPage({
   return (
     <BlogLayout tagCounts={tagCounts} categoryCounts={categoryCounts}>
       <div>
-        {heading && <h1 className="text-3xl font-bold mb-6">{heading}</h1>}
+        {heading && (
+          <div className="page-header mb-6 pb-4">
+            <h1 className="text-3xl font-bold">{heading}</h1>
+          </div>
+        )}
 
         {posts.length === 0 ? (
           emptyMessage ? (

@@ -19,7 +19,7 @@ export default async function LearningPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 pt-12 pb-24">
       {/* ヒーローセクション */}
-      <div className="text-center mb-12">
+      <div className="page-header text-center mb-12">
         <h1 className="text-3xl md:text-4xl font-black text-text mb-4">📚 学習ガイド</h1>
         <p className="text-text/70 font-medium max-w-xl mx-auto leading-relaxed">
           エンジニアリングに必要な概念やツールの仕組みを、図解を交えて体系的に学べます。
