@@ -11,7 +11,9 @@ export function parseFrontmatter<T>(
   const { data, content } = matter(raw);
   const result = schema.safeParse(data);
   if (!result.success) {
-    console.warn('Frontmatter parse failed:', result.error.flatten());
+    if (!process.env.VITEST) {
+      console.warn('Frontmatter parse failed:', result.error.flatten());
+    }
     return { data: schema.parse({}), content };
   }
   return { data: result.data, content };
