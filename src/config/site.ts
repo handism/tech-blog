@@ -778,6 +778,13 @@ export const toolsMenuItems: readonly ToolItem[] = [
     emoji: '📐',
     category: 'dev',
   },
+  {
+    href: '/tools/calculator',
+    label: 'Calculator',
+    description: 'シンプルで使いやすい多機能電卓。履歴機能、キーボード入力、結果のコピー機能も搭載',
+    emoji: '🧮',
+    category: 'dev',
+  },
   // 外部ツール
   {
     href: 'https://handism.github.io/sauna-itta/',
