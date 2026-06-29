@@ -2,7 +2,7 @@
 
 ## このブログについて
 
-- **36種類の多彩なデザインテーマ**: デフォルトの落ち着いた信頼感のある **Paper / Editorial（エディトリアル）** に加え、Glassmorphism, Minimal, Retro, Cyberpunk, Neumorphism, Japanese, Holographic（ホログラフィック）, Synthwave, Terminal, Nordic, Claymorphism, Bento, Hekireki, Chalkboard, Neo-Brutalism（ネオ・ブルータリズム）, Bauhaus, Glitch Art, Blueprint, Steampunk といった幅広いスタイル（全36種）にリアルタイムで切り替え可能
+- **37種類の多彩なデザインテーマ**: デフォルトの落ち着いた信頼感のある **Paper / Editorial（エディトリアル）** に加え、Glassmorphism, Minimal, Retro, Cyberpunk, Neumorphism, Japanese, Holographic（ホログラフィック）, Synthwave, Terminal, Nordic, Claymorphism, Bento, Hekireki, Chalkboard, Neo-Brutalism（ネオ・ブルータリズム）, Bauhaus, Glitch Art, Blueprint, Steampunk, Flat Pop といった幅広いスタイル（全37種）にリアルタイムで切り替え可能
 - **豊富なスキンカラー**: Emerald、Ocean、Sunset、Purple、Rose のアクセントカラーとダークモードを組み合わせ、自分好みの外観にカスタマイズできます
 - 見出しフォントに **Lexend** および **Space Grotesk** を採用した、テックブログらしい力強いタイポグラフィ
 - 触っていて気持ちいい **ダイナミックなアクション**: テーマごとの世界観に合わせて、ホバーやクリック時のインタラクションが最適化されています
@@ -29,7 +29,7 @@
 - **マークダウン処理**：Remark + rehype（HTML 変換・見出し自動リンク・スラッグ生成・TOC 生成・Mermaidダイアグラムパース）
 - **図解・ダイアグラム描画**：Mermaid.js（クライアント側での動的SVGレンダリングに対応）
 - **シンタックスハイライト**：Shiki（github-dark テーマ）
-- **テーマ切り替え**：next-themes（ダークモード・36種類のテーマ切り替え対応）
+- **テーマ切り替え**：next-themes（ダークモード・37種類のテーマ切り替え対応）
 - **検索機能**：kuromoji（日本語形態素解析） + Fuse.js（クライアント側全文検索）
 - **バリデーション**：Zod（frontmatter）
 - **ホスティング**：GitHub Pages

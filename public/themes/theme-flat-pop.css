@@ -1,0 +1,72 @@
+/* ── Flat Pop Theme ── */
+[data-theme='flat-pop'] {
+  --color-bg: #fdfcf5;
+  --color-background: var(--color-bg);
+  --color-card: #ffffff;
+  --color-secondary: #e0f2fe;
+  --color-text: #000000;
+  --color-border: #000000;
+  --color-accent: #ff007f;
+  --theme-font-sans: 'Space Grotesk', system-ui, sans-serif;
+
+  --theme-card-border-width: 3px;
+  --theme-card-radius: 12px;
+  --theme-card-shadow: 6px 6px 0px 0px var(--color-border);
+  --theme-card-hover-transform: translate(-2px, -2px);
+  --theme-card-hover-shadow: 8px 8px 0px 0px var(--color-accent);
+
+  --theme-btn-border-width: 3px;
+  --theme-btn-radius: 8px;
+  --theme-btn-shadow: 4px 4px 0px 0px var(--color-border);
+  --theme-btn-bg: var(--color-accent);
+  --theme-btn-color: #ffffff;
+  --theme-btn-hover-transform: translate(-1px, -1px);
+  --theme-btn-hover-shadow: 5px 5px 0px 0px var(--color-border);
+  --theme-btn-active-transform: translate(2px, 2px);
+  --theme-btn-active-shadow: 2px 2px 0px 0px var(--color-border);
+}
+
+[data-theme='flat-pop'].dark {
+  --color-bg: #0e1525;
+  --color-card: #1e293b;
+  --color-secondary: #1e1b4b;
+  --color-text: #ffffff;
+  --color-border: #ffffff;
+  --color-accent: #ff007f;
+}
+
+[data-theme='flat-pop'] [class*='shadow-'] {
+  --tw-shadow: none;
+  --tw-shadow-colored: none;
+  box-shadow: 6px 6px 0px 0px var(--color-border) !important;
+}
+
+[data-theme='flat-pop'] .theme-card,
+[data-theme='flat-pop'] .theme-card-hover:hover,
+[data-theme='flat-pop'] .theme-btn,
+[data-theme='flat-pop'] .theme-btn:hover,
+[data-theme='flat-pop'] .theme-btn:active {
+  box-shadow: revert-layer;
+}
+
+[data-theme='flat-pop'] .site-header {
+  border: 3px solid var(--color-border) !important;
+  border-radius: 12px !important;
+  box-shadow: 6px 6px 0px 0px var(--color-border) !important;
+  background-color: var(--color-card) !important;
+}
+
+[data-theme='flat-pop'] .site-header nav a {
+  border: 2px solid var(--color-border) !important;
+  border-radius: 8px !important;
+  box-shadow: 3px 3px 0px 0px var(--color-border) !important;
+  background-color: var(--color-card) !important;
+  color: var(--color-text) !important;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, border-color 0.1s ease;
+}
+
+[data-theme='flat-pop'] .site-header nav a:hover {
+  border-color: var(--color-accent) !important;
+  box-shadow: 3px 3px 0px 0px var(--color-accent) !important;
+  transform: translate(-1px, -1px);
+}

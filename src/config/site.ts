@@ -300,6 +300,17 @@ export const themeConfig = [
     previewCard: '#ffffff',
     previewAccent: '#e63329',
   },
+  {
+    id: 'flat-pop',
+    label: 'Flat Pop',
+    description: '太線・ベタ塗り影・高彩度ビビッド・コミック調ポップ',
+    emoji: '⭐',
+    category: 'creative',
+    previewBg: '#fdfcf5',
+    previewCard: '#ffffff',
+    previewAccent: '#ff007f',
+    previewBorderColor: '#000000',
+  },
 
   // ── カルチャー＆ナチュラル (nature) ──
   {
