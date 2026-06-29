@@ -125,6 +125,38 @@ function rehypeImageSize() {
 }
 
 /**
+ * Table要素を div.table-wrapper でラップする Rehype プラグイン。
+ */
+function rehypeTableWrapper() {
+  return (tree: HastRoot) => {
+    visit(tree, 'element', (node: Element, index, parent) => {
+      if (node.tagName !== 'table') return;
+      if (!parent || typeof index !== 'number') return;
+
+      // すでにラッパーが存在する場合はスキップ
+      if (
+        parent.type === 'element' &&
+        parent.tagName === 'div' &&
+        (parent.properties?.className as string[] | undefined)?.includes('table-wrapper')
+      ) {
+        return;
+      }
+
+      const wrapper: Element = {
+        type: 'element',
+        tagName: 'div',
+        properties: {
+          className: ['table-wrapper'],
+        },
+        children: [node],
+      };
+
+      parent.children[index] = wrapper;
+    });
+  };
+}
+
+/**
  * Markdownレンダリング用プロセッサを作成する。
  * 各実行ごとに独立したプロセッサインスタンスを生成し、並行処理時の競合を防ぐ。
  * TOC は VFile の data フィールド経由で受け渡す。
@@ -137,6 +169,7 @@ function createProcessor() {
     .use(remarkMermaid)
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeImageSize)
+    .use(rehypeTableWrapper)
     .use(rehypeShiki, {
       theme: 'github-dark',
       transformers: [

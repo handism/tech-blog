@@ -355,15 +355,21 @@ article.prose pre::-webkit-scrollbar-thumb {
 /* =======================
    表（table）
    ======================= */
-article.prose table {
-  @apply border-collapse my-8 text-sm rounded-xl overflow-hidden;
-  border: 1px solid var(--border);
-  box-shadow: none;
-  display: block;
+article.prose .table-wrapper {
   width: 100%;
   overflow-x: auto;
-  white-space: nowrap;
   -webkit-overflow-scrolling: touch;
+  margin: 2rem 0;
+}
+
+article.prose table {
+  @apply border-collapse text-sm rounded-xl overflow-hidden;
+  border: 1px solid var(--border);
+  box-shadow: none;
+  display: table;
+  width: 100%;
+  min-width: 100%;
+  white-space: nowrap;
 }
 
 .dark article.prose table {
