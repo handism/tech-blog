@@ -100,9 +100,11 @@
   background-size: contain;
 }
 
-/* ── Card Hover Decoration (Halftone Shadow Jump) ── */
+/* ── Card Hover Decoration (Halftone Shadow Jump with Double Pseudo-Elements) ── */
 [data-theme='flat-pop'] .theme-card-hover {
   position: relative !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
   box-shadow: none !important;
   transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
 }
@@ -112,6 +114,22 @@
   box-shadow: none !important;
 }
 
+/* ::before: カード本体の背景とボーダー */
+[data-theme='flat-pop'] .theme-card-hover::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: var(--theme-card-radius) !important;
+  border: var(--theme-card-border-width) solid var(--color-border) !important;
+  background-color: var(--color-card) !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+}
+
+/* ::after: カードの影（ハーフトーン） */
 [data-theme='flat-pop'] .theme-card-hover::after {
   content: '' !important;
   position: absolute !important;
@@ -124,9 +142,15 @@
   background-color: var(--color-border) !important;
   background-image: url("data:image/svg+xml,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' width%3D'8' height%3D'8' viewBox%3D'0 0 8 8'%3E%3Ccircle cx%3D'4' cy%3D'4' r%3D'1.5' fill%3D'%23ffffff' fill-opacity%3D'0.25'%2F%3E%3C%2Fsvg%3E") !important;
   background-size: 8px 8px !important;
-  z-index: -1 !important;
+  z-index: -2 !important;
+  pointer-events: none !important;
   transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.15s ease !important;
   transform: translate(6px, 6px) !important;
+}
+
+[data-theme='flat-pop'].dark .theme-card-hover::before,
+.dark[data-theme='flat-pop'] .theme-card-hover::before {
+  background-color: var(--color-card) !important;
 }
 
 [data-theme='flat-pop'].dark .theme-card-hover::after,
@@ -137,6 +161,7 @@
 [data-theme='flat-pop'] .theme-card-hover:hover::after {
   transform: translate(10px, 10px) !important;
   background-color: var(--color-accent) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg' width%3D'8' height%3D'8' viewBox%3D'0 0 8 8'%3E%3Ccircle cx%3D'4' cy%3D'4' r%3D'1.5' fill%3D'%23ffffff' fill-opacity%3D'0.3'%2F%3E%3C%2Fsvg%3E") !important;
 }
 
 /* ── Footer Decoration (Memphis + Halftone Cluster Accent) ── */
