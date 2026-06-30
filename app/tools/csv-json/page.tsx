@@ -3,6 +3,7 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { Code } from 'lucide-react';
 import { useState } from 'react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 const parseCsvLine = (line: string) => {
   const result: string[] = [];
@@ -76,6 +77,7 @@ const jsonToCsv = (text: string) => {
 };
 
 export default function CsvJsonConverter() {
+  const { copy } = useCopyToClipboard();
   const [mode, setMode] = useState<'csv-to-json' | 'json-to-csv'>('csv-to-json');
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
@@ -93,7 +95,7 @@ export default function CsvJsonConverter() {
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(output);
+    copy(output);
   };
 
   return (

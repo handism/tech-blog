@@ -3,6 +3,7 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useState } from 'react';
 import { Send, Plus, Trash2, Clipboard, Check, HelpCircle, AlertTriangle } from 'lucide-react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 interface HeaderItem {
   id: string;
@@ -27,7 +28,7 @@ export default function HttpTesterPage() {
   const [resBody, setResBody] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
 
   const handleAddHeader = () => {
     setHeaders([...headers, { id: Date.now().toString(), key: '', value: '' }]);
@@ -120,9 +121,7 @@ export default function HttpTesterPage() {
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(resBody);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    copy(resBody);
   };
 
   return (

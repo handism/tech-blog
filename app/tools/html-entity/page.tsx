@@ -3,6 +3,7 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { Code } from 'lucide-react';
 import { useState } from 'react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 const encodeHtmlEntities = (input: string) => {
   const textarea = document.createElement('textarea');
@@ -17,6 +18,7 @@ const decodeHtmlEntities = (input: string) => {
 };
 
 export default function HtmlEntityEncoder() {
+  const { copy } = useCopyToClipboard();
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [mode, setMode] = useState<'encode' | 'decode'>('encode');
@@ -26,7 +28,7 @@ export default function HtmlEntityEncoder() {
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(output);
+    copy(output);
   };
 
   return (

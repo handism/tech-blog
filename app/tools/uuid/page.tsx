@@ -3,6 +3,7 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { Code } from 'lucide-react';
 import { useState } from 'react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 const generateUuid = () => {
   if (typeof crypto?.randomUUID === 'function') {
@@ -24,6 +25,7 @@ const generateUuid = () => {
 };
 
 export default function UuidGenerator() {
+  const { copy } = useCopyToClipboard();
   const [output, setOutput] = useState('');
 
   const handleGenerate = () => {
@@ -31,7 +33,7 @@ export default function UuidGenerator() {
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(output);
+    copy(output);
   };
 
   return (

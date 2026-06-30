@@ -3,6 +3,7 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { ShieldAlert, Copy, RefreshCw, Monitor, Check } from 'lucide-react';
 import { useState, useEffect, useMemo } from 'react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 interface UAParseResult {
   browser: { name: string; version: string };
@@ -123,7 +124,7 @@ function parseUserAgent(ua: string): UAParseResult {
 
 export default function UserAgentParser() {
   const [uaInput, setUaInput] = useState('');
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
   const [detectedUa, setDetectedUa] = useState('');
 
   // Auto-detect browser user agent
@@ -142,9 +143,7 @@ export default function UserAgentParser() {
   }, [uaInput]);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(uaInput);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    copy(uaInput);
   };
 
   const resetToCurrent = () => {

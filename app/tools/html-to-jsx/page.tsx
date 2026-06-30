@@ -3,10 +3,11 @@
 import { useState, useMemo } from 'react';
 import { Code2, Copy, Check, AlertCircle } from 'lucide-react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 export default function HtmlToJsx() {
   const [htmlInput, setHtmlInput] = useState('');
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
 
   // 変換メインロジック (useMemoによる派生)
   const { jsxOutput, error } = useMemo(() => {
@@ -130,9 +131,7 @@ export default function HtmlToJsx() {
 
   const handleCopy = () => {
     if (!jsxOutput) return;
-    navigator.clipboard.writeText(jsxOutput);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    copy(jsxOutput);
   };
 
   const handleClear = () => {

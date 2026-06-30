@@ -3,6 +3,7 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useState, useMemo } from 'react';
 import { Palette, Clipboard, Check, Eye } from 'lucide-react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 export default function SvgEditorPage() {
   const [inputSvg, setInputSvg] = useState(
@@ -13,7 +14,7 @@ export default function SvgEditorPage() {
   );
   const [fillColor, setFillColor] = useState('');
   const [strokeColor, setStrokeColor] = useState('');
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
 
   // SVGプレビューの安全性を考慮したサニタイズ（簡易版）
   const sanitizeForPreview = (svgStr: string): string => {
@@ -69,9 +70,7 @@ export default function SvgEditorPage() {
   }, [inputSvg, fillColor, strokeColor]);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(outputSvg);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    copy(outputSvg);
   };
 
   const handleFormatInput = () => {

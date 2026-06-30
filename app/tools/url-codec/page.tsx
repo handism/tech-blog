@@ -3,8 +3,10 @@
 import { Link as LinkIcon } from 'lucide-react';
 import { useState } from 'react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 export default function UrlCodec() {
+  const { copy } = useCopyToClipboard();
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
 
@@ -27,7 +29,7 @@ export default function UrlCodec() {
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(output);
+    copy(output);
   };
 
   return (

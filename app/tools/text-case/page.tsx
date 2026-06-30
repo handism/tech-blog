@@ -3,6 +3,7 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { FileText, Copy, Trash2, Check, AlignLeft } from 'lucide-react';
 import { useState, useMemo } from 'react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 // Case helper functions
 function toWords(str: string): string[] {
@@ -65,6 +66,7 @@ function toSentenceCase(str: string): string {
 }
 
 export default function TextCaseConverter() {
+  const { copy } = useCopyToClipboard();
   const [input, setInput] = useState('');
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
@@ -111,7 +113,7 @@ export default function TextCaseConverter() {
   }, [input]);
 
   const handleCopy = (text: string, key: string) => {
-    navigator.clipboard.writeText(text);
+    copy(text);
     setCopiedKey(key);
     setTimeout(() => setCopiedKey(null), 1500);
   };

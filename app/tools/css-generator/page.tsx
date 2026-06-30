@@ -3,10 +3,11 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useState } from 'react';
 import { Layers, Copy, Check, Sparkles, Sliders } from 'lucide-react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 export default function CssGenerator() {
   const [activeTab, setActiveTab] = useState<'glass' | 'shadow'>('glass');
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
 
   // Glassmorphism state
   const [blur, setBlur] = useState(12);
@@ -62,9 +63,7 @@ border-radius: 24px;`;
   const shadowCss = generateSmoothShadow();
 
   const handleCopy = (text: string) => {
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    copy(text);
   };
 
   return (
@@ -80,7 +79,6 @@ border-radius: 24px;`;
             <button
               onClick={() => {
                 setActiveTab('glass');
-                setCopied(false);
               }}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
                 activeTab === 'glass'
@@ -94,7 +92,6 @@ border-radius: 24px;`;
             <button
               onClick={() => {
                 setActiveTab('shadow');
-                setCopied(false);
               }}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all cursor-pointer ${
                 activeTab === 'shadow'

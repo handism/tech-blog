@@ -3,6 +3,7 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useState, useMemo } from 'react';
 import { Type, Clipboard, Check, Shuffle } from 'lucide-react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 const LOREM_TEXTS = {
   lorem: {
@@ -133,7 +134,7 @@ export default function LoremIpsumPage() {
   const [unit, setUnit] = useState<UnitType>('paragraphs');
   const [count, setCount] = useState<number>(3);
   const [htmlMarkup, setHtmlMarkup] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
   const [trigger, setTrigger] = useState(0);
 
   const generatedText = useMemo(() => {
@@ -224,9 +225,7 @@ export default function LoremIpsumPage() {
   }, [textType, unit, count, htmlMarkup, trigger]);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(generatedText);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    copy(generatedText);
   };
 
   return (

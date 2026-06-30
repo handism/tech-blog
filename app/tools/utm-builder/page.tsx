@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import QRCode from 'qrcode';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 interface Preset {
   source: string;
@@ -31,7 +32,7 @@ export default function UtmBuilderTool() {
   const [shortUrl, setShortUrl] = useState<string>('');
   const [isShortening, setIsShortening] = useState<boolean>(false);
   const [urlError, setUrlError] = useState<string>('');
-  const [copied, setCopied] = useState<boolean>(false);
+  const { copied, copy } = useCopyToClipboard();
   const [copiedType, setCopiedType] = useState<string>('');
 
   const qrCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -129,11 +130,9 @@ export default function UtmBuilderTool() {
 
   // コピーハンドラ
   const handleCopy = (text: string, type: string) => {
-    navigator.clipboard.writeText(text);
-    setCopied(true);
+    copy(text);
     setCopiedType(type);
     setTimeout(() => {
-      setCopied(false);
       setCopiedType('');
     }, 2000);
   };

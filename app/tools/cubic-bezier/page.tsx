@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react';
 import { Activity, Copy, Check, Play, RefreshCw } from 'lucide-react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 // イージングプリセット定義
 const PRESETS = [
@@ -27,7 +28,7 @@ export default function CubicBezierVisualizer() {
 
   const [comparePreset, setComparePreset] = useState('linear');
   const [isAnimating, setIsAnimating] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
 
   // 比較対象のイージング値を取得
   const compareValue = useMemo(() => {
@@ -46,9 +47,7 @@ export default function CubicBezierVisualizer() {
 
   const handleCopy = () => {
     const code = `transition: all 1.0s cubic-bezier(${x1.toFixed(2)}, ${y1.toFixed(2)}, ${x2.toFixed(2)}, ${y2.toFixed(2)});`;
-    navigator.clipboard.writeText(code);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    copy(code);
   };
 
   const applyPreset = (vals: number[]) => {

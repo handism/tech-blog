@@ -3,8 +3,10 @@
 import { useState, useMemo } from 'react';
 import { Sparkles, Copy, Check, RefreshCw } from 'lucide-react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 export default function NeoBrutalismGenerator() {
+  const { copy } = useCopyToClipboard();
   // 状態管理
   const [borderWidth, setBorderWidth] = useState(3);
   const [borderRadius, setBorderRadius] = useState(16);
@@ -179,7 +181,7 @@ export default function NeoBrutalismGenerator() {
   ]);
 
   const handleCopy = (code: string, type: 'tailwind' | 'css') => {
-    navigator.clipboard.writeText(code);
+    copy(code);
     setCopiedType(type);
     setTimeout(() => setCopiedType(null), 2000);
   };

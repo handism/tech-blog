@@ -3,8 +3,10 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { Clock, Copy, RefreshCw, Play, Pause } from 'lucide-react';
 import { useState, useEffect, useMemo } from 'react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 export default function UnixTimestampConverter() {
+  const { copy } = useCopyToClipboard();
   const [currentSec, setCurrentSec] = useState<number>(0);
   const [isLive, setIsLive] = useState(true);
 
@@ -126,7 +128,7 @@ export default function UnixTimestampConverter() {
   }, [dateStr, timeStr, tzSelect]);
 
   const handleCopy = (text: string, key: string) => {
-    navigator.clipboard.writeText(text);
+    copy(text);
     setTsCopied(key);
     setTimeout(() => setTsCopied(null), 1500);
   };

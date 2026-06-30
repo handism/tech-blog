@@ -3,8 +3,10 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useState } from 'react';
 import { ToggleLeft, Hash, Cpu, AlertCircle } from 'lucide-react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 export default function Bitwise() {
+  const { copy } = useCopyToClipboard();
   // 32bit 符号なし整数をベース状態として管理
   const [baseVal, setBaseVal] = useState<number>(42);
   const [bitMode, setBitMode] = useState<8 | 16 | 32>(8);
@@ -36,7 +38,7 @@ export default function Bitwise() {
   };
 
   const handleCopy = (text: string) => {
-    navigator.clipboard.writeText(text);
+    copy(text);
     setCopiedText(text);
     setTimeout(() => setCopiedText(''), 2000);
   };

@@ -3,6 +3,7 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { Code } from 'lucide-react';
 import { useState } from 'react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const lower = 'abcdefghijklmnopqrstuvwxyz';
@@ -31,6 +32,7 @@ const generatePassword = (
 };
 
 export default function PasswordGenerator() {
+  const { copy } = useCopyToClipboard();
   const [length, setLength] = useState(16);
   const [includeUpper, setIncludeUpper] = useState(true);
   const [includeLower, setIncludeLower] = useState(true);
@@ -57,7 +59,7 @@ export default function PasswordGenerator() {
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(output);
+    copy(output);
   };
 
   return (

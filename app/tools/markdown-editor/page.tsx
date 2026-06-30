@@ -27,6 +27,7 @@ import rehypeSlug from 'rehype-slug';
 import { visit } from 'unist-util-visit';
 import type { Root, Code, Text } from 'mdast';
 import type { Root as HastRoot, Element } from 'hast';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 interface TocItem {
   id: string;
@@ -82,7 +83,7 @@ export default function MarkdownEditorTool() {
   const [toc, setToc] = useState<TocItem[]>([]);
   const [viewMode, setViewMode] = useState<'split' | 'edit' | 'preview'>('split');
   const [showTocPanel, setShowTocPanel] = useState<boolean>(true);
-  const [copied, setCopied] = useState<boolean>(false);
+  const { copied, copy } = useCopyToClipboard();
   const [copiedType, setCopiedType] = useState<string>('');
   const [isParsing, setIsParsing] = useState<boolean>(false);
 
@@ -226,11 +227,9 @@ export default function MarkdownEditorTool() {
   };
 
   const handleCopy = (text: string, type: string) => {
-    navigator.clipboard.writeText(text);
-    setCopied(true);
+    copy(text);
     setCopiedType(type);
     setTimeout(() => {
-      setCopied(false);
       setCopiedType('');
     }, 2000);
   };

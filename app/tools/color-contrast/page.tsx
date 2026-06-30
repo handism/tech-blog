@@ -3,6 +3,7 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useState, useMemo } from 'react';
 import { Eye, Copy, Check, RefreshCw, AlertCircle } from 'lucide-react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 // HEXコードをRGBオブジェクトに変換
 const hexToRgb = (hex: string) => {
@@ -107,6 +108,7 @@ const getContrastRatio = (lum1: number, lum2: number) => {
 };
 
 export default function ColorContrast() {
+  const { copy } = useCopyToClipboard();
   const [fgColor, setFgColor] = useState('#0f172a');
   const [bgColor, setBgColor] = useState('#fafafa');
   const [copiedText, setCopiedText] = useState('');
@@ -123,7 +125,7 @@ export default function ColorContrast() {
   }, [fgColor, bgColor]);
 
   const handleCopy = (text: string) => {
-    navigator.clipboard.writeText(text);
+    copy(text);
     setCopiedText(text);
     setTimeout(() => setCopiedText(''), 2000);
   };

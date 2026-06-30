@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react';
 import { GitCommit, Copy, Check, RefreshCw } from 'lucide-react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 // コミットタイプの定義
 const COMMIT_TYPES = [
@@ -31,6 +32,7 @@ const COMMIT_TYPES = [
 ];
 
 export default function GitCommitHelper() {
+  const { copy } = useCopyToClipboard();
   const [type, setType] = useState('feat');
   const [scope, setScope] = useState('');
   const [summary, setSummary] = useState('');
@@ -106,7 +108,7 @@ export default function GitCommitHelper() {
 
   const handleCopy = (text: string, label: 'commit' | 'cmd' | 'branch') => {
     if (!text) return;
-    navigator.clipboard.writeText(text);
+    copy(text);
     setCopiedType(label);
     setTimeout(() => setCopiedType(null), 2000);
   };

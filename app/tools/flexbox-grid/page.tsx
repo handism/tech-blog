@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import { Sliders, Copy, Layout, RefreshCw, Check, Plus, Minus } from 'lucide-react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 // アイテムの個別スタイル型
 interface ItemStyle {
@@ -17,7 +18,7 @@ interface ItemStyle {
 export default function FlexboxGridPlayground() {
   const [layoutMode, setLayoutMode] = useState<'flex' | 'grid'>('flex');
   const [itemCount, setItemCount] = useState(4);
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
   const [activeItemId, setActiveItemId] = useState<number | null>(null);
 
   // 個別アイテムスタイルの状態
@@ -373,9 +374,7 @@ ${style.gridColumn !== 'auto' ? `  grid-column: ${style.gridColumn};\n` : ''}${s
   ]);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(generatedCode);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    copy(generatedCode);
   };
 
   return (

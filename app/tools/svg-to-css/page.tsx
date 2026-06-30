@@ -3,6 +3,7 @@
 import { useState, useRef, useMemo } from 'react';
 import { FileCode, Copy, Check, Image as ImageIcon, Code, Upload, RefreshCw } from 'lucide-react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 // ReactのSVG属性置換マップ
 const SVG_ATTR_MAP: Record<string, string> = {
@@ -82,6 +83,7 @@ const SAMPLE_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100
 </svg>`;
 
 export default function SvgToCssPage() {
+  const { copy } = useCopyToClipboard();
   const [svgInput, setSvgInput] = useState<string>(SAMPLE_SVG);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -128,7 +130,7 @@ export default function SvgToCssPage() {
 
   // コピー処理
   const handleCopy = (text: string, key: string) => {
-    navigator.clipboard.writeText(text);
+    copy(text);
     setCopiedKey(key);
     setTimeout(() => setCopiedKey(null), 2000);
   };

@@ -2,6 +2,7 @@
 'use client';
 
 import { DEFAULT_THEME, THEME_STORAGE_KEY, themeConfig, type ThemeId } from '@/src/config/site';
+import { useIsClient } from '@/src/hooks/useIsClient';
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 interface ThemeDesignContextValue {
@@ -36,14 +37,7 @@ export function ThemeDesignProvider({ children }: { children: React.ReactNode })
     }
     return DEFAULT_THEME;
   });
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setMounted(true);
-    }, 0);
-    return () => clearTimeout(timer);
-  }, []);
+  const mounted = useIsClient();
 
   useEffect(() => {
     if (mounted) {

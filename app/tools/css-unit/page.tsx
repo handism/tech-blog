@@ -3,10 +3,12 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useState } from 'react';
 import { Ruler, Clipboard, Check } from 'lucide-react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 type UnitType = 'px' | 'rem' | 'em' | 'vw' | 'vh' | '%';
 
 export default function CssUnitConverterPage() {
+  const { copy } = useCopyToClipboard();
   const [baseFontSize, setBaseFontSize] = useState<number>(16);
   const [viewportWidth, setViewportWidth] = useState<number>(1920);
   const [viewportHeight, setViewportHeight] = useState<number>(1080);
@@ -127,7 +129,7 @@ export default function CssUnitConverterPage() {
 
   const handleCopy = (text: string, key: string) => {
     if (!text) return;
-    navigator.clipboard.writeText(text);
+    copy(text);
     setCopiedKey(key);
     setTimeout(() => setCopiedKey(null), 2000);
   };
