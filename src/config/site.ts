@@ -575,6 +575,14 @@ export const toolsMenuItems: readonly ToolItem[] = [
   },
   // エンジニアツール
   {
+    href: '/tools/aws-diagram',
+    label: 'AWS Architecture Diagram Generator',
+    description:
+      'フォーム操作でAWS構成要素（VPC/サブネット/リソース）と接続を定義し、Mermaid.jsで美しい構成図をリアルタイム生成',
+    emoji: '☁️',
+    category: 'dev',
+  },
+  {
     href: '/tools/git-commit-helper',
     label: 'Git Commit & Branch Helper',
     description: 'Conventional Commitsに準拠したコミットメッセージとGitコマンドの自動生成',
