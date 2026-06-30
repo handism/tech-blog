@@ -3,6 +3,7 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useState, useMemo } from 'react';
 import { Terminal, Copy, Check, Send } from 'lucide-react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 interface ParsedCurl {
   url: string;
@@ -119,7 +120,7 @@ function parseCurl(curlCommand: string): ParsedCurl {
 export default function CurlConverter() {
   const [curlInput, setCurlInput] = useState(DEFAULT_CURL);
   const [activeLang, setActiveLang] = useState<'fetch' | 'axios' | 'python' | 'go'>('fetch');
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
 
   const parsed = useMemo(() => {
     return parseCurl(curlInput);
@@ -248,13 +249,10 @@ export default function CurlConverter() {
   }, [parsed, activeLang]);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(generatedCode);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    copy(generatedCode);
   };
 
   const handleRandomizeSample = (type: 'get' | 'post' | 'auth') => {
-    setCopied(false);
     if (type === 'get') {
       setCurlInput(`curl 'https://api.github.com/users/handism'`);
     } else if (type === 'post') {
@@ -344,7 +342,6 @@ export default function CurlConverter() {
                       key={lang.id}
                       onClick={() => {
                         setActiveLang(lang.id);
-                        setCopied(false);
                       }}
                       className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                         activeLang === lang.id

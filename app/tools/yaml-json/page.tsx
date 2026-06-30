@@ -4,8 +4,10 @@ import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { FileJson } from 'lucide-react';
 import { useState } from 'react';
 import YAML from 'js-yaml';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 export default function YamlJsonConverter() {
+  const { copy } = useCopyToClipboard();
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
@@ -39,7 +41,7 @@ export default function YamlJsonConverter() {
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(output);
+    copy(output);
   };
 
   return (

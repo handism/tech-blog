@@ -1,7 +1,7 @@
 'use client';
 
 import { useLearningProgress } from '@/src/hooks/useLearningProgress';
-import { useEffect, useState } from 'react';
+import { useIsClient } from '@/src/hooks/useIsClient';
 
 interface Props {
   courseId: string;
@@ -10,14 +10,7 @@ interface Props {
 
 export default function CourseProgressBadge({ courseId, totalChapters }: Props) {
   const { getCourseProgress, isLoaded } = useLearningProgress();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setMounted(true);
-    }, 0);
-    return () => clearTimeout(timer);
-  }, []);
+  const mounted = useIsClient();
 
   if (!mounted || !isLoaded) {
     return (

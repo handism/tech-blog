@@ -3,6 +3,7 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { Terminal, Copy, Info, Check } from 'lucide-react';
 import { useState, useMemo } from 'react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 // Matches a single cron part
 function matchesCronPart(value: number, part: string, rangeMin: number, rangeMax: number): boolean {
@@ -196,7 +197,7 @@ function getCronExplanation(cronStr: string): string {
 
 export default function CronGenerator() {
   const [cronInput, setCronInput] = useState('*/5 * * * *');
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
 
   // Generator UI state
   const [preset, setPreset] = useState('custom');
@@ -304,9 +305,7 @@ export default function CronGenerator() {
   }, [cronInput]);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(cronInput);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    copy(cronInput);
   };
 
   return (

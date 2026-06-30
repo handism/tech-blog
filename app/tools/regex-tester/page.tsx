@@ -3,8 +3,10 @@
 import { Zap, AlertTriangle } from 'lucide-react';
 import { useState, useMemo } from 'react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 export default function RegexTester() {
+  const { copy } = useCopyToClipboard();
   const [pattern, setPattern] = useState('');
   const [flags, setFlags] = useState('g');
   const [text, setText] = useState('');
@@ -71,7 +73,7 @@ export default function RegexTester() {
   };
 
   const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
+    copy(text);
   };
 
   return (

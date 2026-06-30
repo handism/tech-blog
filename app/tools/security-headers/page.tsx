@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react';
 import { ShieldCheck, Copy, Check, Info } from 'lucide-react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 type ConfigTab = 'nginx' | 'apache' | 'vercel' | 'netlify';
 
@@ -32,7 +33,7 @@ export default function SecurityHeadersGenerator() {
 
   // タブ管理
   const [activeTab, setActiveTab] = useState<ConfigTab>('nginx');
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
 
   // 各ヘッダーのキーと値のペアを算出
   const headers = useMemo(() => {
@@ -137,9 +138,7 @@ ${lines.join('\n')}`;
   }, [headers, activeTab]);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(generatedCode);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    copy(generatedCode);
   };
 
   return (

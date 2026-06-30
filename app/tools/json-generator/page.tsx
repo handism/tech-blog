@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Database, Plus, Trash2, Copy, Check, Download, Play } from 'lucide-react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 type FieldType = 'id' | 'uuid' | 'name' | 'email' | 'date' | 'boolean' | 'number' | 'string';
 
@@ -68,7 +69,7 @@ export default function MockJsonGenerator() {
 
   const [count, setCount] = useState(10);
   const [generatedJson, setGeneratedJson] = useState<string>('');
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
 
   // フィールドの追加
   const addField = () => {
@@ -148,9 +149,7 @@ export default function MockJsonGenerator() {
 
   const handleCopy = () => {
     if (!generatedJson) return;
-    navigator.clipboard.writeText(generatedJson);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    copy(generatedJson);
   };
 
   const handleDownload = () => {

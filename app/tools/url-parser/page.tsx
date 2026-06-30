@@ -3,6 +3,7 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { Link, Copy, Trash2, Plus, AlertTriangle } from 'lucide-react';
 import { useState, useMemo } from 'react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 interface QueryParam {
   id: string;
@@ -12,7 +13,7 @@ interface QueryParam {
 
 export default function UrlParser() {
   const [urlInput, setUrlInput] = useState('');
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
   const [error, setError] = useState('');
 
   // Structured states for URL components
@@ -88,9 +89,7 @@ export default function UrlParser() {
 
   const handleCopy = () => {
     if (!reconstructedUrl) return;
-    navigator.clipboard.writeText(reconstructedUrl);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    copy(reconstructedUrl);
   };
 
   const handleAddParam = () => {

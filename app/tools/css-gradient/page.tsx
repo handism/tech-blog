@@ -14,6 +14,7 @@ import {
   RotateCw,
 } from 'lucide-react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 interface ColorStop {
   id: string;
@@ -32,7 +33,7 @@ interface MeshPoint {
 
 export default function CssGradientTool() {
   const [gradientType, setGradientType] = useState<'linear' | 'radial' | 'mesh'>('linear');
-  const [copied, setCopied] = useState<boolean>(false);
+  const { copied, copy } = useCopyToClipboard();
   const [copiedType, setCopiedType] = useState<string>('');
   const [isAppliedToSite, setIsAppliedToSite] = useState<boolean>(false);
   const originalBackgroundRef = useRef<string>('');
@@ -105,11 +106,9 @@ export default function CssGradientTool() {
 
   // 各種フォーマットでコピー
   const handleCopy = (text: string, type: string) => {
-    navigator.clipboard.writeText(text);
-    setCopied(true);
+    copy(text);
     setCopiedType(type);
     setTimeout(() => {
-      setCopied(false);
       setCopiedType('');
     }, 2000);
   };
@@ -331,7 +330,6 @@ export default function CssGradientTool() {
               key={type}
               onClick={() => {
                 setGradientType(type);
-                setCopied(false);
               }}
               className={`px-5 py-2.5 rounded-xl text-xs font-black capitalize transition-all cursor-pointer ${
                 gradientType === type

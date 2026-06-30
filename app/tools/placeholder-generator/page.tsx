@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Image as ImageIcon, Copy, Check, Download, RotateCw, Plus, Minus } from 'lucide-react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 interface SizePreset {
   label: string;
@@ -18,7 +19,7 @@ export default function PlaceholderGeneratorTool() {
   const [customText, setCustomText] = useState<string>('');
   const [fontSize, setFontSize] = useState<number>(48);
   const [fontFamily, setFontFamily] = useState<string>('Lexend');
-  const [copied, setCopied] = useState<boolean>(false);
+  const { copied, copy } = useCopyToClipboard();
   const [copiedType, setCopiedType] = useState<string>('');
 
   const sizePresets: SizePreset[] = [
@@ -76,11 +77,9 @@ export default function PlaceholderGeneratorTool() {
 
   // コピーハンドラ
   const handleCopy = (text: string, type: string) => {
-    navigator.clipboard.writeText(text);
-    setCopied(true);
+    copy(text);
     setCopiedType(type);
     setTimeout(() => {
-      setCopied(false);
       setCopiedType('');
     }, 2000);
   };

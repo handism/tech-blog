@@ -2,6 +2,7 @@
 
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useState, useMemo } from 'react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 import {
   Grid,
   Plus,
@@ -27,7 +28,7 @@ export default function MarkdownTablePage() {
 
   const [importText, setImportText] = useState('');
   const [importError, setImportError] = useState('');
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
   const [showImport, setShowImport] = useState(false);
 
   // テーブルデータからMarkdownを生成する処理 (useMemo化)
@@ -114,9 +115,7 @@ export default function MarkdownTablePage() {
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(outputMarkdown);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    copy(outputMarkdown);
   };
 
   // Markdownテーブルをインポートしてパースする

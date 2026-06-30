@@ -3,8 +3,10 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useState, useMemo } from 'react';
 import { Binary, Clipboard, Check } from 'lucide-react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 export default function CidrCalculatorPage() {
+  const { copy } = useCopyToClipboard();
   const [ipAddress, setIpAddress] = useState('192.168.1.1');
   const [prefix, setPrefix] = useState<number>(24);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
@@ -136,7 +138,7 @@ export default function CidrCalculatorPage() {
   } = calculationResult;
 
   const handleCopy = (text: string, key: string) => {
-    navigator.clipboard.writeText(text);
+    copy(text);
     setCopiedKey(key);
     setTimeout(() => setCopiedKey(null), 2000);
   };

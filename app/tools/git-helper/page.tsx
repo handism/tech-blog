@@ -3,6 +3,7 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useState, useMemo } from 'react';
 import { Terminal, Search, Copy, Check, AlertTriangle, ShieldCheck } from 'lucide-react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 interface Param {
   key: string;
@@ -241,7 +242,7 @@ export default function GitHelper() {
 
   // パラメータ入力値の格納
   const [inputParams, setInputParams] = useState<Record<string, string>>({});
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
 
   // カテゴリやユースケースの選択時にパラメータ入力値を初期化
   const selectUseCase = (useCase: GitUseCase) => {
@@ -251,7 +252,6 @@ export default function GitHelper() {
       initial[p.key] = p.defaultValue;
     });
     setInputParams(initial);
-    setCopied(false);
   };
 
   // 最初のロード時、またはユースケース変更時にパラメータを初期設定
@@ -291,9 +291,7 @@ export default function GitHelper() {
   }, [activeUseCase, inputParams]);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(generatedCommand);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    copy(generatedCommand);
   };
 
   return (

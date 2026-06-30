@@ -4,6 +4,7 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useState, useMemo } from 'react';
 import { Clipboard, Check, RefreshCw } from 'lucide-react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 export default function JsonToTsPage() {
   const [inputJson, setInputJson] = useState(
@@ -11,7 +12,7 @@ export default function JsonToTsPage() {
   );
   const [rootName, setRootName] = useState('User');
   const [outputFormat, setOutputFormat] = useState<'interface' | 'type' | 'zod'>('interface');
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
 
   const { outputCode, error } = useMemo(() => {
     if (!inputJson.trim()) {
@@ -28,9 +29,7 @@ export default function JsonToTsPage() {
   }, [inputJson, rootName, outputFormat]);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(outputCode);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    copy(outputCode);
   };
 
   const handleFormat = () => {

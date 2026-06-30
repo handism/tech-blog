@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react';
 import { Search, Eye, Clipboard, Trash2, Check, AlertTriangle, Info } from 'lucide-react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 // 特殊文字の定義
 interface SpecialCharDef {
@@ -96,7 +97,7 @@ const SPECIAL_CHARS: SpecialCharDef[] = [
 
 export default function InvisibleCharacterDetector() {
   const [inputText, setInputText] = useState('');
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
 
   // 各種クリーンアップトグル
   const [cleanFullWidthSpace, setCleanFullWidthSpace] = useState(true);
@@ -208,9 +209,7 @@ export default function InvisibleCharacterDetector() {
 
   // コピー
   const handleCopyCleaned = () => {
-    navigator.clipboard.writeText(cleanedText);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    copy(cleanedText);
   };
 
   // 全て削除

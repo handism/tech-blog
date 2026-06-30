@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Calculator, Copy, Check, Trash2, History, Delete } from 'lucide-react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 interface HistoryItem {
   id: string;
@@ -15,7 +16,7 @@ export default function CalculatorTool() {
   const [formula, setFormula] = useState<string>('');
   const [displayValue, setDisplayValue] = useState<string>('0');
   const [isCalculated, setIsCalculated] = useState<boolean>(false);
-  const [copied, setCopied] = useState<boolean>(false);
+  const { copied, copy } = useCopyToClipboard();
   const [history, setHistory] = useState<HistoryItem[]>([]);
 
   // ローカルストレージから履歴を読み込む
@@ -241,10 +242,7 @@ export default function CalculatorTool() {
   // 結果のコピー
   const copyToClipboard = () => {
     if (displayValue === 'Error') return;
-    navigator.clipboard.writeText(displayValue).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    });
+    copy(displayValue);
   };
 
   // 履歴アイテムの使用

@@ -3,10 +3,12 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { Hash } from 'lucide-react';
 import { useState } from 'react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 type HashAlgorithm = 'SHA-1' | 'SHA-256' | 'SHA-384' | 'SHA-512';
 
 export default function HashGenerator() {
+  const { copy } = useCopyToClipboard();
   const [input, setInput] = useState('');
   const [algorithm, setAlgorithm] = useState<HashAlgorithm>('SHA-256');
   const [output, setOutput] = useState('');
@@ -28,7 +30,7 @@ export default function HashGenerator() {
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(output);
+    copy(output);
   };
 
   return (

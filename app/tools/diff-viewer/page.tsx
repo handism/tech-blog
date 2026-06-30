@@ -3,6 +3,7 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { GitCompare, Copy, Trash2, Eye } from 'lucide-react';
 import { useState, useMemo } from 'react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 // LCS (Longest Common Subsequence) Algorithm for diffing
 function computeLcs(
@@ -56,7 +57,7 @@ export default function DiffViewer() {
   const [text2, setText2] = useState('');
   const [diffMode, setDiffMode] = useState<'line' | 'word' | 'char'>('line');
   const [viewMode, setViewMode] = useState<'split' | 'unified'>('split');
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
 
   // Computes the raw diff using the selected mode
   const diffResult = useMemo(() => {
@@ -149,9 +150,7 @@ export default function DiffViewer() {
       }
     });
 
-    navigator.clipboard.writeText(unifiedText);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    copy(unifiedText);
   };
 
   const clearAll = () => {

@@ -3,6 +3,7 @@
 import { useState, useMemo, useCallback } from 'react';
 import { Sliders, Copy, Download, RefreshCw, Layers, Sparkles, Check } from 'lucide-react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 // 簡易乱数ジェネレータ（シードベース）
 function createRandom(seed: number) {
@@ -16,7 +17,7 @@ function createRandom(seed: number) {
 export default function SvgWaveBlobGenerator() {
   const [mode, setMode] = useState<'blob' | 'wave'>('blob');
   const [seed, setSeed] = useState<number>(42);
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
 
   // Blob設定
   const [blobEdges, setBlobEdges] = useState(6);
@@ -254,9 +255,7 @@ ${paths}
 
   // コピー
   const handleCopy = () => {
-    navigator.clipboard.writeText(svgString);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    copy(svgString);
   };
 
   // ダウンロード

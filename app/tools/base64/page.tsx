@@ -3,6 +3,7 @@
 import { Lock } from 'lucide-react';
 import { useState } from 'react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 /**
  * UTF-8 文字列を Base64 にエンコードする (TextEncoder 版)
@@ -23,6 +24,7 @@ const decodeBase64 = (base64: string): string => {
 };
 
 export default function Base64Converter() {
+  const { copy } = useCopyToClipboard();
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
@@ -48,7 +50,7 @@ export default function Base64Converter() {
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(output);
+    copy(output);
   };
 
   return (

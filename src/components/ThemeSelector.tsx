@@ -4,7 +4,7 @@
 import { useThemeDesign } from '@/src/components/ThemeDesignProvider';
 import { themeConfig, type ThemeId } from '@/src/config/site';
 import { Check } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useIsClient } from '@/src/hooks/useIsClient';
 
 const CATEGORY_MAP = {
   modern: {
@@ -43,12 +43,7 @@ const CATEGORIES: readonly ThemeCategory[] = ['modern', 'tactile', 'tech', 'crea
  */
 export function ThemeSelector() {
   const { currentTheme, setTheme } = useThemeDesign();
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsMounted(true), 0);
-    return () => clearTimeout(timer);
-  }, []);
+  const isMounted = useIsClient();
 
   const effectiveTheme = isMounted ? currentTheme : null;
 

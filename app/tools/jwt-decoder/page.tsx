@@ -4,8 +4,10 @@ import { Key } from 'lucide-react';
 import { useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 export default function JwtDecoder() {
+  const { copy } = useCopyToClipboard();
   const [token, setToken] = useState('');
   const [decoded, setDecoded] = useState('');
   const [error, setError] = useState('');
@@ -39,7 +41,7 @@ export default function JwtDecoder() {
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(decoded);
+    copy(decoded);
   };
 
   return (

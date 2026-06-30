@@ -4,6 +4,7 @@ import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useState, useRef } from 'react';
 import { Upload, Download, Check, Clipboard } from 'lucide-react';
 import JSZip from 'jszip';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 interface IconSize {
   name: string;
@@ -62,7 +63,7 @@ export default function FaviconGeneratorPage() {
   const [sourceImage, setSourceImage] = useState<string | null>(null);
   const [imageName, setImageName] = useState<string>('');
   const [generatedIcons, setGeneratedIcons] = useState<Record<string, string>>({}); // filename -> dataUrl
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -182,9 +183,7 @@ export default function FaviconGeneratorPage() {
 <link rel="manifest" href="/site.webmanifest">`;
 
   const copyHtmlCode = () => {
-    navigator.clipboard.writeText(htmlCode);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    copy(htmlCode);
   };
 
   return (

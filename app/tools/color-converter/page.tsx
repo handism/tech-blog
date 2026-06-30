@@ -3,6 +3,7 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { Palette } from 'lucide-react';
 import { useState } from 'react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 interface Color {
   hex: string;
@@ -11,6 +12,7 @@ interface Color {
 }
 
 export default function ColorConverter() {
+  const { copy } = useCopyToClipboard();
   const [color, setColor] = useState<Color>({
     hex: '#FF5733',
     rgb: { r: 255, g: 87, b: 51 },
@@ -132,7 +134,7 @@ export default function ColorConverter() {
   };
 
   const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
+    copy(text);
   };
 
   return (

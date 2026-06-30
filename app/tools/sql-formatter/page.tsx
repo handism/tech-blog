@@ -3,6 +3,7 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { Database, Copy, Sparkles, Check } from 'lucide-react';
 import { useState, useMemo } from 'react';
+import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 // Basic custom SQL tokenizer and formatter
 function formatSql(
@@ -152,7 +153,7 @@ export default function SqlFormatter() {
   const [rawSql, setRawSql] = useState('');
   const [uppercase, setUppercase] = useState(true);
   const [indentType, setIndentType] = useState<'space2' | 'space4' | 'tab'>('space2');
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
 
   const formattedSql = useMemo(() => {
     return formatSql(rawSql, { uppercase, indentType });
@@ -160,9 +161,7 @@ export default function SqlFormatter() {
 
   const handleCopy = () => {
     if (!formattedSql) return;
-    navigator.clipboard.writeText(formattedSql);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    copy(formattedSql);
   };
 
   const handleClear = () => {
