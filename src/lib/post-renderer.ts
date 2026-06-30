@@ -10,6 +10,8 @@ import type { Root as HastRoot } from 'hast';
 import remarkGfm from 'remark-gfm';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
+import remarkCjkFriendly from 'remark-cjk-friendly';
+import remarkCjkFriendlyGfmStrikethrough from 'remark-cjk-friendly-gfm-strikethrough';
 import { unified } from 'unified';
 import { imageSizeFromFile } from 'image-size/fromFile';
 import { visit } from 'unist-util-visit';
@@ -165,6 +167,8 @@ function createProcessor() {
   return unified()
     .use(remarkParse)
     .use(remarkGfm)
+    .use(remarkCjkFriendly)
+    .use(remarkCjkFriendlyGfmStrikethrough)
     .use(remarkExtractCodeFilename)
     .use(remarkMermaid)
     .use(remarkRehype, { allowDangerousHtml: true })

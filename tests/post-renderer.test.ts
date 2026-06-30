@@ -40,4 +40,12 @@ describe('renderPostMarkdown', () => {
     expect(html2).toContain('src="data:image/png;base64,');
     expect(html2).not.toContain('width=');
   });
+
+  it('日本語の「」や句読点に隣接する強調および取り消し線が正しく認識されること', async () => {
+    const markdown =
+      '個人開発を経験することで**「全体を俯瞰する視野」**が養われます。そして、~~「不要な機能」~~を削除します。';
+    const { html } = await renderPostMarkdown(markdown);
+    expect(html).toContain('<strong>「全体を俯瞰する視野」</strong>');
+    expect(html).toContain('<del>「不要な機能」</del>');
+  });
 });
