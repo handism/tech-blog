@@ -48,10 +48,50 @@ async function downloadFont() {
       }
     } catch (writeError) {
       console.error('Critical: Failed to create fallback font file:', writeError);
-      process.exit(1);
+      throw writeError;
     }
-    process.exit(0);
   }
 }
 
-downloadFont();
+async function downloadAvatar() {
+  const destDir = path.join(process.cwd(), 'public', 'images');
+  const dest = path.join(destDir, 'avatar.png');
+
+  // 既にダウンロード済みの場合はスキップ
+  if (fs.existsSync(dest)) {
+    console.log('Avatar already downloaded.');
+    return;
+  }
+
+  const avatarUrl = 'https://github.com/handism.png';
+  console.log(`Downloading avatar from ${avatarUrl}...`);
+
+  try {
+    const response = await fetch(avatarUrl);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch avatar: ${response.statusText}`);
+    }
+    
+    const buffer = await response.arrayBuffer();
+    fs.mkdirSync(destDir, { recursive: true });
+    fs.writeFileSync(dest, Buffer.from(buffer));
+    console.log('Successfully downloaded avatar.png');
+  } catch (error) {
+    console.warn('\n=========================================');
+    console.warn('WARNING: Failed to download avatar.png.');
+    console.warn('Reason:', error.message || error);
+    console.warn('The build will continue using the remote avatar URL fallback.');
+    console.warn('=========================================\n');
+  }
+}
+
+async function main() {
+  try {
+    await Promise.all([downloadFont(), downloadAvatar()]);
+  } catch (e) {
+    process.exit(1);
+  }
+  process.exit(0);
+}
+
+main();

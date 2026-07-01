@@ -27,41 +27,100 @@ export default function RegexTester() {
     return dangerousPatterns.some((p) => p.test(pattern));
   }, [pattern]);
 
-  const handleTest = () => {
-    try {
-      setError('');
-      if (!pattern) {
-        setError('正規表現パターンを入力してください');
-        return;
-      }
-      const regex = new RegExp(pattern, flags);
-      const matches = text.match(regex);
-      if (matches) {
-        setOutput(`マッチ数: ${matches.length}\n\n${matches.join('\n')}`);
-      } else {
-        setOutput('マッチしませんでした');
-      }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'エラーが発生しました');
-      setOutput('');
+  // Web Worker を使って安全に正規表現を実行するヘルパー
+  const runRegexInWorker = (
+    mode: 'test' | 'replace',
+    onSuccess: (data: unknown) => void,
+    onFailure: (errStr: string) => void
+  ) => {
+    setError('');
+    if (!pattern) {
+      setError('正規表現パターンを入力してください');
+      return;
     }
+
+    const workerCode = `
+      self.onmessage = function(e) {
+        const { pattern, flags, text, mode, replacement } = e.data;
+        try {
+          const regex = new RegExp(pattern, flags);
+          if (mode === 'test') {
+            const matches = text.match(regex);
+            self.postMessage({ success: true, result: matches });
+          } else if (mode === 'replace') {
+            const result = text.replace(regex, replacement);
+            self.postMessage({ success: true, result: result });
+          }
+        } catch (err) {
+          self.postMessage({ success: false, error: err.message });
+        }
+      };
+    `;
+
+    const blob = new Blob([workerCode], { type: 'application/javascript' });
+    const workerUrl = URL.createObjectURL(blob);
+    const worker = new Worker(workerUrl);
+
+    const timeoutId = setTimeout(() => {
+      worker.terminate();
+      URL.revokeObjectURL(workerUrl);
+      onFailure(
+        '処理がタイムアウトしました。正規表現パターンが複雑すぎる（ReDOS）可能性があります。'
+      );
+    }, 2000); // 2秒タイムアウト
+
+    worker.onmessage = (e) => {
+      clearTimeout(timeoutId);
+      worker.terminate();
+      URL.revokeObjectURL(workerUrl);
+
+      if (e.data.success) {
+        onSuccess(e.data.result);
+      } else {
+        onFailure(e.data.error || 'エラーが発生しました');
+      }
+    };
+
+    worker.onerror = (err) => {
+      clearTimeout(timeoutId);
+      worker.terminate();
+      URL.revokeObjectURL(workerUrl);
+      onFailure(err.message || 'エラーが発生しました');
+    };
+
+    worker.postMessage({ pattern, flags, text, mode, replacement });
+  };
+
+  const handleTest = () => {
+    runRegexInWorker(
+      'test',
+      (result) => {
+        const matches = result as string[] | null;
+        if (matches) {
+          setOutput(`マッチ数: ${matches.length}\n\n${matches.join('\n')}`);
+        } else {
+          setOutput('マッチしませんでした');
+        }
+      },
+      (errStr) => {
+        setError(errStr);
+        setOutput('');
+      }
+    );
   };
 
   const handleReplace = () => {
-    try {
-      setError('');
-      if (!pattern) {
-        setError('正規表現パターンを入力してください');
-        return;
+    runRegexInWorker(
+      'replace',
+      (result) => {
+        setReplaced(result as string);
+        setOutput('');
+      },
+      (errStr) => {
+        setError(errStr);
+        setReplaced('');
       }
-      const regex = new RegExp(pattern, flags);
-      const result = text.replace(regex, replacement);
-      setReplaced(result);
-      setOutput('');
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'エラーが発生しました');
-      setReplaced('');
-    }
+    );
   };
 
   const toggleFlag = (flag: string) => {

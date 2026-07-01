@@ -50,13 +50,21 @@ function tokenizeFallback(text: string): string {
 
 /**
  * 日本語テキストを形態素解析し、検索用クエリ文字列に変換する。
- * 形態素解析エンジン（kuromoji）がロード済みの場合は内容語を抽出し、基本形に正規化する。
- * まだロードが完了していない、または失敗した場合は、軽量な簡易分かち書きフォールバックで即時応答する。
+ * ブラウザ環境（クライアントサイド）では、巨大な辞書のロードによるパフォーマンスへの影響を避けるため、
+ * 常に軽量な簡易分かち書きフォールバックで即時応答します。
+ * サーバー/ビルド環境のみ、形態素解析エンジン（kuromoji）をロードして詳細なトークナイズを行います。
  */
 export async function tokenizeForSearch(text: string, waitLoad = false): Promise<string> {
   if (!text.trim()) return text;
 
   const isServer = typeof window === 'undefined';
+
+  // クライアントサイドでは巨大な辞書のフェッチと初期化を回避するために
+  // 常にフォールバック（正規表現ベースの分かち書き）を使用します。
+  if (!isServer) {
+    return tokenizeFallback(text);
+  }
+
   const shouldWait = waitLoad || isServer;
 
   if (shouldWait && !activeTokenizer) {
@@ -81,15 +89,16 @@ export async function tokenizeForSearch(text: string, waitLoad = false): Promise
     }
   }
 
-  // まだロードされていない場合は、バックグラウンドでのロードを開始しつつ、
-  // 今回のクエリに対しては待たずに簡易分かち書きで即座に応答する（検索の即時応答性を最優先）
-  preloadTokenizer();
   return tokenizeFallback(text);
 }
 
 /**
  * バックグラウンドで形態素解析エンジンを事前ロードする。
+ * クライアントサイド（ブラウザ）では何も行いません。
  */
 export function preloadTokenizer(): void {
-  getTokenizer().catch(() => {});
+  const isServer = typeof window === 'undefined';
+  if (isServer) {
+    getTokenizer().catch(() => {});
+  }
 }

@@ -95,14 +95,14 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 
 #### 日本語検索パイプライン
 
-1. `scripts/copy-kuromoji-dict.js` — ビルド/起動時に `node_modules/kuromoji/dict` から `public/dict/` に辞書バイナリファイルをコピー
-2. `src/lib/kuromoji-tokenizer.ts` — `kuromoji` を用いて、日本語テキストを単語（トークン）のスペース区切り形式に分解するシングルトン・トークナイザー（辞書の動的読み込みとキャッシュを行う）
+1. `scripts/copy-kuromoji-dict.js` — ビルド/起動時に `node_modules/kuromoji/dict` から `public/kuromoji/dict/` に辞書バイナリファイルをコピー（コピー先にファイルが既に存在する場合は自動でスキップされる）
+2. `src/lib/kuromoji-tokenizer.ts` — `kuromoji` を用いて、日本語テキストを単語（トークン）のスペース区切り形式に分解するシングルトン・トークナイザー（※クライアントサイドでの辞書ロード負荷削減のため、ブラウザ上では簡易トークナイズにフォールバックし、Kuromojiのロードはサーバーサイド/ビルド時のみ実行するように最適化されています）
 3. `src/components/SearchBox.tsx` — クライアントサイドで記事データ（タイトル、本文、タグ、カテゴリ等）をトークナイズし、`Fuse.js` を用いて全文検索を実行
 
 #### 静的OGP画像生成パイプライン
 
-1. `scripts/download-fonts.js` — ビルド/起動時に OGP 画像で使用する日本語フォント（`NotoSansCJKjp-Bold.otf`）を Google Fonts の GitHub リポジトリから `public/fonts/` に自動ダウンロードする（失敗した場合は空のダミーファイルを置いてビルドエラーを防ぐ）
-2. `app/og/[slug]/image.png/route.tsx` — Next.js 16 の `ImageResponse` と `generateStaticParams()` を用いて、SSG（`output: 'export'`）環境でもビルド時に全ブログ記事の OGP 画像を静的 PNG ファイルとして事前生成・出力する
+1. `scripts/download-fonts.js` — ビルド/起動時に OGP 画像で使用する日本語フォント（`NotoSansCJKjp-Bold.otf`）およびアバター画像（`avatar.png`）を自動ダウンロードする（失敗した場合は空のダミーファイルを置く、または外部URLへフォールバックしてビルドエラーを防ぐ）
+2. `app/og/[slug]/image.png/route.tsx` — Next.js 16 の `ImageResponse` と `generateStaticParams()` を用いて、SSG（`output: 'export'`）環境でもビルド時に全ブログ記事の OGP 画像を静的 PNG ファイルとして事前生成・出力する（ローカルの `avatar.png` を優先し、なければ外部URLへフェイルセーフする）
 
 ### 主要ディレクトリ
 

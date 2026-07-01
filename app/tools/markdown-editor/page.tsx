@@ -187,11 +187,11 @@ export default function MarkdownEditorTool() {
         .use(remarkParse)
         .use(remarkGfm)
         .use(remarkExtractCodeFilename)
-        .use(remarkRehype, { allowDangerousHtml: true })
+        .use(remarkRehype, { allowDangerousHtml: false })
         .use(rehypeSlug)
         .use(rehypeCodeMeta)
         .use(rehypeExtractToc)
-        .use(rehypeStringify, { allowDangerousHtml: true });
+        .use(rehypeStringify, { allowDangerousHtml: false });
 
       const result = await processor.process(rawText);
       setHtml(String(result));

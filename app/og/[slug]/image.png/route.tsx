@@ -15,6 +15,7 @@ export async function generateStaticParams() {
 }
 
 let fontDataCache: ArrayBuffer | null = null;
+let avatarDataCache: string | null = null;
 
 function getFontData() {
   if (!fontDataCache) {
@@ -31,6 +32,24 @@ function getFontData() {
   return fontDataCache;
 }
 
+function getAvatarDataUri() {
+  if (!avatarDataCache) {
+    const avatarPath = path.join(process.cwd(), 'public', 'images', 'avatar.png');
+    try {
+      if (fs.existsSync(avatarPath)) {
+        const buffer = fs.readFileSync(avatarPath);
+        avatarDataCache = `data:image/png;base64,${buffer.toString('base64')}`;
+      } else {
+        avatarDataCache = `${siteConfig.github}.png`;
+      }
+    } catch (e) {
+      console.error('Failed to load local avatar image:', e);
+      avatarDataCache = `${siteConfig.github}.png`;
+    }
+  }
+  return avatarDataCache;
+}
+
 /**
  * 記事ごとの動的OGP画像を生成するルートハンドラ。
  */
@@ -43,7 +62,7 @@ export async function GET(request: Request, props: { params: Promise<{ slug: str
   }
 
   const fontData = getFontData();
-  const avatarUrl = `${siteConfig.github}.png`;
+  const avatarUrl = getAvatarDataUri();
 
   return new ImageResponse(
     <div

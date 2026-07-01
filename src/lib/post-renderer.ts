@@ -62,9 +62,12 @@ function remarkMermaid() {
   };
 }
 
+// 画像サイズ情報のキャッシュ用 Map
+const imageSizeCache = new Map<string, { width: number; height: number }>();
+
 /**
  * Markdown 本文中の画像に対して、ビルド時にファイルの
- * 実寸を読み取り width / height / loading 属性を自動付与する Rehype プラグイン。
+ * 実寸を読み取り width / height / loading 属性を自動付与する Rehype プラブイン。
  * これにより、静的エクスポート環境でも CLS（レイアウトシフト）を防止できる。
  */
 function rehypeImageSize() {
@@ -103,13 +106,25 @@ function rehypeImageSize() {
           if (!foundPath) return;
 
           try {
-            const dimensions = await imageSizeFromFile(foundPath);
-            if (dimensions.width && dimensions.height) {
-              node.properties.width = dimensions.width;
-              node.properties.height = dimensions.height;
-
-              // アスペクト比を維持しつつレスポンシブ対応するためのスタイル
+            // まずキャッシュをチェック
+            const cached = imageSizeCache.get(foundPath);
+            if (cached) {
+              node.properties.width = cached.width;
+              node.properties.height = cached.height;
               node.properties.style = `max-width: 100%; height: auto; ${node.properties.style || ''}`;
+            } else {
+              const dimensions = await imageSizeFromFile(foundPath);
+              if (dimensions.width && dimensions.height) {
+                node.properties.width = dimensions.width;
+                node.properties.height = dimensions.height;
+                node.properties.style = `max-width: 100%; height: auto; ${node.properties.style || ''}`;
+
+                // キャッシュに保存
+                imageSizeCache.set(foundPath, {
+                  width: dimensions.width,
+                  height: dimensions.height,
+                });
+              }
             }
           } catch (e) {
             console.warn(`Failed to get size for image: ${foundPath}`, e);
