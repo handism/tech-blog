@@ -1,43 +1,11 @@
 // src/lib/kuromoji-tokenizer.ts
 /**
- * kuromoji.js による日本語形態素解析（ブラウザ専用）。
- * 辞書ファイルは /kuromoji/dict/ から XHR で読み込む。
+ * kuromoji.js による日本語形態素解析。
+ * ※ 現在は検索精度の一貫性と軽量化のため、簡易分かち書きフォールバックに統一されています。
  */
-import type { Tokenizer, IpadicFeatures } from 'kuromoji';
-
-let activeTokenizer: Tokenizer<IpadicFeatures> | null = null;
-let tokenizerPromise: Promise<Tokenizer<IpadicFeatures>> | null = null;
-
-function getTokenizer(): Promise<Tokenizer<IpadicFeatures>> {
-  if (!tokenizerPromise) {
-    tokenizerPromise = import('kuromoji').then(
-      (kuromoji) =>
-        new Promise<Tokenizer<IpadicFeatures>>((resolve, reject) => {
-          const isServer = typeof window === 'undefined';
-          const dicPath = isServer
-            ? (process.cwd() + '/public/kuromoji/dict').replace(/\\/g, '/')
-            : '/kuromoji/dict';
-
-          kuromoji.builder({ dicPath }).build((err, tokenizer) => {
-            if (err) {
-              tokenizerPromise = null;
-              reject(err);
-            } else {
-              activeTokenizer = tokenizer;
-              resolve(tokenizer);
-            }
-          });
-        })
-    );
-  }
-  return tokenizerPromise;
-}
-
-// 検索に有効な品詞
-const CONTENT_POS = new Set(['名詞', '動詞', '形容詞', '副詞']);
 
 /**
- * 形態素解析が利用できない場合に備えた、文字種ベースの簡易トークナイズ（分かち書き）フォールバック。
+ * 形態素解析が利用できない場合に備えた、文字種ベース of 簡易トークナイズ（分かち書き）フォールバック。
  * 漢字・ひらがな・カタカナ・英数字の連続する部分でテキストを分割してスペースで連結する。
  */
 function tokenizeFallback(text: string): string {
@@ -49,56 +17,19 @@ function tokenizeFallback(text: string): string {
 }
 
 /**
- * 日本語テキストを形態素解析し、検索用クエリ文字列に変換する。
- * ブラウザ環境（クライアントサイド）では、巨大な辞書のロードによるパフォーマンスへの影響を避けるため、
- * 常に軽量な簡易分かち書きフォールバックで即時応答します。
- * サーバー/ビルド環境のみ、形態素解析エンジン（kuromoji）をロードして詳細なトークナイズを行います。
+ * 日本語テキストを分かち書きし、検索用クエリ文字列に変換する。
+ * 検索精度の一貫性を保つため、ビルド時（サーバー）と検索実行時（クライアント）の双方で
+ * 同一の軽量な分かち書きロジック（tokenizeFallback）を使用します。
  */
-export async function tokenizeForSearch(text: string, waitLoad = false): Promise<string> {
+export async function tokenizeForSearch(text: string, _waitLoad = false): Promise<string> {
   if (!text.trim()) return text;
-
-  const isServer = typeof window === 'undefined';
-
-  // クライアントサイドでは巨大な辞書のフェッチと初期化を回避するために
-  // 常にフォールバック（正規表現ベースの分かち書き）を使用します。
-  if (!isServer) {
-    return tokenizeFallback(text);
-  }
-
-  const shouldWait = waitLoad || isServer;
-
-  if (shouldWait && !activeTokenizer) {
-    try {
-      await getTokenizer();
-    } catch (e) {
-      console.warn('Failed to load kuromoji tokenizer, using fallback:', e);
-      return tokenizeFallback(text);
-    }
-  }
-
-  // すでにロード済みの場合はそれを使用
-  if (activeTokenizer) {
-    try {
-      const tokens = activeTokenizer.tokenize(text);
-      const terms = tokens
-        .filter((t) => CONTENT_POS.has(t.pos))
-        .map((t) => (t.basic_form && t.basic_form !== '*' ? t.basic_form : t.surface_form));
-      return terms.length > 0 ? terms.join(' ') : text;
-    } catch {
-      return tokenizeFallback(text);
-    }
-  }
-
   return tokenizeFallback(text);
 }
 
 /**
  * バックグラウンドで形態素解析エンジンを事前ロードする。
- * クライアントサイド（ブラウザ）では何も行いません。
+ * 常に軽量トークナイズを使用するため、何もしません。
  */
 export function preloadTokenizer(): void {
-  const isServer = typeof window === 'undefined';
-  if (isServer) {
-    getTokenizer().catch(() => {});
-  }
+  // no-op
 }

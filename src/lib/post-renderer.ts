@@ -214,11 +214,20 @@ function createProcessor() {
     .use(rehypeStringify, { allowDangerousHtml: true });
 }
 
+let processorInstance: ReturnType<typeof createProcessor> | null = null;
+
+function getProcessor() {
+  if (!processorInstance) {
+    processorInstance = createProcessor();
+  }
+  return processorInstance;
+}
+
 /**
  * Markdown本文をHTMLとTOCへ変換する。
  */
 export async function renderPostMarkdown(content: string): Promise<RenderedPost> {
-  const processor = createProcessor();
+  const processor = getProcessor();
   const result = await processor.process(content);
   const toc = (result.data as { toc?: TocItem[] }).toc ?? [];
 

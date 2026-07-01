@@ -33,10 +33,13 @@ export function createMarkdownRepository(dirPath: string): MarkdownRepository {
       );
     },
     async readSourceBySlug(slug: string) {
-      const fullPath = path.join(/*turbopackIgnore: true*/ dirPath, `${slug}.md`);
+      const resolvedPath = path.resolve(/*turbopackIgnore: true*/ dirPath, `${slug}.md`);
+      if (!resolvedPath.startsWith(path.resolve(dirPath))) {
+        return null;
+      }
       return catchEnoent(
         (async () => {
-          const raw = await fs.readFile(fullPath, 'utf8');
+          const raw = await fs.readFile(resolvedPath, 'utf8');
           return { slug, raw };
         })(),
         null

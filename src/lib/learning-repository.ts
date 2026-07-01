@@ -39,7 +39,10 @@ export async function getCourseIds(): Promise<string[]> {
  * 特定コースのメタデータ (meta.json) を読み込む。
  */
 export async function readCourseMeta(courseId: string): Promise<LearningCourseMeta | null> {
-  const metaPath = path.join(/*turbopackIgnore: true*/ learningDir, courseId, 'meta.json');
+  const metaPath = path.resolve(/*turbopackIgnore: true*/ learningDir, courseId, 'meta.json');
+  if (!metaPath.startsWith(path.resolve(learningDir))) {
+    return null;
+  }
   return catchEnoent(
     (async () => {
       const raw = await fs.readFile(metaPath, 'utf-8');
@@ -70,7 +73,10 @@ export async function readAllCourseMetas(): Promise<LearningCourseMeta[]> {
  * 指定されたコース内の全Markdownファイルの生データを取得する。
  */
 export async function readLearningSourcesByCourse(courseId: string): Promise<LearningSource[]> {
-  const courseDir = path.join(/*turbopackIgnore: true*/ learningDir, courseId);
+  const courseDir = path.resolve(/*turbopackIgnore: true*/ learningDir, courseId);
+  if (!courseDir.startsWith(path.resolve(learningDir))) {
+    return [];
+  }
   return catchEnoent(
     (async () => {
       const files = await fs.readdir(courseDir, { withFileTypes: true });
@@ -108,10 +114,13 @@ export async function readLearningSource(
   courseId: string,
   slug: string
 ): Promise<LearningSource | null> {
-  const fullPath = path.join(/*turbopackIgnore: true*/ learningDir, courseId, `${slug}.md`);
+  const resolvedPath = path.resolve(/*turbopackIgnore: true*/ learningDir, courseId, `${slug}.md`);
+  if (!resolvedPath.startsWith(path.resolve(learningDir))) {
+    return null;
+  }
   return catchEnoent(
     (async () => {
-      const raw = await fs.readFile(fullPath, 'utf8');
+      const raw = await fs.readFile(resolvedPath, 'utf8');
       return { course: courseId, slug, raw };
     })(),
     null
