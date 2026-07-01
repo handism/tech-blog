@@ -3,10 +3,9 @@
 import { Link as LinkIcon } from 'lucide-react';
 import { useState } from 'react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import ResultBox from '@/src/components/ResultBox';
 
 export default function UrlCodec() {
-  const { copy } = useCopyToClipboard();
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
 
@@ -28,25 +27,21 @@ export default function UrlCodec() {
     }
   };
 
-  const copyToClipboard = () => {
-    copy(output);
-  };
-
   return (
     <ToolPageLayout
       title="URL エンコード・デコード"
-      description="URL のクエリパラメータなどに用いる文字列のエンコード・デコード"
+      description="URL のクエリパラメータなどに用いる文字列 of エンコード・デコード"
       icon={LinkIcon}
     >
       <div className="space-y-6">
         {/* 入力エリア */}
-        <div>
-          <label className="block text-sm font-bold text-text mb-2">入力</label>
+        <div className="space-y-2">
+          <label className="block text-xs font-bold text-text/70">入力</label>
           <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="ここに URL またはテキストを入力"
-            className="w-full h-40 px-4 py-3 border-2 border-border bg-card text-text font-mono text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-accent resize-none shadow-[2px_2px_0px_0px_var(--border)]"
+            className="w-full h-40 border-2 border-border p-3 rounded-lg bg-card text-text font-mono text-sm focus:outline-none focus:ring-2 focus:ring-accent resize-none"
           />
         </div>
 
@@ -61,27 +56,10 @@ export default function UrlCodec() {
         </div>
 
         {/* 出力エリア */}
-        {output && (
-          <div>
-            <div className="flex justify-between items-center mb-2">
-              <label className="block text-sm font-bold text-text">出力</label>
-              <button
-                onClick={copyToClipboard}
-                className="theme-btn px-3 py-1 text-xs shadow-[2px_2px_0px_0px_var(--border)]"
-              >
-                コピー
-              </button>
-            </div>
-            <textarea
-              value={output}
-              readOnly
-              className="w-full h-40 px-4 py-3 border-2 border-border bg-secondary text-text font-mono text-sm rounded-xl resize-none shadow-[2px_2px_0px_0px_var(--border)]"
-            />
-          </div>
-        )}
+        {output && <ResultBox value={output} label="出力" />}
 
         {/* 変換例 */}
-        <div className="bg-secondary border-2 border-border p-6 rounded-xl shadow-[4px_4px_0px_0px_var(--border)]">
+        <div className="theme-card p-6 bg-secondary">
           <h2 className="text-sm font-bold text-text mb-4">変換例</h2>
           <div className="space-y-4 text-sm font-mono">
             <div>

@@ -3,7 +3,7 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { Code } from 'lucide-react';
 import { useState } from 'react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import ResultBox from '@/src/components/ResultBox';
 
 const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const lower = 'abcdefghijklmnopqrstuvwxyz';
@@ -32,7 +32,6 @@ const generatePassword = (
 };
 
 export default function PasswordGenerator() {
-  const { copy } = useCopyToClipboard();
   const [length, setLength] = useState(16);
   const [includeUpper, setIncludeUpper] = useState(true);
   const [includeLower, setIncludeLower] = useState(true);
@@ -58,61 +57,55 @@ export default function PasswordGenerator() {
     }
   };
 
-  const copyToClipboard = () => {
-    copy(output);
-  };
-
   return (
     <ToolPageLayout title="Password Generator" icon={Code}>
       <div className="space-y-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-              文字数
-            </label>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <label className="block text-xs font-bold text-text/70">文字数</label>
             <input
               type="number"
               min={8}
               max={64}
               value={length}
               onChange={(e) => setLength(Number(e.target.value))}
-              className="w-full px-4 py-3 border border-slate-300 dark:border-slate-500 dark:bg-slate-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500"
+              className="w-full border-2 border-border p-3 rounded-lg bg-card text-sm font-black focus:outline-none focus:ring-2 focus:ring-accent"
             />
           </div>
-          <div className="space-y-2">
-            <label className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+          <div className="space-y-3 pt-2">
+            <label className="flex items-center gap-3 text-sm font-bold text-text/80 cursor-pointer">
               <input
                 type="checkbox"
                 checked={includeUpper}
                 onChange={(e) => setIncludeUpper(e.target.checked)}
-                className="w-4 h-4"
+                className="w-4 h-4 border-2 border-border rounded accent-accent"
               />
               大文字を含める
             </label>
-            <label className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+            <label className="flex items-center gap-3 text-sm font-bold text-text/80 cursor-pointer">
               <input
                 type="checkbox"
                 checked={includeLower}
                 onChange={(e) => setIncludeLower(e.target.checked)}
-                className="w-4 h-4"
+                className="w-4 h-4 border-2 border-border rounded accent-accent"
               />
               小文字を含める
             </label>
-            <label className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+            <label className="flex items-center gap-3 text-sm font-bold text-text/80 cursor-pointer">
               <input
                 type="checkbox"
                 checked={includeNumbers}
                 onChange={(e) => setIncludeNumbers(e.target.checked)}
-                className="w-4 h-4"
+                className="w-4 h-4 border-2 border-border rounded accent-accent"
               />
               数字を含める
             </label>
-            <label className="flex items-center gap-3 text-slate-700 dark:text-slate-300">
+            <label className="flex items-center gap-3 text-sm font-bold text-text/80 cursor-pointer">
               <input
                 type="checkbox"
                 checked={includeSymbols}
                 onChange={(e) => setIncludeSymbols(e.target.checked)}
-                className="w-4 h-4"
+                className="w-4 h-4 border-2 border-border rounded accent-accent"
               />
               記号を含める
             </label>
@@ -120,33 +113,20 @@ export default function PasswordGenerator() {
         </div>
 
         {error && (
-          <div className="bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-600 text-red-800 dark:text-red-200 px-4 py-3 rounded-lg">
+          <div className="border-2 border-red-500 bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 p-4 rounded-lg text-sm font-bold">
             {error}
           </div>
         )}
 
-        <div className="space-y-3">
+        <div className="space-y-4">
           <button
             onClick={handleGenerate}
-            className="bg-slate-700 hover:bg-slate-800 text-white font-semibold py-3 px-5 rounded-lg transition"
+            className="theme-btn px-5 py-3 font-bold text-sm w-full sm:w-auto"
           >
             パスワードを生成
           </button>
 
-          {output && (
-            <div className="rounded-lg bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 px-4 py-3 font-mono text-sm text-slate-900 dark:text-white break-all">
-              <div className="flex justify-between items-center mb-2">
-                <span className="font-semibold text-slate-700 dark:text-slate-300">生成結果</span>
-                <button
-                  onClick={copyToClipboard}
-                  className="text-xs bg-slate-200 dark:bg-slate-600 hover:bg-slate-300 dark:hover:bg-slate-500 text-slate-800 dark:text-white px-3 py-1 rounded transition"
-                >
-                  コピー
-                </button>
-              </div>
-              {output}
-            </div>
-          )}
+          {output && <ResultBox value={output} />}
         </div>
       </div>
     </ToolPageLayout>
