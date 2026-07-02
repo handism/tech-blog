@@ -34,7 +34,9 @@ export function createMarkdownRepository(dirPath: string): MarkdownRepository {
     },
     async readSourceBySlug(slug: string) {
       const resolvedPath = path.resolve(/*turbopackIgnore: true*/ dirPath, `${slug}.md`);
-      if (!resolvedPath.startsWith(path.resolve(dirPath))) {
+      const relative = path.relative(dirPath, resolvedPath);
+      const isSafe = relative && !relative.startsWith('..') && !path.isAbsolute(relative);
+      if (!isSafe) {
         return null;
       }
       return catchEnoent(

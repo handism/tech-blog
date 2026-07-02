@@ -11,6 +11,8 @@ const imgDir = path.join(/*turbopackIgnore: true*/ awsDir, 'img');
 
 const publicDestDir = path.join(/*turbopackIgnore: true*/ process.cwd(), 'public', 'aws-patterns');
 
+let isAssetCopied = false;
+
 /**
  * ファイルが必要な場合のみコピーを行う（更新日時比較）。
  */
@@ -56,21 +58,24 @@ export async function readAllPatternMetas(): Promise<AwsPatternMeta[]> {
   const metas = ArraySchema.parse(parsed);
 
   // ビルド/開発時に必要なアセットを自動コピー
-  await Promise.all(
-    metas.flatMap((meta) => {
-      const tasks: Promise<void>[] = [];
-      // YAMLファイルのコピー
-      const yamlSrc = path.join(/*turbopackIgnore: true*/ iacDir, meta.templateFile);
-      tasks.push(ensureAssetCopied(yamlSrc, meta.templateFile));
+  if (!isAssetCopied) {
+    await Promise.all(
+      metas.flatMap((meta) => {
+        const tasks: Promise<void>[] = [];
+        // YAMLファイルのコピー
+        const yamlSrc = path.join(/*turbopackIgnore: true*/ iacDir, meta.templateFile);
+        tasks.push(ensureAssetCopied(yamlSrc, meta.templateFile));
 
-      // 画像（SVG）ファイルのコピー
-      if (meta.diagramFile) {
-        const imgSrc = path.join(/*turbopackIgnore: true*/ imgDir, meta.diagramFile);
-        tasks.push(ensureAssetCopied(imgSrc, meta.diagramFile));
-      }
-      return tasks;
-    })
-  );
+        // 画像（SVG）ファイルのコピー
+        if (meta.diagramFile) {
+          const imgSrc = path.join(/*turbopackIgnore: true*/ imgDir, meta.diagramFile);
+          tasks.push(ensureAssetCopied(imgSrc, meta.diagramFile));
+        }
+        return tasks;
+      })
+    );
+    isAssetCopied = true;
+  }
 
   return metas;
 }

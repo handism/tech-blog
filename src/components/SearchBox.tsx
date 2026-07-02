@@ -2,7 +2,7 @@
 'use client';
 
 import { createPostSearcher, searchPostsWithMatches } from '@/src/lib/client-search';
-import { preloadTokenizer, tokenizeForSearch } from '@/src/lib/kuromoji-tokenizer';
+import { tokenizeForSearch } from '@/src/lib/kuromoji-tokenizer';
 import type { RangeTuple } from 'fuse.js';
 import type { PostMeta } from '@/src/types/post';
 import Link from 'next/link';
@@ -48,7 +48,6 @@ export default function SearchBox() {
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
   const handleFocus = async () => {
-    preloadTokenizer();
     if (posts.length > 0 || isLoading) return;
     setIsLoading(true);
     try {
@@ -71,7 +70,6 @@ export default function SearchBox() {
     let cancelled = false;
     idleCallback(() => {
       if (cancelled) return;
-      preloadTokenizer();
       if (posts.length > 0 || isLoading) return;
 
       fetch('/search.json')

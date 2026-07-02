@@ -57,10 +57,88 @@ export default function CalculatorTool() {
       return 'Error';
     }
 
+    // 再帰下降パーサーの実装
+    const parseAndEvaluate = (valExpr: string): number => {
+      let index = 0;
+
+      const peek = () => valExpr[index];
+      const consume = () => valExpr[index++];
+
+      const skipWhitespace = () => {
+        while (peek() === ' ') consume();
+      };
+
+      const parseNumber = (): number => {
+        skipWhitespace();
+        const start = index;
+        if (peek() === '-' || peek() === '+') {
+          consume();
+        }
+        while (peek() !== undefined && /[0-9.]/.test(peek())) {
+          consume();
+        }
+        const numStr = valExpr.slice(start, index);
+        const val = parseFloat(numStr);
+        if (isNaN(val)) throw new Error('Invalid number');
+        return val;
+      };
+
+      const parseFactor = (): number => {
+        skipWhitespace();
+        const c = peek();
+        if (c === '(') {
+          consume();
+          const val = parseExpression();
+          skipWhitespace();
+          if (peek() !== ')') throw new Error('Mismatched parenthesis');
+          consume();
+          return val;
+        }
+        return parseNumber();
+      };
+
+      const parseTerm = (): number => {
+        let val = parseFactor();
+        skipWhitespace();
+        while (peek() === '*' || peek() === '/') {
+          const op = consume();
+          const nextVal = parseFactor();
+          if (op === '*') {
+            val *= nextVal;
+          } else {
+            if (nextVal === 0) throw new Error('Division by zero');
+            val /= nextVal;
+          }
+          skipWhitespace();
+        }
+        return val;
+      };
+
+      const parseExpression = (): number => {
+        let val = parseTerm();
+        skipWhitespace();
+        while (peek() === '+' || peek() === '-') {
+          const op = consume();
+          const nextVal = parseTerm();
+          if (op === '+') {
+            val += nextVal;
+          } else {
+            val -= nextVal;
+          }
+          skipWhitespace();
+        }
+        return val;
+      };
+
+      const result = parseExpression();
+      skipWhitespace();
+      if (index < valExpr.length) throw new Error('Extra tokens');
+      return result;
+    };
+
     try {
       // 安全に数式を評価
-      const fn = new Function(`return (${targetExpr})`);
-      const result = fn();
+      const result = parseAndEvaluate(targetExpr);
 
       if (typeof result !== 'number' || isNaN(result) || !isFinite(result)) {
         return 'Error';

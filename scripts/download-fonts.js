@@ -6,8 +6,8 @@ async function downloadFont() {
   const destDir = path.join(process.cwd(), 'public', 'fonts');
   const dest = path.join(destDir, 'NotoSansCJKjp-Bold.otf');
 
-  // 既にダウンロード済みの場合はスキップ
-  if (fs.existsSync(dest)) {
+  // 既にダウンロード済み（かつ空ファイルでない）の場合はスキップ
+  if (fs.existsSync(dest) && fs.statSync(dest).size > 0) {
     console.log('Font already downloaded.');
     return;
   }
@@ -57,8 +57,8 @@ async function downloadAvatar() {
   const destDir = path.join(process.cwd(), 'public', 'images');
   const dest = path.join(destDir, 'avatar.png');
 
-  // 既にダウンロード済みの場合はスキップ
-  if (fs.existsSync(dest)) {
+  // 既にダウンロード済み（かつ空ファイルでない）の場合はスキップ
+  if (fs.existsSync(dest) && fs.statSync(dest).size > 0) {
     console.log('Avatar already downloaded.');
     return;
   }

@@ -1,7 +1,7 @@
 // src/lib/kuromoji-tokenizer.ts
 /**
- * kuromoji.js による日本語形態素解析。
- * ※ 現在は検索精度の一貫性と軽量化のため、簡易分かち書きフォールバックに統一されています。
+ * 簡易分かち書きによる日本語トークナイズ（検索キーワード抽出用）。
+ * ※ クライアント側（ブラウザ）とサーバー側（ビルド時）で同一の軽量トークナイズを使用します。
  */
 
 /**
@@ -24,12 +24,4 @@ function tokenizeFallback(text: string): string {
 export async function tokenizeForSearch(text: string, _waitLoad = false): Promise<string> {
   if (!text.trim()) return text;
   return tokenizeFallback(text);
-}
-
-/**
- * バックグラウンドで形態素解析エンジンを事前ロードする。
- * 常に軽量トークナイズを使用するため、何もしません。
- */
-export function preloadTokenizer(): void {
-  // no-op
 }
