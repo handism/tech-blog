@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import {
   FileText,
   Copy,
@@ -12,7 +12,7 @@ import {
   Split,
   ChevronRight,
   Printer,
-  History,
+  List,
 } from 'lucide-react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useThemeDesign } from '@/src/components/ThemeDesignProvider';
@@ -25,14 +25,47 @@ import remarkRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify';
 import rehypeSlug from 'rehype-slug';
 import { visit } from 'unist-util-visit';
-import type { Root, Code, Text } from 'mdast';
-import type { Root as HastRoot, Element } from 'hast';
+import type { Root as HastRoot, Element, Text } from 'hast';
+import { remarkExtractCodeFilename } from '@/src/lib/remark-plugins';
 import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 interface TocItem {
   id: string;
   text: string;
   level: number;
+}
+
+/**
+ * コードブロックの pre/code タグに data-attributes を付与する Rehype プラグイン。
+ * モジュールトップレベルで定義して毎レンダリング時の再生成を防ぐ。
+ */
+function rehypeCodeMeta() {
+  return (tree: HastRoot) => {
+    visit(tree, 'element', (node: Element) => {
+      if (node.tagName === 'pre') {
+        const codeNode = node.children?.find(
+          (c): c is Element => c.type === 'element' && c.tagName === 'code'
+        );
+        if (codeNode) {
+          // 言語クラスの抽出
+          const className = (codeNode.properties?.className as string[]) || [];
+          const langClass = className.find((c: string) => c.startsWith('language-'));
+          if (langClass) {
+            const lang = langClass.replace('language-', '');
+            node.properties = node.properties || {};
+            node.properties['data-language'] = lang;
+          }
+          // meta情報の filename を data-filename に変換する
+          const meta = (codeNode.data as { meta?: string })?.meta || '';
+          const filenameMatch = meta.match(/filename="([^"]+)"/);
+          if (filenameMatch) {
+            node.properties = node.properties || {};
+            node.properties['data-filename'] = filenameMatch[1];
+          }
+        }
+      }
+    });
+  };
 }
 
 const DEFAULT_MARKDOWN = `# Markdown Live Editor
@@ -91,81 +124,10 @@ export default function MarkdownEditorTool() {
   const previewRef = useRef<HTMLDivElement>(null);
   const isSyncingScrollRef = useRef<boolean>(false);
 
-  // ローカルストレージからロード
-  useEffect(() => {
-    const saved = localStorage.getItem('markdown_draft');
-    setMarkdown(saved !== null ? saved : DEFAULT_MARKDOWN);
-  }, []);
-
-  // マークダウンの変更があったらパースを実行する (Debounce)
-  useEffect(() => {
-    if (markdown === '') {
-      setHtml('');
-      setToc([]);
-      return;
-    }
-
-    setIsParsing(true);
-    const timer = setTimeout(() => {
-      parseMarkdown(markdown);
-    }, 250); // 250ms debounce
-
-    // 自動保存
-    localStorage.setItem('markdown_draft', markdown);
-
-    return () => clearTimeout(timer);
-  }, [markdown]);
-
   // Unified による Markdown パース
-  const parseMarkdown = async (rawText: string) => {
+  const parseMarkdown = useCallback(async (rawText: string) => {
     try {
-      // 1. コードブロックのファイル名指定をメタに変換する Remark プラグイン
-      const remarkExtractCodeFilename = () => {
-        return (tree: Root) => {
-          visit(tree, 'code', (node: Code) => {
-            if (node.lang?.includes(':')) {
-              const colonIdx = node.lang.indexOf(':');
-              const filename = node.lang.slice(colonIdx + 1);
-              node.lang = node.lang.slice(0, colonIdx) || null;
-              node.meta = node.meta
-                ? `${node.meta} filename="${filename}"`
-                : `filename="${filename}"`;
-            }
-          });
-        };
-      };
-
-      // 2. コードブロックの pre/code タグに data-attributes を付与する Rehype プラグイン
-      const rehypeCodeMeta = () => {
-        return (tree: HastRoot) => {
-          visit(tree, 'element', (node: Element) => {
-            if (node.tagName === 'pre') {
-              const codeNode = node.children?.find(
-                (c): c is Element => c.type === 'element' && c.tagName === 'code'
-              );
-              if (codeNode) {
-                // 言語クラスの抽出
-                const className = (codeNode.properties?.className as string[]) || [];
-                const langClass = className.find((c: string) => c.startsWith('language-'));
-                if (langClass) {
-                  const lang = langClass.replace('language-', '');
-                  node.properties = node.properties || {};
-                  node.properties['data-language'] = lang;
-                }
-                // meta情報の filename を data-filename に変換する
-                const meta = (codeNode.data as { meta?: string })?.meta || '';
-                const filenameMatch = meta.match(/filename="([^"]+)"/);
-                if (filenameMatch) {
-                  node.properties = node.properties || {};
-                  node.properties['data-filename'] = filenameMatch[1];
-                }
-              }
-            }
-          });
-        };
-      };
-
-      // 3. 見出しから TOC (目次) を抽出する Rehype プラグイン
+      // 見出しから TOC (目次) を抽出する Rehype プラグイン（ローカル状態を参照するため関数内で定義）
       const tempToc: TocItem[] = [];
       const rehypeExtractToc = () => {
         return (tree: HastRoot) => {
@@ -201,7 +163,32 @@ export default function MarkdownEditorTool() {
     } finally {
       setIsParsing(false);
     }
-  };
+  }, []);
+
+  // ローカルストレージからロード
+  useEffect(() => {
+    const saved = localStorage.getItem('markdown_draft');
+    setMarkdown(saved !== null ? saved : DEFAULT_MARKDOWN);
+  }, []);
+
+  // マークダウンの変更があったらパースを実行する (Debounce)
+  useEffect(() => {
+    if (markdown === '') {
+      setHtml('');
+      setToc([]);
+      return;
+    }
+
+    setIsParsing(true);
+    const timer = setTimeout(() => {
+      parseMarkdown(markdown);
+    }, 250); // 250ms debounce
+
+    // 自動保存
+    localStorage.setItem('markdown_draft', markdown);
+
+    return () => clearTimeout(timer);
+  }, [markdown, parseMarkdown]);
 
   // スクロール同期
   const handleScroll = (source: 'editor' | 'preview') => {
@@ -465,7 +452,7 @@ export default function MarkdownEditorTool() {
           <div className="lg:col-span-3">
             <div className="theme-card p-5 bg-card border-2 border-border shadow-[4px_4px_0px_0px_var(--border)] dark:shadow-[4px_4px_0px_0px_var(--accent)] h-full min-h-[250px] flex flex-col">
               <h3 className="font-extrabold text-sm border-b-2 border-border pb-3 mb-4 text-text flex items-center gap-1.5">
-                <History className="w-4 h-4 text-accent shrink-0" />
+                <List className="w-4 h-4 text-accent shrink-0" />
                 <span>ドキュメント目次</span>
               </h3>
 

@@ -35,10 +35,6 @@ export function parsePostSource(raw: string): ParsedPostSource {
 }
 
 /**
- * マークダウン本文をプレーンテキストに変換する。
- * コードブロック・画像・テーブル・HTML タグなどを除去し、本文のみ残す。
- */
-/**
  * frontmatterと本文から一覧向けメタ情報を生成する。
  */
 export async function createPostMeta(

@@ -1,5 +1,6 @@
 // src/lib/post-renderer.ts
 import { generateTocFromHast } from '@/src/lib/toc';
+import { remarkExtractCodeFilename } from '@/src/lib/remark-plugins';
 import type { TocItem } from '@/src/types/post';
 import rehypeShiki from '@shikijs/rehype';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
@@ -25,24 +26,6 @@ type RenderedPost = {
 };
 
 type ShikiOptions = { meta?: { __raw?: string }; lang?: string };
-
-/**
- * コードブロックの言語指定からファイル名を分離するRemarkプラグイン。
- * 例: ```ts:filename.ts → lang="ts", meta に filename="filename.ts" を追加
- */
-function remarkExtractCodeFilename() {
-  return (tree: Root) => {
-    visit(tree, 'code', (node: Code) => {
-      if (node.lang?.includes(':')) {
-        const colonIdx = node.lang.indexOf(':');
-        const filename = node.lang.slice(colonIdx + 1);
-        node.lang = node.lang.slice(0, colonIdx) || null;
-        const filenameMeta = `filename="${filename}"`;
-        node.meta = node.meta ? `${node.meta} ${filenameMeta}` : filenameMeta;
-      }
-    });
-  };
-}
 
 /**
  * Mermaidのコードブロックを検出し、Shikiをバイパスして

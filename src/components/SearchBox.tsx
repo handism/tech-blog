@@ -7,7 +7,7 @@ import type { RangeTuple } from 'fuse.js';
 import type { PostMeta } from '@/src/types/post';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 /**
  * マッチ位置情報をもとにテキストを <mark> でハイライトした React ノード配列を返す。
@@ -47,20 +47,24 @@ export default function SearchBox() {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
-  const handleFocus = async () => {
+  /**
+   * 検索インデックスをフェッチしてセットする共通ロジック。
+   * すでにロード済みまたはロード中の場合は何もしない。
+   */
+  const loadSearchIndex = useCallback(async () => {
     if (posts.length > 0 || isLoading) return;
     setIsLoading(true);
     try {
       const res = await fetch('/search.json');
-      const data = await res.json();
-      setPosts(data);
+      setPosts(await res.json());
     } catch (e) {
       console.error('Failed to fetch search index:', e);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [isLoading, posts.length]);
 
+  // アイドル時にプリフェッチ（フォーカス前に準備）
   useEffect(() => {
     const idleCallback =
       typeof window !== 'undefined' && 'requestIdleCallback' in window
@@ -69,17 +73,7 @@ export default function SearchBox() {
 
     let cancelled = false;
     idleCallback(() => {
-      if (cancelled) return;
-      if (posts.length > 0 || isLoading) return;
-
-      fetch('/search.json')
-        .then((res) => res.json())
-        .then((data) => {
-          if (!cancelled) setPosts(data);
-        })
-        .catch((e) => {
-          console.error('Failed to pre-fetch search index:', e);
-        });
+      if (!cancelled) loadSearchIndex();
     });
 
     return () => {
@@ -167,8 +161,8 @@ export default function SearchBox() {
         placeholder={isLoading ? '読込中...' : '検索...'}
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        onFocus={handleFocus}
-        onMouseEnter={handleFocus}
+        onFocus={loadSearchIndex}
+        onMouseEnter={loadSearchIndex}
         onKeyDown={handleKeyDown}
         role="combobox"
         aria-expanded={hasResults}

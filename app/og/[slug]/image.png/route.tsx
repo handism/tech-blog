@@ -1,8 +1,7 @@
 import { siteConfig } from '@/src/config/site';
 import { getAllPostMeta, getPostMetaBySlug } from '@/src/lib/posts-server';
-import fs from 'fs';
+import { getOgFontData, getOgAvatarDataUri } from '@/src/lib/og-helpers';
 import { ImageResponse } from 'next/og';
-import path from 'path';
 
 /**
  * ビルド時にすべての記事のOGPルートを事前生成する
@@ -12,42 +11,6 @@ export async function generateStaticParams() {
   return posts.map((post) => ({
     slug: post.slug,
   }));
-}
-
-let fontDataCache: ArrayBuffer | null = null;
-let avatarDataCache: string | null = null;
-
-function getFontData() {
-  if (!fontDataCache) {
-    const fontPath = path.join(process.cwd(), 'public', 'fonts', 'NotoSansCJKjp-Bold.otf');
-    try {
-      // readFileSyncでバッファとして読み込み、ArrayBufferに変換
-      const buffer = fs.readFileSync(fontPath);
-      fontDataCache = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
-    } catch (e) {
-      console.error('Failed to load font. Did you run `npm run dev` or download scripts?', e);
-      throw e;
-    }
-  }
-  return fontDataCache;
-}
-
-function getAvatarDataUri() {
-  if (!avatarDataCache) {
-    const avatarPath = path.join(process.cwd(), 'public', 'images', 'avatar.png');
-    try {
-      if (fs.existsSync(avatarPath)) {
-        const buffer = fs.readFileSync(avatarPath);
-        avatarDataCache = `data:image/png;base64,${buffer.toString('base64')}`;
-      } else {
-        avatarDataCache = `${siteConfig.github}.png`;
-      }
-    } catch (e) {
-      console.error('Failed to load local avatar image:', e);
-      avatarDataCache = `${siteConfig.github}.png`;
-    }
-  }
-  return avatarDataCache;
 }
 
 /**
@@ -61,8 +24,8 @@ export async function GET(request: Request, props: { params: Promise<{ slug: str
     return new Response('Not Found', { status: 404 });
   }
 
-  const fontData = getFontData();
-  const avatarUrl = getAvatarDataUri();
+  const fontData = getOgFontData();
+  const avatarUrl = getOgAvatarDataUri();
 
   return new ImageResponse(
     <div

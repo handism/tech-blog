@@ -20,17 +20,25 @@ export const getAllScrapMeta = cache(async function getAllScrapMeta(): Promise<S
 
 /**
  * 全スクラップを本文HTML付きで取得（フィードページ用）。
+ * ドラフト除外・日付ソートをHTMLレンダリングより先に実施し、無駄な処理を省く。
  */
 export const getAllScraps = cache(async function getAllScraps(): Promise<Scrap[]> {
   const sources = await readAllScrapSources();
-  const scraps = await Promise.all(
-    sources.map(async ({ slug, raw }) => {
-      const { data, content } = parseScrapSource(raw);
-      const meta = createScrapMeta(slug, data, content);
+
+  // まずメタ情報のみ生成し、ドラフト除外・日付ソートを先に実施
+  const parsed = sources.map(({ slug, raw }) => {
+    const { data, content } = parseScrapSource(raw);
+    return { meta: createScrapMeta(slug, data, content), content };
+  });
+  const slugOrder = sortByDate(filterDrafts(parsed.map((p) => p.meta))).map((m) => m.slug);
+  const parsedBySlug = new Map(parsed.map((p) => [p.meta.slug, p]));
+
+  // 可視スクラップのみHTMLをレンダリング
+  return Promise.all(
+    slugOrder.map(async (slug) => {
+      const { meta, content } = parsedBySlug.get(slug)!;
       const { html } = await renderPostMarkdown(content);
       return { ...meta, content: html };
     })
   );
-  const filtered = filterDrafts(scraps);
-  return sortByDate(filtered);
 });

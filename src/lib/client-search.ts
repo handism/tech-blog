@@ -46,15 +46,6 @@ export function createPostSearcher(posts: PostMeta[]): Fuse<PostMeta> {
 }
 
 /**
- * 生成済みの検索インデックスで記事を検索する。
- */
-export function searchPosts(searcher: Fuse<PostMeta>, keyword: string): PostMeta[] {
-  if (!keyword.trim()) return [];
-
-  return searcher.search(keyword).map((result) => result.item);
-}
-
-/**
  * マッチ位置情報付きで記事を検索する。
  * タイトルのハイライトと本文スニペットを返す。
  */

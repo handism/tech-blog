@@ -1,6 +1,6 @@
 // tests/client-search.test.ts
 import { describe, expect, it } from 'vitest';
-import { createPostSearcher, searchPosts, searchPostsWithMatches } from '@/src/lib/client-search';
+import { createPostSearcher, searchPostsWithMatches } from '@/src/lib/client-search';
 import type { PostMeta } from '@/src/types/post';
 
 const makePosts = (): PostMeta[] => [
@@ -52,23 +52,24 @@ describe('createPostSearcher', () => {
   });
 });
 
-describe('searchPosts', () => {
+describe('searchPosts (インライン実装)', () => {
   it('タイトルにマッチする記事を返す', () => {
     const searcher = createPostSearcher(makePosts());
-    const results = searchPosts(searcher, 'Vue');
+    const results = searcher.search('Vue').map((r) => r.item);
     expect(results.length).toBeGreaterThan(0);
     expect(results[0].slug).toBe('vue-intro');
   });
 
   it('空キーワードで空配列を返す', () => {
     const searcher = createPostSearcher(makePosts());
-    expect(searchPosts(searcher, '')).toEqual([]);
-    expect(searchPosts(searcher, '   ')).toEqual([]);
+    const search = (q: string) => (q.trim() === '' ? [] : searcher.search(q).map((r) => r.item));
+    expect(search('')).toEqual([]);
+    expect(search('   ')).toEqual([]);
   });
 
   it('マッチしないキーワードで空配列を返す', () => {
     const searcher = createPostSearcher(makePosts());
-    const results = searchPosts(searcher, 'xyzxyzxyz存在しないキーワード');
+    const results = searcher.search('xyzxyzxyz存在しないキーワード').map((r) => r.item);
     expect(results).toEqual([]);
   });
 });
