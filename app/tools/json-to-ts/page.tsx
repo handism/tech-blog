@@ -23,8 +23,11 @@ export default function JsonToTsPage() {
       const parsed = JSON.parse(inputJson);
       const generated = generateTypes(parsed, rootName || 'Root', outputFormat);
       return { outputCode: generated, error: '' };
-    } catch (e: any) {
-      return { outputCode: '', error: `JSON解析エラー: ${e.message}` };
+    } catch (e: unknown) {
+      return {
+        outputCode: '',
+        error: `JSON解析エラー: ${e instanceof Error ? e.message : String(e)}`,
+      };
     }
   }, [inputJson, rootName, outputFormat]);
 
@@ -36,7 +39,7 @@ export default function JsonToTsPage() {
     try {
       const parsed = JSON.parse(inputJson);
       setInputJson(JSON.stringify(parsed, null, 2));
-    } catch (e: any) {
+    } catch (e: unknown) {
       console.error(e);
     }
   };
