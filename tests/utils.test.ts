@@ -1,6 +1,6 @@
 // tests/utils.test.ts
 import { describe, expect, it } from 'vitest';
-import { categoryToSlug, estimateReadingMinutes, tagToSlug } from '@/src/lib/utils';
+import { categoryToSlug, estimateReadingMinutes, sortByDate, tagToSlug } from '@/src/lib/utils';
 
 describe('tagToSlug', () => {
   it('英小文字はそのまま返す', () => {
@@ -59,6 +59,49 @@ describe('categoryToSlug', () => {
 
   it('tagToSlug と同じ変換ルールを持つ', () => {
     expect(categoryToSlug('IT Infrastructure')).toBe('it-infrastructure');
+  });
+});
+
+describe('sortByDate', () => {
+  it('日付順に降順でソートする (最新が先)', () => {
+    const items = [
+      { id: 1, date: new Date('2023-01-01') },
+      { id: 2, date: new Date('2023-12-31') },
+      { id: 3, date: new Date('2023-06-15') },
+    ];
+    const result = sortByDate(items);
+    expect(result.map((i) => i.id)).toEqual([2, 3, 1]);
+  });
+
+  it('dateプロパティがないアイテムは末尾に配置する', () => {
+    const items = [
+      { id: 1, date: new Date('2023-01-01') },
+      { id: 2 },
+      { id: 3, date: new Date('2023-06-15') },
+    ];
+    const result = sortByDate(items);
+    expect(result.map((i) => i.id)).toEqual([3, 1, 2]);
+  });
+
+  it('元の配列を変更しない', () => {
+    const items = [
+      { id: 1, date: new Date('2023-01-01') },
+      { id: 2, date: new Date('2023-12-31') },
+    ];
+    const itemsCopy = [...items];
+    sortByDate(items);
+    expect(items).toEqual(itemsCopy);
+  });
+
+  it('すべてのアイテムにdateプロパティがない場合、エラーにならず配列を返す', () => {
+    const items: { id: number; date?: Date }[] = [{ id: 1 }, { id: 2 }];
+    const result = sortByDate(items);
+    expect(result.length).toBe(2);
+    expect(result).toEqual(expect.arrayContaining(items));
+  });
+
+  it('空の配列を処理できる', () => {
+    expect(sortByDate([])).toEqual([]);
   });
 });
 
