@@ -3,9 +3,12 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useState, useMemo } from 'react';
 import { Palette, Clipboard, Check, Eye } from 'lucide-react';
+import DOMPurify from 'dompurify';
 import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import { useIsClient } from '@/src/hooks/useIsClient';
 
 export default function SvgEditorPage() {
+  const isClient = useIsClient();
   const [inputSvg, setInputSvg] = useState(
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
   <!-- サンプル星型アイコン -->
@@ -16,17 +19,14 @@ export default function SvgEditorPage() {
   const [strokeColor, setStrokeColor] = useState('');
   const { copied, copy } = useCopyToClipboard();
 
-  const sanitizedPreviewUri = useMemo(() => {
-    if (typeof window === 'undefined') return '';
+  const sanitizedPreview = useMemo(() => {
+    if (!isClient) return '';
     try {
-      // SVG内のスクリプトやイベントハンドラは img タグで描画する場合にブラウザによって自動的に無効化されます。
-      // ここでは base64 データURIに変換して安全に img.src としてセットできるようにします。
-      const base64 = window.btoa(unescape(encodeURIComponent(inputSvg)));
-      return `data:image/svg+xml;base64,${base64}`;
+      return DOMPurify.sanitize(inputSvg, { USE_PROFILES: { svg: true } });
     } catch {
       return '';
     }
-  }, [inputSvg]);
+  }, [inputSvg, isClient]);
 
   const optimizeSvg = (svg: string): string => {
     let res = svg.trim();
@@ -182,11 +182,10 @@ export default function SvgEditorPage() {
               <span>プレビュー表示</span>
             </h3>
             <div className="flex-1 border-2 border-dashed border-border/40 rounded-xl bg-[linear-gradient(45deg,#ccc_25%,transparent_25%),linear-gradient(-45deg,#ccc_25%,transparent_25%),linear-gradient(45deg,transparent_75%,#ccc_75%),linear-gradient(-45deg,transparent_75%,#ccc_75%)] bg-[size:16px_16px] bg-[position:0_0,0_8px,8px_-8px,8px_0px] flex items-center justify-center overflow-hidden p-4">
-              {sanitizedPreviewUri ? (
-                <img
-                  src={sanitizedPreviewUri}
-                  alt="SVG Preview"
-                  className="max-w-full max-h-full object-contain scale-150 transition-transform"
+              {isClient && sanitizedPreview ? (
+                <div
+                  className="max-w-full max-h-full flex items-center justify-center scale-150 transition-transform [&>svg]:max-w-full [&>svg]:max-h-full"
+                  dangerouslySetInnerHTML={{ __html: sanitizedPreview }}
                 />
               ) : (
                 <span className="text-xs text-text/40 font-bold">有効なSVGを入力してください</span>
