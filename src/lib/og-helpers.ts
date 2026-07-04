@@ -5,26 +5,28 @@
  * ビルド時にキャッシュし、同一プロセス内での重複 I/O を防ぐ。
  */
 import { siteConfig } from '@/src/config/site';
-import fs from 'fs';
+import { promises as fsPromises } from 'fs';
 import path from 'path';
 
-let fontDataCache: ArrayBuffer | null = null;
-let avatarDataCache: string | null = null;
+let fontDataCache: Promise<ArrayBuffer> | null = null;
+let avatarDataCache: Promise<string> | null = null;
 
 /**
  * OGP 用フォント（NotoSansCJKjp-Bold.otf）を読み込み、ArrayBuffer を返す。
  * 同一プロセス内ではキャッシュを返す。
  */
-export function getOgFontData(): ArrayBuffer {
+export async function getOgFontData(): Promise<ArrayBuffer> {
   if (!fontDataCache) {
-    const fontPath = path.join(process.cwd(), 'public', 'fonts', 'NotoSansCJKjp-Bold.otf');
-    try {
-      const buffer = fs.readFileSync(fontPath);
-      fontDataCache = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
-    } catch (e) {
-      console.error('Failed to load font. Did you run `npm run dev` or download scripts?', e);
-      throw e;
-    }
+    fontDataCache = (async () => {
+      const fontPath = path.join(process.cwd(), 'public', 'fonts', 'NotoSansCJKjp-Bold.otf');
+      try {
+        const buffer = await fsPromises.readFile(fontPath);
+        return buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
+      } catch (e) {
+        console.error('Failed to load font. Did you run `npm run dev` or download scripts?', e);
+        throw e;
+      }
+    })();
   }
   return fontDataCache;
 }
@@ -34,20 +36,20 @@ export function getOgFontData(): ArrayBuffer {
  * ローカルファイルが存在しない場合は GitHub アバター URL にフォールバックする。
  * 同一プロセス内ではキャッシュを返す。
  */
-export function getOgAvatarDataUri(): string {
+export async function getOgAvatarDataUri(): Promise<string> {
   if (!avatarDataCache) {
-    const avatarPath = path.join(process.cwd(), 'public', 'images', 'avatar.png');
-    try {
-      if (fs.existsSync(avatarPath)) {
-        const buffer = fs.readFileSync(avatarPath);
-        avatarDataCache = `data:image/png;base64,${buffer.toString('base64')}`;
-      } else {
-        avatarDataCache = `${siteConfig.github}.png`;
+    avatarDataCache = (async () => {
+      const avatarPath = path.join(process.cwd(), 'public', 'images', 'avatar.png');
+      try {
+        const buffer = await fsPromises.readFile(avatarPath);
+        return `data:image/png;base64,${buffer.toString('base64')}`;
+      } catch (e) {
+        if ((e as NodeJS.ErrnoException).code !== 'ENOENT') {
+          console.error('Failed to load local avatar image:', e);
+        }
+        return `${siteConfig.github}.png`;
       }
-    } catch (e) {
-      console.error('Failed to load local avatar image:', e);
-      avatarDataCache = `${siteConfig.github}.png`;
-    }
+    })();
   }
   return avatarDataCache;
 }
