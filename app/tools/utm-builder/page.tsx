@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import {
   Link as LinkIcon,
   Copy,
@@ -28,10 +28,8 @@ export default function UtmBuilderTool() {
   const [utmTerm, setUtmTerm] = useState<string>('');
   const [utmContent, setUtmContent] = useState<string>('');
 
-  const [generatedUrl, setGeneratedUrl] = useState<string>('');
   const [shortUrl, setShortUrl] = useState<string>('');
   const [isShortening, setIsShortening] = useState<boolean>(false);
-  const [urlError, setUrlError] = useState<string>('');
   const { copied, copy } = useCopyToClipboard();
   const [copiedType, setCopiedType] = useState<string>('');
 
@@ -47,23 +45,18 @@ export default function UtmBuilderTool() {
   };
 
   // URL とパラメータから最終 URL を構築する
-  useEffect(() => {
+  const { generatedUrl, urlError } = useMemo(() => {
     if (!baseUrl) {
-      setGeneratedUrl('');
-      setUrlError('');
-      return;
+      return { generatedUrl: '', urlError: '' };
     }
 
-    // URL 構文チェック
     try {
-      // 簡易プロトコル補完
       let urlToParse = baseUrl;
       if (!/^https?:\/\//i.test(baseUrl)) {
         urlToParse = 'https://' + baseUrl;
       }
 
       const parsedUrl = new URL(urlToParse);
-      setUrlError('');
 
       // パラメータの追加
       if (utmSource) parsedUrl.searchParams.set('utm_source', utmSource);
@@ -72,13 +65,22 @@ export default function UtmBuilderTool() {
       if (utmTerm) parsedUrl.searchParams.set('utm_term', utmTerm);
       if (utmContent) parsedUrl.searchParams.set('utm_content', utmContent);
 
-      setGeneratedUrl(parsedUrl.toString());
-      setShortUrl(''); // 新しい URL が出来たら短縮はクリア
+      return { generatedUrl: parsedUrl.toString(), urlError: '' };
     } catch {
-      setUrlError('有効なURLを入力してください (例: https://example.com)');
-      setGeneratedUrl('');
+      return {
+        generatedUrl: '',
+        urlError: '有効なURLを入力してください (例: https://example.com)',
+      };
     }
   }, [baseUrl, utmSource, utmMedium, utmCampaign, utmTerm, utmContent]);
+
+  // 新しい URL が出来たら短縮URLを非同期にクリア
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShortUrl('');
+    }, 0);
+    return () => clearTimeout(timer);
+  }, [generatedUrl]);
 
   // QRコードの描画
   useEffect(() => {

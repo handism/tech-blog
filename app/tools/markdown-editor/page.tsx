@@ -168,15 +168,21 @@ export default function MarkdownEditorTool() {
   // ローカルストレージからロード
   useEffect(() => {
     const saved = localStorage.getItem('markdown_draft');
-    setMarkdown(saved !== null ? saved : DEFAULT_MARKDOWN);
+    const initialMarkdown = saved !== null ? saved : DEFAULT_MARKDOWN;
+    const timer = setTimeout(() => {
+      setMarkdown(initialMarkdown);
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   // マークダウンの変更があったらパースを実行する (Debounce)
   useEffect(() => {
     if (markdown === '') {
-      setHtml('');
-      setToc([]);
-      return;
+      const timer = setTimeout(() => {
+        setHtml('');
+        setToc([]);
+      }, 0);
+      return () => clearTimeout(timer);
     }
 
     setIsParsing(true);
