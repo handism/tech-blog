@@ -24,10 +24,7 @@ export async function GET(request: Request, props: { params: Promise<{ slug: str
     return new Response('Not Found', { status: 404 });
   }
 
-  const [fontData, avatarUrl] = await Promise.all([
-    getOgFontData(),
-    getOgAvatarDataUri(),
-  ]);
+  const [fontData, avatarUrl] = await Promise.all([getOgFontData(), getOgAvatarDataUri()]);
 
   return new ImageResponse(
     <div

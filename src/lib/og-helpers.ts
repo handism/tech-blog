@@ -5,7 +5,6 @@
  * ビルド時にキャッシュし、同一プロセス内での重複 I/O を防ぐ。
  */
 import { siteConfig } from '@/src/config/site';
-import fs from 'fs';
 import { promises as fsPromises } from 'fs';
 import path from 'path';
 
@@ -44,8 +43,8 @@ export async function getOgAvatarDataUri(): Promise<string> {
       try {
         const buffer = await fsPromises.readFile(avatarPath);
         return `data:image/png;base64,${buffer.toString('base64')}`;
-      } catch (e: any) {
-        if (e.code !== 'ENOENT') {
+      } catch (e) {
+        if ((e as NodeJS.ErrnoException).code !== 'ENOENT') {
           console.error('Failed to load local avatar image:', e);
         }
         return `${siteConfig.github}.png`;
