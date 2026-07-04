@@ -1,7 +1,7 @@
 'use client';
 
 import ToolPageLayout from '@/src/components/ToolPageLayout';
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef, useId } from 'react';
 import {
   Cloud,
   Plus,
@@ -339,7 +339,8 @@ let mermaidLib: typeof Mermaid | null = null;
 function MermaidPreview({ chartCode }: { chartCode: string }) {
   const [svgHtml, setSvgHtml] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
-  const uniqueId = useRef(`mermaid-${Math.floor(Math.random() * 100000)}`);
+  const rawId = useId();
+  const uniqueId = useRef(`mermaid-${rawId.replace(/:/g, '')}`);
 
   useEffect(() => {
     let active = true;
