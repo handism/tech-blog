@@ -144,7 +144,7 @@ export default function HtmlToJsx() {
     <h3 class="title">ユーザープロフィール</h3>
     <hr>
   </header>
-  <form action="#" method="POST" onclick="console.log('clicked')">
+  <form action="#" method="POST" onclick="alert('clicked')">
     <div class="form-group">
       <label for="username">ユーザー名</label>
       <input type="text" id="username" class="form-control" placeholder="ユーザー名を入力してください" tabindex="1">
