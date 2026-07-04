@@ -9,5 +9,6 @@
   "css.lint.unknownAtRules": "ignore",
   "chat.tools.terminal.autoApprove": {
     "bun": true
-  }
+  },
+  "npm.packageManager": "bun"
 }
