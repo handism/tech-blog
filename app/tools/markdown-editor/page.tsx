@@ -185,7 +185,9 @@ export default function MarkdownEditorTool() {
       return () => clearTimeout(timer);
     }
 
-    setIsParsing(true);
+    const parseTimer = setTimeout(() => {
+      setIsParsing(true);
+    }, 0);
     const timer = setTimeout(() => {
       parseMarkdown(markdown);
     }, 250); // 250ms debounce
@@ -193,7 +195,10 @@ export default function MarkdownEditorTool() {
     // 自動保存
     localStorage.setItem('markdown_draft', markdown);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(parseTimer);
+      clearTimeout(timer);
+    };
   }, [markdown, parseMarkdown]);
 
   // スクロール同期
