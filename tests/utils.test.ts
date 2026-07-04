@@ -1,6 +1,12 @@
 // tests/utils.test.ts
 import { describe, expect, it } from 'vitest';
-import { categoryToSlug, estimateReadingMinutes, sortByDate, tagToSlug } from '@/src/lib/utils';
+import {
+  categoryToSlug,
+  estimateReadingMinutes,
+  sortByDate,
+  tagToSlug,
+  catchEnoent,
+} from '@/src/lib/utils';
 
 describe('tagToSlug', () => {
   it('英小文字はそのまま返す', () => {
@@ -161,5 +167,27 @@ describe('estimateReadingMinutes', () => {
     // "well-known" -> 1 word
     // total 2 words -> < 200 -> 1 minute
     expect(estimateReadingMinutes("It's a well-known fact that")).toBe(1);
+  });
+});
+
+describe('catchEnoent', () => {
+  it('プロミスが成功した場合はその値を返す', async () => {
+    const result = await catchEnoent(Promise.resolve('success'), 'fallback');
+    expect(result).toBe('success');
+  });
+
+  it('プロミスが ENOENT エラーで失敗した場合はフォールバック値を返す', async () => {
+    const enoentError = new Error('File not found') as NodeJS.ErrnoException;
+    enoentError.code = 'ENOENT';
+    const result = await catchEnoent(Promise.reject(enoentError), 'fallback');
+    expect(result).toBe('fallback');
+  });
+
+  it('プロミスが ENOENT 以外のエラーで失敗した場合はエラーを投げる', async () => {
+    const otherError = new Error('Other error') as NodeJS.ErrnoException;
+    otherError.code = 'EACCES';
+    await expect(catchEnoent(Promise.reject(otherError), 'fallback')).rejects.toThrow(
+      'Other error'
+    );
   });
 });
