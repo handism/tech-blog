@@ -2,22 +2,38 @@ import { describe, expect, it } from 'vitest';
 import { buildRssXml, buildSitemapXml, escapeXml } from '@/src/lib/xml';
 
 describe('escapeXml', () => {
-  it('should escape special XML characters', () => {
-    expect(escapeXml('&')).toBe('&amp;');
-    expect(escapeXml('<')).toBe('&lt;');
-    expect(escapeXml('>')).toBe('&gt;');
-    expect(escapeXml('"')).toBe('&quot;');
-    expect(escapeXml("'")).toBe('&apos;');
+  it('エスケープ不要な文字列はそのまま返す', () => {
+    expect(escapeXml('Hello World')).toBe('Hello World');
   });
 
-  it('should handle strings with multiple special characters', () => {
-    expect(escapeXml('<tag attr="value"> & \'test\'')).toBe(
-      '&lt;tag attr=&quot;value&quot;&gt; &amp; &apos;test&apos;'
+  it('& をエスケープする', () => {
+    expect(escapeXml('A & B')).toBe('A &amp; B');
+  });
+
+  it('< をエスケープする', () => {
+    expect(escapeXml('1 < 2')).toBe('1 &lt; 2');
+  });
+
+  it('> をエスケープする', () => {
+    expect(escapeXml('2 > 1')).toBe('2 &gt; 1');
+  });
+
+  it('" をエスケープする', () => {
+    expect(escapeXml('Hello "World"')).toBe('Hello &quot;World&quot;');
+  });
+
+  it("' をエスケープする", () => {
+    expect(escapeXml("It's a beautiful day")).toBe('It&apos;s a beautiful day');
+  });
+
+  it('複数の特殊文字が混ざっている場合、全てエスケープする', () => {
+    expect(escapeXml('<tag attr="value" data=\'test\'> & content >')).toBe(
+      '&lt;tag attr=&quot;value&quot; data=&apos;test&apos;&gt; &amp; content &gt;'
     );
   });
 
-  it('should return plain text as is', () => {
-    expect(escapeXml('Hello World')).toBe('Hello World');
+  it('空文字の場合は空文字を返す', () => {
+    expect(escapeXml('')).toBe('');
   });
 });
 
