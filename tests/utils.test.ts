@@ -70,7 +70,7 @@ describe('sortByDate', () => {
       { id: 3, date: new Date('2023-06-15') },
     ];
     const result = sortByDate(items);
-    expect(result.map(i => i.id)).toEqual([2, 3, 1]);
+    expect(result.map((i) => i.id)).toEqual([2, 3, 1]);
   });
 
   it('dateプロパティがないアイテムは末尾に配置する', () => {
@@ -80,7 +80,7 @@ describe('sortByDate', () => {
       { id: 3, date: new Date('2023-06-15') },
     ];
     const result = sortByDate(items);
-    expect(result.map(i => i.id)).toEqual([3, 1, 2]);
+    expect(result.map((i) => i.id)).toEqual([3, 1, 2]);
   });
 
   it('元の配列を変更しない', () => {
