@@ -1,6 +1,12 @@
 // tests/utils.test.ts
 import { describe, expect, it } from 'vitest';
-import { categoryToSlug, estimateReadingMinutes, sortByDate, tagToSlug, catchEnoent } from '@/src/lib/utils';
+import {
+  categoryToSlug,
+  estimateReadingMinutes,
+  sortByDate,
+  tagToSlug,
+  catchEnoent,
+} from '@/src/lib/utils';
 
 describe('tagToSlug', () => {
   it('英小文字はそのまま返す', () => {
@@ -180,6 +186,8 @@ describe('catchEnoent', () => {
   it('プロミスが ENOENT 以外のエラーで失敗した場合はエラーを投げる', async () => {
     const otherError = new Error('Other error') as NodeJS.ErrnoException;
     otherError.code = 'EACCES';
-    await expect(catchEnoent(Promise.reject(otherError), 'fallback')).rejects.toThrow('Other error');
+    await expect(catchEnoent(Promise.reject(otherError), 'fallback')).rejects.toThrow(
+      'Other error'
+    );
   });
 });
