@@ -220,7 +220,20 @@ export default function InvisibleCharacterDetector() {
   // サンプルテキスト適用
   const applySample = () => {
     // 意図的に不可視文字を混入したJavaScriptコード
-    const sample = `// ⚠️ このコードには不可視文字や全角スペースが混入しています\nfunction helloWorld() {\n  const message = "Hello";\u3000// 行末に全角スペース\n  const\u200b hiddenSecret = "ZWSP"; // 変数名の前にゼロ幅スペース(ZWSP)\n  \u200cconsole.log(message + \u00a0" World"); // consoleの前にZWNJ、スペースにNBSP\n}`;
+    const sample = [
+      '// ⚠️ このコードには不可視文字や全角スペースが混入しています',
+      'function helloWorld() {',
+      '  const message = "Hello";' + String.fromCharCode(0x3000) + '// 行末に全角スペース',
+      '  const' +
+        String.fromCharCode(0x200b) +
+        ' hiddenSecret = "ZWSP"; // 変数名の前にゼロ幅スペース(ZWSP)',
+      '  ' +
+        String.fromCharCode(0x200c) +
+        'console.log(message + ' +
+        String.fromCharCode(0x00a0) +
+        '" World"); // consoleの前にZWNJ、スペースにNBSP',
+      '}',
+    ].join('\n');
     setInputText(sample);
   };
 
