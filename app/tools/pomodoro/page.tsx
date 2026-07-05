@@ -488,7 +488,7 @@ export default function PomodoroTool() {
                           : 'text-5xl text-text'
                   }`}
                   style={{
-                    fontFamily: isChalkboard ? 'Caveat, Georgia, serif' : undefined,
+                    fontFamily: isChalkboard ? "'Architects Daughter', Georgia, serif" : undefined,
                   }}
                 >
                   {formattedTime}
