@@ -1,0 +1,107 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0" version="29.5.5">
+  <diagram name="WAF &amp; Shield Security" id="waf-shield-security">
+    <mxGraphModel dx="1100" dy="700" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- AWS Cloud Container -->
+        <mxCell id="aws-cloud" parent="1" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud;strokeColor=#AAB7B8;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#AAB7B8;dashed=0;" value="" vertex="1">
+          <mxGeometry height="540" width="880" x="180" y="80" as="geometry" />
+        </mxCell>
+
+        <!-- Region Container -->
+        <mxCell id="region" parent="1" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_region;strokeColor=#00A4A6;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#147EBA;dashed=1;" value="AWS Region (ap-northeast-1 / us-east-1 for CloudFront WAF)" vertex="1">
+          <mxGeometry height="460" width="800" x="220" y="140" as="geometry" />
+        </mxCell>
+
+        <!-- User / Browser -->
+        <mxCell id="user" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#232F3D;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.user;" value="User / Browser" vertex="1">
+          <mxGeometry height="60" width="60" x="30" y="270" as="geometry" />
+        </mxCell>
+
+        <!-- CloudFront Distribution -->
+        <mxCell id="cloudfront" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.cloudfront;" value="CloudFront Distribution&#xa;(Global Edge)" vertex="1">
+          <mxGeometry height="60" width="60" x="280" y="270" as="geometry" />
+        </mxCell>
+
+        <!-- WAF Web ACL (CloudFront Scope) -->
+        <mxCell id="waf-cloudfront" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#DD344C;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.waf;" value="WAF Web ACL&#xa;(Scope: CLOUDFRONT)" vertex="1">
+          <mxGeometry height="60" width="60" x="280" y="160" as="geometry" />
+        </mxCell>
+
+        <!-- Application Load Balancer (ALB) -->
+        <mxCell id="alb" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.application_load_balancer;" value="Application Load Balancer&#xa;(ALB)" vertex="1">
+          <mxGeometry height="60" width="60" x="520" y="270" as="geometry" />
+        </mxCell>
+
+        <!-- WAF Web ACL (ALB Regional Scope) -->
+        <mxCell id="waf-regional" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#DD344C;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.waf;" value="WAF Web ACL&#xa;(Scope: REGIONAL)" vertex="1">
+          <mxGeometry height="60" width="60" x="520" y="160" as="geometry" />
+        </mxCell>
+
+        <!-- CloudWatch Logs (WAF logs) -->
+        <mxCell id="cw-logs" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#759C3E;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.cloudwatch_2;" value="CloudWatch Logs&#xa;(WAF Logs, 90 days)" vertex="1">
+          <mxGeometry height="60" width="60" x="680" y="160" as="geometry" />
+        </mxCell>
+
+        <!-- CloudWatch Alarms -->
+        <mxCell id="cw-alarms" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#759C3E;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.cloudwatch_alarm;" value="CloudWatch Alarms&#xa;(RateLimit &amp; Blocked)" vertex="1">
+          <mxGeometry height="60" width="60" x="680" y="270" as="geometry" />
+        </mxCell>
+
+        <!-- AWS Shield Advanced -->
+        <mxCell id="shield" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#DD344C;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.shield;" value="AWS Shield Advanced&#xa;(DDoS Protection)" vertex="1">
+          <mxGeometry height="60" width="60" x="110" y="160" as="geometry" />
+        </mxCell>
+
+        <!-- Connections -->
+        <!-- User to CloudFront -->
+        <mxCell id="conn-user-cf" edge="1" parent="1" source="user" target="cloudfront" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- CloudFront to ALB -->
+        <mxCell id="conn-cf-alb" edge="1" parent="1" source="cloudfront" target="alb" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- WAF CloudFront Association -->
+        <mxCell id="conn-waf-cf" edge="1" parent="1" source="waf-cloudfront" target="cloudfront" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#545B64;fontSize=11;dashed=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- WAF Regional Association -->
+        <mxCell id="conn-waf-alb" edge="1" parent="1" source="waf-regional" target="alb" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#545B64;fontSize=11;dashed=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Shield protection to CloudFront & ALB -->
+        <mxCell id="conn-shield-cf" edge="1" parent="1" source="shield" target="cloudfront" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#545B64;fontSize=11;dashed=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- WAF Regional to Logs -->
+        <mxCell id="conn-waf-logs" edge="1" parent="1" source="waf-regional" target="cw-logs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#545B64;fontSize=11;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Alarms monitoring WAF Regional -->
+        <mxCell id="conn-alarm-waf" edge="1" parent="1" source="cw-alarms" target="waf-regional" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#545B64;fontSize=11;dashed=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Security Features Note -->
+        <mxCell id="sec-note" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF4E6;strokeColor=#D79B00;align=left;verticalAlign=top;fontStyle=1;fontSize=11;" value="Security Hardening &amp; Rules:&#xa;• Common Rule Set (CRS): Protects against OWASP Top 10 vulnerabilities&#xa;• Known Bad Inputs: Detects malicious payloads &amp; vulnerability scanners&#xa;• SQL Injection (SQLi): Inspects query strings and bodies for SQLi patterns&#xa;• Amazon IP Reputation: Blocks requests from known bots/malicious hosts&#xa;• Rate Limiting: Blocks IPs exceeding 2,000 requests per 5 minutes&#xa;• IP Set Control: Explicit blocklist/allowlist configuration" vertex="1">
+          <mxGeometry height="140" width="380" x="280" y="410" as="geometry" />
+        </mxCell>
+
+        <!-- Monitoring Features Note -->
+        <mxCell id="mon-note" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E6F2FF;strokeColor=#0066CC;align=left;verticalAlign=top;fontStyle=1;fontSize=11;" value="Monitoring &amp; Alarms:&#xa;• WAFBlockedRequestsAlarm: Triggers if overall WAF blocks &gt; 100 reqs in 5m&#xa;• WAFRateLimitAlarm: Triggers if Rate Limiting blocks &gt; 50 reqs in 5m&#xa;• WAF Logs: Complete request logging (including matched rule) retained for 90 days" vertex="1">
+          <mxGeometry height="140" width="320" x="680" y="410" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

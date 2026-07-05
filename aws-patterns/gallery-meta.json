@@ -149,7 +149,7 @@
     "description": "AWS CodePipeline、CodeBuild、ECR を連携させ、GitHub へのプッシュを契機にコンテナイメージのビルド・プッシュ・ECS デプロイまでを全自動化する CI/CD パイプラインです。",
     "category": "DevOps",
     "templateFile": "cicd-pipeline.yaml",
-    "diagramFile": null,
+    "diagramFile": "cicd-pipeline.drawio.svg",
     "awsServices": ["CodePipeline", "CodeBuild", "ECR", "ECS", "S3", "IAM"]
   },
   {
@@ -158,7 +158,7 @@
     "description": "AWS WAF v2 のマネージドルール（共通ルールセット・SQLi・IP評判リスト）とレートベース制限を CloudFront および ALB に適用し、DDoS・OWASP Top 10 攻撃からアプリケーションを多層防御します。",
     "category": "Security & CDN",
     "templateFile": "waf-shield-security.yaml",
-    "diagramFile": null,
+    "diagramFile": "waf-shield-security.drawio.svg",
     "awsServices": ["WAF", "Shield", "CloudFront", "ALB", "CloudWatch"]
   }
 ]

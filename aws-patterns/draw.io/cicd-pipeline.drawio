@@ -1,0 +1,138 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0" version="29.5.5">
+  <diagram name="CI/CD Pipeline" id="cicd-pipeline">
+    <mxGraphModel dx="1100" dy="700" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- AWS Cloud Container -->
+        <mxCell id="aws-cloud" parent="1" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud;strokeColor=#AAB7B8;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#AAB7B8;dashed=0;" value="" vertex="1">
+          <mxGeometry height="540" width="880" x="180" y="80" as="geometry" />
+        </mxCell>
+
+        <!-- Region Container -->
+        <mxCell id="region" parent="1" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_region;strokeColor=#00A4A6;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#147EBA;dashed=1;" value="AWS Region (ap-northeast-1)" vertex="1">
+          <mxGeometry height="460" width="800" x="220" y="140" as="geometry" />
+        </mxCell>
+
+        <!-- Developer (External) -->
+        <mxCell id="developer" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#232F3D;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.user;" value="Developer" vertex="1">
+          <mxGeometry height="60" width="60" x="30" y="200" as="geometry" />
+        </mxCell>
+
+        <!-- GitHub Repository (External) -->
+        <mxCell id="github" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#545B64;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.traditional_server;" value="GitHub Repository" vertex="1">
+          <mxGeometry height="60" width="60" x="30" y="340" as="geometry" />
+        </mxCell>
+
+        <!-- CodeStar Connection (GitHub) -->
+        <mxCell id="codestar-connection" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#DD344C;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.permissions;" value="CodeStar Connection" vertex="1">
+          <mxGeometry height="60" width="60" x="260" y="270" as="geometry" />
+        </mxCell>
+
+        <!-- AWS CodePipeline -->
+        <mxCell id="codepipeline" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#E7157B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.codepipeline;" value="AWS CodePipeline&#xa;(Orchestration)" vertex="1">
+          <mxGeometry height="60" width="60" x="400" y="270" as="geometry" />
+        </mxCell>
+
+        <!-- AWS CodeBuild Project -->
+        <mxCell id="codebuild" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#E7157B;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.codebuild;" value="AWS CodeBuild&#xa;(Docker Build &amp; Push)" vertex="1">
+          <mxGeometry height="60" width="60" x="560" y="270" as="geometry" />
+        </mxCell>
+
+        <!-- Amazon ECR -->
+        <mxCell id="ecr" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.ecr_registry;" value="Amazon ECR&#xa;(KMS Encrypted)" vertex="1">
+          <mxGeometry height="60" width="60" x="720" y="270" as="geometry" />
+        </mxCell>
+
+        <!-- Amazon ECS (Fargate) -->
+        <mxCell id="ecs" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.ecs;" value="Amazon ECS&#xa;(Fargate Service)" vertex="1">
+          <mxGeometry height="60" width="60" x="880" y="270" as="geometry" />
+        </mxCell>
+
+        <!-- S3 Artifact Bucket -->
+        <mxCell id="s3-bucket" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#7AA116;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.s3_bucket;" value="S3 Artifact Bucket&#xa;(Encrypted, Versioned)" vertex="1">
+          <mxGeometry height="60" width="60" x="480" y="410" as="geometry" />
+        </mxCell>
+
+        <!-- CloudWatch Logs -->
+        <mxCell id="cw-logs" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#759C3E;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.cloudwatch_2;" value="CloudWatch Logs&#xa;(Retention: 14 days)" vertex="1">
+          <mxGeometry height="60" width="60" x="640" y="410" as="geometry" />
+        </mxCell>
+
+        <!-- CloudWatch Alarm -->
+        <mxCell id="cw-alarm" parent="1" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#759C3E;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.cloudwatch_alarm;" value="CW Alarm&#xa;(Pipeline Failure)" vertex="1">
+          <mxGeometry height="60" width="60" x="320" y="410" as="geometry" />
+        </mxCell>
+
+        <!-- Connections -->
+        <!-- Dev to GitHub -->
+        <mxCell id="conn-dev-git" edge="1" parent="1" source="developer" target="github" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;">
+          <mxGeometry relative="1" as="geometry" />
+          <mxPoint as="offset" value="0" />
+        </mxCell>
+
+        <!-- GitHub to CodeStar -->
+        <mxCell id="conn-git-codestar" edge="1" parent="1" source="github" target="codestar-connection" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;dashed=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- CodeStar to CodePipeline -->
+        <mxCell id="conn-codestar-pipeline" edge="1" parent="1" source="codestar-connection" target="codepipeline" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- CodePipeline to CodeBuild (Trigger) -->
+        <mxCell id="conn-pipeline-build" edge="1" parent="1" source="codepipeline" target="codebuild" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- CodeBuild to ECR (Push) -->
+        <mxCell id="conn-build-ecr" edge="1" parent="1" source="codebuild" target="ecr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- CodePipeline to ECS (Deploy) -->
+        <mxCell id="conn-pipeline-ecs" edge="1" parent="1" source="codepipeline" target="ecs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;exitX=0.5;exitY=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitDx=0;exitDy=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="430" y="220" />
+              <mxPoint x="910" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ECS to ECR (Pull Image) -->
+        <mxCell id="conn-ecs-ecr" edge="1" parent="1" source="ecs" target="ecr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#545B64;fontSize=11;dashed=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- CodePipeline to S3 Bucket (Artifacts Store) -->
+        <mxCell id="conn-pipeline-s3" edge="1" parent="1" source="codepipeline" target="s3-bucket" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#545B64;fontSize=11;dashed=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- CodeBuild to S3 Bucket (Read/Write Artifacts) -->
+        <mxCell id="conn-build-s3" edge="1" parent="1" source="codebuild" target="s3-bucket" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#545B64;fontSize=11;dashed=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- CodeBuild to CloudWatch Logs -->
+        <mxCell id="conn-build-logs" edge="1" parent="1" source="codebuild" target="cw-logs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#545B64;fontSize=11;dashed=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- CloudWatch Alarm to Pipeline -->
+        <mxCell id="conn-alarm-pipeline" edge="1" parent="1" source="cw-alarm" target="codepipeline" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#545B64;fontSize=11;dashed=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Best Practices Note -->
+        <mxCell id="bp-note" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;align=left;verticalAlign=top;fontStyle=1;fontSize=11;" value="CI/CD Best Practices:&#xa;• Security: ECR KMS encryption &amp; Image scanning on push&#xa;• Lifecycle: Automatically expire old ECR images (Keep last 20)&#xa;• Privileged Mode: Enabled in CodeBuild to build Docker images&#xa;• Least Privilege: Isolated IAM roles for CodePipeline &amp; CodeBuild&#xa;• Failure Detection: CloudWatch Alarm triggers on pipeline failure" vertex="1">
+          <mxGeometry height="140" width="220" x="780" y="410" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

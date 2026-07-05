@@ -1,5 +1,10 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: 'MCP Server - Model Context Protocol Server on AWS with API Gateway, Lambda, DynamoDB, and S3'
+# NOTE: This template provisions the AWS infrastructure (API Gateway, Lambda, DynamoDB, S3)
+# to host an MCP-compatible server. The Lambda function included here is a reference
+# implementation for session/context management. To fully comply with the MCP specification
+# (JSON-RPC 2.0, tools/list, tools/call, etc.), replace the Lambda code with your own
+# MCP-compliant handler.
 
 Parameters:
   Environment:
