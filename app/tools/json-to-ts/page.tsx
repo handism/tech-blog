@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import ToolPageLayout from '@/src/components/ToolPageLayout';
@@ -24,9 +23,10 @@ export default function JsonToTsPage() {
       const generated = generateTypes(parsed, rootName || 'Root', outputFormat);
       return { outputCode: generated, error: '' };
     } catch (e: unknown) {
+      const errorMessage = e instanceof Error ? e.message : String(e);
       return {
         outputCode: '',
-        error: `JSON解析エラー: ${e instanceof Error ? e.message : String(e)}`,
+        error: `JSON解析エラー: ${errorMessage}`,
       };
     }
   }, [inputJson, rootName, outputFormat]);
@@ -45,7 +45,7 @@ export default function JsonToTsPage() {
   };
 
   function generateTypes(
-    value: any,
+    value: unknown,
     typeName: string,
     format: 'interface' | 'type' | 'zod'
   ): string {
@@ -56,7 +56,7 @@ export default function JsonToTsPage() {
       return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
-    function resolveType(val: any, currentKey: string): string {
+    function resolveType(val: unknown, currentKey: string): string {
       if (val === null) return 'null';
       if (Array.isArray(val)) {
         if (val.length === 0) return 'any[]';
@@ -70,14 +70,14 @@ export default function JsonToTsPage() {
         const nestedName = capitalize(currentKey);
         if (!seenNames.has(nestedName)) {
           seenNames.add(nestedName);
-          buildType(val, nestedName);
+          buildType(val as Record<string, unknown>, nestedName);
         }
         return nestedName;
       }
       return typeof val;
     }
 
-    function resolveZod(val: any, currentKey: string, indent: string = '  '): string {
+    function resolveZod(val: unknown, currentKey: string, indent: string = '  '): string {
       if (val === null) return 'z.null()';
       if (Array.isArray(val)) {
         if (val.length === 0) return 'z.array(z.any())';
@@ -90,7 +90,7 @@ export default function JsonToTsPage() {
         return `z.array(z.union([${itemTypes.join(', ')}]))`;
       }
       if (typeof val === 'object') {
-        return buildZod(val, indent + '  ');
+        return buildZod(val as Record<string, unknown>, indent + '  ');
       }
       if (typeof val === 'string') return 'z.string()';
       if (typeof val === 'number') return 'z.number()';
@@ -98,7 +98,7 @@ export default function JsonToTsPage() {
       return 'z.any()';
     }
 
-    function buildType(obj: any, name: string) {
+    function buildType(obj: Record<string, unknown>, name: string) {
       const keys = Object.keys(obj);
       let output = '';
       if (format === 'interface') {
@@ -119,7 +119,7 @@ export default function JsonToTsPage() {
       generatedTypes.push(output);
     }
 
-    function buildZod(obj: any, indent: string): string {
+    function buildZod(obj: Record<string, unknown>, indent: string): string {
       const keys = Object.keys(obj);
       if (keys.length === 0) return 'z.object({})';
 
@@ -146,14 +146,14 @@ export default function JsonToTsPage() {
         }
         const sample = value[0];
         if (typeof sample === 'object' && sample !== null) {
-          buildType(sample, typeName + 'Item');
+          buildType(sample as Record<string, unknown>, typeName + 'Item');
           return generatedTypes.join('\n\n') + `\n\nexport type ${typeName} = ${typeName}Item[];`;
         } else {
           const typeStr = resolveType(sample, typeName);
           return `export type ${typeName} = ${typeStr}[];`;
         }
       }
-      buildType(value, typeName);
+      buildType(value as Record<string, unknown>, typeName);
       return generatedTypes.reverse().join('\n\n');
     }
   }

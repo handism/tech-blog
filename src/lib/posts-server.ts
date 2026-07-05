@@ -70,10 +70,12 @@ export const getRelatedPosts = cache(async function getRelatedPosts(
   const current = posts.find((p) => p.slug === slug);
   if (!current) return [];
 
+  const currentTags = new Set(current.tags);
+
   return posts
     .filter((p) => p.slug !== slug)
     .map((p) => {
-      const tagOverlap = p.tags.filter((t) => current.tags.includes(t)).length;
+      const tagOverlap = p.tags.filter((t) => currentTags.has(t)).length;
       const categoryMatch = p.category === current.category ? 1 : 0;
       return { post: p, score: tagOverlap * 2 + categoryMatch };
     })

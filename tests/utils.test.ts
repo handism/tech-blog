@@ -6,6 +6,7 @@ import {
   sortByDate,
   tagToSlug,
   filterDrafts,
+  catchEnoent,
 } from '@/src/lib/utils';
 
 describe('tagToSlug', () => {
@@ -193,5 +194,27 @@ describe('filterDrafts', () => {
     const result = filterDrafts(items);
     expect(result).toHaveLength(2);
     expect(result.map((i) => i.id)).toEqual([1, 3]);
+  });
+});
+
+describe('catchEnoent', () => {
+  it('プロミスが成功した場合はその値を返す', async () => {
+    const result = await catchEnoent(Promise.resolve('success'), 'fallback');
+    expect(result).toBe('success');
+  });
+
+  it('プロミスが ENOENT エラーで失敗した場合はフォールバック値を返す', async () => {
+    const enoentError = new Error('File not found') as NodeJS.ErrnoException;
+    enoentError.code = 'ENOENT';
+    const result = await catchEnoent(Promise.reject(enoentError), 'fallback');
+    expect(result).toBe('fallback');
+  });
+
+  it('プロミスが ENOENT 以外のエラーで失敗した場合はエラーを投げる', async () => {
+    const otherError = new Error('Other error') as NodeJS.ErrnoException;
+    otherError.code = 'EACCES';
+    await expect(catchEnoent(Promise.reject(otherError), 'fallback')).rejects.toThrow(
+      'Other error'
+    );
   });
 });

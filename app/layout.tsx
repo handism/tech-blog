@@ -56,7 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* フラッシュ防止スクリプト(デザインテーマ): キー名は THEME_STORAGE_KEY、フォールバック値は DEFAULT_THEME と一致させること */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('${THEME_STORAGE_KEY}')||'${DEFAULT_THEME}';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`,
+            __html: `(function(){try{var t=localStorage.getItem('${THEME_STORAGE_KEY}')||'${DEFAULT_THEME}';document.documentElement.setAttribute('data-theme',t);}catch(e){console.error('Failed to access localStorage:', e);}})();`,
           }}
         />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>

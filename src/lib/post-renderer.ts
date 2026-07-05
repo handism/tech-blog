@@ -76,14 +76,15 @@ function rehypeImageSize() {
       tasks.push(
         (async () => {
           let foundPath = '';
-          for (const fp of filePaths) {
-            try {
-              await fs.access(fp);
-              foundPath = fp;
-              break;
-            } catch {
-              // 存在しない場合は次を試す
-            }
+          try {
+            foundPath = await Promise.any(
+              filePaths.map(async (fp) => {
+                await fs.access(fp);
+                return fp;
+              })
+            );
+          } catch {
+            // すべてのパスが存在しない場合
           }
 
           if (!foundPath) return;
