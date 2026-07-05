@@ -527,7 +527,7 @@ pre.shiki[data-filename]::before {
 }
 
 /* =======================
-   記事一覧デフォルトレイアウト（グリッド）
+   記事一覧レイアウト（設定連動）
    ======================= */
 .post-card-list {
   display: grid;
@@ -535,13 +535,54 @@ pre.shiki[data-filename]::before {
   gap: 1.5rem;
 }
 
+/* ── 1 Column List ── */
+[data-layout='1-column'] .post-card-list {
+  grid-template-columns: 1fr !important;
+  gap: 2rem !important;
+}
+
+[data-layout='1-column'] .post-card-list > .featured-card {
+  grid-column: span 1 !important;
+}
+
+[data-layout='1-column'] .post-card-list > .featured-card > article {
+  flex-direction: column !important;
+}
+
+[data-layout='1-column'] .post-card-list > .featured-card .post-card-image-link {
+  width: 100% !important;
+}
+
+[data-layout='1-column'] .post-card-list > .featured-card .post-card-image-wrapper {
+  border-bottom-width: 1px !important;
+  border-right-width: 0 !important;
+}
+
+[data-layout='1-column'] .post-card-list > .featured-card .post-card-content {
+  width: 100% !important;
+  padding: 1.5rem !important;
+}
+
+/* ── 2 Column Grid ── */
 @media (min-width: 768px) {
-  .post-card-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  [data-layout='2-column'] .post-card-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   }
   
-  .post-card-list > .featured-card {
-    grid-column: span 2;
+  [data-layout='2-column'] .post-card-list > .featured-card {
+    grid-column: span 2 !important;
+  }
+}
+
+/* ── 3 Column Grid ── */
+@media (min-width: 768px) {
+  [data-layout='3-column'] .post-card-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 1.5rem !important;
+  }
+  
+  [data-layout='3-column'] .post-card-list > .featured-card {
+    grid-column: span 3 !important;
   }
 }
 

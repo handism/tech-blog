@@ -37,42 +37,48 @@
 
 /* ── Dashboard Grid Layout ── */
 @media (min-width: 768px) {
-  /* PCでは左3:右2の非対称2カラム構成 */
-  [data-theme='dashboard'] .post-card-list {
+  /* 2カラムまたは3カラムレイアウトが選択されている時のみ非対称3:2構成にする */
+  [data-theme='dashboard'][data-layout='2-column'] .post-card-list,
+  [data-theme='dashboard'][data-layout='3-column'] .post-card-list {
     display: grid;
     grid-template-columns: 3fr 2fr !important;
     gap: 1.25rem !important;
     align-items: start;
   }
 
-  /* 1枚目（最新記事）は左カラムに入る */
-  [data-theme='dashboard'] .post-card-list > .featured-card {
+  [data-theme='dashboard'][data-layout='2-column'] .post-card-list > .featured-card,
+  [data-theme='dashboard'][data-layout='3-column'] .post-card-list > .featured-card {
     grid-column: 1 / 2 !important;
     grid-row: span 8 !important; /* 右側にアクティビティログを積み重ねる高さ */
   }
 
-  /* 2枚目以降の記事はすべて右カラムに縦積み */
-  [data-theme='dashboard'] .post-card-list > .post-card-item:not(.featured-card) {
+  [data-theme='dashboard'][data-layout='2-column'] .post-card-list > .post-card-item:not(.featured-card),
+  [data-theme='dashboard'][data-layout='3-column'] .post-card-list > .post-card-item:not(.featured-card) {
     grid-column: 2 / 3 !important;
   }
 }
 
 /* ── 右側の「アクティビティログ」風カードの最適化 ── */
-[data-theme='dashboard'] .post-card-item:not(.featured-card) .post-card-image-link {
+/* 2カラムまたは3カラム選択時のみ、右側の通常カードをログ形式に潰します */
+[data-theme='dashboard'][data-layout='2-column'] .post-card-item:not(.featured-card) .post-card-image-link,
+[data-theme='dashboard'][data-layout='3-column'] .post-card-item:not(.featured-card) .post-card-image-link {
   display: none !important;
 }
 
-[data-theme='dashboard'] .post-card-item:not(.featured-card) .post-card-content {
+[data-theme='dashboard'][data-layout='2-column'] .post-card-item:not(.featured-card) .post-card-content,
+[data-theme='dashboard'][data-layout='3-column'] .post-card-item:not(.featured-card) .post-card-content {
   padding: 0.75rem 1rem !important;
 }
 
-[data-theme='dashboard'] .post-card-item:not(.featured-card) .post-card-title {
+[data-theme='dashboard'][data-layout='2-column'] .post-card-item:not(.featured-card) .post-card-title,
+[data-theme='dashboard'][data-layout='3-column'] .post-card-item:not(.featured-card) .post-card-title {
   font-size: 1.05rem !important;
   font-weight: 600 !important;
   margin-bottom: 0.25rem !important;
 }
 
-[data-theme='dashboard'] .post-card-item:not(.featured-card) .post-card-description {
+[data-theme='dashboard'][data-layout='2-column'] .post-card-item:not(.featured-card) .post-card-description,
+[data-theme='dashboard'][data-layout='3-column'] .post-card-item:not(.featured-card) .post-card-description {
   display: none !important;
 }
 

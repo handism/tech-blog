@@ -1,6 +1,7 @@
 // app/settings/page.tsx
 import { ThemeSelector } from '@/src/components/ThemeSelector';
 import { ThemeToggle } from '@/src/components/ThemeToggle';
+import { LayoutSelector } from '@/src/components/LayoutSelector';
 import { themeConfig } from '@/src/config/site';
 import type { Metadata } from 'next';
 
@@ -42,6 +43,23 @@ export default function SettingsPage() {
           </p>
         </div>
         <ThemeSelector />
+      </section>
+
+      {/* セクション2: 記事一覧レイアウト */}
+      <section className="mb-16" aria-labelledby="layout-section-heading">
+        <div className="mb-6">
+          <h2
+            id="layout-section-heading"
+            className="text-xl font-bold text-text mb-1 flex items-center gap-2"
+          >
+            <span>📐</span>
+            記事一覧レイアウト
+          </h2>
+          <p className="text-sm text-text opacity-60">
+            記事一覧の段組み（1列、2列、3列）を設定します。デザインテーマと組み合わせて自由にカスタマイズ可能です。
+          </p>
+        </div>
+        <LayoutSelector />
       </section>
 
       {/* セクション3: ダークモード */}
