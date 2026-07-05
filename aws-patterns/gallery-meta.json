@@ -65,11 +65,11 @@
   {
     "slug": "streaming-architecture",
     "title": "リアルタイムデータストリーミングアーキテクチャ",
-    "description": "Amazon Kinesis Data Streams、Kinesis Data Firehose、S3、Lambdaを組み合わせ、大量のイベントデータをリアルタイムで収集・加工・保存するパイプラインです。",
+    "description": "Amazon Kinesis Data Streams、Amazon Data Firehose、S3、Lambdaを組み合わせ、大量のイベントデータをリアルタイムで収集・加工・保存するパイプラインです。",
     "category": "Analytics",
     "templateFile": "streaming-architecture.yaml",
     "diagramFile": "streaming-architecture.drawio.svg",
-    "awsServices": ["Kinesis Data Streams", "Kinesis Data Firehose", "S3", "Lambda"]
+    "awsServices": ["Kinesis Data Streams", "Amazon Data Firehose", "S3", "Lambda"]
   },
   {
     "slug": "three-tier-architecture",
@@ -92,11 +92,11 @@
   {
     "slug": "high-availability-architecture",
     "title": "高可用エンタープライズ構成（Aurora, Redis & CDN）",
-    "description": "マルチAZ配置 of RDS、Auto Scaling EC2、VPC構成により、シングルポイント障害を排除した安全な高可用インフラテンプレートです。",
+    "description": "マルチAZ配置のAurora、Auto Scaling EC2、ElastiCache Redis、CloudFront、VPC構成により、シングルポイント障害を排除した安全な高可用インフラテンプレートです。",
     "category": "High Availability",
     "templateFile": "high-availability-architecture.yaml",
     "diagramFile": "high-availability-architecture.drawio.svg",
-    "awsServices": ["EC2", "ALB", "RDS", "Auto Scaling", "VPC"]
+    "awsServices": ["EC2", "ALB", "Aurora", "ElastiCache", "CloudFront", "Auto Scaling", "VPC"]
   },
   {
     "slug": "mcp-server",

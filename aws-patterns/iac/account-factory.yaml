@@ -434,6 +434,9 @@ Resources:
             Principal:
               Service: servicecatalog.amazonaws.com
             Action: sts:AssumeRole
+      # NOTE: AdministratorAccess is used here for simplicity in this sample template.
+      # In production, replace with a least-privilege policy scoped to only the
+      # resources and actions required by your account vending product.
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AdministratorAccess
       Tags:

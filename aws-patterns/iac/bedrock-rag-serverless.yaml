@@ -151,7 +151,7 @@ Resources:
                   - bedrock:InvokeModel
                 Resource:
                   - !Sub 'arn:aws:bedrock:${AWS::Region}::foundation-model/amazon.titan-embed-text-v2:0'
-                  - !Sub 'arn:aws:bedrock:${AWS::Region}::foundation-model/anthropic.claude-3-5-sonnet-20240620-v1:0'
+                  - !Sub 'arn:aws:bedrock:${AWS::Region}::foundation-model/anthropic.claude-3-5-sonnet-20241022-v2:0'
         - PolicyName: S3Access
           PolicyDocument:
             Version: '2012-10-17'
@@ -219,7 +219,7 @@ Resources:
       Environment:
         Variables:
           AOSS_ENDPOINT: !GetAtt VectorCollection.CollectionEndpoint
-          MODEL_ID: 'anthropic.claude-3-5-sonnet-20240620-v1:0'
+          MODEL_ID: 'anthropic.claude-3-5-sonnet-20241022-v2:0'
       Code:
         ZipFile: |
           import json
