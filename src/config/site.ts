@@ -137,17 +137,6 @@ export const themeConfig = [
     previewAccent: '#f0e68c',
     hasBorder: false,
   },
-  {
-    id: 'bauhaus',
-    label: 'Bauhaus',
-    description: '三原色×幾何学・モダニズムの原点・アート性が際立つ構成',
-    emoji: '🔴',
-    category: 'creative',
-    previewBg: '#f5f5f0',
-    previewCard: '#ffffff',
-    previewAccent: '#e63329',
-  },
-
   // ── カルチャー＆ナチュラル (nature) ──
   {
     id: 'modern-japanese',

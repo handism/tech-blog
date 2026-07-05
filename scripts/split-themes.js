@@ -35,7 +35,7 @@ const themeIds = [
   'minimal', 'dashboard', 'bento',
   'glassmorphism', 'claymorphism', 'three-d',
   'terminal', 'blueprint', 'synthwave',
-  'neo-brutalism', 'editorial', 'chalkboard', 'bauhaus',
+  'neo-brutalism', 'editorial', 'chalkboard',
   'modern-japanese', 'nordic', 'steampunk'
 ];
 

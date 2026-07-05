@@ -2,7 +2,7 @@
 
 ## このブログについて
 
-- **16種類の多彩なデザインテーマ**: デフォルトの個性的な **Neo-Brutalism（ネオ・ブルータリズム）** に加え、Glassmorphism, Minimal, Bento, Blueprint, Steampunk, Chalkboard, Bauhaus, Editorial, Synthwave, Terminal, Modern Japanese, Nordic, Claymorphism, Dashboard, 3D Interactive といった幅広いスタイル（全16種）にリアルタイムで切り替え可能
+- **15種類の多彩なデザインテーマ**: デフォルトの個性的な **Neo-Brutalism（ネオ・ブルータリズム）** に加え、Glassmorphism, Minimal, Bento, Blueprint, Steampunk, Chalkboard, Editorial, Synthwave, Terminal, Modern Japanese, Nordic, Claymorphism, Dashboard, 3D Interactive といった幅広いスタイル（全15種）にリアルタイムで切り替え可能
 - **豊富なスキンカラー**: Emerald、Ocean、Sunset、Purple、Rose のアクセントカラーとダークモードを組み合わせ、自分好みの外観にカスタマイズできます
 - 見出しフォントに **Lexend** および **Space Grotesk** を採用した、テックブログらしい力強いタイポグラフィ
 - 触っていて気持ちいい **ダイナミックなアクション**: テーマごとの世界観に合わせて、ホバーやクリック時のインタラクションが最適化されています
