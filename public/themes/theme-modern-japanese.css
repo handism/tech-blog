@@ -1,18 +1,19 @@
 [data-theme='modern-japanese'] {
-  --color-bg: #f5f2eb;
+  --color-bg: #f5f2eb; /* 砂色（和紙のようなウォームベージュ） */
   --color-background: var(--color-bg);
-  --color-card: #faf8f5;
-  --color-secondary: #e6dfd5;
-  --color-text: #1c1c1c;
+  --color-card: #faf8f5; /* 漆喰（オフホワイト） */
+  --color-secondary: #e6dfd5; /* 薄墨 */
+  --color-text: #1c1c1c; /* 墨色 */
   --color-border: #1c1c1c;
-  --color-accent: #d93333;
-  --theme-font-sans: 'Noto Serif JP', serif;
+  --color-accent: #d93333; /* 朱赤 */
+  --theme-font-sans: 'Noto Serif JP', 'Noto Sans JP', serif;
 
   --theme-card-border-width: 1px;
   --theme-card-radius: 0px;
-  --theme-card-shadow: none;
+  --theme-card-bg: var(--color-card);
+  --theme-card-shadow: 0 0 0 1px var(--color-border), 0 0 0 3px var(--color-bg), 0 0 0 4px var(--color-border);
   --theme-card-hover-transform: none;
-  --theme-card-hover-shadow: 0 0 0 1px var(--color-accent);
+  --theme-card-hover-shadow: 0 0 0 1px var(--color-accent), 0 0 0 3px var(--color-bg), 0 0 0 4px var(--color-accent);
 
   --theme-btn-border-width: 1px;
   --theme-btn-radius: 0px;
@@ -25,24 +26,34 @@
   --theme-btn-hover-color: var(--color-bg);
   --theme-btn-active-transform: none;
 }
+
 [data-theme='modern-japanese'].dark {
-  --color-bg: #121212;
-  --color-card: #1c1c1c;
-  --color-secondary: #262626;
-  --color-text: #e6dfd5;
-  --color-border: #e6dfd5;
-  --color-accent: #f87171;
-}
-[data-theme='modern-japanese'] body {
-  background-color: var(--color-bg);
-  font-family: 'Noto Serif JP', serif;
+  --color-bg: #0a0a0a; /* 黒漆（深い漆黒） */
+  --color-background: var(--color-bg);
+  --color-card: #121212; /* 漆の器 */
+  --color-secondary: #1a1a1a;
+  --color-text: #e5dfd3; /* 和紙の白 */
+  --color-border: #333333;
+  --color-accent: #c49a45; /* 金箔ゴールド */
+  
+  --theme-card-shadow: 0 0 0 1px var(--color-border), 0 0 0 3px var(--color-bg), 0 0 0 4px var(--color-border);
+  --theme-card-hover-shadow: 0 0 0 1px var(--color-accent), 0 0 0 3px var(--color-bg), 0 0 0 4px var(--color-accent);
 }
 
+[data-theme='modern-japanese'] body {
+  background-color: var(--color-bg);
+  font-family: 'Noto Serif JP', 'Noto Sans JP', serif;
+}
+
+/* ==========================================================================
+   影のリセットと二重線（子持ち罫）の強制適用
+   ========================================================================== */
 [data-theme='modern-japanese'] [class*='shadow-'] {
   --tw-shadow: none;
   --tw-shadow-colored: none;
   box-shadow: none !important;
 }
+
 [data-theme='modern-japanese'] .theme-card,
 [data-theme='modern-japanese'] .theme-card-hover:hover,
 [data-theme='modern-japanese'] .theme-btn,
@@ -51,19 +62,265 @@
   box-shadow: revert-layer;
 }
 
-/* Organic */
+/* サイトヘッダーの二重線化 */
 [data-theme='modern-japanese'] .site-header {
   border: 1px solid var(--color-border) !important;
   border-radius: 0px !important;
-  box-shadow: none !important;
+  box-shadow: 0 0 0 2px var(--color-bg), 0 0 0 3px var(--color-border) !important;
+  margin-bottom: 2rem;
 }
+
 [data-theme='modern-japanese'] .site-header nav a {
   border: 1px solid transparent !important;
   border-radius: 0px !important;
   box-shadow: none !important;
-}
-[data-theme='modern-japanese'] .site-header nav a:hover {
-  border-color: var(--color-border) !important;
+  position: relative;
+  transition: all 0.2s ease;
 }
 
-/* Organic */
+[data-theme='modern-japanese'] .site-header nav a:hover {
+  border-color: transparent !important;
+  color: var(--color-accent) !important;
+}
+
+/* ナビゲーション下部の朱色/金色アンダーライン */
+[data-theme='modern-japanese'] .site-header nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-accent);
+  transition: width 0.2s ease;
+}
+
+[data-theme='modern-japanese'] .site-header nav a:hover::after {
+  width: 100%;
+}
+
+/* ==========================================================================
+   記事カード (PostCard) の和モダンレイアウト
+   ========================================================================== */
+[data-theme='modern-japanese'] .post-card-list {
+  gap: 2rem !important;
+}
+
+/* 記事カードの角丸リセット */
+[data-theme='modern-japanese'] .theme-card {
+  border-radius: 0px !important;
+  border: 1px solid var(--color-border) !important;
+}
+
+[data-theme='modern-japanese'] .post-card-image-wrapper {
+  border-radius: 0px !important;
+  border-bottom: 1px solid var(--color-border) !important;
+}
+
+/* コンテンツとメタデータのグリッド化（右側に縦書きメタデータエリア） */
+[data-theme='modern-japanese'] .post-card-content {
+  display: grid !important;
+  grid-template-columns: 1fr auto !important;
+  gap: 1.5rem !important;
+  align-items: stretch !important;
+  padding: 1.5rem !important;
+}
+
+[data-theme='modern-japanese'] .post-card-text {
+  grid-column: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+}
+
+[data-theme='modern-japanese'] .post-card-meta {
+  grid-column: 2 !important;
+  grid-row: 1 / span 2 !important;
+  margin-top: 0 !important;
+  border-left: 1px dashed var(--color-border) !important;
+  padding-left: 1.25rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  writing-mode: vertical-rl !important;
+  text-orientation: mixed !important;
+}
+
+/* 縦書き内のアイコンを排除 */
+[data-theme='modern-japanese'] .post-card-meta svg {
+  display: none !important;
+}
+
+/* 縦書き内の日付 */
+[data-theme='modern-japanese'] .post-card-meta time {
+  white-space: nowrap !important;
+  letter-spacing: 0.15em !important;
+  font-size: 0.85rem !important;
+  order: 2 !important; /* 日付を下に配置 */
+}
+
+/* 落款・スタンプ（朱肉）風カテゴリ */
+[data-theme='modern-japanese'] .post-card-meta a[href*='/blog/categories/'] {
+  border: 1px solid var(--color-accent) !important;
+  background-color: color-mix(in srgb, var(--color-accent) 6%, transparent) !important;
+  color: var(--color-accent) !important;
+  padding: 0.5rem 0.25rem !important;
+  font-weight: bold !important;
+  font-size: 0.8rem !important;
+  writing-mode: vertical-rl !important;
+  text-orientation: upright !important;
+  white-space: nowrap !important;
+  display: inline-block !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.05em !important;
+  margin-bottom: 1rem !important;
+  order: 1 !important; /* カテゴリを上に配置 */
+  transition: all 0.2s ease !important;
+}
+
+[data-theme='modern-japanese'] .post-card-meta a[href*='/blog/categories/']:hover {
+  background-color: var(--color-accent) !important;
+  color: var(--color-bg) !important;
+}
+
+/* 記事カード内のタグを非表示にして引き算の美 */
+[data-theme='modern-japanese'] .post-card-meta div[class*='gap-2'] {
+  display: none !important;
+}
+
+/* ==========================================================================
+   記事詳細ページ & タイポグラフィ
+   ========================================================================== */
+[data-theme='modern-japanese'] article.prose {
+  font-family: 'Noto Serif JP', serif;
+}
+
+[data-theme='modern-japanese'] article.prose h1 {
+  font-size: 2.25rem !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0.05em !important;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem !important;
+}
+
+/* 記事ヘッダーのメタデータを横書きの落款風に */
+[data-theme='modern-japanese'] .post-header .not-prose {
+  display: flex !important;
+  align-items: center !important;
+  gap: 1.5rem !important;
+  margin-top: 1rem !important;
+}
+
+[data-theme='modern-japanese'] .post-header .not-prose svg {
+  display: none !important;
+}
+
+[data-theme='modern-japanese'] .post-header .not-prose a[href*='/blog/categories/'] {
+  border: 1px solid var(--color-accent) !important;
+  background-color: color-mix(in srgb, var(--color-accent) 6%, transparent) !important;
+  color: var(--color-accent) !important;
+  padding: 0.2rem 0.6rem !important;
+  font-weight: bold !important;
+  border-radius: 0px !important;
+}
+
+/* タグクラウド / タグリンクを落款風に */
+[data-theme='modern-japanese'] a.tag-link,
+[data-theme='modern-japanese'] .post-header .not-prose a[href*='/blog/tags/'] {
+  border: 1px solid var(--color-border) !important;
+  background-color: transparent !important;
+  color: var(--color-text) !important;
+  border-radius: 0px !important;
+  padding: 0.15rem 0.5rem !important;
+  font-size: 0.75rem !important;
+  transition: all 0.2s ease !important;
+}
+
+[data-theme='modern-japanese'] a.tag-link:hover,
+[data-theme='modern-japanese'] .post-header .not-prose a[href*='/blog/tags/']:hover {
+  border-color: var(--color-accent) !important;
+  color: var(--color-accent) !important;
+  background-color: color-mix(in srgb, var(--color-accent) 5%, transparent) !important;
+}
+
+/* 記事詳細のアイキャッチ画像（アスペクト比）の角丸＆影リセット、二重線適用 */
+[data-theme='modern-japanese'] .aspect-video {
+  border-radius: 0px !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: 0 0 0 2px var(--color-bg), 0 0 0 3px var(--color-border) !important;
+}
+
+/* 記事本文の見出し h2 (二重線) */
+[data-theme='modern-japanese'] article.prose h2 {
+  font-family: 'Noto Serif JP', serif;
+  font-weight: 700 !important;
+  border-bottom: none !important;
+  position: relative;
+  padding-bottom: 0.75rem;
+  margin-top: 3.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+[data-theme='modern-japanese'] article.prose h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* 記事本文の見出し h3 (左の縦線) */
+[data-theme='modern-japanese'] article.prose h3 {
+  font-family: 'Noto Serif JP', serif;
+  border-left: 3px solid var(--color-accent) !important;
+  padding-left: 0.75rem !important;
+  margin-top: 2.5rem !important;
+}
+
+/* 引用ブロック (blockquote) */
+[data-theme='modern-japanese'] article.prose blockquote {
+  border-left: 3px solid var(--color-accent) !important;
+  background-color: var(--color-secondary) !important;
+  border-radius: 0px !important;
+  font-style: normal !important;
+}
+
+/* ==========================================================================
+   サイドバー (TOC / 目次) の縦書き
+   ========================================================================== */
+[data-theme='modern-japanese'] aside.toc-sidebar > div {
+  border-radius: 0px !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: 0 0 0 2px var(--color-bg), 0 0 0 3px var(--color-border) !important;
+}
+
+[data-theme='modern-japanese'] aside.toc-sidebar h2 {
+  writing-mode: vertical-rl !important;
+  text-orientation: upright !important;
+  font-family: 'Noto Serif JP', serif;
+  letter-spacing: 0.25em !important;
+  font-weight: 700 !important;
+  margin-bottom: 1.5rem !important;
+  border-left: none !important;
+  border-right: 2px solid var(--color-accent) !important;
+  padding-right: 0.5rem !important;
+  padding-left: 0 !important;
+  height: 6rem;
+  display: inline-flex !important;
+  align-items: center;
+}
+
+/* ==========================================================================
+   フッター
+   ========================================================================== */
+[data-theme='modern-japanese'] footer {
+  border-top: 1px solid var(--color-border) !important;
+  box-shadow: 0 -2px 0 var(--color-bg), 0 -3px 0 var(--color-border) !important;
+  margin-top: 4rem;
+}
