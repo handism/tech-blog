@@ -119,5 +119,76 @@ html[data-theme='blueprint'] .dark .site-header {
   box-shadow: 0 0 30px rgba(96, 165, 250, 0.08);
 }
 
+/* ── Blueprint Layout ── */
+[data-theme='blueprint'] .post-card-list {
+  gap: 1.5rem !important;
+}
+
+/* カード自体の背景に細かい方眼紙グリッドを敷く */
+[data-theme='blueprint'] .post-card-item .theme-card {
+  background-color: var(--color-card) !important;
+  background-image:
+    linear-gradient(rgba(10, 40, 100, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 40, 100, 0.05) 1px, transparent 1px) !important;
+  background-size: 10px 10px !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 2px !important;
+  box-shadow: inset 0 0 10px rgba(10, 40, 100, 0.05) !important;
+  position: relative;
+}
+
+html[data-theme='blueprint'].dark .post-card-item .theme-card,
+html[data-theme='blueprint'] .dark .post-card-item .theme-card {
+  background-image:
+    linear-gradient(rgba(96, 165, 250, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(96, 165, 250, 0.04) 1px, transparent 1px) !important;
+}
+
+/* 四隅に寸法線（引き出し線）をあしらう */
+[data-theme='blueprint'] .post-card-item .theme-card::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 1px solid transparent;
+  background-image:
+    linear-gradient(var(--color-border) 1px, transparent 1px),
+    linear-gradient(var(--color-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-border) 1px, transparent 1px) !important;
+  background-size: 10px 1px, 10px 1px, 1px 10px, 1px 10px !important;
+  background-position: top left, bottom right, top left, bottom right !important;
+  background-repeat: no-repeat !important;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* サムネイル画像を青写真（シアノタイプ）化する */
+[data-theme='blueprint'] .post-card-image-wrapper img {
+  filter: invert(0.9) sepia(0.8) hue-rotate(185deg) saturate(1.8) contrast(1.2);
+  mix-blend-mode: multiply;
+  opacity: 0.85;
+  transition: filter 0.3s ease, opacity 0.3s ease !important;
+}
+
+html[data-theme='blueprint'].dark .post-card-image-wrapper img,
+html[data-theme='blueprint'] .dark .post-card-image-wrapper img {
+  filter: sepia(0.8) hue-rotate(190deg) saturate(2) brightness(0.9) contrast(1.1);
+  mix-blend-mode: screen;
+}
+
+[data-theme='blueprint'] .post-card-item:hover .post-card-image-wrapper img {
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: 1;
+}
+
+[data-theme='blueprint'] .post-card-image-wrapper {
+  border-bottom: 1px solid var(--color-border) !important;
+}
+
+
 
 /* ═══════════════════════════════════════════════════════

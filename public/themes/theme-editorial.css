@@ -76,10 +76,75 @@
   box-shadow: none !important;
   border-radius: 2px !important;
 }
+/* Synthwave */
 [data-theme='editorial'] .site-header nav a:hover {
   background-color: var(--color-text) !important;
   color: var(--color-bg) !important;
   box-shadow: none !important;
 }
+
+/* ── Editorial Layout ── */
+@media (min-width: 768px) {
+  [data-theme='editorial'] .post-card-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.5rem;
+  }
+
+  [data-theme='editorial'] .post-card-list > .featured-card {
+    grid-column: span 2;
+  }
+
+  [data-theme='editorial'] .post-card-list > .featured-card > article {
+    flex-direction: row !important;
+    align-items: stretch;
+  }
+
+  [data-theme='editorial'] .post-card-list > .featured-card .post-card-image-link {
+    width: 50%;
+  }
+
+  [data-theme='editorial'] .post-card-list > .featured-card .post-card-image-wrapper {
+    height: 100% !important;
+    min-height: 280px;
+    border-bottom-width: 0 !important;
+    border-right: 1px solid var(--color-border) !important;
+  }
+
+  [data-theme='editorial'] .post-card-list > .featured-card .post-card-content {
+    width: 50%;
+    padding: 2.5rem !important;
+  }
+}
+
+/* 2枚目以降の記事カードは画像や装飾をシンプルにし、罫線で区切る（フラットペーパーの再現） */
+[data-theme='editorial'] .post-card-item:not(.featured-card) .theme-card {
+  border-width: 0 0 1px 0 !important;
+  border-radius: 0px !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  padding-bottom: 1.5rem !important;
+}
+
+[data-theme='editorial'] .post-card-item:not(.featured-card) .theme-card-hover:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+[data-theme='editorial'] .post-card-item:not(.featured-card) .post-card-image-wrapper {
+  height: 140px !important;
+  border-radius: 0px !important;
+  border-width: 1px !important;
+}
+
+/* 画像に新聞紙風のモノクロセピアフィルターをかける */
+[data-theme='editorial'] .post-card-image-wrapper img {
+  filter: grayscale(1) sepia(0.2) contrast(1.1) brightness(0.95);
+  transition: filter 0.3s ease, transform 0.5s ease !important;
+}
+
+[data-theme='editorial'] .post-card-item:hover .post-card-image-wrapper img {
+  filter: grayscale(0.5) sepia(0.1) contrast(1) brightness(1);
+}
+
 
 /* Synthwave */

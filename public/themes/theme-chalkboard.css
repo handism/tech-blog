@@ -121,5 +121,85 @@ html[data-theme='chalkboard'] .dark body {
   background-attachment: fixed;
 }
 
+/* ── Chalkboard Layout ── */
+[data-theme='chalkboard'] .post-card-list {
+  grid-template-columns: 1fr !important;
+  gap: 2rem !important;
+}
+
+@media (min-width: 640px) {
+  [data-theme='chalkboard'] .post-card-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* ポラロイド風の白枠カード */
+[data-theme='chalkboard'] .post-card-item .theme-card {
+  background: #fbfaf5 !important;
+  color: #1a1a1a !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  padding: 12px 12px 18px 12px !important;
+  border-radius: 4px !important;
+  box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.25) !important;
+  position: relative;
+  transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+
+/* テキストをポラロイド風に黒で強調 */
+[data-theme='chalkboard'] .post-card-item .post-card-title a {
+  color: #1c1c1c !important;
+  font-family: var(--font-sans) !important;
+}
+
+[data-theme='chalkboard'] .post-card-item .post-card-description {
+  color: #4a4a4a !important;
+}
+
+/* 偶数/奇数でランダム風に傾きをつける */
+[data-theme='chalkboard'] .post-card-item:nth-child(even) .theme-card {
+  transform: rotate(1.2deg);
+}
+
+[data-theme='chalkboard'] .post-card-item:nth-child(odd) .theme-card {
+  transform: rotate(-1.5deg);
+}
+
+/* ホバー時に少し傾きをゆるめ、浮き上がる */
+[data-theme='chalkboard'] .post-card-item:hover .theme-card {
+  transform: translateY(-6px) rotate(0.5deg) scale(1.02) !important;
+  box-shadow: 8px 12px 20px rgba(0, 0, 0, 0.35) !important;
+  z-index: 10;
+}
+
+/* 画像は白枠で囲む */
+[data-theme='chalkboard'] .post-card-item .post-card-image-wrapper {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+  border-radius: 2px !important;
+}
+
+/* マグネットの装飾をカード上部中央に配置 */
+[data-theme='chalkboard'] .post-card-item .theme-card::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 5px 5px, #ff4d4d, #b30000);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  z-index: 20;
+}
+
+[data-theme='chalkboard'] .post-card-item:nth-child(3n) .theme-card::before {
+  background: radial-gradient(circle at 5px 5px, #4d94ff, #0052cc);
+}
+
+[data-theme='chalkboard'] .post-card-item:nth-child(3n+1) .theme-card::before {
+  background: radial-gradient(circle at 5px 5px, #ffd11a, #cca300);
+}
+
+
 
 /* ═══════════════════════════════════════════════════════
