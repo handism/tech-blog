@@ -32,11 +32,11 @@ const themeCssLines = lines.slice(splitIndex);
 
 // テーマIDのリスト (site.ts から抽出したもの)
 const themeIds = [
-  'minimal', 'flat', 'material', 'corporate', 'dashboard', 'bento', 'hekireki',
-  'glassmorphism', 'neumorphism', 'claymorphism', 'skeuomorphism', 'isometric', 'three-d',
-  'retro', 'cyberpunk', 'synthwave', 'terminal', 'y2k', 'blueprint', 'glitch', 'dark-ui',
-  'neo-brutalism', 'brutalism', 'editorial', 'illustration', 'chalkboard', 'holographic', 'bauhaus',
-  'japanese', 'modern-japanese', 'nordic', 'organic', 'luxury', 'pop', 'kawaii', 'steampunk'
+  'minimal', 'dashboard', 'bento',
+  'glassmorphism', 'claymorphism', 'three-d',
+  'terminal', 'blueprint', 'synthwave',
+  'neo-brutalism', 'editorial', 'chalkboard', 'bauhaus',
+  'modern-japanese', 'nordic', 'steampunk'
 ];
 
 // 各テーマのCSSを行ごとに格納するバッファ

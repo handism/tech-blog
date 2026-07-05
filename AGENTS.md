@@ -197,8 +197,8 @@ quiz:                # 確認クイズ (省略可)
 - Prettier：行幅 100 文字、シングルクォート、インデント 2 スペース
 - TypeScript strict モード、パスエイリアス `@/*` → プロジェクトルート
 - スタイリングは Tailwind CSS 4、本文組版は Tailwind Typography
-- サイト全体で **37種類の多彩なデザインテーマ（デフォルトはEditorial）** を採用したフレキシブルなスタイリングシステムを導入：
-  - 各テーマ（Neo-Brutalism, Glassmorphism, Minimal, ..., Bento, Hekireki, Blueprint, Steampunk, Chalkboard, Holographic, Bauhaus, Glitch Art, Flat Pop など37種類）は `app/globals.css` で CSS 変数として定義され、`data-theme` 属性で切り替わります。
+- サイト全体で **16種類の多彩なデザインテーマ（デフォルトはNeo-Brutalism）** を採用したフレキシブルなスタイリングシステムを導入：
+  - 各テーマ（Neo-Brutalism, Glassmorphism, Minimal, Bento, Blueprint, Steampunk, Chalkboard, Bauhaus など16種類）は `app/globals.css` で CSS 変数として定義され、`data-theme` 属性で切り替わります。
   - 共通のUIパーツ（カード、ボタン、入力エリア）には、選択されたテーマに応じた専用のスタイル（ボーダー、シャドウ、エフェクト）が自動適用されます。
   - 見出し等のタイポグラフィには Google Fonts からインポートした **Lexend** と **Space Grotesk** を優先して割り当てる設計です。新テーマ用に **Caveat**（Chalkboard）・**Cinzel**（Steampunk）・**Bebas Neue**（Bauhaus）・**Outfit**（Holographic）・**Roboto Mono**（Blueprint）も追加インポート済み。
   - 新しいコンポーネントの実装やテーマ別のスタイリング調整を行う際は、`.agents/designs/DESIGN_*.md` の各テーマ詳細仕様書を参照してください。
