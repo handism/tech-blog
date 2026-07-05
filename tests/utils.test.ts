@@ -1,10 +1,11 @@
 // tests/utils.test.ts
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi, afterEach } from 'vitest';
 import {
   categoryToSlug,
   estimateReadingMinutes,
   sortByDate,
   tagToSlug,
+  filterDrafts,
   catchEnoent,
 } from '@/src/lib/utils';
 
@@ -167,6 +168,32 @@ describe('estimateReadingMinutes', () => {
     // "well-known" -> 1 word
     // total 2 words -> < 200 -> 1 minute
     expect(estimateReadingMinutes("It's a well-known fact that")).toBe(1);
+  });
+});
+
+describe('filterDrafts', () => {
+  const items = [
+    { id: 1, title: 'Published 1', draft: false },
+    { id: 2, title: 'Draft 1', draft: true },
+    { id: 3, title: 'Published 2' }, // draft undefined -> false equivalent
+  ];
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it('development環境ではdraftを含むすべてのアイテムを返す', () => {
+    vi.stubEnv('NODE_ENV', 'development');
+    const result = filterDrafts(items);
+    expect(result).toHaveLength(3);
+    expect(result).toEqual(items);
+  });
+
+  it('production環境ではdraftがtrueのアイテムを除外する', () => {
+    vi.stubEnv('NODE_ENV', 'production');
+    const result = filterDrafts(items);
+    expect(result).toHaveLength(2);
+    expect(result.map((i) => i.id)).toEqual([1, 3]);
   });
 });
 
