@@ -28,20 +28,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v4
       - name: Install dependencies
         run: bun install --frozen-lockfile
       - name: Build with Next.js
         run: bun run build
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
 
@@ -53,7 +53,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
     name: Deploy
     steps:
       - name: Deploy to GitHub Pages
