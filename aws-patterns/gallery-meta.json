@@ -146,10 +146,10 @@
   {
     "slug": "secure-data-lake",
     "title": "セキュアなデータレイク構成",
-    "description": "S3、AWS Glue、Amazon Athena、Lake Formation を組み合わせ、きめ細かなアクセス制御と KMS 暗号化を施したバッチ分析・クエリ基盤を構築します。Glue Crawler による自動スキーマ検出と Athena ワークグループによるクエリコスト管理も含みます。",
+    "description": "S3、AWS Glue、Amazon Athena、Lake Formation を組み合わせ、きめ細かなアクセス制御と KMS 暗号化を施したバッチ分析・クエリ基盤を構築します。Glue Crawler による自動スキーマ検出 and Athena ワークグループによるクエリコスト管理も含みます。",
     "category": "Analytics",
     "templateFile": "secure-data-lake.yaml",
-    "diagramFile": null,
+    "diagramFile": "secure-data-lake.drawio.svg",
     "awsServices": ["S3", "Glue", "Athena", "Lake Formation", "KMS", "IAM"]
   },
   {
@@ -158,7 +158,7 @@
     "description": "Amazon EKS + Fargate プロファイルによるサーバーレス Kubernetes 環境を構築します。AWS Load Balancer Controller 用の IRSA（IAM Roles for Service Accounts）設定と ECR リポジトリを含み、ALB Ingress による外部公開に対応します。",
     "category": "Containers",
     "templateFile": "eks-cluster.yaml",
-    "diagramFile": null,
+    "diagramFile": "eks-cluster.drawio.svg",
     "awsServices": ["EKS", "Fargate", "ECR", "ALB", "VPC", "IAM"]
   },
   {
@@ -167,7 +167,7 @@
     "description": "Route 53 フェイルオーバールーティング、S3 クロスリージョンレプリケーション（S3 RTC 対応）、Aurora Global Database を組み合わせ、リージョン障害時に自動で切り替わるディザスタリカバリ基盤を構築します。プライマリ・セカンダリ両リージョンへの個別デプロイが必要です。",
     "category": "High Availability",
     "templateFile": "multi-region-dr.yaml",
-    "diagramFile": null,
+    "diagramFile": "multi-region-dr.drawio.svg",
     "awsServices": ["Route 53", "S3", "Aurora Global Database", "KMS", "CloudWatch"]
   },
   {
@@ -176,7 +176,7 @@
     "description": "AWS IoT Core の MQTT トピックルールで受信したデバイステレメトリを Kinesis Data Streams 経由で Lambda に流し、DynamoDB へのリアルタイム状態管理と S3 への長期アーカイブを同時に実現する IoT データパイプラインです。クリティカルアラートは Lambda へ直接ルーティングされます。",
     "category": "IoT",
     "templateFile": "iot-pipeline.yaml",
-    "diagramFile": null,
+    "diagramFile": "iot-pipeline.drawio.svg",
     "awsServices": ["IoT Core", "Kinesis Data Streams", "Lambda", "DynamoDB", "S3", "SQS"]
   },
   {

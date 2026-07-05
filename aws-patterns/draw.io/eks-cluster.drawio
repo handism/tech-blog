@@ -1,0 +1,152 @@
+<mxfile host="app.diagrams.net" version="29.5.2">
+  <diagram name="EKS Cluster Architecture" id="eks-cluster">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="750" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- AWS Cloud Container -->
+        <mxCell id="aws-cloud" value="AWS Cloud" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=14;fontStyle=1;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud;strokeColor=#AAB7B8;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#232F3E;dashed=0;" vertex="1" parent="1">
+          <mxGeometry x="100" y="60" width="1020" height="620" as="geometry"/>
+        </mxCell>
+
+        <!-- Region Container -->
+        <mxCell id="region" value="Region" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_region;strokeColor=#00A4A6;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#147EBA;dashed=1;" vertex="1" parent="aws-cloud">
+          <mxGeometry x="40" y="40" width="940" height="540" as="geometry"/>
+        </mxCell>
+
+        <!-- ECR Repository (Region Service) -->
+        <mxCell id="ecr" value="Amazon ECR&#xa;(KMS Encrypted)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.elastic_container_registry;" vertex="1" parent="region">
+          <mxGeometry x="840" y="100" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- CloudWatch Logs (Region Service) -->
+        <mxCell id="cw-logs" value="CloudWatch Logs&#xa;(EKS Log Group)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#759C3E;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.cloudwatch_2;" vertex="1" parent="region">
+          <mxGeometry x="840" y="240" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- EKS Cluster (Control Plane - Managed) -->
+        <mxCell id="eks-control-plane" value="Amazon EKS&#xa;Control Plane" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.eks;" vertex="1" parent="region">
+          <mxGeometry x="50" y="40" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- VPC Container -->
+        <mxCell id="vpc" value="VPC (10.0.0.0/16)" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_vpc;strokeColor=#8C4FFF;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#8C4FFF;dashed=0;" vertex="1" parent="region">
+          <mxGeometry x="160" y="100" width="640" height="410" as="geometry"/>
+        </mxCell>
+
+        <!-- Internet Gateway -->
+        <mxCell id="igw" value="IGW" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.internet_gateway;" vertex="1" parent="region">
+          <mxGeometry x="100" y="200" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Availability Zone 1 -->
+        <mxCell id="az-1" value="Availability Zone 1" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=11;fontStyle=0;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_availability_zone;strokeColor=#00A4A6;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#147EBA;dashed=1;" vertex="1" parent="vpc">
+          <mxGeometry x="40" y="50" width="260" height="330" as="geometry"/>
+        </mxCell>
+
+        <!-- Public Subnet 1 -->
+        <mxCell id="pub-sub-1" value="Public Subnet 1 (10.0.0.0/24)" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=10;fontStyle=0;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_public_subnet;strokeColor=#7AA116;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#7AA116;dashed=0;" vertex="1" parent="az-1">
+          <mxGeometry x="10" y="40" width="240" height="110" as="geometry"/>
+        </mxCell>
+
+        <!-- NAT Gateway -->
+        <mxCell id="nat-gw" value="NAT Gateway" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.nat_gateway;" vertex="1" parent="pub-sub-1">
+          <mxGeometry x="90" y="30" width="50" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- Private Subnet 1 -->
+        <mxCell id="priv-sub-1" value="Private Subnet 1 (10.0.2.0/24)" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=10;fontStyle=0;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_private_subnet;strokeColor=#147EBA;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#147EBA;dashed=0;" vertex="1" parent="az-1">
+          <mxGeometry x="10" y="170" width="240" height="140" as="geometry"/>
+        </mxCell>
+
+        <!-- Fargate Pod (System) -->
+        <mxCell id="pod-sys-1" value="kube-system&#xa;(Fargate)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=10;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.fargate;" vertex="1" parent="priv-sub-1">
+          <mxGeometry x="25" y="40" width="50" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- Fargate Pod (App) -->
+        <mxCell id="pod-app-1" value="app-ns&#xa;(Fargate)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=10;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.fargate;" vertex="1" parent="priv-sub-1">
+          <mxGeometry x="145" y="40" width="50" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- Availability Zone 2 -->
+        <mxCell id="az-2" value="Availability Zone 2" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=11;fontStyle=0;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_availability_zone;strokeColor=#00A4A6;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#147EBA;dashed=1;" vertex="1" parent="vpc">
+          <mxGeometry x="340" y="50" width="260" height="330" as="geometry"/>
+        </mxCell>
+
+        <!-- Public Subnet 2 -->
+        <mxCell id="pub-sub-2" value="Public Subnet 2 (10.0.1.0/24)" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=10;fontStyle=0;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_public_subnet;strokeColor=#7AA116;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#7AA116;dashed=0;" vertex="1" parent="az-2">
+          <mxGeometry x="10" y="40" width="240" height="110" as="geometry"/>
+        </mxCell>
+
+        <!-- Private Subnet 2 -->
+        <mxCell id="priv-sub-2" value="Private Subnet 2 (10.0.3.0/24)" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=10;fontStyle=0;container=1;pointerEvents=0;collapsible=0;recursiveResize=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_private_subnet;strokeColor=#147EBA;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#147EBA;dashed=0;" vertex="1" parent="az-2">
+          <mxGeometry x="10" y="170" width="240" height="140" as="geometry"/>
+        </mxCell>
+
+        <!-- Fargate Pod (System) 2 -->
+        <mxCell id="pod-sys-2" value="kube-system&#xa;(Fargate)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=10;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.fargate;" vertex="1" parent="priv-sub-2">
+          <mxGeometry x="25" y="40" width="50" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- Fargate Pod (App) 2 -->
+        <mxCell id="pod-app-2" value="app-ns&#xa;(Fargate)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#ED7100;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=10;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.fargate;" vertex="1" parent="priv-sub-2">
+          <mxGeometry x="145" y="40" width="50" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- Application Load Balancer (Provisioned in Public Subnets) -->
+        <mxCell id="alb" value="Application Load Balancer&#xa;(Managed by Controller)" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#8C4FFF;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=11;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.application_load_balancer;" vertex="1" parent="region">
+          <mxGeometry x="220" y="200" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- User / Actor -->
+        <mxCell id="user" value="End User" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;fillColor=#232F3D;strokeColor=none;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;fontSize=12;fontStyle=0;aspect=fixed;pointerEvents=1;shape=mxgraph.aws4.user;" vertex="1" parent="1">
+          <mxGeometry x="20" y="340" width="60" height="60" as="geometry"/>
+        </mxCell>
+
+        <!-- Connections -->
+        <!-- User to ALB -->
+        <mxCell id="edge-user-alb" value="HTTPS" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=11;" edge="1" parent="region" source="user" target="alb">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- ALB to App Pods -->
+        <mxCell id="edge-alb-pod1" value="Route" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=10;exitX=1;exitY=0.5;entryX=0.5;entryY=1;" edge="1" parent="region" source="alb" target="pod-app-1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge-alb-pod2" value="Route" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#545B64;fontSize=10;exitX=1;exitY=0.5;entryX=0.5;entryY=1;" edge="1" parent="region" source="alb" target="pod-app-2">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Control Plane management -->
+        <mxCell id="edge-eks-pods" value="Manage" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#ED7100;dashed=1;fontSize=10;" edge="1" parent="region" source="eks-control-plane" target="pod-sys-1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- EKS to CloudWatch Logs -->
+        <mxCell id="edge-eks-cw" value="Audit / API Logs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#759C3E;dashed=1;fontSize=10;" edge="1" parent="region" source="eks-control-plane" target="cw-logs">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Fargate Pods to ECR -->
+        <mxCell id="edge-pod-ecr" value="Pull Image" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#ED7100;dashed=1;fontSize=10;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" edge="1" parent="region" source="pod-app-1" target="ecr">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Outbound Routing through NAT GW -->
+        <mxCell id="edge-pod-nat" value="Outbound" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=1;strokeColor=#8C4FFF;dashed=1;fontSize=10;exitX=0;exitY=0.5;entryX=0.5;entryY=1;" edge="1" parent="region" source="pod-app-1" target="nat-gw">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge-nat-igw" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeWidth=2;strokeColor=#8C4FFF;fontSize=10;" edge="1" parent="region" source="nat-gw" target="igw">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- Highlights Note -->
+        <mxCell id="note-highlights" value="Key Configurations:&#xa;- Fargate serverless node execution&#xa;- VPC Multi-AZ setup with NAT Gateway&#xa;- AWS Load Balancer Controller manages ALB Ingress&#xa;- IAM Roles for Service Accounts (IRSA) for least privilege&#xa;- Private subnets restrict direct external pod access" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF4E6;strokeColor=#D79B00;align=left;verticalAlign=top;fontSize=11;fontStyle=1;" vertex="1" parent="region">
+          <mxGeometry x="630" y="40" width="190" height="110" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

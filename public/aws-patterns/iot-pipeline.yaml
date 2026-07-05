@@ -1,0 +1,430 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'IoT Data Collection and Processing Pipeline with IoT Core, Kinesis, Lambda, DynamoDB, and S3'
+
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues: [dev, prod]
+
+Resources:
+  # KMS Key
+  EncryptionKey:
+    Type: AWS::KMS::Key
+    Properties:
+      Description: KMS key for IoT pipeline encryption
+      EnableKeyRotation: true
+      KeyPolicy:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: Enable IAM User Permissions
+            Effect: Allow
+            Principal:
+              AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+            Action: 'kms:*'
+            Resource: '*'
+
+  EncryptionKeyAlias:
+    Type: AWS::KMS::Alias
+    Properties:
+      AliasName: !Sub 'alias/iot-pipeline-${Environment}'
+      TargetKeyId: !Ref EncryptionKey
+
+  # S3 Bucket for long-term IoT data storage
+  IoTDataBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: aws:kms
+              KMSMasterKeyID: !Ref EncryptionKey
+            BucketKeyEnabled: true
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Enabled
+      LifecycleConfiguration:
+        Rules:
+          - Id: ArchiveOldData
+            Status: Enabled
+            Transitions:
+              - TransitionInDays: 90
+                StorageClass: STANDARD_IA
+              - TransitionInDays: 365
+                StorageClass: GLACIER
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+
+  # DynamoDB Table for real-time device state
+  DeviceStateTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub 'iot-device-state-${Environment}'
+      BillingMode: PAY_PER_REQUEST
+      TableClass: STANDARD
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      SSESpecification:
+        SSEEnabled: true
+        SSEType: KMS
+        KMSMasterKeyId: !Ref EncryptionKey
+      AttributeDefinitions:
+        - AttributeName: deviceId
+          AttributeType: S
+        - AttributeName: timestamp
+          AttributeType: S
+      KeySchema:
+        - AttributeName: deviceId
+          KeyType: HASH
+        - AttributeName: timestamp
+          KeyType: RANGE
+      TimeToLiveSpecification:
+        AttributeName: ttl
+        Enabled: true
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+
+  # Kinesis Data Stream for IoT telemetry
+  IoTDataStream:
+    Type: AWS::Kinesis::Stream
+    Properties:
+      RetentionPeriodHours: 24
+      StreamModeDetails:
+        StreamMode: ON_DEMAND
+      StreamEncryption:
+        EncryptionType: KMS
+        KeyId: !Ref EncryptionKey
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+
+  # IAM Role for IoT Core to publish to Kinesis
+  IoTCoreRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: iot.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: IoTKinesisPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - kinesis:PutRecord
+                  - kinesis:PutRecords
+                Resource: !GetAtt IoTDataStream.Arn
+              - Effect: Allow
+                Action:
+                  - kms:GenerateDataKey
+                  - kms:Decrypt
+                Resource: !GetAtt EncryptionKey.Arn
+
+  # IoT Topic Rule: route telemetry to Kinesis
+  IoTTelemetryRule:
+    Type: AWS::IoT::TopicRule
+    Properties:
+      RuleName: !Sub 'iot_telemetry_to_kinesis_${Environment}'
+      TopicRulePayload:
+        Sql: "SELECT *, topic() AS topic, timestamp() AS receivedAt FROM 'devices/+/telemetry'"
+        RuleDisabled: false
+        Actions:
+          - Kinesis:
+              StreamName: !Ref IoTDataStream
+              PartitionKey: '${deviceId}'
+              RoleArn: !GetAtt IoTCoreRole.Arn
+        ErrorAction:
+          CloudwatchLogs:
+            LogGroupName: !Ref IoTErrorLogGroup
+            RoleArn: !GetAtt IoTCoreRole.Arn
+
+  # IoT Topic Rule: route alerts directly to Lambda
+  IoTAlertRule:
+    Type: AWS::IoT::TopicRule
+    Properties:
+      RuleName: !Sub 'iot_alert_to_lambda_${Environment}'
+      TopicRulePayload:
+        Sql: "SELECT * FROM 'devices/+/alert' WHERE severity = 'critical'"
+        RuleDisabled: false
+        Actions:
+          - Lambda:
+              FunctionArn: !GetAtt AlertProcessorFunction.Arn
+
+  # IAM Role for Lambda
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: IoTLambdaPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - kinesis:GetRecords
+                  - kinesis:GetShardIterator
+                  - kinesis:DescribeStream
+                  - kinesis:ListShards
+                  - kinesis:ListStreams
+                Resource: !GetAtt IoTDataStream.Arn
+              - Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                  - dynamodb:GetItem
+                  - dynamodb:Query
+                Resource: !GetAtt DeviceStateTable.Arn
+              - Effect: Allow
+                Action:
+                  - s3:PutObject
+                Resource: !Sub '${IoTDataBucket.Arn}/*'
+              - Effect: Allow
+                Action:
+                  - kms:Decrypt
+                  - kms:GenerateDataKey
+                Resource: !GetAtt EncryptionKey.Arn
+
+  # Lambda: Kinesis stream processor (telemetry → DynamoDB + S3)
+  TelemetryProcessorFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Runtime: python3.12
+      Handler: index.lambda_handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Timeout: 60
+      MemorySize: 256
+      Environment:
+        Variables:
+          DEVICE_TABLE: !Ref DeviceStateTable
+          DATA_BUCKET: !Ref IoTDataBucket
+          ENVIRONMENT: !Ref Environment
+      Code:
+        ZipFile: |
+          import json
+          import base64
+          import boto3
+          import os
+          import time
+
+          dynamodb = boto3.resource('dynamodb')
+          s3 = boto3.client('s3')
+          table = dynamodb.Table(os.environ['DEVICE_TABLE'])
+          bucket = os.environ['DATA_BUCKET']
+
+          def lambda_handler(event, context):
+              for record in event['Records']:
+                  payload = json.loads(base64.b64decode(record['kinesis']['data']))
+                  device_id = payload.get('deviceId', 'unknown')
+                  ts = payload.get('receivedAt', str(int(time.time() * 1000)))
+
+                  # Update device state in DynamoDB
+                  table.put_item(Item={
+                      'deviceId': device_id,
+                      'timestamp': str(ts),
+                      'data': payload,
+                      'ttl': int(time.time()) + 86400 * 30  # 30 days TTL
+                  })
+
+                  # Archive raw data to S3
+                  s3.put_object(
+                      Bucket=bucket,
+                      Key=f'telemetry/{device_id}/{ts}.json',
+                      Body=json.dumps(payload),
+                      ContentType='application/json'
+                  )
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+
+  TelemetryProcessorLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${TelemetryProcessorFunction}'
+      RetentionInDays: 7
+
+  # Lambda: Alert processor (critical alerts)
+  AlertProcessorFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Runtime: python3.12
+      Handler: index.lambda_handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Timeout: 30
+      MemorySize: 128
+      Environment:
+        Variables:
+          DEVICE_TABLE: !Ref DeviceStateTable
+          ENVIRONMENT: !Ref Environment
+      Code:
+        ZipFile: |
+          import json
+          import boto3
+          import os
+          import time
+
+          dynamodb = boto3.resource('dynamodb')
+          table = dynamodb.Table(os.environ['DEVICE_TABLE'])
+
+          def lambda_handler(event, context):
+              device_id = event.get('deviceId', 'unknown')
+              ts = str(int(time.time() * 1000))
+
+              table.put_item(Item={
+                  'deviceId': device_id,
+                  'timestamp': ts,
+                  'data': event,
+                  'alertType': 'critical',
+                  'ttl': int(time.time()) + 86400 * 7  # 7 days TTL
+              })
+
+              print(f"Critical alert processed for device: {device_id}")
+              return {'statusCode': 200}
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+
+  AlertProcessorLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${AlertProcessorFunction}'
+      RetentionInDays: 7
+
+  # Allow IoT Core to invoke AlertProcessorFunction
+  IoTLambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !GetAtt AlertProcessorFunction.Arn
+      Action: lambda:InvokeFunction
+      Principal: iot.amazonaws.com
+      SourceArn: !Sub 'arn:aws:iot:${AWS::Region}:${AWS::AccountId}:rule/${IoTAlertRule}'
+
+  # Kinesis → Lambda Event Source Mapping
+  KinesisEventSourceMapping:
+    Type: AWS::Lambda::EventSourceMapping
+    Properties:
+      EventSourceArn: !GetAtt IoTDataStream.Arn
+      FunctionName: !GetAtt TelemetryProcessorFunction.Arn
+      StartingPosition: LATEST
+      BatchSize: 100
+      BisectBatchOnFunctionError: true
+      MaximumRetryAttempts: 3
+      DestinationConfig:
+        OnFailure:
+          Destination: !GetAtt DeadLetterQueue.Arn
+
+  # SQS Dead Letter Queue for failed Kinesis records
+  DeadLetterQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      QueueName: !Sub 'iot-dlq-${Environment}'
+      KmsMasterKeyId: !Ref EncryptionKey
+      MessageRetentionPeriod: 1209600  # 14 days
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+
+  # CloudWatch Log Group for IoT errors
+  IoTErrorLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aws/iot/errors-${Environment}'
+      RetentionInDays: 7
+
+  # CloudWatch Alarms
+  KinesisIteratorAgeAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmDescription: Alert when Kinesis iterator age is too high
+      MetricName: GetRecords.IteratorAgeMilliseconds
+      Namespace: AWS/Kinesis
+      Statistic: Maximum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 60000
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: StreamName
+          Value: !Ref IoTDataStream
+
+  LambdaErrorAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmDescription: Alert when telemetry processor Lambda errors occur
+      MetricName: Errors
+      Namespace: AWS/Lambda
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 5
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: FunctionName
+          Value: !Ref TelemetryProcessorFunction
+
+  DLQDepthAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmDescription: Alert when DLQ has messages (processing failures)
+      MetricName: ApproximateNumberOfMessagesVisible
+      Namespace: AWS/SQS
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      Dimensions:
+        - Name: QueueName
+          Value: !GetAtt DeadLetterQueue.QueueName
+
+Outputs:
+  IoTDataStreamName:
+    Description: Kinesis Data Stream name for IoT telemetry
+    Value: !Ref IoTDataStream
+    Export:
+      Name: !Sub '${AWS::StackName}-IoTDataStream'
+
+  IoTDataStreamArn:
+    Description: Kinesis Data Stream ARN
+    Value: !GetAtt IoTDataStream.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-IoTDataStreamArn'
+
+  DeviceStateTableName:
+    Description: DynamoDB table for device state
+    Value: !Ref DeviceStateTable
+    Export:
+      Name: !Sub '${AWS::StackName}-DeviceStateTable'
+
+  IoTDataBucketName:
+    Description: S3 bucket for long-term IoT data storage
+    Value: !Ref IoTDataBucket
+    Export:
+      Name: !Sub '${AWS::StackName}-IoTDataBucket'
+
+  TelemetryTopicPattern:
+    Description: IoT Core MQTT topic pattern for device telemetry
+    Value: 'devices/{deviceId}/telemetry'
+
+  AlertTopicPattern:
+    Description: IoT Core MQTT topic pattern for device alerts
+    Value: 'devices/{deviceId}/alert'

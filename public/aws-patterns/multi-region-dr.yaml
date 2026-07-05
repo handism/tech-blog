@@ -1,0 +1,408 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Multi-Region Disaster Recovery with Route 53 Failover, S3 CRR, and Aurora Global Database'
+# IMPORTANT: This template must be deployed in the PRIMARY region first.
+# The secondary region stack must be deployed separately with IsPrimary=false.
+# Aurora Global Database secondary cluster must be added after primary cluster creation.
+
+Parameters:
+  Environment:
+    Type: String
+    Default: prod
+    AllowedValues: [dev, prod]
+  IsPrimary:
+    Type: String
+    Default: 'true'
+    AllowedValues: ['true', 'false']
+    Description: Set to true for primary region, false for secondary region
+  PrimaryRegion:
+    Type: String
+    Default: ap-northeast-1
+    Description: Primary AWS region
+  SecondaryRegion:
+    Type: String
+    Default: us-east-1
+    Description: Secondary (DR) AWS region
+  DomainName:
+    Type: String
+    Description: Route 53 hosted zone domain name (e.g. example.com)
+  HostedZoneId:
+    Type: String
+    Description: Route 53 Hosted Zone ID
+  DBMasterUsername:
+    Type: String
+    Default: admin
+    NoEcho: true
+  DBMasterPassword:
+    Type: String
+    NoEcho: true
+    MinLength: 8
+    Description: Aurora master password (min 8 chars)
+
+Conditions:
+  IsPrimaryRegion: !Equals [!Ref IsPrimary, 'true']
+
+Resources:
+  # KMS Key (per-region)
+  EncryptionKey:
+    Type: AWS::KMS::Key
+    Properties:
+      Description: !Sub 'DR encryption key - ${Environment}'
+      EnableKeyRotation: true
+      MultiRegion: true
+      KeyPolicy:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: Enable IAM User Permissions
+            Effect: Allow
+            Principal:
+              AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+            Action: 'kms:*'
+            Resource: '*'
+
+  EncryptionKeyAlias:
+    Type: AWS::KMS::Alias
+    Properties:
+      AliasName: !Sub 'alias/dr-key-${Environment}'
+      TargetKeyId: !Ref EncryptionKey
+
+  # S3 Bucket with Cross-Region Replication
+  PrimaryDataBucket:
+    Type: AWS::S3::Bucket
+    Condition: IsPrimaryRegion
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: aws:kms
+              KMSMasterKeyID: !Ref EncryptionKey
+            BucketKeyEnabled: true
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Enabled
+      ReplicationConfiguration:
+        Role: !GetAtt S3ReplicationRole.Arn
+        Rules:
+          - Id: ReplicateAll
+            Status: Enabled
+            Destination:
+              Bucket: !Sub 'arn:aws:s3:::${AWS::StackName}-dr-data-${SecondaryRegion}'
+              StorageClass: STANDARD
+              ReplicationTime:
+                Status: Enabled
+                Time:
+                  Minutes: 15
+              Metrics:
+                Status: Enabled
+                EventThreshold:
+                  Minutes: 15
+              EncryptionConfiguration:
+                ReplicaKmsKeyID: !Sub 'arn:aws:kms:${SecondaryRegion}:${AWS::AccountId}:alias/dr-key-${Environment}'
+            SourceSelectionCriteria:
+              SseKmsEncryptedObjects:
+                Status: Enabled
+            DeleteMarkerReplication:
+              Status: Enabled
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+
+  ReplicaDataBucket:
+    Type: AWS::S3::Bucket
+    Condition: !Not [!Condition IsPrimaryRegion]
+    Properties:
+      BucketName: !Sub '${AWS::StackName}-dr-data-${AWS::Region}'
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: aws:kms
+              KMSMasterKeyID: !Ref EncryptionKey
+            BucketKeyEnabled: true
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Enabled
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Role
+          Value: replica
+
+  # IAM Role for S3 Replication
+  S3ReplicationRole:
+    Type: AWS::IAM::Role
+    Condition: IsPrimaryRegion
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: s3.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: S3ReplicationPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetReplicationConfiguration
+                  - s3:ListBucket
+                Resource: !GetAtt PrimaryDataBucket.Arn
+              - Effect: Allow
+                Action:
+                  - s3:GetObjectVersionForReplication
+                  - s3:GetObjectVersionAcl
+                  - s3:GetObjectVersionTagging
+                Resource: !Sub '${PrimaryDataBucket.Arn}/*'
+              - Effect: Allow
+                Action:
+                  - s3:ReplicateObject
+                  - s3:ReplicateDelete
+                  - s3:ReplicateTags
+                Resource: !Sub 'arn:aws:s3:::${AWS::StackName}-dr-data-${SecondaryRegion}/*'
+              - Effect: Allow
+                Action:
+                  - kms:Decrypt
+                Resource: !GetAtt EncryptionKey.Arn
+              - Effect: Allow
+                Action:
+                  - kms:GenerateDataKey
+                Resource: !Sub 'arn:aws:kms:${SecondaryRegion}:${AWS::AccountId}:alias/dr-key-${Environment}'
+
+  # VPC
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !If [IsPrimaryRegion, '10.0.0.0/16', '10.1.0.0/16']
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      Tags:
+        - Key: Name
+          Value: !Sub 'dr-vpc-${Environment}-${AWS::Region}'
+
+  PrivateSubnetOne:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !If [IsPrimaryRegion, '10.0.0.0/24', '10.1.0.0/24']
+      AvailabilityZone: !Select [0, !GetAZs '']
+
+  PrivateSubnetTwo:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !If [IsPrimaryRegion, '10.0.1.0/24', '10.1.1.0/24']
+      AvailabilityZone: !Select [1, !GetAZs '']
+
+  DBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: Subnet group for Aurora Global Database
+      SubnetIds:
+        - !Ref PrivateSubnetOne
+        - !Ref PrivateSubnetTwo
+
+  DBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Aurora security group
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          CidrIp: !If [IsPrimaryRegion, '10.0.0.0/16', '10.1.0.0/16']
+
+  # Aurora Global Database (primary region only)
+  AuroraGlobalCluster:
+    Type: AWS::RDS::GlobalCluster
+    Condition: IsPrimaryRegion
+    Properties:
+      GlobalClusterIdentifier: !Sub 'aurora-global-${Environment}'
+      Engine: aurora-mysql
+      EngineVersion: '8.0.mysql_aurora.3.07.1'
+      StorageEncrypted: true
+      DeletionProtection: !If [IsPrimaryRegion, true, false]
+
+  # Aurora Primary Cluster
+  AuroraPrimaryCluster:
+    Type: AWS::RDS::DBCluster
+    Condition: IsPrimaryRegion
+    DependsOn: AuroraGlobalCluster
+    Properties:
+      GlobalClusterIdentifier: !Ref AuroraGlobalCluster
+      Engine: aurora-mysql
+      EngineVersion: '8.0.mysql_aurora.3.07.1'
+      MasterUsername: !Ref DBMasterUsername
+      MasterUserPassword: !Ref DBMasterPassword
+      DBSubnetGroupName: !Ref DBSubnetGroup
+      VpcSecurityGroupIds:
+        - !Ref DBSecurityGroup
+      StorageEncrypted: true
+      KmsKeyId: !Ref EncryptionKey
+      BackupRetentionPeriod: 7
+      DeletionProtection: true
+      EnableCloudwatchLogsExports:
+        - error
+        - slowquery
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+
+  AuroraPrimaryInstance:
+    Type: AWS::RDS::DBInstance
+    Condition: IsPrimaryRegion
+    Properties:
+      DBClusterIdentifier: !Ref AuroraPrimaryCluster
+      DBInstanceClass: db.r6g.large
+      Engine: aurora-mysql
+      PubliclyAccessible: false
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+
+  # Aurora Secondary Cluster (deployed in secondary region)
+  # Note: Secondary cluster joins the existing GlobalCluster created in primary region.
+  # Set GlobalClusterIdentifier to match the primary region's GlobalCluster identifier.
+  AuroraSecondaryCluster:
+    Type: AWS::RDS::DBCluster
+    Condition: !Not [!Condition IsPrimaryRegion]
+    Properties:
+      GlobalClusterIdentifier: !Sub 'aurora-global-${Environment}'
+      Engine: aurora-mysql
+      EngineVersion: '8.0.mysql_aurora.3.07.1'
+      DBSubnetGroupName: !Ref DBSubnetGroup
+      VpcSecurityGroupIds:
+        - !Ref DBSecurityGroup
+      StorageEncrypted: true
+      KmsKeyId: !Ref EncryptionKey
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Role
+          Value: secondary
+
+  AuroraSecondaryInstance:
+    Type: AWS::RDS::DBInstance
+    Condition: !Not [!Condition IsPrimaryRegion]
+    Properties:
+      DBClusterIdentifier: !Ref AuroraSecondaryCluster
+      DBInstanceClass: db.r6g.large
+      Engine: aurora-mysql
+      PubliclyAccessible: false
+      Tags:
+        - Key: Environment
+          Value: !Ref Environment
+
+  # Route 53 Health Check for primary endpoint
+  PrimaryHealthCheck:
+    Type: AWS::Route53::HealthCheck
+    Condition: IsPrimaryRegion
+    Properties:
+      HealthCheckConfig:
+        Type: HTTPS
+        FullyQualifiedDomainName: !Sub 'app.${DomainName}'
+        Port: 443
+        ResourcePath: /health
+        RequestInterval: 30
+        FailureThreshold: 3
+        EnableSNI: true
+      HealthCheckTags:
+        - Key: Name
+          Value: !Sub 'primary-health-check-${Environment}'
+
+  # Route 53 Failover DNS Records
+  PrimaryDNSRecord:
+    Type: AWS::Route53::RecordSet
+    Condition: IsPrimaryRegion
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Sub 'app.${DomainName}'
+      Type: A
+      SetIdentifier: primary
+      Failover: PRIMARY
+      HealthCheckId: !Ref PrimaryHealthCheck
+      AliasTarget:
+        DNSName: !Sub 'app.${DomainName}'
+        EvaluateTargetHealth: true
+        HostedZoneId: !Ref HostedZoneId
+
+  SecondaryDNSRecord:
+    Type: AWS::Route53::RecordSet
+    Condition: !Not [!Condition IsPrimaryRegion]
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Sub 'app.${DomainName}'
+      Type: A
+      SetIdentifier: secondary
+      Failover: SECONDARY
+      AliasTarget:
+        DNSName: !Sub 'app-dr.${DomainName}'
+        EvaluateTargetHealth: true
+        HostedZoneId: !Ref HostedZoneId
+
+  # CloudWatch Alarms
+  ReplicationLagAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Condition: IsPrimaryRegion
+    Properties:
+      AlarmDescription: Alert when Aurora Global Database replication lag exceeds threshold
+      MetricName: AuroraGlobalDBReplicationLag
+      Namespace: AWS/RDS
+      Statistic: Maximum
+      Period: 60
+      EvaluationPeriods: 3
+      Threshold: 1000
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: DBClusterIdentifier
+          Value: !Ref AuroraPrimaryCluster
+
+  HealthCheckAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Condition: IsPrimaryRegion
+    Properties:
+      AlarmDescription: Alert when primary endpoint health check fails
+      MetricName: HealthCheckStatus
+      Namespace: AWS/Route53
+      Statistic: Minimum
+      Period: 60
+      EvaluationPeriods: 2
+      Threshold: 1
+      ComparisonOperator: LessThanThreshold
+      Dimensions:
+        - Name: HealthCheckId
+          Value: !Ref PrimaryHealthCheck
+
+Outputs:
+  Region:
+    Description: Deployed region
+    Value: !Ref AWS::Region
+
+  DataBucketName:
+    Description: S3 data bucket name
+    Value: !If [IsPrimaryRegion, !Ref PrimaryDataBucket, !Ref ReplicaDataBucket]
+    Export:
+      Name: !Sub '${AWS::StackName}-DataBucket'
+
+  AuroraClusterEndpoint:
+    Description: Aurora cluster writer endpoint (primary only)
+    Condition: IsPrimaryRegion
+    Value: !GetAtt AuroraPrimaryCluster.Endpoint.Address
+    Export:
+      Name: !Sub '${AWS::StackName}-AuroraEndpoint'
+
+  GlobalClusterIdentifier:
+    Description: Aurora Global Cluster identifier
+    Condition: IsPrimaryRegion
+    Value: !Ref AuroraGlobalCluster
+    Export:
+      Name: !Sub '${AWS::StackName}-GlobalClusterId'
