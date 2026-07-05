@@ -33,45 +33,47 @@ const ThemeDesignContext = createContext<ThemeDesignContextValue>({
  * LocalStorage に保存し、html[data-theme], html[data-layout] に反映する。
  */
 export function ThemeDesignProvider({ children }: { children: React.ReactNode }) {
-  // テーマの初期値
-  const [currentTheme, setCurrentTheme] = useState<ThemeId>(() => {
-    if (typeof window !== 'undefined') {
-      const themeAttr = document.documentElement.getAttribute('data-theme') as ThemeId | null;
-      if (themeAttr && themeConfig.some((t) => t.id === themeAttr)) {
-        return themeAttr;
-      }
-      try {
-        const saved = localStorage.getItem(THEME_STORAGE_KEY) as ThemeId | null;
-        if (saved && themeConfig.some((t) => t.id === saved)) {
-          return saved;
-        }
-      } catch {
-        // ignore
-      }
-    }
-    return DEFAULT_THEME;
-  });
-
-  // レイアウトの初期値
-  const [currentLayout, setCurrentLayout] = useState<LayoutId>(() => {
-    if (typeof window !== 'undefined') {
-      const layoutAttr = document.documentElement.getAttribute('data-layout') as LayoutId | null;
-      if (layoutAttr && layoutConfig.some((l) => l.id === layoutAttr)) {
-        return layoutAttr;
-      }
-      try {
-        const saved = localStorage.getItem(LAYOUT_STORAGE_KEY) as LayoutId | null;
-        if (saved && layoutConfig.some((l) => l.id === saved)) {
-          return saved;
-        }
-      } catch {
-        // ignore
-      }
-    }
-    return DEFAULT_LAYOUT;
-  });
+  // 初期状態はSSRハイドレーションエラー防止のためデフォルト値に固定
+  const [currentTheme, setCurrentTheme] = useState<ThemeId>(DEFAULT_THEME);
+  const [currentLayout, setCurrentLayout] = useState<LayoutId>(DEFAULT_LAYOUT);
 
   const mounted = useIsClient();
+
+  // マウント後に LocalStorage または html の data-* 属性から設定を安全に復元する
+  useEffect(() => {
+    if (mounted) {
+      const timer = setTimeout(() => {
+        try {
+          // テーマの復元
+          const themeAttr = document.documentElement.getAttribute('data-theme') as ThemeId | null;
+          if (themeAttr && themeConfig.some((t) => t.id === themeAttr)) {
+            setCurrentTheme(themeAttr);
+          } else {
+            const savedTheme = localStorage.getItem(THEME_STORAGE_KEY) as ThemeId | null;
+            if (savedTheme && themeConfig.some((t) => t.id === savedTheme)) {
+              setCurrentTheme(savedTheme);
+            }
+          }
+
+          // レイアウトの復元
+          const layoutAttr = document.documentElement.getAttribute(
+            'data-layout'
+          ) as LayoutId | null;
+          if (layoutAttr && layoutConfig.some((l) => l.id === layoutAttr)) {
+            setCurrentLayout(layoutAttr);
+          } else {
+            const savedLayout = localStorage.getItem(LAYOUT_STORAGE_KEY) as LayoutId | null;
+            if (savedLayout && layoutConfig.some((l) => l.id === savedLayout)) {
+              setCurrentLayout(savedLayout);
+            }
+          }
+        } catch {
+          // ignore
+        }
+      }, 0);
+      return () => clearTimeout(timer);
+    }
+  }, [mounted]);
 
   useEffect(() => {
     if (mounted) {

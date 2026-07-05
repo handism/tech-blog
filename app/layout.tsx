@@ -5,8 +5,14 @@ import Footer from '@/src/components/Footer';
 import Header from '@/src/components/Header';
 import ScrollToTopButton from '@/src/components/ScrollToTopButton';
 import { ThemeDesignProvider } from '@/src/components/ThemeDesignProvider';
-import { DEFAULT_THEME, THEME_STORAGE_KEY, siteConfig } from '@/src/config/site';
 import { ThemeProvider } from 'next-themes';
+import {
+  DEFAULT_THEME,
+  THEME_STORAGE_KEY,
+  DEFAULT_LAYOUT,
+  LAYOUT_STORAGE_KEY,
+  siteConfig,
+} from '@/src/config/site';
 import type { Metadata } from 'next';
 
 /**
@@ -43,10 +49,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className="bg-bg text-text antialiased relative min-h-screen">
-        {/* フラッシュ防止スクリプト(デザインテーマ): キー名は THEME_STORAGE_KEY、フォールバック値は DEFAULT_THEME と一致させること */}
+        {/* フラッシュ防止スクリプト(デザインテーマ & レイアウト) */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('${THEME_STORAGE_KEY}')||'${DEFAULT_THEME}';document.documentElement.setAttribute('data-theme',t);}catch(e){console.error('Failed to access localStorage:', e);}})();`,
+            __html: `(function(){try{
+              var t=localStorage.getItem('${THEME_STORAGE_KEY}')||'${DEFAULT_THEME}';
+              document.documentElement.setAttribute('data-theme',t);
+              var l=localStorage.getItem('${LAYOUT_STORAGE_KEY}')||'${DEFAULT_LAYOUT}';
+              document.documentElement.setAttribute('data-layout',l);
+            }catch(e){console.error('Failed to access localStorage:', e);}})();`,
           }}
         />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
