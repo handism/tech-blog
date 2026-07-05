@@ -17,10 +17,10 @@ type PostCardProps = {
  */
 export default function PostCard({ post, priorityImage = false }: PostCardProps) {
   return (
-    <article className="group theme-card theme-card-hover overflow-hidden">
+    <article className="group theme-card theme-card-hover overflow-hidden flex flex-col h-full">
       {/* サムネイル画像 */}
-      <Link href={`/blog/posts/${post.slug}`} className="block">
-        <div className="relative w-full h-56 bg-secondary border-b-3 border-border overflow-hidden">
+      <Link href={`/blog/posts/${post.slug}`} className="post-card-image-link block shrink-0">
+        <div className="post-card-image-wrapper relative w-full h-56 bg-secondary border-b-3 border-border overflow-hidden">
           <Image
             src={post.image ? `/images/${post.image}` : `/og/${post.slug}/image.png`}
             alt={post.title}
@@ -32,25 +32,29 @@ export default function PostCard({ post, priorityImage = false }: PostCardProps)
         </div>
       </Link>
 
-      <div className="p-6">
-        {/* タイトル */}
-        <h2 className="text-2xl font-extrabold mb-3 tracking-tight group-hover:text-accent group-focus-within:text-accent transition-colors">
-          <Link
-            href={`/blog/posts/${post.slug}`}
-            className="hover:underline decoration-3 decoration-accent"
-          >
-            {post.title}
-          </Link>
-        </h2>
+      <div className="post-card-content p-6 flex flex-col flex-grow justify-between">
+        <div className="post-card-text">
+          {/* タイトル */}
+          <h2 className="post-card-title text-2xl font-extrabold mb-3 tracking-tight group-hover:text-accent group-focus-within:text-accent transition-colors">
+            <Link
+              href={`/blog/posts/${post.slug}`}
+              className="hover:underline decoration-3 decoration-accent"
+            >
+              {post.title}
+            </Link>
+          </h2>
 
-        {/* 説明文 */}
-        {post.description && (
-          <p className="text-text/80 text-sm line-clamp-2 mt-3 mb-4 font-medium">
-            {post.description}
-          </p>
-        )}
+          {/* 説明文 */}
+          {post.description && (
+            <p className="post-card-description text-text/80 text-sm line-clamp-2 mt-3 mb-4 font-medium">
+              {post.description}
+            </p>
+          )}
+        </div>
 
-        <PostMeta post={post} showReadingTime={false} stackTags />
+        <div className="post-card-meta mt-auto">
+          <PostMeta post={post} showReadingTime={false} stackTags />
+        </div>
       </div>
     </article>
   );

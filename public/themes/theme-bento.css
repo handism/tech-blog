@@ -62,3 +62,46 @@
 [data-theme='bento'] .site-header nav a:hover {
   background-color: var(--color-secondary) !important;
 }
+
+/* ── Bento Grid Layout ── */
+@media (min-width: 768px) {
+  /* グリッドを3カラムに変更 */
+  [data-theme='bento'] .post-card-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* 1枚目（最新記事）は大きくフィーチャー */
+  [data-theme='bento'] .post-card-list > .featured-card {
+    grid-column: span 3;
+    grid-row: span 1;
+  }
+
+  /* 1枚目のカードを横並び（フレックス）にする */
+  [data-theme='bento'] .post-card-list > .featured-card > article {
+    flex-direction: row !important;
+    align-items: stretch;
+  }
+
+  [data-theme='bento'] .post-card-list > .featured-card .post-card-image-link {
+    width: 55%;
+  }
+
+  [data-theme='bento'] .post-card-list > .featured-card .post-card-image-wrapper {
+    height: 100% !important;
+    min-height: 320px;
+    border-bottom-width: 0 !important;
+    border-right-width: 1px !important;
+    border-right-color: var(--color-border) !important;
+  }
+
+  [data-theme='bento'] .post-card-list > .featured-card .post-card-content {
+    width: 45%;
+    padding: 2.5rem !important;
+  }
+
+  /* 4番目の記事（index=3）もアクセントとして横長（2カラム幅）にする */
+  [data-theme='bento'] .post-card-list > *:nth-child(4) {
+    grid-column: span 2;
+  }
+}

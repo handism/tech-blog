@@ -91,9 +91,46 @@ html[data-theme='terminal'] .dark,
   box-shadow: none !important;
   border-radius: 0px !important;
 }
+/* Nordic */
 [data-theme='terminal'] .site-header nav a:hover {
   background-color: var(--color-text) !important;
   color: var(--color-bg) !important;
 }
+
+/* ── Terminal Layout ── */
+[data-theme='terminal'] .post-card-list {
+  grid-template-columns: 1fr !important;
+  gap: 1rem !important;
+}
+
+[data-theme='terminal'] .post-card-list > .featured-card {
+  grid-column: span 1 !important;
+}
+
+/* サムネイル画像を非表示にし、等幅フォントのCLIリストにする */
+[data-theme='terminal'] .post-card-image-link {
+  display: none !important;
+}
+
+[data-theme='terminal'] .post-card-content {
+  padding: 1rem !important;
+}
+
+[data-theme='terminal'] .post-card-title {
+  font-size: 1.25rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+[data-theme='terminal'] .post-card-title::before {
+  content: '$ ';
+  color: var(--color-accent);
+}
+
+[data-theme='terminal'] .post-card-description {
+  font-size: 0.875rem !important;
+  margin-top: 0.25rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
 
 /* Nordic */

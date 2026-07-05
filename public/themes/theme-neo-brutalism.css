@@ -134,3 +134,36 @@ html:not([data-theme]).dark pre.shiki,
 html:not([data-theme]) .dark pre.shiki {
   box-shadow: 5px 5px 0px 0px var(--color-accent);
 }
+
+/* ── Neo-Brutalism Grid Layout ── */
+@media (min-width: 768px) {
+  [data-theme='neo-brutalism'] .post-card-list,
+  html:not([data-theme]) .post-card-list {
+    gap: 2rem;
+  }
+
+  [data-theme='neo-brutalism'] .post-card-list > .featured-card > article,
+  html:not([data-theme]) .post-card-list > .featured-card > article {
+    flex-direction: row !important;
+    align-items: stretch;
+  }
+
+  [data-theme='neo-brutalism'] .post-card-list > .featured-card .post-card-image-link,
+  html:not([data-theme]) .post-card-list > .featured-card .post-card-image-link {
+    width: 50%;
+  }
+
+  [data-theme='neo-brutalism'] .post-card-list > .featured-card .post-card-image-wrapper,
+  html:not([data-theme]) .post-card-list > .featured-card .post-card-image-wrapper {
+    height: 100% !important;
+    min-height: 280px;
+    border-bottom-width: 0 !important;
+    border-right: 3px solid var(--color-border) !important;
+  }
+
+  [data-theme='neo-brutalism'] .post-card-list > .featured-card .post-card-content,
+  html:not([data-theme]) .post-card-list > .featured-card .post-card-content {
+    width: 50%;
+    padding: 2rem !important;
+  }
+}

@@ -524,3 +524,23 @@ pre.shiki[data-filename]::before {
     display: none;  /* Chrome, Safari and Opera */
   }
 }
+
+/* =======================
+   記事一覧デフォルトレイアウト（グリッド）
+   ======================= */
+.post-card-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .post-card-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  
+  .post-card-list > .featured-card {
+    grid-column: span 2;
+  }
+}
+

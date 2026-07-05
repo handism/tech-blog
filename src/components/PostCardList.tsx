@@ -11,9 +11,11 @@ type Props = {
  */
 export default function PostCardList({ posts }: Props) {
   return (
-    <div className="space-y-6">
+    <div className="post-card-list">
       {posts.map((post, index) => (
-        <PostCard key={post.slug} post={post} priorityImage={index === 0} />
+        <div key={post.slug} className={`post-card-item ${index === 0 ? 'featured-card' : ''}`}>
+          <PostCard post={post} priorityImage={index === 0} />
+        </div>
       ))}
     </div>
   );
