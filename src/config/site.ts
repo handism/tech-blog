@@ -676,7 +676,7 @@ export const siteConfig = {
     defaultTitle: 'No title',
   },
   pagination: {
-    postsPerPage: 10,
+    postsPerPage: 9,
     scrapsPerPage: 20,
   },
 };
