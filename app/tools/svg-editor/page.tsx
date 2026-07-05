@@ -3,7 +3,7 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useState, useMemo } from 'react';
 import { Palette, Clipboard, Check, Eye } from 'lucide-react';
-import DOMPurify from 'dompurify';
+import { sanitizeSvg, optimizeSvg } from '@/src/lib/svg-utils';
 import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 import { useIsClient } from '@/src/hooks/useIsClient';
 
@@ -21,28 +21,8 @@ export default function SvgEditorPage() {
 
   const sanitizedPreview = useMemo(() => {
     if (!isClient) return '';
-    try {
-      return DOMPurify.sanitize(inputSvg, { USE_PROFILES: { svg: true } });
-    } catch {
-      return '';
-    }
+    return sanitizeSvg(inputSvg);
   }, [inputSvg, isClient]);
-
-  const optimizeSvg = (svg: string): string => {
-    let res = svg.trim();
-    // コメントの削除
-    res = res.replace(/<!--[\s\S]*?-->/g, '');
-    // XML宣言、DOCTYPEの削除
-    res = res.replace(/<\?xml[\s\S]*?\?>/g, '');
-    res = res.replace(/<!DOCTYPE[\s\S]*?>/g, '');
-    // InkscapeやIllustratorの独自属性・メタデータを削除
-    res = res.replace(/xmlns:(sodipodi|inkscape|illustrator|adobe)="[^"]*"/gi, '');
-    res = res.replace(/(sodipodi|inkscape|i|a):[a-z-]+="[^"]*"/gi, '');
-    // 空白文字の圧縮
-    res = res.replace(/\s+/g, ' ');
-    res = res.replace(/>\s+</g, '><');
-    return res.trim();
-  };
 
   const outputSvg = useMemo(() => {
     let currentSvg = inputSvg;
