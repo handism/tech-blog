@@ -1,44 +1,44 @@
-── Steampunk ──
+/* ── Steampunk ──
    真鍮・歯車・重厚なヴィンテージ機械感
    ═══════════════════════════════════════════════════════ */
 [data-theme='steampunk'] {
-  --color-bg: #2a1a0a;
+  --color-bg: #f4ede0; /* 羊皮紙風の明るいアイボリー */
   --color-background: var(--color-bg);
-  --color-card: #3d2512;
-  --color-secondary: #4e3018;
-  --color-text: #e8c99a;
-  --color-border: #8b6535;
-  --color-accent: #c8872a;
+  --color-card: #e8ddcb;
+  --color-secondary: #decfa6;
+  --color-text: #4a3319; /* コゲ茶のヴィンテージインク色 */
+  --color-border: #8b6535; /* 真鍮・ブロンズ */
+  --color-accent: #a05a0c; /* コパーゴールド */
   --font-sans: 'Cinzel', 'Noto Serif JP', serif;
 
   --theme-card-border-width: 2px;
-  --theme-card-border-color: #7a5522;
-  --theme-card-bg: #3d2512;
+  --theme-card-border-color: #8b6535;
+  --theme-card-bg: #e8ddcb;
   --theme-card-radius: 6px;
-  --theme-card-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(200, 135, 42, 0.2);
+  --theme-card-shadow: 2px 2px 8px rgba(74, 51, 25, 0.15), inset 0 1px 0 rgba(200, 135, 42, 0.1);
   --theme-card-hover-transform: translateY(-2px);
-  --theme-card-hover-shadow: 4px 4px 16px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(200, 135, 42, 0.3);
+  --theme-card-hover-shadow: 4px 4px 16px rgba(74, 51, 25, 0.25), inset 0 1px 0 rgba(200, 135, 42, 0.2);
   --theme-card-hover-border-color: #c8872a;
 
   --theme-btn-border-width: 2px;
   --theme-btn-border-color: #8b6535;
-  --theme-btn-bg: linear-gradient(180deg, #5a3a18 0%, #3d2512 100%);
+  --theme-btn-bg: linear-gradient(180deg, #eadaaf 0%, #d8caa0 100%);
   --theme-btn-radius: 4px;
   --theme-btn-font-family: 'Cinzel', serif;
   --theme-btn-letter-spacing: 0.08em;
-  --theme-btn-color: #e8c99a;
-  --theme-btn-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(200, 135, 42, 0.2);
+  --theme-btn-color: #4a3319;
+  --theme-btn-shadow: 2px 2px 6px rgba(74, 51, 25, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3);
   --theme-btn-hover-transform: translateY(-1px);
-  --theme-btn-hover-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(200, 135, 42, 0.3);
-  --theme-btn-hover-bg: linear-gradient(180deg, #6e4820 0%, #4e3018 100%);
-  --theme-btn-hover-color: #f5d9a8;
+  --theme-btn-hover-shadow: 3px 3px 10px rgba(74, 51, 25, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  --theme-btn-hover-bg: linear-gradient(180deg, #f5e4bd 0%, #e3d2a7 100%);
+  --theme-btn-hover-color: #5a3c1c;
   --theme-btn-hover-border-color: #c8872a;
   --theme-btn-active-transform: translateY(1px);
-  --theme-btn-active-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+  --theme-btn-active-shadow: 1px 1px 4px rgba(74, 51, 25, 0.15);
 }
 
 [data-theme='steampunk'] body {
-  background: radial-gradient(ellipse at top, #2a1a0a 0%, #1a0f07 100%);
+  background: radial-gradient(ellipse at top, #fbf8f3 0%, #f4ede0 100%);
   background-attachment: fixed;
 }
 
@@ -47,61 +47,117 @@
 [data-theme='steampunk'] h3 {
   font-family: 'Cinzel', serif;
   letter-spacing: 0.06em;
-  color: #d4aa6a;
+  color: #7a5223;
 }
 
 [data-theme='steampunk'] .site-header {
-  border: 2px solid #7a5522;
+  border: 2px solid #8b6535;
   border-radius: 4px;
-  background: linear-gradient(180deg, #4e3018 0%, #3d2512 100%);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(200, 135, 42, 0.15);
+  background: linear-gradient(180deg, #eadaaf 0%, #d8caa0 100%);
+  box-shadow: 0 4px 16px rgba(74, 51, 25, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 [data-theme='steampunk'] article.prose h2 {
-  border-bottom: 2px solid #7a5522;
-  color: #d4aa6a;
+  border-bottom: 2px solid #8b6535;
+  color: #7a5223;
 }
 
 [data-theme='steampunk'] article.prose h4 {
-  border-left: 4px solid #c8872a;
+  border-left: 4px solid #a05a0c;
   padding-left: 0.75rem;
-  color: #c8872a;
+  color: #a05a0c;
 }
 
 [data-theme='steampunk'] article.prose blockquote {
   border-left: 4px solid #8b6535;
   border-radius: 4px;
-  background: rgba(61, 37, 18, 0.8);
-  color: #d4aa6a;
+  background: rgba(234, 221, 203, 0.7);
+  color: #5a3c1c;
 }
 
 [data-theme='steampunk'] pre.shiki {
-  border: 2px solid #7a5522;
+  border: 2px solid #8b6535;
   border-radius: 4px;
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.15);
+  background-color: #111111 !important; /* コードブロックは黒ベースでShikiシンタックスハイライトを見せる */
 }
 
 [data-theme='steampunk'] aside.toc-sidebar > div {
-  border: 2px solid #7a5522;
+  border: 2px solid #8b6535;
   border-radius: 4px;
-  background: #3d2512;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+  background: #e8ddcb;
+  box-shadow: 2px 2px 8px rgba(74, 51, 25, 0.1);
 }
 
 /* Steampunk ダークモード */
 html[data-theme='steampunk'].dark,
 html[data-theme='steampunk'] .dark {
-  --color-bg: #100808;
+  --color-bg: #2a1a0a; /* 従来の暗い茶色 */
   --color-background: var(--color-bg);
-  --color-card: #1f1005;
-  --color-secondary: #2a1808;
-  --color-text: #f0d5a8;
-  --color-border: #a07040;
-  --color-accent: #e09840;
+  --color-card: #3d2512;
+  --color-secondary: #4e3018;
+  --color-text: #e8c99a;
+  --color-border: #8b6535;
+  --color-accent: #c8872a;
 
-  --theme-card-shadow: 2px 2px 12px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(224, 152, 64, 0.15);
-  --theme-card-hover-shadow: 4px 4px 20px rgba(0, 0, 0, 0.8), 0 0 20px rgba(200, 135, 42, 0.1);
-  --theme-card-hover-border-color: #e09840;
+  --theme-card-border-color: #7a5522;
+  --theme-card-bg: #3d2512;
+  --theme-card-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(200, 135, 42, 0.2);
+  --theme-card-hover-shadow: 4px 4px 16px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(200, 135, 42, 0.3);
+  --theme-card-hover-border-color: #c8872a;
+}
+
+html[data-theme='steampunk'].dark body,
+html[data-theme='steampunk'] .dark body {
+  background: radial-gradient(ellipse at top, #2a1a0a 0%, #1a0f07 100%);
+  background-attachment: fixed;
+}
+
+html[data-theme='steampunk'].dark h1,
+html[data-theme='steampunk'].dark h2,
+html[data-theme='steampunk'].dark h3,
+html[data-theme='steampunk'] .dark h1,
+html[data-theme='steampunk'] .dark h2,
+html[data-theme='steampunk'] .dark h3 {
+  color: #d4aa6a;
+}
+
+html[data-theme='steampunk'].dark .site-header,
+html[data-theme='steampunk'] .dark .site-header {
+  border: 2px solid #7a5522;
+  background: linear-gradient(180deg, #4e3018 0%, #3d2512 100%);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(200, 135, 42, 0.15);
+}
+
+html[data-theme='steampunk'].dark article.prose h2,
+html[data-theme='steampunk'] .dark article.prose h2 {
+  border-bottom: 2px solid #7a5522;
+  color: #d4aa6a;
+}
+
+html[data-theme='steampunk'].dark article.prose h4,
+html[data-theme='steampunk'] .dark article.prose h4 {
+  border-left: 4px solid #c8872a;
+  color: #c8872a;
+}
+
+html[data-theme='steampunk'].dark article.prose blockquote,
+html[data-theme='steampunk'] .dark article.prose blockquote {
+  border-left: 4px solid #8b6535;
+  background: rgba(61, 37, 18, 0.8);
+  color: #d4aa6a;
+}
+
+html[data-theme='steampunk'].dark pre.shiki,
+html[data-theme='steampunk'] .dark pre.shiki {
+  border: 2px solid #7a5522;
+}
+
+html[data-theme='steampunk'].dark aside.toc-sidebar > div,
+html[data-theme='steampunk'] .dark aside.toc-sidebar > div {
+  border: 2px solid #7a5522;
+  background: #3d2512;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 /* ── Steampunk Layout ── */
@@ -112,13 +168,13 @@ html[data-theme='steampunk'] .dark {
   }
 }
 
-/* 真鍮パネル風の重厚なカード */
+/* 真鍮パネル風のカード */
 [data-theme='steampunk'] .post-card-item .theme-card {
-  border: 3px solid #7a5522 !important;
-  background: linear-gradient(135deg, #3d2512 0%, #29180b 100%) !important;
+  border: 3px solid #8b6535 !important;
+  background: linear-gradient(135deg, #eadaaf 0%, #d8caa0 100%) !important;
   box-shadow: 
-    3px 3px 10px rgba(0, 0, 0, 0.6), 
-    inset 0 1px 0 rgba(200, 135, 42, 0.15) !important;
+    3px 3px 10px rgba(74, 51, 25, 0.12), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
   border-radius: 4px !important;
   position: relative;
   overflow: visible !important;
@@ -169,13 +225,47 @@ html[data-theme='steampunk'] .dark {
 }
 
 [data-theme='steampunk'] .post-card-image-wrapper {
-  border-bottom: 3px solid #7a5522 !important;
+  border-bottom: 3px solid #8b6535 !important;
   border-radius: 2px !important;
 }
 
 /* ホバー時に真鍮ゴールドの重厚なグローと縮尺変形 */
 [data-theme='steampunk'] .post-card-item:hover .theme-card {
   transform: translateY(-4px) !important;
+  border-color: #c8872a !important;
+  box-shadow: 
+    0 8px 24px rgba(200, 135, 42, 0.15), 
+    3px 12px 20px rgba(74, 51, 25, 0.2), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+}
+
+/* ダークモード時のカード */
+html[data-theme='steampunk'].dark .post-card-item .theme-card,
+[data-theme='steampunk'] .dark .post-card-item .theme-card {
+  border: 3px solid #7a5522 !important;
+  background: linear-gradient(135deg, #3d2512 0%, #29180b 100%) !important;
+  box-shadow: 
+    3px 3px 10px rgba(0, 0, 0, 0.6), 
+    inset 0 1px 0 rgba(200, 135, 42, 0.15) !important;
+}
+
+html[data-theme='steampunk'].dark .post-card-item .post-card-title a,
+[data-theme='steampunk'] .dark .post-card-item .post-card-title a {
+  color: #e8c99a !important;
+}
+
+html[data-theme='steampunk'].dark .post-card-item .post-card-description,
+[data-theme='steampunk'] .dark .post-card-item .post-card-description {
+  color: #c0a47a !important;
+}
+
+html[data-theme='steampunk'].dark .post-card-image-wrapper,
+[data-theme='steampunk'] .dark .post-card-image-wrapper {
+  border-bottom: 3px solid #7a5522 !important;
+}
+
+html[data-theme='steampunk'].dark .post-card-item:hover .theme-card,
+[data-theme='steampunk'] .dark .post-card-item:hover .theme-card {
   border-color: #c8872a !important;
   box-shadow: 
     0 8px 24px rgba(200, 135, 42, 0.25), 

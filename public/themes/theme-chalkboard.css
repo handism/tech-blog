@@ -1,40 +1,117 @@
-── Chalkboard ──
+/* ── Chalkboard ──
    黒板＆チョーク・手書き風のやわらかいタッチ
    ═══════════════════════════════════════════════════════ */
 [data-theme='chalkboard'] {
-  --color-bg: #2d4a3e;
+  --color-bg: #eef3f0; /* チョークの粉をきれいに拭き取った後の明るいミントグリーン */
   --color-background: var(--color-bg);
-  --color-card: #243d32;
-  --color-secondary: #1e3327;
-  --color-text: #f0ece0;
-  --color-border: rgba(240, 236, 224, 0.5);
-  --color-accent: #f0e68c;
+  --color-card: #e0e8e3;
+  --color-secondary: #d2ded7;
+  --color-text: #1b3326; /* 深い黒板色（文字用） */
+  --color-border: rgba(27, 51, 38, 0.25);
+  --color-accent: #c44545; /* 赤チョーク風 */
   --font-sans: 'Caveat', 'Noto Sans JP', cursive;
 
   --theme-card-border-width: 2px;
-  --theme-card-border-color: rgba(240, 236, 224, 0.35);
-  --theme-card-bg: rgba(36, 61, 50, 0.9);
+  --theme-card-border-color: rgba(27, 51, 38, 0.2);
+  --theme-card-bg: rgba(224, 232, 227, 0.85);
   --theme-card-radius: 8px;
-  --theme-card-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(240, 236, 224, 0.08);
+  --theme-card-shadow: 1px 1px 6px rgba(0, 0, 0, 0.08), inset 0 0 0 1px rgba(27, 51, 38, 0.04);
   --theme-card-hover-transform: translateY(-3px) rotate(-0.3deg);
-  --theme-card-hover-shadow: 4px 8px 20px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(240, 236, 224, 0.15);
-  --theme-card-hover-border-color: rgba(240, 236, 224, 0.65);
+  --theme-card-hover-shadow: 4px 8px 20px rgba(0, 0, 0, 0.12), inset 0 0 0 1px rgba(27, 51, 38, 0.08);
+  --theme-card-hover-border-color: rgba(27, 51, 38, 0.45);
 
   --theme-btn-border-width: 2px;
-  --theme-btn-border-color: rgba(240, 236, 224, 0.5);
-  --theme-btn-bg: rgba(36, 61, 50, 0.8);
+  --theme-btn-border-color: rgba(27, 51, 38, 0.35);
+  --theme-btn-bg: rgba(224, 232, 227, 0.8);
   --theme-btn-radius: 6px;
   --theme-btn-font-family: 'Caveat', cursive;
   --theme-btn-font-weight: 700;
   --theme-btn-letter-spacing: 0.05em;
-  --theme-btn-color: #f0ece0;
+  --theme-btn-color: #1b3326;
   --theme-btn-hover-transform: translateY(-1px) rotate(0.3deg);
-  --theme-btn-hover-border-color: rgba(240, 230, 140, 0.8);
-  --theme-btn-hover-color: #f0e68c;
+  --theme-btn-hover-border-color: #c44545;
+  --theme-btn-hover-color: #c44545;
 }
 
 [data-theme='chalkboard'] body {
-  background-color: #2d4a3e;
+  background-color: #eef3f0;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 28px,
+      rgba(27, 51, 38, 0.03) 28px,
+      rgba(27, 51, 38, 0.03) 29px
+    );
+  background-attachment: fixed;
+}
+
+[data-theme='chalkboard'] h1,
+[data-theme='chalkboard'] h2,
+[data-theme='chalkboard'] h3,
+[data-theme='chalkboard'] h4 {
+  font-family: 'Caveat', cursive;
+  letter-spacing: 0.04em;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme='chalkboard'] .site-header {
+  border: 2px solid rgba(27, 51, 38, 0.2);
+  border-radius: 6px;
+  background: rgba(238, 245, 241, 0.95);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+}
+
+[data-theme='chalkboard'] article.prose h2 {
+  border-bottom: 2px dashed rgba(27, 51, 38, 0.25);
+  padding-bottom: 0.5rem;
+}
+
+[data-theme='chalkboard'] article.prose h4 {
+  border-left: 4px solid #c44545;
+  padding-left: 0.75rem;
+}
+
+[data-theme='chalkboard'] article.prose blockquote {
+  border-left: 4px solid #c44545;
+  border-radius: 6px;
+  background: rgba(224, 232, 227, 0.6);
+  font-style: italic;
+  color: #1b3326;
+}
+
+[data-theme='chalkboard'] pre.shiki {
+  border: 2px dashed rgba(27, 51, 38, 0.3);
+  border-radius: 6px;
+  background: rgba(27, 51, 38, 0.95) !important; /* コードブロックは黒板らしさを残すため暗い緑にする */
+  color: #f0ece0;
+}
+
+[data-theme='chalkboard'] aside.toc-sidebar > div {
+  border: 2px solid rgba(27, 51, 38, 0.2);
+  border-radius: 6px;
+  background: rgba(224, 232, 227, 0.9);
+}
+
+/* Chalkboard ダークモード */
+html[data-theme='chalkboard'].dark,
+html[data-theme='chalkboard'] .dark {
+  --color-bg: #1c2e26; /* 従来の暗い緑の黒板 */
+  --color-background: var(--color-bg);
+  --color-card: #15241e;
+  --color-secondary: #0f1a15;
+  --color-text: #f0ece0;
+  --color-border: rgba(240, 236, 224, 0.4);
+  --color-accent: #f0e68c; /* 黄チョーク風 */
+
+  --theme-card-border-color: rgba(240, 236, 224, 0.25);
+  --theme-card-bg: rgba(21, 36, 30, 0.9);
+  --theme-card-hover-shadow: 4px 8px 24px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(240, 236, 224, 0.12);
+}
+
+html[data-theme='chalkboard'].dark body,
+html[data-theme='chalkboard'] .dark body {
+  background-color: #1c2e26;
   background-image:
     repeating-linear-gradient(
       0deg,
@@ -46,79 +123,52 @@
   background-attachment: fixed;
 }
 
-[data-theme='chalkboard'] h1,
-[data-theme='chalkboard'] h2,
-[data-theme='chalkboard'] h3,
-[data-theme='chalkboard'] h4 {
-  font-family: 'Caveat', cursive;
-  letter-spacing: 0.04em;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+html[data-theme='chalkboard'].dark h1,
+html[data-theme='chalkboard'].dark h2,
+html[data-theme='chalkboard'].dark h3,
+html[data-theme='chalkboard'].dark h4,
+html[data-theme='chalkboard'] .dark h1,
+html[data-theme='chalkboard'] .dark h2,
+html[data-theme='chalkboard'] .dark h3,
+html[data-theme='chalkboard'] .dark h4 {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
 }
 
-[data-theme='chalkboard'] .site-header {
-  border: 2px solid rgba(240, 236, 224, 0.3);
-  border-radius: 6px;
-  background: rgba(36, 61, 50, 0.95);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(240, 236, 224, 0.06);
+html[data-theme='chalkboard'].dark .site-header,
+html[data-theme='chalkboard'] .dark .site-header {
+  border: 2px solid rgba(240, 236, 224, 0.25);
+  background: rgba(21, 36, 30, 0.95);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(240, 236, 224, 0.05);
 }
 
-[data-theme='chalkboard'] article.prose h2 {
-  border-bottom: 2px dashed rgba(240, 236, 224, 0.35);
-  padding-bottom: 0.5rem;
+html[data-theme='chalkboard'].dark article.prose h2,
+html[data-theme='chalkboard'] .dark article.prose h2 {
+  border-bottom: 2px dashed rgba(240, 236, 224, 0.3);
 }
 
-[data-theme='chalkboard'] article.prose h4 {
-  border-left: 4px solid rgba(240, 230, 140, 0.7);
-  padding-left: 0.75rem;
+html[data-theme='chalkboard'].dark article.prose h4,
+html[data-theme='chalkboard'] .dark article.prose h4 {
+  border-left: 4px solid #f0e68c;
 }
 
-[data-theme='chalkboard'] article.prose blockquote {
-  border-left: 4px solid rgba(240, 230, 140, 0.7);
-  border-radius: 6px;
-  background: rgba(30, 51, 39, 0.8);
-  font-style: italic;
+html[data-theme='chalkboard'].dark article.prose blockquote,
+html[data-theme='chalkboard'] .dark article.prose blockquote {
+  border-left: 4px solid #f0e68c;
+  background: rgba(15, 26, 21, 0.8);
+  color: #f0ece0;
 }
 
-[data-theme='chalkboard'] pre.shiki {
-  border: 2px dashed rgba(240, 236, 224, 0.3);
-  border-radius: 6px;
-  background: rgba(30, 51, 39, 0.9) !important;
+html[data-theme='chalkboard'].dark pre.shiki,
+html[data-theme='chalkboard'] .dark pre.shiki {
+  border: 2px dashed rgba(240, 236, 224, 0.25);
+  background: rgba(15, 26, 21, 0.9) !important;
+  color: #f0ece0;
 }
 
-[data-theme='chalkboard'] aside.toc-sidebar > div {
-  border: 2px solid rgba(240, 236, 224, 0.3);
-  border-radius: 6px;
-  background: rgba(36, 61, 50, 0.9);
-}
-
-/* Chalkboard ダークモード */
-html[data-theme='chalkboard'].dark,
-html[data-theme='chalkboard'] .dark {
-  --color-bg: #141f1b;
-  --color-background: var(--color-bg);
-  --color-card: #0f1812;
-  --color-secondary: #0a130e;
-  --color-text: #f5f2e8;
-  --color-border: rgba(240, 236, 224, 0.4);
-  --color-accent: #f0e68c;
-
-  --theme-card-border-color: rgba(240, 236, 224, 0.25);
-  --theme-card-bg: rgba(15, 24, 18, 0.9);
-  --theme-card-hover-shadow: 4px 8px 24px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(240, 236, 224, 0.12);
-}
-
-html[data-theme='chalkboard'].dark body,
-html[data-theme='chalkboard'] .dark body {
-  background-color: #141f1b;
-  background-image:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 28px,
-      rgba(240, 236, 224, 0.03) 28px,
-      rgba(240, 236, 224, 0.03) 29px
-    );
-  background-attachment: fixed;
+html[data-theme='chalkboard'].dark aside.toc-sidebar > div,
+html[data-theme='chalkboard'] .dark aside.toc-sidebar > div {
+  border: 2px solid rgba(240, 236, 224, 0.25);
+  background: rgba(21, 36, 30, 0.9);
 }
 
 /* ── Chalkboard Layout ── */

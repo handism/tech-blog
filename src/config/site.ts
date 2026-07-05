@@ -132,9 +132,9 @@ export const themeConfig = [
     description: '黒板＆チョーク・手書き風のやわらかいタッチ',
     emoji: '🖊️',
     category: 'creative',
-    previewBg: '#2d4a3e',
-    previewCard: '#1e3327',
-    previewAccent: '#f0e68c',
+    previewBg: '#eef3f0',
+    previewCard: '#e0e8e3',
+    previewAccent: '#c44545',
     hasBorder: false,
   },
   // ── カルチャー＆ナチュラル (nature) ──
@@ -165,9 +165,9 @@ export const themeConfig = [
     description: '真鍮・歯車・重厚なヴィンテージ機械感',
     emoji: '⚙️',
     category: 'nature',
-    previewBg: '#1a0f07',
-    previewCard: '#2c1a0e',
-    previewAccent: '#c8872a',
+    previewBg: '#f4ede0',
+    previewCard: '#eadaaf',
+    previewAccent: '#a05a0c',
   },
 ] as const;
 
