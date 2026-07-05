@@ -34,3 +34,70 @@
   --color-border: #374151;
   --color-accent: #3b82f6;
 }
+
+/* ── Dashboard Grid Layout ── */
+@media (min-width: 768px) {
+  /* PCでは左3:右2の非対称2カラム構成 */
+  [data-theme='dashboard'] .post-card-list {
+    display: grid;
+    grid-template-columns: 3fr 2fr !important;
+    gap: 1.25rem !important;
+    align-items: start;
+  }
+
+  /* 1枚目（最新記事）は左カラムに入る */
+  [data-theme='dashboard'] .post-card-list > .featured-card {
+    grid-column: 1 / 2 !important;
+    grid-row: span 8 !important; /* 右側にアクティビティログを積み重ねる高さ */
+  }
+
+  /* 2枚目以降の記事はすべて右カラムに縦積み */
+  [data-theme='dashboard'] .post-card-list > .post-card-item:not(.featured-card) {
+    grid-column: 2 / 3 !important;
+  }
+}
+
+/* ── 右側の「アクティビティログ」風カードの最適化 ── */
+[data-theme='dashboard'] .post-card-item:not(.featured-card) .post-card-image-link {
+  display: none !important;
+}
+
+[data-theme='dashboard'] .post-card-item:not(.featured-card) .post-card-content {
+  padding: 0.75rem 1rem !important;
+}
+
+[data-theme='dashboard'] .post-card-item:not(.featured-card) .post-card-title {
+  font-size: 1.05rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 0.25rem !important;
+}
+
+[data-theme='dashboard'] .post-card-item:not(.featured-card) .post-card-description {
+  display: none !important;
+}
+
+/* ── タグやカテゴリのステータスバッジ化 ── */
+[data-theme='dashboard'] .post-card-item .post-card-meta {
+  margin-top: 0.25rem !important;
+}
+
+[data-theme='dashboard'] .post-card-item a[href*='/blog/tags/'],
+[data-theme='dashboard'] .post-card-item a[href*='/blog/categories/'] {
+  background-color: var(--color-secondary) !important;
+  color: var(--color-accent) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 4px !important;
+  padding: 2px 6px !important;
+  font-size: 0.75rem !important;
+  font-family: var(--theme-font-sans) !important;
+  text-transform: uppercase;
+  font-weight: 500;
+  box-shadow: none !important;
+}
+
+[data-theme='dashboard'] .post-card-item a[href*='/blog/tags/']:hover,
+[data-theme='dashboard'] .post-card-item a[href*='/blog/categories/']:hover {
+  background-color: var(--color-accent) !important;
+  color: #ffffff !important;
+  border-color: var(--color-accent) !important;
+}
