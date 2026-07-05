@@ -1,0 +1,131 @@
+/* ── Neumorphism / Soft UI ── */
+[data-theme='neumorphism'] {
+  --color-bg: #e0e8f6;
+  --color-background: var(--color-bg);
+  --color-card: #e0e8f6;
+  --color-secondary: #d1daf0;
+  --color-text: #2c3e50;
+  --color-border: transparent;
+  --color-accent: #3b82f6;
+  --theme-font-sans: 'Lexend', system-ui, sans-serif;
+
+  --theme-card-border-width: 0px;
+  --theme-card-radius: 20px;
+  --theme-card-bg: var(--color-card);
+  --theme-card-shadow: 6px 6px 14px #bec5d1, -6px -6px 14px #ffffff;
+  --theme-card-hover-transform: translateY(-2px);
+  --theme-card-hover-shadow: 8px 8px 20px #b4bcce, -8px -8px 20px #ffffff;
+  --theme-card-hover-border-color: transparent;
+
+  --theme-btn-border-width: 0px;
+  --theme-btn-radius: 12px;
+  --theme-btn-bg: var(--color-card);
+  --theme-btn-color: var(--color-text);
+  --theme-btn-shadow: 4px 4px 8px #bec5d1, -4px -4px 8px #ffffff;
+  --theme-btn-hover-transform: translateY(-1px);
+  --theme-btn-hover-shadow: 5px 5px 10px #b4bcce, -5px -5px 10px #ffffff;
+  
+  --theme-btn-active-transform: translateY(0px);
+  --theme-btn-active-shadow: inset 4px 4px 8px #bec5d1, inset -4px -4px 8px #ffffff;
+}
+
+[data-theme='neumorphism'].dark {
+  --color-bg: #1b2230;
+  --color-card: #1b2230;
+  --color-secondary: #151b26;
+  --color-text: #e2e8f0;
+  --color-border: transparent;
+  --color-accent: #60a5fa;
+
+  --theme-card-shadow: 6px 6px 14px #121721, -6px -6px 14px #242d3f;
+  --theme-card-hover-shadow: 8px 8px 20px #0e121a, -8px -8px 20px #283246;
+
+  --theme-btn-shadow: 4px 4px 8px #121721, -4px -4px 8px #242d3f;
+  --theme-btn-hover-shadow: 5px 5px 10px #0e121a, -5px -5px 10px #283246;
+  --theme-btn-active-shadow: inset 4px 4px 8px #121721, inset -4px -4px 8px #242d3f;
+}
+
+/* シャドウのオーバーライド */
+[data-theme='neumorphism'] [class*='shadow-'] {
+  --tw-shadow: none;
+  --tw-shadow-colored: none;
+  box-shadow: 4px 4px 10px #bec5d1, -4px -4px 10px #ffffff !important;
+}
+
+[data-theme='neumorphism'].dark [class*='shadow-'] {
+  box-shadow: 4px 4px 10px #121721, -4px -4px 10px #242d3f !important;
+}
+
+[data-theme='neumorphism'] .theme-card,
+[data-theme='neumorphism'] .theme-card-hover:hover,
+[data-theme='neumorphism'] .theme-btn,
+[data-theme='neumorphism'] .theme-btn:hover,
+[data-theme='neumorphism'] .theme-btn:active {
+  box-shadow: revert-layer;
+}
+
+/* ヘッダーやナビゲーションもNeumorphicに統一 */
+[data-theme='neumorphism'] .site-header {
+  border: none !important;
+  background: var(--color-bg) !important;
+  border-radius: 20px !important;
+  box-shadow: 6px 6px 14px #bec5d1, -6px -6px 14px #ffffff !important;
+}
+
+[data-theme='neumorphism'].dark .site-header {
+  box-shadow: 6px 6px 14px #121721, -6px -6px 14px #242d3f !important;
+}
+
+[data-theme='neumorphism'] .site-header nav a {
+  border: none !important;
+  border-radius: 10px !important;
+  box-shadow: inset 2px 2px 5px #bec5d1, inset -2px -2px 5px #ffffff !important;
+}
+
+[data-theme='neumorphism'].dark .site-header nav a {
+  box-shadow: inset 2px 2px 5px #121721, inset -2px -2px 5px #242d3f !important;
+}
+
+[data-theme='neumorphism'] .site-header nav a:hover {
+  background-color: transparent !important;
+  box-shadow: 2px 2px 5px #bec5d1, -2px -2px 5px #ffffff !important;
+}
+
+[data-theme='neumorphism'].dark .site-header nav a:hover {
+  box-shadow: 2px 2px 5px #121721, -2px -2px 5px #242d3f !important;
+}
+
+/* 記事コンテンツ内のコンポーネント */
+[data-theme='neumorphism'] article.prose blockquote {
+  border: none !important;
+  box-shadow: inset 4px 4px 8px #bec5d1, inset -4px -4px 8px #ffffff !important;
+  background: transparent !important;
+}
+
+[data-theme='neumorphism'].dark article.prose blockquote {
+  box-shadow: inset 4px 4px 8px #121721, inset -4px -4px 8px #242d3f !important;
+}
+
+[data-theme='neumorphism'] article.prose pre.shiki {
+  border: none !important;
+  box-shadow: inset 4px 4px 10px #bec5d1, inset -4px -4px 10px #ffffff !important;
+  background-color: #111111 !important;
+}
+
+[data-theme='neumorphism'].dark article.prose pre.shiki {
+  box-shadow: inset 4px 4px 10px #121721, inset -4px -4px 10px #242d3f !important;
+}
+
+[data-theme='neumorphism'] aside.toc-sidebar > div {
+  border: none !important;
+  box-shadow: 6px 6px 14px #bec5d1, -6px -6px 14px #ffffff !important;
+  background: var(--color-bg) !important;
+}
+
+[data-theme='neumorphism'].dark aside.toc-sidebar > div {
+  box-shadow: 6px 6px 14px #121721, -6px -6px 14px #242d3f !important;
+}
+
+[data-theme='neumorphism'] .post-card-list > .featured-card .post-card-image-wrapper {
+  border-right: none !important;
+}
