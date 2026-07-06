@@ -1,5 +1,5 @@
 ---
-title: IT世界を流れる「水」と「配管」のメタファー — ALBのConnection Drainingから学ぶ
+title: IT世界に溢れる「水」と「配管」のメタファー
 date: 2026-06-22
 tags: [Infrastructure, Network, AWS]
 category: Infrastructure

@@ -1,5 +1,5 @@
 ---
-title: AWS Certified SysOps Administrator - Associateの対策
+title: AWS Certified SysOps Administrator Associateの対策
 date: 2024-01-08
 tags: [AWS]
 category: Infrastructure

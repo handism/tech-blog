@@ -1,5 +1,5 @@
 ---
-title: SSL/TLS証明書関連の知識をまとめてみる
+title: SSL/TLS証明書の知識まとめ
 date: 2026-01-27
 tags: [Certificate]
 category: Security

@@ -1,5 +1,5 @@
 ---
-title: VitePress + GitHub Actions + GitHub Pagesでブログを自作する
+title: VitePress + GitHub Pagesでブログを自作する
 date: 2023-11-26
 tags: [Vue, VitePress, Blog]
 category: Frontend

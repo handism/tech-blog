@@ -1,5 +1,5 @@
 ---
-title: 個人開発とチーム開発の違い：エンジニアとして成長するための両輪
+title: 個人開発とチーム開発の違い
 date: 2026-06-24
 tags: [Development, SoftwareEngineering]
 category: IT

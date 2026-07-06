@@ -1,5 +1,5 @@
 ---
-title: Gemma 2Bで実用的なローカルRAGアプリを作るためのチューニングと「時間クエリ」対策
+title: Gemma 2BでローカルなオンデバイスRAGアプリを作る
 date: 2026-06-15
 tags: [Android, RAG, Gemma, EdgeAI, SQLite]
 category: IT

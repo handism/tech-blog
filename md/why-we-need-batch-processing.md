@@ -1,5 +1,5 @@
 ---
-title: 「全部オンライン処理でいいじゃん」に対する回答：なぜ現代のシステム開発に「バッチ処理」が必要なのか？
+title: なぜ現代のシステム開発に「バッチ処理」が必要なのか？
 date: 2026-07-04
 tags: [SystemDesign, Architecture, Backend, BatchProcessing]
 category: Backend
