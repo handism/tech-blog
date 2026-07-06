@@ -245,5 +245,38 @@ html[data-theme='chalkboard'] .dark aside.toc-sidebar > div {
 }
 
 
+/* ダークモードでもポラロイド風カード内のテキストは黒系を維持 */
+html[data-theme='chalkboard'].dark .post-card-item .theme-card,
+html[data-theme='chalkboard'] .dark .post-card-item .theme-card {
+  color: #1a1a1a !important;
+}
+
+html[data-theme='chalkboard'].dark .post-card-item .post-card-title a,
+html[data-theme='chalkboard'] .dark .post-card-item .post-card-title a {
+  color: #1c1c1c !important;
+}
+
+html[data-theme='chalkboard'].dark .post-card-item .post-card-description,
+html[data-theme='chalkboard'] .dark .post-card-item .post-card-description {
+  color: #4a4a4a !important;
+}
+
+html[data-theme='chalkboard'].dark .post-card-item .post-card-meta,
+html[data-theme='chalkboard'] .dark .post-card-item .post-card-meta,
+html[data-theme='chalkboard'].dark .post-card-item .post-card-content,
+html[data-theme='chalkboard'] .dark .post-card-item .post-card-content {
+  color: #3a3a3a !important;
+}
+
+/* メタ情報（日付・カテゴリ・タグ）のテキスト色を強制上書き */
+html[data-theme='chalkboard'].dark .post-card-item .post-card-meta *,
+html[data-theme='chalkboard'] .dark .post-card-item .post-card-meta * {
+  color: #4a4a4a !important;
+}
+
+html[data-theme='chalkboard'].dark .post-card-item .post-card-meta a:hover,
+html[data-theme='chalkboard'] .dark .post-card-item .post-card-meta a:hover {
+  color: #c44545 !important;
+}
 
 /* ═══════════════════════════════════════════════════════
