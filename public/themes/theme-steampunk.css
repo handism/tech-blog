@@ -105,6 +105,15 @@ html[data-theme='steampunk'] .dark {
   --theme-card-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(200, 135, 42, 0.2);
   --theme-card-hover-shadow: 4px 4px 16px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(200, 135, 42, 0.3);
   --theme-card-hover-border-color: #c8872a;
+
+  --theme-btn-bg: linear-gradient(180deg, #4e3018 0%, #3d2512 100%);
+  --theme-btn-border-color: #7a5522;
+  --theme-btn-color: #e8c99a;
+  --theme-btn-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(200, 135, 42, 0.15);
+  --theme-btn-hover-bg: linear-gradient(180deg, #5a3c1c 0%, #4e3018 100%);
+  --theme-btn-hover-color: #f5d48b;
+  --theme-btn-hover-border-color: #c8872a;
+  --theme-btn-hover-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(200, 135, 42, 0.25);
 }
 
 html[data-theme='steampunk'].dark body,

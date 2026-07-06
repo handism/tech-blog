@@ -107,6 +107,13 @@ html[data-theme='chalkboard'] .dark {
   --theme-card-border-color: rgba(240, 236, 224, 0.25);
   --theme-card-bg: rgba(21, 36, 30, 0.9);
   --theme-card-hover-shadow: 4px 8px 24px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(240, 236, 224, 0.12);
+
+  --theme-btn-bg: rgba(21, 36, 30, 0.85);
+  --theme-btn-border-color: rgba(240, 236, 224, 0.3);
+  --theme-btn-color: #f0ece0;
+  --theme-btn-hover-bg: rgba(30, 50, 40, 0.9);
+  --theme-btn-hover-color: #f0e68c;
+  --theme-btn-hover-border-color: #f0e68c;
 }
 
 html[data-theme='chalkboard'].dark body,
