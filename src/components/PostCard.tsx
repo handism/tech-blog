@@ -43,13 +43,6 @@ export default function PostCard({ post, priorityImage = false }: PostCardProps)
               {post.title}
             </Link>
           </h2>
-
-          {/* 説明文 */}
-          {post.description && (
-            <p className="post-card-description text-text/80 text-sm line-clamp-2 mt-3 mb-4 font-medium">
-              {post.description}
-            </p>
-          )}
         </div>
 
         <div className="post-card-meta mt-auto">
