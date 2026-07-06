@@ -8,7 +8,7 @@ export const themeConfig = [
     id: 'minimal',
     label: 'Minimal / Clean',
     description: '余白多め・細線・フラット',
-    emoji: '○',
+    emoji: '⬜',
     category: 'modern',
     previewBg: '#ffffff',
     previewCard: '#f9f9f9',
