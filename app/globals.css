@@ -568,6 +568,10 @@ pre.shiki[data-filename]::before {
     width: 100% !important;
     padding: 1.5rem 2rem !important;
   }
+
+  [data-layout='1-column'] .post-card-list > .post-card-item .post-card-title {
+    font-size: 1.25rem !important;
+  }
 }
 
 /* ── 2 Column Grid ── */
