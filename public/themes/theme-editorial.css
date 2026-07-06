@@ -84,16 +84,11 @@
 }
 
 /* ── Editorial Layout ── */
+[data-theme='editorial'] .post-card-list {
+  gap: 2.5rem;
+}
+
 @media (min-width: 768px) {
-  [data-theme='editorial'] .post-card-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 2.5rem;
-  }
-
-  [data-theme='editorial'] .post-card-list > .featured-card {
-    grid-column: span 2;
-  }
-
   [data-theme='editorial'] .post-card-list > .featured-card > article {
     flex-direction: row !important;
     align-items: stretch;

@@ -161,12 +161,10 @@ html[data-theme='steampunk'] .dark aside.toc-sidebar > div {
 }
 
 /* ── Steampunk Layout ── */
-@media (min-width: 768px) {
-  [data-theme='steampunk'] .post-card-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    gap: 2rem !important;
-  }
+[data-theme='steampunk'] .post-card-list {
+  gap: 2rem !important;
 }
+
 
 /* 真鍮パネル風のカード */
 [data-theme='steampunk'] .post-card-item .theme-card {

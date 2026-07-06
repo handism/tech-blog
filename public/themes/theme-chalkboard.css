@@ -173,15 +173,9 @@ html[data-theme='chalkboard'] .dark aside.toc-sidebar > div {
 
 /* ── Chalkboard Layout ── */
 [data-theme='chalkboard'] .post-card-list {
-  grid-template-columns: 1fr !important;
   gap: 2rem !important;
 }
 
-@media (min-width: 640px) {
-  [data-theme='chalkboard'] .post-card-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  }
-}
 
 /* ポラロイド風の白枠カード */
 [data-theme='chalkboard'] .post-card-item .theme-card {

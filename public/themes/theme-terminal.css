@@ -99,13 +99,9 @@ html[data-theme='terminal'] .dark,
 
 /* ── Terminal Layout ── */
 [data-theme='terminal'] .post-card-list {
-  grid-template-columns: 1fr !important;
   gap: 1rem !important;
 }
 
-[data-theme='terminal'] .post-card-list > .featured-card {
-  grid-column: span 1 !important;
-}
 
 /* サムネイル画像を非表示にし、等幅フォントのCLIリストにする */
 [data-theme='terminal'] .post-card-image-link {

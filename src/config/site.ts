@@ -677,5 +677,5 @@ export const LAYOUT_STORAGE_KEY = 'layout-mode';
 export const layoutConfig = [
   { id: '1-column', label: '1 Column List', emoji: '☰' },
   { id: '2-column', label: '2 Column Grid', emoji: '⚏' },
-  { id: '3-column', label: '3 Column Grid (Bento/Dashboard)', emoji: '☱' },
+  { id: '3-column', label: '3 Column Grid', emoji: '☱' },
 ] as const;
