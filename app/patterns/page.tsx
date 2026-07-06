@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description:
     'AWSのベストプラクティスに基づき設計された、CloudFormationテンプレート（IaC）およびアーキテクチャ図（Draw.io）のギャラリーカタログ。コンテナ、サーバーレス、高可用性構成など、実用的なインフラ定義コードをプレビュー・コピー・ダウンロードできます。',
   alternates: {
-    canonical: '/aws-patterns',
+    canonical: '/patterns',
   },
 };
 

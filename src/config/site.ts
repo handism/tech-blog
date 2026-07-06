@@ -661,7 +661,7 @@ export const siteConfig = {
     defaultTitle: 'No title',
   },
   awsGallery: {
-    dir: 'aws-patterns',
+    dir: 'patterns',
     defaultTitle: 'No title',
   },
   pagination: {

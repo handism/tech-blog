@@ -31,18 +31,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {};
   }
 
-  const ogImageUrl = `${siteConfig.url}/og/aws/${slug}/image.png`;
+  const ogImageUrl = `${siteConfig.url}/og/patterns/${slug}/image.png`;
 
   return {
     title: `${pattern.title} | AWSアーキテクチャ | ${siteConfig.name}`,
     description: pattern.description,
     alternates: {
-      canonical: `/aws-patterns/${slug}`,
+      canonical: `/patterns/${slug}`,
     },
     openGraph: {
       title: `${pattern.title} | AWSアーキテクチャ | ${siteConfig.name}`,
       description: pattern.description,
-      url: `${siteConfig.url}/aws-patterns/${slug}`,
+      url: `${siteConfig.url}/patterns/${slug}`,
       images: [
         {
           url: ogImageUrl,
@@ -81,7 +81,7 @@ export default async function AwsBestPracticeDetailPage({ params }: Props) {
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `${siteConfig.url}/aws-patterns/${slug}`,
+      '@id': `${siteConfig.url}/patterns/${slug}`,
     },
     subjectOf: {
       '@type': 'SoftwareSourceCode',

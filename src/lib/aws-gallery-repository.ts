@@ -4,12 +4,12 @@ import { AwsPatternMeta, AwsPatternMetaSchema } from '../types/aws-gallery';
 import { z } from 'zod';
 import { fileExists } from './server-utils';
 
-const awsDir = path.join(/*turbopackIgnore: true*/ process.cwd(), 'aws-patterns');
+const awsDir = path.join(/*turbopackIgnore: true*/ process.cwd(), 'patterns');
 const metaPath = path.join(/*turbopackIgnore: true*/ awsDir, 'gallery-meta.json');
 const iacDir = path.join(/*turbopackIgnore: true*/ awsDir, 'iac');
 const imgDir = path.join(/*turbopackIgnore: true*/ awsDir, 'img');
 
-const publicDestDir = path.join(/*turbopackIgnore: true*/ process.cwd(), 'public', 'aws-patterns');
+const publicDestDir = path.join(/*turbopackIgnore: true*/ process.cwd(), 'public', 'patterns');
 
 let isAssetCopied = false;
 

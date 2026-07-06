@@ -164,7 +164,7 @@ export default function AwsPatternGallery({ patterns }: Props) {
           {filteredPatterns.map((pattern) => (
             <Link
               key={pattern.slug}
-              href={`/aws-patterns/${pattern.slug}`}
+              href={`/patterns/${pattern.slug}`}
               className="group theme-card theme-card-hover p-6 border-2 rounded-2xl flex flex-col justify-between"
             >
               <div className="space-y-4">
