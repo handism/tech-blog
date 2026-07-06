@@ -18,7 +18,7 @@ export const themeConfig = [
     id: 'neumorphism',
     label: 'Neumorphism',
     description: 'ぷっくり凹凸・立体 Soft UI',
-    emoji: '⚪',
+    emoji: '🫧',
     category: 'modern',
     previewBg: '#e0e8f6',
     previewCard: '#e0e8f6',
