@@ -141,5 +141,10 @@
   filter: grayscale(0.5) sepia(0.1) contrast(1) brightness(1);
 }
 
+/* 1カラムレイアウト選択時は画像の高さを横長表示に適合させる */
+[data-layout='1-column'] [data-theme='editorial'] .post-card-item:not(.featured-card) .post-card-image-wrapper {
+  height: 100% !important;
+}
+
 
 /* Synthwave */

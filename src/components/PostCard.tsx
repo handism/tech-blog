@@ -20,7 +20,7 @@ export default function PostCard({ post, priorityImage = false }: PostCardProps)
     <article className="group theme-card theme-card-hover overflow-hidden flex flex-col h-full">
       {/* サムネイル画像 */}
       <Link href={`/blog/posts/${post.slug}`} className="post-card-image-link block shrink-0">
-        <div className="post-card-image-wrapper relative w-full h-56 bg-secondary border-b-3 border-border overflow-hidden">
+        <div className="post-card-image-wrapper relative w-full aspect-video bg-secondary border-b-3 border-border overflow-hidden">
           <Image
             src={post.image ? `/images/${post.image}` : `/og/${post.slug}/image.png`}
             alt={post.title}

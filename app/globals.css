@@ -541,36 +541,79 @@ pre.shiki[data-filename]::before {
   gap: 2rem !important;
 }
 
-[data-layout='1-column'] .post-card-list > .featured-card {
+[data-layout='1-column'] .post-card-list > .post-card-item {
   grid-column: span 1 !important;
 }
 
-[data-layout='1-column'] .post-card-list > .featured-card > article {
-  flex-direction: column !important;
-}
+@media (min-width: 768px) {
+  [data-layout='1-column'] .post-card-list > .post-card-item > article {
+    flex-direction: row !important;
+    align-items: stretch;
+  }
 
-[data-layout='1-column'] .post-card-list > .featured-card .post-card-image-link {
-  width: 100% !important;
-}
+  [data-layout='1-column'] .post-card-list > .post-card-item .post-card-image-link {
+    width: 320px !important;
+    flex-shrink: 0;
+  }
 
-[data-layout='1-column'] .post-card-list > .featured-card .post-card-image-wrapper {
-  border-bottom-width: 1px !important;
-  border-right-width: 0 !important;
-}
+  [data-layout='1-column'] .post-card-list > .post-card-item .post-card-image-wrapper {
+    height: 100% !important;
+    border-bottom-width: 0 !important;
+    border-right-width: var(--theme-card-border-width, 1px) !important;
+    border-right-style: solid;
+    border-right-color: var(--theme-card-border-color, var(--color-border));
+  }
 
-[data-layout='1-column'] .post-card-list > .featured-card .post-card-content {
-  width: 100% !important;
-  padding: 1.5rem !important;
+  [data-layout='1-column'] .post-card-list > .post-card-item .post-card-content {
+    width: 100% !important;
+    padding: 1.5rem 2rem !important;
+  }
 }
 
 /* ── 2 Column Grid ── */
 @media (min-width: 768px) {
   [data-layout='2-column'] .post-card-list {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 1.5rem !important;
   }
   
   [data-layout='2-column'] .post-card-list > .featured-card {
     grid-column: span 2 !important;
+  }
+
+  /* 2カラムカード個別設定（注目記事以外） */
+  [data-layout='2-column'] .post-card-list > .post-card-item:not(.featured-card) .post-card-content {
+    padding: 1.25rem !important;
+  }
+
+  [data-layout='2-column'] .post-card-list > .post-card-item:not(.featured-card) .post-card-title {
+    font-size: 1.25rem !important;
+    line-height: 1.75rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* 2カラム注目記事（横並び） */
+  [data-layout='2-column'] .post-card-list > .featured-card > article {
+    flex-direction: row !important;
+    align-items: stretch;
+  }
+
+  [data-layout='2-column'] .post-card-list > .featured-card .post-card-image-link {
+    width: 50% !important;
+    flex-shrink: 0;
+  }
+
+  [data-layout='2-column'] .post-card-list > .featured-card .post-card-image-wrapper {
+    height: 100% !important;
+    border-bottom-width: 0 !important;
+    border-right-width: var(--theme-card-border-width, 1px) !important;
+    border-right-style: solid;
+    border-right-color: var(--theme-card-border-color, var(--color-border));
+  }
+
+  [data-layout='2-column'] .post-card-list > .featured-card .post-card-content {
+    width: 50% !important;
+    padding: 1.75rem !important;
   }
 }
 
@@ -583,6 +626,45 @@ pre.shiki[data-filename]::before {
   
   [data-layout='3-column'] .post-card-list > .featured-card {
     grid-column: span 3 !important;
+  }
+
+  /* 3カラムカード個別設定（注目記事以外、説明文非表示） */
+  [data-layout='3-column'] .post-card-list > .post-card-item:not(.featured-card) .post-card-content {
+    padding: 1rem !important;
+  }
+
+  [data-layout='3-column'] .post-card-list > .post-card-item:not(.featured-card) .post-card-title {
+    font-size: 1.125rem !important;
+    line-height: 1.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  [data-layout='3-column'] .post-card-list > .post-card-item:not(.featured-card) .post-card-description {
+    display: none !important;
+  }
+
+  /* 3カラム注目記事（横並び） */
+  [data-layout='3-column'] .post-card-list > .featured-card > article {
+    flex-direction: row !important;
+    align-items: stretch;
+  }
+
+  [data-layout='3-column'] .post-card-list > .featured-card .post-card-image-link {
+    width: 60% !important;
+    flex-shrink: 0;
+  }
+
+  [data-layout='3-column'] .post-card-list > .featured-card .post-card-image-wrapper {
+    height: 100% !important;
+    border-bottom-width: 0 !important;
+    border-right-width: var(--theme-card-border-width, 1px) !important;
+    border-right-style: solid;
+    border-right-color: var(--theme-card-border-color, var(--color-border));
+  }
+
+  [data-layout='3-column'] .post-card-list > .featured-card .post-card-content {
+    width: 40% !important;
+    padding: 2rem !important;
   }
 }
 
