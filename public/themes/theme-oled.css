@@ -1,0 +1,143 @@
+/* ── OLED (High Contrast Flat) ── */
+[data-theme='oled'] {
+  --color-bg: #ffffff;
+  --color-background: var(--color-bg);
+  --color-card: #ffffff;
+  --color-secondary: #f4f4f5;
+  --color-text: #000000;
+  --color-border: #e4e4e7;
+  --color-accent: #2563eb;
+  --theme-font-sans: 'Lexend', system-ui, sans-serif;
+
+  --theme-card-border-width: 1px;
+  --theme-card-border-color: #e4e4e7;
+  --theme-card-radius: 8px;
+  --theme-card-shadow: 0 0 0 1px #f4f4f5;
+  --theme-card-hover-transform: translateY(-2px);
+  --theme-card-hover-shadow: 0 0 15px rgba(37, 99, 235, 0.1);
+  --theme-card-hover-border-color: #2563eb;
+
+  --theme-btn-border-width: 1px;
+  --theme-btn-border-color: #e4e4e7;
+  --theme-btn-radius: 6px;
+  --theme-btn-bg: transparent;
+  --theme-btn-color: #2563eb;
+  --theme-btn-shadow: none;
+  --theme-btn-hover-transform: none;
+  --theme-btn-hover-shadow: 0 0 10px rgba(37, 99, 235, 0.2);
+  --theme-btn-hover-bg: #2563eb;
+  --theme-btn-hover-color: #ffffff;
+  --theme-btn-hover-border-color: #2563eb;
+  --theme-btn-active-transform: translateY(0);
+}
+
+/* ダークモード対応 (OLED Dark) */
+[data-theme='oled'].dark {
+  --color-bg: #000000;
+  --color-card: #080808;
+  --color-secondary: #121212;
+  --color-text: #e2e8f0;
+  --color-border: #1f1f1f;
+  --color-accent: #3b82f6;
+
+  --theme-card-border-color: #1f1f1f;
+  --theme-card-shadow: 0 0 0 1px #121212;
+  --theme-card-hover-shadow: 0 0 15px rgba(59, 130, 246, 0.15);
+  --theme-card-hover-border-color: #3b82f6;
+
+  --theme-btn-border-color: #2e2e2e;
+  --theme-btn-color: #3b82f6;
+  --theme-btn-hover-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+  --theme-btn-hover-bg: #3b82f6;
+  --theme-btn-hover-border-color: #3b82f6;
+}
+
+[data-theme='oled'] [class*='shadow-'] {
+  --tw-shadow: none;
+  --tw-shadow-colored: none;
+  box-shadow: none !important;
+}
+
+[data-theme='oled'] .theme-card,
+[data-theme='oled'] .theme-card-hover:hover,
+[data-theme='oled'] .theme-btn,
+[data-theme='oled'] .theme-btn:hover,
+[data-theme='oled'] .theme-btn:active {
+  box-shadow: revert-layer;
+}
+
+/* ヘッダーやサイドバー */
+[data-theme='oled'] .site-header {
+  border: 1px solid #e4e4e7 !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+}
+
+[data-theme='oled'].dark .site-header {
+  border: 1px solid #1f1f1f !important;
+  background: #080808 !important;
+}
+
+[data-theme='oled'] .site-header nav a {
+  border: 1px solid #e4e4e7 !important;
+  border-radius: 6px !important;
+}
+
+[data-theme='oled'].dark .site-header nav a {
+  border: 1px solid #1f1f1f !important;
+}
+
+[data-theme='oled'] .site-header nav a:hover {
+  background-color: #f4f4f5 !important;
+  color: #2563eb !important;
+  border-color: #2563eb !important;
+}
+
+[data-theme='oled'].dark .site-header nav a:hover {
+  background-color: #121212 !important;
+  color: #3b82f6 !important;
+  border-color: #3b82f6 !important;
+}
+
+/* 記事ページ内のコンポーネント */
+[data-theme='oled'] article.prose blockquote {
+  border-left: 2px solid #2563eb !important;
+  background: #f4f4f5 !important;
+  color: #000000 !important;
+}
+
+[data-theme='oled'].dark article.prose blockquote {
+  border-left: 2px solid #3b82f6 !important;
+  background: #080808 !important;
+  color: #e2e8f0 !important;
+}
+
+[data-theme='oled'] article.prose pre.shiki {
+  border: 1px solid #e4e4e7 !important;
+  background-color: #050505 !important;
+}
+
+[data-theme='oled'].dark article.prose pre.shiki {
+  border: 1px solid #1f1f1f !important;
+  background-color: #050505 !important;
+}
+
+[data-theme='oled'] aside.toc-sidebar > div {
+  border: 1px solid #e4e4e7 !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+}
+
+[data-theme='oled'].dark aside.toc-sidebar > div {
+  border: 1px solid #1f1f1f !important;
+  background: #080808 !important;
+}
+
+[data-theme='oled'] .post-card-list > .featured-card .post-card-image-wrapper {
+  border-right-color: #e4e4e7 !important;
+}
+
+[data-theme='oled'].dark .post-card-list > .featured-card .post-card-image-wrapper {
+  border-right-color: #1f1f1f !important;
+}

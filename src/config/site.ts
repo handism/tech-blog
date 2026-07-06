@@ -25,14 +25,14 @@ export const themeConfig = [
     previewAccent: '#3b82f6',
   },
   {
-    id: 'oled-dark',
-    label: 'OLED Dark',
-    description: '漆黒OLED・高コントラストテック',
+    id: 'oled',
+    label: 'OLED',
+    description: '漆黒と純白・極限の高コントラスト',
     emoji: '🕶️',
     category: 'modern',
-    previewBg: '#000000',
-    previewCard: '#050505',
-    previewAccent: '#3b82f6',
+    previewBg: '#ffffff',
+    previewCard: '#ffffff',
+    previewAccent: '#2563eb',
   },
 
   // ── 立体＆質感 (tactile) ──
