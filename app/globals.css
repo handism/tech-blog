@@ -545,6 +545,10 @@ pre.shiki[data-filename]::before {
   grid-column: span 1 !important;
 }
 
+[data-layout='1-column'] .post-card-list > .post-card-item .post-card-title {
+  font-size: 1.25rem !important;
+}
+
 @media (min-width: 768px) {
   [data-layout='1-column'] .post-card-list > .post-card-item > article {
     flex-direction: row !important;
