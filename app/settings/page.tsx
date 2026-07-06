@@ -46,7 +46,7 @@ export default function SettingsPage() {
       </section>
 
       {/* セクション2: 記事一覧レイアウト */}
-      <section className="mb-16" aria-labelledby="layout-section-heading">
+      <section className="hidden md:block mb-16" aria-labelledby="layout-section-heading">
         <div className="mb-6">
           <h2
             id="layout-section-heading"
