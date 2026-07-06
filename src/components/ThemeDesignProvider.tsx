@@ -36,6 +36,7 @@ export function ThemeDesignProvider({ children }: { children: React.ReactNode })
   // 初期状態はSSRハイドレーションエラー防止のためデフォルト値に固定
   const [currentTheme, setCurrentTheme] = useState<ThemeId>(DEFAULT_THEME);
   const [currentLayout, setCurrentLayout] = useState<LayoutId>(DEFAULT_LAYOUT);
+  const [isRestored, setIsRestored] = useState(false);
 
   const mounted = useIsClient();
 
@@ -45,42 +46,49 @@ export function ThemeDesignProvider({ children }: { children: React.ReactNode })
       const timer = setTimeout(() => {
         try {
           // テーマの復元
-          const themeAttr = document.documentElement.getAttribute('data-theme') as ThemeId | null;
-          if (themeAttr && themeConfig.some((t) => t.id === themeAttr)) {
-            setCurrentTheme(themeAttr);
+          // まず LocalStorage に保存されている設定を優先する
+          const savedTheme = localStorage.getItem(THEME_STORAGE_KEY) as ThemeId | null;
+          if (savedTheme && themeConfig.some((t) => t.id === savedTheme)) {
+            setCurrentTheme(savedTheme);
           } else {
-            const savedTheme = localStorage.getItem(THEME_STORAGE_KEY) as ThemeId | null;
-            if (savedTheme && themeConfig.some((t) => t.id === savedTheme)) {
-              setCurrentTheme(savedTheme);
+            // なければ DOM の data-theme 属性を確認する
+            const themeAttr = document.documentElement.getAttribute('data-theme') as ThemeId | null;
+            if (themeAttr && themeConfig.some((t) => t.id === themeAttr)) {
+              setCurrentTheme(themeAttr);
             }
           }
 
           // レイアウトの復元
-          const layoutAttr = document.documentElement.getAttribute(
-            'data-layout'
-          ) as LayoutId | null;
-          if (layoutAttr && layoutConfig.some((l) => l.id === layoutAttr)) {
-            setCurrentLayout(layoutAttr);
+          // まず LocalStorage に保存されている設定を優先する
+          const savedLayout = localStorage.getItem(LAYOUT_STORAGE_KEY) as LayoutId | null;
+          if (savedLayout && layoutConfig.some((l) => l.id === savedLayout)) {
+            setCurrentLayout(savedLayout);
           } else {
-            const savedLayout = localStorage.getItem(LAYOUT_STORAGE_KEY) as LayoutId | null;
-            if (savedLayout && layoutConfig.some((l) => l.id === savedLayout)) {
-              setCurrentLayout(savedLayout);
+            // なければ DOM の data-layout 属性を確認する
+            const layoutAttr = document.documentElement.getAttribute(
+              'data-layout'
+            ) as LayoutId | null;
+            if (layoutAttr && layoutConfig.some((l) => l.id === layoutAttr)) {
+              setCurrentLayout(layoutAttr);
             }
           }
         } catch {
           // ignore
+        } finally {
+          setIsRestored(true);
         }
       }, 0);
       return () => clearTimeout(timer);
     }
   }, [mounted]);
 
+  // 設定復元後にのみ DOM にテーマとレイアウトを適用する（デフォルト値での意図しない上書きを防ぐ）
   useEffect(() => {
-    if (mounted) {
+    if (mounted && isRestored) {
       document.documentElement.setAttribute('data-theme', currentTheme);
       document.documentElement.setAttribute('data-layout', currentLayout);
     }
-  }, [currentTheme, currentLayout, mounted]);
+  }, [currentTheme, currentLayout, mounted, isRestored]);
 
   const setTheme = useCallback((themeId: ThemeId) => {
     setCurrentTheme(themeId);
