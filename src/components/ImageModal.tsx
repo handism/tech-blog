@@ -79,6 +79,7 @@ export function ImageModal() {
       <button
         className="absolute top-4 right-4 text-white text-4xl hover:text-gray-300 z-10"
         onClick={() => setSelectedImage(null)}
+        aria-label="閉じる"
       >
         ×
       </button>
@@ -93,6 +94,7 @@ export function ImageModal() {
             setCurrentIndex(newIndex);
             setSelectedImage(allImages[newIndex]);
           }}
+          aria-label="前の画像"
         >
           ‹
         </button>
@@ -108,6 +110,7 @@ export function ImageModal() {
             setCurrentIndex(newIndex);
             setSelectedImage(allImages[newIndex]);
           }}
+          aria-label="次の画像"
         >
           ›
         </button>
