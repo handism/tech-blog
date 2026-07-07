@@ -1,7 +1,7 @@
 ---
 title: なぜ現代のシステム開発に「バッチ処理」が必要なのか？
 date: 2026-07-04
-tags: [SystemDesign, Architecture, Backend, BatchProcessing]
+tags: [Development]
 category: Backend
 image: why-we-need-batch-processing-flatpop.webp
 ---

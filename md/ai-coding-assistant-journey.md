@@ -1,7 +1,7 @@
 ---
 title: 個人開発のAIアシスタント変遷記：Claude Code → Copilot Pro → Google AI Pro
 date: 2026-06-28
-tags: [AI, Claude Code, GitHub Copilot, Google AI Pro, Antigravity]
+tags: [Claude Code, GitHub Copilot, Antigravity]
 category: AI
 image: ai-coding-assistant-journey-flatpop.webp
 ---

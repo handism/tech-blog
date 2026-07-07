@@ -1,7 +1,7 @@
 ---
 title: IT世界に溢れる「水」と「配管」のメタファー
 date: 2026-06-22
-tags: [Infrastructure, Network, AWS]
+tags: [Network, AWS]
 category: Infrastructure
 image: it-water-metaphor.webp
 ---
