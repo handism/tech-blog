@@ -341,7 +341,9 @@ export default function ThemeEffectManager() {
 
       {/* ── 5. Nordic 用の暖炉のゆらぎ背景 ── */}
       {currentTheme === 'nordic' && (
-        <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden bg-[#edf2f0]">
+        <div
+          className={`fixed inset-0 pointer-events-none z-[-1] overflow-hidden ${isDark ? 'bg-[#121c17]' : 'bg-[#edf2f0]'}`}
+        >
           <div
             className="absolute inset-0 opacity-[0.02] mix-blend-overlay bg-repeat"
             style={{
@@ -349,11 +351,11 @@ export default function ThemeEffectManager() {
             }}
           />
           <div
-            className="absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-gradient-to-tr from-[#faebe1] to-[#e4ede7] opacity-60 blur-[100px] animate-pulse"
+            className={`absolute bottom-[-10%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-gradient-to-tr ${isDark ? 'from-[#1f3026] to-[#122118] opacity-30' : 'from-[#faebe1] to-[#e4ede7] opacity-60'} blur-[100px] animate-pulse`}
             style={{ animationDuration: '10s' }}
           />
           <div
-            className="absolute top-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-gradient-to-bl from-[#e9f2ef] to-[#f4ebe3] opacity-60 blur-[90px] animate-pulse"
+            className={`absolute top-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-gradient-to-bl ${isDark ? 'from-[#1a2d22] to-[#16271e] opacity-30' : 'from-[#e9f2ef] to-[#f4ebe3] opacity-60'} blur-[90px] animate-pulse`}
             style={{ animationDuration: '14s' }}
           />
         </div>
