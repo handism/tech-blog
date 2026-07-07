@@ -328,17 +328,6 @@ export default function ThemeEffectManager() {
               }}
             />
           </div>
-          {/* アニメーション用のインラインCSS */}
-          <style
-            dangerouslySetInnerHTML={{
-              __html: `
-              @keyframes synthwave-grid-scroll {
-                0% { background-position: 0 0, 0 0, 0 0; }
-                100% { background-position: 0 40px, 0 40px, 0 0; }
-              }
-            `,
-            }}
-          />
         </div>
       )}
 

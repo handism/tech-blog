@@ -186,3 +186,13 @@ html[data-theme='synthwave'] .dark .theme-card-hover:hover {
   left: 100%;
   transition: 0.5s;
 }
+
+/* 地平線グリッドスクロールアニメーション */
+@keyframes synthwave-grid-scroll {
+  0% {
+    background-position: 0 0, 0 0, 0 0;
+  }
+  100% {
+    background-position: 0 40px, 0 0, 0 0;
+  }
+}
