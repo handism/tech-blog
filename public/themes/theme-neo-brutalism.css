@@ -167,3 +167,23 @@ html:not([data-theme]) .dark pre.shiki {
     padding: 2rem !important;
   }
 }
+
+/* ── Neo-Brutalism ステッカーコラージュ風演出 ── */
+[data-theme='neo-brutalism'] a.tag-link,
+[data-theme='neo-brutalism'] .post-card-meta a[href*='/blog/categories/'],
+[data-theme='neo-brutalism'] .post-header .not-prose a {
+  display: inline-block;
+  transform: rotate(-1.5deg);
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+[data-theme='neo-brutalism'] a.tag-link:nth-child(even),
+[data-theme='neo-brutalism'] .post-header .not-prose a:nth-child(even) {
+  transform: rotate(2.2deg);
+}
+
+[data-theme='neo-brutalism'] a.tag-link:hover,
+[data-theme='neo-brutalism'] .post-card-meta a[href*='/blog/categories/']:hover,
+[data-theme='neo-brutalism'] .post-header .not-prose a:hover {
+  transform: rotate(0deg) scale(1.08) !important;
+}

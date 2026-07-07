@@ -120,3 +120,35 @@ html[data-theme='glassmorphism'] .dark .theme-toc-drawer,
 }
 
 /* Minimal */
+
+/* Glassmorphism カードの透過・ブラー強化 */
+[data-theme='glassmorphism'] .theme-card {
+  background: rgba(255, 255, 255, 0.25) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+html[data-theme='glassmorphism'].dark .theme-card,
+html[data-theme='glassmorphism'] .dark .theme-card {
+  background: rgba(15, 15, 35, 0.45) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+/* ホバー時に光沢の透過率を少し変えて浮かび上がらせる */
+[data-theme='glassmorphism'] .theme-card-hover:hover {
+  background: rgba(255, 255, 255, 0.35) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  box-shadow: 0 12px 40px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+}
+
+html[data-theme='glassmorphism'].dark .theme-card-hover:hover,
+html[data-theme='glassmorphism'] .dark .theme-card-hover:hover {
+  background: rgba(20, 20, 45, 0.55) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}

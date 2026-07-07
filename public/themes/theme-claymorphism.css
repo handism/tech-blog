@@ -124,3 +124,22 @@ html[data-theme='claymorphism'] .dark body,
 [data-theme='claymorphism'] .site-header nav a:hover {
   background-color: var(--color-secondary) !important;
 }
+
+/* ── Claymorphism Jelly Elastic エフェクト ── */
+[data-theme='claymorphism'] .post-card-item .theme-card,
+[data-theme='claymorphism'] .theme-btn {
+  transition: transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.45), box-shadow 0.4s ease !important;
+}
+
+/* ホバー時にぷるんと弾むように少し縮小させてから大きくなる */
+[data-theme='claymorphism'] .post-card-item:hover .theme-card {
+  transform: scale(1.03) translateY(-4px) !important;
+}
+
+[data-theme='claymorphism'] .theme-btn:hover {
+  transform: scale(1.05) translateY(-1px) !important;
+}
+
+[data-theme='claymorphism'] .theme-btn:active {
+  transform: scale(0.95) translateY(1px) !important;
+}

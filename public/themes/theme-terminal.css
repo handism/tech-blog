@@ -130,3 +130,36 @@ html[data-theme='terminal'] .dark,
 
 
 /* Nordic */
+
+/* ── Terminal / CLI 演出 ── */
+[data-theme='terminal'] .post-card-item:hover .post-card-title::after {
+  content: ' █';
+  color: var(--color-text);
+  animation: terminal-blink 0.8s step-end infinite;
+  display: inline-block;
+}
+
+/* プログラムのロード風に、ホバー時に少し発光する */
+[data-theme='terminal'] .post-card-item:hover .theme-card {
+  background: var(--color-secondary) !important;
+  box-shadow: 0 0 15px var(--color-text) !important;
+}
+
+/* スクロールバーのグリーン・ハッカー化 */
+[data-theme='terminal'] ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+[data-theme='terminal'] ::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+[data-theme='terminal'] ::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 0px;
+}
+
+[data-theme='terminal'] ::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}

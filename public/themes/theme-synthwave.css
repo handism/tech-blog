@@ -139,3 +139,50 @@ html[data-theme='synthwave'] .dark .site-header nav a:hover,
 }
 
 /* Terminal */
+
+/* ネオン明滅アニメーション */
+@keyframes neon-flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    text-shadow: 0 0 8px rgba(0, 255, 255, 0.6), 0 0 15px rgba(0, 255, 255, 0.3), 0 0 30px rgba(255, 0, 127, 0.2);
+  }
+  20%, 24%, 55% {
+    text-shadow: none;
+  }
+}
+
+html[data-theme='synthwave'].dark h1,
+html[data-theme='synthwave'].dark h2,
+html[data-theme='synthwave'].dark h3,
+html[data-theme='synthwave'] .dark h1,
+html[data-theme='synthwave'] .dark h2,
+html[data-theme='synthwave'] .dark h3 {
+  animation: neon-flicker 6s infinite alternate;
+}
+
+/* ホバー時にネオンボーダーを発光させる効果 */
+html[data-theme='synthwave'].dark .theme-card-hover:hover,
+html[data-theme='synthwave'] .dark .theme-card-hover:hover {
+  border-color: #00ffff !important;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5), 0 0 40px rgba(255, 0, 127, 0.3) !important;
+}
+
+[data-theme='synthwave'] .theme-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+[data-theme='synthwave'] .theme-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  transition: 0.5s;
+}
+
+[data-theme='synthwave'] .theme-btn:hover::after {
+  left: 100%;
+  transition: 0.5s;
+}

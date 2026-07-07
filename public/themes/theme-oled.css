@@ -141,3 +141,22 @@
 [data-theme='oled'].dark .post-card-list > .featured-card .post-card-image-wrapper {
   border-right-color: #1f1f1f !important;
 }
+
+/* ── OLED 極限高コントラスト・ネオンフリッカー ── */
+@keyframes border-glow-flicker {
+  0%, 100% {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.4) !important;
+  }
+  45%, 55% {
+    border-color: #1f1f1f !important;
+    box-shadow: none !important;
+  }
+}
+
+html[data-theme='oled'].dark .post-card-item:hover .theme-card,
+html[data-theme='oled'].dark .post-card-item:focus-within .theme-card {
+  animation: border-glow-flicker 0.45s ease-in-out;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.5) !important;
+}

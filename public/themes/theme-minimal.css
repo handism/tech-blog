@@ -70,3 +70,42 @@
 }
 
 /* Neumorphism */
+
+/* ── Minimal / Clean アップデート ── */
+/* フォーカス・ビュー効果 (ホバーしていない他のカードをフェードアウトさせる) */
+[data-theme='minimal'] .post-card-list:has(.post-card-item:hover) .post-card-item:not(:hover) {
+  opacity: 0.45;
+}
+
+[data-theme='minimal'] .post-card-item {
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* ホバー時のカードのボーダー調整 */
+[data-theme='minimal'] .post-card-item:hover .theme-card {
+  border-color: var(--color-accent) !important;
+}
+
+/* リンクホバー時の下線のローリングアニメーション */
+[data-theme='minimal'] .post-card-title a {
+  position: relative;
+  text-decoration: none !important;
+}
+
+[data-theme='minimal'] .post-card-title a::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: var(--color-accent);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+[data-theme='minimal'] .post-card-title a:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}

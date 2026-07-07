@@ -280,6 +280,46 @@ html[data-theme='steampunk'].dark .post-card-item:hover .theme-card,
     inset 0 1px 0 rgba(200, 135, 42, 0.3) !important;
 }
 
+/* ── Steampunk 歯車やディテール追加 ── */
+[data-theme='steampunk'] svg {
+  filter: drop-shadow(1px 2px 3px rgba(74, 51, 25, 0.2));
+}
+
+[data-theme='steampunk'] .theme-btn {
+  background: linear-gradient(180deg, #f5e4bd 0%, #decfa6 50%, #cca96a 100%) !important;
+  border: 2px solid #8b6535 !important;
+  color: #4a3319 !important;
+  box-shadow: 
+    1px 1px 3px rgba(0,0,0,0.2), 
+    inset 0 1px 0 rgba(255,255,255,0.4) !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+}
+
+[data-theme='steampunk'] .theme-btn:hover {
+  background: linear-gradient(180deg, #fff2d5 0%, #eadaaf 50%, #e0be82 100%) !important;
+  border-color: #c8872a !important;
+  box-shadow: 
+    2px 3px 8px rgba(74, 51, 25, 0.2), 
+    inset 0 1px 0 rgba(255,255,255,0.6) !important;
+}
+
+html[data-theme='steampunk'].dark .theme-btn,
+html[data-theme='steampunk'] .dark .theme-btn {
+  background: linear-gradient(180deg, #5a3a18 0%, #442a10 50%, #321c08 100%) !important;
+  color: #e8c99a !important;
+  border-color: #7a5522 !important;
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.4);
+  box-shadow: 
+    1px 1px 3px rgba(0,0,0,0.4), 
+    inset 0 1px 0 rgba(200,135,42,0.2) !important;
+}
+
+html[data-theme='steampunk'].dark .theme-btn:hover,
+html[data-theme='steampunk'] .dark .theme-btn:hover {
+  background: linear-gradient(180deg, #6e4822 0%, #513316 50%, #3f250f 100%) !important;
+  border-color: #c8872a !important;
+}
+
 
 
 /* ═══════════════════════════════════════════════════════

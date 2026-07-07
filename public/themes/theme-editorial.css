@@ -148,3 +148,16 @@
 
 
 /* Synthwave */
+
+/* ── Editorial / Paper アップデート ── */
+/* ドロップキャップ (本文最初の1文字を新聞社風に装飾) */
+[data-theme='editorial'] article.prose p:first-of-type::first-letter {
+  font-family: 'Noto Serif JP', Georgia, serif;
+  font-size: 3.2rem;
+  font-weight: 900;
+  float: left;
+  line-height: 0.85;
+  margin-right: 8px;
+  margin-top: 4px;
+  color: var(--color-accent);
+}

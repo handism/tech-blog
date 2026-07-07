@@ -324,3 +324,51 @@
   box-shadow: 0 -2px 0 var(--color-bg), 0 -3px 0 var(--color-border) !important;
   margin-top: 4rem;
 }
+
+/* ── Modern Japanese 和風ギミック追加 ── */
+/* 引き戸（障子）風ボタンホバー効果 */
+[data-theme='modern-japanese'] .theme-btn {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  border: 1px solid var(--color-border) !important;
+  transition: color 0.35s cubic-bezier(0.76, 0, 0.24, 1) !important;
+}
+
+[data-theme='modern-japanese'] .theme-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: var(--color-text);
+  z-index: -1;
+  transition: width 0.35s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+[data-theme='modern-japanese'] .theme-btn:hover::before {
+  width: 100%;
+}
+
+[data-theme='modern-japanese'] .theme-btn:hover {
+  color: var(--color-bg) !important;
+  background: transparent !important;
+}
+
+/* 落款スタンプのリアリティ表現（わずかな傾き） */
+[data-theme='modern-japanese'] .post-card-meta a[href*='/blog/categories/'] {
+  transform: rotate(-1.5deg);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* 暗い和室（ダークモード）での金箔ボタン調整 */
+html[data-theme='modern-japanese'].dark .theme-btn::before,
+html[data-theme='modern-japanese'] .dark .theme-btn::before {
+  background-color: var(--color-accent);
+}
+
+html[data-theme='modern-japanese'].dark .theme-btn:hover,
+html[data-theme='modern-japanese'] .dark .theme-btn:hover {
+  color: #0a0a0a !important;
+}

@@ -163,6 +163,34 @@ html[data-theme='blueprint'] .dark .post-card-item .theme-card {
   background-repeat: no-repeat !important;
   pointer-events: none;
   z-index: 10;
+  transition: all 0.3s ease;
+}
+
+/* CADアノテーションテキスト（ホバー時に出現） */
+[data-theme='blueprint'] .post-card-item .theme-card::after {
+  content: 'SCALE: 1.00 / W: 320.00 / H: AUTO';
+  position: absolute;
+  bottom: -18px;
+  right: 4px;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 8px;
+  color: var(--color-border);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+[data-theme='blueprint'] .post-card-item:hover .theme-card::after {
+  opacity: 0.8;
+}
+
+/* ホバー時に寸法線（引き出し線）が外側にスライド拡張する */
+[data-theme='blueprint'] .post-card-item:hover .theme-card::before {
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  background-size: 20px 1px, 20px 1px, 1px 20px, 1px 20px !important;
 }
 
 /* サムネイル画像を青写真（シアノタイプ）化する */

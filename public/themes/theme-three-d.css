@@ -73,3 +73,29 @@
 }
 
 /* Illustration */
+
+/* ── 3D Interactive 立体パララックス追加 ── */
+[data-theme='three-d'] .theme-card {
+  transform-style: preserve-3d !important;
+  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out !important;
+}
+
+[data-theme='three-d'] .post-card-image-wrapper {
+  transform: translateZ(15px);
+  transform-style: preserve-3d;
+}
+
+[data-theme='three-d'] .post-card-image-wrapper img {
+  transform: scale(1.05) translate(var(--parallax-x, 0px), var(--parallax-y, 0px)) !important;
+  transition: transform 0.1s ease-out !important;
+}
+
+[data-theme='three-d'] .post-card-title {
+  transform: translateZ(30px);
+  transition: transform 0.15s ease-out;
+}
+
+[data-theme='three-d'] .post-card-meta {
+  transform: translateZ(20px);
+  transition: transform 0.15s ease-out;
+}

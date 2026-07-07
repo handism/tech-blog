@@ -12,18 +12,18 @@
   --theme-card-border-width: 0px;
   --theme-card-radius: 20px;
   --theme-card-bg: var(--color-card);
-  --theme-card-shadow: 6px 6px 14px #bec5d1, -6px -6px 14px #ffffff;
+  --theme-card-shadow: var(--mx, 6px) var(--my, 6px) 14px #bec5d1, calc(var(--mx, 6px) * -1) calc(var(--my, 6px) * -1) 14px #ffffff;
   --theme-card-hover-transform: translateY(-2px);
-  --theme-card-hover-shadow: 8px 8px 20px #b4bcce, -8px -8px 20px #ffffff;
+  --theme-card-hover-shadow: calc(var(--mx, 6px) * 1.3) calc(var(--my, 6px) * 1.3) 20px #b4bcce, calc(var(--mx, 6px) * -1.3) calc(var(--my, 6px) * -1.3) 20px #ffffff;
   --theme-card-hover-border-color: transparent;
 
   --theme-btn-border-width: 0px;
   --theme-btn-radius: 12px;
   --theme-btn-bg: var(--color-card);
   --theme-btn-color: var(--color-text);
-  --theme-btn-shadow: 4px 4px 8px #bec5d1, -4px -4px 8px #ffffff;
+  --theme-btn-shadow: var(--mx, 4px) var(--my, 4px) 8px #bec5d1, calc(var(--mx, 4px) * -1) calc(var(--my, 4px) * -1) 8px #ffffff;
   --theme-btn-hover-transform: translateY(-1px);
-  --theme-btn-hover-shadow: 5px 5px 10px #b4bcce, -5px -5px 10px #ffffff;
+  --theme-btn-hover-shadow: calc(var(--mx, 4px) * 1.2) calc(var(--my, 4px) * 1.2) 10px #b4bcce, calc(var(--mx, 4px) * -1.2) calc(var(--my, 4px) * -1.2) 10px #ffffff;
   
   --theme-btn-active-transform: translateY(0px);
   --theme-btn-active-shadow: inset 4px 4px 8px #bec5d1, inset -4px -4px 8px #ffffff;
@@ -37,11 +37,11 @@
   --color-border: transparent;
   --color-accent: #60a5fa;
 
-  --theme-card-shadow: 6px 6px 14px #121721, -6px -6px 14px #242d3f;
-  --theme-card-hover-shadow: 8px 8px 20px #0e121a, -8px -8px 20px #283246;
+  --theme-card-shadow: var(--mx, 6px) var(--my, 6px) 14px #121721, calc(var(--mx, 6px) * -1) calc(var(--my, 6px) * -1) 14px #242d3f;
+  --theme-card-hover-shadow: calc(var(--mx, 6px) * 1.3) calc(var(--my, 6px) * 1.3) 20px #0e121a, calc(var(--mx, 6px) * -1.3) calc(var(--my, 6px) * -1.3) 20px #283246;
 
-  --theme-btn-shadow: 4px 4px 8px #121721, -4px -4px 8px #242d3f;
-  --theme-btn-hover-shadow: 5px 5px 10px #0e121a, -5px -5px 10px #283246;
+  --theme-btn-shadow: var(--mx, 4px) var(--my, 4px) 8px #121721, calc(var(--mx, 4px) * -1) calc(var(--my, 4px) * -1) 8px #242d3f;
+  --theme-btn-hover-shadow: calc(var(--mx, 4px) * 1.2) calc(var(--my, 4px) * 1.2) 10px #0e121a, calc(var(--mx, 4px) * -1.2) calc(var(--my, 4px) * -1.2) 10px #283246;
   --theme-btn-active-shadow: inset 4px 4px 8px #121721, inset -4px -4px 8px #242d3f;
 }
 
