@@ -30,6 +30,11 @@
   --theme-btn-active-shadow: 0 2px 5px rgba(47, 62, 70, 0.05);
 }
 
+[data-theme='nordic'] body {
+  background: transparent !important;
+}
+
+
 html[data-theme='nordic'].dark,
 html[data-theme='nordic'] .dark,
 .dark[data-theme='nordic'],
@@ -103,4 +108,44 @@ html[data-theme='nordic'] .dark .theme-card {
 /* ボタンも優しく弾むように */
 [data-theme='nordic'] .theme-btn {
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+/* ── 暖炉のゆらぎ（炎のまたたき）アニメーション ── */
+@keyframes nordic-fireplace-flicker {
+  0%, 100% {
+    opacity: 0.28;
+    transform: scale(1) translate(0, 0);
+  }
+  15% {
+    opacity: 0.38;
+    transform: scale(1.05) translate(-1%, -1%);
+  }
+  30% {
+    opacity: 0.24;
+    transform: scale(0.95) translate(1%, 0);
+  }
+  45% {
+    opacity: 0.42;
+    transform: scale(1.08) translate(-2%, -3%);
+  }
+  60% {
+    opacity: 0.3;
+    transform: scale(0.97) translate(1%, 1%);
+  }
+  75% {
+    opacity: 0.48;
+    transform: scale(1.04) translate(-1%, -2%);
+  }
+  90% {
+    opacity: 0.34;
+    transform: scale(0.98) translate(2%, 0);
+  }
+}
+
+[data-theme='nordic'] .fireplace-flame-1 {
+  animation: nordic-fireplace-flicker 7s ease-in-out infinite alternate;
+}
+
+[data-theme='nordic'] .fireplace-flame-2 {
+  animation: nordic-fireplace-flicker 9s ease-in-out infinite alternate-reverse;
 }
