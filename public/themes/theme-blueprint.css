@@ -145,7 +145,7 @@ html[data-theme='blueprint'] .dark .post-card-item .theme-card {
 }
 
 /* 四隅に寸法線（引き出し線）をあしらう */
-[data-theme='blueprint'] .post-card-item .theme-card::before {
+[data-theme='blueprint'] .theme-card::before {
   content: '';
   position: absolute;
   top: -4px;
@@ -167,7 +167,7 @@ html[data-theme='blueprint'] .dark .post-card-item .theme-card {
 }
 
 /* CADアノテーションテキスト（ホバー時に出現） */
-[data-theme='blueprint'] .post-card-item .theme-card::after {
+[data-theme='blueprint'] .theme-card::after {
   content: 'SCALE: 1.00 / W: 320.00 / H: AUTO';
   position: absolute;
   bottom: -18px;
@@ -180,12 +180,12 @@ html[data-theme='blueprint'] .dark .post-card-item .theme-card {
   pointer-events: none;
 }
 
-[data-theme='blueprint'] .post-card-item:hover .theme-card::after {
+[data-theme='blueprint'] .theme-card:hover::after {
   opacity: 0.8;
 }
 
 /* ホバー時に寸法線（引き出し線）が外側にスライド拡張する */
-[data-theme='blueprint'] .post-card-item:hover .theme-card::before {
+[data-theme='blueprint'] .theme-card:hover::before {
   top: -8px;
   left: -8px;
   right: -8px;

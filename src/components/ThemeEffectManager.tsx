@@ -3,6 +3,8 @@
 
 import { useThemeDesign } from '@/src/components/ThemeDesignProvider';
 import { themeConfig, type ThemeId } from '@/src/config/site';
+import { useIsClient } from '@/src/hooks/useIsClient';
+import { useTheme } from 'next-themes';
 import { useEffect, useRef, useState } from 'react';
 
 /**
@@ -10,6 +12,8 @@ import { useEffect, useRef, useState } from 'react';
  */
 export default function ThemeEffectManager() {
   const { currentTheme, setTheme } = useThemeDesign();
+  const { resolvedTheme } = useTheme();
+  const mounted = useIsClient();
   const [scrollProgress, setScrollProgress] = useState(0);
   const [cliOpen, setCliOpen] = useState(false);
   const [cliInput, setCliInput] = useState('');
@@ -18,6 +22,8 @@ export default function ThemeEffectManager() {
     'Type "help" for a list of available commands.',
   ]);
   const cliInputRef = useRef<HTMLInputElement>(null);
+
+  const isDark = mounted && resolvedTheme === 'dark';
 
   // 1. スクロール監視 (Minimalの進捗ゲージ、Steampunkの歯車スクロール連動など)
   useEffect(() => {
@@ -205,7 +211,9 @@ export default function ThemeEffectManager() {
 
       {/* ── 2. Glassmorphism 用の浮遊Blob背景 ── */}
       {currentTheme === 'glassmorphism' && (
-        <div className="fixed inset-0 overflow-hidden pointer-events-none z-[-1] bg-gradient-to-br from-[#0c0f1d] to-[#05060b]">
+        <div
+          className={`fixed inset-0 overflow-hidden pointer-events-none z-[-1] ${isDark ? 'bg-gradient-to-br from-[#0c0f1d] to-[#05060b]' : 'bg-gradient-to-br from-[#e2e8f0] to-[#f8fafc]'}`}
+        >
           <div
             className="absolute inset-0 opacity-[0.03] mix-blend-overlay bg-repeat"
             style={{
@@ -280,11 +288,18 @@ export default function ThemeEffectManager() {
 
       {/* ── 4. Synthwave 用の3Dグリッド背景 ── */}
       {currentTheme === 'synthwave' && (
-        <div className="fixed inset-0 pointer-events-none z-[-2] overflow-hidden bg-[#0d0d26]">
+        <div
+          className={`fixed inset-0 pointer-events-none z-[-2] overflow-hidden ${isDark ? 'bg-[#0d0d26]' : 'bg-gradient-to-br from-[#fdf2f8] to-[#fae8ff]'}`}
+        >
           {/* ネオン太陽 */}
           <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-80 h-80 rounded-full bg-gradient-to-b from-[#ff007f] to-[#ffaa00] opacity-40 blur-md">
             {/* 太陽の横縞カット */}
-            <div className="absolute inset-0 bg-[repeating-linear-gradient(to_bottom,transparent,transparent_12px,#0d0d26_12px,#0d0d26_16px)]" />
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage: `repeating-linear-gradient(to bottom, transparent, transparent 12px, ${isDark ? '#0d0d26' : '#fae8ff'} 12px, ${isDark ? '#0d0d26' : '#fae8ff'} 16px)`,
+              }}
+            />
           </div>
           {/* レーザー光線のような放射線背景 */}
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(112,0,255,0.15),transparent_70%)]" />
@@ -293,9 +308,14 @@ export default function ThemeEffectManager() {
             <div
               className="absolute inset-0 w-full h-[200%] origin-top bg-[linear-gradient(to_bottom,transparent,rgba(255,0,127,0.3))] border-t-2 border-[#ff007f]/30"
               style={{
-                backgroundImage: `
+                backgroundImage: isDark
+                  ? `
                   linear-gradient(to bottom, rgba(255, 0, 127, 0.2) 2px, transparent 2px),
                   linear-gradient(to right, rgba(0, 240, 255, 0.2) 2px, transparent 2px)
+                `
+                  : `
+                  linear-gradient(to bottom, rgba(255, 0, 127, 0.1) 2px, transparent 2px),
+                  linear-gradient(to right, rgba(14, 165, 233, 0.1) 2px, transparent 2px)
                 `,
                 backgroundSize: '40px 40px',
                 transform: 'rotateX(75deg)',
@@ -343,7 +363,7 @@ export default function ThemeEffectManager() {
           {/* CLIトグルボタン */}
           <button
             onClick={() => setCliOpen(!cliOpen)}
-            className="fixed bottom-6 right-6 z-50 font-mono text-xs px-3 py-2 bg-[#050505] border border-[#00ff00] text-[#00ff00] rounded hover:bg-[#00ff00] hover:text-[#000] transition-colors shadow-lg"
+            className="fixed bottom-6 right-20 z-50 font-mono text-xs px-3 py-2 bg-[#050505] border border-[#00ff00] text-[#00ff00] rounded hover:bg-[#00ff00] hover:text-[#000] transition-colors shadow-lg"
             title="Toggle Console (Ctrl + \`)"
           >
             {cliOpen ? '_[CLOSE]' : '>_[CLI]'}
@@ -354,7 +374,7 @@ export default function ThemeEffectManager() {
 
           {/* CLIドロップダウンコンソール */}
           {cliOpen && (
-            <div className="fixed top-0 left-0 w-full h-[40vh] min-h-[300px] bg-[#050505] border-b-2 border-[#00ff00] text-[#00ff00] font-mono p-4 z-40 flex flex-col shadow-2xl">
+            <div className="fixed top-0 left-0 w-full h-[40vh] min-h-[300px] bg-[#050505] border-b-2 border-[#00ff00] text-[#00ff00] font-mono p-4 z-[60] flex flex-col shadow-2xl">
               <div className="flex justify-between items-center border-b border-[#00ff00]/30 pb-2 mb-2 text-xs">
                 <span>ANTIGRAVITY SYSTEM TERMINAL</span>
                 <button onClick={() => setCliOpen(false)} className="hover:text-red-500">
