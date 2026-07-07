@@ -367,7 +367,11 @@ export default function ThemeEffectManager() {
           {/* CLIトグルボタン */}
           <button
             onClick={() => setCliOpen(!cliOpen)}
-            className="fixed bottom-6 left-6 z-50 font-mono text-xs px-3 py-2 bg-[#050505] border border-[#00ff00] text-[#00ff00] rounded hover:bg-[#00ff00] hover:text-[#000] transition-colors shadow-lg"
+            className={`fixed bottom-6 left-6 z-50 font-mono text-xs px-3 py-2 rounded transition-colors shadow-lg border ${
+              isDark
+                ? 'bg-[#050505] border-[#00ff00] text-[#00ff00] hover:bg-[#00ff00] hover:text-[#000]'
+                : 'bg-[#f2e9d3] border-[#7c4f00] text-[#7c4f00] hover:bg-[#7c4f00] hover:text-[#fbf5e6]'
+            }`}
             title="Toggle Console (Ctrl + \`)"
           >
             {cliOpen ? '_[CLOSE]' : '>_[CLI]'}
@@ -378,14 +382,31 @@ export default function ThemeEffectManager() {
 
           {/* CLIスライドアップコンソール */}
           {cliOpen && (
-            <div className="fixed bottom-0 left-0 w-full h-[40vh] min-h-[300px] bg-[#050505] border-t-2 border-[#00ff00] text-[#00ff00] font-mono p-4 z-[60] flex flex-col shadow-2xl">
-              <div className="flex justify-between items-center border-b border-[#00ff00]/30 pb-2 mb-2 text-xs">
+            <div
+              className={`fixed bottom-0 left-0 w-full h-[40vh] min-h-[300px] border-t-2 font-mono p-4 z-[60] flex flex-col shadow-2xl ${
+                isDark
+                  ? 'bg-[#050505] border-[#00ff00] text-[#00ff00]'
+                  : 'bg-[#fbf5e6] border-[#7c4f00] text-[#7c4f00]'
+              }`}
+            >
+              <div
+                className={`flex justify-between items-center border-b pb-2 mb-2 text-xs ${
+                  isDark ? 'border-[#00ff00]/30' : 'border-[#7c4f00]/30'
+                }`}
+              >
                 <span>ANTIGRAVITY SYSTEM TERMINAL</span>
-                <button onClick={() => setCliOpen(false)} className="hover:text-red-500">
+                <button
+                  onClick={() => setCliOpen(false)}
+                  className={isDark ? 'hover:text-red-500' : 'hover:text-[#c67c00]'}
+                >
                   [ESC] CLOSE
                 </button>
               </div>
-              <div className="flex-grow overflow-y-auto text-sm space-y-1 mb-2 scrollbar-thin scrollbar-thumb-[#00ff00]/30">
+              <div
+                className={`flex-grow overflow-y-auto text-sm space-y-1 mb-2 scrollbar-thin ${
+                  isDark ? 'scrollbar-thumb-[#00ff00]/30' : 'scrollbar-thumb-[#7c4f00]/30'
+                }`}
+              >
                 {cliHistory.map((line, index) => (
                   <div key={index} className="whitespace-pre-wrap">
                     {line}
@@ -394,15 +415,19 @@ export default function ThemeEffectManager() {
               </div>
               <form
                 onSubmit={handleCliSubmit}
-                className="flex items-center text-sm border-t border-[#00ff00]/30 pt-2"
+                className={`flex items-center text-sm border-t pt-2 ${
+                  isDark ? 'border-[#00ff00]/30' : 'border-[#7c4f00]/30'
+                }`}
               >
-                <span className="mr-2 text-[#00ff00]">$</span>
+                <span className={`mr-2 ${isDark ? 'text-[#00ff00]' : 'text-[#c67c00]'}`}>$</span>
                 <input
                   ref={cliInputRef}
                   type="text"
                   value={cliInput}
                   onChange={(e) => setCliInput(e.target.value)}
-                  className="flex-grow bg-transparent text-[#00ff00] outline-none border-none p-0 focus:ring-0"
+                  className={`flex-grow bg-transparent outline-none border-none p-0 focus:ring-0 ${
+                    isDark ? 'text-[#00ff00]' : 'text-[#7c4f00]'
+                  }`}
                   placeholder="Type 'help' for commands..."
                 />
               </form>
