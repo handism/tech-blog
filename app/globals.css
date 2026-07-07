@@ -389,8 +389,8 @@ article.prose .mermaid {
 }
 
 article.prose .mermaid svg {
-  max-width: 100% !important;
-  height: auto !important;
+  max-width: 100%;
+  height: auto;
 }
 
 article.prose thead {
