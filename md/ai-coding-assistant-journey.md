@@ -9,6 +9,14 @@ image: ai-coding-assistant-journey-flatpop.webp
 個人開発におけるAIコーディングアシスタントの進化スピードは凄まじく、開発スタイルもそれに合わせて激変し続けています。  
 本記事では、私がこれまでに渡り歩いてきた **Claude Code** から **GitHub Copilot Pro**、そして現在愛用している **Google AI Pro（Antigravity）** に至るまでの課金と活用の変遷、さらに各ツールの具体的な設定や活用方法のノウハウを1つのストーリーとしてまとめました。
 
+```mermaid
+timeline
+    title AIコーディングアシスタント変遷記
+    2026年3月 : Claude Code : 自律エージェントの衝撃 / 豊富なコマンド / レート制限の壁
+    2026年4月 : GitHub Copilot Pro : コスパ重視 (10ドル) / GPT-5 mini等による無制限開発
+    現在 : Google AI Pro (Antigravity) : 高い推論能力 / 独自スキルの統合
+```
+
 ---
 
 ## 1. 黎明期：自律エージェントの衝撃と「Claude Code」
@@ -62,6 +70,16 @@ Claude Codeは対話型インターフェースに加え、強力なスラッシ
 2. 未コミットの変更に対し、`/review` ➔ `/security-review` ➔ `/simplify` ➔ `/lint` ➔ `/test-unit` の順で品質チェック。
 3. コミットメッセージを Copilot 等に自動生成させてコミット。
 4. デプロイ後に `/test-e2e` でPlaywright等による確認を行う。
+
+```mermaid
+graph TD
+    Plan[1. Plan Mode: 計画策定] --> Code[2. 実装 & リファクタリング]
+    Code --> Review[3. /review /security-review]
+    Review --> Test[4. /lint /test-unit]
+    Test --> Commit[5. コミットメッセージ自動生成 & コミット]
+    Commit --> E2E[6. デプロイ後 /test-e2e 検証]
+    E2E -->|次なる課題・機能追加| Plan
+```
 
 ### 避けて通れなかった「レート制限」の壁
 Claude Codeは非常に強力な一方、`/simplify` や長いコンテキストを抱えたやり取りを繰り返すと、消費トークンが激増します。結果として、**契約初週にしてすぐに週の利用制限（レート制限）に引っかかる** という大きな課題に直面しました。
