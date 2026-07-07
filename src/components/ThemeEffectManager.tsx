@@ -127,6 +127,8 @@ export default function ThemeEffectManager() {
       if (e.key === '`' && e.ctrlKey) {
         e.preventDefault();
         setCliOpen((prev) => !prev);
+      } else if (e.key === 'Escape') {
+        setCliOpen(false);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -363,7 +365,7 @@ export default function ThemeEffectManager() {
           {/* CLIトグルボタン */}
           <button
             onClick={() => setCliOpen(!cliOpen)}
-            className="fixed bottom-6 right-20 z-50 font-mono text-xs px-3 py-2 bg-[#050505] border border-[#00ff00] text-[#00ff00] rounded hover:bg-[#00ff00] hover:text-[#000] transition-colors shadow-lg"
+            className="fixed bottom-6 left-6 z-50 font-mono text-xs px-3 py-2 bg-[#050505] border border-[#00ff00] text-[#00ff00] rounded hover:bg-[#00ff00] hover:text-[#000] transition-colors shadow-lg"
             title="Toggle Console (Ctrl + \`)"
           >
             {cliOpen ? '_[CLOSE]' : '>_[CLI]'}
@@ -372,9 +374,9 @@ export default function ThemeEffectManager() {
           {/* スキャンラインオーバーレイ */}
           <div className="fixed inset-0 pointer-events-none z-50 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.12)_50%)] bg-[length:100%_4px] opacity-15" />
 
-          {/* CLIドロップダウンコンソール */}
+          {/* CLIスライドアップコンソール */}
           {cliOpen && (
-            <div className="fixed top-0 left-0 w-full h-[40vh] min-h-[300px] bg-[#050505] border-b-2 border-[#00ff00] text-[#00ff00] font-mono p-4 z-[60] flex flex-col shadow-2xl">
+            <div className="fixed bottom-0 left-0 w-full h-[40vh] min-h-[300px] bg-[#050505] border-t-2 border-[#00ff00] text-[#00ff00] font-mono p-4 z-[60] flex flex-col shadow-2xl">
               <div className="flex justify-between items-center border-b border-[#00ff00]/30 pb-2 mb-2 text-xs">
                 <span>ANTIGRAVITY SYSTEM TERMINAL</span>
                 <button onClick={() => setCliOpen(false)} className="hover:text-red-500">
