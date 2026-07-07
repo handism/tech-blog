@@ -1,8 +1,8 @@
 ---
 title: Gemma 2BでローカルなオンデバイスRAGアプリを作る
 date: 2026-06-15
-tags: [Android, RAG, Gemma, EdgeAI, SQLite]
-category: IT
+tags: [Android, AI]
+category: AI    
 image: local-rag-tuning-flatpop.webp
 ---
 

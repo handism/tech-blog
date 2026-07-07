@@ -87,6 +87,7 @@ export default function ToolsDashboard() {
           <input
             id="tool-search"
             type="text"
+            aria-label="ツール名や説明から検索"
             placeholder="ツール名や説明から検索..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}

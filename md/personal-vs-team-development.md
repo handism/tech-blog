@@ -1,7 +1,7 @@
 ---
 title: 個人開発とチーム開発の違い
 date: 2026-06-24
-tags: [Development, SoftwareEngineering]
+tags: [Development]
 category: IT
 image: personal-vs-team-development-flatpop.webp
 ---
