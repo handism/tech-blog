@@ -72,9 +72,30 @@ export default function ThemeEffectManager() {
   useEffect(() => {
     if (currentTheme !== 'three-d') return;
 
-    const cards = document.querySelectorAll('.theme-card');
+    let activeCard: HTMLElement | null = null;
 
-    const handleMouseMove = (e: MouseEvent, card: Element) => {
+    const resetCardStyle = (card: HTMLElement) => {
+      card.style.transform = '';
+      card.style.setProperty('--parallax-x', '0px');
+      card.style.setProperty('--parallax-y', '0px');
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target) return;
+
+      const card = target.closest('.theme-card') as HTMLElement | null;
+
+      // ホバーするカードが変わった場合の処理
+      if (card !== activeCard) {
+        if (activeCard) {
+          resetCardStyle(activeCard);
+        }
+        activeCard = card;
+      }
+
+      if (!card) return;
+
       const rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left; // マウスのカード内X座標
       const y = e.clientY - rect.top; // マウスのカード内Y座標
@@ -88,35 +109,33 @@ export default function ThemeEffectManager() {
       const tiltY = (px * 15).toFixed(1);
 
       // 内側の画像やテキストにもパララックスを効かせるため、カスタムプロパティを更新
-      const htmlCard = card as HTMLElement;
-      htmlCard.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
-      htmlCard.style.setProperty('--parallax-x', `${px * 12}px`);
-      htmlCard.style.setProperty('--parallax-y', `${py * 12}px`);
+      card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
+      card.style.setProperty('--parallax-x', `${px * 12}px`);
+      card.style.setProperty('--parallax-y', `${py * 12}px`);
     };
 
-    const handleMouseLeave = (card: Element) => {
-      const htmlCard = card as HTMLElement;
-      htmlCard.style.transform = '';
-      htmlCard.style.setProperty('--parallax-x', '0px');
-      htmlCard.style.setProperty('--parallax-y', '0px');
+    const handleMouseLeave = () => {
+      if (activeCard) {
+        resetCardStyle(activeCard);
+        activeCard = null;
+      }
     };
 
-    const listeners: { card: Element; move: EventListener; leave: EventListener }[] = [];
-
-    cards.forEach((card) => {
-      const moveListener: EventListener = (e) => handleMouseMove(e as MouseEvent, card);
-      const leaveListener: EventListener = () => handleMouseLeave(card);
-
-      card.addEventListener('mousemove', moveListener, { passive: true });
-      card.addEventListener('mouseleave', leaveListener);
-
-      listeners.push({ card, move: moveListener, leave: leaveListener });
-    });
+    document.addEventListener('mousemove', handleMouseMove, { passive: true });
+    document.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('blur', handleMouseLeave);
 
     return () => {
-      listeners.forEach(({ card, move, leave }) => {
-        card.removeEventListener('mousemove', move);
-        card.removeEventListener('mouseleave', leave);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('blur', handleMouseLeave);
+
+      if (activeCard) {
+        resetCardStyle(activeCard);
+      }
+      // 念のため、現在存在するすべての .theme-card をリセット
+      document.querySelectorAll('.theme-card').forEach((c) => {
+        resetCardStyle(c as HTMLElement);
       });
     };
   }, [currentTheme]);
