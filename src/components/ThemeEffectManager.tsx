@@ -308,18 +308,21 @@ export default function ThemeEffectManager() {
           {/* 3Dグリッド */}
           <div className="absolute bottom-0 left-0 w-full h-[40vh] [perspective:200px] overflow-hidden">
             <div
-              className="absolute inset-0 w-full h-[200%] origin-top bg-[linear-gradient(to_bottom,transparent,rgba(255,0,127,0.3))] border-t-2 border-[#ff007f]/30"
+              className="absolute inset-0 w-full h-[200%] origin-top border-t-2 border-[#ff007f]/30"
               style={{
                 backgroundImage: isDark
                   ? `
                   linear-gradient(to bottom, rgba(255, 0, 127, 0.2) 2px, transparent 2px),
-                  linear-gradient(to right, rgba(0, 240, 255, 0.2) 2px, transparent 2px)
+                  linear-gradient(to right, rgba(0, 240, 255, 0.2) 2px, transparent 2px),
+                  linear-gradient(to bottom, transparent, rgba(255, 0, 127, 0.3))
                 `
                   : `
                   linear-gradient(to bottom, rgba(255, 0, 127, 0.1) 2px, transparent 2px),
-                  linear-gradient(to right, rgba(14, 165, 233, 0.1) 2px, transparent 2px)
+                  linear-gradient(to right, rgba(14, 165, 233, 0.1) 2px, transparent 2px),
+                  linear-gradient(to bottom, transparent, rgba(255, 0, 127, 0.15))
                 `,
-                backgroundSize: '40px 40px',
+                backgroundSize: '40px 40px, 40px 40px, 100% 100%',
+                backgroundPosition: '0 0, 0 0, 0 0',
                 transform: 'rotateX(75deg)',
                 animation: 'synthwave-grid-scroll 3s linear infinite',
               }}
@@ -330,8 +333,8 @@ export default function ThemeEffectManager() {
             dangerouslySetInnerHTML={{
               __html: `
               @keyframes synthwave-grid-scroll {
-                0% { background-position: 0 0; }
-                100% { background-position: 0 40px; }
+                0% { background-position: 0 0, 0 0, 0 0; }
+                100% { background-position: 0 40px, 0 40px, 0 0; }
               }
             `,
             }}

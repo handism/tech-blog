@@ -172,7 +172,8 @@ html:not([data-theme]) .dark pre.shiki {
 [data-theme='neo-brutalism'] a.tag-link,
 [data-theme='neo-brutalism'] .post-card-meta a[href*='/blog/categories/'],
 [data-theme='neo-brutalism'] .post-header .not-prose a {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   transform: rotate(-1.5deg);
   transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
 }

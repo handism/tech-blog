@@ -56,12 +56,20 @@
   box-shadow: 4px 4px 10px #121721, -4px -4px 10px #242d3f !important;
 }
 
-[data-theme='neumorphism'] .theme-card,
-[data-theme='neumorphism'] .theme-card-hover:hover,
-[data-theme='neumorphism'] .theme-btn,
-[data-theme='neumorphism'] .theme-btn:hover,
+[data-theme='neumorphism'] .theme-card {
+  box-shadow: var(--theme-card-shadow) !important;
+}
+[data-theme='neumorphism'] .theme-card-hover:hover {
+  box-shadow: var(--theme-card-hover-shadow) !important;
+}
+[data-theme='neumorphism'] .theme-btn {
+  box-shadow: var(--theme-btn-shadow) !important;
+}
+[data-theme='neumorphism'] .theme-btn:hover {
+  box-shadow: var(--theme-btn-hover-shadow) !important;
+}
 [data-theme='neumorphism'] .theme-btn:active {
-  box-shadow: revert-layer;
+  box-shadow: var(--theme-btn-active-shadow) !important;
 }
 
 /* ヘッダーやナビゲーションもNeumorphicに統一 */
