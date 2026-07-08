@@ -281,11 +281,12 @@ export const toolsMenuItems: readonly ToolItem[] = [
     category: 'convert',
   },
   {
-    href: '/tools/url-codec',
-    label: 'URL Codec',
-    description: 'URLのクエリパラメータなどに用いる文字列のエンコード・デコード',
+    href: '/tools/url',
+    label: 'URL & Web Utilities',
+    description:
+      'URLエンコード/デコード、URL解析・再構築、UTMタグ作成、User Agent解析などのツール集',
     emoji: '🔗',
-    category: 'convert',
+    category: 'dev',
   },
   {
     href: '/tools/html-entity',
@@ -381,24 +382,10 @@ export const toolsMenuItems: readonly ToolItem[] = [
     category: 'dev',
   },
   {
-    href: '/tools/url-parser',
-    label: 'URL Parser & Query Inspector',
-    description: 'URLのホスト名、パス、クエリパラメータを個別に解析して一覧表示',
-    emoji: '🕵️',
-    category: 'dev',
-  },
-  {
     href: '/tools/text-case',
     label: 'Text Case Converter & Counter',
     description: '大文字・小文字などの変換および文字数・行数のリアルタイムカウント',
     emoji: '✍️',
-    category: 'dev',
-  },
-  {
-    href: '/tools/user-agent',
-    label: 'User Agent Parser',
-    description: 'ブラウザのUser Agent文字列からOSやブラウザ、デバイス情報を判定',
-    emoji: '💻',
     category: 'dev',
   },
   {
@@ -542,14 +529,6 @@ export const toolsMenuItems: readonly ToolItem[] = [
       'モックアップ作成に便利な指定サイズ・指定テキストのダミー画像（SVG / PNG）を一瞬で生成',
     emoji: '🖼️',
     category: 'image',
-  },
-  {
-    href: '/tools/utm-builder',
-    label: 'UTM Campaign URL Builder',
-    description:
-      'Google Analyticsなどのアクセス解析用キャンペーンURLパラメータを正確に組み立て、QRコードを自動生成',
-    emoji: '🔗',
-    category: 'dev',
   },
   // 外部ツール
   {
