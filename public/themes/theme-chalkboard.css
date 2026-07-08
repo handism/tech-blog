@@ -292,15 +292,27 @@ html[data-theme='chalkboard'] .dark .post-card-item .post-card-content {
   color: #3a3a3a !important;
 }
 
-/* メタ情報（日付・カテゴリ・タグ）のテキスト色を強制上書き */
-html[data-theme='chalkboard'].dark .post-card-item .post-card-meta *,
-html[data-theme='chalkboard'] .dark .post-card-item .post-card-meta * {
+/* メタ情報（日付・カテゴリ）のテキスト色を強制上書き（タグは背景があるので除外） */
+html[data-theme='chalkboard'].dark .post-card-item .post-card-meta *:not(a[href^='/blog/tags/']),
+html[data-theme='chalkboard'] .dark .post-card-item .post-card-meta *:not(a[href^='/blog/tags/']) {
   color: #4a4a4a !important;
 }
 
-html[data-theme='chalkboard'].dark .post-card-item .post-card-meta a:hover,
-html[data-theme='chalkboard'] .dark .post-card-item .post-card-meta a:hover {
+/* カテゴリリンクのホバー色 */
+html[data-theme='chalkboard'].dark .post-card-item .post-card-meta a[href^='/blog/categories/']:hover,
+html[data-theme='chalkboard'] .dark .post-card-item .post-card-meta a[href^='/blog/categories/']:hover {
   color: #c44545 !important;
+}
+
+/* タグリンク（TagLink）はサイドバーのタグと配色を合わせる */
+html[data-theme='chalkboard'].dark .post-card-item .post-card-meta a[href^='/blog/tags/'],
+html[data-theme='chalkboard'] .dark .post-card-item .post-card-meta a[href^='/blog/tags/'] {
+  color: #f0ece0 !important;
+}
+
+html[data-theme='chalkboard'].dark .post-card-item .post-card-meta a[href^='/blog/tags/']:hover,
+html[data-theme='chalkboard'] .dark .post-card-item .post-card-meta a[href^='/blog/tags/']:hover {
+  color: #f0e68c !important;
 }
 
 /* タイトルホバー時にチョークの手書き星が出現 */
