@@ -1,8 +1,8 @@
+// src/components/tools/css/CssGradient.tsx
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
 import {
-  Paintbrush,
   Copy,
   Check,
   Download,
@@ -13,7 +13,6 @@ import {
   Move,
   RotateCw,
 } from 'lucide-react';
-import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 interface ColorStop {
@@ -31,9 +30,9 @@ interface MeshPoint {
   opacity: number; // 0 - 1
 }
 
-export default function CssGradientTool() {
+export default function CssGradient() {
   const [gradientType, setGradientType] = useState<'linear' | 'radial' | 'mesh'>('linear');
-  const { copied, copy } = useCopyToClipboard();
+  const { copy } = useCopyToClipboard();
   const [copiedType, setCopiedType] = useState<string>('');
   const [isAppliedToSite, setIsAppliedToSite] = useState<boolean>(false);
   const originalBackgroundRef = useRef<string>('');
@@ -226,13 +225,10 @@ export default function CssGradientTool() {
     if (!ctx) return;
 
     if (gradientType === 'linear') {
-      // 線形グラデーション
-      // 角度をラジアンに変換して始点終点を計算
       const angleRad = (angle * Math.PI) / 180;
       const width = canvas.width;
       const height = canvas.height;
 
-      // 中心から外周へのベクトル長
       const length = Math.abs(width * Math.sin(angleRad)) + Math.abs(height * Math.cos(angleRad));
       const halfLength = length / 2;
 
@@ -251,13 +247,11 @@ export default function CssGradientTool() {
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
     } else if (gradientType === 'radial') {
-      // 放射状グラデーション
       const width = canvas.width;
       const height = canvas.height;
       const cx = (posX / 100) * width;
       const cy = (posY / 100) * height;
 
-      // 簡易的に最大距離を半径とする
       const maxDist = Math.max(cx, width - cx, cy, height - cy);
       const r1 = shape === 'circle' ? maxDist : maxDist * 1.5;
 
@@ -268,15 +262,12 @@ export default function CssGradientTool() {
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
     } else {
-      // メッシュグラデーション
       const width = canvas.width;
       const height = canvas.height;
 
-      // 暗めのベース色でクリア
       ctx.fillStyle = '#0a0a14';
       ctx.fillRect(0, 0, width, height);
 
-      // 各 radial gradient を重ね合わせる
       meshPoints.forEach((p) => {
         const px = (p.x / 100) * width;
         const py = (p.y / 100) * height;
@@ -291,7 +282,6 @@ export default function CssGradientTool() {
       });
     }
 
-    // ダウンロード実行
     const link = document.createElement('a');
     link.download = `gradient-${gradientType}-${Date.now()}.png`;
     link.href = canvas.toDataURL('image/png');
@@ -301,11 +291,7 @@ export default function CssGradientTool() {
   const activePoint = meshPoints.find((p) => p.id === activeMeshPointId) || meshPoints[0];
 
   return (
-    <ToolPageLayout
-      title="CSS Gradient & Mesh Generator"
-      description="直感的な操作で美しい線形、放射状、そして複数の色を滑らかに融合させるトレンドの「メッシュグラデーション」を生成できます。作成したグラデーションはサイト全体の背景としてその場でテスト適用可能です。"
-      icon={Paintbrush}
-    >
+    <div className="space-y-6">
       {/* サイトプレビュー適用時の通知バナー */}
       {isAppliedToSite && (
         <div className="bg-accent/15 border-2 border-accent text-text p-4 rounded-2xl flex items-center justify-between text-xs font-bold shadow-sm animate-pulse mb-4">
@@ -353,7 +339,7 @@ export default function CssGradientTool() {
           {/* メインプレビューコンテナ */}
           <div
             ref={meshContainerRef}
-            className="border-3 border-border rounded-3xl min-h-[380px] shadow-[4px_4px_0px_0px_var(--border)] dark:shadow-[4px_4px_0px_0px_var(--accent)] relative overflow-hidden flex items-center justify-center bg-slate-950"
+            className="border-3 border-border rounded-3xl min-h-[380px] shadow-[4px_4px_0px_0px_var(--border)] relative overflow-hidden flex items-center justify-center bg-slate-950"
             style={{
               backgroundImage: gradientType === 'mesh' ? undefined : cssValue,
             }}
@@ -438,7 +424,7 @@ export default function CssGradientTool() {
                   onClick={() => handleCopy(fullCssDeclaration, 'css')}
                   className="p-1 px-2.5 rounded-lg border border-slate-700 bg-slate-800 text-[10px] text-slate-200 hover:text-white flex items-center gap-1 cursor-pointer transition-colors"
                 >
-                  {copied && copiedType === 'css' ? (
+                  {copiedType === 'css' ? (
                     <>
                       <Check className="w-3 h-3 text-green-400" />
                       <span className="text-green-400 font-bold">Copied!</span>
@@ -468,7 +454,7 @@ export default function CssGradientTool() {
                   }
                   className="p-1 px-2.5 rounded-lg border border-slate-700 bg-slate-800 text-[10px] text-slate-200 hover:text-white flex items-center gap-1 cursor-pointer transition-colors"
                 >
-                  {copied && copiedType === 'var' ? (
+                  {copiedType === 'var' ? (
                     <>
                       <Check className="w-3 h-3 text-green-400" />
                       <span className="text-green-400 font-bold">Copied!</span>
@@ -490,7 +476,7 @@ export default function CssGradientTool() {
 
         {/* 右側：コントロールパネル (5列) */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="theme-card p-6 bg-card border-2 border-border shadow-[4px_4px_0px_0px_var(--border)] dark:shadow-[4px_4px_0px_0px_var(--accent)]">
+          <div className="theme-card p-6 bg-card border-2 border-border shadow-[4px_4px_0px_0px_var(--border)]">
             <h3 className="font-black text-sm border-b-2 border-border pb-3 mb-5 text-text">
               グラデーションパラメータ設定
             </h3>
@@ -532,7 +518,7 @@ export default function CssGradientTool() {
                         <select
                           value={shape}
                           onChange={(e) => setShape(e.target.value as 'circle' | 'ellipse')}
-                          className="w-full bg-secondary border border-border rounded-xl px-2 py-2 text-xs text-text focus:outline-none"
+                          className="w-full bg-secondary border-2 border-border rounded-xl px-2 py-2 text-xs text-text focus:outline-none"
                         >
                           <option value="circle">円形 (Circle)</option>
                           <option value="ellipse">楕円形 (Ellipse)</option>
@@ -701,7 +687,7 @@ export default function CssGradientTool() {
                             onChange={(e) =>
                               updateMeshPoint(activePoint.id, { color: e.target.value })
                             }
-                            className="w-full bg-card border border-border rounded-lg px-2 py-1 text-xs font-mono uppercase focus:outline-none"
+                            className="w-full bg-card border border-border rounded-lg px-2 py-1 text-xs font-mono uppercase focus:outline-none text-text"
                           />
                         </div>
                       </div>
@@ -710,7 +696,7 @@ export default function CssGradientTool() {
                       <div>
                         <div className="flex justify-between text-[10px] font-bold text-text/60 mb-1">
                           <span>影響範囲 (Radius)</span>
-                          <span className="font-mono">{activePoint.radius}%</span>
+                          <span className="font-mono text-text">{activePoint.radius}%</span>
                         </div>
                         <input
                           type="range"
@@ -730,7 +716,7 @@ export default function CssGradientTool() {
                       <div>
                         <div className="flex justify-between text-[10px] font-bold text-text/60 mb-1">
                           <span>位置 X</span>
-                          <span className="font-mono">{activePoint.x}%</span>
+                          <span className="font-mono text-text">{activePoint.x}%</span>
                         </div>
                         <input
                           type="range"
@@ -746,7 +732,7 @@ export default function CssGradientTool() {
                       <div>
                         <div className="flex justify-between text-[10px] font-bold text-text/60 mb-1">
                           <span>位置 Y</span>
-                          <span className="font-mono">{activePoint.y}%</span>
+                          <span className="font-mono text-text">{activePoint.y}%</span>
                         </div>
                         <input
                           type="range"
@@ -765,7 +751,9 @@ export default function CssGradientTool() {
                     <div>
                       <div className="flex justify-between text-[10px] font-bold text-text/60 mb-1">
                         <span>不透明度 (Opacity)</span>
-                        <span className="font-mono">{Math.round(activePoint.opacity * 100)}%</span>
+                        <span className="font-mono text-text">
+                          {Math.round(activePoint.opacity * 100)}%
+                        </span>
                       </div>
                       <input
                         type="range"
@@ -786,6 +774,6 @@ export default function CssGradientTool() {
           </div>
         </div>
       </div>
-    </ToolPageLayout>
+    </div>
   );
 }

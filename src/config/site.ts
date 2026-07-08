@@ -333,10 +333,11 @@ export const toolsMenuItems: readonly ToolItem[] = [
     category: 'dev',
   },
   {
-    href: '/tools/cubic-bezier',
-    label: 'CSS Cubic-Bezier Visualizer',
-    description: 'ドラッグや数値指定でイージングカーブを視覚的に編集し、トランジションコードを生成',
-    emoji: '📈',
+    href: '/tools/css',
+    label: 'CSS & Design Toolkit',
+    description:
+      'グラデーション・メッシュ作成、Glassmorphism・Shadow生成、単位変換、Cubic-Bezier調整などのツール集',
+    emoji: '🎨',
     category: 'dev',
   },
   {
@@ -389,13 +390,6 @@ export const toolsMenuItems: readonly ToolItem[] = [
     category: 'dev',
   },
   {
-    href: '/tools/css-generator',
-    label: 'CSS Generator',
-    description: 'Glassmorphismや美しい極上の影（box-shadow）を直感的に生成',
-    emoji: '💎',
-    category: 'dev',
-  },
-  {
     href: '/tools/color-contrast',
     label: 'Color Contrast & Palette',
     description: 'WCAGに基づいた色のコントラスト比判定と配色パレットの自動作成',
@@ -428,13 +422,6 @@ export const toolsMenuItems: readonly ToolItem[] = [
     label: 'Curl to Code Converter',
     description: 'CurlリクエストをFetch、Axios、Python等マルチ言語のコードに相互変換',
     emoji: '🚀',
-    category: 'dev',
-  },
-  {
-    href: '/tools/css-unit',
-    label: 'CSS Unit Converter',
-    description: 'px, rem, em, vw, vh などのWeb開発で頻出する各種単位をリアルタイム相互変換',
-    emoji: '📏',
     category: 'dev',
   },
   {
@@ -505,14 +492,6 @@ export const toolsMenuItems: readonly ToolItem[] = [
       '25分の作業と5分の休憩を繰り返す、テーマ連動・音響効果付きポモドーロ・フォーカスタイマー',
     emoji: '⏱️',
     category: 'dev',
-  },
-  {
-    href: '/tools/css-gradient',
-    label: 'CSS Gradient & Mesh Generator',
-    description:
-      '美しいグラデーションや複雑なメッシュグラデーションを直感的に生成し、サイト全体にプレビュー可能',
-    emoji: '🎨',
-    category: 'image',
   },
   {
     href: '/tools/markdown-editor',
