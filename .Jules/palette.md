@@ -1,0 +1,1 @@
+## 2026-07-08 - [Pomodoro Timer Delete Button Accessibility]\n**Learning:** Added an aria-label to the icon-only trash button in the Pomodoro timer history section.\n**Action:** Remember to check icon-only buttons for aria-labels to ensure screen reader accessibility.

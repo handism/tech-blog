@@ -699,6 +699,7 @@ export default function PomodoroTool() {
                   onClick={clearHistory}
                   className="p-1 rounded-lg hover:bg-secondary text-text/40 hover:text-red-500 transition-colors cursor-pointer"
                   title="履歴を削除"
+                  aria-label="履歴を削除"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
