@@ -344,9 +344,10 @@ export const toolsMenuItems: readonly ToolItem[] = [
     category: 'dev',
   },
   {
-    href: '/tools/color-converter',
-    label: 'Color Converter',
-    description: 'HEX, RGB, HSL, CMYKなどのカラーコードを相互に変換',
+    href: '/tools/color',
+    label: 'Color Utilities',
+    description:
+      'HEX/RGB/HSLコードの相互変換、WCAG基準のコントラスト比判定、および配色パレット生成ツール集',
     emoji: '🌈',
     category: 'dev',
   },
@@ -383,13 +384,6 @@ export const toolsMenuItems: readonly ToolItem[] = [
     label: 'Text Case Converter & Counter',
     description: '大文字・小文字などの変換および文字数・行数のリアルタイムカウント',
     emoji: '✍️',
-    category: 'dev',
-  },
-  {
-    href: '/tools/color-contrast',
-    label: 'Color Contrast & Palette',
-    description: 'WCAGに基づいた色のコントラスト比判定と配色パレットの自動作成',
-    emoji: '🎨',
     category: 'dev',
   },
   {
