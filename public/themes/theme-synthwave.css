@@ -7,7 +7,7 @@
   --color-text: #2e1049;
   --color-border: #ff007f;
   --color-accent: #0ea5e9;
-  --theme-font-sans: 'Orbitron', 'Space Grotesk', system-ui, sans-serif;
+  --font-sans: 'Orbitron', 'Space Grotesk', system-ui, sans-serif;
 
   --theme-card-border-width: 2px;
   --theme-card-radius: 8px;
