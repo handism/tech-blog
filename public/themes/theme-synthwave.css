@@ -7,7 +7,7 @@
   --color-text: #2e1049;
   --color-border: #ff007f;
   --color-accent: #0ea5e9;
-  --font-sans: 'Orbitron', 'Space Grotesk', system-ui, sans-serif;
+  --font-sans: 'Rajdhani', 'Space Grotesk', system-ui, sans-serif;
 
   --theme-card-border-width: 2px;
   --theme-card-radius: 8px;
@@ -22,7 +22,7 @@
   --theme-btn-shadow: 3px 3px 0px 0px var(--color-border);
   --theme-btn-bg: linear-gradient(135deg, #ff007f 0%, #7f00ff 100%);
   --theme-btn-color: #ffffff;
-  --theme-btn-font-family: 'Orbitron', sans-serif;
+  --theme-btn-font-family: 'Rajdhani', sans-serif;
   --theme-btn-text-transform: uppercase;
   --theme-btn-letter-spacing: 0.05em;
   --theme-btn-hover-transform: translate(-1px, -1px);
@@ -70,7 +70,7 @@ html[data-theme='synthwave'] .dark body,
 [data-theme='synthwave'] h1,
 [data-theme='synthwave'] h2,
 [data-theme='synthwave'] h3 {
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Rajdhani', sans-serif;
 }
 
 html[data-theme='synthwave'].dark h1,
