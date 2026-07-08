@@ -1,3 +1,5 @@
+// src/components/tools/git/GitUseCases.ts
+
 export interface Param {
   key: string;
   label: string;

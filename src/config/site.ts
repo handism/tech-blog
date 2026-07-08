@@ -306,9 +306,10 @@ export const toolsMenuItems: readonly ToolItem[] = [
     category: 'dev',
   },
   {
-    href: '/tools/git-commit-helper',
-    label: 'Git Commit & Branch Helper',
-    description: 'Conventional Commitsに準拠したコミットメッセージとGitコマンドの自動生成',
+    href: '/tools/git',
+    label: 'Git Utilities',
+    description:
+      'Conventional Commits準拠のメッセージ生成、およびやりたいことからGitコマンドを生成するツール集',
     emoji: '🌱',
     category: 'dev',
   },
@@ -403,13 +404,6 @@ export const toolsMenuItems: readonly ToolItem[] = [
     label: 'Bitwise & Radix Converter',
     description: '進数変換とビット操作（トグル切替）や基本的なビット演算の可視化',
     emoji: '🔢',
-    category: 'dev',
-  },
-  {
-    href: '/tools/git-helper',
-    label: 'Git Command Helper',
-    description: 'やりたいことから最適なGitコマンドを生成しパラメータも動的入力',
-    emoji: '🌱',
     category: 'dev',
   },
   {
