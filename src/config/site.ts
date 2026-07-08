@@ -258,9 +258,10 @@ export const toolsMenuItems: readonly ToolItem[] = [
     category: 'convert',
   },
   {
-    href: '/tools/json-generator',
-    label: 'Mock JSON Data Generator',
-    description: 'UUID、名前、メールなどダミーデータのスキーマを定義し、テスト用JSONを一括生成',
+    href: '/tools/data-json',
+    label: 'Data & JSON Toolkit',
+    description:
+      'JSON整形・比較・ダミー生成、YAML/CSV変換、TypeScript型生成、SQL整形などのデータユーティリティ集',
     emoji: '📊',
     category: 'convert',
   },
@@ -269,20 +270,6 @@ export const toolsMenuItems: readonly ToolItem[] = [
     label: 'Timezone Converter',
     description: '複数のタイムゾーンと現地時間を一覧比較・双方向変換',
     emoji: '🌐',
-    category: 'convert',
-  },
-  {
-    href: '/tools/json-formatter',
-    label: 'JSON Formatter',
-    description: 'JSONデータをきれいに整形・ミニファイし、構文エラー箇所を検出',
-    emoji: '✨',
-    category: 'convert',
-  },
-  {
-    href: '/tools/yaml-json',
-    label: 'YAML ↔ JSON',
-    description: 'YAML形式とJSON形式のデータをブラウザ上で双方向に相互変換',
-    emoji: '🔄',
     category: 'convert',
   },
   {
@@ -314,13 +301,6 @@ export const toolsMenuItems: readonly ToolItem[] = [
     category: 'convert',
   },
   {
-    href: '/tools/csv-json',
-    label: 'CSV ↔ JSON',
-    description: '表形式のCSVデータと構造化されたJSONデータを双方向に変換',
-    emoji: '📊',
-    category: 'convert',
-  },
-  {
     href: '/tools/password-generator',
     label: 'Password Generator',
     description: '長さや使用文字種をカスタマイズして安全なランダムパスワードを生成',
@@ -328,24 +308,10 @@ export const toolsMenuItems: readonly ToolItem[] = [
     category: 'convert',
   },
   {
-    href: '/tools/json-to-ts',
-    label: 'JSON to TypeScript / Zod',
-    description: 'JSONオブジェクトからTypeScriptの型定義やZodのバリデーションスキーマを自動生成',
-    emoji: '🏷️',
-    category: 'convert',
-  },
-  {
     href: '/tools/svg-to-css',
     label: 'SVG to CSS Converter',
     description: 'SVGコードをCSS背景画像用URL (Data URI/Base64) やJSX用に最適化・相互変換',
     emoji: '🎨',
-    category: 'convert',
-  },
-  {
-    href: '/tools/json-diff',
-    label: 'JSON Diff Comparer',
-    description: '2つのJSONデータを構造的に比較し、キー順を正規化したうえで差分を色分け表示',
-    emoji: '🆚',
     category: 'convert',
   },
   // エンジニアツール
@@ -446,13 +412,6 @@ export const toolsMenuItems: readonly ToolItem[] = [
     label: 'URL Parser & Query Inspector',
     description: 'URLのホスト名、パス、クエリパラメータを個別に解析して一覧表示',
     emoji: '🕵️',
-    category: 'dev',
-  },
-  {
-    href: '/tools/sql-formatter',
-    label: 'SQL Formatter',
-    description: '読みづらいSQLクエリをキーワードごとにきれいにインデント整形',
-    emoji: '🗄️',
     category: 'dev',
   },
   {
