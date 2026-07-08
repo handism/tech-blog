@@ -1,4 +1,5 @@
-// HTTPステータスコード定義の型
+// src/components/tools/network/HttpStatusData.ts
+
 export interface HttpStatusCode {
   code: number;
   phrase: string;
@@ -10,7 +11,6 @@ export interface HttpStatusCode {
   mdnUrl: string;
 }
 
-// HTTPステータスコードデータ
 export const HTTP_STATUS_CODES: HttpStatusCode[] = [
   // 1xx Informational
   {
@@ -82,7 +82,7 @@ export const HTTP_STATUS_CODES: HttpStatusCode[] = [
     phrase: 'Accepted',
     category: '2xx',
     description:
-      'リクエストは受け入れられましたが、まだ処理が完了していない（非同期処理）ことを示します。',
+      'リクエストは受け入れられましたが、まだ処理が完了していない（非异步処理）ことを示します。',
     details:
       'バッチ処理やキューにタスクを登録するような、完了まで時間がかかるバックグラウンド処理を開始するAPIで返されます。',
     mockResponse:

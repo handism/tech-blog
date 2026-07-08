@@ -1,6 +1,6 @@
+// src/components/tools/network/HttpTester.tsx
 'use client';
 
-import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useState } from 'react';
 import { Send, Plus, Trash2, Clipboard, Check, HelpCircle, AlertTriangle } from 'lucide-react';
 import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
@@ -11,7 +11,7 @@ interface HeaderItem {
   value: string;
 }
 
-export default function HttpTesterPage() {
+export default function HttpTester() {
   const [url, setUrl] = useState('https://jsonplaceholder.typicode.com/todos/1');
   const [method, setMethod] = useState<'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH'>('GET');
   const [headers, setHeaders] = useState<HeaderItem[]>([
@@ -125,19 +125,15 @@ export default function HttpTesterPage() {
   };
 
   return (
-    <ToolPageLayout
-      title="HTTP Request Tester"
-      description="ブラウザのFetch APIを用いて、各種APIへのリクエストを送信してレスポンスを確認します。"
-      icon={Send}
-    >
+    <div className="space-y-6 text-text">
       {/* CORS注意喚起アラート */}
-      <div className="p-4 bg-amber-50 dark:bg-amber-950/20 border-3 border-amber-500 rounded-2xl flex items-start gap-3 mb-8">
+      <div className="p-4 bg-amber-50 dark:bg-amber-950/20 border-2 border-amber-500 text-amber-800 dark:text-amber-300 rounded-2xl flex items-start gap-3 mb-6 shadow-sm">
         <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
-        <div className="text-xs md:text-sm font-bold text-amber-800 dark:text-amber-300 space-y-1">
+        <div className="text-xs md:text-sm font-bold space-y-1">
           <p>⚠️ CORS（オリジン間リソース共有）に関する重要なお知らせ</p>
-          <p className="font-medium">
+          <p className="font-medium opacity-90">
             本ツールは完全にブラウザ側（クライアントサイド）からリクエストを送信します。
-            リクエスト先サーバーが CORS を許可していない（`Access-Control-Allow-Origin`
+            リクエスト先サーバーが CORS を許可していない（Access-Control-Allow-Origin
             ヘッダーが未付与、または本サイトが許可されていない）場合、ブラウザセキュリティの制限によって通信がブロックされます。
           </p>
         </div>
@@ -146,19 +142,22 @@ export default function HttpTesterPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* リクエスト設定パネル */}
         <div className="lg:col-span-6 space-y-6">
-          <div className="theme-card p-5 md:p-6 space-y-5">
-            <div className="flex justify-between items-center border-b-2 border-border pb-2">
-              <h2 className="text-lg font-bold">📡 リクエスト構成</h2>
+          <div className="theme-card p-5 md:p-6 space-y-5 border-2 border-border bg-card shadow-[4px_4px_0px_0px_var(--border)]">
+            <div className="flex justify-between items-center border-b-2 border-border/20 pb-3">
+              <h2 className="text-base font-extrabold flex items-center gap-1.5">
+                <Send className="w-4 h-4 text-accent" />
+                <span>📡 リクエスト構成</span>
+              </h2>
               <div className="flex gap-2">
                 <button
                   onClick={() => handlePreset('get-todo')}
-                  className="theme-btn px-2.5 py-1 text-xs bg-secondary"
+                  className="theme-btn px-2.5 py-1 text-xs bg-secondary border-border shadow-[1.5px_1.5px_0px_0px_var(--border)] cursor-pointer"
                 >
                   GETデモ
                 </button>
                 <button
                   onClick={() => handlePreset('post-todo')}
-                  className="theme-btn px-2.5 py-1 text-xs bg-secondary"
+                  className="theme-btn px-2.5 py-1 text-xs bg-secondary border-border shadow-[1.5px_1.5px_0px_0px_var(--border)] cursor-pointer"
                 >
                   POSTデモ
                 </button>
@@ -170,7 +169,7 @@ export default function HttpTesterPage() {
               <select
                 value={method}
                 onChange={(e) => setMethod(e.target.value as typeof method)}
-                className="px-3 py-3 border-2 border-border rounded-xl font-bold bg-card text-text focus:outline-none cursor-pointer"
+                className="px-3 py-3 border-2 border-border rounded-xl font-bold bg-card text-text focus:outline-none focus:ring-1 focus:ring-accent cursor-pointer"
               >
                 <option value="GET">GET</option>
                 <option value="POST">POST</option>
@@ -183,17 +182,19 @@ export default function HttpTesterPage() {
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 placeholder="https://api.example.com/endpoint"
-                className="flex-1 px-4 py-3 border-2 border-border rounded-xl font-mono text-sm bg-card text-text focus:outline-none"
+                className="flex-1 px-4 py-3 border-2 border-border rounded-xl font-mono text-sm bg-card text-text focus:outline-none focus:ring-1 focus:ring-accent shadow-inner"
               />
             </div>
 
             {/* Headers */}
             <div className="space-y-3">
               <div className="flex justify-between items-center">
-                <span className="text-sm font-bold">🔑 リクエストヘッダー</span>
+                <span className="text-xs font-black text-text/60 uppercase tracking-wider">
+                  🔑 リクエストヘッダー
+                </span>
                 <button
                   onClick={handleAddHeader}
-                  className="theme-btn p-1.5 bg-secondary text-text"
+                  className="theme-btn p-1.5 bg-secondary border-border shadow-[1px_1px_0px_0px_var(--border)] cursor-pointer"
                   title="ヘッダー行を追加"
                 >
                   <Plus className="w-4 h-4" />
@@ -208,25 +209,25 @@ export default function HttpTesterPage() {
                       placeholder="Header-Name"
                       value={header.key}
                       onChange={(e) => handleHeaderChange(header.id, 'key', e.target.value)}
-                      className="w-1/2 px-3 py-1.5 border-2 border-border rounded-lg text-xs font-mono bg-card"
+                      className="w-1/2 px-3 py-1.5 border border-border/70 rounded-lg text-xs font-mono bg-card text-text"
                     />
                     <input
                       type="text"
                       placeholder="value"
                       value={header.value}
                       onChange={(e) => handleHeaderChange(header.id, 'value', e.target.value)}
-                      className="w-1/2 px-3 py-1.5 border-2 border-border rounded-lg text-xs font-mono bg-card"
+                      className="w-1/2 px-3 py-1.5 border border-border/70 rounded-lg text-xs font-mono bg-card text-text"
                     />
                     <button
                       onClick={() => handleRemoveHeader(header.id)}
-                      className="p-1.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 rounded-lg"
+                      className="p-1.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/20 rounded-lg cursor-pointer"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
                 ))}
                 {headers.length === 0 && (
-                  <p className="text-xs font-medium text-text/50 py-2">
+                  <p className="text-xs font-bold text-text/40 py-2">
                     ヘッダーは設定されていません。
                   </p>
                 )}
@@ -236,9 +237,11 @@ export default function HttpTesterPage() {
             {/* Request Body */}
             {method !== 'GET' && (
               <div className="space-y-2">
-                <span className="text-sm font-bold">📦 リクエストボディ</span>
+                <span className="text-xs font-black text-text/60 uppercase tracking-wider">
+                  📦 リクエストボディ
+                </span>
                 <textarea
-                  className="w-full h-[150px] p-3 border-2 border-border rounded-xl font-mono text-xs bg-card text-text focus:outline-none resize-none"
+                  className="w-full h-[150px] p-3 border-2 border-border rounded-xl font-mono text-xs bg-card text-text focus:outline-none focus:ring-1 focus:ring-accent resize-none shadow-inner"
                   value={reqBody}
                   onChange={(e) => setReqBody(e.target.value)}
                   placeholder="リクエストのJSONデータを入力..."
@@ -250,7 +253,7 @@ export default function HttpTesterPage() {
             <button
               onClick={handleSend}
               disabled={loading}
-              className="w-full theme-btn py-3 bg-accent text-white font-extrabold cursor-pointer disabled:opacity-50"
+              className="w-full theme-btn py-3 bg-accent text-white border-accent font-extrabold cursor-pointer disabled:opacity-50 shadow-[3px_3px_0px_0px_var(--border)] active:translate-y-1 active:shadow-none"
             >
               {loading ? '送信中...' : 'リクエスト送信 🚀'}
             </button>
@@ -259,12 +262,12 @@ export default function HttpTesterPage() {
 
         {/* レスポンス結果パネル */}
         <div className="lg:col-span-6 space-y-6">
-          <div className="theme-card p-5 md:p-6 flex flex-col h-[520px]">
-            <h2 className="text-lg font-bold text-text mb-4 border-b-2 border-border pb-2 flex items-center justify-between">
+          <div className="theme-card p-5 md:p-6 flex flex-col h-[520px] border-2 border-border bg-card shadow-[4px_4px_0px_0px_var(--border)]">
+            <h2 className="text-base font-extrabold text-text mb-4 border-b-2 border-border/20 pb-3 flex items-center justify-between">
               <span>📥 レスポンス</span>
               {resStatus !== null && (
                 <span
-                  className={`text-xs font-extrabold px-3 py-1 rounded-lg border-2 border-border ${
+                  className={`text-xs font-black px-3 py-1 rounded-lg border-2 border-border ${
                     resStatus >= 200 && resStatus < 300
                       ? 'bg-emerald-500 text-white'
                       : 'bg-rose-500 text-white'
@@ -277,14 +280,14 @@ export default function HttpTesterPage() {
 
             <div className="flex-1 flex flex-col min-h-0">
               {error ? (
-                <div className="p-4 bg-red-100 dark:bg-red-900/30 border-2 border-red-500 rounded-xl text-red-700 dark:text-red-300 text-sm font-bold whitespace-pre-line overflow-y-auto">
+                <div className="flex-1 p-4 bg-red-100 dark:bg-red-900/30 border-2 border-red-500 rounded-xl text-red-700 dark:text-red-300 text-xs font-bold whitespace-pre-line overflow-y-auto shadow-inner leading-relaxed">
                   {error}
                 </div>
               ) : resBody ? (
                 <div className="flex-1 flex flex-col min-h-0 relative">
                   <button
                     onClick={handleCopy}
-                    className="absolute top-4 right-4 z-10 theme-btn p-2 bg-secondary text-text flex items-center justify-center"
+                    className="absolute top-4 right-4 z-10 theme-btn p-2 bg-secondary border-border text-text flex items-center justify-center cursor-pointer shadow-[1.5px_1.5px_0px_0px_var(--border)]"
                     title="コピー"
                   >
                     {copied ? (
@@ -295,8 +298,10 @@ export default function HttpTesterPage() {
                   </button>
                   <div className="flex-1 grid grid-rows-3 gap-4 min-h-0">
                     {/* レスポンスヘッダー */}
-                    <div className="row-span-1 border-2 border-border rounded-xl p-3 bg-card overflow-y-auto flex flex-col">
-                      <span className="text-xs font-extrabold mb-1.5 text-text/60">Headers</span>
+                    <div className="row-span-1 border-2 border-border rounded-xl p-3 bg-card overflow-y-auto flex flex-col shadow-inner">
+                      <span className="text-[10px] font-extrabold mb-1.5 text-text/50">
+                        Headers
+                      </span>
                       <pre className="font-mono text-[10px] whitespace-pre-wrap leading-relaxed text-text/85">
                         {Object.entries(resHeaders)
                           .map(([k, v]) => `${k}: ${v}`)
@@ -304,8 +309,8 @@ export default function HttpTesterPage() {
                       </pre>
                     </div>
                     {/* レスポンスボディ */}
-                    <div className="row-span-2 border-2 border-border rounded-xl p-3 bg-slate-950 text-slate-100 overflow-y-auto">
-                      <span className="text-xs font-extrabold mb-1.5 text-slate-400 block">
+                    <div className="row-span-2 border-2 border-border rounded-xl p-3 bg-slate-950 text-slate-100 overflow-y-auto shadow-inner select-all leading-normal">
+                      <span className="text-[10px] font-extrabold mb-1.5 text-slate-400 block">
                         Body
                       </span>
                       <pre className="font-mono text-xs whitespace-pre-wrap">{resBody}</pre>
@@ -313,8 +318,8 @@ export default function HttpTesterPage() {
                   </div>
                 </div>
               ) : (
-                <div className="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-border/40 rounded-xl text-text/40 font-bold p-8 text-center text-sm">
-                  <HelpCircle className="w-8 h-8 mb-2 opacity-50" />
+                <div className="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-border/40 rounded-xl text-text/40 font-bold p-8 text-center text-xs shadow-inner">
+                  <HelpCircle className="w-8 h-8 mb-2 opacity-50 text-accent" />
                   リクエストを設定し「送信」ボタンを押すと、ここに結果が表示されます。
                 </div>
               )}
@@ -322,6 +327,6 @@ export default function HttpTesterPage() {
           </div>
         </div>
       </div>
-    </ToolPageLayout>
+    </div>
   );
 }

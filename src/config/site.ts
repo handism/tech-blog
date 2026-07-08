@@ -320,10 +320,11 @@ export const toolsMenuItems: readonly ToolItem[] = [
     category: 'dev',
   },
   {
-    href: '/tools/security-headers',
-    label: 'HTTP Security Headers Generator',
-    description: 'CSPやHSTSなどのセキュリティヘッダーを生成し、各種Webサーバー用の設定を出力',
-    emoji: '🔒',
+    href: '/tools/network',
+    label: 'Web & Network Utilities',
+    description:
+      'HTTPリクエストテスト、HTTPステータスコード検索、セキュリティヘッダー生成、CIDR計算などの通信・ネットワークツール集',
+    emoji: '🌐',
     category: 'dev',
   },
   {
@@ -419,33 +420,11 @@ export const toolsMenuItems: readonly ToolItem[] = [
     category: 'dev',
   },
   {
-    href: '/tools/http-tester',
-    label: 'HTTP Request Tester',
-    description:
-      '任意のAPIリクエストを送信し、レスポンスヘッダーやJSONデータをブラウザ上で即時テスト',
-    emoji: '📡',
-    category: 'dev',
-  },
-  {
     href: '/tools/lorem-ipsum',
     label: 'Lorem Ipsum & Dummy Text',
     description:
       '段落数や文字数を指定して、レイアウト確認用のダミーテキスト（日本語・ラテン語）を瞬時に作成',
     emoji: '✍️',
-    category: 'dev',
-  },
-  {
-    href: '/tools/cidr-calculator',
-    label: 'IP Subnet & CIDR Calculator',
-    description: 'IPアドレスとCIDRプレフィックスからサブネット範囲やホスト可能数を即時算出・可視化',
-    emoji: '🔢',
-    category: 'dev',
-  },
-  {
-    href: '/tools/http-status',
-    label: 'HTTP Status Code Explorer',
-    description: 'すべてのHTTPステータスコード（100〜599）の意味や解説をクイック検索・検証',
-    emoji: '📡',
     category: 'dev',
   },
   {
