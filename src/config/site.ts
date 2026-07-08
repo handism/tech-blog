@@ -251,11 +251,12 @@ export const toolsMenuItems: readonly ToolItem[] = [
   },
   // データ変換
   {
-    href: '/tools/html-to-jsx',
-    label: 'HTML to JSX Converter',
-    description: '通常のHTMLコードをReact/Next.jsでそのまま使えるJSX/TSX形式に自動変換',
-    emoji: '🏷️',
-    category: 'convert',
+    href: '/tools/markup',
+    label: 'Markup & Markdown Editor',
+    description:
+      'Markdownエディタ/テーブル作成、HTMLからJSXへの変換、HTML実体参照エスケープなどのツール集',
+    emoji: '📝',
+    category: 'dev',
   },
   {
     href: '/tools/data-json',
@@ -287,13 +288,6 @@ export const toolsMenuItems: readonly ToolItem[] = [
       'URLエンコード/デコード、URL解析・再構築、UTMタグ作成、User Agent解析などのツール集',
     emoji: '🔗',
     category: 'dev',
-  },
-  {
-    href: '/tools/html-entity',
-    label: 'HTML Entity Encoder / Decoder',
-    description: 'HTML特殊文字とエスケープシーケンスの相互変換',
-    emoji: '🔤',
-    category: 'convert',
   },
   {
     href: '/tools/svg-to-css',
@@ -441,14 +435,6 @@ export const toolsMenuItems: readonly ToolItem[] = [
     category: 'dev',
   },
   {
-    href: '/tools/markdown-table',
-    label: 'Markdown Table Editor',
-    description:
-      'スプレッドシート風のGUIで行列を編集し、Markdown形式の表コードを動的に構築・パース',
-    emoji: '📋',
-    category: 'dev',
-  },
-  {
     href: '/tools/cidr-calculator',
     label: 'IP Subnet & CIDR Calculator',
     description: 'IPアドレスとCIDRプレフィックスからサブネット範囲やホスト可能数を即時算出・可視化',
@@ -491,14 +477,6 @@ export const toolsMenuItems: readonly ToolItem[] = [
     description:
       '25分の作業と5分の休憩を繰り返す、テーマ連動・音響効果付きポモドーロ・フォーカスタイマー',
     emoji: '⏱️',
-    category: 'dev',
-  },
-  {
-    href: '/tools/markdown-editor',
-    label: 'Markdown Live Editor',
-    description:
-      'Markdownの入力から本サイトの各テーマに応じたスタイルでリアルタイムプレビュー・PDF出力',
-    emoji: '📝',
     category: 'dev',
   },
   {

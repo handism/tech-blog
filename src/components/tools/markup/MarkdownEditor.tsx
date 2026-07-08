@@ -1,8 +1,8 @@
+// src/components/tools/markup/MarkdownEditor.tsx
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import {
-  FileText,
   Copy,
   Check,
   Download,
@@ -14,7 +14,6 @@ import {
   Printer,
   List,
 } from 'lucide-react';
-import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useThemeDesign } from '@/src/components/ThemeDesignProvider';
 
 // Unified 関連モジュールをインポート
@@ -37,7 +36,6 @@ interface TocItem {
 
 /**
  * コードブロックの pre/code タグに data-attributes を付与する Rehype プラグイン。
- * モジュールトップレベルで定義して毎レンダリング時の再生成を防ぐ。
  */
 function rehypeCodeMeta() {
   return (tree: HastRoot) => {
@@ -109,14 +107,14 @@ console.log(greet("Antigravity"));
 「印刷 / PDF」ボタンを押すと、エディタ部分やヘッダーが自動的に隠れ、**プレビューエリアのみが綺麗に配置されたA4印刷用レイアウト**でPDFとして出力・印刷できます。
 `;
 
-export default function MarkdownEditorTool() {
+export default function MarkdownEditor() {
   const { currentTheme } = useThemeDesign();
   const [markdown, setMarkdown] = useState<string>('');
   const [html, setHtml] = useState<string>('');
   const [toc, setToc] = useState<TocItem[]>([]);
   const [viewMode, setViewMode] = useState<'split' | 'edit' | 'preview'>('split');
   const [showTocPanel, setShowTocPanel] = useState<boolean>(true);
-  const { copied, copy } = useCopyToClipboard();
+  const { copy } = useCopyToClipboard();
   const [copiedType, setCopiedType] = useState<string>('');
   const [isParsing, setIsParsing] = useState<boolean>(false);
 
@@ -127,7 +125,6 @@ export default function MarkdownEditorTool() {
   // Unified による Markdown パース
   const parseMarkdown = useCallback(async (rawText: string) => {
     try {
-      // 見出しから TOC (目次) を抽出する Rehype プラグイン（ローカル状態を参照するため関数内で定義）
       const tempToc: TocItem[] = [];
       const rehypeExtractToc = () => {
         return (tree: HastRoot) => {
@@ -257,11 +254,7 @@ export default function MarkdownEditorTool() {
   };
 
   return (
-    <ToolPageLayout
-      title="Markdown Live Editor"
-      description="Gfm対応のMarkdownエディタです。ブログと同じレンダリングエンジンを使用しているため、選択中のデザインテーマ別の見出し・引用・コードブロック装飾がそのままプレビューにリアルタイム反映されます。"
-      icon={FileText}
-    >
+    <div className="space-y-6">
       {/* 印刷用CSSの動的挿入 (PDF印刷時にプレビューのみを出力) */}
       <style>{`
         @media print {
@@ -281,7 +274,6 @@ export default function MarkdownEditorTool() {
             box-shadow: none;
             border: none;
           }
-          /* 不要な余白やスクロールバーを削除 */
           html, body {
             height: auto;
             background: white !important;
@@ -362,7 +354,7 @@ export default function MarkdownEditorTool() {
             onClick={() => handleCopy(markdown, 'md')}
             className="px-3 py-1.5 rounded-xl border border-border bg-card hover:bg-secondary text-text/80 text-xs font-bold flex items-center gap-1 cursor-pointer transition-all"
           >
-            {copied && copiedType === 'md' ? (
+            {copiedType === 'md' ? (
               <>
                 <Check className="w-3.5 h-3.5 text-green-500" />
                 <span className="text-green-500">コピー完了</span>
@@ -378,7 +370,7 @@ export default function MarkdownEditorTool() {
             onClick={() => handleCopy(html, 'html')}
             className="px-3 py-1.5 rounded-xl border border-border bg-card hover:bg-secondary text-text/80 text-xs font-bold flex items-center gap-1 cursor-pointer transition-all"
           >
-            {copied && copiedType === 'html' ? (
+            {copiedType === 'html' ? (
               <>
                 <Check className="w-3.5 h-3.5 text-green-500" />
                 <span className="text-green-500">コピー完了</span>
@@ -443,7 +435,6 @@ export default function MarkdownEditorTool() {
                 onScroll={() => handleScroll('preview')}
                 className="flex-1 overflow-y-auto p-6 md:p-8 min-h-[450px]"
               >
-                {/* ブログと同じテーマスタイルのために data-theme={currentTheme} を適用 */}
                 <article
                   data-theme={currentTheme}
                   className="prose prose-stone dark:prose-invert max-w-none break-words leading-relaxed"
@@ -461,7 +452,7 @@ export default function MarkdownEditorTool() {
         {/* 右側：目次（TOC）パネル (3列) */}
         {showTocPanel && (
           <div className="lg:col-span-3">
-            <div className="theme-card p-5 bg-card border-2 border-border shadow-[4px_4px_0px_0px_var(--border)] dark:shadow-[4px_4px_0px_0px_var(--accent)] h-full min-h-[250px] flex flex-col">
+            <div className="theme-card p-5 bg-card border-2 border-border shadow-[4px_4px_0px_0px_var(--border)] h-full min-h-[250px] flex flex-col">
               <h3 className="font-extrabold text-sm border-b-2 border-border pb-3 mb-4 text-text flex items-center gap-1.5">
                 <List className="w-4 h-4 text-accent shrink-0" />
                 <span>ドキュメント目次</span>
@@ -490,6 +481,6 @@ export default function MarkdownEditorTool() {
           </div>
         )}
       </div>
-    </ToolPageLayout>
+    </div>
   );
 }
