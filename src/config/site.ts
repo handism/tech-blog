@@ -266,13 +266,7 @@ export const toolsMenuItems: readonly ToolItem[] = [
     emoji: '📊',
     category: 'convert',
   },
-  {
-    href: '/tools/timezone',
-    label: 'Timezone Converter',
-    description: '複数のタイムゾーンと現地時間を一覧比較・双方向変換',
-    emoji: '🌐',
-    category: 'convert',
-  },
+
   {
     href: '/tools/crypto',
     label: 'Crypto & ID Generator',
@@ -366,17 +360,11 @@ export const toolsMenuItems: readonly ToolItem[] = [
     category: 'dev',
   },
   {
-    href: '/tools/unix-timestamp',
-    label: 'Unix Timestamp Converter',
-    description: 'Unixエポックミリ秒と人間が読める日時形式を双方向変換',
+    href: '/tools/time',
+    label: 'Time & Schedule Utilities',
+    description:
+      'Unixタイムスタンプの相互変換、主要タイムゾーン時間表示、およびCronスケジュール解析ツール集',
     emoji: '⏰',
-    category: 'dev',
-  },
-  {
-    href: '/tools/cron',
-    label: 'Cron Parser & Generator',
-    description: 'Cron式から次の実行スケジュールを生成・自然言語でわかりやすく解説',
-    emoji: '📆',
     category: 'dev',
   },
   {
