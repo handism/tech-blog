@@ -182,6 +182,15 @@ html[data-theme='chalkboard'] .dark aside.toc-sidebar > div {
   background: rgba(21, 36, 30, 0.9);
 }
 
+/* ダークモード時の一般的なテーマカード（サイドバーやプロフィール、ツールなど） */
+html[data-theme='chalkboard'].dark .theme-card,
+html[data-theme='chalkboard'] .dark .theme-card {
+  background: rgba(21, 36, 30, 0.95) !important;
+  color: #f0ece0 !important;
+  border: 2px solid rgba(240, 236, 224, 0.25) !important;
+  box-shadow: 3px 5px 15px rgba(0, 0, 0, 0.4) !important;
+}
+
 /* ── Chalkboard Layout ── */
 [data-theme='chalkboard'] .post-card-list {
   gap: 2rem !important;
@@ -257,10 +266,13 @@ html[data-theme='chalkboard'] .dark aside.toc-sidebar > div {
 }
 
 
-/* ダークモードでもポラロイド風カード内のテキストは黒系を維持 */
+/* ダークモードでもポラロイド風カード（ブログ記事一覧）の背景とテキストはライトモードのスタイルを維持 */
 html[data-theme='chalkboard'].dark .post-card-item .theme-card,
 html[data-theme='chalkboard'] .dark .post-card-item .theme-card {
+  background: #fbfaf5 !important;
   color: #1a1a1a !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.25) !important;
 }
 
 html[data-theme='chalkboard'].dark .post-card-item .post-card-title a,
