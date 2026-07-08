@@ -1,7 +1,6 @@
+// src/components/tools/crypto/UuidGenerator.tsx
 'use client';
 
-import ToolPageLayout from '@/src/components/ToolPageLayout';
-import { Code } from 'lucide-react';
 import { useState } from 'react';
 import ResultBox from '@/src/components/ResultBox';
 
@@ -32,20 +31,17 @@ export default function UuidGenerator() {
   };
 
   return (
-    <ToolPageLayout
-      title="UUID Generator"
-      description="ボタンを押すだけで UUID v4 を生成できます。"
-      icon={Code}
-    >
-      <div className="space-y-6">
-        <p className="text-text/80 font-medium">ボタンを押すだけで UUID v4 を生成できます。</p>
+    <div className="space-y-6">
+      <p className="text-text/80 font-medium">ボタンを押すだけで UUID v4 を生成できます。</p>
 
-        <button onClick={handleGenerate} className="theme-btn px-5 py-3 font-bold text-sm">
-          生成
-        </button>
+      <button
+        onClick={handleGenerate}
+        className="theme-btn px-5 py-3 font-bold text-sm cursor-pointer"
+      >
+        生成
+      </button>
 
-        {output && <ResultBox value={output} />}
-      </div>
-    </ToolPageLayout>
+      {output && <ResultBox value={output} />}
+    </div>
   );
 }

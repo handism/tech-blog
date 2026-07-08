@@ -273,10 +273,11 @@ export const toolsMenuItems: readonly ToolItem[] = [
     category: 'convert',
   },
   {
-    href: '/tools/base64',
-    label: 'Base64 Codec',
-    description: 'テキストやファイルのBase64エンコード・デコード処理',
-    emoji: '📦',
+    href: '/tools/crypto',
+    label: 'Crypto & ID Generator',
+    description:
+      'Base64変換、暗号ハッシュ生成、JWTデコード、UUID作成、セキュアパスワード生成などのツール集',
+    emoji: '🔑',
     category: 'convert',
   },
   {
@@ -287,24 +288,10 @@ export const toolsMenuItems: readonly ToolItem[] = [
     category: 'convert',
   },
   {
-    href: '/tools/uuid',
-    label: 'UUID Generator',
-    description: '開発や検証に使えるランダムなUUID (v4) を一括生成',
-    emoji: '🆔',
-    category: 'convert',
-  },
-  {
     href: '/tools/html-entity',
     label: 'HTML Entity Encoder / Decoder',
     description: 'HTML特殊文字とエスケープシーケンスの相互変換',
     emoji: '🔤',
-    category: 'convert',
-  },
-  {
-    href: '/tools/password-generator',
-    label: 'Password Generator',
-    description: '長さや使用文字種をカスタマイズして安全なランダムパスワードを生成',
-    emoji: '🔑',
     category: 'convert',
   },
   {
@@ -359,24 +346,10 @@ export const toolsMenuItems: readonly ToolItem[] = [
     category: 'dev',
   },
   {
-    href: '/tools/hash-generator',
-    label: 'Hash Generator',
-    description: 'MD5, SHA-1, SHA-256などの暗号ハッシュ値を瞬時に生成',
-    emoji: '🔒',
-    category: 'dev',
-  },
-  {
     href: '/tools/color-converter',
     label: 'Color Converter',
     description: 'HEX, RGB, HSL, CMYKなどのカラーコードを相互に変換',
     emoji: '🌈',
-    category: 'dev',
-  },
-  {
-    href: '/tools/jwt-decoder',
-    label: 'JWT Decoder',
-    description: 'JSON Web Token (JWT) のヘッダー、ペイロード、署名を解析・検証',
-    emoji: '🎫',
     category: 'dev',
   },
   {
