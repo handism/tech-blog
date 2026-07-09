@@ -26,6 +26,7 @@ export default function PostCard({ post, priorityImage = false }: PostCardProps)
             alt={post.title}
             fill
             priority={priorityImage}
+            fetchPriority={priorityImage ? 'high' : undefined}
             className="object-cover group-hover:scale-105 group-focus-within:scale-105 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />

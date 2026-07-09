@@ -48,6 +48,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Google Fonts への preconnect でフォント読み込みを高速化 */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Google Fonts を並列ダウンロードしてレンダリングブロックを解消 */}
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700;800;900&family=Space+Grotesk:wght@400;500;700;800&family=Noto+Serif+JP:wght@400;700&family=Press+Start+2P&family=Noto+Sans+JP:wght@400;700&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&family=Caveat:wght@400;600;700&family=Cinzel:wght@400;600;700&family=Outfit:wght@300;400;500;700&family=Roboto+Mono:wght@300;400;500;700&family=Yomogi&family=Architects+Daughter&display=swap"
+        />
       </head>
       <body className="bg-bg text-text antialiased relative min-h-screen">
         {/* フラッシュ防止スクリプト(デザインテーマ & レイアウト) */}
