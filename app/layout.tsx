@@ -161,8 +161,13 @@ export const metadata: Metadata = {
  */
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ja" suppressHydrationWarning data-scroll-behavior="smooth">
-      <body className={`bg-bg text-text antialiased relative min-h-screen ${fontVariables}`}>
+    <html
+      lang="ja"
+      suppressHydrationWarning
+      data-scroll-behavior="smooth"
+      className={fontVariables}
+    >
+      <body className="bg-bg text-text antialiased relative min-h-screen">
         {/* フラッシュ防止スクリプト(デザインテーマ & レイアウト) */}
         <script
           dangerouslySetInnerHTML={{
