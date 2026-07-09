@@ -58,6 +58,10 @@
   --theme-btn-active-bg: var(--theme-btn-hover-bg);
 }
 
+:root[data-theme="chalkboard"] {
+  --font-sans: var(--font-caveat), var(--font-architects-daughter), cursive;
+}
+
 .dark {
   --color-bg: #000000; /* 漆黒 */
   --color-background: var(--color-bg);
