@@ -15,6 +15,124 @@ import {
   siteConfig,
 } from '@/src/config/site';
 import type { Metadata } from 'next';
+import {
+  Lexend,
+  Space_Grotesk,
+  Noto_Sans_JP,
+  Noto_Serif_JP,
+  Press_Start_2P,
+  Orbitron,
+  Rajdhani,
+  Share_Tech_Mono,
+  Caveat,
+  Cinzel,
+  Outfit,
+  Roboto_Mono,
+  Yomogi,
+  Architects_Daughter,
+} from 'next/font/google';
+
+const lexend = Lexend({
+  subsets: ['latin'],
+  weight: ['400', '500', '700', '800', '900'],
+  variable: '--font-lexend',
+  display: 'swap',
+});
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  variable: '--font-space-grotesk',
+  display: 'swap',
+});
+const notoSansJP = Noto_Sans_JP({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-noto-sans-jp',
+  display: 'swap',
+});
+const notoSerifJP = Noto_Serif_JP({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-noto-serif-jp',
+  display: 'swap',
+});
+const pressStart2P = Press_Start_2P({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-press-start-2p',
+  display: 'swap',
+});
+const orbitron = Orbitron({
+  subsets: ['latin'],
+  weight: ['400', '700', '900'],
+  variable: '--font-orbitron',
+  display: 'swap',
+});
+const rajdhani = Rajdhani({
+  subsets: ['latin'],
+  weight: ['500', '600', '700'],
+  variable: '--font-rajdhani',
+  display: 'swap',
+});
+const shareTechMono = Share_Tech_Mono({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-share-tech-mono',
+  display: 'swap',
+});
+const caveat = Caveat({
+  subsets: ['latin'],
+  weight: ['400', '600', '700'],
+  variable: '--font-caveat',
+  display: 'swap',
+});
+const cinzel = Cinzel({
+  subsets: ['latin'],
+  weight: ['400', '600', '700'],
+  variable: '--font-cinzel',
+  display: 'swap',
+});
+const outfit = Outfit({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '700'],
+  variable: '--font-outfit',
+  display: 'swap',
+});
+const robotoMono = Roboto_Mono({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '700'],
+  variable: '--font-roboto-mono',
+  display: 'swap',
+});
+const yomogi = Yomogi({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-yomogi',
+  display: 'swap',
+});
+const architectsDaughter = Architects_Daughter({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-architects-daughter',
+  display: 'swap',
+});
+
+const fontVariables = [
+  lexend.variable,
+  spaceGrotesk.variable,
+  notoSansJP.variable,
+  notoSerifJP.variable,
+  pressStart2P.variable,
+  orbitron.variable,
+  rajdhani.variable,
+  shareTechMono.variable,
+  caveat.variable,
+  cinzel.variable,
+  outfit.variable,
+  robotoMono.variable,
+  yomogi.variable,
+  architectsDaughter.variable,
+].join(' ');
 
 /**
  * ルートレイアウトで利用するメタデータ。
@@ -44,18 +162,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja" suppressHydrationWarning data-scroll-behavior="smooth">
-      <head>
-        {/* Google Fonts への preconnect でフォント読み込みを高速化 */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* Google Fonts を並列ダウンロードしてレンダリングブロックを解消 */}
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700;800;900&family=Space+Grotesk:wght@400;500;700;800&family=Noto+Serif+JP:wght@400;700&family=Press+Start+2P&family=Noto+Sans+JP:wght@400;700&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&family=Caveat:wght@400;600;700&family=Cinzel:wght@400;600;700&family=Outfit:wght@300;400;500;700&family=Roboto+Mono:wght@300;400;500;700&family=Yomogi&family=Architects+Daughter&display=swap"
-        />
-      </head>
-      <body className="bg-bg text-text antialiased relative min-h-screen">
+      <body className={`bg-bg text-text antialiased relative min-h-screen ${fontVariables}`}>
         {/* フラッシュ防止スクリプト(デザインテーマ & レイアウト) */}
         <script
           dangerouslySetInnerHTML={{

@@ -7,7 +7,7 @@
   --color-text: #7c4f00;
   --color-border: #7c4f00;
   --color-accent: #c67c00;
-  --theme-font-sans: 'Share Tech Mono', ui-monospace, monospace;
+  --theme-font-sans: var(--font-share-tech-mono), ui-monospace, monospace;
 
   --theme-card-border-width: 1px;
   --theme-card-radius: 0px !important;
@@ -21,7 +21,7 @@
   --theme-btn-radius: 0px !important;
   --theme-btn-bg: transparent;
   --theme-btn-color: var(--color-text);
-  --theme-btn-font-family: 'Share Tech Mono', monospace;
+  --theme-btn-font-family: var(--font-share-tech-mono), monospace;
   --theme-btn-shadow: none;
   --theme-btn-hover-transform: none;
   --theme-btn-hover-shadow: none;
@@ -47,14 +47,14 @@ html[data-theme='terminal'] .dark,
 
 [data-theme='terminal'] body,
 [data-theme='terminal'] html {
-  font-family: 'Share Tech Mono', ui-monospace, monospace;
+  font-family: var(--font-share-tech-mono), ui-monospace, monospace;
 }
 
 [data-theme='terminal'] h1,
 [data-theme='terminal'] h2,
 [data-theme='terminal'] h3,
 [data-theme='terminal'] h4 {
-  font-family: 'Share Tech Mono', monospace;
+  font-family: var(--font-share-tech-mono), monospace;
 }
 
 [data-theme='terminal'] article.prose h2::after {

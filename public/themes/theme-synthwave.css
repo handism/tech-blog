@@ -22,7 +22,7 @@
   --theme-btn-shadow: 3px 3px 0px 0px var(--color-border);
   --theme-btn-bg: linear-gradient(135deg, #ff007f 0%, #7f00ff 100%);
   --theme-btn-color: #ffffff;
-  --theme-btn-font-family: 'Rajdhani', sans-serif;
+  --theme-btn-font-family: var(--font-rajdhani), sans-serif;
   --theme-btn-text-transform: uppercase;
   --theme-btn-letter-spacing: 0.05em;
   --theme-btn-hover-transform: translate(-1px, -1px);
@@ -70,7 +70,7 @@ html[data-theme='synthwave'] .dark body,
 [data-theme='synthwave'] h1,
 [data-theme='synthwave'] h2,
 [data-theme='synthwave'] h3 {
-  font-family: 'Rajdhani', sans-serif;
+  font-family: var(--font-rajdhani), sans-serif;
 }
 
 html[data-theme='synthwave'].dark h1,

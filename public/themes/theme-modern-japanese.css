@@ -6,7 +6,7 @@
   --color-text: #1c1c1c; /* 墨色 */
   --color-border: #1c1c1c;
   --color-accent: #d93333; /* 朱赤 */
-  --theme-font-sans: 'Noto Serif JP', 'Noto Sans JP', serif;
+  --theme-font-sans: var(--font-noto-serif-jp), var(--font-noto-sans-jp), serif;
 
   --theme-card-border-width: 1px;
   --theme-card-radius: 0px;
@@ -42,7 +42,7 @@
 
 [data-theme='modern-japanese'] body {
   background-color: var(--color-bg);
-  font-family: 'Noto Serif JP', 'Noto Sans JP', serif;
+  font-family: var(--font-noto-serif-jp), var(--font-noto-sans-jp), serif;
 }
 
 /* ==========================================================================
@@ -193,7 +193,7 @@
    記事詳細ページ & タイポグラフィ
    ========================================================================== */
 [data-theme='modern-japanese'] article.prose {
-  font-family: 'Noto Serif JP', serif;
+  font-family: var(--font-noto-serif-jp), serif;
 }
 
 [data-theme='modern-japanese'] article.prose h1 {
@@ -255,7 +255,7 @@
 
 /* 記事本文の見出し h2 (二重線) */
 [data-theme='modern-japanese'] article.prose h2 {
-  font-family: 'Noto Serif JP', serif;
+  font-family: var(--font-noto-serif-jp), serif;
   font-weight: 700 !important;
   border-bottom: none !important;
   position: relative;
@@ -277,7 +277,7 @@
 
 /* 記事本文の見出し h3 (左の縦線) */
 [data-theme='modern-japanese'] article.prose h3 {
-  font-family: 'Noto Serif JP', serif;
+  font-family: var(--font-noto-serif-jp), serif;
   border-left: 3px solid var(--color-accent) !important;
   padding-left: 0.75rem !important;
   margin-top: 2.5rem !important;
@@ -303,7 +303,7 @@
 [data-theme='modern-japanese'] aside.toc-sidebar h2 {
   writing-mode: vertical-rl !important;
   text-orientation: upright !important;
-  font-family: 'Noto Serif JP', serif;
+  font-family: var(--font-noto-serif-jp), serif;
   letter-spacing: 0.25em !important;
   font-weight: 700 !important;
   margin-bottom: 1.5rem !important;

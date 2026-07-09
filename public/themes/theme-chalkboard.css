@@ -9,7 +9,7 @@
   --color-text: #1b3326; /* 深い黒板色（文字用） */
   --color-border: rgba(27, 51, 38, 0.25);
   --color-accent: #c44545; /* 赤チョーク風 */
-  --font-sans: 'Architects Daughter', 'Yomogi', 'Noto Sans JP', cursive;
+  --font-sans: var(--font-architects-daughter), var(--font-yomogi), var(--font-noto-sans-jp), cursive;
 
   --theme-card-border-width: 2px;
   --theme-card-border-color: rgba(27, 51, 38, 0.2);
@@ -24,7 +24,7 @@
   --theme-btn-border-color: rgba(27, 51, 38, 0.35);
   --theme-btn-bg: rgba(224, 232, 227, 0.8);
   --theme-btn-radius: 6px;
-  --theme-btn-font-family: 'Architects Daughter', 'Yomogi', 'Noto Sans JP', cursive;
+  --theme-btn-font-family: var(--font-architects-daughter), var(--font-yomogi), var(--font-noto-sans-jp), cursive;
   --theme-btn-font-weight: 700;
   --theme-btn-letter-spacing: 0.05em;
   --theme-btn-color: #1b3326;
@@ -52,7 +52,7 @@
 [data-theme='chalkboard'] h2,
 [data-theme='chalkboard'] h3,
 [data-theme='chalkboard'] h4 {
-  font-family: 'Architects Daughter', 'Yomogi', 'Noto Sans JP', cursive;
+  font-family: var(--font-architects-daughter), var(--font-yomogi), var(--font-noto-sans-jp), cursive;
   letter-spacing: 0.04em;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
 }

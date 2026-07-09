@@ -24,7 +24,7 @@
   --theme-btn-border-color: rgba(10, 40, 100, 0.5);
   --theme-btn-bg: rgba(208, 224, 255, 0.7);
   --theme-btn-radius: 2px;
-  --theme-btn-font-family: 'Roboto Mono', monospace;
+  --theme-btn-font-family: var(--font-roboto-mono), monospace;
   --theme-btn-letter-spacing: 0.05em;
   --theme-btn-hover-transform: translateY(-1px);
   --theme-btn-hover-shadow: 0 4px 12px rgba(10, 40, 100, 0.15);
@@ -45,7 +45,7 @@
 [data-theme='blueprint'] h1,
 [data-theme='blueprint'] h2,
 [data-theme='blueprint'] h3 {
-  font-family: 'Roboto Mono', monospace;
+  font-family: var(--font-roboto-mono), monospace;
   letter-spacing: 0.03em;
 }
 
@@ -172,7 +172,7 @@ html[data-theme='blueprint'].dark .theme-card {
   position: absolute;
   bottom: -18px;
   right: 4px;
-  font-family: 'Roboto Mono', monospace;
+  font-family: var(--font-roboto-mono), monospace;
   font-size: 8px;
   color: var(--color-border);
   opacity: 0;

@@ -24,7 +24,7 @@
   --theme-btn-border-color: #8b6535;
   --theme-btn-bg: linear-gradient(180deg, #eadaaf 0%, #d8caa0 100%);
   --theme-btn-radius: 4px;
-  --theme-btn-font-family: 'Cinzel', serif;
+  --theme-btn-font-family: var(--font-cinzel), serif;
   --theme-btn-letter-spacing: 0.08em;
   --theme-btn-color: #4a3319;
   --theme-btn-shadow: 2px 2px 6px rgba(74, 51, 25, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3);
@@ -45,7 +45,7 @@
 [data-theme='steampunk'] h1,
 [data-theme='steampunk'] h2,
 [data-theme='steampunk'] h3 {
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-cinzel), serif;
   letter-spacing: 0.06em;
   color: #7a5223;
 }

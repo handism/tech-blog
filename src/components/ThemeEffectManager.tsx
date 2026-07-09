@@ -27,6 +27,8 @@ export default function ThemeEffectManager() {
 
   // 1. スクロール監視 (Minimalの進捗ゲージ、Steampunkの歯車スクロール連動など)
   useEffect(() => {
+    if (currentTheme !== 'minimal' && currentTheme !== 'steampunk') return;
+
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -73,6 +75,7 @@ export default function ThemeEffectManager() {
     if (currentTheme !== 'three-d') return;
 
     let activeCard: HTMLElement | null = null;
+    let rafId: number | null = null;
 
     const resetCardStyle = (card: HTMLElement) => {
       card.style.transform = '';
@@ -81,40 +84,48 @@ export default function ThemeEffectManager() {
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (!target) return;
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = null;
+        const target = e.target as HTMLElement;
+        if (!target) return;
 
-      const card = target.closest('.theme-card') as HTMLElement | null;
+        const card = target.closest('.theme-card') as HTMLElement | null;
 
-      // ホバーするカードが変わった場合の処理
-      if (card !== activeCard) {
-        if (activeCard) {
-          resetCardStyle(activeCard);
+        // ホバーするカードが変わった場合の処理
+        if (card !== activeCard) {
+          if (activeCard) {
+            resetCardStyle(activeCard);
+          }
+          activeCard = card;
         }
-        activeCard = card;
-      }
 
-      if (!card) return;
+        if (!card) return;
 
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left; // マウスのカード内X座標
-      const y = e.clientY - rect.top; // マウスのカード内Y座標
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left; // マウスのカード内X座標
+        const y = e.clientY - rect.top; // マウスのカード内Y座標
 
-      // 中心からのズレを比率にする (-0.5 to 0.5)
-      const px = x / rect.width - 0.5;
-      const py = y / rect.height - 0.5;
+        // 中心からのズレを比率にする (-0.5 to 0.5)
+        const px = x / rect.width - 0.5;
+        const py = y / rect.height - 0.5;
 
-      // 3D回転角を算出 (最大15度)
-      const tiltX = (py * -15).toFixed(1);
-      const tiltY = (px * 15).toFixed(1);
+        // 3D回転角を算出 (最大15度)
+        const tiltX = (py * -15).toFixed(1);
+        const tiltY = (px * 15).toFixed(1);
 
-      // 内側の画像やテキストにもパララックスを効かせるため、カスタムプロパティを更新
-      card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
-      card.style.setProperty('--parallax-x', `${px * 12}px`);
-      card.style.setProperty('--parallax-y', `${py * 12}px`);
+        // 内側の画像やテキストにもパララックスを効かせるため、カスタムプロパティを更新
+        card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
+        card.style.setProperty('--parallax-x', `${px * 12}px`);
+        card.style.setProperty('--parallax-y', `${py * 12}px`);
+      });
     };
 
     const handleMouseLeave = () => {
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
       if (activeCard) {
         resetCardStyle(activeCard);
         activeCard = null;
@@ -126,6 +137,7 @@ export default function ThemeEffectManager() {
     window.addEventListener('blur', handleMouseLeave);
 
     return () => {
+      if (rafId !== null) cancelAnimationFrame(rafId);
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('blur', handleMouseLeave);

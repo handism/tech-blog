@@ -34,7 +34,7 @@ export default function MermaidRenderer() {
           startOnLoad: false,
           theme: isDark ? 'dark' : 'neutral',
           securityLevel: 'loose',
-          fontFamily: 'Lexend, Inter, sans-serif',
+          fontFamily: 'var(--font-lexend), Inter, sans-serif',
           themeVariables: {
             primaryColor: isDark ? '#1e293b' : '#f8fafc',
             primaryTextColor: isDark ? '#f8fafc' : '#0f172a',

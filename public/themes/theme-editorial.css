@@ -7,7 +7,7 @@
   --color-text: #1a1a1a;
   --color-border: #1a1a1a;
   --color-accent: #c0392b;
-  --theme-font-sans: 'Noto Serif JP', Georgia, serif;
+  --theme-font-sans: var(--font-noto-serif-jp), Georgia, serif;
 
   --theme-card-border-width: 1px;
   --theme-card-radius: 0;
@@ -18,7 +18,7 @@
   --theme-btn-border-width: 1px;
   --theme-btn-radius: 2px;
   --theme-btn-shadow: none;
-  --theme-btn-font-family: 'Noto Serif JP', Georgia, serif;
+  --theme-btn-font-family: var(--font-noto-serif-jp), Georgia, serif;
   --theme-btn-letter-spacing: 0.03em;
   --theme-btn-hover-transform: none;
   --theme-btn-hover-shadow: none;
@@ -45,7 +45,7 @@
 
 [data-theme='editorial'] body,
 [data-theme='editorial'] html {
-  font-family: 'Noto Serif JP', Georgia, serif;
+  font-family: var(--font-noto-serif-jp), Georgia, serif;
 }
 
 [data-theme='editorial'] [class*='shadow-'] {
@@ -152,7 +152,7 @@
 /* ── Editorial / Paper アップデート ── */
 /* ドロップキャップ (本文最初の1文字を新聞社風に装飾) */
 [data-theme='editorial'] article.prose p:first-of-type::first-letter {
-  font-family: 'Noto Serif JP', Georgia, serif;
+  font-family: var(--font-noto-serif-jp), Georgia, serif;
   font-size: 3.2rem;
   font-weight: 900;
   float: left;
