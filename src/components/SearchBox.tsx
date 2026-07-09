@@ -8,6 +8,7 @@ import type { PostMeta } from '@/src/types/post';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { X } from 'lucide-react';
 
 /**
  * マッチ位置情報をもとにテキストを <mark> でハイライトした React ノード配列を返す。
@@ -154,25 +155,39 @@ export default function SearchBox() {
       <label htmlFor="site-search" className="sr-only">
         記事検索
       </label>
-      <input
-        id="site-search"
-        name="q"
-        type="text"
-        placeholder={isLoading ? '読込中...' : '検索...'}
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        onFocus={loadSearchIndex}
-        onMouseEnter={loadSearchIndex}
-        onKeyDown={handleKeyDown}
-        role="combobox"
-        aria-expanded={hasResults}
-        aria-autocomplete="list"
-        aria-controls="search-results-list"
-        aria-activedescendant={
-          selectedIndex >= 0 ? `search-result-item-${selectedIndex}` : undefined
-        }
-        className="w-full border-2 border-border bg-card text-text placeholder:text-text/50 py-2.5 px-4 rounded-xl shadow-[2px_2px_0px_0px_var(--border)] dark:shadow-[2px_2px_0px_0px_var(--accent)] focus:outline-none focus:translate-x-[-1px] focus:translate-y-[-1px] focus:shadow-[3px_3px_0px_0px_var(--border)] dark:focus:shadow-[3px_3px_0px_0px_var(--accent)] transition-all font-bold"
-      />
+      <div className="relative">
+        <input
+          id="site-search"
+          name="q"
+          type="text"
+          placeholder={isLoading ? '読込中...' : '検索...'}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onFocus={loadSearchIndex}
+          onMouseEnter={loadSearchIndex}
+          onKeyDown={handleKeyDown}
+          role="combobox"
+          aria-expanded={hasResults}
+          aria-autocomplete="list"
+          aria-controls="search-results-list"
+          aria-activedescendant={
+            selectedIndex >= 0 ? `search-result-item-${selectedIndex}` : undefined
+          }
+          className="w-full border-2 border-border bg-card text-text placeholder:text-text/50 py-2.5 pl-4 pr-10 rounded-xl shadow-[2px_2px_0px_0px_var(--border)] dark:shadow-[2px_2px_0px_0px_var(--accent)] focus:outline-none focus:translate-x-[-1px] focus:translate-y-[-1px] focus:shadow-[3px_3px_0px_0px_var(--border)] dark:focus:shadow-[3px_3px_0px_0px_var(--accent)] transition-all font-bold"
+        />
+        {query && (
+          <button
+            onClick={() => {
+              setQuery('');
+              document.getElementById('site-search')?.focus();
+            }}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-text/40 hover:text-text transition-colors p-1 focus-visible:ring-2 focus-visible:ring-accent rounded"
+            aria-label="検索条件をクリア"
+          >
+            <X className="w-4 h-4" />
+          </button>
+        )}
+      </div>
       {showResultsContainer && (
         <ul
           id="search-results-list"
