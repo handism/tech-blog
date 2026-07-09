@@ -2,7 +2,7 @@
 'use client';
 
 import { toolsMenuItems, ToolItem } from '@/src/config/site';
-import { Search, ExternalLink, Sparkles } from 'lucide-react';
+import { Search, ExternalLink, Sparkles, X } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useMemo } from 'react';
 
@@ -91,8 +91,20 @@ export default function ToolsDashboard() {
             placeholder="ツール名や説明から検索..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-card border-2 border-border text-text placeholder-text/50 rounded-xl focus:outline-none focus:translate-x-[-1px] focus:translate-y-[-1px] focus:shadow-[3px_3px_0px_0px_var(--border)] dark:focus:shadow-[3px_3px_0px_0px_var(--accent)] transition-all text-sm font-bold"
+            className="w-full pl-12 pr-10 py-3 bg-card border-2 border-border text-text placeholder-text/50 rounded-xl focus:outline-none focus:translate-x-[-1px] focus:translate-y-[-1px] focus:shadow-[3px_3px_0px_0px_var(--border)] dark:focus:shadow-[3px_3px_0px_0px_var(--accent)] transition-all text-sm font-bold"
           />
+          {searchQuery && (
+            <button
+              onClick={() => {
+                setSearchQuery('');
+                document.getElementById('tool-search')?.focus();
+              }}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-text/40 hover:text-text transition-colors p-1 focus-visible:ring-2 focus-visible:ring-accent rounded"
+              aria-label="検索条件をクリア"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
         </div>
 
         {/* カテゴリタブ */}
