@@ -1,8 +1,8 @@
 // src/components/tools/git/GitHelper.tsx
 'use client';
 
-import { useState, useMemo } from 'react';
-import { Terminal, Search, AlertTriangle, ShieldCheck } from 'lucide-react';
+import { useState, useMemo, useRef } from 'react';
+import { Terminal, Search, AlertTriangle, ShieldCheck, X } from 'lucide-react';
 import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 import { CATEGORIES, USE_CASES, type GitUseCase } from './GitUseCases';
 
@@ -10,6 +10,7 @@ export default function GitHelper() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeUseCase, setActiveUseCase] = useState<GitUseCase>(USE_CASES[0]);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   // パラメータ入力値の格納
   const [inputParams, setInputParams] = useState<Record<string, string>>(() => {
@@ -73,12 +74,25 @@ export default function GitHelper() {
         <div className="relative flex-1 w-full max-w-md">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text/45" />
           <input
+            ref={searchInputRef}
             type="text"
             placeholder="Gitの目的やコマンドで検索..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-11 pr-4 py-2.5 bg-secondary/35 border-2 border-border text-text placeholder-text/40 rounded-xl focus:outline-none focus:ring-1 focus:ring-accent text-sm font-bold shadow-inner"
+            className="w-full pl-11 pr-10 py-2.5 bg-secondary/35 border-2 border-border text-text placeholder-text/40 rounded-xl focus:outline-none focus:ring-1 focus:ring-accent text-sm font-bold shadow-inner"
           />
+          {searchQuery && (
+            <button
+              aria-label="検索条件をクリア"
+              onClick={() => {
+                setSearchQuery('');
+                searchInputRef.current?.focus();
+              }}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-text/40 hover:text-text cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
         </div>
 
         <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 scrollbar-none">

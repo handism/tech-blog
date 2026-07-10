@@ -1,8 +1,8 @@
 // src/components/tools/network/HttpStatus.tsx
 'use client';
 
-import { useState, useMemo } from 'react';
-import { Search, ExternalLink, HelpCircle, ArrowRight, CornerDownRight } from 'lucide-react';
+import { useState, useMemo, useRef } from 'react';
+import { Search, ExternalLink, HelpCircle, ArrowRight, CornerDownRight, X } from 'lucide-react';
 import { HTTP_STATUS_CODES } from './HttpStatusData';
 
 export default function HttpStatus() {
@@ -11,6 +11,7 @@ export default function HttpStatus() {
     'all' | '1xx' | '2xx' | '3xx' | '4xx' | '5xx'
   >('all');
   const [activeCode, setActiveCode] = useState<number | null>(200);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   // 検索とフィルタリング
   const filteredCodes = useMemo(() => {
@@ -52,12 +53,25 @@ export default function HttpStatus() {
         <div className="relative">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-text/40" />
           <input
+            ref={searchInputRef}
             type="text"
             placeholder="コード（例: 404）や名前で検索..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-card border-2 border-border text-text placeholder-text/50 rounded-xl focus:outline-none focus:ring-1 focus:ring-accent transition-all text-sm font-bold shadow-inner"
+            className="w-full pl-10 pr-10 py-2.5 bg-card border-2 border-border text-text placeholder-text/50 rounded-xl focus:outline-none focus:ring-1 focus:ring-accent transition-all text-sm font-bold shadow-inner"
           />
+          {searchQuery && (
+            <button
+              aria-label="検索条件をクリア"
+              onClick={() => {
+                setSearchQuery('');
+                searchInputRef.current?.focus();
+              }}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-text/40 hover:text-text cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
         </div>
 
         {/* クラス別タブ */}

@@ -1,9 +1,9 @@
 // src/components/AwsPatternGallery.tsx
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import Link from 'next/link';
-import { Search, Filter, Cpu, Tag, ArrowRight, FileCode } from 'lucide-react';
+import { Search, Filter, Cpu, Tag, ArrowRight, FileCode, X } from 'lucide-react';
 import type { AwsPatternMeta } from '@/src/types/aws-gallery';
 import { getServiceBadgeStyle } from '@/src/lib/aws-gallery-helpers';
 
@@ -15,6 +15,7 @@ export default function AwsPatternGallery({ patterns }: Props) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedService, setSelectedService] = useState('All');
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   // 全カテゴリを動的に収集
   const categories = useMemo(() => {
@@ -64,12 +65,25 @@ export default function AwsPatternGallery({ patterns }: Props) {
           <div className="relative flex-1">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-5 w-5 text-text/50" />
             <input
+              ref={searchInputRef}
               type="text"
               placeholder="テンプレート名、説明、AWSサービスで検索..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-11 pr-4 py-2.5 border-2 border-border rounded-xl bg-card text-text placeholder-text/40 font-medium focus:outline-none focus:border-accent transition-colors"
+              className="w-full pl-11 pr-10 py-2.5 border-2 border-border rounded-xl bg-card text-text placeholder-text/40 font-medium focus:outline-none focus:border-accent transition-colors"
             />
+            {searchQuery && (
+              <button
+                aria-label="検索条件をクリア"
+                onClick={() => {
+                  setSearchQuery('');
+                  searchInputRef.current?.focus();
+                }}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-text/40 hover:text-text cursor-pointer"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            )}
           </div>
 
           {/* カテゴリセレクトボックス (モバイル向け) */}
