@@ -19,7 +19,7 @@ export default function ToolPageLayout({
 }: ToolPageLayoutProps) {
   return (
     <div className="min-h-screen bg-bg p-4 md:p-8">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* Back Link */}
         <Link
           href="/tools"

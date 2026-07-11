@@ -162,7 +162,7 @@ export default function ImageTrimmingApp() {
       description="ドラッグ＆ドロップで素早くトリミング"
       icon={Download}
     >
-      <main className="w-full max-w-5xl bg-card rounded-3xl shadow-lg overflow-hidden border border-border">
+      <main className="w-full bg-card rounded-3xl shadow-lg overflow-hidden border border-border">
         {image ? (
           <div className="flex flex-col lg:flex-row">
             {/* トリミングエリア */}
