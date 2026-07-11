@@ -8,6 +8,7 @@ interface SizePreset {
   label: string;
   width: number;
   height: number;
+  fontSize?: number;
 }
 
 export default function PlaceholderGenerator() {
@@ -22,14 +23,14 @@ export default function PlaceholderGenerator() {
   const [copiedType, setCopiedType] = useState<string>('');
 
   const sizePresets: SizePreset[] = [
-    { label: '16:9 カバー画像', width: 1200, height: 675 },
-    { label: 'OGP画像 (1200x630)', width: 1200, height: 630 },
-    { label: '4:3 標準画面', width: 800, height: 600 },
-    { label: '1:1 スクエア (大)', width: 800, height: 800 },
-    { label: '1:1 スクエア (中)', width: 400, height: 400 },
-    { label: 'モバイルバナー (640x360)', width: 640, height: 360 },
-    { label: 'FHDバナー (1920x1080)', width: 1920, height: 1080 },
-    { label: 'アイコンプレース (128x128)', width: 128, height: 128 },
+    { label: '16:9 カバー画像', width: 1200, height: 675, fontSize: 80 },
+    { label: 'OGP画像 (1200x630)', width: 1200, height: 630, fontSize: 80 },
+    { label: '4:3 標準画面', width: 800, height: 600, fontSize: 48 },
+    { label: '1:1 スクエア (大)', width: 800, height: 800, fontSize: 48 },
+    { label: '1:1 スクエア (中)', width: 400, height: 400, fontSize: 32 },
+    { label: 'モバイルバナー (640x360)', width: 640, height: 360, fontSize: 28 },
+    { label: 'FHDバナー (1920x1080)', width: 1920, height: 1080, fontSize: 120 },
+    { label: 'アイコンプレース (128x128)', width: 128, height: 128, fontSize: 14 },
   ];
 
   // SVG コードの生成
@@ -294,6 +295,9 @@ export default function PlaceholderGenerator() {
                       onClick={() => {
                         setWidth(preset.width);
                         setHeight(preset.height);
+                        if (preset.fontSize) {
+                          setFontSize(preset.fontSize);
+                        }
                       }}
                       className="p-2 border border-border bg-card hover:bg-secondary text-text/80 rounded-xl text-[10px] font-bold text-left transition-colors cursor-pointer truncate"
                       title={`${preset.label}: ${preset.width}x${preset.height}`}
