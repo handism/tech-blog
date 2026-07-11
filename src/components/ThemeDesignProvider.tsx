@@ -10,6 +10,7 @@ import {
   DEFAULT_LAYOUT,
   LAYOUT_STORAGE_KEY,
   layoutConfig,
+  EFFECTS_STORAGE_KEY,
 } from '@/src/config/site';
 import { useIsClient } from '@/src/hooks/useIsClient';
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
@@ -19,6 +20,8 @@ interface ThemeDesignContextValue {
   setTheme: (themeId: ThemeId) => void;
   currentLayout: LayoutId;
   setLayout: (layoutId: LayoutId) => void;
+  effectsEnabled: boolean;
+  setEffectsEnabled: (enabled: boolean) => void;
 }
 
 const ThemeDesignContext = createContext<ThemeDesignContextValue>({
@@ -26,16 +29,19 @@ const ThemeDesignContext = createContext<ThemeDesignContextValue>({
   setTheme: () => {},
   currentLayout: DEFAULT_LAYOUT,
   setLayout: () => {},
+  effectsEnabled: true,
+  setEffectsEnabled: () => {},
 });
 
 /**
  * デザインテーマ（スタイル全体）およびレイアウトモードを管理するプロバイダー。
- * LocalStorage に保存し、html[data-theme], html[data-layout] に反映する。
+ * LocalStorage に保存し、html[data-theme], html[data-layout], html[data-effects] に反映する。
  */
 export function ThemeDesignProvider({ children }: { children: React.ReactNode }) {
   // 初期状態はSSRハイドレーションエラー防止のためデフォルト値に固定
   const [currentTheme, setCurrentTheme] = useState<ThemeId>(DEFAULT_THEME);
   const [currentLayout, setCurrentLayout] = useState<LayoutId>(DEFAULT_LAYOUT);
+  const [effectsEnabled, setEffectsEnabledState] = useState<boolean>(true);
   const [isRestored, setIsRestored] = useState(false);
 
   const mounted = useIsClient();
@@ -72,6 +78,17 @@ export function ThemeDesignProvider({ children }: { children: React.ReactNode })
               setCurrentLayout(layoutAttr);
             }
           }
+
+          // エフェクト設定の復元
+          const savedEffects = localStorage.getItem(EFFECTS_STORAGE_KEY);
+          if (savedEffects !== null) {
+            setEffectsEnabledState(savedEffects === 'true');
+          } else {
+            const effectsAttr = document.documentElement.getAttribute('data-effects');
+            if (effectsAttr !== null) {
+              setEffectsEnabledState(effectsAttr === 'enabled');
+            }
+          }
         } catch {
           // ignore
         } finally {
@@ -87,8 +104,12 @@ export function ThemeDesignProvider({ children }: { children: React.ReactNode })
     if (mounted && isRestored) {
       document.documentElement.setAttribute('data-theme', currentTheme);
       document.documentElement.setAttribute('data-layout', currentLayout);
+      document.documentElement.setAttribute(
+        'data-effects',
+        effectsEnabled ? 'enabled' : 'disabled'
+      );
     }
-  }, [currentTheme, currentLayout, mounted, isRestored]);
+  }, [currentTheme, currentLayout, effectsEnabled, mounted, isRestored]);
 
   const setTheme = useCallback((themeId: ThemeId) => {
     setCurrentTheme(themeId);
@@ -110,9 +131,19 @@ export function ThemeDesignProvider({ children }: { children: React.ReactNode })
     document.documentElement.setAttribute('data-layout', layoutId);
   }, []);
 
+  const setEffectsEnabled = useCallback((enabled: boolean) => {
+    setEffectsEnabledState(enabled);
+    try {
+      localStorage.setItem(EFFECTS_STORAGE_KEY, String(enabled));
+    } catch {
+      // ignore
+    }
+    document.documentElement.setAttribute('data-effects', enabled ? 'enabled' : 'disabled');
+  }, []);
+
   const value = useMemo(
-    () => ({ currentTheme, setTheme, currentLayout, setLayout }),
-    [currentTheme, setTheme, currentLayout, setLayout]
+    () => ({ currentTheme, setTheme, currentLayout, setLayout, effectsEnabled, setEffectsEnabled }),
+    [currentTheme, setTheme, currentLayout, setLayout, effectsEnabled, setEffectsEnabled]
   );
 
   return (

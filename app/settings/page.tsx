@@ -2,6 +2,8 @@
 import { ThemeSelector } from '@/src/components/ThemeSelector';
 import { ThemeToggle } from '@/src/components/ThemeToggle';
 import { LayoutSelector } from '@/src/components/LayoutSelector';
+import { EffectsSelector } from '@/src/components/EffectsSelector';
+import { BackupSettings } from '@/src/components/BackupSettings';
 import { themeConfig } from '@/src/config/site';
 import type { Metadata } from 'next';
 
@@ -11,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 /**
- * サイト設定（デザインテーマ・カラースキン）ページ。
+ * サイト設定（デザインテーマ・カラースキン・エフェクト・データ管理）ページ。
  */
 export default function SettingsPage() {
   return (
@@ -23,7 +25,7 @@ export default function SettingsPage() {
           <h1 className="text-3xl md:text-4xl font-extrabold text-text tracking-tight">Settings</h1>
         </div>
         <p className="text-text opacity-70 text-lg">
-          ブログのデザインをカスタマイズできます。変更はすぐに反映され、次回の訪問時にも引き継がれます。
+          ブログのデザインや設定をカスタマイズできます。変更はすぐに反映され、次回の訪問時にも引き継がれます。
         </p>
       </div>
 
@@ -62,8 +64,25 @@ export default function SettingsPage() {
         <LayoutSelector />
       </section>
 
-      {/* セクション3: ダークモード */}
-      <section aria-labelledby="darkmode-section-heading" className="mt-16">
+      {/* セクション3: アニメーションと効果 */}
+      <section className="mb-16" aria-labelledby="effects-section-heading">
+        <div className="mb-6">
+          <h2
+            id="effects-section-heading"
+            className="text-xl font-bold text-text mb-1 flex items-center gap-2"
+          >
+            <span>✨</span>
+            アニメーションと効果
+          </h2>
+          <p className="text-sm text-text opacity-60">
+            デザインテーマごとの動的な視覚効果や3D傾斜インタラクションの表示を設定します。
+          </p>
+        </div>
+        <EffectsSelector />
+      </section>
+
+      {/* セクション4: ダークモード */}
+      <section className="mb-16" aria-labelledby="darkmode-section-heading">
         <div className="mb-6">
           <h2
             id="darkmode-section-heading"
@@ -79,6 +98,23 @@ export default function SettingsPage() {
         <div className="theme-card p-6 inline-block">
           <ThemeToggle />
         </div>
+      </section>
+
+      {/* セクション5: データ管理 */}
+      <section aria-labelledby="backup-section-heading" className="mt-16">
+        <div className="mb-6">
+          <h2
+            id="backup-section-heading"
+            className="text-xl font-bold text-text mb-1 flex items-center gap-2"
+          >
+            <span>💾</span>
+            データ管理
+          </h2>
+          <p className="text-sm text-text opacity-60">
+            学習進捗（読了チェックやクイズ履歴）やカスタム設定のバックアップ、データのインポート、削除リセットが行えます。
+          </p>
+        </div>
+        <BackupSettings />
       </section>
     </main>
   );

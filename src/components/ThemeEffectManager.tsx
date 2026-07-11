@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from 'react';
  * デザインテーマに応じた動的なJSエフェクトおよび背景・装飾DOMを管理するコンポーネント。
  */
 export default function ThemeEffectManager() {
-  const { currentTheme, setTheme } = useThemeDesign();
+  const { currentTheme, setTheme, effectsEnabled } = useThemeDesign();
   const { resolvedTheme } = useTheme();
   const mounted = useIsClient();
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -27,6 +27,7 @@ export default function ThemeEffectManager() {
 
   // 1. スクロール監視 (Minimalの進捗ゲージ、Steampunkの歯車スクロール連動など)
   useEffect(() => {
+    if (!effectsEnabled) return;
     if (currentTheme !== 'minimal' && currentTheme !== 'steampunk') return;
 
     const handleScroll = () => {
@@ -47,10 +48,11 @@ export default function ThemeEffectManager() {
     // 初期実行
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [currentTheme]);
+  }, [currentTheme, effectsEnabled]);
 
   // 2. Neumorphism用の光源追従シャドウ (マウス追従)
   useEffect(() => {
+    if (!effectsEnabled) return;
     if (currentTheme !== 'neumorphism') return;
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -68,10 +70,11 @@ export default function ThemeEffectManager() {
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [currentTheme]);
+  }, [currentTheme, effectsEnabled]);
 
   // 3. 3D Interactive用のカードチルト効果 (JSによる3D Tilt)
   useEffect(() => {
+    if (!effectsEnabled) return;
     if (currentTheme !== 'three-d') return;
 
     let activeCard: HTMLElement | null = null;
@@ -150,7 +153,7 @@ export default function ThemeEffectManager() {
         resetCardStyle(c as HTMLElement);
       });
     };
-  }, [currentTheme]);
+  }, [currentTheme, effectsEnabled]);
 
   // Terminal CLIのキー監視
   useEffect(() => {
@@ -235,7 +238,7 @@ export default function ThemeEffectManager() {
   return (
     <>
       {/* ── 1. Minimal 用の極細スクロール進捗ゲージ ── */}
-      {currentTheme === 'minimal' && (
+      {currentTheme === 'minimal' && effectsEnabled && (
         <div
           className="fixed top-0 left-0 h-[2px] bg-blue-500 z-50 transition-all duration-75"
           style={{ width: `${scrollProgress}%` }}
@@ -254,14 +257,18 @@ export default function ThemeEffectManager() {
             }}
           />
           {/* 浮遊するカラフルなBlob */}
-          <div
-            className="absolute top-[20%] left-[10%] w-[35vw] h-[35vw] rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 opacity-25 blur-[120px] animate-pulse"
-            style={{ animationDuration: '8s' }}
-          />
-          <div
-            className="absolute bottom-[20%] right-[10%] w-[40vw] h-[40vw] rounded-full bg-gradient-to-r from-pink-600 to-rose-600 opacity-20 blur-[130px] animate-pulse"
-            style={{ animationDuration: '12s' }}
-          />
+          {effectsEnabled && (
+            <>
+              <div
+                className="absolute top-[20%] left-[10%] w-[35vw] h-[35vw] rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 opacity-25 blur-[120px] animate-pulse"
+                style={{ animationDuration: '8s' }}
+              />
+              <div
+                className="absolute bottom-[20%] right-[10%] w-[40vw] h-[40vw] rounded-full bg-gradient-to-r from-pink-600 to-rose-600 opacity-20 blur-[130px] animate-pulse"
+                style={{ animationDuration: '12s' }}
+              />
+            </>
+          )}
         </div>
       )}
 
@@ -271,7 +278,7 @@ export default function ThemeEffectManager() {
           {/* 左上の大歯車 */}
           <svg
             className="absolute top-[-80px] left-[-80px] w-64 h-64 text-[#8b6535] fill-none stroke-current stroke-2"
-            style={{ transform: 'rotate(var(--gear-rotation))' }}
+            style={{ transform: effectsEnabled ? 'rotate(var(--gear-rotation))' : 'rotate(0deg)' }}
             viewBox="0 0 100 100"
           >
             <circle cx="50" cy="50" r="30" />
@@ -287,7 +294,9 @@ export default function ThemeEffectManager() {
           {/* 右上の小歯車 (噛み合い逆回転) */}
           <svg
             className="absolute top-[100px] left-[130px] w-32 h-32 text-[#a05a0c] fill-none stroke-current stroke-2"
-            style={{ transform: 'rotate(var(--gear-rotation-anti))' }}
+            style={{
+              transform: effectsEnabled ? 'rotate(var(--gear-rotation-anti))' : 'rotate(0deg)',
+            }}
             viewBox="0 0 100 100"
           >
             <circle cx="50" cy="50" r="30" />
@@ -303,7 +312,7 @@ export default function ThemeEffectManager() {
           {/* 右下の大歯車 */}
           <svg
             className="absolute bottom-[-100px] right-[-100px] w-80 h-80 text-[#8b6535] fill-none stroke-current stroke-2"
-            style={{ transform: 'rotate(var(--gear-rotation))' }}
+            style={{ transform: effectsEnabled ? 'rotate(var(--gear-rotation))' : 'rotate(0deg)' }}
             viewBox="0 0 100 100"
           >
             <circle cx="50" cy="50" r="35" />
@@ -355,7 +364,7 @@ export default function ThemeEffectManager() {
                 backgroundSize: '40px 40px, 40px 40px, 100% 100%',
                 backgroundPosition: '0 0, 0 0, 0 0',
                 transform: 'rotateX(75deg)',
-                animation: 'synthwave-grid-scroll 3s linear infinite',
+                animation: effectsEnabled ? 'synthwave-grid-scroll 3s linear infinite' : 'none',
               }}
             />
           </div>
@@ -377,13 +386,13 @@ export default function ThemeEffectManager() {
           <div
             className={`absolute bottom-[-15%] left-[-15%] w-[70vw] h-[70vw] rounded-full bg-gradient-to-tr ${
               isDark ? 'from-[#3a1a05] via-[#240b02] to-[#120501]' : 'from-[#faebe1] to-[#e4ede7]'
-            } blur-[120px] fireplace-flame-1`}
+            } blur-[120px] ${effectsEnabled ? 'fireplace-flame-1' : ''}`}
           />
           {/* 右上の炎 / 暖色（ダークモード） or セージグリーン（ライトモード） */}
           <div
             className={`absolute top-[-15%] right-[-15%] w-[60vw] h-[60vw] rounded-full bg-gradient-to-bl ${
               isDark ? 'from-[#2e0f02] via-[#1a0801] to-[#0f0400]' : 'from-[#e9f2ef] to-[#f4ebe3]'
-            } blur-[100px] fireplace-flame-2`}
+            } blur-[100px] ${effectsEnabled ? 'fireplace-flame-2' : ''}`}
           />
         </div>
       )}
