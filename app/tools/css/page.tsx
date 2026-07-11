@@ -3,14 +3,15 @@
 
 import { Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { Paintbrush, Layers, Ruler, Activity } from 'lucide-react';
+import { Paintbrush, Layers, Ruler, Activity, Layout } from 'lucide-react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import CssGradient from '@/src/components/tools/css/CssGradient';
 import CssGenerator from '@/src/components/tools/css/CssGenerator';
 import CssUnit from '@/src/components/tools/css/CssUnit';
 import CubicBezier from '@/src/components/tools/css/CubicBezier';
+import FlexboxGrid from '@/src/components/tools/css/FlexboxGrid';
 
-type SubToolKey = 'gradient' | 'generator' | 'unit' | 'cubic-bezier';
+type SubToolKey = 'gradient' | 'generator' | 'unit' | 'cubic-bezier' | 'flexbox-grid';
 
 const SUB_TOOLS = {
   gradient: {
@@ -26,6 +27,13 @@ const SUB_TOOLS = {
       'Glassmorphismやすりガラス風エフェクト、および極上の陰影（Smooth Shadow）をビジュアル調整しながら生成します。',
     icon: Layers,
     component: CssGenerator,
+  },
+  'flexbox-grid': {
+    label: 'Flexbox & Grid Playground',
+    description:
+      'FlexboxとCSS Gridのレイアウトプロパティを視覚的に操作し、HTML/CSSコードを自動生成します。',
+    icon: Layout,
+    component: FlexboxGrid,
   },
   unit: {
     label: 'Unit Converter',

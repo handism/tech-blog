@@ -1,51 +1,58 @@
-// app/tools/calculator/page.tsx
+// app/tools/text-toolkit/page.tsx
 'use client';
 
 import { Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { Calculator, Hash, Ruler } from 'lucide-react';
+import { FileText, EyeOff, AlignLeft, Split } from 'lucide-react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
-import StandardCalculator from '@/src/components/tools/calculator/StandardCalculator';
-import BitwiseConverter from '@/src/components/tools/calculator/BitwiseConverter';
-import AspectRatio from '@/src/components/tools/calculator/AspectRatio';
+import TextCase from '@/src/components/tools/text-toolkit/TextCase';
+import InvisibleCharacters from '@/src/components/tools/text-toolkit/InvisibleCharacters';
+import LoremIpsum from '@/src/components/tools/text-toolkit/LoremIpsum';
+import DiffViewer from '@/src/components/tools/text-toolkit/DiffViewer';
 
-type SubToolKey = 'standard' | 'bitwise' | 'aspect';
+type SubToolKey = 'case' | 'invisible' | 'lorem' | 'diff';
 
 const SUB_TOOLS = {
-  standard: {
-    label: 'Calculator',
-    description:
-      'シンプルで使いやすい多機能電卓。履歴機能、キーボード入力、結果のコピー機能も搭載しています。',
-    icon: Calculator,
-    component: StandardCalculator,
+  case: {
+    label: 'Text Case Converter & Counter',
+    description: '大文字・小文字などの変換および文字数・行数のリアルタイムカウントを行います。',
+    icon: FileText,
+    component: TextCase,
   },
-  bitwise: {
-    label: 'Bitwise & Radix Converter',
-    description: '進数変換とビット操作（トグル切替）や基本的なビット演算の可視化を行います。',
-    icon: Hash,
-    component: BitwiseConverter,
-  },
-  aspect: {
-    label: 'Aspect Ratio Calculator',
+  invisible: {
+    label: 'Invisible Character Detector',
     description:
-      '画面解像度や画像サイズからアスペクト比を計算し、双方向で幅・高さを自動補完します。',
-    icon: Ruler,
-    component: AspectRatio,
+      '全角スペースやゼロ幅スペースなどの不可視文字・特殊文字を検出し、ワンクリックで除去します。',
+    icon: EyeOff,
+    component: InvisibleCharacters,
+  },
+  lorem: {
+    label: 'Lorem Ipsum & Dummy Text',
+    description:
+      '段落数や文字数を指定して、レイアウト確認用のダミーテキスト（日本語・ラテン語）を瞬時に作成します。',
+    icon: AlignLeft,
+    component: LoremIpsum,
+  },
+  diff: {
+    label: 'Diff Viewer',
+    description: '2つのテキストを並べて変更箇所を行単位・文字単位で視覚的に比較します。',
+    icon: Split,
+    component: DiffViewer,
   },
 } as const;
 
-function CalculatorToolkitContent() {
+function TextToolkitContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const currentTab = (searchParams.get('tab') || 'standard') as SubToolKey;
-  const activeTab: SubToolKey = currentTab in SUB_TOOLS ? currentTab : 'standard';
+  const currentTab = (searchParams.get('tab') || 'case') as SubToolKey;
+  const activeTab: SubToolKey = currentTab in SUB_TOOLS ? currentTab : 'case';
 
   const activeTool = SUB_TOOLS[activeTab];
   const ActiveComponent = activeTool.component;
 
   const handleTabChange = (tab: SubToolKey) => {
-    router.push(`/tools/calculator?tab=${tab}`);
+    router.push(`/tools/text-toolkit?tab=${tab}`);
   };
 
   return (
@@ -91,7 +98,7 @@ function CalculatorToolkitContent() {
   );
 }
 
-export default function CalculatorToolkit() {
+export default function TextToolkit() {
   return (
     <Suspense
       fallback={
@@ -100,7 +107,7 @@ export default function CalculatorToolkit() {
         </div>
       }
     >
-      <CalculatorToolkitContent />
+      <TextToolkitContent />
     </Suspense>
   );
 }

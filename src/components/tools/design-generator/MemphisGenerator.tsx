@@ -1,0 +1,381 @@
+// app/tools/memphis/page.tsx
+'use client';
+
+import { siteConfig } from '@/src/config/site';
+import { Image as ImageIcon } from 'lucide-react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+
+// =====================
+// Types
+// =====================
+
+/**
+ * 出力サイズ定義。
+ */
+type Size = { width: number; height: number; label: string };
+
+/**
+ * 描画密度定義。
+ */
+type Density = { name: string; min: number; max: number };
+
+/**
+ * カラーパレット定義。
+ */
+type ColorPalette = {
+  name: string;
+  primary: string[];
+  secondary: string[];
+  backgrounds: string[];
+};
+
+/**
+ * サイズのキー。
+ */
+type SizeKey = 'youtube' | 'instagram' | 'twitter';
+
+/**
+ * 密度のキー。
+ */
+type DensityKey = 'simple' | 'standard' | 'busy';
+
+/**
+ * トーンのキー。
+ */
+type ToneKey = 'pale' | 'light' | 'bright' | 'vivid';
+
+/**
+ * 背景指定モード。
+ */
+type BackgroundMode = 'auto' | 'custom' | 'transparent';
+
+// =====================
+// Constants
+// =====================
+
+/**
+ * 出力サイズの一覧。
+ */
+const sizes: Record<SizeKey, Size> = {
+  youtube: { width: 1280, height: 720, label: 'YouTube サムネイル (1280×720)' },
+  instagram: { width: 1080, height: 1080, label: 'Instagram 投稿 (1080×1080)' },
+  twitter: { width: 1200, height: 675, label: 'X (Twitter) 投稿 (1200×675)' },
+};
+
+/**
+ * 描画密度の一覧。
+ */
+const densities: Record<DensityKey, Density> = {
+  simple: { name: 'シンプル', min: 8, max: 15 },
+  standard: { name: '標準', min: 20, max: 30 },
+  busy: { name: '賑やか', min: 35, max: 50 },
+};
+
+/**
+ * トーン別のカラーパレット。
+ */
+const colorPalettes: Record<ToneKey, ColorPalette> = {
+  pale: {
+    name: 'ペールトーン',
+    primary: ['#FFB3C1', '#FFFACD', '#B4E7F5', '#D4C5F9', '#FFB6B9'],
+    secondary: ['#C9E4CA', '#FFF4E0', '#E8C4F7', '#C1E1C1', '#FAD2E1'],
+    backgrounds: ['#FFF9F3', '#F7F9FB', '#FFF5F7', '#F8F9FF', '#FFFEF7'],
+  },
+  light: {
+    name: 'ライトトーン',
+    primary: ['#FFD4E5', '#FFF9B1', '#C4E8F5', '#E5D4FF', '#FFD4D4'],
+    secondary: ['#D4F1D4', '#FFEAA7', '#DFD4FF', '#D4F5E8', '#FFE4E8'],
+    backgrounds: ['#FFFBF5', '#F5FAFF', '#FFF7FA', '#FAFBFF', '#FFFFF5'],
+  },
+  bright: {
+    name: 'ブライトトーン',
+    primary: ['#FF9EBB', '#FFE066', '#66D9EF', '#B98FFF', '#FF8A8A'],
+    secondary: ['#8FE8A0', '#FFD93D', '#C78FFF', '#6EDDB8', '#FFA8B8'],
+    backgrounds: ['#FFF8F0', '#F0F8FF', '#FFF3F8', '#F8F0FF', '#FFFEF0'],
+  },
+  vivid: {
+    name: 'ビビッドトーン',
+    primary: ['#FF6B9D', '#FEC601', '#00D9FF', '#A259FF', '#FF4E50'],
+    secondary: ['#00E676', '#FFD600', '#D500F9', '#00BFA5', '#FF1744'],
+    backgrounds: ['#FFF5E6', '#E8F4F8', '#FFF0F5', '#F0F8FF', '#FFFACD'],
+  },
+};
+
+// =====================
+// Utils
+// =====================
+
+/**
+ * シード値から擬似乱数を生成する。
+ */
+const seededRandom = (seed: number): number => {
+  const x = Math.sin(seed++) * 10000;
+  return x - Math.floor(x);
+};
+
+/**
+ * パレットから色を選択する。
+ */
+const getRandomColor = (palette: string[], seed: number): string => {
+  const index = Math.floor(seededRandom(seed) * palette.length);
+  return palette[index];
+};
+
+// =====================
+// Component
+// =====================
+
+/**
+ * メンフィス柄のジェネレーター画面。
+ */
+export default function MemphisGenerator() {
+  useEffect(() => {
+    document.title = `Memphis Generator | ${siteConfig.name}`;
+  }, []);
+
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const [selectedSize, setSelectedSize] = useState<SizeKey>('youtube');
+  const [selectedTone, setSelectedTone] = useState<ToneKey>('pale');
+  const [selectedDensity, setSelectedDensity] = useState<DensityKey>('standard');
+  const [backgroundMode] = useState<BackgroundMode>('auto');
+  const [customBackgroundColor] = useState('#FFF9F3');
+  const [seed, setSeed] = useState(() => Date.now());
+
+  const colors = colorPalettes[selectedTone];
+
+  // =====================
+  // Drawing
+  // =====================
+
+  /**
+   * キャンバスにメンフィス柄を描画する。
+   */
+  const draw = useCallback(
+    (ctx: CanvasRenderingContext2D, width: number, height: number) => {
+      ctx.clearRect(0, 0, width, height);
+
+      if (backgroundMode === 'custom') {
+        ctx.fillStyle = customBackgroundColor;
+        ctx.fillRect(0, 0, width, height);
+      } else if (backgroundMode === 'auto') {
+        ctx.fillStyle = getRandomColor(colors.backgrounds, seed);
+        ctx.fillRect(0, 0, width, height);
+      }
+
+      let s = seed;
+      const { min, max } = densities[selectedDensity];
+      const count = min + Math.floor(seededRandom(s++) * (max - min + 1));
+
+      for (let i = 0; i < count; i++) {
+        const type = Math.floor(seededRandom(s++) * 7);
+        const x = seededRandom(s++) * width;
+        const y = seededRandom(s++) * height;
+        const size = 30 + seededRandom(s++) * 150;
+        const rot = seededRandom(s++) * Math.PI * 2;
+        const color =
+          seededRandom(s++) > 0.5
+            ? getRandomColor(colors.primary, s++)
+            : getRandomColor(colors.secondary, s++);
+
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(rot);
+        ctx.fillStyle = color;
+        ctx.strokeStyle = color;
+        ctx.lineWidth = seededRandom(s++) > 0.8 ? 4 : 0;
+
+        switch (type) {
+          case 0:
+            ctx.beginPath();
+            ctx.arc(0, 0, size / 2, 0, Math.PI * 2);
+            if (seededRandom(s++) > 0.5) {
+              ctx.fill();
+            } else {
+              ctx.stroke();
+            }
+            break;
+          case 1:
+            ctx.fillRect(-size / 2, -size / 2, size, size);
+            break;
+          case 2:
+            ctx.beginPath();
+            ctx.moveTo(0, -size / 2);
+            ctx.lineTo(-size / 2, size / 2);
+            ctx.lineTo(size / 2, size / 2);
+            ctx.closePath();
+            if (seededRandom(s++) > 0.5) {
+              ctx.fill();
+            } else {
+              ctx.stroke();
+            }
+            break;
+          case 3:
+            ctx.beginPath();
+            ctx.lineWidth = 5;
+            for (let j = 0; j < 5; j++) {
+              ctx.lineTo((j - 2.5) * 30, (j % 2) * 30 - 15);
+            }
+            ctx.stroke();
+            break;
+          case 4:
+            ctx.beginPath();
+            ctx.lineWidth = 5;
+            for (let t = 0; t < Math.PI * 2; t += 0.1) {
+              const wx = t * 20 - 60;
+              const wy = Math.sin(t * 3) * 20;
+              if (t === 0) {
+                ctx.moveTo(wx, wy);
+              } else {
+                ctx.lineTo(wx, wy);
+              }
+            }
+            ctx.stroke();
+            break;
+          case 5:
+            for (let dx = -2; dx <= 2; dx++) {
+              for (let dy = -2; dy <= 2; dy++) {
+                ctx.beginPath();
+                ctx.arc(dx * 15, dy * 15, 4, 0, Math.PI * 2);
+                ctx.fill();
+              }
+            }
+            break;
+          case 6:
+            ctx.beginPath();
+            ctx.arc(0, 0, size / 2, 0, Math.PI);
+            if (seededRandom(s++) > 0.5) {
+              ctx.fill();
+            } else {
+              ctx.stroke();
+            }
+            break;
+        }
+
+        ctx.restore();
+      }
+    },
+    [backgroundMode, customBackgroundColor, colors, seed, selectedDensity]
+  );
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const { width, height } = sizes[selectedSize];
+    canvas.width = width;
+    canvas.height = height;
+    draw(ctx, width, height);
+  }, [draw, selectedSize]);
+
+  // =====================
+  // Actions
+  // =====================
+
+  /**
+   * 現在のキャンバスをPNGでダウンロードする。
+   */
+  const downloadPNG = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const a = document.createElement('a');
+    a.download = `memphis-${seed}.png`;
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+  };
+
+  // =====================
+  // UI
+  // =====================
+
+  return (
+    <>
+      <main className="w-full rounded-3xl bg-card border border-border p-5 shadow-lg">
+        {/* Controls */}
+        <div className="grid gap-8 md:grid-cols-2">
+          <div className="space-y-6">
+            <section>
+              <h2 className="mb-3 font-bold text-text">サイズ</h2>
+              <div className="grid gap-2">
+                {(Object.keys(sizes) as SizeKey[]).map((k) => (
+                  <button
+                    key={k}
+                    onClick={() => setSelectedSize(k)}
+                    className={`rounded-xl border px-4 py-3 text-left font-semibold transition ${
+                      selectedSize === k
+                        ? 'border-accent bg-accent/10 text-accent'
+                        : 'border-border text-text hover:bg-secondary'
+                    }`}
+                  >
+                    {sizes[k].label}
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            <section>
+              <h2 className="mb-3 font-bold text-text">トーン</h2>
+              <div className="grid grid-cols-2 gap-2">
+                {(Object.keys(colorPalettes) as ToneKey[]).map((k) => (
+                  <button
+                    key={k}
+                    onClick={() => setSelectedTone(k)}
+                    className={`rounded-xl border px-4 py-3 font-semibold transition ${
+                      selectedTone === k
+                        ? 'border-accent bg-accent/10 text-accent'
+                        : 'border-border text-text hover:bg-secondary'
+                    }`}
+                  >
+                    {colorPalettes[k].name}
+                  </button>
+                ))}
+              </div>
+            </section>
+
+            <section>
+              <h2 className="mb-3 font-bold text-text">密度</h2>
+              <div className="grid grid-cols-3 gap-2">
+                {(Object.keys(densities) as DensityKey[]).map((k) => (
+                  <button
+                    key={k}
+                    onClick={() => setSelectedDensity(k)}
+                    className={`rounded-xl border px-3 py-3 font-semibold transition ${
+                      selectedDensity === k
+                        ? 'border-accent bg-accent/10 text-accent'
+                        : 'border-border text-text hover:bg-secondary'
+                    }`}
+                  >
+                    {densities[k].name}
+                  </button>
+                ))}
+              </div>
+            </section>
+          </div>
+
+          {/* Preview */}
+          <div className="flex items-center justify-center rounded-2xl border border-border bg-secondary p-4">
+            <canvas ref={canvasRef} className="max-h-125 max-w-full" />
+          </div>
+        </div>
+
+        {/* Actions */}
+        <div className="mt-8 grid gap-4 md:grid-cols-2">
+          <button
+            onClick={() => setSeed(Date.now())}
+            className="rounded-xl border border-border bg-secondary py-4 font-bold text-text shadow hover:bg-accent/10 hover:border-accent hover:text-accent transition"
+          >
+            新しく生成
+          </button>
+          <button
+            onClick={downloadPNG}
+            className="rounded-xl bg-accent py-4 font-bold text-white shadow hover:opacity-90 transition"
+          >
+            PNG ダウンロード
+          </button>
+        </div>
+      </main>
+    </>
+  );
+}

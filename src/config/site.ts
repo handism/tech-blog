@@ -191,73 +191,32 @@ export interface ToolItem {
  * ヘッダー / 専用ページで利用するメニュー項目。
  */
 export const toolsMenuItems: readonly ToolItem[] = [
-  // 画像処理
+  // ── 画像処理 ＆ グラフィック (image) ──
   {
-    href: '/tools/neo-brutalism',
-    label: 'Neo-Brutalism UI Generator',
-    description: 'ネオブルータリズム特有の太線ボーダーやハードシャドウ、発光ネオンを直感的に生成',
-    emoji: '🎨',
-    category: 'image',
-  },
-  {
-    href: '/tools/image-optimizer',
-    label: 'Image Converter & Optimizer',
-    description: 'ブラウザ上だけで画像のWebP変換、リサイズ、品質（画質）調整を安全・高速に実行',
+    href: '/tools/image-editor',
+    label: 'Image Studio',
+    description: '画像のWebP変換・圧縮、トリミング、Favicon & App Icon生成を行う画像編集ツール集',
     emoji: '🖼️',
     category: 'image',
   },
   {
-    href: '/tools/memphis',
-    label: 'Memphis Generator',
-    description: 'メンフィスパターンのモダンな幾何学背景を直感的に生成・カスタマイズ',
-    emoji: '🎨',
-    category: 'image',
-  },
-  {
-    href: '/tools/trimming',
-    label: 'Image Trimmer',
-    description: '画像を任意の縦横比やカスタムサイズでトリミング・リサイズ・保存',
-    emoji: '✂️',
-    category: 'image',
-  },
-  {
-    href: '/tools/favicon-generator',
-    label: 'Favicon & App Icon Generator',
-    description: 'アップロード画像から各サイズアイコンへリサイズ・ZIP一括生成',
-    emoji: '📲',
-    category: 'image',
-  },
-  {
-    href: '/tools/svg-editor',
-    label: 'SVG Path Visualizer & Optimizer',
-    description: 'SVGコードのプレビュー表示と、不要な属性や余白の簡易クリーンアップ',
-    emoji: '🎨',
-    category: 'image',
-  },
-  {
-    href: '/tools/pixel-art',
-    label: 'Pixel Art Canvas',
-    description: '16x16や32x32のグリッド上に直感的にドット絵を描き、PNG/SVGで保存',
-    emoji: '👾',
-    category: 'image',
-  },
-  {
-    href: '/tools/svg-wave-blob',
-    label: 'SVG Wave & Blob Generator',
+    href: '/tools/svg-toolkit',
+    label: 'SVG Toolkit',
     description:
-      '美しい波形（Wave）やアメーバ状の不定形シェイプ（Blob）を直感的に生成・カスタマイズしSVG出力',
+      'SVGプレビュー、波形/アメーバ生成、SVG-CSS変換、ダミー画像（Placeholder）生成を行うSVGユーティリティ集',
     emoji: '🌊',
     category: 'image',
   },
-  // データ変換
   {
-    href: '/tools/markup',
-    label: 'Markup & Markdown Editor',
+    href: '/tools/design-generator',
+    label: 'UI & Graphic Generator',
     description:
-      'Markdownエディタ/テーブル作成、HTMLからJSXへの変換、HTML実体参照エスケープなどのツール集',
-    emoji: '📝',
-    category: 'dev',
+      'Neo-Brutalism UI、メンフィス幾何学背景、Pixel Art（ドット絵）の生成・作成ツール集',
+    emoji: '🎨',
+    category: 'image',
   },
+
+  // ── データ変換 (convert) ──
   {
     href: '/tools/data-json',
     label: 'Data & JSON Toolkit',
@@ -266,7 +225,6 @@ export const toolsMenuItems: readonly ToolItem[] = [
     emoji: '📊',
     category: 'convert',
   },
-
   {
     href: '/tools/crypto',
     label: 'Crypto & ID Generator',
@@ -274,6 +232,24 @@ export const toolsMenuItems: readonly ToolItem[] = [
       'Base64変換、暗号ハッシュ生成、JWTデコード、UUID作成、セキュアパスワード生成などのツール集',
     emoji: '🔑',
     category: 'convert',
+  },
+  {
+    href: '/tools/text-toolkit',
+    label: 'Text Studio',
+    description:
+      '文字カウント・ケース変換、不可視文字検出、Lorem Ipsum（ダミーテキスト）生成、Diff比較を行うテキスト編集ツール集',
+    emoji: '📝',
+    category: 'convert',
+  },
+
+  // ── 開発者ツール (dev) ──
+  {
+    href: '/tools/markup',
+    label: 'Markup & Markdown Editor',
+    description:
+      'Markdownエディタ、Markdownテーブル生成、HTML実体参照エスケープなどのマークアップ支援ツール集',
+    emoji: '📝',
+    category: 'dev',
   },
   {
     href: '/tools/url',
@@ -284,13 +260,29 @@ export const toolsMenuItems: readonly ToolItem[] = [
     category: 'dev',
   },
   {
-    href: '/tools/svg-to-css',
-    label: 'SVG to CSS Converter',
-    description: 'SVGコードをCSS背景画像用URL (Data URI/Base64) やJSX用に最適化・相互変換',
-    emoji: '🎨',
-    category: 'convert',
+    href: '/tools/code-helper',
+    label: 'Code Helper',
+    description:
+      '正規表現テスト、Curlから各種プログラミング言語のコードへの変換、HTMLからJSXへの変換を行う開発支援ツール集',
+    emoji: '🚀',
+    category: 'dev',
   },
-  // エンジニアツール
+  {
+    href: '/tools/calculator',
+    label: 'Developer Calculator',
+    description:
+      '多機能電卓、進数変換・ビット演算（トグル可視化）、アスペクト比計算を行う計算ツール集',
+    emoji: '🧮',
+    category: 'dev',
+  },
+  {
+    href: '/tools/css',
+    label: 'CSS & Layout Toolkit',
+    description:
+      'CSSグラデーション、すりガラス・影生成、CSS単位変換、イージング曲線設計、Flexbox & GridシミュレーターのCSSツール集',
+    emoji: '🎨',
+    category: 'dev',
+  },
   {
     href: '/tools/aws-diagram',
     label: 'AWS Architecture Diagram Generator',
@@ -303,15 +295,8 @@ export const toolsMenuItems: readonly ToolItem[] = [
     href: '/tools/git',
     label: 'Git Utilities',
     description:
-      'Conventional Commits準拠のメッセージ生成、およびやりたいことからGitコマンドを生成するツール集',
+      'Conventional Commits準拠 of メッセージ生成、およびやりたいことからGitコマンドを生成するツール集',
     emoji: '🌱',
-    category: 'dev',
-  },
-  {
-    href: '/tools/aspect-ratio',
-    label: 'Aspect Ratio Calculator',
-    description: '画面解像度や画像サイズからアスペクト比を計算し、双方向で幅・高さを自動補完',
-    emoji: '📐',
     category: 'dev',
   },
   {
@@ -323,18 +308,11 @@ export const toolsMenuItems: readonly ToolItem[] = [
     category: 'dev',
   },
   {
-    href: '/tools/css',
-    label: 'CSS & Design Toolkit',
+    href: '/tools/time',
+    label: 'Time & Schedule Utilities',
     description:
-      'グラデーション・メッシュ作成、Glassmorphism・Shadow生成、単位変換、Cubic-Bezier調整などのツール集',
-    emoji: '🎨',
-    category: 'dev',
-  },
-  {
-    href: '/tools/regex-tester',
-    label: 'Regex Tester',
-    description: '正規表現パターンの一致確認とキャプチャグループのリアルタイムテスト',
-    emoji: '🔍',
+      'Unixタイムスタンプの相互変換、主要タイムゾーン時間表示、およびCronスケジュール解析ツール集',
+    emoji: '⏰',
     category: 'dev',
   },
   {
@@ -353,77 +331,10 @@ export const toolsMenuItems: readonly ToolItem[] = [
     category: 'dev',
   },
   {
-    href: '/tools/diff-viewer',
-    label: 'Diff Viewer',
-    description: '2つのテキストを並べて変更箇所を行単位・文字単位で視覚的に比較',
-    emoji: '🆚',
-    category: 'dev',
-  },
-  {
-    href: '/tools/time',
-    label: 'Time & Schedule Utilities',
-    description:
-      'Unixタイムスタンプの相互変換、主要タイムゾーン時間表示、およびCronスケジュール解析ツール集',
-    emoji: '⏰',
-    category: 'dev',
-  },
-  {
-    href: '/tools/text-case',
-    label: 'Text Case Converter & Counter',
-    description: '大文字・小文字などの変換および文字数・行数のリアルタイムカウント',
-    emoji: '✍️',
-    category: 'dev',
-  },
-  {
     href: '/tools/keyboard-events',
     label: 'Keyboard Event Visualizer',
     description: '押したキーのJavaScriptイベントパラメータや仮想キーボード上の位置を表示',
     emoji: '⌨️',
-    category: 'dev',
-  },
-  {
-    href: '/tools/bitwise',
-    label: 'Bitwise & Radix Converter',
-    description: '進数変換とビット操作（トグル切替）や基本的なビット演算の可視化',
-    emoji: '🔢',
-    category: 'dev',
-  },
-  {
-    href: '/tools/curl-converter',
-    label: 'Curl to Code Converter',
-    description: 'CurlリクエストをFetch、Axios、Python等マルチ言語のコードに相互変換',
-    emoji: '🚀',
-    category: 'dev',
-  },
-  {
-    href: '/tools/lorem-ipsum',
-    label: 'Lorem Ipsum & Dummy Text',
-    description:
-      '段落数や文字数を指定して、レイアウト確認用のダミーテキスト（日本語・ラテン語）を瞬時に作成',
-    emoji: '✍️',
-    category: 'dev',
-  },
-  {
-    href: '/tools/invisible-characters',
-    label: 'Invisible Character Detector',
-    description:
-      '全角スペースやゼロ幅スペースなどの不可視文字・特殊文字を検出し、ワンクリックで除去',
-    emoji: '🔍',
-    category: 'dev',
-  },
-  {
-    href: '/tools/flexbox-grid',
-    label: 'CSS Flexbox & Grid Playground',
-    description:
-      'FlexboxとCSS Gridのレイアウトプロパティを視覚的に操作し、HTML/CSSコードを自動生成',
-    emoji: '📐',
-    category: 'dev',
-  },
-  {
-    href: '/tools/calculator',
-    label: 'Calculator',
-    description: 'シンプルで使いやすい多機能電卓。履歴機能、キーボード入力、結果のコピー機能も搭載',
-    emoji: '🧮',
     category: 'dev',
   },
   {
@@ -434,15 +345,8 @@ export const toolsMenuItems: readonly ToolItem[] = [
     emoji: '⏱️',
     category: 'dev',
   },
-  {
-    href: '/tools/placeholder-generator',
-    label: 'SVG Placeholder Generator',
-    description:
-      'モックアップ作成に便利な指定サイズ・指定テキストのダミー画像（SVG / PNG）を一瞬で生成',
-    emoji: '🖼️',
-    category: 'image',
-  },
-  // 外部ツール
+
+  // ── 外部ツール (external) ──
   {
     href: 'https://handism.github.io/sauna-itta/',
     label: 'Sauna Itta',

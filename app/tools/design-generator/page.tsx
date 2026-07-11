@@ -1,51 +1,50 @@
-// app/tools/calculator/page.tsx
+// app/tools/design-generator/page.tsx
 'use client';
 
 import { Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { Calculator, Hash, Ruler } from 'lucide-react';
+import { Paintbrush, ImageIcon, Gamepad2 } from 'lucide-react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
-import StandardCalculator from '@/src/components/tools/calculator/StandardCalculator';
-import BitwiseConverter from '@/src/components/tools/calculator/BitwiseConverter';
-import AspectRatio from '@/src/components/tools/calculator/AspectRatio';
+import NeoBrutalism from '@/src/components/tools/design-generator/NeoBrutalism';
+import MemphisGenerator from '@/src/components/tools/design-generator/MemphisGenerator';
+import PixelArt from '@/src/components/tools/design-generator/PixelArt';
 
-type SubToolKey = 'standard' | 'bitwise' | 'aspect';
+type SubToolKey = 'neo-brutalism' | 'memphis' | 'pixel-art';
 
 const SUB_TOOLS = {
-  standard: {
-    label: 'Calculator',
+  'neo-brutalism': {
+    label: 'Neo-Brutalism UI Generator',
     description:
-      'シンプルで使いやすい多機能電卓。履歴機能、キーボード入力、結果のコピー機能も搭載しています。',
-    icon: Calculator,
-    component: StandardCalculator,
+      'ネオブルータリズム特有の太線ボーダーやハードシャドウ、発光ネオンを直感的に生成・カスタマイズします。',
+    icon: Paintbrush,
+    component: NeoBrutalism,
   },
-  bitwise: {
-    label: 'Bitwise & Radix Converter',
-    description: '進数変換とビット操作（トグル切替）や基本的なビット演算の可視化を行います。',
-    icon: Hash,
-    component: BitwiseConverter,
+  memphis: {
+    label: 'Memphis Generator',
+    description: 'メンフィスパターンのモダンな幾何学背景を直感的に生成・カスタマイズします。',
+    icon: ImageIcon,
+    component: MemphisGenerator,
   },
-  aspect: {
-    label: 'Aspect Ratio Calculator',
-    description:
-      '画面解像度や画像サイズからアスペクト比を計算し、双方向で幅・高さを自動補完します。',
-    icon: Ruler,
-    component: AspectRatio,
+  'pixel-art': {
+    label: 'Pixel Art Canvas',
+    description: '16x16や32x32のグリッド上に直感的にドット絵を描き、PNG/SVGで保存します。',
+    icon: Gamepad2,
+    component: PixelArt,
   },
 } as const;
 
-function CalculatorToolkitContent() {
+function DesignGeneratorToolkitContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const currentTab = (searchParams.get('tab') || 'standard') as SubToolKey;
-  const activeTab: SubToolKey = currentTab in SUB_TOOLS ? currentTab : 'standard';
+  const currentTab = (searchParams.get('tab') || 'neo-brutalism') as SubToolKey;
+  const activeTab: SubToolKey = currentTab in SUB_TOOLS ? currentTab : 'neo-brutalism';
 
   const activeTool = SUB_TOOLS[activeTab];
   const ActiveComponent = activeTool.component;
 
   const handleTabChange = (tab: SubToolKey) => {
-    router.push(`/tools/calculator?tab=${tab}`);
+    router.push(`/tools/design-generator?tab=${tab}`);
   };
 
   return (
@@ -91,7 +90,7 @@ function CalculatorToolkitContent() {
   );
 }
 
-export default function CalculatorToolkit() {
+export default function DesignGeneratorToolkit() {
   return (
     <Suspense
       fallback={
@@ -100,7 +99,7 @@ export default function CalculatorToolkit() {
         </div>
       }
     >
-      <CalculatorToolkitContent />
+      <DesignGeneratorToolkitContent />
     </Suspense>
   );
 }

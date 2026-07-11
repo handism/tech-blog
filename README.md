@@ -10,15 +10,15 @@
 - サムネイル画像にも対応。比率は 16:9 がおすすめ
 - サイドバーありの 2 カラムレイアウトで、レスポンシブレイアウトに対応
 - 記事のデータソースは `Markdown ファイル` に対応
-- ヘッダーの Tools メニューから利用できるブラウザ完結型の便利ツール（全55種）を内蔵
-  - **🎨 画像処理**: Neo-Brutalism UI Generator, Image Converter & Optimizer, Memphis Generator, Image Trimmer, Favicon & App Icon Generator, SVG Path Visualizer & Optimizer, Pixel Art Canvas, SVG Wave & Blob Generator (8種)
-  - **🔄 データ変換**: HTML to JSX Converter, Mock JSON Data Generator, Timezone Converter, JSON Formatter, YAML ↔ JSON, Base64 Codec, URL Codec, UUID Generator, HTML Entity Encoder / Decoder, CSV ↔ JSON, Password Generator, JSON to TypeScript / Zod, SVG to CSS Converter, JSON Diff Comparer (14種)
-  - **🛠️ 開発者向けツール**: Calculator, Git Commit & Branch Helper, Aspect Ratio Calculator, HTTP Security Headers Generator, CSS Cubic-Bezier Visualizer, Regex Tester, Hash Generator, Color Converter, JWT Decoder, QR Code Generator, Diff Viewer, Unix Timestamp Converter, Cron Parser & Generator, URL Parser & Query Inspector, SQL Formatter, Text Case Converter & Counter, User Agent Parser, CSS Generator, Color Contrast & Palette, Keyboard Event Visualizer, Bitwise & Radix Converter, Git Command Helper, Curl to Code Converter, CSS Unit Converter, HTTP Request Tester, Lorem Ipsum & Dummy Text, Markdown Table Editor, IP Subnet & CIDR Calculator, HTTP Status Code Explorer, Invisible Character Detector, CSS Flexbox & Grid Playground (31種)
+- ヘッダーの Tools メニューから利用できるブラウザ完結型の便利ツール（Toolkit形式で全60機能に整理）を内蔵
+  - **🎨 画像 ＆ グラフィック (3種・全10機能)**: Image Studio (WebP変換・トリミング・favicon), SVG Toolkit (プレビュー・波形生成・CSS変換・ダミー画像), UI & Graphic Generator (Neo-Brutalism・メンフィス背景・ドット絵)
+  - **🔄 データ変換 ＆ テキスト (4種・全18機能)**: Data & JSON Toolkit (JSON/YAML/CSV/SQL変換・整形), Crypto & ID Generator (Base64・ハッシュ・JWT・UUID・パスワード), Text Studio (ケース変換・文字カウント・不可視文字検出・Lorem Ipsum・Diff), Color Utilities (コード変換・コントラスト)
+  - **🛠️ 開発者向けツール (12種・全30機能)**: Code Helper (正規表現・Curl・HTML to JSX), Developer Calculator (電卓・進数変換・アスペクト比), CSS & Layout Toolkit (CSS/Flexbox/Gridシミュレーター), AWS Architecture Diagram Generator, Git Utilities, Web & Network Utilities, Time & Schedule Utilities, Markup & Markdown Editor, URL & Web Utilities, QR Code Generator, Keyboard Event Visualizer, Pomodoro Focus Timer
   - **🧖 外部ツール**: Sauna Itta, Sauna Simulator (2種)
 - About・プライバシーポリシー・HTML Sitemap・RSS フィードページを提供
 - **Scraps**（`/scraps`）：Twitter/Mastodon 感覚で日々の気づきやエラー解決ログを短く残せる技術メモ欄。独立したネオ・ブルータリズム風のカード形式で表示されます。`scraps/` ディレクトリに Markdown を置くだけで公開される
 - **学習ガイド**（`/learning`）：Docker、GitHub、Webセキュリティ、API設計、Linux & Bash、ネットワークの基本、CI/CDパイプライン、システムデザイン、Gitアドバンスド、AWSクラウド、フロントエンドテスト、モダンCSS、データベース、Next.js、パフォーマンス、React Hooks、TypeScript などの各種仕組みを順序立てて（タイムライン状のロードマップ形式で）学べる体系的な学習コンテンツ。Mermaid.jsによる動的な図解ダイアグラム表示に対応しているほか、LocalStorageを利用した読了進捗管理（進捗率・完了チェック）や、各チャプターの末尾で挑戦できるインタラクティブな「理解度クイズ」機能を搭載しています。
-- **AWS Patterns**（`/patterns`）：AWSのベストプラクティスに沿って設計された、13種類の実践的な CloudFormation テンプレート（IaC）とアーキテクチャ図（Draw.io）のギャラリーカタログ。ShikiによるYAMLコードプレビュー・コピー・ダウンロードや、SVG構成図を画面いっぱいに拡大表示するインタラクティブなライトボックス、デプロイ用CLIコマンド生成機能を備えています。
+- **AWS Patterns**（`/patterns`）：AWSのベストプラクティスに沿って設計された、13種類の実践的な CloudFormation テンプレート（IaC）とアーキテクチャ図（Draw.io）のギャラリーカタログ。ShikiによるYAMLコードプレビュー・コピー・ダウンロードや、SVG構成図を画面いっぱいに拡大表示するインタラクティブなライトボックス、デプロブ用CLIコマンド生成機能を備えています。
 
 
 ## 技術スタック

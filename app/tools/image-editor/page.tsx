@@ -1,51 +1,49 @@
-// app/tools/calculator/page.tsx
+// app/tools/image-editor/page.tsx
 'use client';
 
 import { Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { Calculator, Hash, Ruler } from 'lucide-react';
+import { ImageIcon, Crop, Smartphone } from 'lucide-react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
-import StandardCalculator from '@/src/components/tools/calculator/StandardCalculator';
-import BitwiseConverter from '@/src/components/tools/calculator/BitwiseConverter';
-import AspectRatio from '@/src/components/tools/calculator/AspectRatio';
+import ImageOptimizer from '@/src/components/tools/image-editor/ImageOptimizer';
+import ImageTrimmer from '@/src/components/tools/image-editor/ImageTrimmer';
+import FaviconGenerator from '@/src/components/tools/image-editor/FaviconGenerator';
 
-type SubToolKey = 'standard' | 'bitwise' | 'aspect';
+type SubToolKey = 'optimizer' | 'trimmer' | 'favicon';
 
 const SUB_TOOLS = {
-  standard: {
-    label: 'Calculator',
-    description:
-      'シンプルで使いやすい多機能電卓。履歴機能、キーボード入力、結果のコピー機能も搭載しています。',
-    icon: Calculator,
-    component: StandardCalculator,
+  optimizer: {
+    label: 'Image Converter & Optimizer',
+    description: 'ブラウザ上だけで画像のWebP変換、リサイズ、品質調整を安全・高速に実行します。',
+    icon: ImageIcon,
+    component: ImageOptimizer,
   },
-  bitwise: {
-    label: 'Bitwise & Radix Converter',
-    description: '進数変換とビット操作（トグル切替）や基本的なビット演算の可視化を行います。',
-    icon: Hash,
-    component: BitwiseConverter,
+  trimmer: {
+    label: 'Image Trimmer',
+    description: '画像を任意の縦横比やカスタムサイズでトリミング・リサイズ・保存します。',
+    icon: Crop,
+    component: ImageTrimmer,
   },
-  aspect: {
-    label: 'Aspect Ratio Calculator',
-    description:
-      '画面解像度や画像サイズからアスペクト比を計算し、双方向で幅・高さを自動補完します。',
-    icon: Ruler,
-    component: AspectRatio,
+  favicon: {
+    label: 'Favicon & App Icon Generator',
+    description: 'アップロード画像から各サイズアイコンへリサイズ・ZIP一括生成します。',
+    icon: Smartphone,
+    component: FaviconGenerator,
   },
 } as const;
 
-function CalculatorToolkitContent() {
+function ImageEditorToolkitContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const currentTab = (searchParams.get('tab') || 'standard') as SubToolKey;
-  const activeTab: SubToolKey = currentTab in SUB_TOOLS ? currentTab : 'standard';
+  const currentTab = (searchParams.get('tab') || 'optimizer') as SubToolKey;
+  const activeTab: SubToolKey = currentTab in SUB_TOOLS ? currentTab : 'optimizer';
 
   const activeTool = SUB_TOOLS[activeTab];
   const ActiveComponent = activeTool.component;
 
   const handleTabChange = (tab: SubToolKey) => {
-    router.push(`/tools/calculator?tab=${tab}`);
+    router.push(`/tools/image-editor?tab=${tab}`);
   };
 
   return (
@@ -91,7 +89,7 @@ function CalculatorToolkitContent() {
   );
 }
 
-export default function CalculatorToolkit() {
+export default function ImageEditorToolkit() {
   return (
     <Suspense
       fallback={
@@ -100,7 +98,7 @@ export default function CalculatorToolkit() {
         </div>
       }
     >
-      <CalculatorToolkitContent />
+      <ImageEditorToolkitContent />
     </Suspense>
   );
 }
