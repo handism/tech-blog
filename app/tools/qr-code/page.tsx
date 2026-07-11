@@ -17,30 +17,35 @@ export default function QrCodeGenerator() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (input && canvasRef.current) {
-      Promise.resolve().then(() => {
-        setIsLoading(true);
-      });
-      QRCode.toCanvas(
-        canvasRef.current,
-        input,
-        {
-          width: size,
-          margin: 2,
-          errorCorrectionLevel: level,
-          color: {
-            dark: fgColor,
-            light: bgColor,
-          },
+    if (!input || !canvasRef.current) return;
+
+    let isMounted = true;
+    setIsLoading(true);
+
+    QRCode.toCanvas(
+      canvasRef.current,
+      input,
+      {
+        width: size,
+        margin: 2,
+        errorCorrectionLevel: level,
+        color: {
+          dark: fgColor,
+          light: bgColor,
         },
-        (error) => {
-          if (error) {
-            console.error(error);
-          }
-          setIsLoading(false);
+      },
+      (error) => {
+        if (!isMounted) return;
+        if (error) {
+          console.error(error);
         }
-      );
-    }
+        setIsLoading(false);
+      }
+    );
+
+    return () => {
+      isMounted = false;
+    };
   }, [input, size, level, fgColor, bgColor]);
 
   const downloadQRCode = () => {
