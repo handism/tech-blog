@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Image as ImageIcon, Copy, Check, Download, RotateCw, Plus, Minus } from 'lucide-react';
+import { Copy, Check, Download, RotateCw, Plus, Minus } from 'lucide-react';
 import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 interface SizePreset {
@@ -56,7 +56,7 @@ export default function PlaceholderGenerator() {
 
     return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
   <rect width="100%" height="100%" fill="${bgColor}" />
-  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="${fontStyle}" font-size="${fontSize}px" font-weight="bold" fill="${textColor}">${escapedText}</text>
+  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-family="${fontStyle}" font-size="${fontSize}px" font-weight="bold" fill="${textColor}">${escapedText}</text>
 </svg>`;
   };
 
@@ -151,7 +151,7 @@ export default function PlaceholderGenerator() {
                 boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1)',
                 border: '1px solid rgba(0,0,0,0.08)',
               }}
-              className="relative transition-all duration-300 rounded-xl overflow-hidden shrink-0 select-none bg-white"
+              className="relative transition-all duration-300 rounded-xl overflow-hidden shrink-0 select-none bg-white [&>svg]:w-full [&>svg]:h-full"
               dangerouslySetInnerHTML={{ __html: svgContent }}
             />
 
