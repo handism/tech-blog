@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useRef, useMemo } from 'react';
-import { FileCode, Copy, Check, Image as ImageIcon, Code, Upload, RefreshCw } from 'lucide-react';
+import { useState, useMemo } from 'react';
+import { FileCode, Copy, Check, Image as ImageIcon, Code, RefreshCw } from 'lucide-react';
 import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import FileDropZone from '../shared/FileDropZone';
 
 // ReactのSVG属性置換マップ
 const SVG_ATTR_MAP: Record<string, string> = {
@@ -85,7 +86,6 @@ export default function SvgToCss() {
   const { copy } = useCopyToClipboard();
   const [svgInput, setSvgInput] = useState<string>(SAMPLE_SVG);
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // SVG入力のクリーンアップ・バリデーション
   const cleanSvg = useMemo(() => {
@@ -135,10 +135,7 @@ export default function SvgToCss() {
   };
 
   // ファイルアップロード処理
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
+  const handleFile = (file: File) => {
     const reader = new FileReader();
     reader.onload = (event) => {
       const text = event.target?.result as string;
@@ -163,20 +160,6 @@ export default function SvgToCss() {
             </h2>
             <div className="flex gap-2">
               <button
-                onClick={() => fileInputRef.current?.click()}
-                className="theme-btn py-1.5 px-3 text-xs flex items-center gap-1 cursor-pointer"
-              >
-                <Upload className="w-3.5 h-3.5" />
-                ファイルを読み込む
-              </button>
-              <input
-                type="file"
-                ref={fileInputRef}
-                onChange={handleFileUpload}
-                accept=".svg"
-                className="hidden"
-              />
-              <button
                 onClick={handleReset}
                 className="theme-btn py-1.5 px-3 text-xs flex items-center gap-1 cursor-pointer bg-secondary"
                 title="サンプルに戻す"
@@ -197,6 +180,14 @@ export default function SvgToCss() {
               className="w-full p-4 bg-card border-2 border-border text-text font-mono text-xs md:text-sm rounded-xl focus:outline-none focus:translate-x-[-1px] focus:translate-y-[-1px] focus:shadow-[3px_3px_0px_0px_var(--border)] dark:focus:shadow-[3px_3px_0px_0px_var(--accent)] transition-all resize-y"
             />
           </div>
+
+          <FileDropZone
+            onFileSelect={handleFile}
+            accept=".svg,image/svg+xml"
+            title="SVGファイルをドラッグ＆ドロップ"
+            subtitle="またはクリックしてファイルを読み込む"
+            className="min-h-[120px] py-6"
+          />
 
           {/* プレビュー表示 */}
           <div className="theme-card p-4 bg-secondary/50 flex flex-col items-center justify-center min-h-[200px]">

@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
-import { Image as ImageIcon, Upload, Download, RefreshCw, Trash2 } from 'lucide-react';
+import { useState, useEffect, useCallback } from 'react';
+import { Download, RefreshCw, Trash2 } from 'lucide-react';
+import FileDropZone from '../shared/FileDropZone';
 
 type ImageState = {
   file: File;
@@ -27,9 +28,6 @@ export default function ImageOptimizer() {
   const [maxWidth, setMaxWidth] = useState<number | ''>('');
   const [maxHeight, setMaxHeight] = useState<number | ''>('');
   const [isProcessing, setIsProcessing] = useState(false);
-  const [dragActive, setDragActive] = useState(false);
-
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // ファイル読み込み処理
   const handleFile = (file: File) => {
@@ -52,36 +50,6 @@ export default function ImageOptimizer() {
       // デフォルトで最大幅を元画像に合わせるか、空欄にしておく
       setOptimized(null);
     };
-  };
-
-  const handleDrag = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.type === 'dragenter' || e.type === 'dragover') {
-      setDragActive(true);
-    } else if (e.type === 'dragleave') {
-      setDragActive(false);
-    }
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      handleFile(e.dataTransfer.files[0]);
-    }
-  };
-
-  const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      handleFile(e.target.files[0]);
-    }
-  };
-
-  const triggerFileInput = () => {
-    fileInputRef.current?.click();
   };
 
   const clearImage = () => {
@@ -200,28 +168,12 @@ export default function ImageOptimizer() {
         <div className="lg:col-span-5 space-y-6">
           {/* アップローダー */}
           {!image ? (
-            <div
-              onDragEnter={handleDrag}
-              onDragOver={handleDrag}
-              onDragLeave={handleDrag}
-              onDrop={handleDrop}
-              onClick={triggerFileInput}
-              className={`
-                theme-card p-10 bg-card hover:bg-secondary cursor-pointer border-dashed border-3 flex flex-col items-center justify-center text-center transition-colors
-                ${dragActive ? 'bg-accent/10 border-accent' : 'border-border'}
-              `}
-            >
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleFileInput}
-                className="hidden"
-              />
-              <Upload className="w-12 h-12 text-text/40 mb-4 animate-bounce" />
-              <h3 className="font-extrabold text-base mb-1">画像をドラッグ＆ドロップ</h3>
-              <p className="text-xs text-text/60 font-medium">またはクリックしてファイルを選択</p>
-            </div>
+            <FileDropZone
+              onFileSelect={handleFile}
+              accept="image/*"
+              title="画像をドラッグ＆ドロップ"
+              subtitle="またはクリックしてファイルを選択"
+            />
           ) : (
             /* 画像情報 ＆ 設定パネル */
             <div className="theme-card p-6 space-y-5">

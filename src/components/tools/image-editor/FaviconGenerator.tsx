@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { Upload, Download, Check, Clipboard } from 'lucide-react';
 import JSZip from 'jszip';
 import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import FileDropZone from '../shared/FileDropZone';
 
 import { ICON_SIZES } from './favicon-generator-data';
 
@@ -11,9 +12,7 @@ export default function FaviconGenerator() {
   const [sourceImage, setSourceImage] = useState<string | null>(null);
   const [imageName, setImageName] = useState<string>('');
   const [generatedIcons, setGeneratedIcons] = useState<Record<string, string>>({}); // filename -> dataUrl
-  const [dragActive, setDragActive] = useState(false);
   const { copied, copy } = useCopyToClipboard();
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFile = (file: File) => {
     setImageName(file.name);
@@ -25,37 +24,6 @@ export default function FaviconGenerator() {
       }
     };
     reader.readAsDataURL(file);
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    handleFile(file);
-  };
-
-  const handleDrag = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.type === 'dragenter' || e.type === 'dragover') {
-      setDragActive(true);
-    } else if (e.type === 'dragleave') {
-      setDragActive(false);
-    }
-  };
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      const file = e.dataTransfer.files[0];
-      if (file.type.startsWith('image/')) {
-        handleFile(file);
-      } else {
-        alert('画像ファイルを選択してください。');
-      }
-    }
   };
 
   const generateAllIcons = (imgSrc: string) => {
@@ -173,35 +141,17 @@ export default function FaviconGenerator() {
               📤 画像のアップロード
             </h2>
 
-            <div
-              onClick={() => fileInputRef.current?.click()}
-              onDragEnter={handleDrag}
-              onDragOver={handleDrag}
-              onDragLeave={handleDrag}
-              onDrop={handleDrop}
-              className={`border-3 border-dashed rounded-2xl p-8 flex flex-col items-center justify-center cursor-pointer transition-all bg-card/50 text-center
-                ${
-                  dragActive
-                    ? 'border-accent bg-accent/10'
-                    : 'border-border/40 hover:border-accent/60'
-                }
-              `}
-            >
-              <Upload className="w-10 h-10 text-text/50 mb-3" />
-              <span className="text-sm font-extrabold text-text">
-                {imageName ? imageName : '画像ファイルをドロップまたはクリック'}
-              </span>
-              <span className="text-xs font-medium text-text/60 mt-1.5">
-                PNG, JPG, SVGに対応 (正方形画像がベスト)
-              </span>
-              <input
-                type="file"
-                ref={fileInputRef}
-                onChange={handleFileChange}
-                accept="image/*"
-                className="hidden"
-              />
-            </div>
+            <FileDropZone
+              onFileSelect={handleFile}
+              accept="image/*"
+              title={imageName || '画像ファイルをドラッグ＆ドロップ'}
+              subtitle={
+                imageName
+                  ? 'またはクリックして別のファイルを選択'
+                  : 'またはクリックしてファイルを選択'
+              }
+              description="PNG, JPG, SVGに対応 (正方形画像がベスト)"
+            />
 
             {sourceImage && (
               <div className="space-y-3">

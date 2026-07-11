@@ -2,9 +2,10 @@
 'use client';
 
 import { siteConfig } from '@/src/config/site';
-import { Download, Maximize, FileImage } from 'lucide-react';
+import { Download, Maximize } from 'lucide-react';
 import React, { useState, useCallback, useEffect } from 'react';
 import Cropper, { Area, Point } from 'react-easy-crop';
+import FileDropZone from '../shared/FileDropZone';
 
 /**
  * 画像を指定領域で切り抜いたデータURLを生成する。
@@ -57,7 +58,6 @@ export default function ImageTrimmer() {
   const [aspect, setAspect] = useState(16 / 9);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [format, setFormat] = useState<'png' | 'webp'>('png');
-  const [isDragging, setIsDragging] = useState(false);
 
   // ファイル処理の共通ロジック
   /**
@@ -68,41 +68,6 @@ export default function ImageTrimmer() {
       const reader = new FileReader();
       reader.onload = () => setImage(reader.result as string);
       reader.readAsDataURL(file);
-    }
-  };
-
-  // フォルダから選択
-  /**
-   * ファイル選択時のハンドラー。
-   */
-  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      handleFile(e.target.files[0]);
-    }
-  };
-
-  // ドラッグ&ドロップのハンドラー
-  /**
-   * ドラッグ中のハンドラー。
-   */
-  const onDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  /**
-   * ドラッグ離脱時のハンドラー。
-   */
-  const onDragLeave = () => setIsDragging(false);
-
-  /**
-   * ドロップ時のハンドラー。
-   */
-  const onDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      handleFile(e.dataTransfer.files[0]);
     }
   };
 
@@ -253,42 +218,13 @@ export default function ImageTrimmer() {
             </div>
           </div>
         ) : (
-          /* アップロードエリア（D&D対応） */
-          <div
-            onDragOver={onDragOver}
-            onDragLeave={onDragLeave}
-            onDrop={onDrop}
-            className={`group m-8 h-80 border-4 border-dashed rounded-3xl flex flex-col items-center justify-center transition-all ${
-              isDragging
-                ? 'border-accent bg-accent/10 scale-[1.02]'
-                : 'border-border bg-secondary hover:bg-bg hover:border-accent/50'
-            }`}
-          >
-            <input
-              type="file"
-              accept="image/*"
-              onChange={onFileChange}
-              className="hidden"
-              id="upload-input"
-            />
-            <label htmlFor="upload-input" className="flex flex-col items-center cursor-pointer">
-              <div
-                className={`p-5 rounded-full mb-4 transition-all ${
-                  isDragging
-                    ? 'bg-accent text-white animate-bounce'
-                    : 'bg-bg text-text/40 shadow-sm group-hover:text-accent'
-                }`}
-              >
-                <FileImage className="w-12 h-12" />
-              </div>
-              <span className="text-xl font-bold text-text">
-                {isDragging ? 'そのままドロップ！' : '画像をドロップして開始'}
-              </span>
-              <span className="text-text/50 mt-2 font-medium border-b border-border pb-1 hover:text-accent transition-colors">
-                またはフォルダから選択
-              </span>
-            </label>
-          </div>
+          <FileDropZone
+            onFileSelect={handleFile}
+            accept="image/*"
+            title="画像をドロップして開始"
+            subtitle="またはクリックしてファイルを選択"
+            className="m-8 h-80"
+          />
         )}
       </main>
     </>
