@@ -3,7 +3,7 @@
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import { useState, useEffect } from 'react';
 import { Keyboard, Trash2, ShieldAlert } from 'lucide-react';
-import { keyboardRows } from './keyboard-data';
+import { usKeyboardRows, jisKeyboardRows } from './keyboard-data';
 
 interface KeyHistoryItem {
   key: string;
@@ -20,7 +20,22 @@ export default function KeyboardEvents() {
   const [currentEvent, setCurrentEvent] = useState<KeyHistoryItem | null>(null);
   const [history, setHistory] = useState<KeyHistoryItem[]>([]);
   const [activeCodes, setActiveCodes] = useState<Set<string>>(new Set());
+  const [layout, setLayout] = useState<'us' | 'jis'>('us');
   /* const visualizerRef = useRef<HTMLDivElement>(null); */
+
+  useEffect(() => {
+    const savedLayout = localStorage.getItem('keyboard-layout');
+    if (savedLayout === 'jis' || savedLayout === 'us') {
+      requestAnimationFrame(() => {
+        setLayout(savedLayout);
+      });
+    }
+  }, []);
+
+  const handleLayoutChange = (newLayout: 'us' | 'jis') => {
+    setLayout(newLayout);
+    localStorage.setItem('keyboard-layout', newLayout);
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -196,16 +211,40 @@ export default function KeyboardEvents() {
 
             {/* 仮想キーボード */}
             <div className="bg-card border border-border rounded-3xl p-5 shadow-sm hidden md:flex flex-col gap-2 overflow-x-auto">
-              <div className="flex justify-between items-center mb-2 px-1">
-                <span className="text-xs font-bold text-text/50 uppercase tracking-wider">
-                  仮想キーボード (US配列)
-                </span>
-                <span className="text-[10px] bg-secondary text-text/60 px-2 py-0.5 rounded-full font-bold">
+              <div className="flex justify-between items-center mb-2 px-1 gap-4">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-bold text-text/50 uppercase tracking-wider">
+                    仮想キーボード
+                  </span>
+                  <div className="flex bg-secondary rounded-lg p-0.5 border border-border/80 text-[10px]">
+                    <button
+                      onClick={() => handleLayoutChange('us')}
+                      className={`px-2 py-0.5 rounded-md transition-all font-bold cursor-pointer ${
+                        layout === 'us'
+                          ? 'bg-card text-accent shadow-sm'
+                          : 'text-text/50 hover:text-text'
+                      }`}
+                    >
+                      US配列
+                    </button>
+                    <button
+                      onClick={() => handleLayoutChange('jis')}
+                      className={`px-2 py-0.5 rounded-md transition-all font-bold cursor-pointer ${
+                        layout === 'jis'
+                          ? 'bg-card text-accent shadow-sm'
+                          : 'text-text/50 hover:text-text'
+                      }`}
+                    >
+                      JIS配列
+                    </button>
+                  </div>
+                </div>
+                <span className="text-[10px] bg-secondary text-text/60 px-2 py-0.5 rounded-full font-bold whitespace-nowrap">
                   リアルタイム反応
                 </span>
               </div>
               <div className="min-w-[700px] flex flex-col gap-1.5 p-2 bg-secondary/20 border border-border/60 rounded-2xl">
-                {keyboardRows.map((row, rowIndex) => (
+                {(layout === 'us' ? usKeyboardRows : jisKeyboardRows).map((row, rowIndex) => (
                   <div key={rowIndex} className="flex gap-1.5 w-full">
                     {row.map((key) => {
                       const isActive = activeCodes.has(key.code);
