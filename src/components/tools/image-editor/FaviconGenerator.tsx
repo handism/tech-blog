@@ -11,13 +11,11 @@ export default function FaviconGenerator() {
   const [sourceImage, setSourceImage] = useState<string | null>(null);
   const [imageName, setImageName] = useState<string>('');
   const [generatedIcons, setGeneratedIcons] = useState<Record<string, string>>({}); // filename -> dataUrl
+  const [dragActive, setDragActive] = useState(false);
   const { copied, copy } = useCopyToClipboard();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
+  const handleFile = (file: File) => {
     setImageName(file.name);
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -27,6 +25,37 @@ export default function FaviconGenerator() {
       }
     };
     reader.readAsDataURL(file);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    handleFile(file);
+  };
+
+  const handleDrag = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === 'dragenter' || e.type === 'dragover') {
+      setDragActive(true);
+    } else if (e.type === 'dragleave') {
+      setDragActive(false);
+    }
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      const file = e.dataTransfer.files[0];
+      if (file.type.startsWith('image/')) {
+        handleFile(file);
+      } else {
+        alert('画像ファイルを選択してください。');
+      }
+    }
   };
 
   const generateAllIcons = (imgSrc: string) => {
@@ -146,7 +175,17 @@ export default function FaviconGenerator() {
 
             <div
               onClick={() => fileInputRef.current?.click()}
-              className="border-3 border-dashed border-border/40 hover:border-accent/60 rounded-2xl p-8 flex flex-col items-center justify-center cursor-pointer transition-all bg-card/50 text-center"
+              onDragEnter={handleDrag}
+              onDragOver={handleDrag}
+              onDragLeave={handleDrag}
+              onDrop={handleDrop}
+              className={`border-3 border-dashed rounded-2xl p-8 flex flex-col items-center justify-center cursor-pointer transition-all bg-card/50 text-center
+                ${
+                  dragActive
+                    ? 'border-accent bg-accent/10'
+                    : 'border-border/40 hover:border-accent/60'
+                }
+              `}
             >
               <Upload className="w-10 h-10 text-text/50 mb-3" />
               <span className="text-sm font-extrabold text-text">
