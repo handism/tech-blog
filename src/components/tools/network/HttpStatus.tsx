@@ -67,7 +67,7 @@ export default function HttpStatus() {
                 setSearchQuery('');
                 searchInputRef.current?.focus();
               }}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-text/40 hover:text-text cursor-pointer"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-text/40 hover:text-text cursor-pointer transition-colors p-1 focus-visible:ring-2 focus-visible:ring-accent rounded"
             >
               <X className="w-4 h-4" />
             </button>

@@ -135,7 +135,8 @@ export default function LearningLayout({
               </div>
               <button
                 onClick={() => setIsChapterDrawerOpen(false)}
-                className="p-1 hover:bg-secondary rounded-lg"
+                className="p-1 hover:bg-secondary rounded-lg focus-visible:ring-2 focus-visible:ring-accent"
+                aria-label="閉じる"
               >
                 <X className="h-5 w-5 text-text/60" />
               </button>
