@@ -7,10 +7,9 @@ import { FileText, Grid, Code } from 'lucide-react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
 import MarkdownEditor from '@/src/components/tools/markup/MarkdownEditor';
 import MarkdownTable from '@/src/components/tools/markup/MarkdownTable';
-import HtmlToJsx from '@/src/components/tools/markup/HtmlToJsx';
 import HtmlEntity from '@/src/components/tools/markup/HtmlEntity';
 
-type SubToolKey = 'editor' | 'table' | 'html-to-jsx' | 'html-entity';
+type SubToolKey = 'editor' | 'table' | 'html-entity';
 
 const SUB_TOOLS = {
   editor: {
@@ -25,12 +24,6 @@ const SUB_TOOLS = {
       '表計算ライクなUIで直感的に表を作成・編集し、Markdown形式のテーブルを入出力します。',
     icon: Grid,
     component: MarkdownTable,
-  },
-  'html-to-jsx': {
-    label: 'HTML to JSX',
-    description: 'HTMLコードを、React / Next.js用のJSX / TSX形式に自動パースして変換します。',
-    icon: Code,
-    component: HtmlToJsx,
   },
   'html-entity': {
     label: 'HTML Entity',

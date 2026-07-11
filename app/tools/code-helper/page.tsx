@@ -1,51 +1,49 @@
-// app/tools/calculator/page.tsx
+// app/tools/code-helper/page.tsx
 'use client';
 
 import { Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { Calculator, Hash, Ruler } from 'lucide-react';
+import { Search, Terminal, Code } from 'lucide-react';
 import ToolPageLayout from '@/src/components/ToolPageLayout';
-import StandardCalculator from '@/src/components/tools/calculator/StandardCalculator';
-import BitwiseConverter from '@/src/components/tools/calculator/BitwiseConverter';
-import AspectRatio from '@/src/components/tools/calculator/AspectRatio';
+import RegexTester from '@/src/components/tools/code-helper/RegexTester';
+import CurlConverter from '@/src/components/tools/code-helper/CurlConverter';
+import HtmlToJsx from '@/src/components/tools/code-helper/HtmlToJsx';
 
-type SubToolKey = 'standard' | 'bitwise' | 'aspect';
+type SubToolKey = 'regex' | 'curl' | 'html-to-jsx';
 
 const SUB_TOOLS = {
-  standard: {
-    label: 'Calculator',
-    description:
-      'シンプルで使いやすい多機能電卓。履歴機能、キーボード入力、結果のコピー機能も搭載しています。',
-    icon: Calculator,
-    component: StandardCalculator,
+  regex: {
+    label: 'Regex Tester',
+    description: '正規表現パターンの一致確認とキャプチャグループのリアルタイムテストを行います。',
+    icon: Search,
+    component: RegexTester,
   },
-  bitwise: {
-    label: 'Bitwise & Radix Converter',
-    description: '進数変換とビット操作（トグル切替）や基本的なビット演算の可視化を行います。',
-    icon: Hash,
-    component: BitwiseConverter,
+  curl: {
+    label: 'Curl to Code Converter',
+    description: 'CurlリクエストをFetch、Axios、Python等マルチ言語のコードに相互変換します。',
+    icon: Terminal,
+    component: CurlConverter,
   },
-  aspect: {
-    label: 'Aspect Ratio Calculator',
-    description:
-      '画面解像度や画像サイズからアスペクト比を計算し、双方向で幅・高さを自動補完します。',
-    icon: Ruler,
-    component: AspectRatio,
+  'html-to-jsx': {
+    label: 'HTML to JSX',
+    description: 'HTMLコードを、React / Next.js用のJSX / TSX形式に自動パースして変換します。',
+    icon: Code,
+    component: HtmlToJsx,
   },
 } as const;
 
-function CalculatorToolkitContent() {
+function CodeHelperToolkitContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const currentTab = (searchParams.get('tab') || 'standard') as SubToolKey;
-  const activeTab: SubToolKey = currentTab in SUB_TOOLS ? currentTab : 'standard';
+  const currentTab = (searchParams.get('tab') || 'regex') as SubToolKey;
+  const activeTab: SubToolKey = currentTab in SUB_TOOLS ? currentTab : 'regex';
 
   const activeTool = SUB_TOOLS[activeTab];
   const ActiveComponent = activeTool.component;
 
   const handleTabChange = (tab: SubToolKey) => {
-    router.push(`/tools/calculator?tab=${tab}`);
+    router.push(`/tools/code-helper?tab=${tab}`);
   };
 
   return (
@@ -91,7 +89,7 @@ function CalculatorToolkitContent() {
   );
 }
 
-export default function CalculatorToolkit() {
+export default function CodeHelperToolkit() {
   return (
     <Suspense
       fallback={
@@ -100,7 +98,7 @@ export default function CalculatorToolkit() {
         </div>
       }
     >
-      <CalculatorToolkitContent />
+      <CodeHelperToolkitContent />
     </Suspense>
   );
 }
