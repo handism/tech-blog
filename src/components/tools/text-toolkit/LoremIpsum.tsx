@@ -1,10 +1,20 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Type, Clipboard, Check, Shuffle } from 'lucide-react';
+import { Clipboard, Check, Shuffle } from 'lucide-react';
 import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 
 import { LOREM_TEXTS, TextType, UnitType, pseudoRandom } from './lorem-ipsum-data';
+
+function getShuffledIndices(length: number, trigger: number): number[] {
+  const indices = Array.from({ length }, (_, i) => i);
+  for (let i = length - 1; i > 0; i--) {
+    const seed = trigger * 1000 + i;
+    const j = Math.floor(pseudoRandom(seed) * (i + 1));
+    [indices[i], indices[j]] = [indices[j], indices[i]];
+  }
+  return indices;
+}
 
 export default function LoremIpsum() {
   const [textType, setTextType] = useState<TextType>('lorem');
@@ -21,8 +31,9 @@ export default function LoremIpsum() {
     if (unit === 'paragraphs') {
       // パラグラフの生成
       const srcParas = activeText.paragraphs;
+      const shuffled = getShuffledIndices(srcParas.length, trigger);
       for (let i = 0; i < count; i++) {
-        items.push(srcParas[i % srcParas.length]);
+        items.push(srcParas[shuffled[i % srcParas.length]]);
       }
       if (htmlMarkup) {
         return items.map((p) => `<p>${p}</p>`).join('\n\n');
@@ -35,9 +46,11 @@ export default function LoremIpsum() {
         'sentences' in activeText
           ? activeText.sentences
           : activeText.paragraphs.flatMap((p) => p.split(/(?<=[。\?\.])/)); // 簡易分割
+      const filteredSentences = srcSentences.map((s) => s.trim()).filter(Boolean);
+      const shuffled = getShuffledIndices(filteredSentences.length, trigger);
 
       for (let i = 0; i < count; i++) {
-        items.push(srcSentences[i % srcSentences.length].trim());
+        items.push(filteredSentences[shuffled[i % filteredSentences.length]]);
       }
       const text = items.join(textType === 'lorem' ? ' ' : '');
       if (htmlMarkup) {
@@ -50,7 +63,7 @@ export default function LoremIpsum() {
       if (textType === 'lorem') {
         const srcWords = LOREM_TEXTS.lorem.words;
         for (let i = 0; i < count; i++) {
-          const seed = trigger + i;
+          const seed = trigger * 1000 + i;
           items.push(srcWords[Math.floor(pseudoRandom(seed) * srcWords.length)]);
         }
         // 文頭を大文字にする
@@ -65,12 +78,15 @@ export default function LoremIpsum() {
         }
       } else {
         // 日本語の場合は「文字数」として扱う
-        const srcAllText = activeText.paragraphs.join('');
-        let text = '';
-        while (text.length < count) {
-          text += srcAllText;
+        const srcParas = activeText.paragraphs;
+        const shuffled = getShuffledIndices(srcParas.length, trigger);
+        let combinedText = shuffled.map((idx) => srcParas[idx]).join('');
+        while (combinedText.length < count) {
+          const nextTrigger = trigger + Math.floor(combinedText.length / 100) + 1;
+          const nextShuffled = getShuffledIndices(srcParas.length, nextTrigger);
+          combinedText += nextShuffled.map((idx) => srcParas[idx]).join('');
         }
-        text = text.slice(0, count);
+        let text = combinedText.slice(0, count);
         // 最後の文字が句点等でない場合は適宜補正
         if (!text.endsWith('。') && !text.endsWith('、') && text.length > 0) {
           text = text.slice(0, count - 1) + '。';
@@ -87,9 +103,13 @@ export default function LoremIpsum() {
         'sentences' in activeText
           ? activeText.sentences
           : activeText.paragraphs.flatMap((p) => p.split(/(?<=[。\?\.])/));
+      const filteredSentences = srcSentences
+        .map((s) => s.trim().replace(/[。\.]$/, ''))
+        .filter(Boolean);
+      const shuffled = getShuffledIndices(filteredSentences.length, trigger);
 
       for (let i = 0; i < count; i++) {
-        items.push(srcSentences[i % srcSentences.length].trim().replace(/[。\.]$/, ''));
+        items.push(filteredSentences[shuffled[i % filteredSentences.length]]);
       }
 
       if (htmlMarkup) {
