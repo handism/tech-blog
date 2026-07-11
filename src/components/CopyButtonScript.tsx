@@ -16,6 +16,7 @@ export default function CopyButtonScript() {
       const button = document.createElement('button');
       button.innerText = 'Copy';
       button.className = 'copy-button'; // CSSでスタイリング
+      button.setAttribute('aria-label', 'コードをコピー');
 
       button.addEventListener('click', () => {
         const code = block.querySelector('code')?.innerText || '';
