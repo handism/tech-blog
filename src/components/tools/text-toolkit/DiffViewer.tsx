@@ -163,36 +163,30 @@ export default function DiffViewer() {
 
       <div className="space-y-6">
         {/* Controls */}
-        <div className="flex flex-wrap gap-4 items-center justify-between bg-slate-50 dark:bg-slate-900 p-4 rounded-2xl border border-slate-100 dark:border-slate-850">
+        <div className="flex flex-wrap gap-4 items-center justify-between theme-card border-2 border-border p-4">
           <div className="flex flex-wrap gap-3">
             {/* Mode Selectors */}
-            <div className="flex rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+            <div className="flex rounded-lg overflow-hidden border-2 border-border bg-card">
               <button
                 onClick={() => setDiffMode('line')}
-                className={`px-4 py-2 text-xs font-semibold transition ${
-                  diffMode === 'line'
-                    ? 'bg-indigo-600 text-white'
-                    : 'text-slate-600 dark:text-slate-350 hover:bg-slate-100 dark:hover:bg-slate-700'
+                className={`px-4 py-2 text-xs font-semibold transition cursor-pointer ${
+                  diffMode === 'line' ? 'bg-accent text-white' : 'text-text/60 hover:bg-secondary'
                 }`}
               >
                 行単位
               </button>
               <button
                 onClick={() => setDiffMode('word')}
-                className={`px-4 py-2 text-xs font-semibold transition ${
-                  diffMode === 'word'
-                    ? 'bg-indigo-600 text-white'
-                    : 'text-slate-600 dark:text-slate-350 hover:bg-slate-100 dark:hover:bg-slate-700'
+                className={`px-4 py-2 text-xs font-semibold transition cursor-pointer ${
+                  diffMode === 'word' ? 'bg-accent text-white' : 'text-text/60 hover:bg-secondary'
                 }`}
               >
                 単語単位
               </button>
               <button
                 onClick={() => setDiffMode('char')}
-                className={`px-4 py-2 text-xs font-semibold transition ${
-                  diffMode === 'char'
-                    ? 'bg-indigo-600 text-white'
-                    : 'text-slate-600 dark:text-slate-350 hover:bg-slate-100 dark:hover:bg-slate-700'
+                className={`px-4 py-2 text-xs font-semibold transition cursor-pointer ${
+                  diffMode === 'char' ? 'bg-accent text-white' : 'text-text/60 hover:bg-secondary'
                 }`}
               >
                 文字単位
@@ -201,23 +195,23 @@ export default function DiffViewer() {
 
             {/* View Selectors (Only relevant for line diffs, otherwise unified is fallback) */}
             {diffMode === 'line' && (
-              <div className="flex rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+              <div className="flex rounded-lg overflow-hidden border-2 border-border bg-card">
                 <button
                   onClick={() => setViewMode('split')}
-                  className={`px-4 py-2 text-xs font-semibold transition ${
+                  className={`px-4 py-2 text-xs font-semibold transition cursor-pointer ${
                     viewMode === 'split'
-                      ? 'bg-blue-600 text-white'
-                      : 'text-slate-600 dark:text-slate-350 hover:bg-slate-100 dark:hover:bg-slate-700'
+                      ? 'bg-accent text-white'
+                      : 'text-text/60 hover:bg-secondary'
                   }`}
                 >
                   左右分割 (Split)
                 </button>
                 <button
                   onClick={() => setViewMode('unified')}
-                  className={`px-4 py-2 text-xs font-semibold transition ${
+                  className={`px-4 py-2 text-xs font-semibold transition cursor-pointer ${
                     viewMode === 'unified'
-                      ? 'bg-blue-600 text-white'
-                      : 'text-slate-600 dark:text-slate-350 hover:bg-slate-100 dark:hover:bg-slate-700'
+                      ? 'bg-accent text-white'
+                      : 'text-text/60 hover:bg-secondary'
                   }`}
                 >
                   統合表示 (Unified)
@@ -229,7 +223,7 @@ export default function DiffViewer() {
           <div className="flex gap-2">
             <button
               onClick={clearAll}
-              className="flex items-center gap-1.5 px-4 py-2 text-xs font-bold bg-slate-200 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-850 dark:text-slate-200 rounded-lg transition"
+              className="flex items-center gap-1.5 theme-btn px-4 py-2 text-xs font-bold bg-secondary text-text cursor-pointer"
             >
               <Trash2 className="w-3.5 h-3.5" />
               クリア
@@ -240,25 +234,25 @@ export default function DiffViewer() {
         {/* Input Panels */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
+            <label className="block text-xs font-bold text-text/60 uppercase tracking-wider mb-2">
               変更前 (Text A)
             </label>
             <textarea
               value={text1}
               onChange={(e) => setText1(e.target.value)}
               placeholder="元テキストをここに貼り付け..."
-              className="w-full h-64 p-4 border border-slate-250 dark:border-slate-800 dark:bg-slate-900 dark:text-white rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:outline-none font-mono text-sm resize-y shadow-inner transition"
+              className="w-full h-64 p-4 border-2 border-border bg-card text-text rounded-xl focus:outline-none font-mono text-sm resize-y transition"
             />
           </div>
           <div>
-            <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
+            <label className="block text-xs font-bold text-text/60 uppercase tracking-wider mb-2">
               変更後 (Text B)
             </label>
             <textarea
               value={text2}
               onChange={(e) => setText2(e.target.value)}
               placeholder="修正後テキストをここに貼り付け..."
-              className="w-full h-64 p-4 border border-slate-250 dark:border-slate-800 dark:bg-slate-900 dark:text-white rounded-2xl focus:ring-2 focus:ring-indigo-500 focus:outline-none font-mono text-sm resize-y shadow-inner transition"
+              className="w-full h-64 p-4 border-2 border-border bg-card text-text rounded-xl focus:outline-none font-mono text-sm resize-y transition"
             />
           </div>
         </div>
@@ -268,13 +262,13 @@ export default function DiffViewer() {
           <div className="mt-8">
             <div className="flex justify-between items-center mb-3">
               <div className="flex items-center gap-1.5">
-                <Eye className="w-4 h-4 text-indigo-650 dark:text-indigo-400" />
-                <h2 className="text-lg font-bold text-slate-850 dark:text-white">比較結果</h2>
+                <Eye className="w-4 h-4 text-accent" />
+                <h2 className="text-lg font-bold text-text">比較結果</h2>
               </div>
               {viewMode === 'unified' || diffMode !== 'line' ? (
                 <button
                   onClick={handleCopyUnified}
-                  className="flex items-center gap-1 px-3 py-1.5 text-xs bg-slate-100 hover:bg-slate-200 dark:bg-slate-850 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-350 rounded transition"
+                  className="flex items-center gap-1 theme-btn px-3 py-1.5 text-xs bg-secondary text-text cursor-pointer"
                 >
                   <Copy className="w-3.5 h-3.5" />
                   {copied ? 'コピーしました！' : 'Unified形式でコピー'}
@@ -395,9 +389,9 @@ export default function DiffViewer() {
         )}
 
         {/* Explanation card */}
-        <div className="bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-850 p-6 rounded-2xl">
-          <h3 className="font-bold text-slate-850 dark:text-white mb-2">使い方・機能説明</h3>
-          <ul className="text-sm text-slate-600 dark:text-slate-400 space-y-2 list-disc list-inside">
+        <div className="theme-card p-6">
+          <h3 className="font-bold text-text mb-2">使い方・機能説明</h3>
+          <ul className="text-sm text-text/60 space-y-2 list-disc list-inside">
             <li>
               <strong>行単位比較:</strong>{' '}
               ソースコードや文章を行ごとに比較し、左右に並べたり上下で色分けして見比べることができます。
