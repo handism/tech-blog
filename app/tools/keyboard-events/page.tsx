@@ -282,8 +282,9 @@ export default function KeyboardEvents() {
                   {history.length > 0 && (
                     <button
                       onClick={clearHistory}
-                      className="p-1.5 hover:bg-red-500/10 hover:text-red-500 rounded-xl text-text/60 transition-colors cursor-pointer"
+                      className="p-1.5 hover:bg-red-500/10 hover:text-red-500 rounded-xl text-text/60 transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-accent"
                       title="履歴をクリア"
+                      aria-label="履歴をクリア"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>

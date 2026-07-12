@@ -577,8 +577,9 @@ export default function StandardCalculator() {
                     setHistory([]);
                     localStorage.removeItem('calc_history');
                   }}
-                  className="p-1 rounded-lg hover:bg-secondary text-text/40 hover:text-red-500 transition-colors cursor-pointer"
+                  className="p-1 rounded-lg hover:bg-secondary text-text/40 hover:text-red-500 transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-accent"
                   title="履歴をクリア"
+                  aria-label="履歴をクリア"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
