@@ -181,21 +181,21 @@ export default function PlaceholderGenerator() {
           </div>
 
           {/* 出力コード表示 */}
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-5 shadow-sm text-slate-100 space-y-4">
+          <div className="theme-card bg-secondary border-2 border-border rounded-2xl p-5 space-y-4">
             {/* Data URI */}
             <div>
               <div className="flex justify-between items-center mb-2">
-                <span className="text-[10px] font-bold text-slate-400 tracking-wider">
+                <span className="text-[10px] font-bold text-text/50 tracking-wider">
                   DATA URI (BASE64)
                 </span>
                 <button
                   onClick={() => handleCopy(dataUri, 'uri')}
-                  className="p-1 px-2.5 rounded-lg border border-slate-700 bg-slate-800 text-[10px] text-slate-200 hover:text-white flex items-center gap-1 cursor-pointer transition-colors"
+                  className="theme-btn p-1 px-2.5 text-[10px] flex items-center gap-1 cursor-pointer"
                 >
                   {copied && copiedType === 'uri' ? (
                     <>
-                      <Check className="w-3 h-3 text-green-400" />
-                      <span className="text-green-400 font-bold">Copied!</span>
+                      <Check className="w-3 h-3 text-accent" />
+                      <span className="text-accent font-bold">Copied!</span>
                     </>
                   ) : (
                     <>
@@ -208,14 +208,14 @@ export default function PlaceholderGenerator() {
               <textarea
                 readOnly
                 value={dataUri}
-                className="w-full font-mono text-[10px] text-slate-300 bg-slate-950 p-3 rounded-xl border border-slate-900 overflow-x-auto resize-none h-16 focus:outline-none select-all"
+                className="theme-textarea w-full font-mono text-[10px] h-16 resize-none select-all"
               />
             </div>
 
             {/* HTML Tag */}
             <div>
               <div className="flex justify-between items-center mb-2">
-                <span className="text-[10px] font-bold text-slate-400 tracking-wider">
+                <span className="text-[10px] font-bold text-text/50 tracking-wider">
                   HTML &lt;IMG&gt; TAG
                 </span>
                 <button
@@ -225,12 +225,12 @@ export default function PlaceholderGenerator() {
                       'html'
                     )
                   }
-                  className="p-1 px-2.5 rounded-lg border border-slate-700 bg-slate-800 text-[10px] text-slate-200 hover:text-white flex items-center gap-1 cursor-pointer transition-colors"
+                  className="theme-btn p-1 px-2.5 text-[10px] flex items-center gap-1 cursor-pointer"
                 >
                   {copied && copiedType === 'html' ? (
                     <>
-                      <Check className="w-3 h-3 text-green-400" />
-                      <span className="text-green-400 font-bold">Copied!</span>
+                      <Check className="w-3 h-3 text-accent" />
+                      <span className="text-accent font-bold">Copied!</span>
                     </>
                   ) : (
                     <>
@@ -240,7 +240,7 @@ export default function PlaceholderGenerator() {
                   )}
                 </button>
               </div>
-              <pre className="font-mono text-[10px] text-slate-300 bg-slate-950 p-3 rounded-xl border border-slate-900 overflow-x-auto select-all">
+              <pre className="theme-card bg-secondary font-mono text-[10px] p-3 rounded-xl border-2 border-border overflow-x-auto select-all text-text/80">
                 {`<img src="${dataUri.slice(0, 45)}..." width="${width}" height="${height}" alt="placeholder" />`}
               </pre>
             </div>

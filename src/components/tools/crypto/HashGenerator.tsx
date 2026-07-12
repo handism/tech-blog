@@ -36,7 +36,7 @@ export default function HashGenerator() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="ここにテキストを入力"
-          className="w-full h-40 border-2 border-border p-3 rounded-lg bg-card text-sm font-medium focus:outline-none focus:ring-2 focus:ring-accent resize-none shadow-[2px_2px_0px_0px_var(--border)]"
+          className="theme-textarea w-full h-40"
         />
       </div>
 
@@ -47,7 +47,7 @@ export default function HashGenerator() {
           <select
             value={algorithm}
             onChange={(e) => setAlgorithm(e.target.value as HashAlgorithm)}
-            className="w-full border-2 border-border p-2.5 rounded-lg bg-card text-sm font-bold focus:outline-none focus:ring-2 focus:ring-accent shadow-[2px_2px_0px_0px_var(--border)]"
+            className="theme-select w-full"
           >
             <option value="SHA-1">SHA-1</option>
             <option value="SHA-256">SHA-256</option>
@@ -67,7 +67,7 @@ export default function HashGenerator() {
 
       {/* エラーメッセージ */}
       {error && (
-        <div className="border-2 border-red-500 bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 p-4 rounded-lg text-sm font-bold">
+        <div className="border-2 border-red-500 bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 p-4 rounded-xl text-sm font-bold">
           <p>エラー: {error}</p>
         </div>
       )}
@@ -76,7 +76,7 @@ export default function HashGenerator() {
       {output && <ResultBox value={output} label={`${algorithm} ハッシュ値`} />}
 
       {/* 情報 */}
-      <div className="theme-card p-6 bg-secondary text-text/80 text-xs space-y-2 leading-relaxed shadow-[4px_4px_0px_0px_var(--border)]">
+      <div className="theme-card p-6 bg-secondary text-text/80 text-xs space-y-2 leading-relaxed">
         <p className="font-extrabold text-text">対応アルゴリズム:</p>
         <ul className="list-disc list-inside space-y-1 font-medium">
           <li>SHA-1: 160 ビット（非推奨）</li>

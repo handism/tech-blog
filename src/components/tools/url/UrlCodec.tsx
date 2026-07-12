@@ -35,7 +35,7 @@ export default function UrlCodec() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="ここに URL またはテキストを入力"
-          className="w-full h-40 border-2 border-border p-3 rounded-xl bg-card text-text font-mono text-sm focus:outline-none focus:ring-2 focus:ring-accent resize-none shadow-[2px_2px_0px_0px_var(--border)]"
+          className="theme-textarea w-full h-40"
         />
       </div>
 
@@ -59,7 +59,7 @@ export default function UrlCodec() {
       {output && <ResultBox value={output} label="出力" />}
 
       {/* 変換例 */}
-      <div className="bg-secondary border-2 border-border p-6 rounded-xl shadow-[4px_4px_0px_0px_var(--border)] text-sm">
+      <div className="theme-card p-6 bg-secondary text-sm">
         <h2 className="text-sm font-bold text-text mb-4">変換例</h2>
         <div className="space-y-4 font-mono leading-relaxed">
           <div>

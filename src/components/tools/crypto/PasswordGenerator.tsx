@@ -67,7 +67,7 @@ export default function PasswordGenerator() {
             max={64}
             value={length}
             onChange={(e) => setLength(Number(e.target.value))}
-            className="w-full border-2 border-border p-3 rounded-lg bg-card text-sm font-black focus:outline-none focus:ring-2 focus:ring-accent shadow-[2px_2px_0px_0px_var(--border)]"
+            className="theme-input w-full font-black"
           />
         </div>
         <div className="space-y-3 pt-2">
@@ -111,7 +111,7 @@ export default function PasswordGenerator() {
       </div>
 
       {error && (
-        <div className="border-2 border-red-500 bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 p-4 rounded-lg text-sm font-bold animate-pulse">
+        <div className="border-2 border-red-500 bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 p-4 rounded-xl text-sm font-bold animate-pulse">
           {error}
         </div>
       )}

@@ -3,10 +3,9 @@
 
 import { useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import ResultBox from '@/src/components/ResultBox';
 
 export default function JwtDecoder() {
-  const { copy } = useCopyToClipboard();
   const [token, setToken] = useState('');
   const [decoded, setDecoded] = useState('');
   const [error, setError] = useState('');
@@ -39,20 +38,16 @@ export default function JwtDecoder() {
     }
   };
 
-  const copyToClipboard = () => {
-    copy(decoded);
-  };
-
   return (
     <div className="space-y-6">
       {/* JWT 入力 */}
       <div>
-        <label className="block text-sm font-bold text-text mb-2">JWT トークン</label>
+        <label className="block text-xs font-bold text-text/70 mb-2">JWT トークン</label>
         <textarea
           value={token}
           onChange={(e) => setToken(e.target.value)}
           placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U"
-          className="w-full h-40 px-4 py-3 border-2 border-border bg-card text-text font-mono text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-accent resize-none shadow-[2px_2px_0px_0px_var(--border)]"
+          className="theme-textarea w-full h-40"
         />
       </div>
 
@@ -86,25 +81,10 @@ export default function JwtDecoder() {
       )}
 
       {/* デコード結果 */}
-      {decoded && (
-        <div>
-          <div className="flex justify-between items-center mb-2">
-            <label className="block text-sm font-bold text-text">デコード済みペイロード</label>
-            <button
-              onClick={copyToClipboard}
-              className="theme-btn px-3 py-1 text-xs shadow-[2px_2px_0px_0px_var(--border)] font-bold"
-            >
-              コピー
-            </button>
-          </div>
-          <pre className="bg-secondary p-4 rounded-xl border-2 border-border overflow-auto max-h-96 text-sm text-text font-mono shadow-[2px_2px_0px_0px_var(--border)]">
-            {decoded}
-          </pre>
-        </div>
-      )}
+      {decoded && <ResultBox value={decoded} label="デコード済みペイロード" />}
 
       {/* JWT 構造の説明 */}
-      <div className="bg-secondary border-2 border-border p-6 rounded-xl text-sm space-y-2 shadow-[4px_4px_0px_0px_var(--border)]">
+      <div className="theme-card p-6 bg-secondary text-sm space-y-2">
         <p className="font-bold">JWT トークンの構造:</p>
         <p className="font-mono bg-card px-2 py-1 rounded border-2 border-border inline-block text-text font-bold">
           Header.Payload.Signature

@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import ResultBox from '@/src/components/ResultBox';
 
 /**
  * UTF-8 文字列を Base64 にエンコードする (TextEncoder 版)
@@ -23,7 +23,6 @@ const decodeBase64 = (base64: string): string => {
 };
 
 export default function Base64Codec() {
-  const { copy } = useCopyToClipboard();
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
@@ -48,10 +47,6 @@ export default function Base64Codec() {
     }
   };
 
-  const copyToClipboard = () => {
-    copy(output);
-  };
-
   return (
     <div className="space-y-6">
       {/* エラーメッセージ */}
@@ -63,12 +58,12 @@ export default function Base64Codec() {
 
       {/* 入力エリア */}
       <div>
-        <label className="block text-sm font-bold text-text mb-2">入力</label>
+        <label className="block text-xs font-bold text-text/70 mb-2">入力</label>
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="ここにテキストまたは Base64 文字列を入力"
-          className="w-full h-40 px-4 py-3 border-2 border-border bg-card text-text font-mono text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-accent resize-none shadow-[2px_2px_0px_0px_var(--border)]"
+          className="theme-textarea w-full h-40"
         />
       </div>
 
@@ -89,27 +84,10 @@ export default function Base64Codec() {
       </div>
 
       {/* 出力エリア */}
-      {output && (
-        <div>
-          <div className="flex justify-between items-center mb-2">
-            <label className="block text-sm font-bold text-text">出力</label>
-            <button
-              onClick={copyToClipboard}
-              className="theme-btn px-3 py-1 text-xs shadow-[2px_2px_0px_0px_var(--border)] font-bold"
-            >
-              コピー
-            </button>
-          </div>
-          <textarea
-            value={output}
-            readOnly
-            className="w-full h-40 px-4 py-3 border-2 border-border bg-secondary text-text font-mono text-sm rounded-xl resize-none shadow-[2px_2px_0px_0px_var(--border)]"
-          />
-        </div>
-      )}
+      {output && <ResultBox value={output} label="出力" />}
 
       {/* 使用例 */}
-      <div className="bg-secondary border-2 border-border p-6 rounded-xl shadow-[4px_4px_0px_0px_var(--border)]">
+      <div className="theme-card p-6 bg-secondary">
         <h2 className="text-sm font-bold text-text mb-3">使用例</h2>
         <div className="text-sm text-text/70 space-y-2 font-medium">
           <p>• テキストを Base64 にエンコード</p>
