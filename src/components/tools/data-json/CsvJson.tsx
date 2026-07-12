@@ -135,7 +135,7 @@ export default function CsvJson() {
             placeholder={
               mode === 'csv-to-json' ? 'name,age\nAlice,30' : '[{ "name": "Alice", "age": 30 }]'
             }
-            className="w-full h-80 px-4 py-3 border-2 border-border bg-card text-text font-mono text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-accent resize-none shadow-[2px_2px_0px_0px_var(--border)]"
+            className="theme-textarea w-full h-80 font-mono text-sm resize-none"
           />
         </div>
         <div>
@@ -153,7 +153,7 @@ export default function CsvJson() {
           <textarea
             value={output}
             readOnly
-            className="w-full h-80 px-4 py-3 border-2 border-border bg-secondary text-text font-mono text-sm rounded-xl resize-none shadow-[2px_2px_0px_0px_var(--border)]"
+            className="theme-textarea w-full h-80 bg-secondary font-mono text-sm resize-none"
           />
         </div>
       </div>

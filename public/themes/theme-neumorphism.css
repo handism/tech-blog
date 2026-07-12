@@ -27,6 +27,11 @@
   
   --theme-btn-active-transform: translateY(0px);
   --theme-btn-active-shadow: inset 4px 4px 8px #bec5d1, inset -4px -4px 8px #ffffff;
+
+  --theme-input-border-width: 0px;
+  --theme-input-radius: 12px;
+  --theme-input-bg: var(--color-bg);
+  --theme-input-shadow: inset 3px 3px 6px #bec5d1, inset -3px -3px 6px #ffffff;
 }
 
 [data-theme='neumorphism'].dark {
@@ -43,6 +48,11 @@
   --theme-btn-shadow: var(--mx, 4px) var(--my, 4px) 8px #121721, calc(var(--mx, 4px) * -1) calc(var(--my, 4px) * -1) 8px #242d3f;
   --theme-btn-hover-shadow: calc(var(--mx, 4px) * 1.2) calc(var(--my, 4px) * 1.2) 10px #0e121a, calc(var(--mx, 4px) * -1.2) calc(var(--my, 4px) * -1.2) 10px #283246;
   --theme-btn-active-shadow: inset 4px 4px 8px #121721, inset -4px -4px 8px #242d3f;
+
+  --theme-input-border-width: 0px;
+  --theme-input-radius: 12px;
+  --theme-input-bg: var(--color-bg);
+  --theme-input-shadow: inset 3px 3px 6px #121721, inset -3px -3px 6px #242d3f;
 }
 
 /* シャドウのオーバーライド */

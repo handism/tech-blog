@@ -25,6 +25,12 @@
   --theme-btn-hover-bg: var(--color-secondary);
   --theme-btn-active-transform: none;
   --theme-btn-active-shadow: none;
+
+  --theme-input-border-width: 1px;
+  --theme-input-border-color: var(--color-border);
+  --theme-input-radius: 6px;
+  --theme-input-bg: var(--color-bg);
+  --theme-input-shadow: none;
 }
 
 [data-theme='minimal'].dark {

@@ -28,6 +28,12 @@
   --theme-btn-hover-transform: translateY(-1px);
   --theme-btn-active-transform: translateY(0);
   --theme-btn-active-shadow: 0 2px 5px rgba(47, 62, 70, 0.05);
+
+  --theme-input-border-width: 1px;
+  --theme-input-border-color: var(--color-secondary);
+  --theme-input-radius: 12px;
+  --theme-input-bg: var(--color-card);
+  --theme-input-shadow: none;
 }
 
 [data-theme='nordic'] body {

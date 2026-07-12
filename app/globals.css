@@ -56,6 +56,14 @@
   --theme-btn-active-transform: none;
   --theme-btn-active-shadow: none;
   --theme-btn-active-bg: var(--theme-btn-hover-bg);
+
+  --theme-input-border-width: 1px;
+  --theme-input-border-color: var(--color-border);
+  --theme-input-bg: var(--color-card);
+  --theme-input-radius: 8px;
+  --theme-input-shadow: none;
+  --theme-input-color: inherit;
+  --theme-input-focus-border-color: var(--color-accent);
 }
 
 .dark {
@@ -140,6 +148,52 @@
   box-shadow: var(--theme-btn-active-shadow);
   background-color: var(--theme-btn-active-bg);
   background-image: var(--theme-btn-active-bg);
+}
+
+.theme-input,
+.theme-textarea {
+  border: var(--theme-input-border-width) solid var(--theme-input-border-color);
+  background-color: var(--theme-input-bg);
+  border-radius: var(--theme-input-radius);
+  box-shadow: var(--theme-input-shadow);
+  color: var(--theme-input-color);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.theme-input:focus,
+.theme-textarea:focus {
+  outline: none;
+  border-color: var(--theme-input-focus-border-color);
+}
+
+.theme-select {
+  border: var(--theme-input-border-width) solid var(--theme-input-border-color);
+  background-color: var(--theme-input-bg);
+  border-radius: var(--theme-input-radius);
+  box-shadow: var(--theme-input-shadow);
+  color: var(--theme-input-color);
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+  cursor: pointer;
+}
+
+.theme-select:focus {
+  outline: none;
+  border-color: var(--theme-input-focus-border-color);
 }
 
 /* =======================

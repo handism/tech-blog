@@ -25,6 +25,11 @@
   --theme-btn-hover-bg: var(--color-text);
   --theme-btn-hover-color: var(--color-bg);
   --theme-btn-active-transform: none;
+
+  --theme-input-border-width: 1px;
+  --theme-input-border-color: var(--color-border);
+  --theme-input-radius: 0px;
+  --theme-input-bg: var(--color-card);
 }
 
 [data-theme='modern-japanese'].dark {

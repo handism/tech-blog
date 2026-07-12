@@ -161,7 +161,7 @@ export default function ColorConverter() {
             value={input}
             onChange={handleHexChange}
             placeholder="#RRGGBB"
-            className="flex-1 px-4 py-2 border-2 border-border bg-card text-text placeholder-text/40 rounded-lg focus:outline-none focus:ring-1 focus:ring-accent font-mono text-base shadow-inner font-bold"
+            className="theme-input flex-1 placeholder-text/40 font-mono text-base font-bold"
           />
           <button
             onClick={() => copyToClipboard(color.hex)}
@@ -200,7 +200,7 @@ export default function ColorConverter() {
                   max="255"
                   value={color.rgb[channel]}
                   onChange={(e) => handleRgbChange(channel, Number(e.target.value))}
-                  className="w-20 px-3 py-2 border-2 border-border bg-card text-text rounded-lg focus:outline-none focus:ring-1 focus:ring-accent font-bold shadow-inner"
+                  className="theme-input w-20 font-bold"
                 />
                 <input
                   type="range"
@@ -244,7 +244,7 @@ export default function ColorConverter() {
                 max="360"
                 value={color.hsl.h}
                 onChange={(e) => handleHslChange('h', Number(e.target.value))}
-                className="w-20 px-3 py-2 border-2 border-border bg-card text-text rounded-lg focus:outline-none focus:ring-1 focus:ring-accent font-bold shadow-inner"
+                className="theme-input w-20 font-bold"
               />
               <input
                 type="range"
@@ -265,7 +265,7 @@ export default function ColorConverter() {
                 max="100"
                 value={color.hsl.s}
                 onChange={(e) => handleHslChange('s', Number(e.target.value))}
-                className="w-20 px-3 py-2 border-2 border-border bg-card text-text rounded-lg focus:outline-none focus:ring-1 focus:ring-accent font-bold shadow-inner"
+                className="theme-input w-20 font-bold"
               />
               <input
                 type="range"
@@ -286,7 +286,7 @@ export default function ColorConverter() {
                 max="100"
                 value={color.hsl.l}
                 onChange={(e) => handleHslChange('l', Number(e.target.value))}
-                className="w-20 px-3 py-2 border-2 border-border bg-card text-text rounded-lg focus:outline-none focus:ring-1 focus:ring-accent font-bold shadow-inner"
+                className="theme-input w-20 font-bold"
               />
               <input
                 type="range"

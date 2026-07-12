@@ -144,7 +144,7 @@ export default function LoremIpsum() {
                   const val = e.target.value as TextType;
                   setTextType(val);
                 }}
-                className="w-full px-3 py-2 border-2 border-border rounded-xl font-bold bg-card text-text focus:outline-none cursor-pointer text-sm"
+                className="theme-select w-full font-bold text-sm"
               >
                 {Object.entries(LOREM_TEXTS).map(([k, v]) => (
                   <option key={k} value={k}>
@@ -193,7 +193,7 @@ export default function LoremIpsum() {
                 max={unit === 'words' && textType !== 'lorem' ? 2000 : 100}
                 value={count}
                 onChange={(e) => setCount(Math.max(1, Number(e.target.value)))}
-                className="w-full px-3 py-2 border-2 border-border rounded-xl font-bold bg-card text-text focus:outline-none text-sm"
+                className="theme-input w-full font-bold text-sm"
               />
             </div>
 
@@ -242,7 +242,7 @@ export default function LoremIpsum() {
             <div className="flex-1 min-h-0">
               <textarea
                 readOnly
-                className="w-full h-full p-4 border-2 border-border rounded-xl font-mono text-sm bg-card text-text focus:outline-none resize-none overflow-y-auto leading-relaxed"
+                className="theme-textarea w-full h-full font-mono text-sm resize-none overflow-y-auto leading-relaxed"
                 value={generatedText}
                 placeholder="ここにテキストが生成されます。"
               />

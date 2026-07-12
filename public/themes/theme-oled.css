@@ -29,6 +29,12 @@
   --theme-btn-hover-color: #ffffff;
   --theme-btn-hover-border-color: #2563eb;
   --theme-btn-active-transform: translateY(0);
+
+  --theme-input-border-width: 1px;
+  --theme-input-border-color: #e4e4e7;
+  --theme-input-radius: 6px;
+  --theme-input-bg: var(--color-bg);
+  --theme-input-shadow: none;
 }
 
 /* ダークモード対応 (OLED Dark) */

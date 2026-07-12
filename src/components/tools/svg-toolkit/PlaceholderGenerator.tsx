@@ -265,7 +265,7 @@ export default function PlaceholderGenerator() {
                     max="4000"
                     value={width}
                     onChange={(e) => setWidth(Math.max(16, Number(e.target.value)))}
-                    className="w-full bg-secondary border border-border rounded-xl px-3 py-2 text-xs text-text focus:outline-none focus:ring-1 focus:ring-accent font-mono"
+                    className="theme-input w-full font-mono text-xs"
                   />
                 </div>
                 <div>
@@ -278,7 +278,7 @@ export default function PlaceholderGenerator() {
                     max="4000"
                     value={height}
                     onChange={(e) => setHeight(Math.max(16, Number(e.target.value)))}
-                    className="w-full bg-secondary border border-border rounded-xl px-3 py-2 text-xs text-text focus:outline-none focus:ring-1 focus:ring-accent font-mono"
+                    className="theme-input w-full font-mono text-xs"
                   />
                 </div>
               </div>
@@ -325,7 +325,7 @@ export default function PlaceholderGenerator() {
                       type="text"
                       value={bgColor}
                       onChange={(e) => setBgColor(e.target.value)}
-                      className="w-full bg-secondary border border-border rounded-lg px-2 py-1 text-xs font-mono uppercase focus:outline-none focus:ring-1 focus:ring-accent text-text"
+                      className="theme-input w-full px-2 py-1 text-xs font-mono uppercase"
                     />
                   </div>
                 </div>
@@ -343,7 +343,7 @@ export default function PlaceholderGenerator() {
                       type="text"
                       value={textColor}
                       onChange={(e) => setTextColor(e.target.value)}
-                      className="w-full bg-secondary border border-border rounded-lg px-2 py-1 text-xs font-mono uppercase focus:outline-none focus:ring-1 focus:ring-accent text-text"
+                      className="theme-input w-full px-2 py-1 text-xs font-mono uppercase"
                     />
                   </div>
                 </div>
@@ -370,7 +370,7 @@ export default function PlaceholderGenerator() {
                   value={customText}
                   onChange={(e) => setCustomText(e.target.value)}
                   placeholder={`${width} × ${height}`}
-                  className="w-full bg-secondary border border-border rounded-xl px-3 py-2 text-xs text-text focus:outline-none focus:ring-1 focus:ring-accent"
+                  className="theme-input w-full text-xs"
                 />
               </div>
 
@@ -379,7 +379,7 @@ export default function PlaceholderGenerator() {
                   <label className="block text-xs font-bold text-text/80 mb-1.5">
                     フォントサイズ (px)
                   </label>
-                  <div className="flex items-center gap-1 bg-secondary border border-border rounded-xl px-1">
+                  <div className="theme-input flex items-center gap-1 !p-0.5">
                     <button
                       onClick={() => setFontSize(Math.max(8, fontSize - 4))}
                       className="p-1.5 hover:bg-card rounded-lg cursor-pointer"
@@ -410,7 +410,7 @@ export default function PlaceholderGenerator() {
                   <select
                     value={fontFamily}
                     onChange={(e) => setFontFamily(e.target.value)}
-                    className="w-full bg-secondary border border-border rounded-xl px-2.5 py-2 text-xs text-text focus:outline-none"
+                    className="theme-select w-full text-xs"
                   >
                     <option value="Lexend">Lexend</option>
                     <option value="Space Grotesk">Space Grotesk</option>

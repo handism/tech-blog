@@ -59,7 +59,7 @@ export default function JsonFormatter() {
           <select
             value={indent}
             onChange={(e) => setIndent(Number(e.target.value))}
-            className="w-full px-4 py-2 border-2 border-border bg-card text-text rounded-xl focus:outline-none focus:ring-2 focus:ring-accent font-bold shadow-[2px_2px_0px_0px_var(--border)]"
+            className="theme-select w-full font-bold"
           >
             <option value={2}>2 スペース</option>
             <option value={4}>4 スペース</option>
@@ -97,7 +97,7 @@ export default function JsonFormatter() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder='{"key": "value"}'
-            className="w-full h-96 px-4 py-3 border-2 border-border bg-card text-text font-mono text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-accent resize-none shadow-[2px_2px_0px_0px_var(--border)]"
+            className="theme-textarea w-full h-96 font-mono text-sm resize-none"
           />
         </div>
         <div className="space-y-2">
@@ -115,7 +115,7 @@ export default function JsonFormatter() {
           <textarea
             value={output}
             readOnly
-            className="w-full h-96 px-4 py-3 border-2 border-border bg-secondary text-text font-mono text-sm rounded-xl resize-none shadow-[2px_2px_0px_0px_var(--border)]"
+            className="theme-textarea w-full h-96 bg-secondary font-mono text-sm resize-none"
           />
         </div>
       </div>

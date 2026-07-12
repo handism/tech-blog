@@ -29,6 +29,13 @@
   --theme-btn-hover-transform: translateY(-1px);
   --theme-btn-hover-shadow: 0 4px 12px rgba(10, 40, 100, 0.15);
   --theme-btn-active-transform: translateY(0);
+
+  --theme-input-border-width: 1px;
+  --theme-input-border-color: rgba(10, 40, 100, 0.4);
+  --theme-input-radius: 4px;
+  --theme-input-bg: rgba(208, 224, 255, 0.6);
+  --theme-input-color: #0a1628;
+  --theme-input-focus-border-color: rgba(10, 40, 100, 0.9);
 }
 
 [data-theme='blueprint'] body {

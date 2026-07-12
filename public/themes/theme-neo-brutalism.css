@@ -19,6 +19,11 @@ html:not([data-theme]) {
   --theme-btn-hover-shadow: 5px 5px 0px 0px var(--color-border);
   --theme-btn-active-transform: translate(3px, 3px);
   --theme-btn-active-shadow: 0px 0px 0px 0px var(--color-border);
+
+  --theme-input-border-width: 2px;
+  --theme-input-radius: 10px;
+  --theme-input-shadow: 2px 2px 0px 0px var(--color-border);
+  --theme-input-focus-border-color: var(--color-accent);
 }
 
 /* ヘッダーのNeo-Brutalismスタイル */
@@ -91,6 +96,7 @@ html:not([data-theme]) .dark {
   --theme-btn-shadow: 3px 3px 0px 0px var(--color-accent);
   --theme-btn-hover-shadow: 5px 5px 0px 0px var(--color-accent);
   --theme-btn-active-shadow: 0px 0px 0px 0px var(--color-accent);
+  --theme-input-shadow: 2px 2px 0px 0px var(--color-accent);
 }
 
 html[data-theme='neo-brutalism'].dark .site-header,

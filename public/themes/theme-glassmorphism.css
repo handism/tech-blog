@@ -28,6 +28,11 @@
   --theme-btn-hover-shadow: 0 8px 24px rgba(31, 38, 135, 0.08);
   --theme-btn-active-transform: translateY(0);
   --theme-btn-active-shadow: 0 2px 8px rgba(31, 38, 135, 0.04);
+
+  --theme-input-border-color: rgba(0, 0, 0, 0.15);
+  --theme-input-bg: rgba(255, 255, 255, 0.3);
+  --theme-input-radius: 12px;
+  --theme-input-shadow: 0 4px 12px rgba(31, 38, 135, 0.02);
 }
 
 [data-theme='glassmorphism'] body {
@@ -59,6 +64,9 @@ html[data-theme='glassmorphism'] .dark,
   --theme-btn-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
   --theme-btn-hover-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   --theme-btn-active-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+
+  --theme-input-border-color: rgba(255, 255, 255, 0.15);
+  --theme-input-bg: rgba(255, 255, 255, 0.05);
 }
 
 html[data-theme='glassmorphism'].dark body,

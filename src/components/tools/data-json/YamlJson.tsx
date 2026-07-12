@@ -77,7 +77,7 @@ export default function YamlJson() {
             placeholder={
               isYamlInput ? 'key: value\nlist:\n  - item1\n  - item2' : '{"key": "value"}'
             }
-            className="w-full h-96 px-4 py-3 border-2 border-border bg-card text-text font-mono text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-accent resize-none shadow-[2px_2px_0px_0px_var(--border)]"
+            className="theme-textarea w-full h-96 font-mono text-sm resize-none"
           />
         </div>
         <div>
@@ -97,7 +97,7 @@ export default function YamlJson() {
           <textarea
             value={output}
             readOnly
-            className="w-full h-96 px-4 py-3 border-2 border-border bg-secondary text-text font-mono text-sm rounded-xl resize-none shadow-[2px_2px_0px_0px_var(--border)]"
+            className="theme-textarea w-full h-96 bg-secondary font-mono text-sm resize-none"
           />
         </div>
       </div>

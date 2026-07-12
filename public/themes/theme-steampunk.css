@@ -35,6 +35,13 @@
   --theme-btn-hover-border-color: #c8872a;
   --theme-btn-active-transform: translateY(1px);
   --theme-btn-active-shadow: 1px 1px 4px rgba(74, 51, 25, 0.15);
+
+  --theme-input-border-width: 2px;
+  --theme-input-border-color: #8b6535;
+  --theme-input-bg: #decfa6;
+  --theme-input-radius: 4px;
+  --theme-input-color: #4a3319;
+  --theme-input-focus-border-color: #c8872a;
 }
 
 [data-theme='steampunk'] body {

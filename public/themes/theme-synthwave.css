@@ -32,6 +32,13 @@
   --theme-btn-hover-color: #ffffff;
   --theme-btn-active-transform: translate(2px, 2px);
   --theme-btn-active-shadow: 0px 0px 0px 0px var(--color-border);
+
+  --theme-input-border-width: 2px;
+  --theme-input-border-color: #ff007f;
+  --theme-input-bg: var(--color-bg);
+  --theme-input-radius: 8px;
+  --theme-input-color: #2e1049;
+  --theme-input-focus-border-color: #0ea5e9;
 }
 
 html[data-theme='synthwave'].dark,

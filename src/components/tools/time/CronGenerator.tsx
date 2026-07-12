@@ -330,7 +330,7 @@ export default function CronGenerator() {
             value={cronInput}
             onChange={(e) => handleManualInput(e.target.value)}
             placeholder="分 時 日 月 曜日 (例: */10 * * * *)"
-            className="flex-1 px-4 py-3 bg-secondary/30 border-2 border-border text-text placeholder-text/40 rounded-xl focus:outline-none focus:ring-1 focus:ring-accent font-mono text-lg font-bold tracking-wide shadow-inner"
+            className="theme-input flex-1 placeholder-text/40 font-mono text-lg font-bold tracking-wide"
           />
 
           <button
@@ -368,7 +368,7 @@ export default function CronGenerator() {
             <select
               value={preset}
               onChange={(e) => handlePresetChange(e.target.value)}
-              className="px-3 py-1.5 bg-card border-2 border-border rounded-lg text-sm text-text font-bold focus:outline-none focus:ring-1 focus:ring-accent cursor-pointer shadow-sm"
+              className="theme-select text-sm font-bold"
             >
               <option value="custom">カスタム（個別編集）</option>
               <option value="every-min">毎分 (* * * * *)</option>
@@ -387,7 +387,7 @@ export default function CronGenerator() {
               type="text"
               value={genMin}
               onChange={(e) => updateVisualField('min', e.target.value)}
-              className="w-full px-2 py-1 bg-card border-2 border-border rounded text-sm font-mono text-center font-bold focus:outline-none focus:ring-1 focus:ring-accent shadow-sm"
+              className="theme-input w-full font-mono text-center font-bold text-sm"
               placeholder="*"
             />
             <span className="text-[10px] text-text/40 text-center mt-1 font-bold">0 - 59</span>
@@ -400,7 +400,7 @@ export default function CronGenerator() {
               type="text"
               value={genHour}
               onChange={(e) => updateVisualField('hour', e.target.value)}
-              className="w-full px-2 py-1 bg-card border-2 border-border rounded text-sm font-mono text-center font-bold focus:outline-none focus:ring-1 focus:ring-accent shadow-sm"
+              className="theme-input w-full font-mono text-center font-bold text-sm"
               placeholder="*"
             />
             <span className="text-[10px] text-text/40 text-center mt-1 font-bold">0 - 23</span>
@@ -413,7 +413,7 @@ export default function CronGenerator() {
               type="text"
               value={genDom}
               onChange={(e) => updateVisualField('dom', e.target.value)}
-              className="w-full px-2 py-1 bg-card border-2 border-border rounded text-sm font-mono text-center font-bold focus:outline-none focus:ring-1 focus:ring-accent shadow-sm"
+              className="theme-input w-full font-mono text-center font-bold text-sm"
               placeholder="*"
             />
             <span className="text-[10px] text-text/40 text-center mt-1 font-bold">1 - 31</span>
@@ -426,7 +426,7 @@ export default function CronGenerator() {
               type="text"
               value={genMonth}
               onChange={(e) => updateVisualField('month', e.target.value)}
-              className="w-full px-2 py-1 bg-card border-2 border-border rounded text-sm font-mono text-center font-bold focus:outline-none focus:ring-1 focus:ring-accent shadow-sm"
+              className="theme-input w-full font-mono text-center font-bold text-sm"
               placeholder="*"
             />
             <span className="text-[10px] text-text/40 text-center mt-1 font-bold">1 - 12</span>
@@ -439,7 +439,7 @@ export default function CronGenerator() {
               type="text"
               value={genDow}
               onChange={(e) => updateVisualField('dow', e.target.value)}
-              className="w-full px-2 py-1 bg-card border-2 border-border rounded text-sm font-mono text-center font-bold focus:outline-none focus:ring-1 focus:ring-accent shadow-sm"
+              className="theme-input w-full font-mono text-center font-bold text-sm"
               placeholder="*"
             />
             <span className="text-[10px] text-text/40 text-center mt-1 font-bold">0-6 (0=日)</span>

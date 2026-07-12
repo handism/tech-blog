@@ -29,6 +29,13 @@
   --theme-btn-hover-color: var(--color-bg);
   --theme-btn-active-transform: none;
   --theme-btn-active-shadow: inset 0 0 5px var(--color-border);
+
+  --theme-input-border-width: 1px;
+  --theme-input-border-color: var(--color-border);
+  --theme-input-radius: 0px;
+  --theme-input-bg: transparent;
+  --theme-input-color: var(--color-text);
+  --theme-input-focus-border-color: var(--color-accent);
 }
 
 html[data-theme='terminal'].dark,

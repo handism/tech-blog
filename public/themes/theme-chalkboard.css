@@ -31,6 +31,13 @@
   --theme-btn-hover-transform: translateY(-1px) rotate(0.3deg);
   --theme-btn-hover-border-color: #c44545;
   --theme-btn-hover-color: #c44545;
+
+  --theme-input-border-width: 1.5px;
+  --theme-input-border-color: rgba(27, 51, 38, 0.35);
+  --theme-input-radius: 8px;
+  --theme-input-bg: rgba(224, 232, 227, 0.7);
+  --theme-input-color: #1b3326;
+  --theme-input-focus-border-color: #c44545;
 }
 
 [data-theme='chalkboard'] body {

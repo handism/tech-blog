@@ -28,6 +28,11 @@
   --theme-btn-hover-transform: translateY(-1px);
   --theme-btn-active-transform: translateY(1px);
   --theme-btn-active-shadow: inset 4px 4px 8px rgba(3, 105, 161, 0.1), inset -4px -4px 8px rgba(255, 255, 255, 0.6);
+
+  --theme-input-border-width: 0px;
+  --theme-input-radius: 16px;
+  --theme-input-bg: var(--color-secondary);
+  --theme-input-shadow: inset 2px 2px 5px rgba(3, 105, 161, 0.05), inset -2px -2px 5px rgba(255, 255, 255, 0.7);
 }
 
 html[data-theme='claymorphism'].dark,
@@ -46,8 +51,13 @@ html[data-theme='claymorphism'] .dark,
   --theme-card-shadow: 10px 10px 20px rgba(0, 0, 0, 0.4), inset -8px -8px 12px rgba(0, 0, 0, 0.3), inset 8px 8px 12px rgba(255, 255, 255, 0.05);
   --theme-card-hover-shadow: 14px 14px 28px rgba(0, 0, 0, 0.5), inset -8px -8px 12px rgba(0, 0, 0, 0.3), inset 8px 8px 12px rgba(255, 255, 255, 0.08);
   --theme-btn-shadow: 6px 6px 12px rgba(0, 0, 0, 0.3), inset -4px -4px 6px rgba(0, 0, 0, 0.2), inset 4px 4px 6px rgba(255, 255, 255, 0.05);
-  --theme-btn-hover-shadow: 8px 8px 16px rgba(0, 0, 0, 0.4), inset -4px -4px 6px rgba(0, 0, 0, 0.2), inset 4px 4px 6px rgba(255, 255, 255, 0.08);
+  --theme-btn-hover-shadow: 8px 8px 16px rgba(0, 0, 0, 0.4), inset -4px -4px 6px rgba(0, 0, 0, 0.2), inset 4px 4px 6px rgba(255, 255, 255, 0.05);
   --theme-btn-active-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.4), inset -4px -4px 8px rgba(255, 255, 255, 0.05);
+
+  --theme-input-border-width: 0px;
+  --theme-input-radius: 16px;
+  --theme-input-bg: var(--color-secondary);
+  --theme-input-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.4), inset -2px -2px 5px rgba(255, 255, 255, 0.05);
 }
 
 [data-theme='claymorphism'] body {
