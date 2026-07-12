@@ -20,7 +20,7 @@ export default function KeyboardEvents() {
   const [currentEvent, setCurrentEvent] = useState<KeyHistoryItem | null>(null);
   const [history, setHistory] = useState<KeyHistoryItem[]>([]);
   const [activeCodes, setActiveCodes] = useState<Set<string>>(new Set());
-  const [layout, setLayout] = useState<'us' | 'jis'>('us');
+  const [layout, setLayout] = useState<'us' | 'jis'>('jis');
   /* const visualizerRef = useRef<HTMLDivElement>(null); */
 
   useEffect(() => {
