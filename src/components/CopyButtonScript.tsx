@@ -22,7 +22,11 @@ export default function CopyButtonScript() {
         const code = block.querySelector('code')?.innerText || '';
         navigator.clipboard.writeText(code);
         button.innerText = 'Copied!';
-        setTimeout(() => (button.innerText = 'Copy'), 2000);
+        button.setAttribute('aria-label', 'コピーしました');
+        setTimeout(() => {
+          button.innerText = 'Copy';
+          button.setAttribute('aria-label', 'コードをコピー');
+        }, 2000);
       });
 
       block.style.position = 'relative';
