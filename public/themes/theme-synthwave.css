@@ -60,6 +60,9 @@ html[data-theme='synthwave'] .dark,
   --theme-btn-hover-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
   --theme-btn-active-transform: scale(0.97);
   --theme-btn-active-shadow: 0 0 5px rgba(0, 255, 255, 0.2);
+
+  --theme-input-color: #ffffff;
+  --theme-input-focus-border-color: #00ffff;
 }
 
 [data-theme='synthwave'] body {
@@ -202,4 +205,9 @@ html[data-theme='synthwave'] .dark .theme-card-hover:hover {
   100% {
     background-position: 0 40px, 0 0, 0 0;
   }
+}
+
+[data-theme='synthwave'] option {
+  background-color: var(--color-card);
+  color: var(--color-text);
 }
