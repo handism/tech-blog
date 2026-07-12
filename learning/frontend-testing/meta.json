@@ -1,5 +1,6 @@
 {
   "title": "Webフロントエンドテスト入門",
   "description": "テストピラミッドなどのテスト戦略の基本概念から、Vitest + React Testing Libraryを用いたコンポーネントテスト、さらにPlaywrightによるE2Eテストまで、モダンなフロントエンドにおけるテスト手法を体系的に学びます。",
-  "emoji": "🧪"
+  "emoji": "🧪",
+  "category": "frontend"
 }

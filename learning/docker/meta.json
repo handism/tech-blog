@@ -1,5 +1,6 @@
 {
   "title": "Docker入門",
   "description": "コンテナの仕組みから実用的な使い方まで、図解とMermaidダイアグラムを交えて分かりやすく学びます。",
-  "emoji": "🐳"
+  "emoji": "🐳",
+  "category": "infra"
 }

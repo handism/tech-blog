@@ -1,5 +1,6 @@
 {
   "title": "API設計ガイド",
   "description": "RESTful APIの原則、HTTPステータスコードの適切な利用、エンドポイント設計、バージョン管理などを学びます。",
-  "emoji": "🔌"
+  "emoji": "🔌",
+  "category": "backend"
 }

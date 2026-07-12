@@ -38,6 +38,7 @@ export interface LearningCourseMeta {
   title: string; // コースタイトル
   description: string; // コース概要
   emoji: string; // 表示用絵文字
+  category: string; // カテゴリ
 }
 
 /**

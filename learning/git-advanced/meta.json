@@ -1,5 +1,6 @@
 {
   "title": "Git高度なテクニックと内部構造",
   "description": "Gitのオブジェクトモデル（内部構造）から、コンフリクトの仕組み、Rebase、Reflogによるデータ救出など、一歩進んだGitの活用法を学びます。",
-  "emoji": "🐙"
+  "emoji": "🐙",
+  "category": "infra"
 }

@@ -1,5 +1,6 @@
 {
   "title": "WebパフォーマンスとCore Web Vitals",
   "description": "ブラウザが画面を描画する仕組み（レンダリングパイプライン）と、UX向上のための重要指標である Core Web Vitals の最適化アプローチを図解で学びます。",
-  "emoji": "⚡"
+  "emoji": "⚡",
+  "category": "frontend"
 }

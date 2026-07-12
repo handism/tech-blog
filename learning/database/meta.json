@@ -1,5 +1,6 @@
 {
   "title": "データベース入門",
   "description": "リレーショナルデータベースの基本概念からテーブル設計、SQLの実践、パフォーマンス最適化まで、図解とMermaidで体系的に学びます。",
-  "emoji": "🗄️"
+  "emoji": "🗄️",
+  "category": "backend"
 }

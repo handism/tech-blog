@@ -1,5 +1,6 @@
 {
   "title": "Webセキュリティ基礎",
   "description": "XSS、CSRF、CORS、HTTPSなど、モダンWebアプリケーションを保護するための必須知識を学びます。",
-  "emoji": "🛡️"
+  "emoji": "🛡️",
+  "category": "fundamentals"
 }

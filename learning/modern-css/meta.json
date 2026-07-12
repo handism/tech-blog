@@ -1,5 +1,6 @@
 {
   "title": "モダンCSSレイアウト & 設計",
   "description": "Flexbox、CSS Grid、コンテナクエリといった最新レイアウト手法から、Tailwind CSSやCSS Modulesを用いた実用的なコンポーネント設計手法までを体系的に学びます。",
-  "emoji": "🎨"
+  "emoji": "🎨",
+  "category": "frontend"
 }

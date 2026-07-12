@@ -1,5 +1,6 @@
 {
   "title": "GitHub入門",
   "description": "ローカルのGit操作からGitHub上でのプルリクエスト、チーム開発のワークフローまで図解でスムーズに理解します。",
-  "emoji": "🐙"
+  "emoji": "🐙",
+  "category": "infra"
 }

@@ -1,5 +1,6 @@
 {
   "title": "React Hooks入門",
   "description": "Reactのコア機能であるHooksの仕組みを、useStateやuseEffectのライフサイクル、およびカスタムフックの作成まで体系的に学びます。",
-  "emoji": "⚛️"
+  "emoji": "⚛️",
+  "category": "frontend"
 }

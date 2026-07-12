@@ -1,5 +1,6 @@
 {
   "title": "Linux & Bashコマンド入門",
   "description": "サーバー構築や日々の開発で役立つ、Linuxの基本操作、パーミッション、Bashスクリプトの使い方を習得します。",
-  "emoji": "🐧"
+  "emoji": "🐧",
+  "category": "infra"
 }

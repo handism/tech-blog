@@ -12,6 +12,7 @@ const CourseMetaJsonSchema = z.object({
   title: z.string().optional(),
   description: z.string().optional(),
   emoji: z.string().optional(),
+  category: z.string().optional(),
 });
 
 export interface LearningSource {
@@ -54,6 +55,7 @@ export async function readCourseMeta(courseId: string): Promise<LearningCourseMe
         title: data.title || courseId,
         description: data.description || '',
         emoji: data.emoji || '📖',
+        category: data.category || 'fundamentals',
       };
     })(),
     null
