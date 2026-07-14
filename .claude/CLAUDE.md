@@ -92,6 +92,7 @@ draft: true          # 省略可
 | `renderPostMarkdown()` | `src/lib/post-renderer.ts` | Markdown → HTML 変換。コンテンツ非依存 |
 | `getTagsWithCount()` | `src/lib/post-taxonomy.ts` | `{ tags: string[] }[]` を受け取る汎用型。PostMeta・ScrapMeta どちらも渡せる |
 | `getAllTags()` | `src/lib/post-taxonomy.ts` | 同上 |
+| `ToolTabsPage` | `src/components/ToolTabsPage.tsx` | タブ切り替え型ツールページの共通レイアウト。`app/tools/*/page.tsx` は `SUB_TOOLS` 定義＋このコンポーネント呼び出しのみとし、タブ UI・クエリパラメータ処理・Suspense 境界はここに集約する |
 
 ## コードスタイル
 
