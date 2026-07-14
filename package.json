@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node scripts/download-fonts.js && next dev",
-    "build": "node scripts/download-fonts.js && next build",
+    "dev": "node scripts/download-fonts.js && node scripts/copy-pattern-assets.js && next dev",
+    "build": "node scripts/download-fonts.js && node scripts/copy-pattern-assets.js && next build",
     "start": "serve out",
     "lint": "eslint",
     "test:unit": "vitest run",

@@ -5,7 +5,7 @@
 ## コマンド
 
 ```bash
-bun run dev              # 開発サーバー起動（前処理で scripts/download-fonts.js を実行）
+bun run dev              # 開発サーバー起動（前処理で scripts/download-fonts.js と scripts/copy-pattern-assets.js を実行）
 bun run build            # 本番ビルド（静的ファイルを /out に出力）
 bun run start            # ビルド済み /out をローカルで配信
 bun run lint             # ESLint 実行
@@ -56,7 +56,7 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 #### AWS Patterns（`patterns/`）
 
 1. `patterns/gallery-meta.json` — 全パターンのメタデータを一括管理（`src/types/aws-gallery.ts` の Zod スキーマでバリデーション）
-2. `src/lib/aws-gallery-repository.ts` — メタデータと `patterns/iac/*.yaml` テンプレートを読み込み、アセット（YAML・`patterns/img/*.drawio.svg`）を更新日時比較で `public/patterns/` に自動コピー
+2. `src/lib/aws-gallery-repository.ts` — メタデータと `patterns/iac/*.yaml` テンプレートを読み込む純粋な読み取り層。アセット（YAML・`patterns/img/*.drawio.svg`）の `public/patterns/` への同期は、更新日時比較を行う prebuild スクリプト `scripts/copy-pattern-assets.js`（dev / build 前処理）が担う
 3. `src/lib/aws-gallery-server.ts` — React `cache()` で集約し、YAML を Shiki でハイライト済み HTML に事前生成
 4. `app/patterns/` — `/patterns`（一覧）・`/patterns/[slug]`（詳細）の 2 ルート
 

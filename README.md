@@ -145,7 +145,7 @@ AWSのアーキテクチャパターンおよびテンプレートは `patterns`
 2. `patterns/iac/` ディレクトリ配下に CloudFormation テンプレート（`.yaml`）を配置します。
 3. `patterns/img/` ディレクトリ配下にアーキテクチャ図の画像（`.drawio.svg`。図解画像がない場合は JSON 上で `diagramFile: null` に設定）を配置します。
 
-ビルド時または開発サーバー起動時に、これらのファイルは自動的に `public/patterns/` 配下へ複製・同期されます。
+ビルド時または開発サーバー起動時に、前処理スクリプト `scripts/copy-pattern-assets.js` によってこれらのファイルは自動的に `public/patterns/` 配下へ複製・同期されます（更新日時を比較し、変更があったファイルのみコピー）。
 
 ### デプロイメント
 
