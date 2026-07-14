@@ -729,3 +729,24 @@ pre.shiki[data-filename]::before {
   }
 }
 
+/* =======================
+   テーマ別スタイルシートの統合
+   FOUCおよびレイアウトシフトを解消するため、静的ロード化
+   ======================= */
+@import '../src/styles/themes/theme-minimal.css';
+@import '../src/styles/themes/theme-neumorphism.css';
+@import '../src/styles/themes/theme-oled.css';
+@import '../src/styles/themes/theme-glassmorphism.css';
+@import '../src/styles/themes/theme-claymorphism.css';
+@import '../src/styles/themes/theme-three-d.css';
+@import '../src/styles/themes/theme-terminal.css';
+@import '../src/styles/themes/theme-blueprint.css';
+@import '../src/styles/themes/theme-synthwave.css';
+@import '../src/styles/themes/theme-neo-brutalism.css';
+@import '../src/styles/themes/theme-editorial.css';
+@import '../src/styles/themes/theme-chalkboard.css';
+@import '../src/styles/themes/theme-modern-japanese.css';
+@import '../src/styles/themes/theme-nordic.css';
+@import '../src/styles/themes/theme-steampunk.css';
+
+

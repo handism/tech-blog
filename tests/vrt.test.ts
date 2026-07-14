@@ -17,10 +17,8 @@ test.describe('Visual Regression Test (VRT) for all 36 themes', () => {
       // 3. テーマ適用を確実にするためにページを再読み込み
       await page.reload();
 
-      // 4. テーマ別 CSS ファイルのリンクタグがマウントされるのを待つ (React 19 の機能)
-      await page
-        .locator(`link[href="/themes/theme-${theme}.css"][rel="stylesheet"]`)
-        .waitFor({ state: 'attached', timeout: 5000 });
+      // 4. html要素の data-theme 属性が切り替わるのを待つ
+      await page.waitForSelector(`html[data-theme="${theme}"]`);
 
       // 5. トランジションが完了するまで微小に待つ
       await page.waitForTimeout(500);
