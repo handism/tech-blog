@@ -3,7 +3,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { Info } from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 
 // Matches a single cron part
 function matchesCronPart(value: number, part: string, rangeMin: number, rangeMax: number): boolean {
@@ -194,7 +194,6 @@ function getCronExplanation(cronStr: string): string {
 export default function CronGenerator() {
   const [mounted, setMounted] = useState(false);
   const [cronInput, setCronInput] = useState('*/5 * * * *');
-  const { copied, copy } = useCopyToClipboard();
 
   // Generator UI state
   const [preset, setPreset] = useState('custom');
@@ -308,10 +307,6 @@ export default function CronGenerator() {
     return getNextExecutions(cronInput);
   }, [cronInput, mounted]);
 
-  const handleCopy = () => {
-    copy(cronInput);
-  };
-
   if (!mounted) {
     return <div className="text-center py-12 text-text/60 font-bold">初期化中...</div>;
   }
@@ -333,12 +328,13 @@ export default function CronGenerator() {
             className="theme-input flex-1 placeholder-text/40 font-mono text-lg font-bold tracking-wide"
           />
 
-          <button
-            onClick={handleCopy}
+          <CopyButton
+            value={cronInput}
+            label="コピー"
+            copiedLabel="コピー完了"
+            showIcon={false}
             className="flex items-center justify-center gap-1.5 px-6 py-3 font-bold bg-emerald-600 hover:bg-emerald-700 text-white border-2 border-border shadow-[2.5px_2.5px_0px_0px_var(--border)] cursor-pointer rounded-xl active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
-          >
-            {copied ? 'コピー完了' : 'コピー'}
-          </button>
+          />
         </div>
 
         {/* Japanese Explanation Panel */}

@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Palette, Clipboard, Check, Eye } from 'lucide-react';
+import { Palette, Clipboard, Eye } from 'lucide-react';
 import { sanitizeSvg, optimizeSvg } from '@/src/lib/svg-utils';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 import { useIsClient } from '@/src/hooks/useIsClient';
 
 export default function SvgEditor() {
@@ -16,7 +16,6 @@ export default function SvgEditor() {
   );
   const [fillColor, setFillColor] = useState('');
   const [strokeColor, setStrokeColor] = useState('');
-  const { copied, copy } = useCopyToClipboard();
 
   const sanitizedPreview = useMemo(() => {
     if (!isClient) return '';
@@ -45,10 +44,6 @@ export default function SvgEditor() {
 
     return optimizeSvg(currentSvg);
   }, [inputSvg, fillColor, strokeColor]);
-
-  const handleCopy = () => {
-    copy(outputSvg);
-  };
 
   const handleFormatInput = () => {
     // 入力を簡易インデント整形
@@ -173,17 +168,16 @@ export default function SvgEditor() {
             <h3 className="text-sm font-bold text-text border-b-2 border-border pb-2 flex items-center justify-between mb-4">
               <span>⚡ 最適化結果 (圧縮コード)</span>
               {outputSvg && (
-                <button
-                  onClick={handleCopy}
-                  className="theme-btn p-1.5 bg-secondary text-text flex items-center justify-center"
+                <CopyButton
+                  value={outputSvg}
+                  label=""
+                  copiedLabel=""
+                  icon={Clipboard}
+                  iconClassName="w-4 h-4"
+                  copiedIconClassName="w-4 h-4 text-accent"
                   title="最適化コードをコピー"
-                >
-                  {copied ? (
-                    <Check className="w-4 h-4 text-accent" />
-                  ) : (
-                    <Clipboard className="w-4 h-4" />
-                  )}
-                </button>
+                  className="theme-btn p-1.5 bg-secondary text-text flex items-center justify-center"
+                />
               )}
             </h3>
             <pre className="flex-1 w-full p-3 border-2 border-border rounded-xl font-mono text-xs bg-slate-950 text-slate-100 overflow-y-auto whitespace-pre-wrap break-all">

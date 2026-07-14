@@ -3,7 +3,7 @@
 
 import { useState, useMemo } from 'react';
 import { Info } from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 
 type ConfigTab = 'nginx' | 'apache' | 'vercel' | 'netlify';
 
@@ -33,7 +33,6 @@ export default function SecurityHeaders() {
 
   // タブ管理
   const [activeTab, setActiveTab] = useState<ConfigTab>('nginx');
-  const { copied, copy } = useCopyToClipboard();
 
   // 各ヘッダーのキーと値のペアを算出
   const headers = useMemo(() => {
@@ -136,10 +135,6 @@ ${lines.join('\n')}`;
         return '';
     }
   }, [headers, activeTab]);
-
-  const handleCopy = () => {
-    copy(generatedCode);
-  };
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 text-text animate-none">
@@ -390,12 +385,13 @@ ${lines.join('\n')}`;
               ))}
             </div>
 
-            <button
-              onClick={handleCopy}
+            <CopyButton
+              value={generatedCode}
+              label="コピー"
+              copiedLabel="コピー済"
+              showIcon={false}
               className="theme-btn p-1.5 text-[10px] bg-secondary border-border text-text flex items-center gap-1 cursor-pointer shadow-[1px_1px_0px_0px_var(--border)]"
-            >
-              {copied ? 'コピー済' : 'コピー'}
-            </button>
+            />
           </div>
 
           {/* コード出力 */}

@@ -2,8 +2,8 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Copy, Check, Play, RefreshCw } from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import { Play, RefreshCw } from 'lucide-react';
+import CopyButton from '@/src/components/CopyButton';
 
 // イージングプリセット定義
 const PRESETS = [
@@ -28,7 +28,6 @@ export default function CubicBezier() {
 
   const [comparePreset, setComparePreset] = useState('linear');
   const [isAnimating, setIsAnimating] = useState(false);
-  const { copied, copy } = useCopyToClipboard();
 
   // 比較対象のイージング値を取得
   const compareValue = useMemo(() => {
@@ -45,10 +44,7 @@ export default function CubicBezier() {
     }, 50);
   };
 
-  const handleCopy = () => {
-    const code = `transition: all 1.0s cubic-bezier(${x1.toFixed(2)}, ${y1.toFixed(2)}, ${x2.toFixed(2)}, ${y2.toFixed(2)});`;
-    copy(code);
-  };
+  const transitionCode = `transition: all 1.0s cubic-bezier(${x1.toFixed(2)}, ${y1.toFixed(2)}, ${x2.toFixed(2)}, ${y2.toFixed(2)});`;
 
   const applyPreset = (vals: number[]) => {
     setX1(vals[0]);
@@ -327,17 +323,12 @@ export default function CubicBezier() {
             <h4 className="text-xs font-extrabold uppercase tracking-wider text-text/60">
               CSS Transition コード
             </h4>
-            <button
-              onClick={handleCopy}
+            <CopyButton
+              value={transitionCode}
+              label="コピー"
+              copiedLabel="コピー済"
               className="theme-btn p-1.5 text-[10px] flex items-center gap-1 cursor-pointer shadow-[1.5px_1.5px_0px_0px_var(--border)]"
-            >
-              {copied ? (
-                <Check className="w-3.5 h-3.5 text-accent" />
-              ) : (
-                <Copy className="w-3.5 h-3.5" />
-              )}
-              <span>{copied ? 'コピー済' : 'コピー'}</span>
-            </button>
+            />
           </div>
           <pre className="p-3 bg-[#1e1e1e] text-[#f8f8f2] font-mono text-[10px] rounded-lg border-2 border-border overflow-x-auto whitespace-pre-wrap leading-relaxed select-all">
             {`transition: all 1.0s cubic-bezier(${x1.toFixed(2)}, ${y1.toFixed(2)}, ${x2.toFixed(2)}, ${y2.toFixed(2)});`}

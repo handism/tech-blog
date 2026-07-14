@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Terminal, Copy, Check, Send } from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import { Terminal, Send } from 'lucide-react';
+import CopyButton from '@/src/components/CopyButton';
 
 interface ParsedCurl {
   url: string;
@@ -119,7 +119,6 @@ function parseCurl(curlCommand: string): ParsedCurl {
 export default function CurlConverter() {
   const [curlInput, setCurlInput] = useState(DEFAULT_CURL);
   const [activeLang, setActiveLang] = useState<'fetch' | 'axios' | 'python' | 'go'>('fetch');
-  const { copied, copy } = useCopyToClipboard();
 
   const parsed = useMemo(() => {
     return parseCurl(curlInput);
@@ -247,10 +246,6 @@ export default function CurlConverter() {
     }
   }, [parsed, activeLang]);
 
-  const handleCopy = () => {
-    copy(generatedCode);
-  };
-
   const handleRandomizeSample = (type: 'get' | 'post' | 'auth') => {
     if (type === 'get') {
       setCurlInput(`curl 'https://api.github.com/users/handism'`);
@@ -350,22 +345,14 @@ export default function CurlConverter() {
                 </div>
 
                 {/* コピー */}
-                <button
-                  onClick={handleCopy}
+                <CopyButton
+                  value={generatedCode}
+                  label="コードコピー"
+                  copiedLabel="Copied!"
+                  copiedLabelClassName="text-green-400 font-bold"
+                  copiedIconClassName="w-3.5 h-3.5 text-green-400"
                   className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 transition-colors cursor-pointer w-full sm:w-auto justify-center"
-                >
-                  {copied ? (
-                    <>
-                      <Check className="w-3.5 h-3.5 text-green-400" />
-                      <span className="text-green-400 font-bold">Copied!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3.5 h-3.5" />
-                      <span>コードコピー</span>
-                    </>
-                  )}
-                </button>
+                />
               </div>
 
               {/* ターミナル調コード表示 */}

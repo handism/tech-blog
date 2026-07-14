@@ -2,8 +2,8 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Clipboard, Check, RefreshCw } from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import { Clipboard, RefreshCw } from 'lucide-react';
+import CopyButton from '@/src/components/CopyButton';
 
 export default function JsonToTs() {
   const [inputJson, setInputJson] = useState(
@@ -11,7 +11,6 @@ export default function JsonToTs() {
   );
   const [rootName, setRootName] = useState('User');
   const [outputFormat, setOutputFormat] = useState<'interface' | 'type' | 'zod'>('interface');
-  const { copied, copy } = useCopyToClipboard();
 
   const { outputCode, error } = useMemo(() => {
     if (!inputJson.trim()) {
@@ -30,10 +29,6 @@ export default function JsonToTs() {
       };
     }
   }, [inputJson, rootName, outputFormat]);
-
-  const handleCopy = () => {
-    copy(outputCode);
-  };
 
   const handleFormat = () => {
     try {
@@ -227,17 +222,16 @@ export default function JsonToTs() {
 
         <div className="relative flex-1 min-h-0">
           {outputCode ? (
-            <button
-              onClick={handleCopy}
-              className="absolute top-4 right-4 z-10 theme-btn p-2 bg-secondary text-text flex items-center justify-center font-bold"
+            <CopyButton
+              value={outputCode}
+              label=""
+              copiedLabel=""
+              icon={Clipboard}
+              iconClassName="w-4 h-4"
+              copiedIconClassName="w-4 h-4 text-accent"
               title="コードをコピー"
-            >
-              {copied ? (
-                <Check className="w-4 h-4 text-accent" />
-              ) : (
-                <Clipboard className="w-4 h-4" />
-              )}
-            </button>
+              className="absolute top-4 right-4 z-10 theme-btn p-2 bg-secondary text-text flex items-center justify-center font-bold"
+            />
           ) : null}
           <pre className="w-full h-full p-4 border-2 border-border rounded-xl font-mono text-sm bg-slate-950 text-slate-100 overflow-y-auto whitespace-pre">
             {outputCode || '// 有効なJSONが入力されると、ここにコードが生成されます。'}

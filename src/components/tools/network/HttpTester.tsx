@@ -2,8 +2,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Send, Plus, Trash2, Clipboard, Check, HelpCircle, AlertTriangle } from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import { Send, Plus, Trash2, Clipboard, HelpCircle, AlertTriangle } from 'lucide-react';
+import CopyButton from '@/src/components/CopyButton';
 
 interface HeaderItem {
   id: string;
@@ -28,7 +28,6 @@ export default function HttpTester() {
   const [resBody, setResBody] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const { copied, copy } = useCopyToClipboard();
 
   const handleAddHeader = () => {
     setHeaders([...headers, { id: Date.now().toString(), key: '', value: '' }]);
@@ -118,10 +117,6 @@ export default function HttpTester() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleCopy = () => {
-    copy(resBody);
   };
 
   return (
@@ -285,17 +280,16 @@ export default function HttpTester() {
                 </div>
               ) : resBody ? (
                 <div className="flex-1 flex flex-col min-h-0 relative">
-                  <button
-                    onClick={handleCopy}
-                    className="absolute top-4 right-4 z-10 theme-btn p-2 bg-secondary border-border text-text flex items-center justify-center cursor-pointer shadow-[1.5px_1.5px_0px_0px_var(--border)]"
+                  <CopyButton
+                    value={resBody}
+                    label=""
+                    copiedLabel=""
+                    icon={Clipboard}
+                    iconClassName="w-4 h-4"
+                    copiedIconClassName="w-4 h-4 text-accent"
                     title="コピー"
-                  >
-                    {copied ? (
-                      <Check className="w-4 h-4 text-accent" />
-                    ) : (
-                      <Clipboard className="w-4 h-4" />
-                    )}
-                  </button>
+                    className="absolute top-4 right-4 z-10 theme-btn p-2 bg-secondary border-border text-text flex items-center justify-center cursor-pointer shadow-[1.5px_1.5px_0px_0px_var(--border)]"
+                  />
                   <div className="flex-1 grid grid-rows-3 gap-4 min-h-0">
                     {/* レスポンスヘッダー */}
                     <div className="row-span-1 border-2 border-border rounded-xl p-3 bg-card overflow-y-auto flex flex-col shadow-inner">

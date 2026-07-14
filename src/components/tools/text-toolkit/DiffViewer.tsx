@@ -2,7 +2,7 @@
 
 import { GitCompare, Copy, Trash2, Eye } from 'lucide-react';
 import { useState, useMemo } from 'react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 
 // LCS (Longest Common Subsequence) Algorithm for diffing
 function computeLcs(
@@ -56,7 +56,6 @@ export default function DiffViewer() {
   const [text2, setText2] = useState('');
   const [diffMode, setDiffMode] = useState<'line' | 'word' | 'char'>('line');
   const [viewMode, setViewMode] = useState<'split' | 'unified'>('split');
-  const { copied, copy } = useCopyToClipboard();
 
   // Computes the raw diff using the selected mode
   const diffResult = useMemo(() => {
@@ -137,20 +136,19 @@ export default function DiffViewer() {
     return result;
   }, [diffResult, diffMode]);
 
-  const handleCopyUnified = () => {
-    let unifiedText = '';
+  const unifiedText = useMemo(() => {
+    let text = '';
     diffResult.forEach((item) => {
       if (item.type === 'added') {
-        unifiedText += `+ ${item.value}\n`;
+        text += `+ ${item.value}\n`;
       } else if (item.type === 'removed') {
-        unifiedText += `- ${item.value}\n`;
+        text += `- ${item.value}\n`;
       } else {
-        unifiedText += `  ${item.value}\n`;
+        text += `  ${item.value}\n`;
       }
     });
-
-    copy(unifiedText);
-  };
+    return text;
+  }, [diffResult]);
 
   const clearAll = () => {
     setText1('');
@@ -266,13 +264,14 @@ export default function DiffViewer() {
                 <h2 className="text-lg font-bold text-text">比較結果</h2>
               </div>
               {viewMode === 'unified' || diffMode !== 'line' ? (
-                <button
-                  onClick={handleCopyUnified}
+                <CopyButton
+                  value={unifiedText}
+                  label="Unified形式でコピー"
+                  copiedLabel="コピーしました！"
+                  icon={Copy}
+                  copiedIcon={Copy}
                   className="flex items-center gap-1 theme-btn px-3 py-1.5 text-xs bg-secondary text-text cursor-pointer"
-                >
-                  <Copy className="w-3.5 h-3.5" />
-                  {copied ? 'コピーしました！' : 'Unified形式でコピー'}
-                </button>
+                />
               ) : null}
             </div>
 

@@ -3,7 +3,7 @@
 
 import { Trash2, Plus, AlertTriangle } from 'lucide-react';
 import { useState, useMemo } from 'react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 
 interface QueryParam {
   id: string;
@@ -13,7 +13,6 @@ interface QueryParam {
 
 export default function UrlParser() {
   const [urlInput, setUrlInput] = useState('');
-  const { copied, copy } = useCopyToClipboard();
   const [error, setError] = useState('');
 
   // Structured states for URL components
@@ -86,11 +85,6 @@ export default function UrlParser() {
       return '';
     }
   }, [protocol, hostname, port, pathname, hash, params]);
-
-  const handleCopy = () => {
-    if (!reconstructedUrl) return;
-    copy(reconstructedUrl);
-  };
 
   const handleAddParam = () => {
     setParams([
@@ -283,12 +277,13 @@ export default function UrlParser() {
               <span className="text-xs font-bold text-text/60 uppercase tracking-wider">
                 再構築されたURL
               </span>
-              <button
-                onClick={handleCopy}
+              <CopyButton
+                value={reconstructedUrl}
+                label="コピー"
+                copiedLabel="コピー完了"
+                showIcon={false}
                 className="theme-btn bg-accent text-white border-accent shadow-[3px_3px_0px_0px_var(--border)] dark:shadow-[3px_3px_0px_0px_var(--accent)] font-bold px-3 py-1.5 rounded-lg transition cursor-pointer flex items-center gap-1"
-              >
-                {copied ? 'コピー完了' : 'コピー'}
-              </button>
+              />
             </div>
 
             <div className="font-mono text-sm text-text bg-card p-3 rounded-xl border border-border break-all select-all leading-relaxed shadow-inner">

@@ -1,9 +1,9 @@
 // src/components/tools/url/UserAgentParser.tsx
 'use client';
 
-import { ShieldAlert, Copy, RefreshCw, Monitor, Check } from 'lucide-react';
+import { ShieldAlert, RefreshCw, Monitor } from 'lucide-react';
 import { useState, useEffect, useMemo } from 'react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 
 interface UAParseResult {
   browser: { name: string; version: string };
@@ -124,7 +124,6 @@ function parseUserAgent(ua: string): UAParseResult {
 
 export default function UserAgentParser() {
   const [uaInput, setUaInput] = useState('');
-  const { copied, copy } = useCopyToClipboard();
   const [detectedUa, setDetectedUa] = useState('');
 
   // Auto-detect browser user agent
@@ -141,10 +140,6 @@ export default function UserAgentParser() {
   const parsedResult = useMemo(() => {
     return parseUserAgent(uaInput);
   }, [uaInput]);
-
-  const handleCopy = () => {
-    copy(uaInput);
-  };
 
   const resetToCurrent = () => {
     setUaInput(detectedUa);
@@ -249,13 +244,12 @@ export default function UserAgentParser() {
         <span className="text-xs text-text/60">
           現在表示しているUA文字列自体をクリップボードに保存する：
         </span>
-        <button
-          onClick={handleCopy}
+        <CopyButton
+          value={uaInput}
+          label="UA文字列をコピー"
+          copiedLabel="コピーしました！"
           className="flex items-center gap-1 text-xs bg-accent text-white border-accent shadow-[3px_3px_0px_0px_var(--border)] dark:shadow-[3px_3px_0px_0px_var(--accent)] font-bold px-4 py-2 rounded-xl transition cursor-pointer"
-        >
-          {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-          {copied ? 'コピーしました！' : 'UA文字列をコピー'}
-        </button>
+        />
       </div>
 
       {/* 解説 */}

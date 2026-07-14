@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 
 const encodeHtmlEntities = (input: string) => {
   const textarea = document.createElement('textarea');
@@ -17,20 +17,12 @@ const decodeHtmlEntities = (input: string) => {
 };
 
 export default function HtmlEntity() {
-  const { copy } = useCopyToClipboard();
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [mode, setMode] = useState<'encode' | 'decode'>('encode');
-  const [copied, setCopied] = useState(false);
 
   const handleConvert = () => {
     setOutput(mode === 'encode' ? encodeHtmlEntities(input) : decodeHtmlEntities(input));
-  };
-
-  const copyToClipboard = () => {
-    copy(output);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -97,12 +89,13 @@ export default function HtmlEntity() {
           変換する
         </button>
         {output && (
-          <button
-            onClick={copyToClipboard}
+          <CopyButton
+            value={output}
+            label="コピー"
+            copiedLabel="コピー完了"
+            showIcon={false}
             className="theme-btn py-3 px-5 text-sm font-bold cursor-pointer shadow-[2px_2px_0px_0px_var(--border)] bg-card border-border text-text hover:bg-secondary"
-          >
-            {copied ? 'コピー完了' : 'コピー'}
-          </button>
+          />
         )}
       </div>
     </div>

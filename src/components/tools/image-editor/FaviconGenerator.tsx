@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { Upload, Download, Check, Clipboard } from 'lucide-react';
+import { Upload, Download, Clipboard } from 'lucide-react';
 import JSZip from 'jszip';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 import FileDropZone from '../shared/FileDropZone';
 
 import { ICON_SIZES } from './favicon-generator-data';
@@ -12,7 +12,6 @@ export default function FaviconGenerator() {
   const [sourceImage, setSourceImage] = useState<string | null>(null);
   const [imageName, setImageName] = useState<string>('');
   const [generatedIcons, setGeneratedIcons] = useState<Record<string, string>>({}); // filename -> dataUrl
-  const { copied, copy } = useCopyToClipboard();
 
   const handleFile = (file: File) => {
     setImageName(file.name);
@@ -127,10 +126,6 @@ export default function FaviconGenerator() {
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="manifest" href="/site.webmanifest">`;
 
-  const copyHtmlCode = () => {
-    copy(htmlCode);
-  };
-
   return (
     <>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -172,17 +167,16 @@ export default function FaviconGenerator() {
             <div className="theme-card p-5 md:p-6 space-y-3">
               <div className="flex justify-between items-center">
                 <h3 className="text-sm font-bold text-text">📋 HTML &lt;head&gt; の設定</h3>
-                <button
-                  onClick={copyHtmlCode}
-                  className="theme-btn p-1.5 bg-secondary text-text"
+                <CopyButton
+                  value={htmlCode}
+                  label=""
+                  copiedLabel=""
+                  icon={Clipboard}
+                  iconClassName="w-4 h-4"
+                  copiedIconClassName="w-4 h-4 text-accent"
                   title="コードをコピー"
-                >
-                  {copied ? (
-                    <Check className="w-4 h-4 text-accent" />
-                  ) : (
-                    <Clipboard className="w-4 h-4" />
-                  )}
-                </button>
+                  className="theme-btn p-1.5 bg-secondary text-text"
+                />
               </div>
               <pre className="p-3 border-2 border-border rounded-xl font-mono text-[11px] bg-slate-950 text-slate-100 overflow-x-auto whitespace-pre">
                 {htmlCode}

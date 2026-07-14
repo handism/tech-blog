@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { Sliders, Copy, Layout, RefreshCw, Check, Plus, Minus } from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import { Sliders, Layout, RefreshCw, Plus, Minus } from 'lucide-react';
+import CopyButton from '@/src/components/CopyButton';
 
 // アイテムの個別スタイル型
 interface ItemStyle {
@@ -17,7 +17,6 @@ interface ItemStyle {
 export default function FlexboxGrid() {
   const [layoutMode, setLayoutMode] = useState<'flex' | 'grid'>('flex');
   const [itemCount, setItemCount] = useState(4);
-  const { copied, copy } = useCopyToClipboard();
   const [activeItemId, setActiveItemId] = useState<number | null>(null);
 
   // 個別アイテムスタイルの状態
@@ -372,10 +371,6 @@ ${style.gridColumn !== 'auto' ? `  grid-column: ${style.gridColumn};\n` : ''}${s
     itemStyles,
   ]);
 
-  const handleCopy = () => {
-    copy(generatedCode);
-  };
-
   return (
     <>
       {/* レイアウト切り替えタブ */}
@@ -651,17 +646,14 @@ ${style.gridColumn !== 'auto' ? `  grid-column: ${style.gridColumn};\n` : ''}${s
                 </button>
               </div>
 
-              <button
-                onClick={handleCopy}
+              <CopyButton
+                value={generatedCode}
+                label="コードをコピー"
+                copiedLabel="コピーしました"
+                iconClassName="w-4 h-4"
+                copiedIconClassName="w-4 h-4 text-green-500"
                 className="theme-btn px-4 py-1.5 text-xs flex items-center gap-1.5 font-bold"
-              >
-                {copied ? (
-                  <Check className="w-4 h-4 text-green-500" />
-                ) : (
-                  <Copy className="w-4 h-4" />
-                )}
-                <span>{copied ? 'コピーしました' : 'コードをコピー'}</span>
-              </button>
+              />
             </div>
 
             <textarea

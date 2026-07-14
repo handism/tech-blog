@@ -93,6 +93,7 @@ draft: true          # 省略可
 | `getTagsWithCount()` | `src/lib/post-taxonomy.ts` | `{ tags: string[] }[]` を受け取る汎用型。PostMeta・ScrapMeta どちらも渡せる |
 | `getAllTags()` | `src/lib/post-taxonomy.ts` | 同上 |
 | `ToolTabsPage` | `src/components/ToolTabsPage.tsx` | タブ切り替え型ツールページの共通レイアウト。`app/tools/*/page.tsx` は `SUB_TOOLS` 定義＋このコンポーネント呼び出しのみとし、タブ UI・クエリパラメータ処理・Suspense 境界はここに集約する |
+| `CopyButton` | `src/components/CopyButton.tsx` | コピー実行＋「コピー完了」表示切り替えを内包した汎用ボタン。`src/components/tools/` 配下でクリップボードコピーが必要な箇所は個別に `useCopyToClipboard` を呼ばずこれを使う。キーボードショートカット等ボタンクリック以外からもコピーを発火させたい場合のみ `useCopyToClipboard` を直接使用する |
 
 ## コードスタイル
 

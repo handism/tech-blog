@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useMemo, useCallback } from 'react';
-import { Sliders, Copy, Download, RefreshCw, Layers, Sparkles, Check } from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import { Sliders, Download, RefreshCw, Layers, Sparkles } from 'lucide-react';
+import CopyButton from '@/src/components/CopyButton';
 
 // 簡易乱数ジェネレータ（シードベース）
 function createRandom(seed: number) {
@@ -16,7 +16,6 @@ function createRandom(seed: number) {
 export default function SvgWaveBlob() {
   const [mode, setMode] = useState<'blob' | 'wave'>('blob');
   const [seed, setSeed] = useState<number>(42);
-  const { copied, copy } = useCopyToClipboard();
 
   // Blob設定
   const [blobEdges, setBlobEdges] = useState(6);
@@ -253,9 +252,6 @@ ${paths}
   ]);
 
   // コピー
-  const handleCopy = () => {
-    copy(svgString);
-  };
 
   // ダウンロード
   const handleDownload = () => {
@@ -319,17 +315,13 @@ ${paths}
             <div className="flex justify-between items-center">
               <span className="text-xs font-extrabold">SVG Source Code</span>
               <div className="flex gap-2">
-                <button
-                  onClick={handleCopy}
+                <CopyButton
+                  value={svgString}
+                  label="コードをコピー"
+                  copiedLabel="コピーしました"
+                  copiedIconClassName="w-3.5 h-3.5 text-green-500"
                   className="theme-btn px-3 py-1.5 text-xs flex items-center gap-1.5"
-                >
-                  {copied ? (
-                    <Check className="w-3.5 h-3.5 text-green-500" />
-                  ) : (
-                    <Copy className="w-3.5 h-3.5" />
-                  )}
-                  <span>{copied ? 'コピーしました' : 'コードをコピー'}</span>
-                </button>
+                />
                 <button
                   onClick={handleDownload}
                   className="theme-btn px-3 py-1.5 text-xs bg-accent text-white flex items-center gap-1.5"

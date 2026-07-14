@@ -2,12 +2,11 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Copy, Check, AlertCircle } from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import { AlertCircle } from 'lucide-react';
+import CopyButton from '@/src/components/CopyButton';
 
 export default function HtmlToJsx() {
   const [htmlInput, setHtmlInput] = useState('');
-  const { copied, copy } = useCopyToClipboard();
 
   // 変換メインロジック (useMemoによる派生)
   const { jsxOutput, error } = useMemo(() => {
@@ -126,11 +125,6 @@ export default function HtmlToJsx() {
     }
   }, [htmlInput]);
 
-  const handleCopy = () => {
-    if (!jsxOutput) return;
-    copy(jsxOutput);
-  };
-
   const handleClear = () => {
     setHtmlInput('');
   };
@@ -173,13 +167,14 @@ export default function HtmlToJsx() {
         </div>
 
         {jsxOutput && (
-          <button
-            onClick={handleCopy}
+          <CopyButton
+            value={jsxOutput}
+            label="コピーする"
+            copiedLabel="コピーする"
+            iconClassName="w-4 h-4"
+            copiedIconClassName="w-4 h-4"
             className="theme-btn bg-accent text-white border-accent px-5 py-2 text-xs font-bold flex items-center gap-1.5 shadow-[2px_2px_0px_0px_var(--border)] cursor-pointer"
-          >
-            {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-            <span>コピーする</span>
-          </button>
+          />
         )}
       </div>
 

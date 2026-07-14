@@ -3,7 +3,7 @@
 
 import { useState, useMemo, useRef } from 'react';
 import { Terminal, Search, AlertTriangle, ShieldCheck, X } from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 import { CATEGORIES, USE_CASES, type GitUseCase } from './GitUseCases';
 
 export default function GitHelper() {
@@ -20,8 +20,6 @@ export default function GitHelper() {
     });
     return initial;
   });
-  const { copied, copy } = useCopyToClipboard();
-
   // カテゴリやユースケースの選択時にパラメータ入力値を初期化
   const selectUseCase = (useCase: GitUseCase) => {
     setActiveUseCase(useCase);
@@ -62,10 +60,6 @@ export default function GitHelper() {
     });
     return cmd;
   }, [activeUseCase, inputParams]);
-
-  const handleCopy = () => {
-    copy(generatedCommand);
-  };
 
   return (
     <div className="max-w-6xl mx-auto text-text animate-none">
@@ -218,12 +212,13 @@ export default function GitHelper() {
                 <Terminal className="w-4 h-4 text-green-400" />
                 Terminal Output
               </span>
-              <button
-                onClick={handleCopy}
+              <CopyButton
+                value={generatedCommand}
+                label="コマンドコピー"
+                copiedLabel="コピー完了"
+                showIcon={false}
                 className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 transition-colors cursor-pointer"
-              >
-                {copied ? 'コピー完了' : 'コマンドコピー'}
-              </button>
+              />
             </div>
 
             <div className="font-mono text-xs text-slate-300 bg-slate-950 p-4 rounded-xl border border-slate-900 overflow-x-auto whitespace-pre leading-relaxed relative shadow-inner select-all">

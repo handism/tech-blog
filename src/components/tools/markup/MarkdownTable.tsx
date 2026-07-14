@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 import { Plus, Trash2, AlignLeft, AlignCenter, AlignRight, Import } from 'lucide-react';
 
 type Alignment = 'left' | 'center' | 'right';
@@ -18,7 +18,6 @@ export default function MarkdownTable() {
 
   const [importText, setImportText] = useState('');
   const [importError, setImportError] = useState('');
-  const { copied, copy } = useCopyToClipboard();
   const [showImport, setShowImport] = useState(false);
 
   // テーブルデータからMarkdownを生成する処理 (useMemo化)
@@ -102,10 +101,6 @@ export default function MarkdownTable() {
     const updated = [...alignments];
     updated[colIndex] = nextAlignment;
     setAlignments(updated);
-  };
-
-  const handleCopy = () => {
-    copy(outputMarkdown);
   };
 
   // Markdownテーブルをインポートしてパースする
@@ -330,12 +325,13 @@ export default function MarkdownTable() {
           <div className="flex justify-between items-center mb-4 border-b-2 border-border/20 pb-3">
             <h2 className="text-base font-bold text-text">⚡ Markdownエクスポート</h2>
             {outputMarkdown && (
-              <button
-                onClick={handleCopy}
+              <CopyButton
+                value={outputMarkdown}
+                label="コピー"
+                copiedLabel="コピー完了"
+                showIcon={false}
                 className="theme-btn px-3 py-1 text-xs bg-accent text-white border-accent flex items-center gap-1 cursor-pointer"
-              >
-                {copied ? 'コピー完了' : 'コピー'}
-              </button>
+              />
             )}
           </div>
 

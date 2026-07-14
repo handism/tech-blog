@@ -1,9 +1,9 @@
 // src/components/tools/data-json/SqlFormatter.tsx
 'use client';
 
-import { Copy, Sparkles, Check } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { useState, useMemo } from 'react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 
 // Basic custom SQL tokenizer and formatter
 function formatSql(
@@ -153,16 +153,10 @@ export default function SqlFormatter() {
   const [rawSql, setRawSql] = useState('');
   const [uppercase, setUppercase] = useState(true);
   const [indentType, setIndentType] = useState<'space2' | 'space4' | 'tab'>('space2');
-  const { copied, copy } = useCopyToClipboard();
 
   const formattedSql = useMemo(() => {
     return formatSql(rawSql, { uppercase, indentType });
   }, [rawSql, uppercase, indentType]);
-
-  const handleCopy = () => {
-    if (!formattedSql) return;
-    copy(formattedSql);
-  };
 
   const handleClear = () => {
     setRawSql('');
@@ -249,13 +243,14 @@ export default function SqlFormatter() {
             </label>
 
             {formattedSql && (
-              <button
-                onClick={handleCopy}
+              <CopyButton
+                value={formattedSql}
+                label="コピー"
+                copiedLabel="コピーしました！"
+                iconClassName="w-3 h-3"
+                copiedIconClassName="w-3 h-3"
                 className="theme-btn bg-accent text-white border-accent shadow-[3px_3px_0px_0px_var(--border)] dark:shadow-[3px_3px_0px_0px_var(--accent)] font-bold px-3 py-1 text-xs cursor-pointer flex items-center gap-1"
-              >
-                {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
-                {copied ? 'コピーしました！' : 'コピー'}
-              </button>
+              />
             )}
           </div>
 

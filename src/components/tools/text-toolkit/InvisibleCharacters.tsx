@@ -1,15 +1,14 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Search, Eye, Clipboard, Trash2, Check, AlertTriangle, Info } from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import { Eye, Clipboard, Trash2, AlertTriangle, Info } from 'lucide-react';
+import CopyButton from '@/src/components/CopyButton';
 
 // 特殊文字の定義
 import { SpecialCharDef, SPECIAL_CHARS } from './invisible-characters-data';
 
 export default function InvisibleCharacters() {
   const [inputText, setInputText] = useState('');
-  const { copied, copy } = useCopyToClipboard();
 
   // 各種クリーンアップトグル
   const [cleanFullWidthSpace, setCleanFullWidthSpace] = useState(true);
@@ -118,11 +117,6 @@ export default function InvisibleCharacters() {
 
     return text;
   }, [inputText, cleanFullWidthSpace, cleanZeroWidthSpaces, cleanBOM, cleanNBSP, cleanControls]);
-
-  // コピー
-  const handleCopyCleaned = () => {
-    copy(cleanedText);
-  };
 
   // 全て削除
   const handleClear = () => {
@@ -243,20 +237,16 @@ export default function InvisibleCharacters() {
             </div>
 
             <div className="pt-3 border-t border-border/10 flex justify-end">
-              <button
-                onClick={handleCopyCleaned}
+              <CopyButton
+                value={cleanedText}
                 disabled={!inputText}
+                icon={Clipboard}
+                label="クリーンアップしてコピー"
+                copiedLabel="クリーンアップ後にコピー完了！"
+                copiedIconClassName="w-4 h-4 text-green-400"
+                iconClassName="w-4 h-4"
                 className="theme-btn px-5 py-2.5 bg-accent text-white flex items-center gap-2 text-xs font-extrabold disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {copied ? (
-                  <Check className="w-4 h-4 text-green-400" />
-                ) : (
-                  <Clipboard className="w-4 h-4" />
-                )}
-                <span>
-                  {copied ? 'クリーンアップ後にコピー完了！' : 'クリーンアップしてコピー'}
-                </span>
-              </button>
+              />
             </div>
           </div>
         </div>

@@ -2,12 +2,11 @@
 'use client';
 
 import { useState } from 'react';
-import { Layers, Copy, Check, Sparkles, Sliders } from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import { Layers, Sparkles, Sliders } from 'lucide-react';
+import CopyButton from '@/src/components/CopyButton';
 
 export default function CssGenerator() {
   const [activeTab, setActiveTab] = useState<'glass' | 'shadow'>('glass');
-  const { copied, copy } = useCopyToClipboard();
 
   // Glassmorphism state
   const [blur, setBlur] = useState(12);
@@ -61,10 +60,6 @@ border-radius: 24px;`;
   };
 
   const shadowCss = generateSmoothShadow();
-
-  const handleCopy = (text: string) => {
-    copy(text);
-  };
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
@@ -479,22 +474,14 @@ border-radius: 24px;`;
               <span className="text-xs font-bold text-slate-400 tracking-wider uppercase">
                 CSSコード出力
               </span>
-              <button
-                onClick={() => handleCopy(activeTab === 'glass' ? glassCss : shadowCss)}
+              <CopyButton
+                value={activeTab === 'glass' ? glassCss : shadowCss}
+                label="CSSコピー"
+                copiedLabel="Copied!"
+                copiedLabelClassName="text-green-400 font-bold"
+                copiedIconClassName="w-3.5 h-3.5 text-green-400"
                 className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 transition-colors cursor-pointer"
-              >
-                {copied ? (
-                  <>
-                    <Check className="w-3.5 h-3.5 text-green-400" />
-                    <span className="text-green-400 font-bold">Copied!</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-3.5 h-3.5" />
-                    <span>CSSコピー</span>
-                  </>
-                )}
-              </button>
+              />
             </div>
 
             <div className="font-mono text-xs text-slate-300 bg-slate-950 p-4 rounded-xl border border-slate-900 overflow-x-auto whitespace-pre leading-relaxed select-all">

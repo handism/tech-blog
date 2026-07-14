@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Clipboard, Check, Shuffle } from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import { Clipboard, Shuffle } from 'lucide-react';
+import CopyButton from '@/src/components/CopyButton';
 
 import { LOREM_TEXTS, TextType, UnitType, pseudoRandom } from './lorem-ipsum-data';
 
@@ -21,7 +21,6 @@ export default function LoremIpsum() {
   const [unit, setUnit] = useState<UnitType>('paragraphs');
   const [count, setCount] = useState<number>(3);
   const [htmlMarkup, setHtmlMarkup] = useState(false);
-  const { copied, copy } = useCopyToClipboard();
   const [trigger, setTrigger] = useState(0);
 
   const generatedText = useMemo(() => {
@@ -120,10 +119,6 @@ export default function LoremIpsum() {
     }
     return '';
   }, [textType, unit, count, htmlMarkup, trigger]);
-
-  const handleCopy = () => {
-    copy(generatedText);
-  };
 
   return (
     <>
@@ -225,17 +220,13 @@ export default function LoremIpsum() {
             <div className="flex justify-between items-center mb-4 border-b-2 border-border pb-3">
               <h2 className="text-base font-bold text-text">✨ 生成されたダミーテキスト</h2>
               {generatedText && (
-                <button
-                  onClick={handleCopy}
+                <CopyButton
+                  value={generatedText}
+                  icon={Clipboard}
+                  label="コピー"
+                  copiedLabel="コピー"
                   className="theme-btn px-4 py-1.5 text-xs bg-accent text-white flex items-center gap-1.5 cursor-pointer"
-                >
-                  {copied ? (
-                    <Check className="w-3.5 h-3.5" />
-                  ) : (
-                    <Clipboard className="w-3.5 h-3.5" />
-                  )}
-                  コピー
-                </button>
+                />
               )}
             </div>
 
