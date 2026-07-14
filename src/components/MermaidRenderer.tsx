@@ -46,6 +46,18 @@ export default function MermaidRenderer() {
         const nodesToRender: HTMLElement[] = [];
         elements.forEach((el) => {
           const htmlEl = el as HTMLElement;
+
+          // 親コンテナとスケルトン要素を取得
+          const container = htmlEl.closest('.mermaid-container');
+          const skeleton = container?.querySelector('.mermaid-skeleton');
+
+          // レンダリング開始時の初期化：非表示にし、スケルトンを表示
+          htmlEl.classList.add('opacity-0');
+          if (skeleton) {
+            skeleton.classList.remove('opacity-0');
+            skeleton.classList.add('animate-pulse');
+          }
+
           // すでに描画されている場合、元のソースコードを復元する
           let src = htmlEl.getAttribute('data-mermaid-src');
           if (!src) {
@@ -62,8 +74,30 @@ export default function MermaidRenderer() {
         await mermaid.run({
           nodes: nodesToRender,
         });
+
+        // 描画完了後のフェードイン制御
+        nodesToRender.forEach((htmlEl) => {
+          htmlEl.classList.remove('opacity-0');
+          const container = htmlEl.closest('.mermaid-container');
+          const skeleton = container?.querySelector('.mermaid-skeleton');
+          if (skeleton) {
+            skeleton.classList.add('opacity-0');
+            skeleton.classList.remove('animate-pulse');
+          }
+        });
       } catch (err) {
         console.error('Mermaid render error:', err);
+        // エラー時もスケルトンを消して非表示を解除
+        elements.forEach((el) => {
+          const htmlEl = el as HTMLElement;
+          htmlEl.classList.remove('opacity-0');
+          const container = htmlEl.closest('.mermaid-container');
+          const skeleton = container?.querySelector('.mermaid-skeleton');
+          if (skeleton) {
+            skeleton.classList.add('opacity-0');
+            skeleton.classList.remove('animate-pulse');
+          }
+        });
       }
     };
 

@@ -19,10 +19,13 @@ describe('renderPostMarkdown', () => {
     expect(html).toContain('data-language="ts"');
   });
 
-  it('Mermaidコードブロックを生の div.mermaid に置換すること', async () => {
+  it('Mermaidコードブロックをスケルトンおよびコンテナ構造に置換すること', async () => {
     const markdown = '```mermaid\ngraph TD\nA --> B\n```';
     const { html } = await renderPostMarkdown(markdown);
-    expect(html).toContain('<div class="mermaid">graph TD\nA --> B</div>');
+    expect(html).toContain('class="mermaid-container');
+    expect(html).toContain('class="mermaid-skeleton');
+    expect(html).toContain('class="mermaid opacity-0');
+    expect(html).toContain('graph TD\nA --> B');
     expect(html).not.toContain('class="shiki"');
   });
 
