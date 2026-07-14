@@ -1,20 +1,20 @@
 // src/lib/posts-view.ts
-import { getAllPostMeta } from '@/src/lib/posts-server';
+import { getAllPostMeta, toPostSummary } from '@/src/lib/posts-server';
 import {
   getCategoriesWithCount,
   getTagsWithCount,
   type CategoryCount,
   type TagCount,
 } from '@/src/lib/post-taxonomy';
-import type { PostMeta } from '@/src/types/post';
+import type { PostSummary } from '@/src/types/post';
 
 type PaginatedPosts = {
-  posts: PostMeta[];
+  posts: PostSummary[];
   totalPages: number;
 };
 
 type BlogViewContext = {
-  allPosts: PostMeta[];
+  allPosts: PostSummary[];
   categories: string[];
   categoryCounts: CategoryCount[];
   tagCounts: TagCount[];
@@ -29,11 +29,9 @@ export async function getBlogViewContext(): Promise<BlogViewContext> {
   const categories = categoryCounts.map((c) => c.category);
   const tagCounts = getTagsWithCount(allPosts);
 
-  // クライアントに渡すデータから plaintext・keywords を除去して軽量化。
-  // どちらも一覧表示では不要で、keywords は記事全文相当のため RSC ペイロードを肥大化させる。
-  const lightPosts: PostMeta[] = allPosts.map(
-    ({ plaintext: _plaintext, keywords: _keywords, ...rest }) => rest
-  );
+  // クライアントに渡すデータは PostSummary へ変換して軽量化。
+  // plaintext・keywords は一覧表示では不要で、特に keywords は記事全文相当のため RSC ペイロードを肥大化させる。
+  const lightPosts = allPosts.map(toPostSummary);
 
   return { allPosts: lightPosts, categories, categoryCounts, tagCounts };
 }
@@ -41,7 +39,7 @@ export async function getBlogViewContext(): Promise<BlogViewContext> {
 /**
  * 投稿配列をページ番号単位で切り出す。
  */
-export function paginatePosts(posts: PostMeta[], page: number, perPage: number): PaginatedPosts {
+export function paginatePosts(posts: PostSummary[], page: number, perPage: number): PaginatedPosts {
   const totalPages = Math.ceil(posts.length / perPage);
   const startIndex = (page - 1) * perPage;
   const endIndex = startIndex + perPage;

@@ -3,12 +3,12 @@ import BlogLayout from '@/src/components/BlogLayout';
 import Pagination from '@/src/components/Pagination';
 import PostCardList from '@/src/components/PostCardList';
 import type { CategoryCount, TagCount } from '@/src/lib/post-taxonomy';
-import type { PostMeta } from '@/src/types/post';
+import type { PostSummary } from '@/src/types/post';
 
 type PostListPageProps = {
   tagCounts: TagCount[];
   categoryCounts: CategoryCount[];
-  posts: PostMeta[];
+  posts: PostSummary[];
   heading?: string;
   emptyMessage?: string;
   currentPage?: number;

@@ -27,6 +27,13 @@ export type PostMeta = {
 };
 
 /**
+ * クライアント（一覧・カード表示）へ渡す軽量なメタ情報。
+ * 全文由来の plaintext / keywords はサーバー／検索インデックス（search.json）専用のため含まない。
+ * 一覧描画コンポーネントはこの型を受け取り、存在しないフィールドへの依存を型で防ぐ。
+ */
+export type PostSummary = Omit<PostMeta, 'plaintext' | 'keywords'>;
+
+/**
  * 記事詳細データ。
  */
 export type Post = PostMeta & {

@@ -2,10 +2,22 @@
 import { createPostMeta, parsePostSource } from '@/src/lib/post-parser';
 import { readAllPostSources, readPostSourceBySlug } from '@/src/lib/post-repository';
 import { renderPostMarkdown } from '@/src/lib/post-renderer';
-import type { Post, PostMeta } from '@/src/types/post';
+import type { Post, PostMeta, PostSummary } from '@/src/types/post';
 import { isVisibleInEnv } from '@/src/lib/utils';
 import { processMetadataList } from '@/src/lib/server-utils';
 import { cache } from 'react';
+
+/**
+ * クライアントへ渡すため、サーバー／検索専用フィールド（plaintext / keywords）を除いた
+ * 軽量メタ（PostSummary）へ変換する。一覧・カード表示へ渡すデータはこの関数を通す。
+ */
+export function toPostSummary({
+  plaintext: _plaintext,
+  keywords: _keywords,
+  ...rest
+}: PostMeta): PostSummary {
+  return rest;
+}
 
 /**
  * スラッグからソースを読み込み、メタ情報と本文を返す内部ヘルパー。
@@ -65,7 +77,7 @@ export const getPost = cache(async function getPost(slug: string): Promise<Post 
  */
 export const getRelatedPosts = cache(async function getRelatedPosts(
   slug: string
-): Promise<PostMeta[]> {
+): Promise<PostSummary[]> {
   const posts = await getAllPostMeta();
   const current = posts.find((p) => p.slug === slug);
   if (!current) return [];
@@ -84,7 +96,7 @@ export const getRelatedPosts = cache(async function getRelatedPosts(
       (a, b) => b.score - a.score || (b.post.date?.getTime() ?? 0) - (a.post.date?.getTime() ?? 0)
     )
     .slice(0, 3)
-    .map(({ post }) => post);
+    .map(({ post }) => toPostSummary(post));
 });
 
 /**
@@ -92,7 +104,7 @@ export const getRelatedPosts = cache(async function getRelatedPosts(
  */
 export const getAdjacentPosts = cache(async function getAdjacentPosts(
   slug: string
-): Promise<{ prevPost: PostMeta | null; nextPost: PostMeta | null }> {
+): Promise<{ prevPost: PostSummary | null; nextPost: PostSummary | null }> {
   const posts = await getAllPostMeta();
   const slugToIndex = new Map(posts.map((p, i) => [p.slug, i]));
   const currentIndex = slugToIndex.get(slug) ?? -1;
@@ -100,7 +112,7 @@ export const getAdjacentPosts = cache(async function getAdjacentPosts(
     return { prevPost: null, nextPost: null };
   }
   return {
-    prevPost: currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null,
-    nextPost: currentIndex > 0 ? posts[currentIndex - 1] : null,
+    prevPost: currentIndex < posts.length - 1 ? toPostSummary(posts[currentIndex + 1]) : null,
+    nextPost: currentIndex > 0 ? toPostSummary(posts[currentIndex - 1]) : null,
   };
 });

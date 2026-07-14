@@ -1,13 +1,13 @@
 // src/components/RelatedPosts.tsx
 import { formatDate } from '@/src/lib/utils';
-import type { PostMeta } from '@/src/types/post';
+import type { PostSummary } from '@/src/types/post';
 import { Calendar, Folder } from 'lucide-react';
 import Link from 'next/link';
 
 /**
  * 関連記事一覧コンポーネント。
  */
-export default function RelatedPosts({ posts }: { posts: PostMeta[] }) {
+export default function RelatedPosts({ posts }: { posts: PostSummary[] }) {
   if (posts.length === 0) return null;
 
   return (
