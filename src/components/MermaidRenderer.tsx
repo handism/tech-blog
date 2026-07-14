@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { useThemeDesign } from '@/src/components/ThemeDesignProvider';
+import { loadMermaid } from '@/src/lib/mermaid-loader';
 
 /**
  * クライアントサイドで Mermaid 記法を解析し、SVG図解を動的にレンダリングするコンポーネント。
@@ -21,7 +22,7 @@ export default function MermaidRenderer() {
       if (elements.length === 0) return;
 
       try {
-        const mermaid = (await import('mermaid')).default;
+        const mermaid = await loadMermaid();
 
         // ダークモードかどうかの判定 (next-themes や global CSS 変数の data-theme に準拠)
         const isDark =
