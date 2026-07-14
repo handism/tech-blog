@@ -1,18 +1,16 @@
-// app/tools/aws-diagram/page.tsx
-'use client';
+import type { Metadata } from 'next';
+import { siteConfig } from '@/src/config/site';
+import AwsDiagramClientPage from './page.client';
 
-import ToolPageLayout from '@/src/components/ToolPageLayout';
-import { Cloud } from 'lucide-react';
-import AwsDiagramGenerator from '@/src/components/tools/aws-diagram/AwsDiagramGenerator';
+export const metadata: Metadata = {
+  title: `AWS Architecture Diagram Generator | ${siteConfig.name}`,
+  description:
+    'フォーム操作だけで、境界線（VPCやサブネット）と主要AWSリソース、それらを結ぶネットワーク接続線をきれいに定義し、Mermaid.jsで美しい構成図を自動描画します。',
+  alternates: {
+    canonical: '/tools/aws-diagram',
+  },
+};
 
 export default function AwsDiagramPage() {
-  return (
-    <ToolPageLayout
-      title="AWS Architecture Diagram Generator"
-      description="フォーム操作だけで、境界線（VPCやサブネット）と主要AWSリソース、それらを結ぶネットワーク接続線をきれいに定義し、Mermaid.jsで美しい構成図を自動描画します。"
-      icon={Cloud}
-    >
-      <AwsDiagramGenerator />
-    </ToolPageLayout>
-  );
+  return <AwsDiagramClientPage />;
 }

@@ -1,42 +1,15 @@
-// app/tools/text-toolkit/page.tsx
-'use client';
+import type { Metadata } from 'next';
+import { siteConfig } from '@/src/config/site';
+import TextToolkitClient from './page.client';
 
-import { FileText, EyeOff, AlignLeft, Split } from 'lucide-react';
-import ToolTabsPage, { type SubTool } from '@/src/components/ToolTabsPage';
-import TextCase from '@/src/components/tools/text-toolkit/TextCase';
-import InvisibleCharacters from '@/src/components/tools/text-toolkit/InvisibleCharacters';
-import LoremIpsum from '@/src/components/tools/text-toolkit/LoremIpsum';
-import DiffViewer from '@/src/components/tools/text-toolkit/DiffViewer';
-
-const SUB_TOOLS: Record<string, SubTool> = {
-  case: {
-    label: 'Text Case Converter & Counter',
-    description: '大文字・小文字などの変換および文字数・行数のリアルタイムカウントを行います。',
-    icon: FileText,
-    component: TextCase,
-  },
-  invisible: {
-    label: 'Invisible Character Detector',
-    description:
-      '全角スペースやゼロ幅スペースなどの不可視文字・特殊文字を検出し、ワンクリックで除去します。',
-    icon: EyeOff,
-    component: InvisibleCharacters,
-  },
-  lorem: {
-    label: 'Lorem Ipsum & Dummy Text',
-    description:
-      '段落数や文字数を指定して、レイアウト確認用のダミーテキスト（日本語・ラテン語）を瞬時に作成します。',
-    icon: AlignLeft,
-    component: LoremIpsum,
-  },
-  diff: {
-    label: 'Diff Viewer',
-    description: '2つのテキストを並べて変更箇所を行単位・文字単位で視覚的に比較します。',
-    icon: Split,
-    component: DiffViewer,
+export const metadata: Metadata = {
+  title: `Text Toolkit & Diff Viewer | ${siteConfig.name}`,
+  description: '文字数カウント、大文字・小文字変換、不可視文字検出、テキストの差分比較（Diff）。',
+  alternates: {
+    canonical: '/tools/text-toolkit',
   },
 };
 
 export default function TextToolkit() {
-  return <ToolTabsPage basePath="/tools/text-toolkit" subTools={SUB_TOOLS} defaultTab="case" />;
+  return <TextToolkitClient />;
 }

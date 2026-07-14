@@ -1,18 +1,16 @@
-// app/tools/keyboard-events/page.tsx
-'use client';
+import type { Metadata } from 'next';
+import { siteConfig } from '@/src/config/site';
+import KeyboardEventsClientPage from './page.client';
 
-import ToolPageLayout from '@/src/components/ToolPageLayout';
-import { Keyboard } from 'lucide-react';
-import KeyboardEventVisualizer from '@/src/components/tools/keyboard-events/KeyboardEventVisualizer';
+export const metadata: Metadata = {
+  title: `Keyboard Event Visualizer | ${siteConfig.name}`,
+  description:
+    'キーボードを押すと、JavaScriptのイベント情報や入力パラメータをリアルタイムで美しく可視化します。',
+  alternates: {
+    canonical: '/tools/keyboard-events',
+  },
+};
 
 export default function KeyboardEventsPage() {
-  return (
-    <ToolPageLayout
-      title="Keyboard Event Visualizer"
-      description="キーボードを押すと、JavaScriptのイベント情報や入力パラメータをリアルタイムで美しく可視化します。"
-      icon={Keyboard}
-    >
-      <KeyboardEventVisualizer />
-    </ToolPageLayout>
-  );
+  return <KeyboardEventsClientPage />;
 }
