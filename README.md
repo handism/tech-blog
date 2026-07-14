@@ -137,9 +137,12 @@ AWSのアーキテクチャパターンおよびテンプレートは `patterns`
 
 ### サイト設定
 
-- 設定ファイルは `src/config/site.ts`
-- サイトごとに必要な設定（サイト名・URL・著者名など）を変更してください
-- `themeConfig` 配列でテーマ一覧を管理し、`DEFAULT_THEME` でデフォルトテーマを指定します
+`src/config/` 配下に関心事ごとに設定ファイルを分割しています。
+
+- `site.ts`: サイト名・URL・著者名・ページネーションなどのサイト全体設定。サイトごとに必要な項目を変更してください
+- `themes.ts`: `themeConfig` 配列でデザインテーマ一覧を管理し、`DEFAULT_THEME` でデフォルトテーマを指定します
+- `layout.ts`: `layoutConfig` 配列で記事一覧のレイアウト（列数）を管理します
+- `tools.ts`: `toolsMenuItems` 配列でヘッダー・`/tools` で表示するツールメニュー項目を管理します
 
 ### CSS 設定
 

@@ -2,7 +2,7 @@
 'use client';
 
 import { useThemeDesign } from '@/src/components/ThemeDesignProvider';
-import { themeConfig, type ThemeId } from '@/src/config/site';
+import { themeConfig, type ThemeId } from '@/src/config/themes';
 import { useIsClient } from '@/src/hooks/useIsClient';
 import { useTheme } from 'next-themes';
 import { useEffect, useRef, useState } from 'react';

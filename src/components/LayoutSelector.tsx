@@ -2,7 +2,7 @@
 'use client';
 
 import { useThemeDesign } from '@/src/components/ThemeDesignProvider';
-import { layoutConfig } from '@/src/config/site';
+import { layoutConfig } from '@/src/config/layout';
 import { Check } from 'lucide-react';
 
 /**

@@ -3,7 +3,8 @@
 
 import React, { useState } from 'react';
 import { Download, Upload, Trash2, CheckCircle2, AlertTriangle } from 'lucide-react';
-import { THEME_STORAGE_KEY, LAYOUT_STORAGE_KEY, EFFECTS_STORAGE_KEY } from '@/src/config/site';
+import { THEME_STORAGE_KEY, EFFECTS_STORAGE_KEY } from '@/src/config/themes';
+import { LAYOUT_STORAGE_KEY } from '@/src/config/layout';
 
 /**
  * 学習進捗や各種カスタム設定のバックアップ（JSONエクスポート）・インポート・リセット機能を提供するコンポーネント。

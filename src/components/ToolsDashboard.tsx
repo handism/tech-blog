@@ -1,7 +1,7 @@
 // src/components/ToolsDashboard.tsx
 'use client';
 
-import { toolsMenuItems, ToolItem } from '@/src/config/site';
+import { toolsMenuItems, ToolItem } from '@/src/config/tools';
 import { Search, ExternalLink, Sparkles, X } from 'lucide-react';
 import Link from 'next/link';
 import { useState, useMemo } from 'react';

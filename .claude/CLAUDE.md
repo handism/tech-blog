@@ -47,7 +47,7 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 | `scraps/`         | Scraps 記事（短い技術メモ・備忘録）                              |
 | `src/lib/`        | ビジネスロジック（パース・レンダリング・検索・ページネーション） |
 | `src/components/` | UI コンポーネント（サーバー・クライアント）                      |
-| `src/config/`     | サイト全体の設定（著者・ページネーション・スキン等）             |
+| `src/config/`     | 設定値。`site.ts`（著者・ページネーション等のサイト全体設定）／`themes.ts`（デザインテーマカタログ）／`layout.ts`（一覧レイアウト）／`tools.ts`（ツールメニュー項目）に関心事ごとに分割 |
 | `src/types/`      | TypeScript インターフェース（`post.ts`・`scrap.ts`）             |
 | `public/images/`  | 記事カバー画像（16:9 比率、`.webp` 推奨）                        |
 | `tests/`          | テストファイル（E2E: `*.spec.ts`、ユニット: `*.test.ts`）        |

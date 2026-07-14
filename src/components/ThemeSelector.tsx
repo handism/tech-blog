@@ -2,7 +2,7 @@
 'use client';
 
 import { useThemeDesign } from '@/src/components/ThemeDesignProvider';
-import { themeConfig, type ThemeId } from '@/src/config/site';
+import { themeConfig, type ThemeId } from '@/src/config/themes';
 import { Check } from 'lucide-react';
 import { useIsClient } from '@/src/hooks/useIsClient';
 

@@ -7,13 +7,9 @@ import ScrollToTopButton from '@/src/components/ScrollToTopButton';
 import { ThemeDesignProvider } from '@/src/components/ThemeDesignProvider';
 import ThemeEffectManager from '@/src/components/ThemeEffectManager';
 import { ThemeProvider } from 'next-themes';
-import {
-  DEFAULT_THEME,
-  THEME_STORAGE_KEY,
-  DEFAULT_LAYOUT,
-  LAYOUT_STORAGE_KEY,
-  siteConfig,
-} from '@/src/config/site';
+import { DEFAULT_THEME, THEME_STORAGE_KEY } from '@/src/config/themes';
+import { DEFAULT_LAYOUT, LAYOUT_STORAGE_KEY } from '@/src/config/layout';
+import { siteConfig } from '@/src/config/site';
 import type { Metadata } from 'next';
 import {
   Lexend,

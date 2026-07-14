@@ -4,7 +4,7 @@ import { ThemeToggle } from '@/src/components/ThemeToggle';
 import { LayoutSelector } from '@/src/components/LayoutSelector';
 import { EffectsSelector } from '@/src/components/EffectsSelector';
 import { BackupSettings } from '@/src/components/BackupSettings';
-import { themeConfig } from '@/src/config/site';
+import { themeConfig } from '@/src/config/themes';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {

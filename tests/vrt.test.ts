@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { themeConfig } from '../src/config/site';
+import { themeConfig } from '../src/config/themes';
 
 const themes = themeConfig.map((t) => t.id);
 
