@@ -2,7 +2,7 @@
 
 ## このブログについて
 
-- **15種類の多彩なデザインテーマ**: デフォルトの個性的な **Neo-Brutalism（ネオ・ブルータリズム）** に加え、Glassmorphism, Minimal, Bento, Blueprint, Steampunk, Chalkboard, Editorial, Synthwave, Terminal, Modern Japanese, Nordic, Claymorphism, Dashboard, 3D Interactive といった幅広いスタイル（全15種）にリアルタイムで切り替え可能
+- **15種類の多彩なデザインテーマ**: デフォルトの **OLED** に加え、Neo-Brutalism, Glassmorphism, Minimal / Clean, Neumorphism, Claymorphism, 3D Interactive, Terminal / Matrix, Blueprint, Synthwave / Outrun, Paper / Editorial, Chalkboard, Modern Japanese, Nordic / Cozy, Steampunk といった幅広いスタイル（全15種）にリアルタイムで切り替え可能
 - **豊富なスキンカラー**: Emerald、Ocean、Sunset、Purple、Rose のアクセントカラーとダークモードを組み合わせ、自分好みの外観にカスタマイズできます
 - 見出しフォントに **Lexend** および **Space Grotesk** を採用した、テックブログらしい力強いタイポグラフィ
 - 触っていて気持ちいい **ダイナミックなアクション**: テーマごとの世界観に合わせて、ホバーやクリック時のインタラクションが最適化されています
@@ -10,15 +10,15 @@
 - サムネイル画像にも対応。比率は 16:9 がおすすめ
 - サイドバーありの 2 カラムレイアウトで、レスポンシブレイアウトに対応
 - 記事のデータソースは `Markdown ファイル` に対応
-- ヘッダーの Tools メニューから利用できるブラウザ完結型の便利ツール（Toolkit形式で全60機能に整理）を内蔵
-  - **🎨 画像 ＆ グラフィック (3種・全10機能)**: Image Studio (WebP変換・トリミング・favicon), SVG Toolkit (プレビュー・波形生成・CSS変換・ダミー画像), UI & Graphic Generator (Neo-Brutalism・メンフィス背景・ドット絵)
-  - **🔄 データ変換 ＆ テキスト (4種・全18機能)**: Data & JSON Toolkit (JSON/YAML/CSV/SQL変換・整形), Crypto & ID Generator (Base64・ハッシュ・JWT・UUID・パスワード), Text Studio (ケース変換・文字カウント・不可視文字検出・Lorem Ipsum・Diff), Color Utilities (コード変換・コントラスト)
-  - **🛠️ 開発者向けツール (12種・全30機能)**: Code Helper (正規表現・Curl・HTML to JSX), Developer Calculator (電卓・進数変換・アスペクト比), CSS & Layout Toolkit (CSS/Flexbox/Gridシミュレーター), AWS Architecture Diagram Generator, Git Utilities, Web & Network Utilities, Time & Schedule Utilities, Markup & Markdown Editor, URL & Web Utilities, QR Code Generator, Keyboard Event Visualizer, Pomodoro Focus Timer
-  - **🧖 外部ツール**: Sauna Itta, Sauna Simulator (2種)
+- ヘッダーの Tools メニューから利用できるブラウザ完結型の便利ツール（Toolkit 形式・全19種＋外部2種）を内蔵
+  - **🎨 画像 ＆ グラフィック (3種)**: Image Studio (WebP変換・トリミング・favicon), SVG Toolkit (プレビュー・波形生成・CSS変換・ダミー画像), UI & Graphic Generator (Neo-Brutalism・メンフィス背景・ドット絵)
+  - **🔄 データ変換 ＆ テキスト (3種)**: Data & JSON Toolkit (JSON/YAML/CSV/SQL変換・整形), Crypto & ID Generator (Base64・ハッシュ・JWT・UUID・パスワード), Text Studio (ケース変換・文字カウント・不可視文字検出・Lorem Ipsum・Diff)
+  - **🛠️ 開発者向けツール (13種)**: Markup & Markdown Editor, URL & Web Utilities, Code Helper (正規表現・Curl・HTML to JSX), Developer Calculator (電卓・進数変換・アスペクト比), CSS & Layout Toolkit (CSS/Flexbox/Gridシミュレーター), AWS Architecture Diagram Generator, Git Utilities, Web & Network Utilities, Time & Schedule Utilities, Color Utilities (コード変換・コントラスト), QR Code Generator, Keyboard Event Visualizer, Pomodoro Focus Timer
+  - **🧖 外部ツール (2種)**: Sauna Itta, Sauna Simulator
 - About・プライバシーポリシー・HTML Sitemap・RSS フィードページを提供
 - **Scraps**（`/scraps`）：Twitter/Mastodon 感覚で日々の気づきやエラー解決ログを短く残せる技術メモ欄。独立したネオ・ブルータリズム風のカード形式で表示されます。`scraps/` ディレクトリに Markdown を置くだけで公開される
 - **学習ガイド**（`/learning`）：Docker、GitHub、Webセキュリティ、API設計、Linux & Bash、ネットワークの基本、CI/CDパイプライン、システムデザイン、Gitアドバンスド、AWSクラウド、フロントエンドテスト、モダンCSS、データベース、Next.js、パフォーマンス、React Hooks、TypeScript などの各種仕組みを順序立てて（タイムライン状のロードマップ形式で）学べる体系的な学習コンテンツ。Mermaid.jsによる動的な図解ダイアグラム表示に対応しているほか、LocalStorageを利用した読了進捗管理（進捗率・完了チェック）や、各チャプターの末尾で挑戦できるインタラクティブな「理解度クイズ」機能を搭載しています。
-- **AWS Patterns**（`/patterns`）：AWSのベストプラクティスに沿って設計された、13種類の実践的な CloudFormation テンプレート（IaC）とアーキテクチャ図（Draw.io）のギャラリーカタログ。ShikiによるYAMLコードプレビュー・コピー・ダウンロードや、SVG構成図を画面いっぱいに拡大表示するインタラクティブなライトボックス、デプロブ用CLIコマンド生成機能を備えています。
+- **AWS Patterns**（`/patterns`）：AWSのベストプラクティスに沿って設計された、22種類の実践的な CloudFormation テンプレート（IaC）とアーキテクチャ図（Draw.io）のギャラリーカタログ。ShikiによるYAMLコードプレビュー・コピー・ダウンロードや、SVG構成図を画面いっぱいに拡大表示するインタラクティブなライトボックス、デプロイ用CLIコマンド生成機能を備えています。
 
 
 ## 技術スタック
@@ -29,12 +29,13 @@
 - **マークダウン処理**：Remark + rehype（HTML 変換・見出し自動リンク・スラッグ生成・TOC 生成・Mermaidダイアグラムパース）
 - **図解・ダイアグラム描画**：Mermaid.js（クライアント側での動的SVGレンダリングに対応）
 - **シンタックスハイライト**：Shiki（github-dark テーマ）
-- **テーマ切り替え**：next-themes（ダークモード・16種類のテーマ切り替え対応）
-- **検索機能**：kuromoji（日本語形態素解析） + Fuse.js（クライアント側全文検索）
+- **テーマ切り替え**：next-themes（ダークモード・15種類のテーマ切り替え対応）
+- **検索機能**：文字種ベースの簡易分かち書き（日本語トークナイズ） + Fuse.js（クライアント側全文検索）
 - **バリデーション**：Zod（frontmatter）
 - **ホスティング**：GitHub Pages
 - **デプロイ**：GitHub Actions（`main` ブランチへのプッシュで自動デプロイ）
 - **ユニットテスト**：Vitest
+- **ビジュアルリグレッションテスト（VRT）**：Playwright（全テーマのスクリーンショット比較）
 
 ## 使い方
 
@@ -42,7 +43,7 @@
 
 - 本リポジトリをクローンすればすぐに導入可能
 - ホスティングについては、必要に応じて `GitHub Pages` などの設定を行ってください
-  - `GitHub Actions` による自動デプロイには `.github/workflows/static.yml` を使用できます
+  - `GitHub Actions` による自動デプロイには `.github/workflows/deploy.yml` を使用できます
 
 ### 開発方法
 
@@ -77,11 +78,26 @@ bun run analyze
 
 ```bash
 bun run test:unit
+bunx vitest run tests/post-parser.test.ts   # 単一テストファイルの実行
+```
+
+ビジュアルリグレッションテスト（Playwright VRT）。ビルド済みの `out/` を配信して全テーマのスクリーンショットを比較するため、**事前に `bun run build` が必要**です：
+
+```bash
+bun run test:vrt          # スクリーンショット比較を実行
+bun run test:vrt:update   # スナップショットを更新
+```
+
+型チェック：
+
+```bash
+bun run type-check
 ```
 
 テストファイルは `tests/` ディレクトリ以下に配置します。
 
-- `*.test.ts` → Vitest ユニットテスト
+- `*.test.ts` → Vitest ユニットテスト（`vrt.test.ts` は除外）
+- `vrt.test.ts` → Playwright VRT（スナップショットは `tests/vrt.test.ts-snapshots/`）
 
 ### 開発フローと品質保証 (Git Hooks)
 
@@ -299,5 +315,5 @@ graph TD
 - 検索結果でタイトル・本文スニペットに加え、マッチしたタグ・カテゴリもハイライト表示
 - キーボードナビゲーション対応（ドロップダウンメニュー・フォーカスリング）
 - `ThemeToggle` に `aria-label` を設定
-- `kuromoji` による日本語形態素解析により、日本語の文脈に沿った柔軟かつ高精度な検索ヒットを実現
+- 文字種ベースの簡易分かち書き（日本語トークナイズ）により、ビルド時とクライアントで一貫した日本語検索ヒットを実現
 - SSG（静的サイト生成）環境でありながら、ビルド時に全記事のOGP画像を自動で静的画像ファイル（PNG）として事前生成し、適切なOGPタグを付与
