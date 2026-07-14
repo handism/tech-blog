@@ -245,6 +245,7 @@ export default function JsonGenerator() {
                   onClick={() => removeField(field.id)}
                   className="p-1.5 text-red-500 border border-transparent hover:border-red-500 rounded bg-card transition-colors cursor-pointer"
                   title="削除"
+                  aria-label="フィールドを削除"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
