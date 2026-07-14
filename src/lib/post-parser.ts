@@ -21,6 +21,13 @@ const FrontmatterSchema = z.object({
 
 type ValidatedFrontmatter = z.infer<typeof FrontmatterSchema>;
 
+/**
+ * 検索キーワード（keywords）の最大文字数。
+ * keywords は検索インデックス（search.json）へ全記事分が埋め込まれるため、
+ * 記事の長さに比例した肥大化を防ぐ目的で上限を設ける。
+ */
+const MAX_KEYWORDS_LENGTH = 5000;
+
 type ParsedPostSource = {
   data: ValidatedFrontmatter;
   content: string;
@@ -51,7 +58,7 @@ export async function createPostMeta(
     date: data.date,
     tags: data.tags,
     category: data.category,
-    keywords,
+    keywords: keywords.slice(0, MAX_KEYWORDS_LENGTH),
     plaintext: plaintext.slice(0, 5000), // 検索用に長めに保持
     description: plaintext.slice(0, 200), // 一覧表示用
     readingMinutes: estimateReadingMinutes(plaintext),

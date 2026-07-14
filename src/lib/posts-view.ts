@@ -29,8 +29,11 @@ export async function getBlogViewContext(): Promise<BlogViewContext> {
   const categories = categoryCounts.map((c) => c.category);
   const tagCounts = getTagsWithCount(allPosts);
 
-  // クライアントに渡すデータから plaintext を除去して軽量化
-  const lightPosts: PostMeta[] = allPosts.map(({ plaintext: _plaintext, ...rest }) => rest);
+  // クライアントに渡すデータから plaintext・keywords を除去して軽量化。
+  // どちらも一覧表示では不要で、keywords は記事全文相当のため RSC ペイロードを肥大化させる。
+  const lightPosts: PostMeta[] = allPosts.map(
+    ({ plaintext: _plaintext, keywords: _keywords, ...rest }) => rest
+  );
 
   return { allPosts: lightPosts, categories, categoryCounts, tagCounts };
 }
