@@ -1,5 +1,6 @@
 // src/components/ScrapCard.tsx
 import TagLink from '@/src/components/TagLink';
+import { formatDate } from '@/src/lib/utils';
 import type { Scrap } from '@/src/types/scrap';
 
 type ScrapCardProps = {
@@ -8,11 +9,7 @@ type ScrapCardProps = {
 
 export default function ScrapCard({ scrap }: ScrapCardProps) {
   const formattedDate = scrap.date
-    ? scrap.date.toLocaleDateString('ja-JP', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-      })
+    ? formatDate(scrap.date, { year: 'numeric', month: '2-digit', day: '2-digit' })
     : null;
 
   return (

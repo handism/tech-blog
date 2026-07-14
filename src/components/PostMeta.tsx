@@ -1,6 +1,6 @@
 // src/components/PostMeta.tsx
 import TagLink from '@/src/components/TagLink';
-import { categoryToSlug } from '@/src/lib/utils';
+import { categoryToSlug, formatDate } from '@/src/lib/utils';
 import type { PostMeta } from '@/src/types/post';
 import { Clock, Calendar, Folder } from 'lucide-react';
 import Link from 'next/link';
@@ -43,11 +43,7 @@ export default function PostMeta({
       {post.date && (
         <time dateTime={post.date.toISOString()} className="inline-flex items-center gap-1.5">
           <Calendar className="h-4 w-4" />
-          {post.date.toLocaleDateString('ja-JP', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          })}
+          {formatDate(post.date)}
         </time>
       )}
       {/* カテゴリ */}

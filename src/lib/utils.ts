@@ -76,6 +76,16 @@ export function estimateReadingMinutes(plaintext: string): number {
 }
 
 /**
+ * 日付を日本語ロケールでフォーマットする。表示粒度は options で調整する。
+ */
+export function formatDate(
+  date: Date,
+  options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' }
+): string {
+  return date.toLocaleDateString('ja-JP', options);
+}
+
+/**
  * 日付順に降順でソートする（日付がないものは末尾）。元の配列を変更しないようコピーする。
  */
 export function sortByDate<T extends { date?: Date }>(items: T[]): T[] {

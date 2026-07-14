@@ -1,4 +1,5 @@
 // src/components/RelatedPosts.tsx
+import { formatDate } from '@/src/lib/utils';
 import type { PostMeta } from '@/src/types/post';
 import { Calendar, Folder } from 'lucide-react';
 import Link from 'next/link';
@@ -26,11 +27,7 @@ export default function RelatedPosts({ posts }: { posts: PostMeta[] }) {
               {post.date && (
                 <time dateTime={post.date.toISOString()} className="inline-flex items-center gap-1">
                   <Calendar className="h-3 w-3" />
-                  {post.date.toLocaleDateString('ja-JP', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                  })}
+                  {formatDate(post.date, { year: 'numeric', month: 'short', day: 'numeric' })}
                 </time>
               )}
               <span className="inline-flex items-center gap-1">
