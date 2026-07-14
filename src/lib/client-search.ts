@@ -9,7 +9,6 @@ import type { PostMeta } from '@/src/types/post';
 
 /**
  * 記事検索時に使うFuse.js設定。
- * ウェイトの合計を基に正規化される（title:30%, plaintext:25%, tags:25%, category:20%）。
  * threshold を 0.4 にして本文部分一致も拾えるよう調整。
  */
 const postSearchOptions: IFuseOptions<PostMeta> = {

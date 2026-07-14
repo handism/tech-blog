@@ -66,52 +66,40 @@ function rehypeImageSize() {
       if (src.startsWith('http') || src.startsWith('data:') || src.startsWith('//')) return; // 外部・データURLはスキップ
 
       // 画像の候補パスを特定
-      const filePaths: string[] = [];
+      let filePath = '';
       if (src.startsWith('/')) {
-        filePaths.push(path.join(process.cwd(), 'public', src));
+        filePath = path.join(process.cwd(), 'public', src);
       } else {
-        filePaths.push(path.join(process.cwd(), 'public', src.replace(/^(\.\.\/)+public\//, '')));
+        filePath = path.join(process.cwd(), 'public', src.replace(/^(\.\.\/)+public\//, ''));
       }
 
       tasks.push(
         (async () => {
-          let foundPath = '';
           try {
-            foundPath = await Promise.any(
-              filePaths.map(async (fp) => {
-                await fs.access(fp);
-                return fp;
-              })
-            );
-          } catch {
-            // すべてのパスが存在しない場合
-          }
+            await fs.access(filePath);
 
-          if (!foundPath) return;
-
-          try {
             // まずキャッシュをチェック
-            const cached = imageSizeCache.get(foundPath);
+            const cached = imageSizeCache.get(filePath);
             if (cached) {
               node.properties.width = cached.width;
               node.properties.height = cached.height;
               node.properties.style = `max-width: 100%; height: auto; ${node.properties.style || ''}`;
             } else {
-              const dimensions = await imageSizeFromFile(foundPath);
+              const dimensions = await imageSizeFromFile(filePath);
               if (dimensions.width && dimensions.height) {
                 node.properties.width = dimensions.width;
                 node.properties.height = dimensions.height;
                 node.properties.style = `max-width: 100%; height: auto; ${node.properties.style || ''}`;
 
                 // キャッシュに保存
-                imageSizeCache.set(foundPath, {
+                imageSizeCache.set(filePath, {
                   width: dimensions.width,
                   height: dimensions.height,
                 });
               }
             }
           } catch (e) {
-            console.warn(`Failed to get size for image: ${foundPath}`, e);
+            console.warn(`Failed to get size for image: ${filePath}`, e);
           }
           // 遅延読み込みを設定
           if (!node.properties.loading) {

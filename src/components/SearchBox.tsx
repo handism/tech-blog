@@ -2,7 +2,7 @@
 'use client';
 
 import { createPostSearcher, searchPostsWithMatches } from '@/src/lib/client-search';
-import { tokenizeForSearch } from '@/src/lib/kuromoji-tokenizer';
+import { tokenizeForSearch } from '@/src/lib/text-tokenizer';
 import type { RangeTuple } from 'fuse.js';
 import type { PostMeta } from '@/src/types/post';
 import Link from 'next/link';
@@ -43,7 +43,7 @@ export default function SearchBox() {
   const router = useRouter();
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
-  const [tokenizedQuery, setTokenizedQuery] = useState('');
+
   const [posts, setPosts] = useState<PostMeta[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -83,6 +83,11 @@ export default function SearchBox() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const tokenizedQuery = useMemo(() => {
+    if (!debouncedQuery.trim()) return '';
+    return tokenizeForSearch(debouncedQuery);
+  }, [debouncedQuery]);
+
   const searcher = useMemo(() => createPostSearcher(posts), [posts]);
   const results = useMemo(
     () => searchPostsWithMatches(searcher, tokenizedQuery),
@@ -100,22 +105,6 @@ export default function SearchBox() {
 
     return () => window.clearTimeout(timerId);
   }, [query]);
-
-  useEffect(() => {
-    if (!debouncedQuery.trim()) {
-      Promise.resolve().then(() => {
-        setTokenizedQuery('');
-      });
-      return;
-    }
-    let cancelled = false;
-    tokenizeForSearch(debouncedQuery).then((result) => {
-      if (!cancelled) setTokenizedQuery(result);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [debouncedQuery]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.nativeEvent.isComposing) return;

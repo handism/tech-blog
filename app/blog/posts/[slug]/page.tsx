@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const description = postMeta.plaintext?.slice(0, 160);
+  const description = postMeta.description;
   const imageUrl = postMeta.image
     ? `${siteConfig.url}/images/${postMeta.image}`
     : `${siteConfig.url}/og/${slug}/image.png`;
@@ -83,9 +83,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   const { slug } = await params;
   const post = await getPost(slug);
 
-  const { categoryCounts, tagCounts } = await getBlogViewContext();
-
   if (!post) notFound();
+
+  const { categoryCounts, tagCounts } = await getBlogViewContext();
 
   const [{ prevPost, nextPost }, relatedPosts] = await Promise.all([
     getAdjacentPosts(slug),
@@ -96,7 +96,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: post.title,
-    description: post.plaintext?.slice(0, 160),
+    description: post.description,
     image: post.image
       ? `${siteConfig.url}/images/${post.image}`
       : `${siteConfig.url}/og/${post.slug}/image.png`,

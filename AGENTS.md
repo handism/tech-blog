@@ -70,7 +70,7 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 
 #### 日本語検索パイプライン
 
-1. `src/lib/kuromoji-tokenizer.ts` — 文字種（漢字・ひらがな・カタカナ・英数字）ベースの軽量な簡易分かち書き。検索精度の一貫性のため、ビルド時（サーバー）とクライアントで同一ロジックを使用（kuromoji 本体には依存していない）
+1. `src/lib/text-tokenizer.ts` — 文字種（漢字・ひらがな・カタカナ・英数字）ベースの軽量な簡易分かち書き。検索精度の一貫性のため、ビルド時（サーバー）とクライアントで同一ロジックを使用（kuromoji 本体には依存していない）
 2. `app/search.json/` — ビルド時に全記事の検索インデックスを生成
 3. `src/components/SearchBox.tsx` — クライアントサイドで `Fuse.js` を用いて全文検索を実行
 

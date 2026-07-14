@@ -3,7 +3,7 @@ import { siteConfig } from '@/src/config/site';
 import type { PostMeta } from '@/src/types/post';
 import { estimateReadingMinutes, parseFrontmatter, zodDateSchema } from '@/src/lib/utils';
 import { markdownToPlaintext } from '@/src/lib/markdown-utils';
-import { tokenizeForSearch } from '@/src/lib/kuromoji-tokenizer';
+import { tokenizeForSearch } from '@/src/lib/text-tokenizer';
 import { z } from 'zod';
 
 /**
@@ -50,8 +50,8 @@ export async function createPostMeta(
   content: string
 ): Promise<PostMeta> {
   const plaintext = markdownToPlaintext(content);
-  // ビルド/サーバー時なので常に形態素解析を完了するのを待つ (waitLoad = true)
-  const keywords = await tokenizeForSearch(plaintext, true);
+  // 検索キーワードをトークナイズして生成する
+  const keywords = tokenizeForSearch(plaintext);
   return {
     slug,
     title: data.title,
