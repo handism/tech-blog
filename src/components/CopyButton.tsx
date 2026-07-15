@@ -52,6 +52,7 @@ export default function CopyButton({
       onClick={() => copy(value)}
       disabled={disabled}
       title={title}
+      aria-label={title || label || 'コピー'}
       className={className}
     >
       {copied ? (
