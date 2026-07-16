@@ -24,7 +24,7 @@ type CopyButtonProps = {
 };
 
 const DEFAULT_CLASSNAME =
-  'theme-btn px-3 py-1.5 text-xs flex items-center gap-1.5 hover:text-accent transition-colors';
+  'theme-btn px-3 py-1.5 text-xs flex items-center gap-1.5 hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded';
 
 /**
  * コピー実行と「コピー完了」表示切り替えを内包した汎用コピーボタン。
@@ -53,6 +53,7 @@ export default function CopyButton({
       disabled={disabled}
       title={title}
       className={className}
+      aria-label={!label ? (copied ? copiedLabel || 'コピーしました' : 'コピー') : undefined}
     >
       {copied ? (
         <>
