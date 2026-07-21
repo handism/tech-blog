@@ -51,7 +51,9 @@ export function createPostSearcher(posts: PostMeta[]): Fuse<PostMeta> {
 export function searchPostsWithMatches(searcher: Fuse<PostMeta>, keyword: string): SearchResult[] {
   if (!keyword.trim()) return [];
 
-  return (searcher.search(keyword) as FuseResult<PostMeta>[]).slice(0, 8).map((result) => {
+  // Use the `limit` option to stop searching once we have 8 results. This is significantly faster
+  // than searching the whole dataset and then slicing the result array.
+  return (searcher.search(keyword, { limit: 8 }) as FuseResult<PostMeta>[]).map((result) => {
     // result.matches を単一パスで振り分ける
     let titleMatch: FuseResultMatch | undefined;
     let textMatch: FuseResultMatch | undefined;

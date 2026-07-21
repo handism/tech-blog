@@ -56,3 +56,10 @@ node_modules/
 
 # AWS Best Practices auto-generated public assets
 /public/aws-best-practices/
+
+# AI tools
+.claude/
+.claude.json
+.claude-pr/
+.mcp.json
+.Jules/
