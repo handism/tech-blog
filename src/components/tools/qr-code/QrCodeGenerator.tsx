@@ -18,7 +18,9 @@ export default function QrCodeGenerator() {
     if (!input || !canvasRef.current) return;
 
     let isMounted = true;
-    setIsLoading(true);
+    queueMicrotask(() => {
+      if (isMounted) setIsLoading(true);
+    });
 
     QRCode.toCanvas(
       canvasRef.current,

@@ -9,3 +9,6 @@
 ## 2026-07-12 - Reusable CopyButton Accessibility
 **Learning:** The reusable `CopyButton` component, when used as an icon-only button (e.g. `label=""`), loses its accessible name for screen readers. A static `aria-label` fallback fixes the icon-only case but silently breaks the "copied" state announcement for the many call sites that already pass explicit `label`/`copiedLabel` text, since `aria-label` overrides visible text content for the accessible name.
 **Action:** When implementing an internal `aria-label` fallback on a component whose visible text already changes with state (like copy → copied), make the fallback state-aware too (e.g. switch between `label` and `copiedLabel` based on `copied`) instead of using a single static value.
+## 2026-07-13 - Add aria-live to dynamically changing text buttons
+**Learning:** Buttons whose text or state changes dynamically after interaction (e.g., from "Copy" to "Copied!") may not convey this visual feedback to screen reader users immediately. Adding `aria-live="polite"` ensures that screen readers announce these dynamic state changes gracefully.
+**Action:** When implementing buttons or elements that provide dynamic text feedback upon interaction, verify that `aria-live="polite"` (or another appropriate aria-live value) is used so that the state change is accessible.

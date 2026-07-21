@@ -53,6 +53,7 @@ export default function CopyButton({
       disabled={disabled}
       title={title}
       aria-label={title || (copied ? copiedLabel || 'コピーしました' : label || 'コピー')}
+      aria-live="polite"
       className={className}
     >
       {copied ? (
