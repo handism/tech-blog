@@ -1,11 +1,15 @@
+'use client';
+
 import type { TocItem } from '@/src/types/post';
+import { useTocObserver } from '@/src/hooks/useTocObserver';
 
 interface TocListProps {
   toc: TocItem[];
-  activeId: string | null;
 }
 
-export default function TocList({ toc, activeId }: TocListProps) {
+export default function TocList({ toc }: TocListProps) {
+  const activeId = useTocObserver(toc);
+
   return (
     <ul className="space-y-2 text-sm font-bold">
       {toc.map((item) => {

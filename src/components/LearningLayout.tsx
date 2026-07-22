@@ -8,7 +8,6 @@ import type { LearningPostMeta, LearningCourseMeta } from '@/src/types/learning'
 import { BookOpen, ChevronRight, X } from 'lucide-react';
 import MobileToc from '@/src/components/MobileToc';
 import TocList from '@/src/components/TocList';
-import { useTocObserver } from '@/src/hooks/useTocObserver';
 
 interface LearningLayoutProps {
   children: React.ReactNode;
@@ -26,7 +25,6 @@ export default function LearningLayout({
   toc,
 }: LearningLayoutProps) {
   const [isChapterDrawerOpen, setIsChapterDrawerOpen] = useState(false);
-  const activeId = useTocObserver(toc);
 
   const hasToc = !!(toc && toc.length > 0);
 
@@ -113,7 +111,7 @@ export default function LearningLayout({
                 <h3 className="font-extrabold text-sm mb-4 text-text uppercase tracking-wider">
                   ページ内目次
                 </h3>
-                <TocList toc={toc} activeId={activeId} />
+                <TocList toc={toc} />
               </div>
             </div>
           )}

@@ -3,7 +3,6 @@
 import ProfileCard from '@/src/components/ProfileCard';
 import TagCloud from '@/src/components/TagCloud';
 import TocList from '@/src/components/TocList';
-import { useTocObserver } from '@/src/hooks/useTocObserver';
 import type { CategoryCount, TagCount } from '@/src/lib/post-taxonomy';
 import { categoryToSlug } from '@/src/lib/utils';
 import type { TocItem } from '@/src/types/post';
@@ -30,7 +29,6 @@ type SidebarProps = {
  * 記事一覧・カテゴリ・目次を表示するサイドバー。
  */
 export default function Sidebar({ toc, categoryCounts, tagCounts }: SidebarProps) {
-  const activeId = useTocObserver(toc);
   const hasToc = !!(toc && toc.length > 0);
 
   return (
@@ -69,7 +67,7 @@ export default function Sidebar({ toc, categoryCounts, tagCounts }: SidebarProps
         <div className="hidden lg:block sticky top-28 z-10">
           <div className="theme-card p-5 max-h-[calc(100vh-160px)] overflow-y-auto">
             <h2 className="font-extrabold text-lg mb-4 text-text">目次</h2>
-            <TocList toc={toc} activeId={activeId} />
+            <TocList toc={toc} />
           </div>
         </div>
       )}
