@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react';
 import { RefreshCw } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
+import { calculateTargetDimension, calculateSimplifiedRatio } from '@/src/lib/aspect-ratio';
 
 // プリセット比率
 const PRESETS = [
@@ -13,31 +14,6 @@ const PRESETS = [
   { label: '9:16 (縦型 / TikTok / Reels)', w: 9, h: 16 },
   { label: '黄金比 (1.618 : 1)', w: 1.618, h: 1 },
 ];
-
-// 最大公約数を計算する関数 (GCD)
-const getGcd = (a: number, b: number): number => {
-  return b === 0 ? a : getGcd(b, a % b);
-};
-
-// 比率から対象の寸法（幅または高さ）を計算する安全なヘルパー関数
-const calculateTargetDimension = (
-  baseVal: number | '',
-  baseRatio: number | '',
-  targetRatio: number | ''
-): number | '' => {
-  if (
-    baseVal === '' ||
-    baseRatio === '' ||
-    targetRatio === '' ||
-    Number(baseRatio) <= 0 ||
-    Number(targetRatio) <= 0 ||
-    Number(baseVal) <= 0
-  ) {
-    return '';
-  }
-  const result = Math.round((Number(baseVal) * Number(targetRatio)) / Number(baseRatio));
-  return isNaN(result) || !isFinite(result) ? '' : result;
-};
 
 export default function AspectRatio() {
   // モード1: 比率からサイズ算出
@@ -94,34 +70,9 @@ export default function AspectRatio() {
   // 選択中のプリセット判定
   const isPresetActive = (w: number, h: number) => ratioW === w && ratioH === h;
 
-  // モード2: 解像度からアスペクト比を約分して計算 (useMemoによる派生)
+  // モード2: 解像度からアスペクト比を約分して計算 (純粋関数呼出し)
   const resultRatio = useMemo(() => {
-    if (!inputW || !inputH) {
-      return '';
-    }
-
-    const w = Number(inputW);
-    const h = Number(inputH);
-
-    if (w <= 0 || h <= 0 || isNaN(w) || isNaN(h)) {
-      return '';
-    }
-
-    // 小数の場合は整数に補正
-    const factor = 1000;
-    const intW = Math.round(w * factor);
-    const intH = Math.round(h * factor);
-    const gcd = getGcd(intW, intH);
-
-    const simpleW = Math.round((intW / gcd) * 1000) / 1000;
-    const simpleH = Math.round((intH / gcd) * 1000) / 1000;
-
-    // 大きすぎる値の場合は少数形式で簡略表示
-    if (simpleW > 100 || simpleH > 100) {
-      const floatRatio = (w / h).toFixed(3);
-      return `${floatRatio} : 1`;
-    }
-    return `${simpleW} : ${simpleH}`;
+    return calculateSimplifiedRatio(inputW, inputH);
   }, [inputW, inputH]);
 
   const resetAll = () => {
@@ -202,6 +153,7 @@ export default function AspectRatio() {
                     key={p.label}
                     onClick={() => applyPreset(p.w, p.h)}
                     title={p.label}
+                    aria-pressed={active}
                     className={`px-2.5 py-1.5 text-[10px] font-bold rounded-lg border transition-colors ${
                       active
                         ? 'border-accent bg-accent text-accent-foreground font-black'
