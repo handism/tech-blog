@@ -4,6 +4,7 @@ import {
   calculateTargetDimension,
   calculateSimplifiedRatio,
   parseNumberInput,
+  getDecimalPlaces,
 } from '@/src/lib/aspect-ratio';
 
 describe('parseNumberInput', () => {
@@ -21,6 +22,23 @@ describe('parseNumberInput', () => {
   it('数値以外の文字列は空文字 "" を返す', () => {
     expect(parseNumberInput('abc')).toBe('');
     expect(parseNumberInput('12abc')).toBe('');
+  });
+});
+
+describe('getDecimalPlaces', () => {
+  it('整数の場合は 0 を返す', () => {
+    expect(getDecimalPlaces(1920)).toBe(0);
+    expect(getDecimalPlaces(0)).toBe(0);
+  });
+
+  it('小数の小数点以下の桁数を取得する', () => {
+    expect(getDecimalPlaces(1.5)).toBe(1);
+    expect(getDecimalPlaces(1.618)).toBe(3);
+    expect(getDecimalPlaces(0.0001)).toBe(4);
+  });
+
+  it('桁数が 6 桁を超える場合は 6 に制限する', () => {
+    expect(getDecimalPlaces(1.123456789)).toBe(6);
   });
 });
 
@@ -84,15 +102,22 @@ describe('calculateSimplifiedRatio', () => {
     expect(calculateSimplifiedRatio(2560, 1080)).toBe('64 : 27');
   });
 
+  it('小数入力された解像度・アスペクト比を整数比に正確に約分する', () => {
+    expect(calculateSimplifiedRatio(1.5, 1)).toBe('3 : 2');
+    expect(calculateSimplifiedRatio(0.5, 0.25)).toBe('2 : 1');
+    expect(calculateSimplifiedRatio(2.5, 1.5)).toBe('5 : 3');
+  });
+
   it('約分後の値が100を超える場合は小数比率 (x : 1) にフォールバックする', () => {
     // 1920 / 1079 -> 約分できず 1920 > 100 となり小数表現に
     expect(calculateSimplifiedRatio(1920, 1079)).toBe('1.779 : 1');
   });
 
-  it('空文字や無効値の場合は空文字を返す', () => {
+  it('空文字や無効値、超巨大数値の場合は空文字または安全なフォールバックを返す', () => {
     expect(calculateSimplifiedRatio('', 1080)).toBe('');
     expect(calculateSimplifiedRatio(1920, '')).toBe('');
     expect(calculateSimplifiedRatio(0, 1080)).toBe('');
     expect(calculateSimplifiedRatio(1920, -10)).toBe('');
+    expect(calculateSimplifiedRatio(Infinity, 1080)).toBe('');
   });
 });
