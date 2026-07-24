@@ -1,5 +1,28 @@
 import { describe, expect, it } from 'vitest';
-import { getGcd, calculateTargetDimension, calculateSimplifiedRatio } from '@/src/lib/aspect-ratio';
+import {
+  getGcd,
+  calculateTargetDimension,
+  calculateSimplifiedRatio,
+  parseNumberInput,
+} from '@/src/lib/aspect-ratio';
+
+describe('parseNumberInput', () => {
+  it('数値文字列を number に変換する', () => {
+    expect(parseNumberInput('1920')).toBe(1920);
+    expect(parseNumberInput('16.9')).toBe(16.9);
+    expect(parseNumberInput('0')).toBe(0);
+  });
+
+  it('空文字や空白のみの文字列は空文字 "" を返す', () => {
+    expect(parseNumberInput('')).toBe('');
+    expect(parseNumberInput('   ')).toBe('');
+  });
+
+  it('数値以外の文字列は空文字 "" を返す', () => {
+    expect(parseNumberInput('abc')).toBe('');
+    expect(parseNumberInput('12abc')).toBe('');
+  });
+});
 
 describe('getGcd', () => {
   it('正の整数の最大公約数を正確に計算する', () => {

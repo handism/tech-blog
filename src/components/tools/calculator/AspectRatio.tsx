@@ -3,7 +3,11 @@
 import { useState, useMemo } from 'react';
 import { RefreshCw } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
-import { calculateTargetDimension, calculateSimplifiedRatio } from '@/src/lib/aspect-ratio';
+import {
+  calculateTargetDimension,
+  calculateSimplifiedRatio,
+  parseNumberInput,
+} from '@/src/lib/aspect-ratio';
 
 // プリセット比率
 const PRESETS = [
@@ -120,9 +124,7 @@ export default function AspectRatio() {
                 placeholder="幅比"
                 aria-label="アスペクト比（幅）"
                 value={ratioW}
-                onChange={(e) =>
-                  handleRatioWChange(e.target.value === '' ? '' : Number(e.target.value))
-                }
+                onChange={(e) => handleRatioWChange(parseNumberInput(e.target.value))}
                 className="w-full border-2 border-border p-2 rounded-lg bg-card text-xs font-bold text-center focus:outline-none focus:border-accent"
               />
               <span className="font-bold">:</span>
@@ -134,9 +136,7 @@ export default function AspectRatio() {
                 placeholder="高比"
                 aria-label="アスペクト比（高さ）"
                 value={ratioH}
-                onChange={(e) =>
-                  handleRatioHChange(e.target.value === '' ? '' : Number(e.target.value))
-                }
+                onChange={(e) => handleRatioHChange(parseNumberInput(e.target.value))}
                 className="w-full border-2 border-border p-2 rounded-lg bg-card text-xs font-bold text-center focus:outline-none focus:border-accent"
               />
             </div>
@@ -182,9 +182,7 @@ export default function AspectRatio() {
                   placeholder="1920"
                   aria-label="計算サイズ 幅(px)"
                   value={sizeW}
-                  onChange={(e) =>
-                    handleWidthChange(e.target.value === '' ? '' : Number(e.target.value))
-                  }
+                  onChange={(e) => handleWidthChange(parseNumberInput(e.target.value))}
                   className="w-full border-2 border-border p-2 rounded-lg bg-card text-xs font-black focus:outline-none focus:border-accent"
                 />
               </div>
@@ -199,9 +197,7 @@ export default function AspectRatio() {
                   placeholder="1080"
                   aria-label="計算サイズ 高さ(px)"
                   value={sizeH}
-                  onChange={(e) =>
-                    handleHeightChange(e.target.value === '' ? '' : Number(e.target.value))
-                  }
+                  onChange={(e) => handleHeightChange(parseNumberInput(e.target.value))}
                   className="w-full border-2 border-border p-2 rounded-lg bg-card text-xs font-black focus:outline-none focus:border-accent"
                 />
               </div>
@@ -240,7 +236,7 @@ export default function AspectRatio() {
                 placeholder="例: 1920"
                 aria-label="入力幅"
                 value={inputW}
-                onChange={(e) => setInputW(e.target.value === '' ? '' : Number(e.target.value))}
+                onChange={(e) => setInputW(parseNumberInput(e.target.value))}
                 className="w-full border-2 border-border p-2 rounded-lg bg-card text-xs font-bold focus:outline-none focus:border-accent"
               />
             </div>
@@ -255,7 +251,7 @@ export default function AspectRatio() {
                 placeholder="例: 1080"
                 aria-label="入力高"
                 value={inputH}
-                onChange={(e) => setInputH(e.target.value === '' ? '' : Number(e.target.value))}
+                onChange={(e) => setInputH(parseNumberInput(e.target.value))}
                 className="w-full border-2 border-border p-2 rounded-lg bg-card text-xs font-bold focus:outline-none focus:border-accent"
               />
             </div>

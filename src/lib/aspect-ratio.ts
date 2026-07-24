@@ -1,4 +1,15 @@
 /**
+ * <input type="number"> の入力値 (string) を安全に parse して number または '' を返す
+ */
+export const parseNumberInput = (value: string): number | '' => {
+  if (value.trim() === '') {
+    return '';
+  }
+  const num = Number(value);
+  return isNaN(num) ? '' : num;
+};
+
+/**
  * 最大公約数 (GCD) を求める
  * 負数や小数の入力にも対応できるように Math.abs および Math.round で保護する
  */
@@ -42,21 +53,21 @@ export const calculateTargetDimension = (
  * 極端に大きい値（約分後 > 100）の場合は小数表現 "1.778 : 1" にフォールバックする
  */
 export const calculateSimplifiedRatio = (inputW: number | '', inputH: number | ''): string => {
-  if (inputW === '' || inputH === '') {
-    return '';
-  }
-
-  const w = Number(inputW);
-  const h = Number(inputH);
-
-  if (w <= 0 || h <= 0 || isNaN(w) || isNaN(h) || !isFinite(w) || !isFinite(h)) {
+  if (
+    inputW === '' ||
+    inputH === '' ||
+    inputW <= 0 ||
+    inputH <= 0 ||
+    !isFinite(inputW) ||
+    !isFinite(inputH)
+  ) {
     return '';
   }
 
   // 小数の場合は整数化してGCDを適用
   const factor = 1000;
-  const intW = Math.round(w * factor);
-  const intH = Math.round(h * factor);
+  const intW = Math.round(inputW * factor);
+  const intH = Math.round(inputH * factor);
   const gcd = getGcd(intW, intH);
 
   if (gcd === 0) {
@@ -68,7 +79,7 @@ export const calculateSimplifiedRatio = (inputW: number | '', inputH: number | '
 
   // 大きすぎる値の場合は少数形式で簡略表示
   if (simpleW > 100 || simpleH > 100) {
-    const floatRatio = (w / h).toFixed(3);
+    const floatRatio = (inputW / inputH).toFixed(3);
     return `${floatRatio} : 1`;
   }
 
