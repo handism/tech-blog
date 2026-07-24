@@ -7,6 +7,7 @@ import {
   type TagCount,
 } from '@/src/lib/post-taxonomy';
 import type { PostSummary } from '@/src/types/post';
+import { cache } from 'react';
 
 type PaginatedPosts = {
   posts: PostSummary[];
@@ -22,19 +23,22 @@ type BlogViewContext = {
 
 /**
  * 一覧ページ共通で使う投稿データとカテゴリ一覧を返す。
+ * 同一リクエスト内（generateStaticParams / generateMetadata / page 等）での重複呼び出しを dedupe する。
  */
-export async function getBlogViewContext(): Promise<BlogViewContext> {
-  const allPosts = await getAllPostMeta();
-  const categoryCounts = getCategoriesWithCount(allPosts);
-  const categories = categoryCounts.map((c) => c.category);
-  const tagCounts = getTagsWithCount(allPosts);
+export const getBlogViewContext = cache(
+  async function getBlogViewContext(): Promise<BlogViewContext> {
+    const allPosts = await getAllPostMeta();
+    const categoryCounts = getCategoriesWithCount(allPosts);
+    const categories = categoryCounts.map((c) => c.category);
+    const tagCounts = getTagsWithCount(allPosts);
 
-  // クライアントに渡すデータは PostSummary へ変換して軽量化。
-  // plaintext・keywords は一覧表示では不要で、特に keywords は記事全文相当のため RSC ペイロードを肥大化させる。
-  const lightPosts = allPosts.map(toPostSummary);
+    // クライアントに渡すデータは PostSummary へ変換して軽量化。
+    // plaintext・keywords は一覧表示では不要で、特に keywords は記事全文相当のため RSC ペイロードを肥大化させる。
+    const lightPosts = allPosts.map(toPostSummary);
 
-  return { allPosts: lightPosts, categories, categoryCounts, tagCounts };
-}
+    return { allPosts: lightPosts, categories, categoryCounts, tagCounts };
+  }
+);
 
 /**
  * 投稿配列をページ番号単位で切り出す。
