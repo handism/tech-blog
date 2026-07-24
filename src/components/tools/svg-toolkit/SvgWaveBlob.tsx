@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useCallback } from 'react';
-import { Sliders, Download, RefreshCw, Layers, Sparkles } from 'lucide-react';
+import { Sliders, Download, RefreshCw, Layers } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
 
 // 簡易乱数ジェネレータ（シードベース）

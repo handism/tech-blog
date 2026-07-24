@@ -1,6 +1,6 @@
 'use client';
 
-import { GitCompare, Copy, Trash2, Eye } from 'lucide-react';
+import { Copy, Trash2, Eye } from 'lucide-react';
 import { useState, useMemo } from 'react';
 import CopyButton from '@/src/components/CopyButton';
 

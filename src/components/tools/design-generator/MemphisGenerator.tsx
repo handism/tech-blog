@@ -2,7 +2,6 @@
 'use client';
 
 import { siteConfig } from '@/src/config/site';
-import { Image as ImageIcon } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 // =====================

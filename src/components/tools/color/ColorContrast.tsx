@@ -3,7 +3,7 @@
 
 import { useState, useMemo } from 'react';
 import { Eye, RefreshCw, AlertCircle } from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 
 // HEXコードをRGBオブジェクトに変換
 const hexToRgb = (hex: string) => {
@@ -108,10 +108,8 @@ const getContrastRatio = (lum1: number, lum2: number) => {
 };
 
 export default function ColorContrast() {
-  const { copy } = useCopyToClipboard();
   const [fgColor, setFgColor] = useState('#0F172A');
   const [bgColor, setBgColor] = useState('#FAFAFA');
-  const [copiedText, setCopiedText] = useState('');
 
   const contrastRatio = useMemo(() => {
     const fgRgb = hexToRgb(fgColor);
@@ -123,12 +121,6 @@ export default function ColorContrast() {
     }
     return 1;
   }, [fgColor, bgColor]);
-
-  const handleCopy = (text: string) => {
-    copy(text);
-    setCopiedText(text);
-    setTimeout(() => setCopiedText(''), 2000);
-  };
 
   const handleRandomize = () => {
     const r1 = Math.floor(Math.random() * 256);
@@ -448,17 +440,12 @@ export default function ColorContrast() {
                     <span className="text-[10px] font-extrabold text-text/50 truncate">
                       {item.name}
                     </span>
-                    <button
-                      onClick={() => handleCopy(item.hex)}
+                    <CopyButton
+                      value={item.hex}
+                      label={item.hex}
+                      copiedLabel={item.hex}
                       className="text-xs font-mono font-black text-text hover:text-accent flex items-center justify-between transition-colors cursor-pointer text-left w-full mt-1.5"
-                    >
-                      <span>{item.hex}</span>
-                      {copiedText === item.hex ? (
-                        <span className="text-[9px] text-green-500 font-bold">✓</span>
-                      ) : (
-                        <span className="text-[9px] text-text/30 group-hover:text-text/60">📋</span>
-                      )}
-                    </button>
+                    />
                   </div>
                 </div>
               ))}

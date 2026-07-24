@@ -1,11 +1,10 @@
 'use client';
 
-import { Zap, AlertTriangle } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 import { useState, useMemo } from 'react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 
 export default function RegexTester() {
-  const { copy } = useCopyToClipboard();
   const [pattern, setPattern] = useState('');
   const [flags, setFlags] = useState('g');
   const [text, setText] = useState('');
@@ -130,10 +129,6 @@ export default function RegexTester() {
     }
   };
 
-  const copyToClipboard = (text: string) => {
-    copy(text);
-  };
-
   return (
     <>
       <div className="space-y-6">
@@ -221,12 +216,10 @@ export default function RegexTester() {
           <div className="space-y-2">
             <div className="flex justify-between items-center">
               <h3 className="text-sm font-bold text-text">結果</h3>
-              <button
-                onClick={() => copyToClipboard(output)}
+              <CopyButton
+                value={output}
                 className="theme-btn px-3 py-1 text-xs shadow-[2px_2px_0px_0px_var(--border)]"
-              >
-                コピー
-              </button>
+              />
             </div>
             <pre className="bg-secondary p-4 rounded-xl border-2 border-border text-sm overflow-auto max-h-48 text-text font-mono shadow-[2px_2px_0px_0px_var(--border)] whitespace-pre-wrap break-words">
               {output}
@@ -255,12 +248,10 @@ export default function RegexTester() {
               <div className="mt-4 space-y-2">
                 <div className="flex justify-between items-center">
                   <h3 className="text-sm font-bold text-text">置換結果</h3>
-                  <button
-                    onClick={() => copyToClipboard(replaced)}
+                  <CopyButton
+                    value={replaced}
                     className="theme-btn px-3 py-1 text-xs shadow-[2px_2px_0px_0px_var(--border)]"
-                  >
-                    コピー
-                  </button>
+                  />
                 </div>
                 <pre className="bg-card p-4 rounded-xl border-2 border-border text-sm overflow-auto max-h-48 text-text font-mono shadow-[2px_2px_0px_0px_var(--border)] whitespace-pre-wrap break-words">
                   {replaced}

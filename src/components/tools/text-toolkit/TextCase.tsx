@@ -1,11 +1,11 @@
 'use client';
 
-import { FileText, Copy, Trash2, Check, AlignLeft } from 'lucide-react';
+import { Trash2, AlignLeft } from 'lucide-react';
 import { useState, useMemo } from 'react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 
 // Case helper functions
-function toWords(str: string): string[] {
+export function toWords(str: string): string[] {
   if (!str) return [];
   // Split camel, snake, kebab, or spaces
   const clean = str
@@ -16,7 +16,7 @@ function toWords(str: string): string[] {
   return clean.split(' ').filter(Boolean);
 }
 
-function toCamelCase(str: string): string {
+export function toCamelCase(str: string): string {
   const words = toWords(str);
   if (words.length === 0) return '';
   return (
@@ -28,32 +28,32 @@ function toCamelCase(str: string): string {
   );
 }
 
-function toPascalCase(str: string): string {
+export function toPascalCase(str: string): string {
   const words = toWords(str);
   return words.map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join('');
 }
 
-function toSnakeCase(str: string): string {
+export function toSnakeCase(str: string): string {
   const words = toWords(str);
   return words.map((w) => w.toLowerCase()).join('_');
 }
 
-function toKebabCase(str: string): string {
+export function toKebabCase(str: string): string {
   const words = toWords(str);
   return words.map((w) => w.toLowerCase()).join('-');
 }
 
-function toConstantCase(str: string): string {
+export function toConstantCase(str: string): string {
   const words = toWords(str);
   return words.map((w) => w.toUpperCase()).join('_');
 }
 
-function toTitleCase(str: string): string {
+export function toTitleCase(str: string): string {
   const words = toWords(str);
   return words.map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
 }
 
-function toSentenceCase(str: string): string {
+export function toSentenceCase(str: string): string {
   const words = toWords(str);
   if (words.length === 0) return '';
   const first = words[0].charAt(0).toUpperCase() + words[0].slice(1).toLowerCase();
@@ -65,9 +65,7 @@ function toSentenceCase(str: string): string {
 }
 
 export default function TextCase() {
-  const { copy } = useCopyToClipboard();
   const [input, setInput] = useState('');
-  const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   // Compute stats in real-time
   const stats = useMemo(() => {
@@ -110,12 +108,6 @@ export default function TextCase() {
       { label: 'Sentence Case', value: toSentenceCase(input), key: 'sentence' },
     ];
   }, [input]);
-
-  const handleCopy = (text: string, key: string) => {
-    copy(text);
-    setCopiedKey(key);
-    setTimeout(() => setCopiedKey(null), 1500);
-  };
 
   const handleClear = () => {
     setInput('');
@@ -217,21 +209,13 @@ export default function TextCase() {
                   </div>
 
                   {c.value && (
-                    <button
-                      onClick={() => handleCopy(c.value, c.key)}
+                    <CopyButton
+                      value={c.value}
+                      label=""
+                      copiedLabel=""
                       className="shrink-0 theme-btn p-2 bg-secondary text-text relative cursor-pointer"
-                    >
-                      {copiedKey === c.key ? (
-                        <Check className="w-3.5 h-3.5 text-accent" />
-                      ) : (
-                        <Copy className="w-3.5 h-3.5" />
-                      )}
-                      {copiedKey === c.key && (
-                        <span className="absolute -top-7 right-0 text-[10px] bg-text text-card px-2 py-0.5 rounded shadow whitespace-nowrap">
-                          コピー完了！
-                        </span>
-                      )}
-                    </button>
+                      title="コピー"
+                    />
                   )}
                 </div>
               ))}

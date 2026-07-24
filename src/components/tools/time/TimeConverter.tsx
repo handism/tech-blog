@@ -3,7 +3,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { RefreshCw, Play, Pause, Globe } from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 
 const TIMEZONES = [
   { id: 'JST', name: '東京 (JST)', tz: 'Asia/Tokyo', offset: 'UTC+9' },
@@ -19,14 +19,12 @@ const TIMEZONES = [
 ];
 
 export default function TimeConverter() {
-  const { copy } = useCopyToClipboard();
   const [mounted, setMounted] = useState(false);
   const [currentSec, setCurrentSec] = useState<number>(0);
   const [isLive, setIsLive] = useState(true);
 
   // Timestamp to Date state
   const [tsInput, setTsInput] = useState('');
-  const [tsCopied, setTsCopied] = useState<string | null>(null);
 
   // Date to Timestamp state
   const [dateStr, setDateStr] = useState('');
@@ -139,12 +137,6 @@ export default function TimeConverter() {
       return { error: '日付の解析に失敗しました。' };
     }
   }, [dateStr, timeStr, tzSelect]);
-
-  const handleCopy = (text: string, key: string) => {
-    copy(text);
-    setTsCopied(key);
-    setTimeout(() => setTsCopied(null), 1500);
-  };
 
   const setInputToCurrent = () => {
     setTsInput(String(currentSec));
@@ -272,12 +264,10 @@ export default function TimeConverter() {
                         <span className="font-mono text-text break-all text-sm font-extrabold">
                           {parsedDateResults.local}
                         </span>
-                        <button
-                          onClick={() => handleCopy(parsedDateResults.local || '', 'local')}
+                        <CopyButton
+                          value={parsedDateResults.local || ''}
                           className="theme-btn p-1.5 text-[10px] bg-secondary border-border text-text flex items-center gap-1 cursor-pointer shadow-[1px_1px_0px_0px_var(--border)] font-bold shrink-0"
-                        >
-                          {tsCopied === 'local' ? '完了' : 'コピー'}
-                        </button>
+                        />
                       </div>
                     </div>
 
@@ -289,12 +279,10 @@ export default function TimeConverter() {
                         <span className="font-mono text-text break-all text-sm font-extrabold">
                           {parsedDateResults.utc}
                         </span>
-                        <button
-                          onClick={() => handleCopy(parsedDateResults.utc || '', 'utc')}
+                        <CopyButton
+                          value={parsedDateResults.utc || ''}
                           className="theme-btn p-1.5 text-[10px] bg-secondary border-border text-text flex items-center gap-1 cursor-pointer shadow-[1px_1px_0px_0px_var(--border)] font-bold shrink-0"
-                        >
-                          {tsCopied === 'utc' ? '完了' : 'コピー'}
-                        </button>
+                        />
                       </div>
                     </div>
 
@@ -306,12 +294,10 @@ export default function TimeConverter() {
                         <span className="font-mono text-text break-all text-sm font-extrabold">
                           {parsedDateResults.iso}
                         </span>
-                        <button
-                          onClick={() => handleCopy(parsedDateResults.iso || '', 'iso')}
+                        <CopyButton
+                          value={parsedDateResults.iso || ''}
                           className="theme-btn p-1.5 text-[10px] bg-secondary border-border text-text flex items-center gap-1 cursor-pointer shadow-[1px_1px_0px_0px_var(--border)] font-bold shrink-0"
-                        >
-                          {tsCopied === 'iso' ? '完了' : 'コピー'}
-                        </button>
+                        />
                       </div>
                     </div>
 
@@ -407,12 +393,10 @@ export default function TimeConverter() {
                         <span className="font-mono text-lg font-black text-text">
                           {dateToTsResult.sec}
                         </span>
-                        <button
-                          onClick={() => handleCopy(dateToTsResult.sec || '', 'sec')}
+                        <CopyButton
+                          value={dateToTsResult.sec || ''}
                           className="theme-btn p-1.5 text-[10px] bg-secondary border-border text-text flex items-center gap-1 cursor-pointer shadow-[1px_1px_0px_0px_var(--border)] font-bold shrink-0"
-                        >
-                          {tsCopied === 'sec' ? '完了' : 'コピー'}
-                        </button>
+                        />
                       </div>
                     </div>
 
@@ -424,12 +408,10 @@ export default function TimeConverter() {
                         <span className="font-mono text-lg font-black text-text">
                           {dateToTsResult.ms}
                         </span>
-                        <button
-                          onClick={() => handleCopy(dateToTsResult.ms || '', 'ms')}
+                        <CopyButton
+                          value={dateToTsResult.ms || ''}
                           className="theme-btn p-1.5 text-[10px] bg-secondary border-border text-text flex items-center gap-1 cursor-pointer shadow-[1px_1px_0px_0px_var(--border)] font-bold shrink-0"
-                        >
-                          {tsCopied === 'ms' ? '完了' : 'コピー'}
-                        </button>
+                        />
                       </div>
                     </div>
                   </div>
@@ -464,12 +446,12 @@ export default function TimeConverter() {
                       <span className="font-mono text-xs font-extrabold text-accent bg-card border border-border/80 px-2 py-0.5 rounded shadow-sm">
                         {zoneTime}
                       </span>
-                      <button
-                        onClick={() => handleCopy(zoneTime, tzInfo.id)}
+                      <CopyButton
+                        value={zoneTime}
+                        label=""
+                        copiedLabel=""
                         className="opacity-0 group-hover:opacity-100 transition-opacity theme-btn p-1 text-[9px] bg-secondary border-border text-text flex items-center cursor-pointer shadow-[1px_1px_0px_0px_var(--border)] shrink-0"
-                      >
-                        {tsCopied === tzInfo.id ? '✓' : '📋'}
-                      </button>
+                      />
                     </div>
                   </div>
                 );

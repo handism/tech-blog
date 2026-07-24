@@ -2,9 +2,9 @@
 'use client';
 
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { Copy, Check, Download, QrCode, AlertTriangle, RefreshCw, Sparkles } from 'lucide-react';
+import { Download, QrCode, AlertTriangle, RefreshCw, Sparkles } from 'lucide-react';
 import QRCode from 'qrcode';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 
 interface Preset {
   source: string;
@@ -21,8 +21,6 @@ export default function UtmBuilder() {
 
   const [shortUrl, setShortUrl] = useState<string>('');
   const [isShortening, setIsShortening] = useState<boolean>(false);
-  const { copied, copy } = useCopyToClipboard();
-  const [copiedType, setCopiedType] = useState<string>('');
 
   const qrCanvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -119,15 +117,6 @@ export default function UtmBuilder() {
     } finally {
       setIsShortening(false);
     }
-  };
-
-  // コピーハンドラ
-  const handleCopy = (text: string, type: string) => {
-    copy(text);
-    setCopiedType(type);
-    setTimeout(() => {
-      setCopiedType('');
-    }, 2000);
   };
 
   // QRコードのダウンロード
@@ -331,22 +320,12 @@ export default function UtmBuilder() {
               <div className="space-y-2">
                 <div className="flex justify-between items-center text-[10px] font-bold text-text/60">
                   <span>COMPLETE URL</span>
-                  <button
-                    onClick={() => handleCopy(generatedUrl, 'full')}
+                  <CopyButton
+                    value={generatedUrl}
+                    label="URLをコピー"
+                    copiedLabel="コピー完了"
                     className="px-2 py-1 rounded bg-secondary border-2 border-border text-[9px] font-bold text-text hover:bg-secondary/80 flex items-center gap-1 cursor-pointer transition-colors animate-none"
-                  >
-                    {copied && copiedType === 'full' ? (
-                      <>
-                        <Check className="w-3 h-3 text-green-500" />
-                        <span className="text-green-500">コピー完了</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="w-3 h-3" />
-                        <span>URLをコピー</span>
-                      </>
-                    )}
-                  </button>
+                  />
                 </div>
                 <textarea
                   readOnly
@@ -360,22 +339,12 @@ export default function UtmBuilder() {
                 <div className="flex justify-between items-center text-[10px] font-bold text-text/60">
                   <span>SHORT URL (短縮URL)</span>
                   {shortUrl && (
-                    <button
-                      onClick={() => handleCopy(shortUrl, 'short')}
+                    <CopyButton
+                      value={shortUrl}
+                      label="コピー"
+                      copiedLabel="コピー完了"
                       className="px-2 py-1 rounded bg-secondary border-2 border-border text-[9px] font-bold text-text hover:bg-secondary/80 flex items-center gap-1 cursor-pointer transition-colors"
-                    >
-                      {copied && copiedType === 'short' ? (
-                        <>
-                          <Check className="w-3 h-3 text-green-500" />
-                          <span className="text-green-500">コピー完了</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="w-3 h-3" />
-                          <span>コピー</span>
-                        </>
-                      )}
-                    </button>
+                    />
                   )}
                 </div>
 

@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 
 const parseCsvLine = (line: string) => {
   const result: string[] = [];
@@ -76,7 +76,6 @@ const jsonToCsv = (text: string) => {
 };
 
 export default function CsvJson() {
-  const { copy } = useCopyToClipboard();
   const [mode, setMode] = useState<'csv-to-json' | 'json-to-csv'>('csv-to-json');
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
@@ -93,37 +92,37 @@ export default function CsvJson() {
     }
   };
 
-  const copyToClipboard = () => {
-    copy(output);
-  };
-
   return (
     <div className="space-y-6">
-      {/* モード選択 */}
-      <div className="flex flex-wrap gap-6 items-center p-4 bg-secondary border-2 border-border rounded-xl shadow-[2px_2px_0px_0px_var(--border)]">
-        <label className="flex items-center gap-2 text-text font-bold cursor-pointer select-none">
-          <input
-            type="radio"
-            name="mode"
-            value="csv-to-json"
-            checked={mode === 'csv-to-json'}
-            onChange={() => setMode('csv-to-json')}
-            className="w-4 h-4 text-accent border-2 border-border rounded-full focus:ring-0 accent-accent"
-          />
+      {/* モード切り替え & 変換ボタン */}
+      <div className="flex flex-wrap gap-3">
+        <button
+          onClick={() => setMode('csv-to-json')}
+          className={`flex-1 py-2.5 px-4 font-bold rounded-xl transition border-2 border-border ${
+            mode === 'csv-to-json' ? 'bg-accent text-white border-accent' : 'bg-card text-text'
+          }`}
+        >
           CSV → JSON
-        </label>
-        <label className="flex items-center gap-2 text-text font-bold cursor-pointer select-none">
-          <input
-            type="radio"
-            name="mode"
-            value="json-to-csv"
-            checked={mode === 'json-to-csv'}
-            onChange={() => setMode('json-to-csv')}
-            className="w-4 h-4 text-accent border-2 border-border rounded-full focus:ring-0 accent-accent"
-          />
+        </button>
+        <button
+          onClick={() => setMode('json-to-csv')}
+          className={`flex-1 py-2.5 px-4 font-bold rounded-xl transition border-2 border-border ${
+            mode === 'json-to-csv' ? 'bg-accent text-white border-accent' : 'bg-card text-text'
+          }`}
+        >
           JSON → CSV
-        </label>
+        </button>
+        <button onClick={handleConvert} className="theme-btn px-6 py-2.5 font-bold">
+          変換実行
+        </button>
       </div>
+
+      {/* エラーメッセージ */}
+      {error && (
+        <div className="bg-red-50 dark:bg-red-900/20 border-2 border-red-500 text-red-700 dark:text-red-400 px-4 py-3 rounded-xl font-bold text-sm">
+          エラー: {error}
+        </div>
+      )}
 
       {/* 入出力エリア */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -142,12 +141,10 @@ export default function CsvJson() {
           <div className="flex justify-between items-center mb-2">
             <label className="block text-sm font-bold text-text">出力</label>
             {output && (
-              <button
-                onClick={copyToClipboard}
+              <CopyButton
+                value={output}
                 className="theme-btn px-3 py-1 text-xs shadow-[2px_2px_0px_0px_var(--border)] font-bold"
-              >
-                コピー
-              </button>
+              />
             )}
           </div>
           <textarea
@@ -157,21 +154,6 @@ export default function CsvJson() {
           />
         </div>
       </div>
-
-      {/* エラーメッセージ */}
-      {error && (
-        <div className="bg-red-50 dark:bg-red-900/20 border-2 border-red-500 text-red-700 dark:text-red-400 px-4 py-3 rounded-xl font-bold text-sm">
-          <p>エラー: {error}</p>
-        </div>
-      )}
-
-      {/* アクションボタン */}
-      <button
-        onClick={handleConvert}
-        className="theme-btn bg-accent text-white border-accent shadow-[3px_3px_0px_0px_var(--border)] dark:shadow-[3px_3px_0px_0px_var(--accent)] font-bold px-6 py-3 text-base cursor-pointer"
-      >
-        変換する
-      </button>
     </div>
   );
 }

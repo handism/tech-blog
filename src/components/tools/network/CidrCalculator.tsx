@@ -2,13 +2,11 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 
 export default function CidrCalculator() {
-  const { copy } = useCopyToClipboard();
   const [ipAddress, setIpAddress] = useState('192.168.1.1');
   const [prefix, setPrefix] = useState<number>(24);
-  const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   const ipToLong = (ip: string): number => {
     return ip.split('.').reduce((acc, octet) => (acc << 8) + parseInt(octet, 10), 0) >>> 0;
@@ -135,12 +133,6 @@ export default function CidrCalculator() {
     ipBinary,
     maskBinary,
   } = calculationResult;
-
-  const handleCopy = (text: string, key: string) => {
-    copy(text);
-    setCopiedKey(key);
-    setTimeout(() => setCopiedKey(null), 2000);
-  };
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 text-text animate-none">
@@ -277,13 +269,11 @@ export default function CidrCalculator() {
                       {item.val}
                     </span>
                   </div>
-                  <button
-                    onClick={() => handleCopy(item.raw || item.val, item.key)}
+                  <CopyButton
+                    value={item.raw || item.val}
                     className="theme-btn p-1.5 bg-secondary border-border text-text shrink-0 shadow-[1px_1px_0px_0px_var(--border)] cursor-pointer hover:bg-border/20"
                     title="コピー"
-                  >
-                    {copiedKey === item.key ? '完了' : 'コピー'}
-                  </button>
+                  />
                 </div>
               ))}
             </div>

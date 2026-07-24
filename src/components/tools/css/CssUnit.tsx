@@ -2,13 +2,11 @@
 'use client';
 
 import { useState } from 'react';
-import { Clipboard, Check } from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 
 type UnitType = 'px' | 'rem' | 'em' | 'vw' | 'vh' | '%';
 
 export default function CssUnit() {
-  const { copy } = useCopyToClipboard();
   const [baseFontSize, setBaseFontSize] = useState<number>(16);
   const [viewportWidth, setViewportWidth] = useState<number>(1920);
   const [viewportHeight, setViewportHeight] = useState<number>(1080);
@@ -21,8 +19,6 @@ export default function CssUnit() {
   const [vwVal, setVwVal] = useState<string>('0.833');
   const [vhVal, setVhVal] = useState<string>('1.481');
   const [percentVal, setPercentVal] = useState<string>('2');
-
-  const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   const formatNumber = (num: number): string => {
     if (isNaN(num)) return '';
@@ -125,13 +121,6 @@ export default function CssUnit() {
     if (!isNaN(px)) {
       setPercentVal(formatNumber((px / val) * 100));
     }
-  };
-
-  const handleCopy = (text: string, key: string) => {
-    if (!text) return;
-    copy(text);
-    setCopiedKey(key);
-    setTimeout(() => setCopiedKey(null), 2000);
   };
 
   const units = [
@@ -283,18 +272,14 @@ export default function CssUnit() {
                     <span className="text-xs font-extrabold text-text/50 bg-secondary px-2 py-1 border border-border rounded-lg select-none">
                       {unit.suffix}
                     </span>
-                    <button
-                      onClick={() => handleCopy(`${unit.value}${unit.suffix}`, unit.key)}
+                    <CopyButton
+                      value={`${unit.value}${unit.suffix}`}
                       disabled={!unit.value}
+                      label=""
+                      copiedLabel=""
                       className="p-1.5 border-2 border-border rounded-lg bg-card hover:bg-secondary text-text disabled:opacity-40 cursor-pointer shadow-[1px_1px_0px_0px_var(--border)] flex items-center justify-center shrink-0"
                       title="コピー"
-                    >
-                      {copiedKey === unit.key ? (
-                        <Check className="w-3.5 h-3.5 text-accent" />
-                      ) : (
-                        <Clipboard className="w-3.5 h-3.5" />
-                      )}
-                    </button>
+                    />
                   </div>
                 </div>
               </div>

@@ -2,18 +2,8 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import {
-  Copy,
-  Check,
-  Download,
-  Plus,
-  Trash2,
-  Maximize2,
-  Minimize2,
-  Move,
-  RotateCw,
-} from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import { Download, Plus, Trash2, Maximize2, Minimize2, Move, RotateCw } from 'lucide-react';
+import CopyButton from '@/src/components/CopyButton';
 
 interface ColorStop {
   id: string;
@@ -32,8 +22,6 @@ interface MeshPoint {
 
 export default function CssGradient() {
   const [gradientType, setGradientType] = useState<'linear' | 'radial' | 'mesh'>('linear');
-  const { copy } = useCopyToClipboard();
-  const [copiedType, setCopiedType] = useState<string>('');
   const [isAppliedToSite, setIsAppliedToSite] = useState<boolean>(false);
   const originalBackgroundRef = useRef<string>('');
 
@@ -102,15 +90,6 @@ export default function CssGradient() {
 
   const cssValue = generateCssCode();
   const fullCssDeclaration = `background-image: ${cssValue.replace(/\n  /g, ' ')};`;
-
-  // 各種フォーマットでコピー
-  const handleCopy = (text: string, type: string) => {
-    copy(text);
-    setCopiedType(type);
-    setTimeout(() => {
-      setCopiedType('');
-    }, 2000);
-  };
 
   // カラーストップの追加
   const addColorStop = () => {
@@ -420,22 +399,12 @@ export default function CssGradient() {
                 <span className="text-[10px] font-bold text-slate-400 tracking-wider">
                   CSS DECLARATION
                 </span>
-                <button
-                  onClick={() => handleCopy(fullCssDeclaration, 'css')}
+                <CopyButton
+                  value={fullCssDeclaration}
+                  label="CSSコピー"
+                  copiedLabel="Copied!"
                   className="p-1 px-2.5 rounded-lg border border-slate-700 bg-slate-800 text-[10px] text-slate-200 hover:text-white flex items-center gap-1 cursor-pointer transition-colors"
-                >
-                  {copiedType === 'css' ? (
-                    <>
-                      <Check className="w-3 h-3 text-green-400" />
-                      <span className="text-green-400 font-bold">Copied!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3 h-3" />
-                      <span>CSSコピー</span>
-                    </>
-                  )}
-                </button>
+                />
               </div>
               <pre className="font-mono text-xs text-slate-300 bg-slate-950 p-3.5 rounded-xl border border-slate-900 overflow-x-auto whitespace-pre-wrap leading-relaxed select-all">
                 {fullCssDeclaration}
@@ -448,24 +417,12 @@ export default function CssGradient() {
                 <span className="text-[10px] font-bold text-slate-400 tracking-wider">
                   CSS VARIABLE
                 </span>
-                <button
-                  onClick={() =>
-                    handleCopy(`--gradient-custom: ${cssValue.replace(/\n  /g, ' ')};`, 'var')
-                  }
+                <CopyButton
+                  value={`--gradient-custom: ${cssValue.replace(/\n  /g, ' ')};`}
+                  label="変数コピー"
+                  copiedLabel="Copied!"
                   className="p-1 px-2.5 rounded-lg border border-slate-700 bg-slate-800 text-[10px] text-slate-200 hover:text-white flex items-center gap-1 cursor-pointer transition-colors"
-                >
-                  {copiedType === 'var' ? (
-                    <>
-                      <Check className="w-3 h-3 text-green-400" />
-                      <span className="text-green-400 font-bold">Copied!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3 h-3" />
-                      <span>変数コピー</span>
-                    </>
-                  )}
-                </button>
+                />
               </div>
               <pre className="font-mono text-[10px] text-slate-300 bg-slate-950 p-3 rounded-xl border border-slate-900 overflow-x-auto truncate select-all">
                 {`--gradient-custom: ${cssValue.replace(/\n  /g, ' ')};`}

@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { FileCode, Copy, Check, Image as ImageIcon, Code, RefreshCw } from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import { FileCode, Image as ImageIcon, Code, RefreshCw } from 'lucide-react';
+import CopyButton from '@/src/components/CopyButton';
 import FileDropZone from '../shared/FileDropZone';
 
 // ReactのSVG属性置換マップ
@@ -83,9 +83,7 @@ const SAMPLE_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100
 </svg>`;
 
 export default function SvgToCss() {
-  const { copy } = useCopyToClipboard();
   const [svgInput, setSvgInput] = useState<string>(SAMPLE_SVG);
-  const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   // SVG入力のクリーンアップ・バリデーション
   const cleanSvg = useMemo(() => {
@@ -126,13 +124,6 @@ export default function SvgToCss() {
     if (!cleanSvg) return '';
     return convertToJsx(cleanSvg);
   }, [cleanSvg]);
-
-  // コピー処理
-  const handleCopy = (text: string, key: string) => {
-    copy(text);
-    setCopiedKey(key);
-    setTimeout(() => setCopiedKey(null), 2000);
-  };
 
   // ファイルアップロード処理
   const handleFile = (file: File) => {
@@ -230,18 +221,11 @@ export default function SvgToCss() {
                   最も軽量で可読性が高い (推奨)
                 </span>
               </span>
-              <button
+              <CopyButton
                 disabled={!cleanSvg}
-                onClick={() => handleCopy(`background-image: url("${dataUriUtf8}");`, 'css-utf8')}
+                value={`background-image: url("${dataUriUtf8}");`}
                 className="theme-btn py-1 px-2.5 text-xs flex items-center gap-1 cursor-pointer disabled:opacity-50"
-              >
-                {copiedKey === 'css-utf8' ? (
-                  <Check className="w-3 h-3 text-emerald-500" />
-                ) : (
-                  <Copy className="w-3 h-3" />
-                )}
-                {copiedKey === 'css-utf8' ? 'コピー完了' : 'コピー'}
-              </button>
+              />
             </div>
             <pre className="p-3 bg-secondary rounded-lg font-mono text-xs text-text/80 break-all max-h-[96px] overflow-y-auto select-all">
               {cleanSvg ? `background-image: url("${dataUriUtf8}");` : '(SVGが未入力です)'}
@@ -257,18 +241,11 @@ export default function SvgToCss() {
                   エンコード済みバイナリテキスト
                 </span>
               </span>
-              <button
+              <CopyButton
                 disabled={!cleanSvg}
-                onClick={() => handleCopy(`background-image: url("${dataUriBase64}");`, 'css-b64')}
+                value={`background-image: url("${dataUriBase64}");`}
                 className="theme-btn py-1 px-2.5 text-xs flex items-center gap-1 cursor-pointer disabled:opacity-50"
-              >
-                {copiedKey === 'css-b64' ? (
-                  <Check className="w-3 h-3 text-emerald-500" />
-                ) : (
-                  <Copy className="w-3 h-3" />
-                )}
-                {copiedKey === 'css-b64' ? 'コピー完了' : 'コピー'}
-              </button>
+              />
             </div>
             <pre className="p-3 bg-secondary rounded-lg font-mono text-xs text-text/80 break-all max-h-[96px] overflow-y-auto select-all">
               {cleanSvg ? `background-image: url("${dataUriBase64}");` : '(SVGが未入力です)'}
@@ -284,18 +261,11 @@ export default function SvgToCss() {
                   HTMLの &lt;img src=&quot;...&quot; /&gt; 等に使用可能
                 </span>
               </span>
-              <button
+              <CopyButton
                 disabled={!cleanSvg}
-                onClick={() => handleCopy(dataUriUtf8, 'raw-uri')}
+                value={dataUriUtf8}
                 className="theme-btn py-1 px-2.5 text-xs flex items-center gap-1 cursor-pointer disabled:opacity-50"
-              >
-                {copiedKey === 'raw-uri' ? (
-                  <Check className="w-3 h-3 text-emerald-500" />
-                ) : (
-                  <Copy className="w-3 h-3" />
-                )}
-                {copiedKey === 'raw-uri' ? 'コピー完了' : 'コピー'}
-              </button>
+              />
             </div>
             <pre className="p-3 bg-secondary rounded-lg font-mono text-xs text-text/80 break-all max-h-[96px] overflow-y-auto select-all">
               {cleanSvg ? dataUriUtf8 : '(SVGが未入力です)'}
@@ -311,18 +281,11 @@ export default function SvgToCss() {
                   属性を React 用にキャメルケース化
                 </span>
               </span>
-              <button
+              <CopyButton
                 disabled={!cleanSvg}
-                onClick={() => handleCopy(jsxCode, 'react-jsx')}
+                value={jsxCode}
                 className="theme-btn py-1 px-2.5 text-xs flex items-center gap-1 cursor-pointer disabled:opacity-50"
-              >
-                {copiedKey === 'react-jsx' ? (
-                  <Check className="w-3 h-3 text-emerald-500" />
-                ) : (
-                  <Copy className="w-3 h-3" />
-                )}
-                {copiedKey === 'react-jsx' ? 'コピー完了' : 'コピー'}
-              </button>
+              />
             </div>
             <pre className="p-3 bg-secondary rounded-lg font-mono text-xs text-text/80 whitespace-pre-wrap max-h-[150px] overflow-y-auto select-all">
               {cleanSvg ? jsxCode : '(SVGが未入力です)'}

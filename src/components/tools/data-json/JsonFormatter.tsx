@@ -2,10 +2,9 @@
 'use client';
 
 import { useState } from 'react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 
 export default function JsonFormatter() {
-  const { copy } = useCopyToClipboard();
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
@@ -44,10 +43,6 @@ export default function JsonFormatter() {
       setError(err instanceof Error ? err.message : 'JSON パースエラー');
       setOutput('');
     }
-  };
-
-  const copyToClipboard = () => {
-    copy(output);
   };
 
   return (
@@ -104,12 +99,10 @@ export default function JsonFormatter() {
           <div className="flex justify-between items-center">
             <label className="block text-sm font-bold text-text">出力</label>
             {output && (
-              <button
-                onClick={copyToClipboard}
+              <CopyButton
+                value={output}
                 className="theme-btn px-3 py-1 text-xs shadow-[2px_2px_0px_0px_var(--border)] font-bold"
-              >
-                コピー
-              </button>
+              />
             )}
           </div>
           <textarea

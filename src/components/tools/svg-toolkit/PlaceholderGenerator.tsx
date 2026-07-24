@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Copy, Check, Download, RotateCw, Plus, Minus } from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import { Download, RotateCw, Plus, Minus } from 'lucide-react';
+import CopyButton from '@/src/components/CopyButton';
 
 interface SizePreset {
   label: string;
@@ -19,8 +19,6 @@ export default function PlaceholderGenerator() {
   const [customText, setCustomText] = useState<string>('');
   const [fontSize, setFontSize] = useState<number>(48);
   const [fontFamily, setFontFamily] = useState<string>('Lexend');
-  const { copied, copy } = useCopyToClipboard();
-  const [copiedType, setCopiedType] = useState<string>('');
 
   const sizePresets: SizePreset[] = [
     { label: '16:9 カバー画像', width: 1200, height: 675, fontSize: 80 },
@@ -74,15 +72,6 @@ export default function PlaceholderGenerator() {
   };
 
   const dataUri = generateDataUri();
-
-  // コピーハンドラ
-  const handleCopy = (text: string, type: string) => {
-    copy(text);
-    setCopiedType(type);
-    setTimeout(() => {
-      setCopiedType('');
-    }, 2000);
-  };
 
   // SVG ダウンロード
   const downloadSvg = () => {
@@ -188,22 +177,12 @@ export default function PlaceholderGenerator() {
                 <span className="text-[10px] font-bold text-text/50 tracking-wider">
                   DATA URI (BASE64)
                 </span>
-                <button
-                  onClick={() => handleCopy(dataUri, 'uri')}
+                <CopyButton
+                  value={dataUri}
+                  label="Data URI コピー"
+                  copiedLabel="Copied!"
                   className="theme-btn p-1 px-2.5 text-[10px] flex items-center gap-1 cursor-pointer"
-                >
-                  {copied && copiedType === 'uri' ? (
-                    <>
-                      <Check className="w-3 h-3 text-accent" />
-                      <span className="text-accent font-bold">Copied!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3 h-3" />
-                      <span>Data URI コピー</span>
-                    </>
-                  )}
-                </button>
+                />
               </div>
               <textarea
                 readOnly
@@ -218,27 +197,12 @@ export default function PlaceholderGenerator() {
                 <span className="text-[10px] font-bold text-text/50 tracking-wider">
                   HTML &lt;IMG&gt; TAG
                 </span>
-                <button
-                  onClick={() =>
-                    handleCopy(
-                      `<img src="${dataUri}" width="${width}" height="${height}" alt="placeholder" />`,
-                      'html'
-                    )
-                  }
+                <CopyButton
+                  value={`<img src="${dataUri}" width="${width}" height="${height}" alt="placeholder" />`}
+                  label="HTMLコピー"
+                  copiedLabel="Copied!"
                   className="theme-btn p-1 px-2.5 text-[10px] flex items-center gap-1 cursor-pointer"
-                >
-                  {copied && copiedType === 'html' ? (
-                    <>
-                      <Check className="w-3 h-3 text-accent" />
-                      <span className="text-accent font-bold">Copied!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3 h-3" />
-                      <span>HTMLコピー</span>
-                    </>
-                  )}
-                </button>
+                />
               </div>
               <pre className="theme-card bg-secondary font-mono text-[10px] p-3 rounded-xl border-2 border-border overflow-x-auto select-all text-text/80">
                 {`<img src="${dataUri.slice(0, 45)}..." width="${width}" height="${height}" alt="placeholder" />`}

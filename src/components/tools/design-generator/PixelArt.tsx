@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Palette, Trash2, Eye, EyeOff, Download, PenTool, PaintBucket, Eraser } from 'lucide-react';
+import { Trash2, Eye, EyeOff, Download, PenTool, PaintBucket, Eraser } from 'lucide-react';
 
 const PRESET_COLORS = [
   '#000000',

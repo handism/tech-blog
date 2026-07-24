@@ -6,8 +6,6 @@ import {
   Plus,
   Trash2,
   Download,
-  Copy,
-  Check,
   RefreshCw,
   Layers,
   Network,
@@ -15,7 +13,7 @@ import {
   AlertCircle,
   FileCode,
 } from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 import { loadMermaid } from '@/src/lib/mermaid-loader';
 
 import { SERVICE_PRESETS, AWSNode, AWSSubgraph, AWSEdge, TEMPLATES } from './aws-diagram-data';
@@ -142,8 +140,6 @@ export default function AwsDiagramGenerator() {
   const [edgeTo, setEdgeTo] = useState('');
   const [edgeLabel, setEdgeLabel] = useState('');
   const [edgeStyle, setEdgeStyle] = useState<'solid' | 'dashed' | 'bold'>('solid');
-
-  const { copied, copy } = useCopyToClipboard();
 
   // テンプレート適用処理
   const loadTemplate = (key: keyof typeof TEMPLATES) => {
@@ -338,10 +334,6 @@ export default function AwsDiagramGenerator() {
     downloadLink.click();
     document.body.removeChild(downloadLink);
     URL.revokeObjectURL(svgUrl);
-  };
-
-  const handleCopyCode = () => {
-    copy(generatedCode);
   };
 
   // ID自動作成用（useEffectを廃止し、handleAddNode側とUIプレースホルダー側で処理）
@@ -924,17 +916,13 @@ export default function AwsDiagramGenerator() {
               <FileCode className="w-4 h-4 text-accent" />
               <span>生成された Mermaid コード</span>
             </span>
-            <button
-              onClick={handleCopyCode}
+            <CopyButton
+              value={generatedCode}
+              label=""
+              copiedLabel=""
               className="theme-btn p-1.5 bg-secondary text-text flex items-center justify-center"
               title="コードをコピー"
-            >
-              {copied ? (
-                <Check className="w-4 h-4 text-accent animate-scale-up" />
-              ) : (
-                <Copy className="w-4 h-4" />
-              )}
-            </button>
+            />
           </h3>
           <pre className="flex-1 w-full p-4 border-2 border-border rounded-xl font-mono text-[10px] leading-relaxed bg-slate-950 text-slate-100 overflow-y-auto whitespace-pre">
             {generatedCode}

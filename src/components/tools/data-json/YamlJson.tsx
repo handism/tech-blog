@@ -3,10 +3,9 @@
 
 import { useState } from 'react';
 import YAML from 'js-yaml';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 
 export default function YamlJson() {
-  const { copy } = useCopyToClipboard();
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
@@ -37,10 +36,6 @@ export default function YamlJson() {
     setInput(output);
     setOutput(input);
     setError('');
-  };
-
-  const copyToClipboard = () => {
-    copy(output);
   };
 
   return (
@@ -86,12 +81,10 @@ export default function YamlJson() {
               出力 ({!isYamlInput ? 'YAML' : 'JSON'})
             </label>
             {output && (
-              <button
-                onClick={copyToClipboard}
+              <CopyButton
+                value={output}
                 className="theme-btn px-3 py-1 text-xs shadow-[2px_2px_0px_0px_var(--border)] font-bold"
-              >
-                コピー
-              </button>
+              />
             )}
           </div>
           <textarea

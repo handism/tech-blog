@@ -2,18 +2,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import {
-  Copy,
-  Check,
-  Download,
-  BookOpen,
-  Eye,
-  Edit3,
-  Split,
-  ChevronRight,
-  Printer,
-  List,
-} from 'lucide-react';
+import { Download, BookOpen, Eye, Edit3, Split, ChevronRight, Printer, List } from 'lucide-react';
 import { useThemeDesign } from '@/src/components/ThemeDesignProvider';
 
 // Unified 関連モジュールをインポート
@@ -26,7 +15,7 @@ import rehypeSlug from 'rehype-slug';
 import { visit } from 'unist-util-visit';
 import type { Root as HastRoot, Element, Text } from 'hast';
 import { remarkExtractCodeFilename } from '@/src/lib/remark-plugins';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 
 interface TocItem {
   id: string;
@@ -114,8 +103,6 @@ export default function MarkdownEditor() {
   const [toc, setToc] = useState<TocItem[]>([]);
   const [viewMode, setViewMode] = useState<'split' | 'edit' | 'preview'>('split');
   const [showTocPanel, setShowTocPanel] = useState<boolean>(true);
-  const { copy } = useCopyToClipboard();
-  const [copiedType, setCopiedType] = useState<string>('');
   const [isParsing, setIsParsing] = useState<boolean>(false);
 
   const editorRef = useRef<HTMLTextAreaElement>(null);
@@ -219,14 +206,6 @@ export default function MarkdownEditor() {
       const scrollRatio = preview.scrollTop / (preview.scrollHeight - preview.clientHeight);
       editor.scrollTop = scrollRatio * (editor.scrollHeight - editor.clientHeight);
     }
-  };
-
-  const handleCopy = (text: string, type: string) => {
-    copy(text);
-    setCopiedType(type);
-    setTimeout(() => {
-      setCopiedType('');
-    }, 2000);
   };
 
   const downloadMarkdownFile = () => {
@@ -350,38 +329,18 @@ export default function MarkdownEditor() {
             <Download className="w-3.5 h-3.5" />
             <span>MD保存</span>
           </button>
-          <button
-            onClick={() => handleCopy(markdown, 'md')}
+          <CopyButton
+            value={markdown}
+            label="MDコピー"
+            copiedLabel="コピー完了"
             className="px-3 py-1.5 rounded-xl border border-border bg-card hover:bg-secondary text-text/80 text-xs font-bold flex items-center gap-1 cursor-pointer transition-all"
-          >
-            {copiedType === 'md' ? (
-              <>
-                <Check className="w-3.5 h-3.5 text-green-500" />
-                <span className="text-green-500">コピー完了</span>
-              </>
-            ) : (
-              <>
-                <Copy className="w-3.5 h-3.5" />
-                <span>MDコピー</span>
-              </>
-            )}
-          </button>
-          <button
-            onClick={() => handleCopy(html, 'html')}
+          />
+          <CopyButton
+            value={html}
+            label="HTMLコピー"
+            copiedLabel="コピー完了"
             className="px-3 py-1.5 rounded-xl border border-border bg-card hover:bg-secondary text-text/80 text-xs font-bold flex items-center gap-1 cursor-pointer transition-all"
-          >
-            {copiedType === 'html' ? (
-              <>
-                <Check className="w-3.5 h-3.5 text-green-500" />
-                <span className="text-green-500">コピー完了</span>
-              </>
-            ) : (
-              <>
-                <Copy className="w-3.5 h-3.5" />
-                <span>HTMLコピー</span>
-              </>
-            )}
-          </button>
+          />
         </div>
       </div>
 

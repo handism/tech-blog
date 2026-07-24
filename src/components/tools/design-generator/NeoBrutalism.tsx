@@ -1,11 +1,10 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Sparkles, Copy, Check, RefreshCw } from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import { RefreshCw } from 'lucide-react';
+import CopyButton from '@/src/components/CopyButton';
 
 export default function NeoBrutalism() {
-  const { copy } = useCopyToClipboard();
   // 状態管理
   const [borderWidth, setBorderWidth] = useState(3);
   const [borderRadius, setBorderRadius] = useState(16);
@@ -17,8 +16,6 @@ export default function NeoBrutalism() {
   const [textColor, setTextColor] = useState('#000000');
   const [shadowColor, setShadowColor] = useState('#000000');
   const [accentColor, setAccentColor] = useState('#10b981');
-
-  const [copiedType, setCopiedType] = useState<'tailwind' | 'css' | null>(null);
 
   // プリセットパレット
   const PRESETS = [
@@ -178,12 +175,6 @@ export default function NeoBrutalism() {
     shadowColor,
     accentColor,
   ]);
-
-  const handleCopy = (code: string, type: 'tailwind' | 'css') => {
-    copy(code);
-    setCopiedType(type);
-    setTimeout(() => setCopiedType(null), 2000);
-  };
 
   return (
     <>
@@ -373,17 +364,12 @@ export default function NeoBrutalism() {
               <div>
                 <div className="flex justify-between items-center mb-2">
                   <h4 className="text-xs font-extrabold">Vanilla CSS</h4>
-                  <button
-                    onClick={() => handleCopy(cssCode, 'css')}
+                  <CopyButton
+                    value={cssCode}
+                    label="コピー"
+                    copiedLabel="コピー済"
                     className="theme-btn p-1.5 text-xs flex items-center gap-1"
-                  >
-                    {copiedType === 'css' ? (
-                      <Check className="w-3.5 h-3.5 text-accent" />
-                    ) : (
-                      <Copy className="w-3.5 h-3.5" />
-                    )}
-                    <span>{copiedType === 'css' ? 'コピー済' : 'コピー'}</span>
-                  </button>
+                  />
                 </div>
                 <pre className="text-[10px] font-mono p-3 bg-secondary text-text rounded-lg overflow-x-auto max-h-[220px]">
                   {cssCode}
@@ -396,17 +382,12 @@ export default function NeoBrutalism() {
               <div>
                 <div className="flex justify-between items-center mb-2">
                   <h4 className="text-xs font-extrabold">Tailwind HTML</h4>
-                  <button
-                    onClick={() => handleCopy(tailwindCode, 'tailwind')}
+                  <CopyButton
+                    value={tailwindCode}
+                    label="コピー"
+                    copiedLabel="コピー済"
                     className="theme-btn p-1.5 text-xs flex items-center gap-1"
-                  >
-                    {copiedType === 'tailwind' ? (
-                      <Check className="w-3.5 h-3.5 text-accent" />
-                    ) : (
-                      <Copy className="w-3.5 h-3.5" />
-                    )}
-                    <span>{copiedType === 'tailwind' ? 'コピー済' : 'コピー'}</span>
-                  </button>
+                  />
                 </div>
                 <pre className="text-[10px] font-mono p-3 bg-secondary text-text rounded-lg overflow-x-auto max-h-[220px] whitespace-pre-wrap">
                   {tailwindCode}

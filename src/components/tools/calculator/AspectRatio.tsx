@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Ruler, RefreshCw } from 'lucide-react';
+import { RefreshCw } from 'lucide-react';
 
 // プリセット比率
 const PRESETS = [

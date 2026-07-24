@@ -2,10 +2,8 @@
 
 import { useState } from 'react';
 import { ToggleLeft, Hash, Cpu, AlertCircle } from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
-
+import CopyButton from '@/src/components/CopyButton';
 export default function BitwiseConverter() {
-  const { copy } = useCopyToClipboard();
   // 32bit 符号なし整数をベース状態として管理
   const [baseVal, setBaseVal] = useState<number>(42);
   const [bitMode, setBitMode] = useState<8 | 16 | 32>(8);
@@ -20,8 +18,6 @@ export default function BitwiseConverter() {
   const [valA, setValA] = useState<number>(170); // 10101010
   const [valB, setValB] = useState<number>(85); // 01010101
 
-  const [copiedText, setCopiedText] = useState('');
-
   const syncStrings = (val: number, exclude?: 'bin' | 'oct' | 'dec' | 'hex') => {
     const v = Math.max(0, Math.min(4294967295, val));
     if (exclude !== 'bin') setBinStr(v.toString(2));
@@ -34,12 +30,6 @@ export default function BitwiseConverter() {
     const v = Math.max(0, Math.min(4294967295, val));
     setBaseVal(v);
     syncStrings(v, exclude);
-  };
-
-  const handleCopy = (text: string) => {
-    copy(text);
-    setCopiedText(text);
-    setTimeout(() => setCopiedText(''), 2000);
   };
 
   // 進数変換フィールドの変更ハンドラ
@@ -130,12 +120,10 @@ export default function BitwiseConverter() {
                 <div>
                   <div className="flex justify-between items-center mb-1.5">
                     <label className="text-xs font-bold text-text/80">10進数 (Decimal)</label>
-                    <button
-                      onClick={() => handleCopy(decStr)}
+                    <CopyButton
+                      value={decStr}
                       className="text-[10px] text-accent hover:underline flex items-center gap-0.5 cursor-pointer font-bold"
-                    >
-                      {copiedText === decStr ? 'コピー完了!' : 'コピー'}
-                    </button>
+                    />
                   </div>
                   <input
                     type="text"
@@ -149,12 +137,10 @@ export default function BitwiseConverter() {
                 <div>
                   <div className="flex justify-between items-center mb-1.5">
                     <label className="text-xs font-bold text-text/80">16進数 (Hexadecimal)</label>
-                    <button
-                      onClick={() => handleCopy(`0x${hexStr}`)}
+                    <CopyButton
+                      value={`0x${hexStr}`}
                       className="text-[10px] text-accent hover:underline flex items-center gap-0.5 cursor-pointer font-bold"
-                    >
-                      {copiedText === `0x${hexStr}` ? 'コピー完了!' : 'コピー'}
-                    </button>
+                    />
                   </div>
                   <div className="relative">
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 font-mono text-sm text-text/40 font-bold select-none">
@@ -173,12 +159,10 @@ export default function BitwiseConverter() {
                 <div>
                   <div className="flex justify-between items-center mb-1.5">
                     <label className="text-xs font-bold text-text/80">2進数 (Binary)</label>
-                    <button
-                      onClick={() => handleCopy(binStr)}
+                    <CopyButton
+                      value={binStr}
                       className="text-[10px] text-accent hover:underline flex items-center gap-0.5 cursor-pointer font-bold"
-                    >
-                      {copiedText === binStr ? 'コピー完了!' : 'コピー'}
-                    </button>
+                    />
                   </div>
                   <input
                     type="text"
@@ -192,12 +176,10 @@ export default function BitwiseConverter() {
                 <div>
                   <div className="flex justify-between items-center mb-1.5">
                     <label className="text-xs font-bold text-text/80">8進数 (Octal)</label>
-                    <button
-                      onClick={() => handleCopy(`0o${octStr}`)}
+                    <CopyButton
+                      value={`0o${octStr}`}
                       className="text-[10px] text-accent hover:underline flex items-center gap-0.5 cursor-pointer font-bold"
-                    >
-                      {copiedText === `0o${octStr}` ? 'コピー完了!' : 'コピー'}
-                    </button>
+                    />
                   </div>
                   <div className="relative">
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 font-mono text-sm text-text/40 font-bold select-none">

@@ -1,8 +1,9 @@
 'use client';
 
 import { useCallback, useMemo, useReducer, useState, useEffect } from 'react';
-import { Calculator, Copy, Check, Trash2, History, Delete } from 'lucide-react';
+import { Trash2, History, Delete } from 'lucide-react';
 import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 
 interface HistoryItem {
   id: string;
@@ -270,7 +271,7 @@ export default function StandardCalculator() {
   const [calcState, dispatch] = useReducer(calcReducer, initialCalcState);
   const { formula, displayValue } = calcState;
   const [history, setHistory] = useState<HistoryItem[]>([]);
-  const { copied, copy } = useCopyToClipboard();
+  const { copy } = useCopyToClipboard();
 
   // ローカルストレージから履歴を読み込む
   useEffect(() => {
@@ -524,18 +525,14 @@ export default function StandardCalculator() {
 
               {/* 右側アクションボタン（コピー） */}
               <div className="absolute right-3 top-1/2 -translate-y-1/2 flex flex-col gap-1 opacity-60 group-hover:opacity-100 transition-opacity">
-                <button
-                  onClick={handleCopy}
+                <CopyButton
+                  value={displayValue === 'Error' ? '' : displayValue}
                   disabled={displayValue === 'Error'}
+                  label=""
+                  copiedLabel=""
                   className="p-1.5 rounded-lg border border-border bg-card text-text hover:text-accent hover:border-accent disabled:opacity-40 transition-colors cursor-pointer"
                   title="計算結果をコピー"
-                >
-                  {copied ? (
-                    <Check className="w-3.5 h-3.5 text-accent" />
-                  ) : (
-                    <Copy className="w-3.5 h-3.5" />
-                  )}
-                </button>
+                />
               </div>
             </div>
 

@@ -2,8 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Copy, Check } from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 
 interface Color {
   hex: string;
@@ -12,14 +11,12 @@ interface Color {
 }
 
 export default function ColorConverter() {
-  const { copy } = useCopyToClipboard();
   const [color, setColor] = useState<Color>({
     hex: '#FF5733',
     rgb: { r: 255, g: 87, b: 51 },
     hsl: { h: 11, s: 100, l: 60 },
   });
   const [input, setInput] = useState('#FF5733');
-  const [copiedText, setCopiedText] = useState('');
 
   const hexToRgb = (hex: string): { r: number; g: number; b: number } => {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -134,12 +131,6 @@ export default function ColorConverter() {
     setInput(hex);
   };
 
-  const copyToClipboard = (text: string) => {
-    copy(text);
-    setCopiedText(text);
-    setTimeout(() => setCopiedText(''), 2000);
-  };
-
   return (
     <div className="space-y-6 text-text max-w-3xl mx-auto">
       {/* カラープレビュー */}
@@ -163,22 +154,10 @@ export default function ColorConverter() {
             placeholder="#RRGGBB"
             className="theme-input flex-1 placeholder-text/40 font-mono text-base font-bold"
           />
-          <button
-            onClick={() => copyToClipboard(color.hex)}
+          <CopyButton
+            value={color.hex}
             className="theme-btn px-4 py-2 bg-secondary border-2 border-border text-text font-bold rounded-lg transition hover:bg-border/25 active:translate-x-[1px] active:translate-y-[1px] active:shadow-none shadow-[2px_2px_0px_0px_var(--border)] cursor-pointer flex items-center gap-1"
-          >
-            {copiedText === color.hex ? (
-              <>
-                <Check className="w-4 h-4 text-green-500" />
-                <span>完了</span>
-              </>
-            ) : (
-              <>
-                <Copy className="w-4 h-4" />
-                <span>コピー</span>
-              </>
-            )}
-          </button>
+          />
         </div>
       </div>
 
@@ -218,14 +197,10 @@ export default function ColorConverter() {
           <span>
             rgb({color.rgb.r}, {color.rgb.g}, {color.rgb.b})
           </span>
-          <button
-            onClick={() => copyToClipboard(`rgb(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b})`)}
+          <CopyButton
+            value={`rgb(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b})`}
             className="theme-btn p-1.5 text-[10px] bg-secondary border-border text-text flex items-center gap-1 cursor-pointer shadow-[1px_1px_0px_0px_var(--border)] font-bold"
-          >
-            {copiedText === `rgb(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b})`
-              ? 'コピー完了'
-              : 'コピー'}
-          </button>
+          />
         </div>
       </div>
 
@@ -303,14 +278,10 @@ export default function ColorConverter() {
           <span>
             hsl({color.hsl.h}, {color.hsl.s}%, {color.hsl.l}%)
           </span>
-          <button
-            onClick={() => copyToClipboard(`hsl(${color.hsl.h}, ${color.hsl.s}%, {color.hsl.l}%)`)}
+          <CopyButton
+            value={`hsl(${color.hsl.h}, ${color.hsl.s}%, ${color.hsl.l}%)`}
             className="theme-btn p-1.5 text-[10px] bg-secondary border-border text-text flex items-center gap-1 cursor-pointer shadow-[1px_1px_0px_0px_var(--border)] font-bold"
-          >
-            {copiedText === `hsl(${color.hsl.h}, ${color.hsl.s}%, {color.hsl.l}%)`
-              ? 'コピー完了'
-              : 'コピー'}
-          </button>
+          />
         </div>
       </div>
     </div>

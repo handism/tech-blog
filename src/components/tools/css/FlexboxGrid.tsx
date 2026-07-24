@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { Sliders, Layout, RefreshCw, Plus, Minus } from 'lucide-react';
+import { Sliders, RefreshCw, Plus, Minus } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
 import { generateFlexboxGridCode } from './flexbox-grid-utils';
 

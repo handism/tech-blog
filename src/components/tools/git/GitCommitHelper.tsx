@@ -3,7 +3,7 @@
 
 import { useState, useMemo } from 'react';
 import { RefreshCw } from 'lucide-react';
-import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
+import CopyButton from '@/src/components/CopyButton';
 
 // コミットタイプの定義
 const COMMIT_TYPES = [
@@ -32,15 +32,12 @@ const COMMIT_TYPES = [
 ];
 
 export default function GitCommitHelper() {
-  const { copy } = useCopyToClipboard();
   const [type, setType] = useState('feat');
   const [scope, setScope] = useState('');
   const [summary, setSummary] = useState('');
   const [body, setBody] = useState('');
   const [issue, setIssue] = useState('');
   const [branchTopic, setBranchTopic] = useState('');
-
-  const [copiedType, setCopiedType] = useState<'commit' | 'cmd' | 'branch' | null>(null);
 
   // 文字列をURL/Gitフレンドリーなスラッグに変換する関数
   const sluggify = (text: string) => {
@@ -100,13 +97,6 @@ export default function GitCommitHelper() {
 
     return commands.join('\n');
   }, [branchName, commitTitle, body, summary]);
-
-  const handleCopy = (text: string, label: 'commit' | 'cmd' | 'branch') => {
-    if (!text) return;
-    copy(text);
-    setCopiedType(label);
-    setTimeout(() => setCopiedType(null), 2000);
-  };
 
   const resetAll = () => {
     setType('feat');
@@ -262,12 +252,10 @@ export default function GitCommitHelper() {
               🌱 推奨ブランチ名
             </h4>
             {branchName && (
-              <button
-                onClick={() => handleCopy(branchName, 'branch')}
+              <CopyButton
+                value={branchName}
                 className="theme-btn p-1.5 text-[10px] bg-secondary border-border text-text flex items-center gap-1 cursor-pointer shadow-[1px_1px_0px_0px_var(--border)]"
-              >
-                {copiedType === 'branch' ? 'コピー完了' : 'コピー'}
-              </button>
+              />
             )}
           </div>
           {branchName ? (
@@ -288,12 +276,10 @@ export default function GitCommitHelper() {
               💬 コミットメッセージ
             </h4>
             {fullCommitMessage && (
-              <button
-                onClick={() => handleCopy(fullCommitMessage, 'commit')}
+              <CopyButton
+                value={fullCommitMessage}
                 className="theme-btn p-1.5 text-[10px] bg-secondary border-border text-text flex items-center gap-1 cursor-pointer shadow-[1px_1px_0px_0px_var(--border)]"
-              >
-                {copiedType === 'commit' ? 'コピー完了' : 'コピー'}
-              </button>
+              />
             )}
           </div>
           {fullCommitMessage ? (
@@ -314,12 +300,10 @@ export default function GitCommitHelper() {
               🚀 Git コマンド (まとめて実行用)
             </h4>
             {gitCommands && (
-              <button
-                onClick={() => handleCopy(gitCommands, 'cmd')}
+              <CopyButton
+                value={gitCommands}
                 className="theme-btn p-1.5 text-[10px] bg-secondary border-border text-text flex items-center gap-1 cursor-pointer shadow-[1px_1px_0px_0px_var(--border)]"
-              >
-                {copiedType === 'cmd' ? 'コピー完了' : 'コピー'}
-              </button>
+              />
             )}
           </div>
           {gitCommands ? (

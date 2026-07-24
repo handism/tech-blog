@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Palette, Clipboard, Eye } from 'lucide-react';
+import { Clipboard, Eye } from 'lucide-react';
 import { sanitizeSvg, optimizeSvg } from '@/src/lib/svg-utils';
 import CopyButton from '@/src/components/CopyButton';
 import { useIsClient } from '@/src/hooks/useIsClient';
