@@ -89,6 +89,10 @@ export default function AspectRatio() {
   };
 
   const computedSizeText = sizeW && sizeH ? `${sizeW} × ${sizeH}` : '';
+  const previewLabel =
+    ratioW && ratioH && Number(ratioW) > 0 && Number(ratioH) > 0
+      ? `アスペクト比 ${ratioW}:${ratioH}${sizeW && sizeH ? ` (${sizeW}x${sizeH}px)` : ''} のプレビュー`
+      : 'アスペクト比のプレビュー表示';
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -102,19 +106,19 @@ export default function AspectRatio() {
             </h3>
             <button
               onClick={resetAll}
-              className="theme-btn p-1.5 text-[10px] flex items-center gap-1 hover:text-accent"
-              aria-label="入力値をリセット"
+              className="theme-btn p-1.5 text-[10px] flex items-center gap-1 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              aria-label="すべての入力値を初期値にリセット"
             >
-              <RefreshCw className="w-3 h-3" />
+              <RefreshCw className="w-3 h-3" aria-hidden="true" />
               <span>リセット</span>
             </button>
           </div>
 
           {/* 比率設定 */}
-          <div className="space-y-2">
-            <label htmlFor="ratio-w-input" className="text-xs font-extrabold block">
+          <fieldset className="space-y-2 border-0 p-0 m-0">
+            <legend className="text-xs font-extrabold block p-0 mb-1">
               基準となるアスペクト比
-            </label>
+            </legend>
             <div className="flex items-center gap-2.5">
               <input
                 id="ratio-w-input"
@@ -125,9 +129,11 @@ export default function AspectRatio() {
                 aria-label="アスペクト比（幅）"
                 value={ratioW}
                 onChange={(e) => handleRatioWChange(parseNumberInput(e.target.value))}
-                className="w-full border-2 border-border p-2 rounded-lg bg-card text-xs font-bold text-center focus:outline-none focus:border-accent"
+                className="w-full border-2 border-border p-2 rounded-lg bg-card text-xs font-bold text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus:border-accent"
               />
-              <span className="font-bold">:</span>
+              <span className="font-bold" aria-hidden="true">
+                :
+              </span>
               <input
                 id="ratio-h-input"
                 type="number"
@@ -137,15 +143,17 @@ export default function AspectRatio() {
                 aria-label="アスペクト比（高さ）"
                 value={ratioH}
                 onChange={(e) => handleRatioHChange(parseNumberInput(e.target.value))}
-                className="w-full border-2 border-border p-2 rounded-lg bg-card text-xs font-bold text-center focus:outline-none focus:border-accent"
+                className="w-full border-2 border-border p-2 rounded-lg bg-card text-xs font-bold text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus:border-accent"
               />
             </div>
-          </div>
+          </fieldset>
 
           {/* プリセットボタン */}
           <div className="space-y-1.5">
-            <span className="text-[10px] font-extrabold text-text/60 block">プリセットを選択</span>
-            <div className="flex flex-wrap gap-2">
+            <span id="preset-group-label" className="text-[10px] font-extrabold text-text/60 block">
+              プリセットを選択
+            </span>
+            <div role="group" aria-labelledby="preset-group-label" className="flex flex-wrap gap-2">
               {PRESETS.map((p) => {
                 const active = isPresetActive(p.w, p.h);
                 return (
@@ -154,7 +162,8 @@ export default function AspectRatio() {
                     onClick={() => applyPreset(p.w, p.h)}
                     title={p.label}
                     aria-pressed={active}
-                    className={`px-2.5 py-1.5 text-[10px] font-bold rounded-lg border transition-colors ${
+                    aria-label={`プリセット ${p.label}`}
+                    className={`px-2.5 py-1.5 text-[10px] font-bold rounded-lg border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
                       active
                         ? 'border-accent bg-accent text-accent-foreground font-black'
                         : 'border-border bg-card hover:bg-secondary'
@@ -168,8 +177,10 @@ export default function AspectRatio() {
           </div>
 
           {/* サイズ計算 */}
-          <div className="space-y-2 pt-3 border-t border-border/10">
-            <span className="text-xs font-extrabold block">解像度 / サイズの動的補完</span>
+          <fieldset className="space-y-2 pt-3 border-t border-border/10 border-x-0 border-b-0 p-0 m-0">
+            <legend className="text-xs font-extrabold block p-0 mb-1">
+              解像度 / サイズの動的補完
+            </legend>
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1">
                 <label htmlFor="size-w-input" className="text-[10px] font-bold text-text/60 block">
@@ -183,7 +194,7 @@ export default function AspectRatio() {
                   aria-label="計算サイズ 幅(px)"
                   value={sizeW}
                   onChange={(e) => handleWidthChange(parseNumberInput(e.target.value))}
-                  className="w-full border-2 border-border p-2 rounded-lg bg-card text-xs font-black focus:outline-none focus:border-accent"
+                  className="w-full border-2 border-border p-2 rounded-lg bg-card text-xs font-black focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus:border-accent"
                 />
               </div>
               <div className="space-y-1">
@@ -198,14 +209,18 @@ export default function AspectRatio() {
                   aria-label="計算サイズ 高さ(px)"
                   value={sizeH}
                   onChange={(e) => handleHeightChange(parseNumberInput(e.target.value))}
-                  className="w-full border-2 border-border p-2 rounded-lg bg-card text-xs font-black focus:outline-none focus:border-accent"
+                  className="w-full border-2 border-border p-2 rounded-lg bg-card text-xs font-black focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus:border-accent"
                 />
               </div>
             </div>
 
             {/* 結果コピーボタン */}
             {computedSizeText && (
-              <div className="pt-2 flex items-center justify-between bg-secondary/50 p-2.5 rounded-lg border border-border">
+              <div
+                aria-live="polite"
+                aria-atomic="true"
+                className="pt-2 flex items-center justify-between bg-secondary/50 p-2.5 rounded-lg border border-border"
+              >
                 <span className="text-[11px] font-bold text-text/70">
                   補完後の解像度:{' '}
                   <span className="font-mono text-text font-black">{computedSizeText}</span>
@@ -213,7 +228,7 @@ export default function AspectRatio() {
                 <CopyButton value={computedSizeText} className="text-xs px-2 py-1" />
               </div>
             )}
-          </div>
+          </fieldset>
         </div>
       </div>
 
@@ -224,7 +239,8 @@ export default function AspectRatio() {
           <h3 className="font-extrabold text-sm border-b-2 border-border pb-3 flex items-center gap-1.5">
             <span>🧮</span> サイズから比率（約分）を計算
           </h3>
-          <div className="grid grid-cols-2 gap-3">
+          <fieldset className="grid grid-cols-2 gap-3 border-0 p-0 m-0">
+            <legend className="sr-only">入力サイズ指定</legend>
             <div className="space-y-1">
               <label htmlFor="input-w-input" className="text-[10px] font-bold text-text/60 block">
                 入力幅 (W)
@@ -234,10 +250,10 @@ export default function AspectRatio() {
                 type="number"
                 min="1"
                 placeholder="例: 1920"
-                aria-label="入力幅"
+                aria-label="入力幅(px)"
                 value={inputW}
                 onChange={(e) => setInputW(parseNumberInput(e.target.value))}
-                className="w-full border-2 border-border p-2 rounded-lg bg-card text-xs font-bold focus:outline-none focus:border-accent"
+                className="w-full border-2 border-border p-2 rounded-lg bg-card text-xs font-bold focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus:border-accent"
               />
             </div>
             <div className="space-y-1">
@@ -249,15 +265,19 @@ export default function AspectRatio() {
                 type="number"
                 min="1"
                 placeholder="例: 1080"
-                aria-label="入力高"
+                aria-label="入力高(px)"
                 value={inputH}
                 onChange={(e) => setInputH(parseNumberInput(e.target.value))}
-                className="w-full border-2 border-border p-2 rounded-lg bg-card text-xs font-bold focus:outline-none focus:border-accent"
+                className="w-full border-2 border-border p-2 rounded-lg bg-card text-xs font-bold focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus:border-accent"
               />
             </div>
-          </div>
+          </fieldset>
 
-          <div className="p-4 bg-secondary rounded-xl border border-border flex items-center justify-between gap-2">
+          <div
+            aria-live="polite"
+            aria-atomic="true"
+            className="p-4 bg-secondary rounded-xl border border-border flex items-center justify-between gap-2"
+          >
             <span className="text-xs font-bold text-text/70">計算された比率:</span>
             <div className="flex items-center gap-2">
               <span className="font-mono font-black text-base text-accent">
@@ -269,7 +289,11 @@ export default function AspectRatio() {
         </div>
 
         {/* ビジュアルプレビュー */}
-        <div className="theme-card p-5 bg-[#eaeaea] dark:bg-[#222222] min-h-[220px] flex items-center justify-center relative">
+        <div
+          role="img"
+          aria-label={previewLabel}
+          className="theme-card p-5 bg-[#eaeaea] dark:bg-[#222222] min-h-[220px] flex items-center justify-center relative"
+        >
           <span className="absolute top-3 left-3 text-[10px] bg-black text-white px-2 py-0.5 rounded font-black uppercase tracking-widest opacity-60">
             Ratio Visualizer
           </span>
