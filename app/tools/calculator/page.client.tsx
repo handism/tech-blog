@@ -2,9 +2,15 @@
 
 import { Calculator, Hash, Ruler } from 'lucide-react';
 import ToolTabsPage, { type SubTool } from '@/src/components/ToolTabsPage';
-import StandardCalculator from '@/src/components/tools/calculator/StandardCalculator';
-import BitwiseConverter from '@/src/components/tools/calculator/BitwiseConverter';
-import AspectRatio from '@/src/components/tools/calculator/AspectRatio';
+import dynamic from 'next/dynamic';
+
+const StandardCalculator = dynamic(
+  () => import('@/src/components/tools/calculator/StandardCalculator')
+);
+const BitwiseConverter = dynamic(
+  () => import('@/src/components/tools/calculator/BitwiseConverter')
+);
+const AspectRatio = dynamic(() => import('@/src/components/tools/calculator/AspectRatio'));
 
 const SUB_TOOLS: Record<string, SubTool> = {
   standard: {

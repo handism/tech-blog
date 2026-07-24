@@ -2,9 +2,11 @@
 
 import { FileText, Grid, Code } from 'lucide-react';
 import ToolTabsPage, { type SubTool } from '@/src/components/ToolTabsPage';
-import MarkdownEditor from '@/src/components/tools/markup/MarkdownEditor';
-import MarkdownTable from '@/src/components/tools/markup/MarkdownTable';
-import HtmlEntity from '@/src/components/tools/markup/HtmlEntity';
+import dynamic from 'next/dynamic';
+
+const MarkdownEditor = dynamic(() => import('@/src/components/tools/markup/MarkdownEditor'));
+const MarkdownTable = dynamic(() => import('@/src/components/tools/markup/MarkdownTable'));
+const HtmlEntity = dynamic(() => import('@/src/components/tools/markup/HtmlEntity'));
 
 const SUB_TOOLS: Record<string, SubTool> = {
   editor: {

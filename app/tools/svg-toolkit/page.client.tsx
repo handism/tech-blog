@@ -2,10 +2,14 @@
 
 import { FileCode, Sparkles, Code, ImageIcon } from 'lucide-react';
 import ToolTabsPage, { type SubTool } from '@/src/components/ToolTabsPage';
-import SvgEditor from '@/src/components/tools/svg-toolkit/SvgEditor';
-import SvgWaveBlob from '@/src/components/tools/svg-toolkit/SvgWaveBlob';
-import SvgToCss from '@/src/components/tools/svg-toolkit/SvgToCss';
-import PlaceholderGenerator from '@/src/components/tools/svg-toolkit/PlaceholderGenerator';
+import dynamic from 'next/dynamic';
+
+const SvgEditor = dynamic(() => import('@/src/components/tools/svg-toolkit/SvgEditor'));
+const SvgWaveBlob = dynamic(() => import('@/src/components/tools/svg-toolkit/SvgWaveBlob'));
+const SvgToCss = dynamic(() => import('@/src/components/tools/svg-toolkit/SvgToCss'));
+const PlaceholderGenerator = dynamic(
+  () => import('@/src/components/tools/svg-toolkit/PlaceholderGenerator')
+);
 
 const SUB_TOOLS: Record<string, SubTool> = {
   editor: {

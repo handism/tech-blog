@@ -2,10 +2,14 @@
 
 import { FileText, EyeOff, AlignLeft, Split } from 'lucide-react';
 import ToolTabsPage, { type SubTool } from '@/src/components/ToolTabsPage';
-import TextCase from '@/src/components/tools/text-toolkit/TextCase';
-import InvisibleCharacters from '@/src/components/tools/text-toolkit/InvisibleCharacters';
-import LoremIpsum from '@/src/components/tools/text-toolkit/LoremIpsum';
-import DiffViewer from '@/src/components/tools/text-toolkit/DiffViewer';
+import dynamic from 'next/dynamic';
+
+const TextCase = dynamic(() => import('@/src/components/tools/text-toolkit/TextCase'));
+const InvisibleCharacters = dynamic(
+  () => import('@/src/components/tools/text-toolkit/InvisibleCharacters')
+);
+const LoremIpsum = dynamic(() => import('@/src/components/tools/text-toolkit/LoremIpsum'));
+const DiffViewer = dynamic(() => import('@/src/components/tools/text-toolkit/DiffViewer'));
 
 const SUB_TOOLS: Record<string, SubTool> = {
   case: {

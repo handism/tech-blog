@@ -7,6 +7,19 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, type ComponentType } from 'react';
 
 /**
+ * タブ切り替え時のローディングスケルトン。
+ */
+function ToolTabsLoading() {
+  return (
+    <div className="space-y-4 animate-pulse">
+      <div className="h-8 w-1/3 rounded-lg bg-border/20" />
+      <div className="h-48 rounded-xl bg-border/10" />
+      <div className="h-32 rounded-xl bg-border/10" />
+    </div>
+  );
+}
+
+/**
  * タブ切り替え型ツールページのサブツール定義。
  */
 export type SubTool = {
@@ -76,7 +89,9 @@ function ToolTabsContent({ basePath, subTools, defaultTab }: ToolTabsPageProps) 
 
         {/* アクティブなサブツールのレンダリング */}
         <div className="min-h-[400px]">
-          <ActiveComponent />
+          <Suspense fallback={<ToolTabsLoading />}>
+            <ActiveComponent />
+          </Suspense>
         </div>
       </div>
     </ToolPageLayout>

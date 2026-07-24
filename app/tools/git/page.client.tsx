@@ -2,8 +2,10 @@
 
 import { GitCommit, Terminal } from 'lucide-react';
 import ToolTabsPage, { type SubTool } from '@/src/components/ToolTabsPage';
-import GitCommitHelper from '@/src/components/tools/git/GitCommitHelper';
-import GitHelper from '@/src/components/tools/git/GitHelper';
+import dynamic from 'next/dynamic';
+
+const GitCommitHelper = dynamic(() => import('@/src/components/tools/git/GitCommitHelper'));
+const GitHelper = dynamic(() => import('@/src/components/tools/git/GitHelper'));
 
 const SUB_TOOLS: Record<string, SubTool> = {
   commit: {

@@ -2,9 +2,13 @@
 
 import { ImageIcon, Crop, Smartphone } from 'lucide-react';
 import ToolTabsPage, { type SubTool } from '@/src/components/ToolTabsPage';
-import ImageOptimizer from '@/src/components/tools/image-editor/ImageOptimizer';
-import ImageTrimmer from '@/src/components/tools/image-editor/ImageTrimmer';
-import FaviconGenerator from '@/src/components/tools/image-editor/FaviconGenerator';
+import dynamic from 'next/dynamic';
+
+const ImageOptimizer = dynamic(() => import('@/src/components/tools/image-editor/ImageOptimizer'));
+const ImageTrimmer = dynamic(() => import('@/src/components/tools/image-editor/ImageTrimmer'));
+const FaviconGenerator = dynamic(
+  () => import('@/src/components/tools/image-editor/FaviconGenerator')
+);
 
 const SUB_TOOLS: Record<string, SubTool> = {
   optimizer: {

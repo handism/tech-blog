@@ -2,10 +2,12 @@
 
 import { Link as LinkIcon, ShieldAlert } from 'lucide-react';
 import ToolTabsPage, { type SubTool } from '@/src/components/ToolTabsPage';
-import UrlCodec from '@/src/components/tools/url/UrlCodec';
-import UrlParser from '@/src/components/tools/url/UrlParser';
-import UtmBuilder from '@/src/components/tools/url/UtmBuilder';
-import UserAgentParser from '@/src/components/tools/url/UserAgentParser';
+import dynamic from 'next/dynamic';
+
+const UrlCodec = dynamic(() => import('@/src/components/tools/url/UrlCodec'));
+const UrlParser = dynamic(() => import('@/src/components/tools/url/UrlParser'));
+const UtmBuilder = dynamic(() => import('@/src/components/tools/url/UtmBuilder'));
+const UserAgentParser = dynamic(() => import('@/src/components/tools/url/UserAgentParser'));
 
 const SUB_TOOLS: Record<string, SubTool> = {
   'url-codec': {

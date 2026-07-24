@@ -2,11 +2,13 @@
 
 import { Paintbrush, Layers, Ruler, Activity, Layout } from 'lucide-react';
 import ToolTabsPage, { type SubTool } from '@/src/components/ToolTabsPage';
-import CssGradient from '@/src/components/tools/css/CssGradient';
-import CssGenerator from '@/src/components/tools/css/CssGenerator';
-import CssUnit from '@/src/components/tools/css/CssUnit';
-import CubicBezier from '@/src/components/tools/css/CubicBezier';
-import FlexboxGrid from '@/src/components/tools/css/FlexboxGrid';
+import dynamic from 'next/dynamic';
+
+const CssGradient = dynamic(() => import('@/src/components/tools/css/CssGradient'));
+const CssGenerator = dynamic(() => import('@/src/components/tools/css/CssGenerator'));
+const CssUnit = dynamic(() => import('@/src/components/tools/css/CssUnit'));
+const CubicBezier = dynamic(() => import('@/src/components/tools/css/CubicBezier'));
+const FlexboxGrid = dynamic(() => import('@/src/components/tools/css/FlexboxGrid'));
 
 const SUB_TOOLS: Record<string, SubTool> = {
   gradient: {

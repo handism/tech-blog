@@ -2,13 +2,15 @@
 
 import { Code, GitCompare, Database, Clipboard, FileJson } from 'lucide-react';
 import ToolTabsPage, { type SubTool } from '@/src/components/ToolTabsPage';
-import JsonFormatter from '@/src/components/tools/data-json/JsonFormatter';
-import JsonDiff from '@/src/components/tools/data-json/JsonDiff';
-import JsonGenerator from '@/src/components/tools/data-json/JsonGenerator';
-import JsonToTs from '@/src/components/tools/data-json/JsonToTs';
-import YamlJson from '@/src/components/tools/data-json/YamlJson';
-import CsvJson from '@/src/components/tools/data-json/CsvJson';
-import SqlFormatter from '@/src/components/tools/data-json/SqlFormatter';
+import dynamic from 'next/dynamic';
+
+const JsonFormatter = dynamic(() => import('@/src/components/tools/data-json/JsonFormatter'));
+const JsonDiff = dynamic(() => import('@/src/components/tools/data-json/JsonDiff'));
+const JsonGenerator = dynamic(() => import('@/src/components/tools/data-json/JsonGenerator'));
+const JsonToTs = dynamic(() => import('@/src/components/tools/data-json/JsonToTs'));
+const YamlJson = dynamic(() => import('@/src/components/tools/data-json/YamlJson'));
+const CsvJson = dynamic(() => import('@/src/components/tools/data-json/CsvJson'));
+const SqlFormatter = dynamic(() => import('@/src/components/tools/data-json/SqlFormatter'));
 
 const SUB_TOOLS: Record<string, SubTool> = {
   'json-formatter': {

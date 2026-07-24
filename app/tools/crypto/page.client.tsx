@@ -2,11 +2,13 @@
 
 import { Lock, Hash, Key, Code } from 'lucide-react';
 import ToolTabsPage, { type SubTool } from '@/src/components/ToolTabsPage';
-import Base64Codec from '@/src/components/tools/crypto/Base64Codec';
-import HashGenerator from '@/src/components/tools/crypto/HashGenerator';
-import JwtDecoder from '@/src/components/tools/crypto/JwtDecoder';
-import UuidGenerator from '@/src/components/tools/crypto/UuidGenerator';
-import PasswordGenerator from '@/src/components/tools/crypto/PasswordGenerator';
+import dynamic from 'next/dynamic';
+
+const Base64Codec = dynamic(() => import('@/src/components/tools/crypto/Base64Codec'));
+const HashGenerator = dynamic(() => import('@/src/components/tools/crypto/HashGenerator'));
+const JwtDecoder = dynamic(() => import('@/src/components/tools/crypto/JwtDecoder'));
+const UuidGenerator = dynamic(() => import('@/src/components/tools/crypto/UuidGenerator'));
+const PasswordGenerator = dynamic(() => import('@/src/components/tools/crypto/PasswordGenerator'));
 
 const SUB_TOOLS: Record<string, SubTool> = {
   base64: {

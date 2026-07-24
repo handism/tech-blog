@@ -2,9 +2,11 @@
 
 import { Search, Terminal, Code } from 'lucide-react';
 import ToolTabsPage, { type SubTool } from '@/src/components/ToolTabsPage';
-import RegexTester from '@/src/components/tools/code-helper/RegexTester';
-import CurlConverter from '@/src/components/tools/code-helper/CurlConverter';
-import HtmlToJsx from '@/src/components/tools/code-helper/HtmlToJsx';
+import dynamic from 'next/dynamic';
+
+const RegexTester = dynamic(() => import('@/src/components/tools/code-helper/RegexTester'));
+const CurlConverter = dynamic(() => import('@/src/components/tools/code-helper/CurlConverter'));
+const HtmlToJsx = dynamic(() => import('@/src/components/tools/code-helper/HtmlToJsx'));
 
 const SUB_TOOLS: Record<string, SubTool> = {
   regex: {

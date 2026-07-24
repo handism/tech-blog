@@ -2,9 +2,13 @@
 
 import { Paintbrush, ImageIcon, Gamepad2 } from 'lucide-react';
 import ToolTabsPage, { type SubTool } from '@/src/components/ToolTabsPage';
-import NeoBrutalism from '@/src/components/tools/design-generator/NeoBrutalism';
-import MemphisGenerator from '@/src/components/tools/design-generator/MemphisGenerator';
-import PixelArt from '@/src/components/tools/design-generator/PixelArt';
+import dynamic from 'next/dynamic';
+
+const NeoBrutalism = dynamic(() => import('@/src/components/tools/design-generator/NeoBrutalism'));
+const MemphisGenerator = dynamic(
+  () => import('@/src/components/tools/design-generator/MemphisGenerator')
+);
+const PixelArt = dynamic(() => import('@/src/components/tools/design-generator/PixelArt'));
 
 const SUB_TOOLS: Record<string, SubTool> = {
   'neo-brutalism': {

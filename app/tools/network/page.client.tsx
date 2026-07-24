@@ -2,10 +2,12 @@
 
 import { Send, Globe, ShieldCheck, Binary } from 'lucide-react';
 import ToolTabsPage, { type SubTool } from '@/src/components/ToolTabsPage';
-import HttpTester from '@/src/components/tools/network/HttpTester';
-import HttpStatus from '@/src/components/tools/network/HttpStatus';
-import SecurityHeaders from '@/src/components/tools/network/SecurityHeaders';
-import CidrCalculator from '@/src/components/tools/network/CidrCalculator';
+import dynamic from 'next/dynamic';
+
+const HttpTester = dynamic(() => import('@/src/components/tools/network/HttpTester'));
+const HttpStatus = dynamic(() => import('@/src/components/tools/network/HttpStatus'));
+const SecurityHeaders = dynamic(() => import('@/src/components/tools/network/SecurityHeaders'));
+const CidrCalculator = dynamic(() => import('@/src/components/tools/network/CidrCalculator'));
 
 const SUB_TOOLS: Record<string, SubTool> = {
   tester: {

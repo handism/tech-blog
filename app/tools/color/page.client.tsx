@@ -2,8 +2,10 @@
 
 import { Palette, Eye } from 'lucide-react';
 import ToolTabsPage, { type SubTool } from '@/src/components/ToolTabsPage';
-import ColorConverter from '@/src/components/tools/color/ColorConverter';
-import ColorContrast from '@/src/components/tools/color/ColorContrast';
+import dynamic from 'next/dynamic';
+
+const ColorConverter = dynamic(() => import('@/src/components/tools/color/ColorConverter'));
+const ColorContrast = dynamic(() => import('@/src/components/tools/color/ColorContrast'));
 
 const SUB_TOOLS: Record<string, SubTool> = {
   converter: {

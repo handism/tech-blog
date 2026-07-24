@@ -2,8 +2,10 @@
 
 import { Clock, Terminal } from 'lucide-react';
 import ToolTabsPage, { type SubTool } from '@/src/components/ToolTabsPage';
-import TimeConverter from '@/src/components/tools/time/TimeConverter';
-import CronGenerator from '@/src/components/tools/time/CronGenerator';
+import dynamic from 'next/dynamic';
+
+const TimeConverter = dynamic(() => import('@/src/components/tools/time/TimeConverter'));
+const CronGenerator = dynamic(() => import('@/src/components/tools/time/CronGenerator'));
 
 const SUB_TOOLS: Record<string, SubTool> = {
   timestamp: {
