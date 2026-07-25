@@ -66,16 +66,16 @@ Gitをはじめとするバージョン管理ツールの使い方も、共同�
 ```mermaid
 gitGraph
   commit id: "Initial Commit"
-  branch feature/user-auth
-  checkout feature/user-auth
+  branch "feature/user-auth"
+  checkout "feature/user-auth"
   commit id: "Add Login Screen"
   commit id: "Implement Auth Logic"
   checkout main
   commit id: "Fix CSS bug"
-  checkout feature/user-auth
+  checkout "feature/user-auth"
   merge main
   checkout main
-  merge feature/user-auth id: "Merge PR"
+  merge "feature/user-auth" id: "Merge PR"
 ```
 
 ---
