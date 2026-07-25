@@ -34,7 +34,10 @@ export default function MermaidRenderer() {
         mermaid.initialize({
           startOnLoad: false,
           theme: isDark ? 'dark' : 'neutral',
-          securityLevel: 'sandbox',
+          // 'sandbox' は iframe 内に描画するため、グローバルな document から
+          // SVG を引く gitGraph レンダラーが要素を見つけられず描画に失敗する。
+          // 記事は自前の Markdown のみなので、HTML ラベルを無効化する 'strict' を使う。
+          securityLevel: 'strict',
           fontFamily: 'var(--font-lexend), Inter, sans-serif',
           themeVariables: {
             primaryColor: isDark ? '#1e293b' : '#f8fafc',
