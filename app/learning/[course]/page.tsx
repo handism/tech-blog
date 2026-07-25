@@ -1,9 +1,10 @@
+import LearningCourseIcon from '@/src/components/LearningCourseIcon';
 import { getCourse, getAllCourses } from '@/src/lib/learning-server';
 import { siteConfig } from '@/src/config/site';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ChevronRight, ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ChevronRight, Map } from 'lucide-react';
 import RoadmapProgressBar from '@/src/components/RoadmapProgressBar';
 import ChapterProgressCheck from '@/src/components/ChapterProgressCheck';
 
@@ -22,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: `${course.emoji} ${course.title} | ${siteConfig.name}`,
+    title: `${course.title} | ${siteConfig.name}`,
     description: course.description,
     openGraph: {
       title: `${course.title} | ${siteConfig.name}`,
@@ -63,8 +64,8 @@ export default async function CourseRoadmapPage({ params }: Props) {
       {/* コースヘッダー */}
       <div className="theme-card p-6 border-3 rounded-2xl mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
         <div className="flex gap-4 items-start">
-          <span className="text-5xl leading-none p-3 bg-secondary rounded-2xl border-2 border-border shrink-0">
-            {course.emoji}
+          <span className="inline-flex items-center justify-center p-3 bg-secondary text-accent rounded-2xl border-2 border-border shrink-0">
+            <LearningCourseIcon name={course.icon} className="w-10 h-10" />
           </span>
           <div>
             <h1 className="text-2xl md:text-3xl font-black text-text mb-2 leading-tight">
@@ -89,7 +90,7 @@ export default async function CourseRoadmapPage({ params }: Props) {
       {/* ロードマップ・タイムライン */}
       <div className="theme-card p-6 border-3 rounded-2xl">
         <h2 className="text-xl font-black text-text mb-6 pb-3 border-b-2 border-border flex items-center gap-2">
-          🗺️ ロードマップ
+          <Map className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> ロードマップ
         </h2>
 
         {course.chapters.length === 0 ? (

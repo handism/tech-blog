@@ -26,7 +26,7 @@ sequenceDiagram
     actor Victim as 被害者
     participant Server as Webサーバー
     
-    Attacker->>Victim: 悪意あるリンクを送信<br/>(例: http://example.com/search?q=<script>...)
+    Attacker->>Victim: 悪意あるリンクを送信<br/>(例: http://example.com/search?q=&lt;script&gt;...)
     Victim->>Server: リンクをクリックしてリクエスト送信
     Server->>Victim: スクリプトを含んだままレスポンスを返す
     Note over Victim: ブラウザがスクリプトを実行し、<br/>セッションID(Cookie)が攻撃者に送信される

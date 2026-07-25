@@ -12,8 +12,9 @@ export default function ScrapCard({ scrap }: ScrapCardProps) {
     ? formatDate(scrap.date, { year: 'numeric', month: '2-digit', day: '2-digit' })
     : null;
 
+  // スマホでは本文の横幅が記事ページと大きく変わらないよう、カード内側の余白を詰める
   return (
-    <article className="theme-card p-6 mb-6">
+    <article className="theme-card p-4 md:p-6">
       {formattedDate && (
         <div className="flex justify-between items-center mb-4 border-b border-border/20 pb-3">
           <time

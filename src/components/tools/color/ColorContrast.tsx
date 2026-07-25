@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Eye, RefreshCw, AlertCircle } from 'lucide-react';
+import { AlertCircle, ChartColumn, Eye, Palette, RefreshCw } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
 
 // HEXコードをRGBオブジェクトに変換
@@ -201,7 +201,7 @@ export default function ColorContrast() {
           <div className="bg-card border-2 border-border rounded-3xl p-6 shadow-[4px_4px_0px_0px_var(--border)] flex flex-col gap-5">
             <div className="flex justify-between items-center pb-3 border-b-2 border-border/20">
               <h2 className="font-extrabold text-sm md:text-base flex items-center gap-2">
-                🎨 カラー調整
+                <Palette className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> カラー調整
               </h2>
               <div className="flex items-center gap-2">
                 <button
@@ -269,7 +269,8 @@ export default function ColorContrast() {
           <div className="bg-card border-2 border-border rounded-3xl p-6 shadow-[4px_4px_0px_0px_var(--border)] flex flex-col justify-between flex-1">
             <div>
               <h2 className="font-extrabold text-sm md:text-base mb-4 flex items-center gap-2">
-                📊 WCAG 2.1 判定結果
+                <ChartColumn className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> WCAG 2.1
+                判定結果
               </h2>
 
               <div className="flex items-baseline gap-2 mb-6">
@@ -406,7 +407,8 @@ export default function ColorContrast() {
           {/* 配色パレット */}
           <div className="bg-card border-2 border-border rounded-3xl p-6 shadow-[4px_4px_0px_0px_var(--border)]">
             <h2 className="font-extrabold text-sm md:text-base mb-4 flex items-center gap-2">
-              🌈 背景ベース配色パレット
+              <Palette className="w-4 h-4 inline-block align-[-0.15em] mr-1" />{' '}
+              背景ベース配色パレット
             </h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {palette.map((item, index) => (

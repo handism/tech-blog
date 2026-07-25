@@ -1,6 +1,7 @@
 // src/components/tools/network/CidrCalculator.tsx
 'use client';
 
+import { Binary, ChartColumn, Settings } from 'lucide-react';
 import { useState, useMemo } from 'react';
 import CopyButton from '@/src/components/CopyButton';
 
@@ -140,7 +141,8 @@ export default function CidrCalculator() {
       <div className="lg:col-span-5 space-y-6">
         <div className="theme-card p-5 md:p-6 space-y-5 border-2 border-border bg-card shadow-[4px_4px_0px_0px_var(--border)]">
           <h2 className="text-base font-extrabold border-b-2 border-border/20 pb-3">
-            ⚙️ ネットワークパラメーター
+            <Settings className="w-4 h-4 inline-block align-[-0.15em] mr-1" />{' '}
+            ネットワークパラメーター
           </h2>
 
           {/* IPアドレス入力 */}
@@ -194,7 +196,10 @@ export default function CidrCalculator() {
         {!error && (
           <div className="theme-card p-5 md:p-6 space-y-4 border-2 border-border bg-card shadow-[4px_4px_0px_0px_var(--border)]">
             <h3 className="text-sm font-extrabold border-b border-border/20 pb-2">
-              <span>🔢 バイナリ表現 (2進数)</span>
+              <span>
+                <Binary className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> バイナリ表現
+                (2進数)
+              </span>
             </h3>
             <div className="space-y-4">
               {/* IPバイナリ */}
@@ -243,7 +248,7 @@ export default function CidrCalculator() {
       <div className="lg:col-span-7">
         <div className="theme-card p-5 md:p-6 space-y-4 h-full border-2 border-border bg-card shadow-[4px_4px_0px_0px_var(--border)]">
           <h2 className="text-base font-extrabold border-b-2 border-border/20 pb-3">
-            📊 算出された結果
+            <ChartColumn className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> 算出された結果
           </h2>
 
           {!error ? (

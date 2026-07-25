@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useMemo, useReducer, useState, useEffect } from 'react';
-import { Trash2, History, Delete } from 'lucide-react';
+import { Delete, History, Keyboard, Trash2 } from 'lucide-react';
 import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 import CopyButton from '@/src/components/CopyButton';
 
@@ -553,7 +553,8 @@ export default function StandardCalculator() {
             {/* キーボードショートカットヘルプ */}
             <div className="mt-4 text-center">
               <span className="text-[10px] text-text/40 font-semibold">
-                ⌨️ キーボード入力対応: [0-9] [+] [-] [*] [/] [Enter] [Backspace] [Esc] [C (コピー)]
+                <Keyboard className="w-4 h-4 inline-block align-[-0.15em] mr-1" />{' '}
+                キーボード入力対応: [0-9] [+] [-] [*] [/] [Enter] [Backspace] [Esc] [C (コピー)]
               </span>
             </div>
           </div>

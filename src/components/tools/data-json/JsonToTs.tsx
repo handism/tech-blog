@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Clipboard, RefreshCw } from 'lucide-react';
+import { Clipboard, Download, RefreshCw } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
 
 export default function JsonToTs() {
@@ -162,7 +162,9 @@ export default function JsonToTs() {
             htmlFor="json-input"
             className="text-sm font-bold text-text flex items-center gap-2"
           >
-            <span>📥 JSON入力</span>
+            <span>
+              <Download className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> JSON入力
+            </span>
           </label>
           <button
             onClick={handleFormat}

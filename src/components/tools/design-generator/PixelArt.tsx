@@ -1,7 +1,18 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Trash2, Eye, EyeOff, Download, PenTool, PaintBucket, Eraser } from 'lucide-react';
+import {
+  Download,
+  Eraser,
+  Eye,
+  EyeOff,
+  PaintBucket,
+  PenTool,
+  Save,
+  Settings,
+  Trash2,
+  Wrench,
+} from 'lucide-react';
 
 const PRESET_COLORS = [
   '#000000',
@@ -187,7 +198,9 @@ export default function PixelArt() {
           {/* キャンバス設定 */}
           <div className="theme-card p-5 md:p-6 space-y-4">
             <h2 className="text-sm font-bold text-text border-b border-border pb-1.5 flex items-center gap-1.5">
-              <span>⚙️ キャンバス設定</span>
+              <span>
+                <Settings className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> キャンバス設定
+              </span>
             </h2>
             <div className="flex justify-between items-center gap-2">
               <span className="text-xs font-extrabold text-text/75">解像度</span>
@@ -234,7 +247,7 @@ export default function PixelArt() {
           {/* ツールボックス */}
           <div className="theme-card p-5 md:p-6 space-y-4">
             <h2 className="text-sm font-bold text-text border-b border-border pb-1.5">
-              🛠️ ツール選択
+              <Wrench className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> ツール選択
             </h2>
             <div className="grid grid-cols-3 gap-2">
               {[
@@ -356,7 +369,7 @@ export default function PixelArt() {
           <div className="w-full md:w-48 flex flex-col gap-4">
             <div className="theme-card p-5 md:p-6 flex flex-col justify-center h-full gap-4">
               <h3 className="text-sm font-bold text-text border-b border-border pb-1.5 text-center">
-                💾 保存 / 出力
+                <Save className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> 保存 / 出力
               </h3>
 
               <button

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { RefreshCw } from 'lucide-react';
+import { Palette, RefreshCw, Wrench, Zap } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
 
 export default function NeoBrutalism() {
@@ -185,7 +185,7 @@ export default function NeoBrutalism() {
           <div className="theme-card p-6 space-y-5">
             <div className="flex justify-between items-center border-b-2 border-border pb-3">
               <h3 className="font-extrabold text-lg flex items-center gap-1.5">
-                <span>🛠️</span> パラメータ設定
+                <Wrench className="w-4 h-4 shrink-0" /> パラメータ設定
               </h3>
               <button
                 onClick={resetParams}
@@ -313,7 +313,9 @@ export default function NeoBrutalism() {
 
           {/* プリセット */}
           <div className="theme-card p-6">
-            <h3 className="font-extrabold text-sm mb-3">🎨 プリセットスタイル</h3>
+            <h3 className="font-extrabold text-sm mb-3">
+              <Palette className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> プリセットスタイル
+            </h3>
             <div className="flex flex-wrap gap-2">
               {PRESETS.map((preset) => (
                 <button
@@ -342,7 +344,7 @@ export default function NeoBrutalism() {
               className="p-6 md:p-8 max-w-sm w-full transition-all duration-75"
             >
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-2xl">⚡</span>
+                <Zap className="w-4 h-4 shrink-0" />
                 <h4 className="text-xl font-black">Ne Brutalism</h4>
               </div>
               <p className="text-xs md:text-sm font-medium mb-5 opacity-90 leading-relaxed">

@@ -2,7 +2,17 @@
 'use client';
 
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { Download, QrCode, AlertTriangle, RefreshCw, Sparkles } from 'lucide-react';
+import {
+  AlertTriangle,
+  Bird,
+  Download,
+  Mail,
+  QrCode,
+  RefreshCw,
+  Search,
+  Sparkles,
+  Users,
+} from 'lucide-react';
 import QRCode from 'qrcode';
 import CopyButton from '@/src/components/CopyButton';
 
@@ -201,25 +211,26 @@ export default function UtmBuilder() {
                 onClick={() => applyPreset('newsletter')}
                 className="px-2.5 py-1.5 border border-border bg-card hover:bg-secondary text-text/80 rounded-xl text-[10px] font-bold cursor-pointer transition-colors"
               >
-                ✉️ メルマガ配信用
+                <Mail className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> メルマガ配信用
               </button>
               <button
                 onClick={() => applyPreset('twitter')}
                 className="px-2.5 py-1.5 border border-border bg-card hover:bg-secondary text-text/80 rounded-xl text-[10px] font-bold cursor-pointer transition-colors"
               >
-                🐦 X (Twitter) シェア
+                <Bird className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> X (Twitter) シェア
               </button>
               <button
                 onClick={() => applyPreset('facebook')}
                 className="px-2.5 py-1.5 border border-border bg-card hover:bg-secondary text-text/80 rounded-xl text-[10px] font-bold cursor-pointer transition-colors"
               >
-                👥 Facebook 投稿
+                <Users className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> Facebook 投稿
               </button>
               <button
                 onClick={() => applyPreset('google_ads')}
                 className="px-2.5 py-1.5 border border-border bg-card hover:bg-secondary text-text/80 rounded-xl text-[10px] font-bold cursor-pointer transition-colors"
               >
-                🔍 Google検索広告 (CPC)
+                <Search className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> Google検索広告
+                (CPC)
               </button>
             </div>
           </div>

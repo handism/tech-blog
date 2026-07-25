@@ -15,6 +15,7 @@ export function LayoutSelector() {
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
       {layoutConfig.map((layout) => {
         const isSelected = currentLayout === layout.id;
+        const LayoutIcon = layout.icon;
         return (
           <button
             key={layout.id}
@@ -29,9 +30,7 @@ export function LayoutSelector() {
             aria-label={`${layout.label}レイアウトに切り替え`}
           >
             <div className="flex items-center gap-3 pr-2">
-              <span className="text-2xl shrink-0" role="img" aria-hidden="true">
-                {layout.emoji}
-              </span>
+              <LayoutIcon className="w-6 h-6 shrink-0 text-accent" aria-hidden="true" />
               <div>
                 <h3 className="font-bold text-sm tracking-tight text-text">{layout.label}</h3>
                 <p className="text-xs text-text opacity-60 mt-0.5 leading-snug">

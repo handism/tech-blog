@@ -3,7 +3,16 @@
 
 import { useState, useMemo } from 'react';
 import CopyButton from '@/src/components/CopyButton';
-import { Plus, Trash2, AlignLeft, AlignCenter, AlignRight, Import } from 'lucide-react';
+import {
+  AlignCenter,
+  AlignLeft,
+  AlignRight,
+  FileText,
+  Import,
+  Plus,
+  Trash2,
+  Zap,
+} from 'lucide-react';
 
 type Alignment = 'left' | 'center' | 'right';
 
@@ -177,7 +186,9 @@ export default function MarkdownTable() {
         <div className="theme-card p-5 md:p-6 space-y-6 border-2 border-border bg-card shadow-[4px_4px_0px_0px_var(--border)]">
           <div className="flex flex-wrap justify-between items-center gap-4 border-b-2 border-border/20 pb-3">
             <h2 className="text-base font-extrabold flex items-center gap-2">
-              <span>📝 テーブル編集</span>
+              <span>
+                <FileText className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> テーブル編集
+              </span>
             </h2>
 
             <div className="flex flex-wrap gap-2">
@@ -323,7 +334,9 @@ export default function MarkdownTable() {
       <div className="lg:col-span-4">
         <div className="theme-card p-5 md:p-6 flex flex-col h-full min-h-[400px] border-2 border-border bg-card shadow-[4px_4px_0px_0px_var(--border)]">
           <div className="flex justify-between items-center mb-4 border-b-2 border-border/20 pb-3">
-            <h2 className="text-base font-bold text-text">⚡ Markdownエクスポート</h2>
+            <h2 className="text-base font-bold text-text">
+              <Zap className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> Markdownエクスポート
+            </h2>
             {outputMarkdown && (
               <CopyButton
                 value={outputMarkdown}

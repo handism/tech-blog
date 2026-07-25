@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Keyboard, Trash2, ShieldAlert } from 'lucide-react';
+import { Clipboard, Keyboard, ShieldAlert, Trash2 } from 'lucide-react';
 import { usKeyboardRows, jisKeyboardRows } from './keyboard-data';
 
 interface KeyHistoryItem {
@@ -193,7 +193,7 @@ export default function KeyboardEventVisualizer() {
             ) : (
               <div className="flex flex-col items-center justify-center text-center my-auto py-10">
                 <div className="w-16 h-16 rounded-2xl bg-secondary/50 flex items-center justify-center text-3xl mb-4 animate-bounce">
-                  ⌨️
+                  <Keyboard className="w-full h-full" />
                 </div>
                 <h3 className="font-bold text-lg mb-1 text-text">キーボードを押してください</h3>
                 <p className="text-xs text-text/60 max-w-xs">
@@ -271,7 +271,8 @@ export default function KeyboardEventVisualizer() {
             <div>
               <div className="flex justify-between items-center pb-3 border-b border-border/60 mb-4">
                 <h2 className="font-bold text-base md:text-lg flex items-center gap-2">
-                  📋 入力履歴 (直近20件)
+                  <Clipboard className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> 入力履歴
+                  (直近20件)
                 </h2>
                 {history.length > 0 && (
                   <button

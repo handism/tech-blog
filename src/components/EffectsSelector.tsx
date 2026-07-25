@@ -3,7 +3,7 @@
 
 import { useThemeDesign } from '@/src/components/ThemeDesignProvider';
 import { useIsClient } from '@/src/hooks/useIsClient';
-import { Check } from 'lucide-react';
+import { BellOff, Check, Sparkles } from 'lucide-react';
 
 /**
  * アニメーションとエフェクトの ON/OFF を切り替えるセレクターコンポーネント。
@@ -27,9 +27,7 @@ export function EffectsSelector() {
         aria-label="アニメーションとエフェクトを有効化"
       >
         <div className="flex items-center gap-3 pr-2">
-          <span className="text-2xl shrink-0" role="img" aria-hidden="true">
-            ✨
-          </span>
+          <Sparkles className="w-6 h-6 shrink-0 text-accent" aria-hidden="true" />
           <div>
             <h3 className="font-bold text-sm tracking-tight text-text">
               アニメーションとエフェクトを有効化
@@ -57,9 +55,7 @@ export function EffectsSelector() {
         aria-label="動きを停止（パフォーマンス優先）"
       >
         <div className="flex items-center gap-3 pr-2">
-          <span className="text-2xl shrink-0" role="img" aria-hidden="true">
-            🔕
-          </span>
+          <BellOff className="w-6 h-6 shrink-0 text-accent" aria-hidden="true" />
           <div>
             <h3 className="font-bold text-sm tracking-tight text-text">
               動きを停止（パフォーマンス優先）

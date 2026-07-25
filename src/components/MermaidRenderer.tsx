@@ -71,8 +71,10 @@ export default function MermaidRenderer() {
         });
 
         // 描画実行
+        // 1つの図の構文エラーで後続の図が描画されなくなるのを防ぐ
         await mermaid.run({
           nodes: nodesToRender,
+          suppressErrors: true,
         });
 
         // 描画完了後のフェードイン制御

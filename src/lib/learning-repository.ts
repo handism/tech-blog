@@ -1,4 +1,5 @@
 // src/lib/learning-repository.ts
+import { DEFAULT_LEARNING_ICON } from '@/src/config/learning-icons';
 import { siteConfig } from '@/src/config/site';
 import { catchEnoent } from '@/src/lib/utils';
 import fs from 'fs/promises';
@@ -11,7 +12,7 @@ const learningDir = path.join(/*turbopackIgnore: true*/ process.cwd(), siteConfi
 const CourseMetaJsonSchema = z.object({
   title: z.string().optional(),
   description: z.string().optional(),
-  emoji: z.string().optional(),
+  icon: z.string().optional(),
   category: z.string().optional(),
 });
 
@@ -54,7 +55,7 @@ export async function readCourseMeta(courseId: string): Promise<LearningCourseMe
         id: courseId,
         title: data.title || courseId,
         description: data.description || '',
-        emoji: data.emoji || '📖',
+        icon: data.icon || DEFAULT_LEARNING_ICON,
         category: data.category || 'fundamentals',
       };
     })(),

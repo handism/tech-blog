@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Play, RefreshCw } from 'lucide-react';
+import { Play, PlayCircle, RefreshCw, TrendingUp } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
 
 // イージングプリセット定義
@@ -68,7 +68,7 @@ export default function CubicBezier() {
         <div className="theme-card p-5 bg-card space-y-5 border-2 border-border shadow-[4px_4px_0px_0px_var(--border)]">
           <div className="flex justify-between items-center border-b-2 border-border pb-3">
             <h3 className="font-extrabold text-sm flex items-center gap-1.5 text-text">
-              <span>📈</span> ベジェ曲線グラフ
+              <TrendingUp className="w-4 h-4 shrink-0" /> ベジェ曲線グラフ
             </h3>
             <button
               onClick={resetAll}
@@ -252,7 +252,7 @@ export default function CubicBezier() {
         <div className="theme-card p-5 bg-card space-y-4 border-2 border-border shadow-[4px_4px_0px_0px_var(--border)]">
           <div className="flex justify-between items-center border-b-2 border-border pb-3">
             <h3 className="font-extrabold text-sm flex items-center gap-1.5 text-text">
-              <span>🏃</span> プレビュー比較
+              <PlayCircle className="w-4 h-4 shrink-0" /> プレビュー比較
             </h3>
             <button
               onClick={triggerAnimation}

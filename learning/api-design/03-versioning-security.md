@@ -56,7 +56,7 @@ Accept: application/vnd.example.v1+json
 graph TD
     Client[クライアント] -->|1. ログインリクエスト| AuthServer[認証サーバー]
     AuthServer -->|2. JWTトークン発行| Client
-    Client -->|3. Authorization: Bearer <token>| ResourceServer[APIサーバー]
+    Client -->|"3. Authorization: Bearer &lt;token&gt;"| ResourceServer[APIサーバー]
     ResourceServer -->|4. トークンを検証・データ返却| Client
 
     style AuthServer fill:#eff6ff,stroke:#3b82f6,stroke-width:2px

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Clipboard, Shuffle } from 'lucide-react';
+import { Clipboard, Settings, Shuffle, Sparkles } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
 
 import { LOREM_TEXTS, TextType, UnitType, pseudoRandom } from './lorem-ipsum-data';
@@ -127,7 +127,7 @@ export default function LoremIpsum() {
         <div className="lg:col-span-4 space-y-6">
           <div className="theme-card p-5 md:p-6 space-y-5">
             <h2 className="text-base font-bold text-text border-b-2 border-border pb-2">
-              ⚙️ ジェネレーター設定
+              <Settings className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> ジェネレーター設定
             </h2>
 
             {/* テキストソース */}
@@ -218,7 +218,10 @@ export default function LoremIpsum() {
         <div className="lg:col-span-8">
           <div className="theme-card p-5 md:p-6 flex flex-col h-full min-h-[480px]">
             <div className="flex justify-between items-center mb-4 border-b-2 border-border pb-3">
-              <h2 className="text-base font-bold text-text">✨ 生成されたダミーテキスト</h2>
+              <h2 className="text-base font-bold text-text">
+                <Sparkles className="w-4 h-4 inline-block align-[-0.15em] mr-1" />{' '}
+                生成されたダミーテキスト
+              </h2>
               {generatedText && (
                 <CopyButton
                   value={generatedText}

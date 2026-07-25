@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useCallback } from 'react';
-import { Sliders, Download, RefreshCw, Layers } from 'lucide-react';
+import { Blend, Download, Layers, RefreshCw, Sliders, Waves } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
 
 // 簡易乱数ジェネレータ（シードベース）
@@ -276,7 +276,7 @@ ${paths}
             mode === 'blob' ? 'border-accent text-accent' : 'border-transparent text-text/60'
           }`}
         >
-          🔮 Blob (アメーバ)
+          <Blend className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> Blob (アメーバ)
         </button>
         <button
           onClick={() => setMode('wave')}
@@ -284,7 +284,7 @@ ${paths}
             mode === 'wave' ? 'border-accent text-accent' : 'border-transparent text-text/60'
           }`}
         >
-          🌊 Wave (波形)
+          <Waves className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> Wave (波形)
         </button>
       </div>
 

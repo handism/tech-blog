@@ -3,33 +3,33 @@
 
 import { useThemeDesign } from '@/src/components/ThemeDesignProvider';
 import { themeConfig, type ThemeId } from '@/src/config/themes';
-import { Check } from 'lucide-react';
+import { Check, MonitorSmartphone, Layers, Zap, Brush, Flower2 } from 'lucide-react';
 import { useIsClient } from '@/src/hooks/useIsClient';
 
 const CATEGORY_MAP = {
   modern: {
     label: '王道＆モダン',
-    emoji: '📱',
+    icon: MonitorSmartphone,
     description: '実用的で読みやすく、万人向け・機能的なスタイル',
   },
   tactile: {
     label: '立体＆質感',
-    emoji: '🌫️',
+    icon: Layers,
     description: '物理的な奥行きや立体感を強調したスタイル',
   },
   tech: {
     label: 'レトロ＆SFテック',
-    emoji: '⚡',
+    icon: Zap,
     description: '懐かしいゲーム感や近未来のサイバーSFテイスト',
   },
   creative: {
     label: 'アート＆クリエイティブ',
-    emoji: '🎨',
+    icon: Brush,
     description: 'グラフィカルで自己表現的なスタイル',
   },
   nature: {
     label: 'カルチャー＆ナチュラル',
-    emoji: '🌸',
+    icon: Flower2,
     description: '特定の文化的モチーフや優しくポップな世界観',
   },
 } as const;
@@ -51,6 +51,7 @@ export function ThemeSelector() {
     <div className="space-y-10">
       {CATEGORIES.map((categoryKey) => {
         const category = CATEGORY_MAP[categoryKey];
+        const CategoryIcon = category.icon;
         const categoryThemes = themeConfig.filter(
           (theme) => 'category' in theme && theme.category === categoryKey
         );
@@ -65,7 +66,7 @@ export function ThemeSelector() {
             {/* カテゴリヘッダー */}
             <div className="mb-4">
               <h3 className="text-base font-bold text-text flex items-center gap-2">
-                <span className="text-lg leading-none">{category.emoji}</span>
+                <CategoryIcon className="w-5 h-5 text-accent shrink-0" />
                 <span>{category.label}</span>
               </h3>
               <p className="text-xs text-text opacity-50 mt-0.5">{category.description}</p>
@@ -75,6 +76,7 @@ export function ThemeSelector() {
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {categoryThemes.map((theme) => {
                 const isSelected = effectiveTheme === theme.id;
+                const ThemeIcon = theme.icon;
                 // as const による TypeScript の厳密な型推論エラーを回避するためのキャスト用定義
                 const meta = theme as {
                   readonly hasBorder?: boolean;
@@ -152,7 +154,7 @@ export function ThemeSelector() {
                     {/* ラベルエリア */}
                     <div className="flex flex-col gap-0.5 px-3 py-2.5 bg-card flex-1">
                       <div className="flex items-center gap-1.5">
-                        <span className="text-base leading-none">{theme.emoji}</span>
+                        <ThemeIcon className="w-4 h-4 text-accent shrink-0" />
                         <span className="text-xs font-bold text-text leading-tight">
                           {theme.label}
                         </span>

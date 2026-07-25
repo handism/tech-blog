@@ -61,7 +61,7 @@ graph TD
     ChildMemo -->|Yes| PropsChanged{渡されているPropsに<br>変化はあるか?}
     
     PropsChanged -->|Yes| RenderChild
-    PropsChanged -->|No (参照も不変)| SkipChild[子の再レンダリングをスキップ]
+    PropsChanged -->|"No (参照も不変)"| SkipChild[子の再レンダリングをスキップ]
 
     style Parent fill:#eff6ff,stroke:#3b82f6,stroke-width:2px
     style ChildMemo fill:#faf5ff,stroke:#a855f7,stroke-width:2px

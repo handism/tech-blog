@@ -1,3 +1,4 @@
+import { PartyPopper } from 'lucide-react';
 import LearningLayout from '@/src/components/LearningLayout';
 import CopyButtonScript from '@/src/components/CopyButtonScript';
 import { ImageModal } from '@/src/components/ImageModal';
@@ -164,7 +165,10 @@ export default async function ChapterDetailPage({ params }: Props) {
               href="/learning"
               className="block p-4 theme-card theme-card-hover border-2 rounded-xl sm:text-right"
             >
-              <div className="text-xs text-text/50 mb-1 font-bold">コース修了！ 🎉</div>
+              <div className="text-xs text-text/50 mb-1 font-bold flex items-center gap-1">
+                コース修了！
+                <PartyPopper className="w-3.5 h-3.5 shrink-0" />
+              </div>
               <div className="font-extrabold text-text leading-snug">学習ガイド一覧へ</div>
             </Link>
           )}

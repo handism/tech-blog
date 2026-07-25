@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, Lightbulb, Zap } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
 
 export default function HtmlToJsx() {
@@ -220,7 +220,7 @@ export default function HtmlToJsx() {
             />
           ) : (
             <div className="flex-1 flex flex-col items-center justify-center text-text/40 bg-secondary/30 border-2 border-dashed border-border/20 rounded-xl text-center p-6 shadow-inner">
-              <span className="text-3xl mb-2">⚡</span>
+              <Zap className="w-4 h-4 shrink-0" />
               <p className="text-xs font-bold">HTMLを入力すると自動でJSXに変換されます</p>
             </div>
           )}
@@ -230,7 +230,7 @@ export default function HtmlToJsx() {
       {/* 変換機能の説明/ヒント */}
       <div className="theme-card p-5 space-y-3 bg-secondary border-2 border-border shadow-[4px_4px_0px_0px_var(--border)] text-sm">
         <h4 className="font-extrabold text-sm flex items-center gap-1.5 text-text">
-          💡 変換のルールと仕様
+          <Lightbulb className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> 変換のルールと仕様
         </h4>
         <ul className="text-xs font-bold text-text/75 space-y-2 list-disc list-inside">
           <li>

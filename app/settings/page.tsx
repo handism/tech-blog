@@ -1,4 +1,5 @@
 // app/settings/page.tsx
+import { Palette, Ruler, Save, Settings, Sparkles, SunMoon } from 'lucide-react';
 import { ThemeSelector } from '@/src/components/ThemeSelector';
 import { ThemeToggle } from '@/src/components/ThemeToggle';
 import { LayoutSelector } from '@/src/components/LayoutSelector';
@@ -21,7 +22,7 @@ export default function SettingsPage() {
       {/* ページヘッダー */}
       <div className="mb-12">
         <div className="flex items-center gap-3 mb-3">
-          <span className="text-4xl">⚙️</span>
+          <Settings className="w-4 h-4 shrink-0" />
           <h1 className="text-3xl md:text-4xl font-extrabold text-text tracking-tight">Settings</h1>
         </div>
         <p className="text-text opacity-70 text-lg">
@@ -36,7 +37,7 @@ export default function SettingsPage() {
             id="theme-section-heading"
             className="text-xl font-bold text-text mb-1 flex items-center gap-2"
           >
-            <span>🎨</span>
+            <Palette className="w-4 h-4 shrink-0" />
             デザインテーマ
           </h2>
           <p className="text-sm text-text opacity-60">
@@ -54,7 +55,7 @@ export default function SettingsPage() {
             id="layout-section-heading"
             className="text-xl font-bold text-text mb-1 flex items-center gap-2"
           >
-            <span>📐</span>
+            <Ruler className="w-4 h-4 shrink-0" />
             記事一覧レイアウト
           </h2>
           <p className="text-sm text-text opacity-60">
@@ -71,7 +72,7 @@ export default function SettingsPage() {
             id="effects-section-heading"
             className="text-xl font-bold text-text mb-1 flex items-center gap-2"
           >
-            <span>✨</span>
+            <Sparkles className="w-4 h-4 shrink-0" />
             アニメーションと効果
           </h2>
           <p className="text-sm text-text opacity-60">
@@ -88,7 +89,7 @@ export default function SettingsPage() {
             id="darkmode-section-heading"
             className="text-xl font-bold text-text mb-1 flex items-center gap-2"
           >
-            <span>🌓</span>
+            <SunMoon className="w-4 h-4 shrink-0" />
             ダークモード
           </h2>
           <p className="text-sm text-text opacity-60">
@@ -107,7 +108,7 @@ export default function SettingsPage() {
             id="backup-section-heading"
             className="text-xl font-bold text-text mb-1 flex items-center gap-2"
           >
-            <span>💾</span>
+            <Save className="w-4 h-4 shrink-0" />
             データ管理
           </h2>
           <p className="text-sm text-text opacity-60">

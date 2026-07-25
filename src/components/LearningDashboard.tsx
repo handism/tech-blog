@@ -1,25 +1,38 @@
 // src/components/LearningDashboard.tsx
 'use client';
 
+import LearningCourseIcon from '@/src/components/LearningCourseIcon';
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { Search, X, Sparkles } from 'lucide-react';
+import { ArrowRight, Brain, Cloud, Database, GraduationCap, Monitor, Sparkles } from 'lucide-react';
+import DashboardFilterBar, {
+  type DashboardFilterOption,
+} from '@/src/components/dashboard/DashboardFilterBar';
+import DashboardHero from '@/src/components/dashboard/DashboardHero';
+import DashboardShell from '@/src/components/dashboard/DashboardShell';
+import {
+  DashboardEmptyState,
+  DashboardSectionHeading,
+} from '@/src/components/dashboard/DashboardSection';
 import type { LearningCourse } from '@/src/types/learning';
 import CourseProgressBadge from './CourseProgressBadge';
 
 const CATEGORIES = [
-  { id: 'all', name: 'すべて', emoji: '✨' },
-  { id: 'frontend', name: 'フロントエンド', emoji: '💻' },
-  { id: 'backend', name: 'バックエンド', emoji: '🗄️' },
-  { id: 'infra', name: 'インフラ/DevOps', emoji: '☁️' },
-  { id: 'fundamentals', name: '基礎知識/設計', emoji: '🧠' },
-] as const;
+  { id: 'all', name: 'すべて', icon: Sparkles },
+  { id: 'frontend', name: 'フロントエンド', icon: Monitor },
+  { id: 'backend', name: 'バックエンド', icon: Database },
+  { id: 'infra', name: 'インフラ/DevOps', icon: Cloud },
+  { id: 'fundamentals', name: '基礎知識/設計', icon: Brain },
+] as const satisfies readonly DashboardFilterOption[];
 
 type CategoryId = (typeof CATEGORIES)[number]['id'];
 
 const categoryMeta = Object.fromEntries(
-  CATEGORIES.filter((c) => c.id !== 'all').map((c) => [c.id, { name: c.name, emoji: c.emoji }])
-) as Record<Exclude<CategoryId, 'all'>, { name: string; emoji: string }>;
+  CATEGORIES.filter((c) => c.id !== 'all').map((c) => [c.id, { name: c.name, icon: c.icon }])
+) as Record<
+  Exclude<CategoryId, 'all'>,
+  { name: string; icon: (typeof CATEGORIES)[number]['icon'] }
+>;
 
 interface LearningDashboardProps {
   courses: LearningCourse[];
@@ -69,88 +82,31 @@ export default function LearningDashboard({ courses }: LearningDashboardProps) {
   };
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-8 md:py-12">
-      {/* ヒーローヘッダー */}
-      <div className="page-header text-center max-w-2xl mx-auto mb-10 md:mb-14">
-        <div className="inline-flex items-center gap-2 px-3 py-1 border border-border rounded-lg bg-secondary text-text text-xs font-bold mb-4">
-          <Sparkles className="w-3.5 h-3.5 text-accent" />
-          <span>Curriculum</span>
-        </div>
-        <h1 className="text-3xl md:text-4xl font-extrabold text-text tracking-tight mb-4">
-          📚 学習ガイド
-        </h1>
-        <p className="text-text/80 text-sm md:text-base leading-relaxed font-medium">
-          エンジニアリングに必要な概念やツールの仕組みを、図解を交えて体系的に学べます。
-          ご自身のペースでステップ順に進めていきましょう。
-        </p>
-      </div>
+    <DashboardShell>
+      <DashboardHero
+        badge="Curriculum"
+        title="学習ガイド"
+        titleIcon={GraduationCap}
+        description="エンジニアリングに必要な概念やツールの仕組みを、図解を交えて体系的に学べます。ご自身のペースでステップ順に進めていきましょう。"
+      />
 
-      {/* コントロールパネル (検索 ＆ フィルタ) */}
-      <div className="theme-card p-5 md:p-6 mb-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        {/* 検索入力 */}
-        <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text/40" />
-          <input
-            id="course-search"
-            type="text"
-            aria-label="コース名、説明、チャプターから検索"
-            placeholder="コース名、説明、チャプターから検索..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-10 py-3 bg-card border-2 border-border text-text placeholder-text/50 rounded-xl focus:outline-none focus:translate-x-[-1px] focus:translate-y-[-1px] focus:shadow-[3px_3px_0px_0px_var(--border)] dark:focus:shadow-[3px_3px_0px_0px_var(--accent)] transition-all text-sm font-bold"
-          />
-          {searchQuery && (
-            <button
-              onClick={() => {
-                setSearchQuery('');
-                document.getElementById('course-search')?.focus();
-              }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-text/40 hover:text-text transition-colors p-1 focus-visible:ring-2 focus-visible:ring-accent rounded"
-              aria-label="検索条件をクリア"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          )}
-        </div>
-
-        {/* カテゴリタブ */}
-        <div className="flex items-center gap-2 overflow-x-auto md:overflow-x-visible py-2 scrollbar-none -mx-4 px-4 md:mx-0 md:px-0">
-          {CATEGORIES.map((cat) => {
-            const isActive = selectedCategory === cat.id;
-            return (
-              <button
-                key={cat.id}
-                onClick={() => setSelectedCategory(cat.id)}
-                className={`
-                  px-4 py-2.5 rounded-xl text-xs font-extrabold whitespace-nowrap border-2 border-border transition-all flex items-center gap-1.5 cursor-pointer
-                  ${
-                    isActive
-                      ? 'bg-accent text-white translate-x-[2px] translate-y-[2px] shadow-none'
-                      : 'bg-card text-text shadow-[2.5px_2.5px_0px_0px_var(--border)] dark:shadow-[2.5px_2.5px_0px_0px_var(--accent)] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_var(--border)] dark:hover:shadow-[4px_4px_0px_0px_var(--accent)] active:translate-x-0 active:translate-y-0 active:shadow-none'
-                  }
-                `}
-              >
-                <span>{cat.emoji}</span>
-                <span>{cat.name}</span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
+      <DashboardFilterBar
+        searchId="course-search"
+        searchValue={searchQuery}
+        onSearchChange={setSearchQuery}
+        searchPlaceholder="コース名、説明、チャプターから検索..."
+        searchLabel="コース名、説明、チャプターから検索"
+        options={CATEGORIES}
+        selectedId={selectedCategory}
+        onSelect={setSelectedCategory}
+      />
 
       {/* コースリストグリッド */}
       {filteredCourses.length === 0 ? (
-        <div className="text-center py-16 theme-card border-3 border-border rounded-3xl">
-          <p className="text-text/75 mb-4 text-sm md:text-base font-bold">
-            条件に一致するコースが見つかりませんでした。
-          </p>
-          <button
-            onClick={handleClearFilters}
-            className="theme-btn px-5 py-2.5 text-sm font-bold text-text cursor-pointer"
-          >
-            検索条件をリセットする
-          </button>
-        </div>
+        <DashboardEmptyState
+          message="条件に一致するコースが見つかりませんでした。"
+          onReset={handleClearFilters}
+        />
       ) : (
         <div className="space-y-12">
           {/* カテゴリごとのセクション表示（カテゴリが「すべて」の場合） */}
@@ -160,13 +116,7 @@ export default function LearningDashboard({ courses }: LearningDashboardProps) {
               const meta = categoryMeta[catKey as Exclude<CategoryId, 'all'>];
               return (
                 <div key={catKey} className="space-y-6">
-                  <div className="flex items-center gap-2 border-b-3 border-border pb-2">
-                    <span className="text-xl md:text-2xl">{meta.emoji}</span>
-                    <h2 className="text-lg md:text-xl font-extrabold text-text">{meta.name}</h2>
-                    <span className="text-xs border border-border bg-secondary text-text px-2 py-0.5 rounded-md font-bold">
-                      {items.length}
-                    </span>
-                  </div>
+                  <DashboardSectionHeading icon={meta.icon} name={meta.name} count={items.length} />
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {items.map((course) => (
                       <CourseCard key={course.id} course={course} />
@@ -185,7 +135,7 @@ export default function LearningDashboard({ courses }: LearningDashboardProps) {
           )}
         </div>
       )}
-    </div>
+    </DashboardShell>
   );
 }
 
@@ -201,8 +151,8 @@ function CourseCard({ course }: CourseCardProps) {
     >
       <div>
         <div className="flex items-center justify-between mb-4">
-          <span className="text-4xl p-2 bg-secondary rounded-2xl border-2 border-border group-hover:scale-110 transition-transform duration-200">
-            {course.emoji}
+          <span className="inline-flex items-center justify-center p-3 bg-secondary text-accent rounded-2xl border-2 border-border group-hover:scale-110 transition-transform duration-200">
+            <LearningCourseIcon name={course.icon} className="w-8 h-8" />
           </span>
           <span className="text-xs font-black px-2.5 py-1 bg-accent text-white border-2 border-border shadow-[2px_2px_0px_0px_var(--border)] dark:shadow-[2px_2px_0px_0px_var(--accent)] rounded-lg">
             全 {course.chapters.length} 章
@@ -216,11 +166,9 @@ function CourseCard({ course }: CourseCardProps) {
         </p>
         <CourseProgressBadge courseId={course.id} totalChapters={course.chapters.length} />
       </div>
-      <div className="mt-6 flex items-center text-sm font-black text-accent group-hover:translate-x-0.5 transition-transform duration-200">
+      <div className="mt-6 flex items-center gap-1 text-sm font-black text-accent group-hover:translate-x-0.5 transition-transform duration-200">
         学習を始める
-        <span className="inline-block transition-transform duration-200 group-hover:translate-x-1 ml-1">
-          →
-        </span>
+        <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
       </div>
     </Link>
   );

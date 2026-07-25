@@ -2,7 +2,16 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Download, Plus, Trash2, Maximize2, Minimize2, Move, RotateCw } from 'lucide-react';
+import {
+  Download,
+  Maximize2,
+  Minimize2,
+  Move,
+  Plus,
+  RotateCw,
+  Sparkles,
+  Trash2,
+} from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
 
 interface ColorStop {
@@ -275,7 +284,8 @@ export default function CssGradient() {
       {isAppliedToSite && (
         <div className="bg-accent/15 border-2 border-accent text-text p-4 rounded-2xl flex items-center justify-between text-xs font-bold shadow-sm animate-pulse mb-4">
           <span>
-            ✨ 現在、作成したグラデーションをサイト全体の背景として適用（プレビュー中）しています。
+            <Sparkles className="w-4 h-4 inline-block align-[-0.15em] mr-1" />{' '}
+            現在、作成したグラデーションをサイト全体の背景として適用（プレビュー中）しています。
           </span>
           <button
             onClick={toggleSitePreview}

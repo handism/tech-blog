@@ -28,6 +28,15 @@ type RenderedPost = {
 type ShikiOptions = { meta?: { __raw?: string }; lang?: string };
 
 /**
+ * Mermaid ソースを HTML テキストとして安全に埋め込めるようエスケープする。
+ * `<br/>` やラベル内の `<` `>` `&` をブラウザに HTML として解釈させると、
+ * クライアント側で textContent を読み戻したときに構文が壊れてしまうため。
+ */
+function escapeMermaidSource(source: string): string {
+  return source.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+/**
  * Mermaidのコードブロックを検出し、Shikiをバイパスして
  * 生の <div class="mermaid"> に置換する Remark プラグイン。
  */
@@ -44,7 +53,7 @@ function remarkMermaid() {
           '    </svg>',
           '    <span class="text-xs text-muted-foreground/60 font-mono">Rendering diagram...</span>',
           '  </div>',
-          `  <div class="mermaid opacity-0 transition-opacity duration-500 w-full flex justify-center py-6 px-4">${node.value}</div>`,
+          `  <div class="mermaid opacity-0 transition-opacity duration-500 w-full flex justify-center py-6 px-4">${escapeMermaidSource(node.value)}</div>`,
           '</div>',
         ].join('\n');
 

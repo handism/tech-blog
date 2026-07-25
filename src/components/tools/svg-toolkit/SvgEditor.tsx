@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Clipboard, Eye } from 'lucide-react';
+import { Clipboard, Download, Eye, Palette, Zap } from 'lucide-react';
 import { sanitizeSvg, optimizeSvg } from '@/src/lib/svg-utils';
 import CopyButton from '@/src/components/CopyButton';
 import { useIsClient } from '@/src/hooks/useIsClient';
@@ -63,7 +63,7 @@ export default function SvgEditor() {
           <div className="theme-card p-5 md:p-6 flex flex-col h-[400px]">
             <div className="flex justify-between items-center mb-4">
               <label htmlFor="svg-input" className="text-sm font-bold text-text">
-                📥 SVGコード入力
+                <Download className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> SVGコード入力
               </label>
               <button
                 onClick={handleFormatInput}
@@ -84,7 +84,7 @@ export default function SvgEditor() {
           {/* カラー置換パネル */}
           <div className="theme-card p-5 md:p-6 space-y-4">
             <h3 className="text-sm font-bold text-text border-b border-border pb-1.5 flex items-center gap-1.5">
-              🎨 カラー一括置換テスト
+              <Palette className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> カラー一括置換テスト
             </h3>
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -166,7 +166,10 @@ export default function SvgEditor() {
           {/* 最適化コード出力 */}
           <div className="theme-card p-5 md:p-6 flex flex-col h-[280px] relative min-h-0">
             <h3 className="text-sm font-bold text-text border-b-2 border-border pb-2 flex items-center justify-between mb-4">
-              <span>⚡ 最適化結果 (圧縮コード)</span>
+              <span>
+                <Zap className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> 最適化結果
+                (圧縮コード)
+              </span>
               {outputSvg && (
                 <CopyButton
                   value={outputSvg}

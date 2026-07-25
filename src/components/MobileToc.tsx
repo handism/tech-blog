@@ -2,7 +2,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import type { TocItem } from '@/src/types/post';
 
 interface MobileTocProps {
@@ -122,7 +122,7 @@ export default function MobileToc({ toc }: MobileTocProps) {
               className="p-2 text-text/50 hover:text-text focus:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-lg"
               aria-label="目次を閉じる"
             >
-              ✕
+              <X className="w-full h-full" />
             </button>
           </div>
           {renderTocList()}

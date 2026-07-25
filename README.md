@@ -16,7 +16,7 @@
   - **🛠️ 開発者向けツール (13種)**: Markup & Markdown Editor, URL & Web Utilities, Code Helper (正規表現・Curl・HTML to JSX), Developer Calculator (電卓・進数変換・アスペクト比), CSS & Layout Toolkit (CSS/Flexbox/Gridシミュレーター), AWS Architecture Diagram Generator, Git Utilities, Web & Network Utilities, Time & Schedule Utilities, Color Utilities (コード変換・コントラスト), QR Code Generator, Keyboard Event Visualizer, Pomodoro Focus Timer
   - **🧖 外部ツール (2種)**: Sauna Itta, Sauna Simulator
 - About・プライバシーポリシー・HTML Sitemap・RSS フィードページを提供
-- **Scraps**（`/scraps`）：Twitter/Mastodon 感覚で日々の気づきやエラー解決ログを短く残せる技術メモ欄。独立したネオ・ブルータリズム風のカード形式で表示されます。`scraps/` ディレクトリに Markdown を置くだけで公開される
+- **Scraps**（`/scraps`）：Twitter/Mastodon 感覚で日々の気づきやエラー解決ログを短く残せる技術メモ欄。Tools / 学習ガイドと共通のダッシュボードレイアウト（ヒーローヘッダー＋キーワード検索＋タグフィルタ）でカード表示されます。`scraps/` ディレクトリに Markdown を置くだけで公開される
 - **学習ガイド**（`/learning`）：Docker、GitHub、Webセキュリティ、API設計、Linux & Bash、ネットワークの基本、CI/CDパイプライン、システムデザイン、Gitアドバンスド、AWSクラウド、フロントエンドテスト、モダンCSS、データベース、Next.js、パフォーマンス、React Hooks、TypeScript などの各種仕組みを順序立てて（タイムライン状のロードマップ形式で）学べる体系的な学習コンテンツ。Mermaid.jsによる動的な図解ダイアグラム表示に対応しているほか、LocalStorageを利用した読了進捗管理（進捗率・完了チェック）や、各チャプターの末尾で挑戦できるインタラクティブな「理解度クイズ」機能を搭載しています。
 - **AWS Patterns**（`/patterns`）：AWSのベストプラクティスに沿って設計された、22種類の実践的な CloudFormation テンプレート（IaC）とアーキテクチャ図（Draw.io）のギャラリーカタログ。ShikiによるYAMLコードプレビュー・コピー・ダウンロードや、SVG構成図を画面いっぱいに拡大表示するインタラクティブなライトボックス、デプロイ用CLIコマンド生成機能を備えています。
 
@@ -213,9 +213,12 @@ draft: true # true の場合、本番ビルド時に除外される（省略可�
 {
   "title": "コースのタイトル",
   "description": "コースの説明文",
-  "emoji": "🐳"
+  "icon": "container",
+  "category": "infra"
 }
 ```
+
+`icon` には Lucide アイコン名（`src/config/learning-icons.ts` に登録されたキー）を指定します。未登録・未指定の場合は `book` にフォールバックします。
 
 各チャプター（Markdown）の Frontmatter：
 

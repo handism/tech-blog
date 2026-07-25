@@ -2,33 +2,30 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { RefreshCw } from 'lucide-react';
+import { FileText, MessageSquare, RefreshCw, Rocket, Sprout } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
 
 // コミットタイプの定義
 const COMMIT_TYPES = [
-  { value: 'feat', label: 'feat (新機能追加)', emoji: '✨' },
-  { value: 'fix', label: 'fix (バグ修正)', emoji: '🐛' },
-  { value: 'docs', label: 'docs (ドキュメントのみの変更)', emoji: '📝' },
+  { value: 'feat', label: 'feat (新機能追加)' },
+  { value: 'fix', label: 'fix (バグ修正)' },
+  { value: 'docs', label: 'docs (ドキュメントのみの変更)' },
   {
     value: 'style',
     label: 'style (コードの意味に影響を与えない修正 - 空白、フォーマットなど)',
-    emoji: '💄',
   },
   {
     value: 'refactor',
     label: 'refactor (コードリファクタリング - 機能追加もバグ修正も行わない変更)',
-    emoji: '♻️',
   },
-  { value: 'perf', label: 'perf (パフォーマンス向上)', emoji: '⚡' },
-  { value: 'test', label: 'test (テストの追加や修正)', emoji: '✅' },
+  { value: 'perf', label: 'perf (パフォーマンス向上)' },
+  { value: 'test', label: 'test (テストの追加や修正)' },
   {
     value: 'chore',
     label: 'chore (ビルドプロセスやツールの変更 - 依存関係アップデートなど)',
-    emoji: '🔧',
   },
-  { value: 'ci', label: 'ci (CI設定やスクリプトの変更)', emoji: '👷' },
-  { value: 'revert', label: 'revert (以前のコミットの取り消し)', emoji: '⏪' },
+  { value: 'ci', label: 'ci (CI設定やスクリプトの変更)' },
+  { value: 'revert', label: 'revert (以前のコミットの取り消し)' },
 ];
 
 export default function GitCommitHelper() {
@@ -114,7 +111,7 @@ export default function GitCommitHelper() {
         <div className="theme-card p-6 space-y-4 border-2 border-border bg-card shadow-[4px_4px_0px_0px_var(--border)]">
           <div className="flex justify-between items-center border-b-2 border-border/20 pb-3">
             <h3 className="font-extrabold text-sm flex items-center gap-1.5">
-              <span>📝</span> パラメータ入力
+              <FileText className="w-4 h-4 shrink-0" /> パラメータ入力
             </h3>
             <button
               onClick={resetAll}
@@ -141,7 +138,7 @@ export default function GitCommitHelper() {
             >
               {COMMIT_TYPES.map((t) => (
                 <option key={t.value} value={t.value}>
-                  {t.emoji} {t.label}
+                  {t.label}
                 </option>
               ))}
             </select>
@@ -249,7 +246,7 @@ export default function GitCommitHelper() {
         <div className="theme-card p-5 bg-card border-2 border-border shadow-[4px_4px_0px_0px_var(--border)] space-y-3">
           <div className="flex justify-between items-center">
             <h4 className="text-xs font-black uppercase tracking-wider text-text/50">
-              🌱 推奨ブランチ名
+              <Sprout className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> 推奨ブランチ名
             </h4>
             {branchName && (
               <CopyButton
@@ -273,7 +270,8 @@ export default function GitCommitHelper() {
         <div className="theme-card p-5 bg-card border-2 border-border shadow-[4px_4px_0px_0px_var(--border)] space-y-3">
           <div className="flex justify-between items-center">
             <h4 className="text-xs font-black uppercase tracking-wider text-text/50">
-              💬 コミットメッセージ
+              <MessageSquare className="w-4 h-4 inline-block align-[-0.15em] mr-1" />{' '}
+              コミットメッセージ
             </h4>
             {fullCommitMessage && (
               <CopyButton
@@ -297,7 +295,8 @@ export default function GitCommitHelper() {
         <div className="theme-card p-5 bg-card border-2 border-border shadow-[4px_4px_0px_0px_var(--border)] space-y-3">
           <div className="flex justify-between items-center">
             <h4 className="text-xs font-black uppercase tracking-wider text-text/50">
-              🚀 Git コマンド (まとめて実行用)
+              <Rocket className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> Git コマンド
+              (まとめて実行用)
             </h4>
             {gitCommands && (
               <CopyButton

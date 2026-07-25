@@ -2,16 +2,21 @@
 
 import { useState, useEffect, useMemo, useRef, useId } from 'react';
 import {
+  AlertCircle,
+  ArrowRight,
+  BookOpen,
+  Clipboard,
   Cloud,
-  Plus,
-  Trash2,
   Download,
-  RefreshCw,
+  FileCode,
   Layers,
   Network,
-  BookOpen,
-  AlertCircle,
-  FileCode,
+  Package,
+  Plus,
+  RefreshCw,
+  Shield,
+  Trash2,
+  Zap,
 } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
 import { loadMermaid } from '@/src/lib/mermaid-loader';
@@ -353,7 +358,7 @@ export default function AwsDiagramGenerator() {
                   : 'border-transparent text-text/60 hover:text-text'
               }`}
             >
-              📦 リソース
+              <Package className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> リソース
             </button>
             <button
               onClick={() => setActiveTab('subgraphs')}
@@ -363,7 +368,7 @@ export default function AwsDiagramGenerator() {
                   : 'border-transparent text-text/60 hover:text-text'
               }`}
             >
-              🛡️ グループ
+              <Shield className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> グループ
             </button>
             <button
               onClick={() => setActiveTab('edges')}
@@ -373,7 +378,7 @@ export default function AwsDiagramGenerator() {
                   : 'border-transparent text-text/60 hover:text-text'
               }`}
             >
-              ⚡ 接続線
+              <Zap className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> 接続線
             </button>
             <button
               onClick={() => setActiveTab('templates')}
@@ -383,7 +388,7 @@ export default function AwsDiagramGenerator() {
                   : 'border-transparent text-text/60 hover:text-text'
               }`}
             >
-              📋 テンプレート
+              <Clipboard className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> テンプレート
             </button>
           </div>
 
@@ -720,9 +725,9 @@ export default function AwsDiagramGenerator() {
                       onChange={(e) => setEdgeStyle(e.target.value as AWSEdge['style'])}
                       className="w-full px-2.5 py-1.5 text-xs border-2 border-border rounded-lg bg-card text-text font-bold"
                     >
-                      <option value="solid">実線 (──➔)</option>
-                      <option value="dashed">破線 (- - ➔)</option>
-                      <option value="bold">太線 (━━➔)</option>
+                      <option value="solid">実線 (──→)</option>
+                      <option value="dashed">破線 (- - →)</option>
+                      <option value="bold">太線 (━━→)</option>
                     </select>
                   </div>
                 </div>
@@ -761,10 +766,10 @@ export default function AwsDiagramGenerator() {
                             </span>
                             <span className="text-text/40 text-[10px] font-mono">
                               {edge.style === 'solid'
-                                ? '──➔'
+                                ? '──→'
                                 : edge.style === 'dashed'
-                                  ? '- - ➔'
-                                  : '━━➔'}
+                                  ? '- - →'
+                                  : '━━→'}
                             </span>
                             {edge.label && (
                               <span className="bg-secondary px-1.5 py-0.5 rounded text-[10px] font-bold border border-border">
@@ -819,7 +824,8 @@ export default function AwsDiagramGenerator() {
                     <h4 className="text-sm font-extrabold text-text group-hover:text-accent transition-colors flex items-center justify-between">
                       <span>{t.name}</span>
                       <span className="text-xs font-extrabold text-text/40 group-hover:translate-x-0.5 transition-transform flex items-center gap-0.5">
-                        適用 ➔
+                        適用
+                        <ArrowRight className="w-3 h-3" />
                       </span>
                     </h4>
                     <p className="text-[11px] text-text/75 mt-1.5 leading-relaxed font-medium">

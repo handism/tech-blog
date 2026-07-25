@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import type { LearningQuiz } from '@/src/types/learning';
-import { CheckCircle2, XCircle, HelpCircle, ArrowRight } from 'lucide-react';
+import { ArrowRight, CheckCircle2, HelpCircle, PartyPopper, XCircle } from 'lucide-react';
 
 interface Props {
   quiz: LearningQuiz;
@@ -122,8 +122,15 @@ export default function ChapterQuiz({ quiz, onCorrect }: Props) {
                 <XCircle className="w-6 h-6 text-rose-500 shrink-0 mt-0.5" />
               )}
               <div>
-                <h4 className="font-black text-base mb-1">
-                  {isCorrect ? '正解です！🎉' : '残念、不正解です。'}
+                <h4 className="font-black text-base mb-1 flex items-center gap-1">
+                  {isCorrect ? (
+                    <>
+                      正解です！
+                      <PartyPopper className="w-4 h-4 shrink-0" />
+                    </>
+                  ) : (
+                    '残念、不正解です。'
+                  )}
                 </h4>
                 <p className="text-sm leading-relaxed font-medium">{quiz.explanation}</p>
               </div>

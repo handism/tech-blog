@@ -22,7 +22,7 @@ Flexboxは、**「1次元（縦方向または横方向のいずれか一方向�
 
 ```mermaid
 graph LR
-    subgraph FlexContainer [Flexコンテナ (flex-direction: row)]
+    subgraph FlexContainer ["Flexコンテナ (flex-direction: row)"]
         A[Item 1] --> B[Item 2] --> C[Item 3]
     end
     style FlexContainer fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a
@@ -62,7 +62,7 @@ CSS Gridは、**「2次元（行と列の両方）」** のレイアウトを同
 
 ```mermaid
 graph TD
-    subgraph GridContainer [Gridコンテナ (行と列)]
+    subgraph GridContainer ["Gridコンテナ (行と列)"]
         direction TB
         G1[Header / 行1]
         subgraph ColContainer [行2]
@@ -120,11 +120,11 @@ graph TD
 
 ```mermaid
 graph TD
-    subgraph Viewport [ブラウザ幅 1200px]
-        subgraph Main [メインエリア (幅800px)]
+    subgraph Viewport ["ブラウザ幅 1200px"]
+        subgraph Main ["メインエリア (幅800px)"]
             C1[カード: 横長表示 / 写真左・テキスト右]
         end
-        subgraph Sidebar [サイドバー (幅300px)]
+        subgraph Sidebar ["サイドバー (幅300px)"]
             C2[カード: 縦長表示 / 写真上・テキスト下]
         end
     end

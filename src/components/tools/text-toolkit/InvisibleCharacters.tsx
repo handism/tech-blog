@@ -1,7 +1,16 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Eye, Clipboard, Trash2, AlertTriangle, Info } from 'lucide-react';
+import {
+  AlertTriangle,
+  ChartColumn,
+  Clipboard,
+  Eraser,
+  Eye,
+  FileText,
+  Info,
+  Trash2,
+} from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
 
 // 特殊文字の定義
@@ -154,7 +163,7 @@ export default function InvisibleCharacters() {
                 htmlFor="raw-textarea"
                 className="text-sm font-extrabold flex items-center gap-1.5"
               >
-                <span>📝</span> 対象テキストを入力
+                <FileText className="w-4 h-4 shrink-0" /> 対象テキストを入力
               </label>
               <div className="flex gap-2">
                 <button
@@ -186,7 +195,7 @@ export default function InvisibleCharacters() {
           {/* クリーンアップオプション */}
           <div className="theme-card p-5 bg-card border-2 border-border space-y-4">
             <h3 className="text-sm font-extrabold border-b border-border/10 pb-2">
-              🧽 クリーンアップ設定
+              <Eraser className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> クリーンアップ設定
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-bold">
               <label className="flex items-center gap-2 cursor-pointer">
@@ -256,7 +265,9 @@ export default function InvisibleCharacters() {
           {/* 特殊文字検出統計 */}
           <div className="theme-card p-5 bg-card border-2 border-border space-y-4">
             <h3 className="text-sm font-extrabold border-b border-border/10 pb-2 flex items-center justify-between">
-              <span>📊 検出統計</span>
+              <span>
+                <ChartColumn className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> 検出統計
+              </span>
               {detectionStats.totalCount > 0 ? (
                 <span className="text-xs bg-red-100 dark:bg-red-950 text-red-600 dark:text-red-400 px-2 py-0.5 rounded font-black flex items-center gap-1">
                   <AlertTriangle className="w-3.5 h-3.5" />

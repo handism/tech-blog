@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { Download, RefreshCw, Trash2 } from 'lucide-react';
+import { Download, Image as ImageIcon, RefreshCw, Settings, Trash2 } from 'lucide-react';
 import FileDropZone from '../shared/FileDropZone';
 
 type ImageState = {
@@ -179,7 +179,7 @@ export default function ImageOptimizer() {
             <div className="theme-card p-6 space-y-5">
               <div className="flex justify-between items-center border-b-2 border-border pb-3">
                 <h3 className="font-extrabold text-sm flex items-center gap-1.5">
-                  <span>⚙️</span> 最適化設定
+                  <Settings className="w-4 h-4 shrink-0" /> 最適化設定
                 </h3>
                 <button
                   onClick={clearImage}
@@ -373,7 +373,7 @@ export default function ImageOptimizer() {
           ) : (
             /* 画像未選択時のダミープレビュー表示 */
             <div className="theme-card p-8 bg-secondary/30 border-dashed border-2 border-border/30 h-full flex flex-col items-center justify-center text-center">
-              <span className="text-4xl mb-3">🖼️</span>
+              <ImageIcon className="w-4 h-4 shrink-0" />
               <h4 className="font-extrabold text-sm text-text/40 mb-1">プレビューエリア</h4>
               <p className="text-xs text-text/30 font-medium max-w-xs">
                 画像をアップロードすると、ここに元画像と圧縮後の画像が表示され、ファイルサイズを比較できます。

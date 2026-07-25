@@ -1,6 +1,7 @@
 // src/components/LearningLayout.tsx
 'use client';
 
+import LearningCourseIcon from '@/src/components/LearningCourseIcon';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import type { TocItem } from '@/src/types/post';
@@ -69,7 +70,7 @@ export default function LearningLayout({
             href={`/learning/${course.id}`}
             className="hover:text-accent flex items-center gap-1 transition-colors"
           >
-            <span>{course.emoji}</span>
+            <LearningCourseIcon name={course.icon} className="h-4 w-4 text-accent shrink-0" />
             <span>{course.title}</span>
           </Link>
         </div>
@@ -92,7 +93,7 @@ export default function LearningLayout({
           <div className="sticky top-28 space-y-4 max-h-[calc(100vh-160px)] overflow-y-auto pr-2">
             <div className="theme-card p-5">
               <div className="flex items-center gap-2 mb-4 pb-3 border-b-2 border-border">
-                <span className="text-2xl leading-none">{course.emoji}</span>
+                <LearningCourseIcon name={course.icon} className="h-6 w-6 text-accent shrink-0" />
                 <h2 className="font-extrabold text-base text-text leading-tight">{course.title}</h2>
               </div>
               {renderChapterList()}
@@ -128,7 +129,7 @@ export default function LearningLayout({
           <div className="relative bg-card w-80 max-w-[85vw] h-full p-6 border-r-3 border-border shadow-2xl flex flex-col">
             <div className="flex items-center justify-between mb-6 pb-4 border-b-2 border-border">
               <div className="flex items-center gap-2">
-                <span className="text-xl">{course.emoji}</span>
+                <LearningCourseIcon name={course.icon} className="h-5 w-5 text-accent shrink-0" />
                 <span className="font-extrabold text-text leading-tight">{course.title}</span>
               </div>
               <button

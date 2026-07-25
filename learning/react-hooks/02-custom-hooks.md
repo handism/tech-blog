@@ -32,13 +32,13 @@ graph LR
     UI[JSX UIの描画のみに専念]
   end
 
-  subgraph CustomHook [カスタムフック: useWindowSize]
+  subgraph CustomHook ["カスタムフック: useWindowSize"]
     State[useState: width / height]
     Effect[useEffect: resizeイベント監視]
     State <--> Effect
   end
 
-  CustomHook -->|状態データを返す: { width, height }| Component
+  CustomHook -->|"状態データを返す: { width, height }"| Component
   Component -->|トリガー/引数| CustomHook
 
   style Component fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1e3a8a

@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { Info } from 'lucide-react';
+import { Info, Shield } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
 
 type ConfigTab = 'nginx' | 'apache' | 'vercel' | 'netlify';
@@ -142,7 +142,8 @@ ${lines.join('\n')}`;
       <div className="lg:col-span-6 space-y-6">
         <div className="theme-card p-5 bg-card border-2 border-border shadow-[4px_4px_0px_0px_var(--border)] space-y-5">
           <h3 className="font-extrabold text-sm border-b-2 border-border/20 pb-3">
-            🛡️ セキュリティヘッダー設定
+            <Shield className="w-4 h-4 inline-block align-[-0.15em] mr-1" />{' '}
+            セキュリティヘッダー設定
           </h3>
 
           {/* Content-Security-Policy (CSP) */}

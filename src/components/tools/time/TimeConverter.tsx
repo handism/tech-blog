@@ -2,7 +2,7 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { RefreshCw, Play, Pause, Globe } from 'lucide-react';
+import { ArrowRight, Clock, Globe, Pause, Play, RefreshCw } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
 
 const TIMEZONES = [
@@ -215,7 +215,8 @@ export default function TimeConverter() {
           <div className="theme-card p-6 bg-card border-2 border-border shadow-[4px_4px_0px_0px_var(--border)] space-y-4">
             <div className="border-b-2 border-border/20 pb-3">
               <h2 className="text-base font-extrabold flex items-center gap-2">
-                🕰️ Timestamp ➔ 日時 変換
+                <Clock className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> Timestamp{' '}
+                <ArrowRight className="w-3.5 h-3.5 inline-block align-[-0.15em] mx-1" /> 日時 変換
               </h2>
             </div>
 
@@ -317,7 +318,9 @@ export default function TimeConverter() {
           <div className="theme-card p-6 bg-card border-2 border-border shadow-[4px_4px_0px_0px_var(--border)] space-y-4">
             <div className="border-b-2 border-border/20 pb-3">
               <h2 className="text-base font-extrabold flex items-center gap-2">
-                🕰️ 日時 ➔ Timestamp 変換
+                <Clock className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> 日時{' '}
+                <ArrowRight className="w-3.5 h-3.5 inline-block align-[-0.15em] mx-1" /> Timestamp
+                変換
               </h2>
             </div>
 
@@ -427,7 +430,10 @@ export default function TimeConverter() {
           <div className="theme-card p-6 bg-card border-2 border-border shadow-[4px_4px_0px_0px_var(--border)] space-y-4">
             <div className="border-b-2 border-border/20 pb-3 flex items-center gap-2">
               <Globe className="w-4 h-4 text-accent" />
-              <h2 className="text-base font-extrabold">🌐 世界主要都市の現在時刻</h2>
+              <h2 className="text-base font-extrabold">
+                <Globe className="w-4 h-4 inline-block align-[-0.15em] mr-1" />{' '}
+                世界主要都市の現在時刻
+              </h2>
             </div>
 
             <div className="space-y-3 max-h-[480px] overflow-y-auto pr-1">

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { Sliders, RefreshCw, Plus, Minus } from 'lucide-react';
+import { Hand, LayoutGrid, Minus, Plus, RefreshCw, Sliders, Wrench } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
 import { generateFlexboxGridCode } from './flexbox-grid-utils';
 
@@ -226,7 +226,7 @@ export default function FlexboxGrid() {
                 : 'border-transparent text-text/60'
             }`}
           >
-            <span>👉</span> Flexbox
+            <Hand className="w-4 h-4 shrink-0" /> Flexbox
           </button>
           <button
             onClick={() => {
@@ -239,7 +239,7 @@ export default function FlexboxGrid() {
                 : 'border-transparent text-text/60'
             }`}
           >
-            <span>🍱</span> CSS Grid
+            <LayoutGrid className="w-4 h-4 shrink-0" /> CSS Grid
           </button>
         </div>
 
@@ -366,7 +366,8 @@ export default function FlexboxGrid() {
               <div className="mt-4 p-4 bg-secondary/80 border-2 border-accent rounded-xl text-xs font-bold space-y-3 animation-fade-in z-20">
                 <div className="flex justify-between items-center border-b border-border/10 pb-1.5">
                   <span className="text-accent font-black">
-                    🔧 Item {activeItemId} の個別スタイル設定
+                    <Wrench className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> Item{' '}
+                    {activeItemId} の個別スタイル設定
                   </span>
                   <button
                     onClick={() => setActiveItemId(null)}

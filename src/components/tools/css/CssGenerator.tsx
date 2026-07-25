@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Layers, Sparkles, Sliders } from 'lucide-react';
+import { Layers, Sliders, Sparkles } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
 
 export default function CssGenerator() {
@@ -456,7 +456,7 @@ border-radius: 24px;`;
                   className="w-64 p-6 border border-border/30 text-text flex flex-col gap-3 transition-all duration-300 hover:scale-105"
                 >
                   <div className="w-10 h-10 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-lg font-bold">
-                    ✨
+                    <Sparkles className="w-full h-full" />
                   </div>
                   <h3 className="font-extrabold text-lg tracking-tight">Smooth Shadow Card</h3>
                   <p className="text-text/70 text-xs leading-relaxed">

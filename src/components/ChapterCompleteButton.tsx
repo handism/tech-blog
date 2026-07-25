@@ -1,7 +1,7 @@
 'use client';
 
 import { useLearningProgress } from '@/src/hooks/useLearningProgress';
-import { CheckCircle2, Lock, Sparkles } from 'lucide-react';
+import { CheckCircle2, Lock, PartyPopper, Sparkles } from 'lucide-react';
 
 interface Props {
   courseId: string;
@@ -34,7 +34,9 @@ export default function ChapterCompleteButton({ courseId, chapterSlug, isLocked 
           className="w-full flex items-center justify-center gap-2 p-4 bg-emerald-500 text-white font-extrabold rounded-xl border-3 border-border shadow-[4px_4px_0px_0px_var(--border)] dark:shadow-[4px_4px_0px_0px_var(--accent)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[3px_3px_0px_0px_var(--border)] active:translate-x-[4px] active:translate-y-[4px] active:shadow-[0px_0px_0px_0px_var(--border)] transition-all cursor-pointer"
         >
           <CheckCircle2 className="w-5 h-5" />
-          この章は読了済みです！ 🎉（クリックで未完了に戻す）
+          この章は読了済みです！
+          <PartyPopper className="w-4 h-4 shrink-0" />
+          （クリックで未完了に戻す）
         </button>
       ) : (
         <button

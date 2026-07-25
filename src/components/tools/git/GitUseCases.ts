@@ -1,4 +1,5 @@
 // src/components/tools/git/GitUseCases.ts
+import { ChartColumn, Cloud, FolderOpen, GitBranch, Save, Undo2 } from 'lucide-react';
 
 export interface Param {
   key: string;
@@ -18,12 +19,12 @@ export interface GitUseCase {
 }
 
 export const CATEGORIES = [
-  { id: 'all', name: 'すべて', emoji: '📂' },
-  { id: 'commit', name: 'コミット', emoji: '💾' },
-  { id: 'branch', name: 'ブランチ操作', emoji: '🌿' },
-  { id: 'undo', name: '取り消し・復旧', emoji: '⚠️' },
-  { id: 'remote', name: 'リモート同期', emoji: '☁️' },
-  { id: 'history', name: '履歴・ログ', emoji: '📊' },
+  { id: 'all', name: 'すべて', icon: FolderOpen },
+  { id: 'commit', name: 'コミット', icon: Save },
+  { id: 'branch', name: 'ブランチ操作', icon: GitBranch },
+  { id: 'undo', name: '取り消し・復旧', icon: Undo2 },
+  { id: 'remote', name: 'リモート同期', icon: Cloud },
+  { id: 'history', name: '履歴・ログ', icon: ChartColumn },
 ] as const;
 
 export const USE_CASES: GitUseCase[] = [

@@ -37,7 +37,7 @@ export interface LearningCourseMeta {
   id: string; // コースID (ディレクトリ名)
   title: string; // コースタイトル
   description: string; // コース概要
-  emoji: string; // 表示用絵文字
+  icon: string; // 表示用アイコン名（src/config/learning-icons.ts で解決）
   category: string; // カテゴリ
 }
 

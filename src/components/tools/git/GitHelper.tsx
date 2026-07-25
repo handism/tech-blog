@@ -105,7 +105,7 @@ export default function GitHelper() {
                   }
                 `}
               >
-                <span>{cat.emoji}</span>
+                <cat.icon className="w-3.5 h-3.5 shrink-0" />
                 <span>{cat.name}</span>
               </button>
             );

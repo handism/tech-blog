@@ -40,7 +40,7 @@ graph TD
     email_p[email?: string]
   end
 
-  subgraph Pick_Type [Pick&lt;User, 'id' | 'name'&gt;]
+  subgraph Pick_Type ["Pick&lt;User, 'id' | 'name'&gt;"]
     id_k[id: number]
     name_k[name: string]
   end

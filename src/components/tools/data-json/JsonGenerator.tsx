@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Plus, Trash2, Download, Play } from 'lucide-react';
+import { ChartColumn, Clipboard, Download, Play, Plus, Trash2 } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
 
 type FieldType = 'id' | 'uuid' | 'name' | 'email' | 'date' | 'boolean' | 'number' | 'string';
@@ -164,7 +164,7 @@ export default function JsonGenerator() {
         <div className="theme-card p-5 bg-card space-y-5">
           <div className="flex justify-between items-center border-b-2 border-border pb-3">
             <h3 className="font-extrabold text-sm flex items-center gap-1.5">
-              <span>📋</span> スキーマ設計
+              <Clipboard className="w-4 h-4 shrink-0" /> スキーマ設計
             </h3>
             <div className="flex items-center gap-2">
               <label htmlFor="record-count" className="text-xs font-bold whitespace-nowrap">
@@ -307,7 +307,7 @@ export default function JsonGenerator() {
             />
           ) : (
             <div className="flex-1 flex flex-col items-center justify-center text-text/40 bg-secondary/30 border-2 border-dashed border-border/20 rounded-xl text-center p-6">
-              <span className="text-3xl mb-2">📊</span>
+              <ChartColumn className="w-4 h-4 shrink-0" />
               <p className="text-xs font-bold mb-1">左側で構造を設定して「生成」をクリック</p>
               <p className="text-[10px] text-text/50">数千件のランダムデータを数秒で構築します</p>
             </div>

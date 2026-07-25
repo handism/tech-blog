@@ -1,4 +1,5 @@
 // app/aws-patterns/page.tsx
+import { Cloud } from 'lucide-react';
 import { getAllAwsPatternMetas } from '@/src/lib/aws-gallery-server';
 import { siteConfig } from '@/src/config/site';
 import type { Metadata } from 'next';
@@ -27,7 +28,7 @@ export default async function AwsBestPracticesPage() {
           </span>
         </div>
         <h1 className="text-3xl md:text-5xl font-black text-text tracking-tight">
-          ☁️ AWS Patterns
+          <Cloud className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> AWS Patterns
         </h1>
         <p className="text-text/70 font-medium max-w-2xl mx-auto leading-relaxed text-sm md:text-base">
           AWSのベストプラクティスに沿って設計されたインフラ定義テンプレート（CloudFormation）とアーキテクチャ図（Draw.io）のギャラリーです。コピー＆ペーストやダウンロードですぐに開発に活用できます。

@@ -2,7 +2,7 @@
 
 import { useLearningProgress } from '@/src/hooks/useLearningProgress';
 import { useIsClient } from '@/src/hooks/useIsClient';
-import { Trophy } from 'lucide-react';
+import { PartyPopper, Trophy } from 'lucide-react';
 
 interface Props {
   courseId: string;
@@ -34,10 +34,15 @@ export default function RoadmapProgressBar({ courseId, totalChapters }: Props) {
           </div>
           <div>
             <h3 className="font-black text-text text-base leading-tight">コース進捗状況</h3>
-            <p className="text-xs text-text/50 font-bold mt-0.5">
-              {percent === 100
-                ? '全章を完了しました！おめでとうございます！🎉'
-                : 'コース修了を目指して進めましょう！'}
+            <p className="text-xs text-text/50 font-bold mt-0.5 flex items-center gap-1">
+              {percent === 100 ? (
+                <>
+                  全章を完了しました！おめでとうございます！
+                  <PartyPopper className="w-3.5 h-3.5 shrink-0" />
+                </>
+              ) : (
+                'コース修了を目指して進めましょう！'
+              )}
             </p>
           </div>
         </div>

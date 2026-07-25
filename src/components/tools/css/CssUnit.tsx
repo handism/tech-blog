@@ -1,6 +1,7 @@
 // src/components/tools/css/CssUnit.tsx
 'use client';
 
+import { RefreshCw, Settings } from 'lucide-react';
 import { useState } from 'react';
 import CopyButton from '@/src/components/CopyButton';
 
@@ -174,7 +175,9 @@ export default function CssUnit() {
       <div className="lg:col-span-1 space-y-6">
         <div className="theme-card p-5 md:p-6 border-2 border-border shadow-[4px_4px_0px_0px_var(--border)] bg-card">
           <h2 className="text-sm font-black text-text mb-4 border-b-2 border-border pb-2 flex items-center gap-2">
-            <span>⚙️ 基準値の設定</span>
+            <span>
+              <Settings className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> 基準値の設定
+            </span>
           </h2>
           <div className="space-y-4">
             <div>
@@ -244,7 +247,10 @@ export default function CssUnit() {
       <div className="lg:col-span-2">
         <div className="theme-card p-5 md:p-6 border-2 border-border shadow-[4px_4px_0px_0px_var(--border)] bg-card">
           <h2 className="text-sm font-black text-text mb-6 border-b-2 border-border pb-2 flex items-center justify-between">
-            <span>🔄 相互変換 (任意の値を編集してください)</span>
+            <span>
+              <RefreshCw className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> 相互変換
+              (任意の値を編集してください)
+            </span>
             <button
               onClick={clearAllValues}
               className="theme-btn px-3 py-1 text-xs text-text bg-secondary cursor-pointer shadow-[1.5px_1.5px_0px_0px_var(--border)]"

@@ -1,7 +1,7 @@
 // app/scraps/page.tsx
-import ScrapListPage from '@/src/components/ScrapListPage';
+import ScrapsDashboard from '@/src/components/ScrapsDashboard';
 import { siteConfig } from '@/src/config/site';
-import { getBlogViewContext } from '@/src/lib/posts-view';
+import { getTagsWithCount } from '@/src/lib/post-taxonomy';
 import { getAllScraps } from '@/src/lib/scraps-server';
 import type { Metadata } from 'next';
 
@@ -15,6 +15,8 @@ export const metadata: Metadata = {
 
 export default async function ScrapsPage() {
   const scraps = await getAllScraps();
-  const { categoryCounts, tagCounts } = await getBlogViewContext();
-  return <ScrapListPage scraps={scraps} categoryCounts={categoryCounts} tagCounts={tagCounts} />;
+  // タグフィルタはスクラップ自身のタグから生成する（ブログ記事のタグとは別軸のため）
+  const tagCounts = getTagsWithCount(scraps);
+
+  return <ScrapsDashboard scraps={scraps} tagCounts={tagCounts} />;
 }

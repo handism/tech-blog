@@ -25,8 +25,30 @@ describe('renderPostMarkdown', () => {
     expect(html).toContain('class="mermaid-container');
     expect(html).toContain('class="mermaid-skeleton');
     expect(html).toContain('class="mermaid opacity-0');
-    expect(html).toContain('graph TD\nA --> B');
+    expect(html).toContain('graph TD\nA --&gt; B');
     expect(html).not.toContain('class="shiki"');
+  });
+
+  it('MermaidソースのHTML特殊文字をエスケープし、textContentで復元できること', async () => {
+    const source = 'graph TD\n  A["a &amp; b"] -->|"&lt;token&gt;"| B[終端<br/>改行]';
+    const { html } = await renderPostMarkdown('```mermaid\n' + source + '\n```');
+
+    // ブラウザに HTML として解釈されうる文字が生のまま残っていないこと
+    expect(html).toContain('A["a &amp;amp; b"]');
+    expect(html).toContain('&lt;br/&gt;');
+    expect(html).not.toContain('<br/>');
+
+    // textContent 相当（エンティティを1段デコード）で元のソースに戻ること
+    const rendered = html.slice(
+      html.indexOf('class="mermaid opacity-0'),
+      html.indexOf('</div>\n</div>')
+    );
+    const decoded = rendered
+      .slice(rendered.indexOf('>') + 1)
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&amp;/g, '&');
+    expect(decoded).toBe(source);
   });
 
   it('画像サイズ自動付与において、外部URLやデータURLはスキップされること', async () => {

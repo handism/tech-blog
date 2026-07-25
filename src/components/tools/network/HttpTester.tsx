@@ -2,7 +2,20 @@
 'use client';
 
 import { useState } from 'react';
-import { Send, Plus, Trash2, Clipboard, HelpCircle, AlertTriangle } from 'lucide-react';
+import {
+  AlertTriangle,
+  Antenna,
+  Clipboard,
+  Download,
+  HelpCircle,
+  KeyRound,
+  Package,
+  Plus,
+  Rocket,
+  Send,
+  Trash2,
+  TriangleAlert,
+} from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
 
 interface HeaderItem {
@@ -125,7 +138,10 @@ export default function HttpTester() {
       <div className="p-4 bg-amber-50 dark:bg-amber-950/20 border-2 border-amber-500 text-amber-800 dark:text-amber-300 rounded-2xl flex items-start gap-3 mb-6 shadow-sm">
         <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
         <div className="text-xs md:text-sm font-bold space-y-1">
-          <p>⚠️ CORS（オリジン間リソース共有）に関する重要なお知らせ</p>
+          <p>
+            <TriangleAlert className="w-4 h-4 inline-block align-[-0.15em] mr-1" />{' '}
+            CORS（オリジン間リソース共有）に関する重要なお知らせ
+          </p>
           <p className="font-medium opacity-90">
             本ツールは完全にブラウザ側（クライアントサイド）からリクエストを送信します。
             リクエスト先サーバーが CORS を許可していない（Access-Control-Allow-Origin
@@ -141,7 +157,9 @@ export default function HttpTester() {
             <div className="flex justify-between items-center border-b-2 border-border/20 pb-3">
               <h2 className="text-base font-extrabold flex items-center gap-1.5">
                 <Send className="w-4 h-4 text-accent" />
-                <span>📡 リクエスト構成</span>
+                <span>
+                  <Antenna className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> リクエスト構成
+                </span>
               </h2>
               <div className="flex gap-2">
                 <button
@@ -185,7 +203,8 @@ export default function HttpTester() {
             <div className="space-y-3">
               <div className="flex justify-between items-center">
                 <span className="text-xs font-black text-text/60 uppercase tracking-wider">
-                  🔑 リクエストヘッダー
+                  <KeyRound className="w-4 h-4 inline-block align-[-0.15em] mr-1" />{' '}
+                  リクエストヘッダー
                 </span>
                 <button
                   onClick={handleAddHeader}
@@ -233,7 +252,7 @@ export default function HttpTester() {
             {method !== 'GET' && (
               <div className="space-y-2">
                 <span className="text-xs font-black text-text/60 uppercase tracking-wider">
-                  📦 リクエストボディ
+                  <Package className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> リクエストボディ
                 </span>
                 <textarea
                   className="w-full h-[150px] p-3 border-2 border-border rounded-xl font-mono text-xs bg-card text-text focus:outline-none focus:ring-1 focus:ring-accent resize-none shadow-inner"
@@ -250,7 +269,14 @@ export default function HttpTester() {
               disabled={loading}
               className="w-full theme-btn py-3 bg-accent text-white border-accent font-extrabold cursor-pointer disabled:opacity-50 shadow-[3px_3px_0px_0px_var(--border)] active:translate-y-1 active:shadow-none"
             >
-              {loading ? '送信中...' : 'リクエスト送信 🚀'}
+              {loading ? (
+                '送信中...'
+              ) : (
+                <span className="inline-flex items-center justify-center gap-1.5">
+                  リクエスト送信
+                  <Rocket className="w-4 h-4" />
+                </span>
+              )}
             </button>
           </div>
         </div>
@@ -259,7 +285,9 @@ export default function HttpTester() {
         <div className="lg:col-span-6 space-y-6">
           <div className="theme-card p-5 md:p-6 flex flex-col h-[520px] border-2 border-border bg-card shadow-[4px_4px_0px_0px_var(--border)]">
             <h2 className="text-base font-extrabold text-text mb-4 border-b-2 border-border/20 pb-3 flex items-center justify-between">
-              <span>📥 レスポンス</span>
+              <span>
+                <Download className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> レスポンス
+              </span>
               {resStatus !== null && (
                 <span
                   className={`text-xs font-black px-3 py-1 rounded-lg border-2 border-border ${

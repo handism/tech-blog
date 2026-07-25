@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { RefreshCw } from 'lucide-react';
+import { Calculator, RefreshCw, Ruler } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
 import {
   calculateTargetDimension,
@@ -102,7 +102,7 @@ export default function AspectRatio() {
         <div className="theme-card p-5 bg-card space-y-4">
           <div className="flex justify-between items-center border-b-2 border-border pb-3">
             <h3 className="font-extrabold text-sm flex items-center gap-1.5">
-              <span>📐</span> 比率からサイズを計算
+              <Ruler className="w-4 h-4 shrink-0" /> 比率からサイズを計算
             </h3>
             <button
               onClick={resetAll}
@@ -237,7 +237,7 @@ export default function AspectRatio() {
         {/* モード2：サイズから比率 */}
         <div className="theme-card p-5 bg-card space-y-4">
           <h3 className="font-extrabold text-sm border-b-2 border-border pb-3 flex items-center gap-1.5">
-            <span>🧮</span> サイズから比率（約分）を計算
+            <Calculator className="w-4 h-4 shrink-0" /> サイズから比率（約分）を計算
           </h3>
           <fieldset className="grid grid-cols-2 gap-3 border-0 p-0 m-0">
             <legend className="sr-only">入力サイズ指定</legend>

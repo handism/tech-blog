@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Upload, Download, Clipboard } from 'lucide-react';
+import { Clipboard, Download, Sparkles, Upload } from 'lucide-react';
 import JSZip from 'jszip';
 import CopyButton from '@/src/components/CopyButton';
 import FileDropZone from '../shared/FileDropZone';
@@ -133,7 +133,7 @@ export default function FaviconGenerator() {
         <div className="lg:col-span-5 space-y-6">
           <div className="theme-card p-5 md:p-6 space-y-5">
             <h2 className="text-lg font-bold text-text border-b-2 border-border pb-2">
-              📤 画像のアップロード
+              <Upload className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> 画像のアップロード
             </h2>
 
             <FileDropZone
@@ -166,7 +166,10 @@ export default function FaviconGenerator() {
           {Object.keys(generatedIcons).length > 0 && (
             <div className="theme-card p-5 md:p-6 space-y-3">
               <div className="flex justify-between items-center">
-                <h3 className="text-sm font-bold text-text">📋 HTML &lt;head&gt; の設定</h3>
+                <h3 className="text-sm font-bold text-text">
+                  <Clipboard className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> HTML
+                  &lt;head&gt; の設定
+                </h3>
                 <CopyButton
                   value={htmlCode}
                   label=""
@@ -189,7 +192,10 @@ export default function FaviconGenerator() {
         <div className="lg:col-span-7">
           <div className="theme-card p-5 md:p-6 flex flex-col h-full min-h-[500px]">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 border-b-2 border-border pb-3">
-              <h2 className="text-lg font-bold text-text">✨ 生成結果プレビュー</h2>
+              <h2 className="text-lg font-bold text-text">
+                <Sparkles className="w-4 h-4 inline-block align-[-0.15em] mr-1" />{' '}
+                生成結果プレビュー
+              </h2>
               {Object.keys(generatedIcons).length > 0 && (
                 <button
                   onClick={downloadAllAsZip}
