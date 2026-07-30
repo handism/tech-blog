@@ -189,8 +189,7 @@ export default function FlexboxGrid() {
       alignItemsGrid,
       gridGap,
       itemCount,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      itemStyles: itemStyles as any, // alignSelf: React.CSSProperties['alignSelf'] is treated compatible enough
+      itemStyles,
     });
   }, [
     layoutMode,

@@ -1,8 +1,9 @@
+import React from 'react';
 export interface ItemStyle {
   id: number;
   flexGrow: number;
   flexShrink: number;
-  alignSelf: string;
+  alignSelf: React.CSSProperties['alignSelf'];
   gridColumn: string;
   gridRow: string;
 }

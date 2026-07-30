@@ -80,8 +80,7 @@ export default function SearchBox() {
     return () => {
       cancelled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [loadSearchIndex]);
 
   const tokenizedQuery = useMemo(() => {
     if (!debouncedQuery.trim()) return '';
