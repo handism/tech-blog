@@ -1,9 +1,10 @@
 'use client';
 
-import { useCallback, useMemo, useReducer, useState, useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { Delete, History, Keyboard, Trash2 } from 'lucide-react';
 import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 import CopyButton from '@/src/components/CopyButton';
+import { safeReadFromStorage, safeWriteToStorage } from '@/src/lib/storage';
 
 interface HistoryItem {
   id: string;
@@ -270,47 +271,32 @@ const BTN_STYLES: Record<string, string> = {
 export default function StandardCalculator() {
   const [calcState, dispatch] = useReducer(calcReducer, initialCalcState);
   const { formula, displayValue } = calcState;
-  const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [history, setHistory] = useState<HistoryItem[]>(() =>
+    safeReadFromStorage<HistoryItem[]>('calc_history', [])
+  );
   const { copy } = useCopyToClipboard();
 
-  // ローカルストレージから履歴を読み込む
-  useEffect(() => {
-    const saved = localStorage.getItem('calc_history');
-    if (saved) {
-      try {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setHistory(JSON.parse(saved));
-      } catch (e) {
-        console.error('Failed to parse calculator history', e);
-      }
-    }
-  }, []);
+  const handleEquals = useCallback(() => {
+    if (formula === '' || calcState.isCalculated) return;
 
-  // isCalculated が true になったタイミングで履歴を保存する（LocalStorage との同期副作用）
+    const result = evaluateFormula(formula);
+    dispatch({ type: 'EQUALS', result });
 
-  useEffect(() => {
-    if (!calcState.isCalculated) return;
-    const f = calcState.formula;
-    const dv = calcState.displayValue;
-    if (dv === 'Error' || dv === '0' || f === dv) return;
+    if (result === 'Error' || result === '0' || formula === result) return;
+
     const newItem: HistoryItem = {
       id: Math.random().toString(36).substring(2, 9),
-      formula: f,
-      result: dv,
+      formula,
+      result,
       timestamp: new Date().toISOString(),
     };
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+
     setHistory((prev) => {
       const newHistory = [newItem, ...prev].slice(0, 50);
-      localStorage.setItem('calc_history', JSON.stringify(newHistory));
+      safeWriteToStorage('calc_history', newHistory);
       return newHistory;
     });
-  }, [calcState.isCalculated, calcState.formula, calcState.displayValue]);
-
-  // handleEquals: dispatch のみに依存するため useRef 不要
-  const handleEquals = useCallback(() => {
-    dispatch({ type: 'EQUALS_TRIGGER' });
-  }, []);
+  }, [calcState.isCalculated, formula]);
 
   const handleCopy = useCallback(() => {
     if (displayValue !== 'Error') copy(displayValue);

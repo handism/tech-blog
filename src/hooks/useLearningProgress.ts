@@ -1,31 +1,16 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useIsClient } from './useIsClient';
+import { safeReadFromStorage, safeWriteToStorage } from '@/src/lib/storage';
 
 type ProgressData = Record<string, Record<string, boolean>>;
 
 export function useLearningProgress() {
-  const [progress, setProgress] = useState<ProgressData>({});
-  const [isLoaded, setIsLoaded] = useState(false);
-  const isClient = useIsClient();
-
-  // クライアントサイドでのマウント時にLocalStorageから読み込む
-  useEffect(() => {
-    if (!isClient) return;
-
-    const saved = localStorage.getItem('learning-progress');
-    if (saved) {
-      try {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setProgress(JSON.parse(saved));
-      } catch (e) {
-        console.error('Failed to parse learning progress:', e);
-      }
-    }
-
-    setIsLoaded(true);
-  }, [isClient]);
+  const [progress, setProgress] = useState<ProgressData>(() =>
+    safeReadFromStorage<ProgressData>('learning-progress', {})
+  );
+  const isLoaded = useIsClient();
 
   const toggleComplete = (courseId: string, chapterSlug: string) => {
     const currentCourseProgress = progress[courseId] || {};
@@ -40,7 +25,7 @@ export function useLearningProgress() {
     };
 
     setProgress(nextProgress);
-    localStorage.setItem('learning-progress', JSON.stringify(nextProgress));
+    safeWriteToStorage('learning-progress', nextProgress);
   };
 
   const isCompleted = (courseId: string, chapterSlug: string) => {

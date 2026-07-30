@@ -2,6 +2,7 @@
 import TagLink from '@/src/components/TagLink';
 import { formatDate } from '@/src/lib/utils';
 import type { Scrap } from '@/src/types/scrap';
+import DOMPurify from 'dompurify';
 
 type ScrapCardProps = {
   scrap: Scrap;
@@ -11,6 +12,10 @@ export default function ScrapCard({ scrap }: ScrapCardProps) {
   const formattedDate = scrap.date
     ? formatDate(scrap.date, { year: 'numeric', month: '2-digit', day: '2-digit' })
     : null;
+
+  const safeContent = DOMPurify.sanitize(scrap.content, {
+    USE_PROFILES: { html: true },
+  });
 
   // スマホでは本文の横幅が記事ページと大きく変わらないよう、カード内側の余白を詰める
   return (
@@ -28,7 +33,7 @@ export default function ScrapCard({ scrap }: ScrapCardProps) {
 
       <div
         className="prose prose-sm dark:prose-invert max-w-none font-medium text-text/95"
-        dangerouslySetInnerHTML={{ __html: scrap.content }}
+        dangerouslySetInnerHTML={{ __html: safeContent }}
       />
 
       {scrap.tags.length > 0 && (
