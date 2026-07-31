@@ -37,6 +37,7 @@ yarn-error.log*
 bun.log
 .eslintcache
 .turbo/
+.cache/
 
 # ==========================================
 # Testing & Reports
@@ -52,7 +53,6 @@ bun.log
 # ==========================================
 # Auto-generated Public Assets (Scripts / Build)
 # ==========================================
-/public/fonts/
 /public/kuromoji/
 /public/patterns/
 /public/aws-best-practices/

@@ -85,9 +85,49 @@ async function downloadAvatar() {
   }
 }
 
+async function downloadLineSeedJpFonts() {
+  const destDir = path.join(process.cwd(), 'public', 'fonts', 'line-seed-jp');
+  const files = [
+    {
+      name: 'LINESeedJP-Regular.ttf',
+      url: 'https://raw.githubusercontent.com/google/fonts/main/ofl/lineseedjp/LINESeedJP-Regular.ttf',
+    },
+    {
+      name: 'LINESeedJP-Bold.ttf',
+      url: 'https://raw.githubusercontent.com/google/fonts/main/ofl/lineseedjp/LINESeedJP-Bold.ttf',
+    },
+    {
+      name: 'LINESeedJP-ExtraBold.ttf',
+      url: 'https://raw.githubusercontent.com/google/fonts/main/ofl/lineseedjp/LINESeedJP-ExtraBold.ttf',
+    },
+  ];
+
+  fs.mkdirSync(destDir, { recursive: true });
+
+  for (const font of files) {
+    const dest = path.join(destDir, font.name);
+    if (fs.existsSync(dest) && fs.statSync(dest).size > 0) {
+      continue;
+    }
+
+    console.log(`Downloading LINE Seed JP font (${font.name}) from Google Fonts...`);
+    try {
+      const response = await fetch(font.url);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch ${font.name}: ${response.statusText}`);
+      }
+      const buffer = await response.arrayBuffer();
+      fs.writeFileSync(dest, Buffer.from(buffer));
+      console.log(`Successfully downloaded ${font.name}`);
+    } catch (error) {
+      console.warn(`WARNING: Failed to download ${font.name}:`, error.message || error);
+    }
+  }
+}
+
 async function main() {
   try {
-    await Promise.all([downloadFont(), downloadAvatar()]);
+    await Promise.all([downloadFont(), downloadAvatar(), downloadLineSeedJpFonts()]);
   } catch (e) {
     process.exit(1);
   }
