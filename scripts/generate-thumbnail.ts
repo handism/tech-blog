@@ -109,7 +109,7 @@ async function main(): Promise<void> {
     console.log(`使用方法: bun run gen-thumb <slug>
 
 ブログ記事 (md/<slug>.md) の内容から Nano Banana Pro (gemini-3-pro-image) を使用して
-フラットポップ調のサムネイル画像を自動生成し、16:9 (1024x576, WebP形式) で保存した上で
+強く目を引く高品質なブログ記事サムネイル画像を自動生成し、16:9 (1024x576, WebP形式) で保存した上で
 記事フロントマターの image フィールドを更新します。
 `);
     process.exit(args.length === 0 ? 1 : 0);
@@ -142,49 +142,59 @@ async function main(): Promise<void> {
   const ai = new GoogleGenAI({ apiKey });
 
   const promptBuilderQuery = `
-You are an expert pop-art and infographic thumbnail prompt creator for technical blog posts.
+You are an expert art director and professional thumbnail designer for technical blog posts.
 Analyze the following Japanese blog article metadata and excerpt:
-- Title: "\${article.title}"
-- Tags: \${JSON.stringify(article.tags)}
-- Category: "\${article.category}"
-- Content excerpt: "\${article.contentExcerpt.replace(/\\r?\\n/g, ' ')}"
+- Title: "${article.title}"
+- Tags: ${JSON.stringify(article.tags)}
+- Category: "${article.category}"
+- Content excerpt: "${article.contentExcerpt.replace(/\r?\n/g, ' ')}"
 
-Your task is to generate ONE detailed English image generation prompt for Google GenAI Nano Banana Pro (gemini-3-pro-image) that creates an eye-catching, high-density "flat-pop" infographic or pop-art conceptual thumbnail.
+Your task is to generate ONE detailed English image generation prompt for Google GenAI Nano Banana Pro (gemini-3-pro-image) that creates a highly eye-catching, professional blog post thumbnail.
+While the prompt instructions must be written in English, the required catchphrase text MUST be written in Japanese and enclosed in quotes so the model renders it accurately.
 
-### CRITICAL PROHIBITIONS (WHY SIMPLE PROMPTS FAIL)
-- NEVER generate sparse, simplistic, or boring compositions (e.g., placing a single large logo or icon in the center with an empty solid-color background).
-- Even for topics about specific tools or operating systems (e.g., "Windows Tips", "Git", "Docker"), NEVER just place a single logo in the middle. Always visualize an INTRICATE, RICH ECOSYSTEM or WORKFLOW DIAGRAM (e.g., stylized UI windows, optimization gears, keyboard command metaphors, data flow pipelines, interconnected icons, comparison diagrams).
+### MANDATORY COMPOSITION & DESIGN RULES
+You must incorporate all of the following design principles into the generated prompt:
 
-### MANDATORY COMPOSITION & VISUAL DENSITY RULES
-1. **Rich, Intricate Visual Density**: The illustration MUST be packed with engaging visual details—interconnected workflow arrows, floating badges, gears, data pipelines, stylized UI panels, colorful nodes, or conceptual comparison diagrams.
-2. **Sticker-like Decorations & Pop-art Motifs**: Incorporate sticker-like illustrations with bold white outlines, pop-art stars, lightning bolts (⚡), sparkles, geometric badges, and halftone dot patterns.
-3. **Background Style**: Use a **clean white or very bright base background** decorated with colorful flat geometric pop-art shapes, halftone dot patterns, and playful accents so every element stands out vividly with high contrast.
-4. **Balanced Margins**: Ensure the main arrangement is centered with generous margins around the edges (so it can be cleanly cropped to 16:9 widescreen without losing key elements).
-5. **No Text**: NEVER include text, letters, characters, typography, or words in the image.
+1. **Instant Theme Recognition & Strong Visual Hierarchy**: The thumbnail must communicate the article's core topic instantly at a glance with a bold, simple composition and a strong visual hierarchy.
+2. **Bold Asymmetrical Layout**:
+   - Choose either the RIGHT or LEFT side of the screen to prominently feature a large main subject (a person, character, product, or symbolic motif representing the article theme).
+   - On the opposite side, ensure a clean, spacious, uncluttered margin area dedicated to displaying a large Japanese catchphrase.
+3. **Japanese Catchphrase & Typography**:
+   - Create an impactful, concise Japanese catchphrase (around 2 to 12 Japanese characters, short and memorable) based on the article's theme.
+   - Specify that this Japanese catchphrase text (e.g., "キャッチコピー文言") is rendered in extremely large, bold, highly legible Japanese typography.
+   - Include typography styling: thick outlines (bold borders), subtle 3D depth/bevel, and strong drop shadows so it can be instantly read even on small smartphone screens.
+4. **High-Saturation Color Palette**:
+   - Use a highly saturated, eye-catching color scheme dominated by **Yellow, Black, and Red** to maximize contrast between the background, text, and main subject.
+5. **Subtle Guidance Effects**:
+   - Use subtle lighting, speed lines (focus lines), arrows, or highlights sparingly to guide the viewer's eye toward the main subject and the catchphrase text.
+6. **Atmospheric & Defocused Background**:
+   - The background should be an impressive, evocative environment that fits the article theme, but keep visual clutter and information density low, and make it **slightly blurred (defocused)** to accentuate the foreground subject and typography.
+7. **Prohibitions**:
+   - Do NOT include any extra or small unreadable text, random words, logos, watermarks, or overly complex/cluttered backgrounds.
 
-### MANDATORY STYLE TOKENS TO INJECT
-Every generated prompt MUST weave in these core style keywords:
-"superflat pop-art style infographic concept illustrating [detailed scene with multiple interacting elements, workflows, arrows, gears, symbols, and UI/tech metaphors], vibrant high-saturation palette, bold graphic shapes, flat color blocking, flat shading only, hard color boundaries, rich intricate visual density, interconnected flowchart/network motifs, sticker-like decorations with white outlines, crisp geometric shapes, pop-art stars and lightning bolts, halftone dot patterns, clean white background with flat colorful pop-art shapes, bold vector-like graphics, clean crisp edges, poster-style pop-art motifs, clean line-art, ultra-bright colors, masterpiece"
+### HOW TO CONSTRUCT THE PROMPT
+Construct a single, cohesive English image generation prompt that specifies:
+- The bold, professional tech blog thumbnail aesthetic with strong visual hierarchy and simple composition.
+- The layout choice: e.g., "On the right side, prominently feature a large [detailed description of person/character/product/motif]..." and "On the clean, spacious left side, display the Japanese catchphrase..." (or left/right reversed).
+- The exact Japanese catchphrase string enclosed in quotes, along with the required large bold lettering, thick outline, subtle 3D depth, and drop shadow.
+- The high-saturation Yellow, Black, and Red color scheme maximizing contrast.
+- The subtle lighting, focus lines, arrows, or highlights guiding attention to the main subject and text.
+- The theme-appropriate, low-information, slightly blurred background.
+- Negative constraints appended at the end.
 
-### FEW-SHOT EXAMPLES FOR REFERENCE
-- **Bad Prompt (DO NOT GENERATE)**: "superflat pop-art style a single large Windows logo in the center with two small brackets and a wrench on a solid orange background..."
-  (Why bad: Sparse composition, boring, empty solid background, lack of storytelling and infographic depth)
+### FEW-SHOT EXAMPLE FOR REFERENCE
+"A professional, eye-catching tech blog thumbnail with a bold asymmetrical layout and strong visual hierarchy. On the right side, prominently feature a large, expressive software engineer mascot character working on a sleek holographic code interface. On the clean, spacious left side, display the Japanese catchphrase '爆速開発の手法' in extremely large, thick, highly legible Japanese lettering with bold black outlines, subtle 3D depth, and drop shadows for instant smartphone readability. Highly saturated color palette dominated by yellow, black, and red to maximize contrast between the background and text. Subtle lighting effects and subtle focus lines guide the eye toward the character and catchphrase. The background is an atmospheric modern server room, kept low-information and slightly blurred to emphasize the foreground. Masterpiece --no extra text, small unreadable characters, random English words, logos, watermarks, cluttered background, messy typography"
 
-- **Good Prompt 1 (OS/Tool Tips Article)**: "superflat pop-art style infographic concept illustrating a high-performance desktop productivity ecosystem, featuring sleek stylized operating system windows, glowing optimization gears, lightning bolts symbolizing speed, keyboard shortcut command metaphors, interactive control panels, and interconnected workflow arrows, vibrant high-saturation palette, bold graphic shapes, flat color blocking, flat shading only, hard color boundaries, rich intricate visual density, sticker-like decorations with white outlines, pop-art stars and lightning bolts, halftone dot patterns, clean white background with flat colorful pop-art shapes, bold vector-like graphics, clean crisp edges, poster-style pop-art motifs, clean line-art, ultra-bright colors, masterpiece --no gradients, shadows, depth cues, realistic texture, 3d rendering, messy shading, blurry lines, text, watermark, letters, words, writing, human, person"
-
-- **Good Prompt 2 (System/Architecture Article)**: "superflat pop-art style infographic concept illustrating a comparison between scheduled batch data pipelines with glowing clocks and gears versus real-time streaming data processing with lightning bolts and instant flow arrows, interconnected network lines, database icons, colorful nodes, vibrant high-saturation palette, bold graphic shapes, flat color blocking, flat shading only, hard color boundaries, rich intricate visual density, sticker-like decorations with white outlines, pop-art stars, halftone dot patterns, clean white background with flat colorful pop-art shapes, bold vector-like graphics, clean crisp edges, poster-style pop-art motifs, clean line-art, ultra-bright colors, masterpiece --no gradients, shadows, depth cues, realistic texture, 3d rendering, messy shading, blurry lines, text, characters, watermark, letters, words, writing"
-
-### NEGATIVE PROMPT REQUIREMENT
-STRICTLY append the following negative prompt keywords at the very end of your prompt string:
-"masterpiece --no gradients, shadows, depth cues, realistic texture, 3d rendering, messy shading, blurry lines, text, watermark, letters, words, writing"
-(If there are no characters/mascots in the concept, also append ", human, person")
+### NEGATIVE CONSTRAINTS REQUIREMENT
+STRICTLY append the following exclusion keywords at the very end of your prompt string:
+"masterpiece --no extra text, small unreadable characters, random English words, logos, watermarks, cluttered background, messy typography, blurry foreground"
 
 OUTPUT RULES:
-- Output ONLY the English prompt string.
-- Do NOT include markdown code blocks, quotes, or explanations.
+- Output ONLY the single prompt string to be fed directly into the image generation model.
+- Do NOT include markdown code blocks, quotes around the entire output, or explanations.
 `;
 
-  console.log('[2/4] Gemini で最適なフラットポップ調画像生成プロンプトを構築中...');
+  console.log('[2/4] Gemini で最適なサムネイル画像生成プロンプトを構築中...');
   const textResponse = await ai.models.generateContent({
     model: 'gemini-3.5-flash-lite',
     contents: promptBuilderQuery,
