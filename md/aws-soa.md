@@ -3,7 +3,7 @@ title: AWS Certified SysOps Administrator Associateの対策
 date: 2024-01-08
 tags: [AWS]
 category: Infrastructure
-image: cloud-fantasy.webp
+image: aws-soa-flatpop.webp
 ---
 
 ## 経緯
