@@ -3,7 +3,7 @@ title: 個人開発とチーム開発の違い
 date: 2026-06-24
 tags: [Development]
 category: IT
-image: personal-vs-team-development-flatpop.webp
+image: personal-vs-team-development-thumb.webp
 ---
 
 エンジニアとしてのキャリアの中で、あるいは趣味のプロジェクトとして、私たちは「個人開発（ソロ開発）」と「チーム開発」という2つの異なる開発スタイルを経験します。

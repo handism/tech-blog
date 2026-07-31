@@ -3,7 +3,7 @@ title: 個人的によく使うGitのコマンド集
 date: 2023-11-26
 tags: [Git]
 category: IT
-image: how-to-use-git-flatpop.webp
+image: how-to-use-git-thumb.webp
 ---
 
 ## Gitについて

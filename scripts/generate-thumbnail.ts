@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 import { GoogleGenAI } from '@google/genai';
 
 type SharpFactory = (typeof import('sharp'))['default'];
@@ -73,7 +74,11 @@ const RENDER_HEIGHT = OUTPUT_HEIGHT * RENDER_SCALE;
 let PLAN_MODEL = 'gemini-3.5-flash-lite';
 let IMAGE_MODEL = 'gemini-3-pro-image';
 let IMAGE_SIZE: '1K' | '2K' | '4K' = '1K';
-let FONT_FAMILY = 'LINE Seed JP';
+
+// fc-scan の結果に合わせた実際の family 名。
+// ExtraBold は family 名へ含めず、fontconfig の weight で明示する。
+let TITLE_FONT_FAMILY = 'LINE Seed JP App_TTF';
+let LABEL_FONT_FAMILY = 'LINE Seed JP App_TTF';
 
 function refreshRuntimeConfig(): void {
   PLAN_MODEL = process.env.GEMINI_PLAN_MODEL ?? 'gemini-3.5-flash-lite';
@@ -84,40 +89,15 @@ function refreshRuntimeConfig(): void {
     ? (requestedImageSize as '1K' | '2K' | '4K')
     : '1K';
 
-  FONT_FAMILY = process.env.THUMB_FONT_FAMILY ?? 'LINE Seed JP';
+  TITLE_FONT_FAMILY =
+    process.env.THUMB_TITLE_FONT_FAMILY ?? 'LINE Seed JP App_TTF';
+  LABEL_FONT_FAMILY =
+    process.env.THUMB_LABEL_FONT_FAMILY ?? TITLE_FONT_FAMILY;
 }
-
-const FONT_FAMILY_CANDIDATES = [
-  'LINE Seed JP',
-  'LINESeedJP',
-  'LINE Seed JP ExtraBold',
-  'LINESeedJP ExtraBold',
-  'LINE Seed JP Bold',
-  'LINESeedJP Bold',
-  'LINE Seed JP App_OTF ExtraBold',
-  'LINE Seed JP App_TTF ExtraBold',
-  'LINE Seed JP App ExtraBold',
-  'LINE Seed JP_OTF ExtraBold',
-  'LINE Seed JP_TTF ExtraBold',
-  'LINE Seed JP ExtraBold',
-  'LINE Seed JP App_OTF',
-  'LINE Seed JP App_TTF',
-  'LINE Seed JP App',
-  'LINE Seed JP_OTF',
-  'LINE Seed JP_TTF',
-];
-
-const SVG_FONT_FAMILIES = [
-  'ThumbTitle',
-  'ThumbLabel',
-  ...FONT_FAMILY_CANDIDATES.map((fam) => `'${fam}'`),
-  'sans-serif',
-].join(', ');
 const DEFAULT_FONT_ROOTS = [
   path.resolve(process.cwd(), 'public', 'fonts', 'line-seed-jp'),
   path.resolve(process.cwd(), 'assets', 'fonts', 'line-seed-jp'),
 ];
-const DEFAULT_FONT_ROOT = DEFAULT_FONT_ROOTS[0];
 
 const LAYOUTS: LayoutType[] = [
   'centered',
@@ -334,9 +314,14 @@ Layouts:
   ${LAYOUTS.join(', ')}
 
 Font:
-  public/fonts/line-seed-jp 以下へ、Google Fonts (https://fonts.google.com/specimen/LINE+Seed+JP)
-  または公式サイトから取得した LINE Seed JP の .ttf / .otf / .ttc を配置してください。
-  (bun run dev または bun run build 実行時に自動ダウンロードされます)
+  public/fonts/line-seed-jp 以下へ、公式サイトから取得した LINE Seed JP の
+  .ttf / .otf / .ttc を配置してください。
+  推奨ファイル: LINESeedJP-ExtraBold.ttf
+
+Environment:
+  THUMB_FONT_DIR=public/fonts/line-seed-jp
+  THUMB_TITLE_FONT_FAMILY=LINE Seed JP App_TTF
+  THUMB_LABEL_FONT_FAMILY=LINE Seed JP App_TTF
 `);
 }
 
@@ -379,40 +364,66 @@ function configureLocalFonts(): { fontRoot: string; fontFiles: string[]; configP
       [
         'LINE Seed JP のフォントファイルが見つかりません。',
         `探索先: ${searchRoots.join(', ')}`,
-        'Google Fonts (https://fonts.google.com/specimen/LINE+Seed+JP) または公式サイトから取得した .ttf / .otf / .ttc を配置してください。',
-        'bun run dev や bun run build を実行すると自動的にダウンロードされます。',
+        '公式サイトから取得した .ttf / .otf / .ttc を配置してください。',
+        '推奨ファイル: LINESeedJP-ExtraBold.ttf',
         '別の場所を使う場合は .env.local の THUMB_FONT_DIR で指定できます。',
       ].join('\n')
     );
   }
-  const fontRoot = searchRoots[0];
 
+  const extraBoldFiles = fontFiles.filter((file) =>
+    /(?:extra[\s_-]?bold|[_-]eb)(?:\.[^.]+)?$/i.test(path.basename(file))
+  );
+  if (extraBoldFiles.length === 0) {
+    console.warn(
+      '警告: ExtraBold と判定できるフォントファイル名が見つかりません。' +
+        ' LINESeedJP-ExtraBold.ttf が配置されているか確認してください。'
+    );
+  }
+
+  const fontRoot = searchRoots[0];
   const cacheRoot = path.resolve(process.cwd(), '.cache', 'thumbnail-fontconfig');
   const cacheDir = path.join(cacheRoot, 'cache');
   const configPath = path.join(cacheRoot, 'fonts.conf');
   fs.mkdirSync(cacheDir, { recursive: true });
 
   const fontDirs = [...new Set(fontFiles.map((file) => path.dirname(file)))];
-  const preferXml = FONT_FAMILY_CANDIDATES.map(
-    (fam) => `      <family>${escapeXml(fam)}</family>`
-  ).join('\n');
 
+  // fc-scan で確認した family と weight を分けて指定する。
+  // LINESeedJP-ExtraBold.ttf の例:
+  //   family=LINE Seed JP App_TTF
+  //   weight=205 (ExtraBold)
   const configXml = `<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
 <fontconfig>
 ${fontDirs.map((dir) => `  <dir>${escapeXml(dir)}</dir>`).join('\n')}
   <cachedir>${escapeXml(cacheDir)}</cachedir>
-  <alias>
-    <family>ThumbTitle</family>
-    <prefer>
-${preferXml}
-    </prefer>
-  </alias>
-  <alias>
-    <family>ThumbLabel</family>
-    <prefer>
-${preferXml}
-    </prefer>
-  </alias>
+
+  <!-- タイトル: LINE Seed JP ExtraBold を強制 -->
+  <match target="pattern">
+    <test name="family" compare="eq">
+      <string>ThumbTitle</string>
+    </test>
+    <edit name="family" mode="assign_replace">
+      <string>${escapeXml(TITLE_FONT_FAMILY)}</string>
+    </edit>
+    <edit name="weight" mode="assign_replace">
+      <const>extrabold</const>
+    </edit>
+  </match>
+
+  <!-- 補助ラベル: 同じファミリーの Bold を優先 -->
+  <match target="pattern">
+    <test name="family" compare="eq">
+      <string>ThumbLabel</string>
+    </test>
+    <edit name="family" mode="assign_replace">
+      <string>${escapeXml(LABEL_FONT_FAMILY)}</string>
+    </edit>
+    <edit name="weight" mode="assign_replace">
+      <const>bold</const>
+    </edit>
+  </match>
 </fontconfig>
 `;
 
@@ -426,12 +437,39 @@ ${preferXml}
   return { fontRoot, fontFiles, configPath };
 }
 
+function logResolvedFont(alias: 'ThumbTitle' | 'ThumbLabel'): void {
+  const result = spawnSync(
+    'fc-match',
+    [
+      '-f',
+      'family=%{family}; style=%{style}; weight=%{weight}; file=%{file}\\n',
+      alias,
+    ],
+    {
+      env: process.env,
+      encoding: 'utf-8',
+    }
+  );
+
+  if (result.status === 0 && result.stdout.trim()) {
+    console.log(`       ${alias}: ${result.stdout.trim()}`);
+    return;
+  }
+
+  // fc-match が未インストールでも sharp の描画自体は続行できる。
+  if (result.error) {
+    console.warn(`       ${alias}: fc-match で確認できませんでした (${result.error.message})`);
+  }
+}
+
 async function loadSharpWithLocalFonts(): Promise<SharpFactory> {
   const fontInfo = configureLocalFonts();
   console.log(
     `       LINE Seed JP をローカルフォントとして登録しました (${fontInfo.fontFiles.length} files)`
   );
   console.log(`       fontconfig: ${fontInfo.configPath}`);
+  logResolvedFont('ThumbTitle');
+  logResolvedFont('ThumbLabel');
 
   const sharpModule = await import('sharp');
   return sharpModule.default;
@@ -775,9 +813,9 @@ function fitFontSize(lines: string[], box: TextBox): number {
 
 function renderTitleText(lines: string[], box: TextBox): string {
   const fontSize = fitFontSize(lines, box);
-  const lineHeight = fontSize * 1.08;
-  const blockHeight = fontSize * 0.96 + (lines.length - 1) * lineHeight;
-  const firstBaseline = box.y + (box.height - blockHeight) / 2 + fontSize * 0.82;
+  const lineHeight = fontSize * 1.0;
+  const blockHeight = fontSize * 0.94 + (lines.length - 1) * lineHeight;
+  const firstBaseline = box.y + (box.height - blockHeight) / 2 + fontSize * 0.81;
 
   const x =
     box.align === 'middle'
@@ -798,18 +836,18 @@ function renderTitleText(lines: string[], box: TextBox): string {
     .join('');
 
   return `<text
-    font-family="${SVG_FONT_FAMILIES}"
+    font-family="ThumbTitle"
     font-size="${fontSize}"
     font-weight="800"
+    font-style="normal"
     text-anchor="${box.align}"
     fill="${box.fill}"
     ${strokeAttributes}
     stroke-linejoin="round"
-    letter-spacing="0.2"
-    class="title-text"
+    letter-spacing="-1.0"
+    class="title-text title-shadow"
   >${tspans}</text>`;
 }
-
 function labelWidth(label: string, fontSize = 24): number {
   return clamp(Math.ceil(visualUnits(label) * fontSize + 42), 112, 310);
 }
@@ -856,9 +894,10 @@ function renderLabel(params: {
       x="${centerX}"
       y="${params.y + height * 0.67}"
       text-anchor="middle"
-      font-family="${SVG_FONT_FAMILIES}"
+      font-family="ThumbLabel"
       font-size="${fontSize}"
-      font-weight="800"
+      font-weight="700"
+      font-style="normal"
       fill="${params.textFill}"
       letter-spacing="0.3"
     >${escapeXml(params.label)}</text>
@@ -866,14 +905,14 @@ function renderLabel(params: {
 }
 
 function buildTopBannerOverlay(plan: ThumbnailPlan, p: Palette): string {
-  const panelHeight = plan.titleLines.length === 1 ? 152 : 202;
-  const panelY = 82;
+  const panelHeight = plan.titleLines.length === 1 ? 156 : 212;
+  const panelY = 78;
 
   return `
   <g class="panel-shadow">
-    <rect x="46" y="${panelY}" width="932" height="${panelHeight}" rx="34" fill="${p.light}" fill-opacity="0.96" />
+    <rect x="46" y="${panelY}" width="932" height="${panelHeight}" rx="34" fill="${p.light}" fill-opacity="0.98" />
     <rect x="46" y="${panelY}" width="18" height="${panelHeight}" rx="9" fill="${p.primary}" />
-    <rect x="80" y="${panelY + panelHeight - 18}" width="170" height="7" rx="3.5" fill="${p.secondary}" />
+    <rect x="80" y="${panelY + panelHeight - 18}" width="180" height="7" rx="3.5" fill="${p.secondary}" />
   </g>
   ${renderLabel({
     label: plan.subLabel,
@@ -885,28 +924,30 @@ function buildTopBannerOverlay(plan: ThumbnailPlan, p: Palette): string {
   ${renderTitleText(plan.titleLines, {
     x: 76,
     y: panelY + 12,
-    width: 850,
+    width: 856,
     height: panelHeight - 24,
     paddingX: 18,
     paddingY: 8,
     align: 'start',
-    minFontSize: 48,
-    maxFontSize: 88,
+    minFontSize: 50,
+    maxFontSize: 92,
     fill: p.dark,
+    stroke: 'rgba(255,255,255,0.55)',
+    strokeWidth: 0.8,
   })}
   `;
 }
 
 function buildCenteredOverlay(plan: ThumbnailPlan, p: Palette): string {
-  const panelHeight = plan.titleLines.length === 1 ? 178 : 232;
-  const panelY = (OUTPUT_HEIGHT - panelHeight) / 2 + 10;
+  const panelHeight = plan.titleLines.length === 1 ? 184 : 238;
+  const panelY = (OUTPUT_HEIGHT - panelHeight) / 2 + 8;
 
   return `
   <g class="panel-shadow">
-    <rect x="138" y="${panelY}" width="748" height="${panelHeight}" rx="42" fill="${p.dark}" fill-opacity="0.94" />
-    <circle cx="166" cy="${panelY + 28}" r="8" fill="${p.secondary}" />
-    <circle cx="858" cy="${panelY + panelHeight - 28}" r="11" fill="${p.primary}" />
-    <path d="M184 ${panelY + panelHeight - 22} H322" stroke="${p.accent}" stroke-width="7" stroke-linecap="round" />
+    <rect x="132" y="${panelY}" width="760" height="${panelHeight}" rx="42" fill="${p.dark}" fill-opacity="0.97" />
+    <circle cx="164" cy="${panelY + 30}" r="8" fill="${p.secondary}" />
+    <circle cx="862" cy="${panelY + panelHeight - 30}" r="11" fill="${p.primary}" />
+    <path d="M184 ${panelY + panelHeight - 24} H332" stroke="${p.accent}" stroke-width="7" stroke-linecap="round" />
   </g>
   ${renderLabel({
     label: plan.subLabel,
@@ -917,26 +958,28 @@ function buildCenteredOverlay(plan: ThumbnailPlan, p: Palette): string {
     fontSize: 23,
   })}
   ${renderTitleText(plan.titleLines, {
-    x: 174,
+    x: 170,
     y: panelY + 20,
-    width: 676,
+    width: 684,
     height: panelHeight - 40,
     paddingX: 24,
     paddingY: 10,
     align: 'middle',
-    minFontSize: 48,
-    maxFontSize: 86,
+    minFontSize: 50,
+    maxFontSize: 88,
     fill: p.light,
+    stroke: 'rgba(17, 30, 44, 0.22)',
+    strokeWidth: 1.0,
   })}
   `;
 }
 
 function buildDiagonalOverlay(plan: ThumbnailPlan, p: Palette): string {
-  const titleHeight = plan.titleLines.length === 1 ? 148 : 214;
+  const titleHeight = plan.titleLines.length === 1 ? 152 : 218;
 
   return `
   <g class="panel-shadow">
-    <path d="M42 92 L650 34 Q684 30 704 58 L654 ${titleHeight + 130} Q646 ${titleHeight + 158} 614 ${titleHeight + 164} L78 ${titleHeight + 226} Q44 ${titleHeight + 230} 38 ${titleHeight + 196} Z" fill="${p.accent}" fill-opacity="0.96" />
+    <path d="M42 92 L650 34 Q684 30 704 58 L654 ${titleHeight + 130} Q646 ${titleHeight + 158} 614 ${titleHeight + 164} L78 ${titleHeight + 226} Q44 ${titleHeight + 230} 38 ${titleHeight + 196} Z" fill="${p.accent}" fill-opacity="0.98" />
     <path d="M52 ${titleHeight + 200} L314 ${titleHeight + 172}" stroke="${p.secondary}" stroke-width="9" stroke-linecap="round" />
   </g>
   ${renderLabel({
@@ -950,14 +993,16 @@ function buildDiagonalOverlay(plan: ThumbnailPlan, p: Palette): string {
   ${renderTitleText(plan.titleLines, {
     x: 72,
     y: 112,
-    width: 560,
+    width: 568,
     height: titleHeight,
     paddingX: 28,
     paddingY: 8,
     align: 'start',
-    minFontSize: 48,
-    maxFontSize: 86,
+    minFontSize: 50,
+    maxFontSize: 88,
     fill: p.dark,
+    stroke: 'rgba(255,255,255,0.45)',
+    strokeWidth: 0.7,
   })}
   `;
 }
@@ -965,7 +1010,7 @@ function buildDiagonalOverlay(plan: ThumbnailPlan, p: Palette): string {
 function buildRoundedPanelsOverlay(plan: ThumbnailPlan, p: Palette): string {
   return `
   <g class="panel-shadow">
-    <rect x="44" y="58" width="446" height="462" rx="48" fill="${p.light}" fill-opacity="0.94" />
+    <rect x="44" y="58" width="446" height="462" rx="48" fill="${p.light}" fill-opacity="0.97" />
     <rect x="68" y="82" width="112" height="12" rx="6" fill="${p.primary}" />
     <circle cx="452" cy="98" r="17" fill="${p.secondary}" />
     <circle cx="88" cy="486" r="10" fill="${p.accent}" />
@@ -980,23 +1025,25 @@ function buildRoundedPanelsOverlay(plan: ThumbnailPlan, p: Palette): string {
     height: 44,
   })}
   ${renderTitleText(plan.titleLines, {
-    x: 70,
-    y: 170,
-    width: 392,
-    height: 280,
+    x: 68,
+    y: 168,
+    width: 396,
+    height: 286,
     paddingX: 18,
     paddingY: 14,
     align: 'start',
-    minFontSize: 46,
-    maxFontSize: 78,
+    minFontSize: 48,
+    maxFontSize: 80,
     fill: p.dark,
+    stroke: 'rgba(255,255,255,0.55)',
+    strokeWidth: 0.8,
   })}
   <path d="M72 466 H256" stroke="${p.secondary}" stroke-width="8" stroke-linecap="round" />
   `;
 }
 
 function buildStickerOverlay(plan: ThumbnailPlan, p: Palette): string {
-  const panelHeight = plan.titleLines.length === 1 ? 142 : 194;
+  const panelHeight = plan.titleLines.length === 1 ? 146 : 198;
   const panelY = 576 - panelHeight - 48;
 
   return `
@@ -1019,53 +1066,79 @@ function buildStickerOverlay(plan: ThumbnailPlan, p: Palette): string {
       paddingX: 18,
       paddingY: 8,
       align: 'middle',
-      minFontSize: 44,
-      maxFontSize: 76,
+      minFontSize: 46,
+      maxFontSize: 78,
       fill: p.light,
       stroke: p.dark,
-      strokeWidth: 2.2,
+      strokeWidth: 2.4,
     })}
   </g>
   `;
 }
 
 function buildSplitBandOverlay(plan: ThumbnailPlan, p: Palette): string {
-  const bandY = 382;
-  const bandHeight = 150;
+  const bandY = 378;
+  const bandHeight = 158;
+  const labelAreaWidth = 184;
 
   return `
   <g class="panel-shadow">
-    <rect x="42" y="${bandY}" width="940" height="${bandHeight}" rx="34" fill="${p.dark}" fill-opacity="0.95" />
-    <rect x="42" y="${bandY}" width="216" height="${bandHeight}" rx="34" fill="${p.primary}" />
-    <rect x="224" y="${bandY}" width="38" height="${bandHeight}" fill="${p.primary}" />
+    <rect
+      x="42"
+      y="${bandY}"
+      width="940"
+      height="${bandHeight}"
+      rx="34"
+      fill="${p.dark}"
+    />
+
+    <path
+      d="
+        M76 ${bandY}
+        H${42 + labelAreaWidth}
+        V${bandY + bandHeight}
+        H76
+        Q42 ${bandY + bandHeight} 42 ${bandY + bandHeight - 34}
+        V${bandY + 34}
+        Q42 ${bandY} 76 ${bandY}
+        Z
+      "
+      fill="${p.primary}"
+    />
   </g>
+
   ${
     plan.subLabel
       ? (() => {
-          const fontSize = fitSubLabelFontSize(plan.subLabel, 170, 27, 14);
+          const fontSize = fitSubLabelFontSize(plan.subLabel, labelAreaWidth - 38, 26, 14);
           return `<text
-        x="150"
-        y="${bandY + 86}"
-        text-anchor="middle"
-        font-family="${SVG_FONT_FAMILIES}"
-        font-size="${fontSize}"
-        font-weight="800"
-        fill="${p.light}"
-      >${escapeXml(plan.subLabel)}</text>`;
+            x="${42 + labelAreaWidth / 2}"
+            y="${bandY + 91}"
+            text-anchor="middle"
+            font-family="ThumbLabel"
+            font-size="${fontSize}"
+            font-weight="700"
+            font-style="normal"
+            fill="${p.light}"
+            letter-spacing="-0.3"
+          >${escapeXml(plan.subLabel)}</text>`;
         })()
-      : `<circle cx="150" cy="${bandY + 75}" r="25" fill="${p.accent}" />`
+      : `<circle cx="${42 + labelAreaWidth / 2}" cy="${bandY + 79}" r="25" fill="${p.accent}" />`
   }
+
   ${renderTitleText(plan.titleLines, {
-    x: 272,
-    y: bandY + 12,
-    width: 680,
-    height: bandHeight - 24,
-    paddingX: 12,
-    paddingY: 4,
+    x: 244,
+    y: bandY + 10,
+    width: 708,
+    height: bandHeight - 20,
+    paddingX: 10,
+    paddingY: 3,
     align: 'start',
-    minFontSize: 44,
-    maxFontSize: 76,
+    minFontSize: 48,
+    maxFontSize: 84,
     fill: p.light,
+    stroke: 'rgba(16, 28, 40, 0.24)',
+    strokeWidth: 0.8,
   })}
   `;
 }
@@ -1104,16 +1177,19 @@ function buildOverlaySvg(plan: ThumbnailPlan): string {
     <filter id="smallShadow" x="-25%" y="-35%" width="160%" height="190%">
       <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="${p.dark}" flood-opacity="0.16" />
     </filter>
+    <filter id="titleShadow" x="-30%" y="-30%" width="180%" height="190%">
+      <feDropShadow dx="0" dy="3" stdDeviation="2.2" flood-color="#0E1A25" flood-opacity="0.16" />
+    </filter>
     <style><![CDATA[
       .panel-shadow { filter: url(#panelShadow); }
       .small-shadow { filter: url(#smallShadow); }
       .title-text { font-kerning: normal; }
+      .title-shadow { filter: url(#titleShadow); }
     ]]></style>
   </defs>
   ${body}
 </svg>`;
 }
-
 async function saveDebugArtifacts(params: {
   outputDir: string;
   slug: string;

@@ -3,7 +3,7 @@ title: インフラ管理のコツ・ポイントを考える
 date: 2023-12-14
 tags: [Tips]
 category: Infrastructure
-image: cloud-image.webp
+image: infrastructure-tips-thumb.webp
 ---
 
 ## インフラ管理を考える
