@@ -158,7 +158,7 @@ You must incorporate all of the following design principles into the generated p
 1. **Modern Flat Editorial Illustration Style**:
    - Do NOT use realistic, 3D rendered, or heavy metallic/glossy styles.
    - Use a contemporary, flat, and sophisticated editorial illustration style (like modern tech magazine artwork or clean design system illustration).
-   - Express abstract concepts, systems, or subjects using **simple geometric shapes and clean forms** for immediate visual comprehension.
+   - Express abstract concepts, systems, or subjects using **clear, well-designed editorial illustration elements** (such as people, metaphors, objects, or conceptual artwork) tailored to the article theme for immediate visual comprehension.
 2. **Bright-Tone Color Palette (No Primary Color Blocking)**:
    - Avoid harsh, overly saturated primary color blocking (e.g., pure red, pure blue, bright neon yellow).
    - Use a curated, harmonious **bright-tone color palette**: feature colors such as **Sky Blue, Cyan, Mint, Coral, Pale/Soft Yellow, Off-White, and Navy**.
@@ -171,24 +171,22 @@ You must incorporate all of the following design principles into the generated p
    - Ensure the overall impression is **modern, well-organized, and stylish** without visual clutter.
 5. **Versatile & Dynamic Layout Compositions**:
    - Do NOT restrict layouts to just right/left asymmetrical splits. Choose the most suitable layout composition from these versatile patterns according to the article's theme and typography:
-     - **Centered Title Layout**: A bold central title surrounded by harmonious geometric illustrations.
-     - **Top Title + Bottom Visual Layout**: A prominent title at the upper section with simple geometric illustrations at the bottom.
+     - **Centered Title Layout**: A bold central title surrounded by harmonious editorial illustrations or thematic motifs.
+     - **Top Title + Bottom Visual Layout**: A prominent title at the upper section with engaging editorial illustration artwork at the bottom.
      - **Banner / Band Header Layout**: A sleek colored bar or band holding the title text for clear editorial contrast.
-     - **Speech Bubble / Sticker Accent Layout**: Sophisticated speech bubbles or modern sticker-like geometric frames highlighting the key text.
-     - **Diagonal Composition Layout**: Dynamic diagonal visual flow connecting typography and geometric motifs.
-     - **Circular / Rounded Panel Split Layout**: Clean rounded cards, panels, or circular shapes neatly dividing typography and graphical elements.
+     - **Speech Bubble / Sticker Accent Layout**: Sophisticated speech bubbles or modern sticker-like accent frames highlighting the key text.
+     - **Diagonal Composition Layout**: Dynamic diagonal visual flow connecting typography and illustrative artwork.
+     - **Circular / Rounded Panel Split Layout**: Clean rounded cards, panels, or circular shapes neatly dividing typography and illustrative elements.
+   - **CRITICAL**: Always vary the layout choice dynamically so that generated thumbnails across different articles do not look repetitive or similar.
 
 ### HOW TO CONSTRUCT THE PROMPT
 Construct a single, cohesive English image generation prompt that specifies:
-- The modern, flat, sophisticated editorial illustration style using simple geometric shapes.
+- The modern, flat, sophisticated editorial illustration style tailored to the article's theme (using diverse subjects like metaphors, characters, objects, or conceptual art).
 - The chosen layout composition (e.g., "Using a Circular / Rounded Panel Split Layout...", "Using a Top Title + Bottom Visual Layout...", etc.) and where each element is placed.
 - The exact Japanese catchphrase string enclosed in quotes, integrated naturally into the design with clean, legible Japanese typography (avoiding heavy 3D or neon glow).
 - The sophisticated bright-tone color palette (Sky Blue, Cyan, Mint, Coral, Pale Yellow, Off-White, Navy, etc.).
 - The simple, low-information background that gives a modern, well-organized, and stylish impression.
 - Negative constraints appended at the end.
-
-### FEW-SHOT EXAMPLE FOR REFERENCE
-"A modern, flat, and sophisticated editorial illustration blog thumbnail with a 'Circular / Rounded Panel Split Layout' and clean geometric simplicity. The composition uses sleek rounded cards and circular panels on an off-white and soft sky blue background to neatly organize information. In the upper left panel, display the Japanese catchphrase '開発のベストプラクティス' in large, highly legible, clean Japanese lettering in deep navy that integrates naturally into the editorial design. In the adjacent and lower panels, feature simple, elegant geometric shapes—circles, rounded rectangles, and abstract flowchart nodes—rendered in a harmonious bright-tone color palette of mint, coral, cyan, and pale yellow. The overall look is modern, well-organized, and stylish with generous clean negative space. Masterpiece --no realistic 3d rendering, heavy 3d text, metallic textures, excessive glow, neon lighting, highly saturated primary colors, messy typography, extra text, small unreadable characters, random English words, logos, watermarks, cluttered background"
 
 ### NEGATIVE CONSTRAINTS REQUIREMENT
 STRICTLY append the following exclusion keywords at the very end of your prompt string:
