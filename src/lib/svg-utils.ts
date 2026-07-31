@@ -9,7 +9,14 @@ import DOMPurify from 'dompurify';
  */
 export const sanitizeSvg = (inputSvg: string): string => {
   try {
-    return DOMPurify.sanitize(inputSvg, { USE_PROFILES: { svg: true } });
+    const purifier =
+      typeof DOMPurify.sanitize === 'function'
+        ? DOMPurify
+        : (DOMPurify as unknown as { default?: typeof DOMPurify }).default;
+    if (purifier && typeof purifier.sanitize === 'function') {
+      return purifier.sanitize(inputSvg, { USE_PROFILES: { svg: true } });
+    }
+    return inputSvg;
   } catch {
     return '';
   }

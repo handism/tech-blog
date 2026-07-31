@@ -14,6 +14,9 @@ image: how-to-use-git.webp
 
 ## Gitの基本操作
 
+![Gitの基本操作とワークフローの概念図解](/images/how-to-use-git-infographic.webp)
+
+
 - GitHub上などでリポジトリを作成
 - リポジトリをローカルにclone：`git clone [リポジトリURL]`
 - ファイルのリネーム：`git mv [旧ファイル名] [新ファイル名]`

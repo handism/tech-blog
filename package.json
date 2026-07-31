@@ -11,6 +11,9 @@
     "test:vrt": "playwright test",
     "test:vrt:update": "playwright test --update-snapshots",
     "analyze": "ANALYZE=true next build",
+    "gen-thumb": "bun run scripts/generate-thumbnail.ts",
+    "gen-info": "bun run scripts/generate-infographic.ts",
+    "gen-infographic": "bun run scripts/generate-infographic.ts",
     "type-check": "tsc --noEmit",
     "prepare": "simple-git-hooks"
   },
@@ -44,6 +47,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@google/genai": "^2.15.0",
     "@next/bundle-analyzer": "^16.1.6",
     "@playwright/test": "^1.61.1",
     "@tailwindcss/postcss": "^4.1.18",
@@ -68,6 +72,7 @@
     "postcss": "^8.4.32",
     "prettier": "^3.8.1",
     "serve": "^14.2.6",
+    "sharp": "^0.35.3",
     "simple-git-hooks": "^2.13.1",
     "tailwindcss": "^4",
     "typescript": "5.9.3",

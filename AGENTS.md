@@ -8,6 +8,9 @@
 
 - VRT は `out/` を `serve` で配信して実行するため、**先に `bun run build` を済ませておくこと**（対象: `tests/vrt.test.ts`、Vitest からは除外済み）。
 - 単一テストファイルの実行は `bunx vitest run tests/post-parser.test.ts` のように指定する。
+- AI 画像生成コマンド:
+  - `bun run gen-thumb <slug>` : 記事（`md/<slug>.md`）のフラットポップ調サムネイル画像を生成・保存しフロントマターを自動更新（`scripts/generate-thumbnail.ts`）。
+  - `bun run gen-info <slug>` （または `bun run gen-infographic <slug>`） : 記事本文を解析して最適な図解挿入位置を特定し、シンプルでクリーンな技術ドキュメント風インフォグラフィック図を生成・保存した上で Markdown 本文に自動設定・更新する（`scripts/generate-infographic.ts`）。
 
 ## アーキテクチャ
 

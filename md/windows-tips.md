@@ -3,7 +3,7 @@ title: Windowsのセットアップ時の設定メモ
 date: 2023-12-30
 tags: [Windows]
 category: OS
-image: many-windows.webp
+image: windows-tips-flatpop.webp
 ---
 
 ## Windows11初期セットアップ

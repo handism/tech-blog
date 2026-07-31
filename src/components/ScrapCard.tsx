@@ -13,9 +13,20 @@ export default function ScrapCard({ scrap }: ScrapCardProps) {
     ? formatDate(scrap.date, { year: 'numeric', month: '2-digit', day: '2-digit' })
     : null;
 
-  const safeContent = DOMPurify.sanitize(scrap.content, {
-    USE_PROFILES: { html: true },
-  });
+  let safeContent = scrap.content;
+  try {
+    const purifier =
+      typeof DOMPurify.sanitize === 'function'
+        ? DOMPurify
+        : (DOMPurify as unknown as { default?: typeof DOMPurify }).default;
+    if (purifier && typeof purifier.sanitize === 'function') {
+      safeContent = purifier.sanitize(scrap.content, {
+        USE_PROFILES: { html: true },
+      });
+    }
+  } catch {
+    safeContent = scrap.content;
+  }
 
   // スマホでは本文の横幅が記事ページと大きく変わらないよう、カード内側の余白を詰める
   return (

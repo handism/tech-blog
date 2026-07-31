@@ -120,6 +120,27 @@ bun run type-check
 ブログ記事は `md` ディレクトリに Markdown ファイルとして配置します。
 ファイル名の命名規則：`kebab-case.md`
 
+##### AIによるサムネイル・図解インフォグラフィック自動生成
+
+ブログ記事 (`md/<slug>.md`) を対象に、Google GenAI (Gemini / Nano Banana 2 Lite `gemini-3.1-flash-lite-image`) を使用して、記事のサムネイル画像および本文内の解説用図解インフォグラフィックを自動生成・変換・自動設定するコマンドが利用できます。
+ご使用の際は、事前に `.env.local` に `GEMINI_API_KEY=<あなたのAPIキー>` を設定してください。
+
+###### 1. サムネイルの自動生成 (`generate-thumbnail.ts`)
+記事のタイトル・タグ・カテゴリ・本文を分析し、**フラットポップ調 (superflat pop-art)** のアイキャッチサムネイルを 16:9 (1024x576 / WebP形式) で自動生成し、記事フロントマターの `image` フィールドを更新します。
+```bash
+bun run gen-thumb <slug>
+# 例: bun run gen-thumb how-to-use-git
+```
+
+###### 2. 本文内・図解インフォグラフィックの自動生成 (`generate-infographic.ts`)
+記事本文をAIが分析して読者の理解を深める最適な図解挿入位置（セクション見出し等）を自動特定し、記事内容を解説する **シンプル＆クリーンな技術ドキュメント風インフォグラフィック (clean, simple, and modern technical diagram)** を 16:9 (1024x576 / WebP形式) で自動生成・保存の上、記事 Markdown 本文の該当箇所に Markdown 画像リンクを自動挿入（既存の画像タグがある場合は更新のみ実行）します。
+```bash
+bun run gen-info <slug>
+# または
+bun run gen-infographic <slug>
+# 例: bun run gen-info how-to-use-git
+```
+
 #### Scraps（技術メモ）
 
 日々の気づきやエラー解決ログなど短いメモは `scraps` ディレクトリに Markdown ファイルとして配置します。
