@@ -174,7 +174,7 @@ async function main(): Promise<void> {
     console.log(`使用方法: bun run gen-info <slug>
 
 ブログ記事 (md/<slug>.md) の内容をAIで分析し、本文中の「いい感じの箇所（図解があると理解しやすいセクション）」を
-自動特定します。その後、生成AI (gemini-3.1-flash-lite-image) を用いてシンプルでクリーンな図解インフォグラフィックを作成し、
+自動特定します。その後、生成AI (gemini-3-pro-image) を用いてシンプルでクリーンな図解インフォグラフィックを作成し、
 16:9 (1024x576, WebP形式) にリサイズ・保存した上で、記事本文の該当位置にMarkdown画像リンクを設定します。
 `);
     process.exit(args.length === 0 ? 1 : 0);
@@ -257,9 +257,9 @@ Return exactly ONE JSON object matching this schema (do NOT wrap in markdown cod
   console.log(`       代替テキスト: "${plan.altText}"`);
   console.log(`       生成されたプロンプト:\n       "${plan.englishPrompt}"`);
 
-  console.log('[3/5] Nano Banana 2 Lite (gemini-3.1-flash-lite-image) で図解インフォグラフィックを作成中...');
+  console.log('[3/5] Nano Banana Pro (gemini-3-pro-image) で図解インフォグラフィックを作成中...');
   const interaction = await ai.interactions.create({
-    model: 'gemini-3.1-flash-lite-image',
+    model: 'gemini-3-pro-image',
     input: plan.englishPrompt,
   });
 

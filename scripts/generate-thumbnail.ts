@@ -108,7 +108,7 @@ async function main(): Promise<void> {
   if (args.length === 0 || args.includes('--help') || args.includes('-h')) {
     console.log(`使用方法: bun run gen-thumb <slug>
 
-ブログ記事 (md/<slug>.md) の内容から Nano Banana 2 Lite (gemini-3.1-flash-lite-image) を使用して
+ブログ記事 (md/<slug>.md) の内容から Nano Banana Pro (gemini-3-pro-image) を使用して
 フラットポップ調のサムネイル画像を自動生成し、16:9 (1024x576, WebP形式) で保存した上で
 記事フロントマターの image フィールドを更新します。
 `);
@@ -179,9 +179,9 @@ OUTPUT RULES:
   const englishPrompt = (textResponse.text || '').trim();
   console.log(`       生成されたプロンプト:\n       "${englishPrompt}"`);
 
-  console.log('[3/4] Nano Banana 2 Lite (gemini-3.1-flash-lite-image) で画像生成中...');
+  console.log('[3/4] Nano Banana Pro (gemini-3-pro-image) で画像生成中...');
   const interaction = await ai.interactions.create({
-    model: 'gemini-3.1-flash-lite-image',
+    model: 'gemini-3-pro-image',
     input: englishPrompt,
   });
 

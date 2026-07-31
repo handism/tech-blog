@@ -3,7 +3,7 @@ title: 決済・EC用語集
 date: 2024-01-27
 tags: [EC, Terminology]
 category: Business
-image: ec-terminology.webp
+image: ec-terminology-flatpop.webp
 ---
 
 ## 決済・EC用語集
