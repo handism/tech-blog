@@ -23,6 +23,9 @@ image: local-rag-tuning-flatpop.webp
 
 ## システム構成とモデルスペック
 
+![オンデバイスRAGアプリのシステム構成とモデルスペックの全体像を示す図解](/images/gemma-android-rag-tuning-infographic.webp)
+
+
 本アプリで想定しているモデルと開発環境の仕様は以下の通りである。
 
 | 項目 | スペック / 採用技術 | 役割・制約 |
