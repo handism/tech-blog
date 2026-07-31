@@ -3,7 +3,7 @@ title: WordPressの最小構成のブログテーマを自作する
 date: 2024-01-09
 tags: [WordPress, Blog, PHP]
 category: Frontend
-image: many-letters.webp
+image: wordpress-minimum-theme-flatpop.webp
 ---
 
 ## 経緯
