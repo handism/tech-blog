@@ -14,6 +14,9 @@ image: many-letters.webp
 
 テーマを自作した際の手順は以下の通り。順番に深堀りしていく。
 
+![WordPressテーマ自作の全体手順を示すインフォグラフィック図解](/images/wordpress-minimum-theme-infographic.webp)
+
+
 1. まずHTMLでマークアップ
 2. HTMLをテンプレートタグに変換
 3. CSSで装飾

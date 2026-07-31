@@ -85,6 +85,9 @@ Reactで実装したWebアプリケーションは、SPA（シングルページ
 
 ## Next.jsについて
 
+![VitePressとNext.jsのアーキテクチャ比較とSSR/SSGの流れを示すテクニカル図解](/images/vitepress-to-nextjs-infographic.webp)
+
+
 SPAの課題として、ページの初期表示が遅くなる点と、検索エンジンのクローラーがHTMLメタ情報を読み取るのが難しいという点が挙げられる。
 
 これらの課題は、Next.jsによる`サーバーサイドレンダリング（SSR）`という手法によって、Webサーバー上であらかじめJavaScript（React）からHTMLを生成することで解決できる。
