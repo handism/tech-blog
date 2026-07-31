@@ -109,8 +109,8 @@ async function main(): Promise<void> {
     console.log(`使用方法: bun run gen-thumb <slug>
 
 ブログ記事 (md/<slug>.md) の内容から Nano Banana Pro (gemini-3-pro-image) を使用して
-強く目を引く高品質なブログ記事サムネイル画像を自動生成し、16:9 (1024x576, WebP形式) で保存した上で
-記事フロントマターの image フィールドを更新します。
+今風のフラットで洗練されたエディトリアルイラスト調のブログ記事サムネイル画像を自動生成し、
+16:9 (1024x576, WebP形式) で保存した上で記事フロントマターの image フィールドを更新します。
 `);
     process.exit(args.length === 0 ? 1 : 0);
   }
@@ -142,52 +142,57 @@ async function main(): Promise<void> {
   const ai = new GoogleGenAI({ apiKey });
 
   const promptBuilderQuery = `
-You are an expert art director and professional thumbnail designer for technical blog posts.
+You are an expert art director and professional editorial illustrator for technical blog posts.
 Analyze the following Japanese blog article metadata and excerpt:
 - Title: "${article.title}"
 - Tags: ${JSON.stringify(article.tags)}
 - Category: "${article.category}"
 - Content excerpt: "${article.contentExcerpt.replace(/\r?\n/g, ' ')}"
 
-Your task is to generate ONE detailed English image generation prompt for Google GenAI Nano Banana Pro (gemini-3-pro-image) that creates a highly eye-catching, professional blog post thumbnail.
+Your task is to generate ONE detailed English image generation prompt for Google GenAI Nano Banana Pro (gemini-3-pro-image) that creates a modern, flat, and sophisticated editorial illustration blog post thumbnail.
 While the prompt instructions must be written in English, the required catchphrase text MUST be written in Japanese and enclosed in quotes so the model renders it accurately.
 
 ### MANDATORY COMPOSITION & DESIGN RULES
 You must incorporate all of the following design principles into the generated prompt:
 
-1. **Instant Theme Recognition & Strong Visual Hierarchy**: The thumbnail must communicate the article's core topic instantly at a glance with a bold, simple composition and a strong visual hierarchy.
-2. **Bold Asymmetrical Layout**:
-   - Choose either the RIGHT or LEFT side of the screen to prominently feature a large main subject (a person, character, product, or symbolic motif representing the article theme).
-   - On the opposite side, ensure a clean, spacious, uncluttered margin area dedicated to displaying a large Japanese catchphrase.
-3. **Japanese Catchphrase & Typography**:
+1. **Modern Flat Editorial Illustration Style**:
+   - Do NOT use realistic, 3D rendered, or heavy metallic/glossy styles.
+   - Use a contemporary, flat, and sophisticated editorial illustration style (like modern tech magazine artwork or clean design system illustration).
+   - Express abstract concepts, systems, or subjects using **simple geometric shapes and clean forms** for immediate visual comprehension.
+2. **Bright-Tone Color Palette (No Primary Color Blocking)**:
+   - Avoid harsh, overly saturated primary color blocking (e.g., pure red, pure blue, bright neon yellow).
+   - Use a curated, harmonious **bright-tone color palette**: feature colors such as **Sky Blue, Cyan, Mint, Coral, Pale/Soft Yellow, Off-White, and Navy**.
+3. **Japanese Typography Integrated Naturally**:
    - Create an impactful, concise Japanese catchphrase (around 2 to 12 Japanese characters, short and memorable) based on the article's theme.
-   - Specify that this Japanese catchphrase text (e.g., "キャッチコピー文言") is rendered in extremely large, bold, highly legible Japanese typography.
-   - Include typography styling: thick outlines (bold borders), subtle 3D depth/bevel, and strong drop shadows so it can be instantly read even on small smartphone screens.
-4. **High-Saturation Color Palette**:
-   - Use a highly saturated, eye-catching color scheme dominated by **Yellow, Black, and Red** to maximize contrast between the background, text, and main subject.
-5. **Subtle Guidance Effects**:
-   - Use subtle lighting, speed lines (focus lines), arrows, or highlights sparingly to guide the viewer's eye toward the main subject and the catchphrase text.
-6. **Atmospheric & Defocused Background**:
-   - The background should be an impressive, evocative environment that fits the article theme, but keep visual clutter and information density low, and make it **slightly blurred (defocused)** to accentuate the foreground subject and typography.
-7. **Prohibitions**:
-   - Do NOT include any extra or small unreadable text, random words, logos, watermarks, or overly complex/cluttered backgrounds.
+   - Specify that this Japanese catchphrase text (e.g., "キャッチコピー文言") is rendered in **large, highly legible Japanese lettering that integrates naturally and stylishly into the editorial design**.
+   - **Strictly avoid**: heavy 3D extrusion, metallic textures, excessive glowing/neon effects, and realistic 3D lettering. Keep typography crisp, clean, and flat/sharp.
+4. **Clean, Minimal & Modern Background**:
+   - The background must be simple and low-information with generous clean negative space.
+   - Ensure the overall impression is **modern, well-organized, and stylish** without visual clutter.
+5. **Versatile & Dynamic Layout Compositions**:
+   - Do NOT restrict layouts to just right/left asymmetrical splits. Choose the most suitable layout composition from these versatile patterns according to the article's theme and typography:
+     - **Centered Title Layout**: A bold central title surrounded by harmonious geometric illustrations.
+     - **Top Title + Bottom Visual Layout**: A prominent title at the upper section with simple geometric illustrations at the bottom.
+     - **Banner / Band Header Layout**: A sleek colored bar or band holding the title text for clear editorial contrast.
+     - **Speech Bubble / Sticker Accent Layout**: Sophisticated speech bubbles or modern sticker-like geometric frames highlighting the key text.
+     - **Diagonal Composition Layout**: Dynamic diagonal visual flow connecting typography and geometric motifs.
+     - **Circular / Rounded Panel Split Layout**: Clean rounded cards, panels, or circular shapes neatly dividing typography and graphical elements.
 
 ### HOW TO CONSTRUCT THE PROMPT
 Construct a single, cohesive English image generation prompt that specifies:
-- The bold, professional tech blog thumbnail aesthetic with strong visual hierarchy and simple composition.
-- The layout choice: e.g., "On the right side, prominently feature a large [detailed description of person/character/product/motif]..." and "On the clean, spacious left side, display the Japanese catchphrase..." (or left/right reversed).
-- The exact Japanese catchphrase string enclosed in quotes, along with the required large bold lettering, thick outline, subtle 3D depth, and drop shadow.
-- The high-saturation Yellow, Black, and Red color scheme maximizing contrast.
-- The subtle lighting, focus lines, arrows, or highlights guiding attention to the main subject and text.
-- The theme-appropriate, low-information, slightly blurred background.
+- The modern, flat, sophisticated editorial illustration style using simple geometric shapes.
+- The chosen layout composition (e.g., "Using a Circular / Rounded Panel Split Layout...", "Using a Top Title + Bottom Visual Layout...", etc.) and where each element is placed.
+- The exact Japanese catchphrase string enclosed in quotes, integrated naturally into the design with clean, legible Japanese typography (avoiding heavy 3D or neon glow).
+- The sophisticated bright-tone color palette (Sky Blue, Cyan, Mint, Coral, Pale Yellow, Off-White, Navy, etc.).
+- The simple, low-information background that gives a modern, well-organized, and stylish impression.
 - Negative constraints appended at the end.
 
 ### FEW-SHOT EXAMPLE FOR REFERENCE
-"A professional, eye-catching tech blog thumbnail with a bold asymmetrical layout and strong visual hierarchy. On the right side, prominently feature a large, expressive software engineer mascot character working on a sleek holographic code interface. On the clean, spacious left side, display the Japanese catchphrase '爆速開発の手法' in extremely large, thick, highly legible Japanese lettering with bold black outlines, subtle 3D depth, and drop shadows for instant smartphone readability. Highly saturated color palette dominated by yellow, black, and red to maximize contrast between the background and text. Subtle lighting effects and subtle focus lines guide the eye toward the character and catchphrase. The background is an atmospheric modern server room, kept low-information and slightly blurred to emphasize the foreground. Masterpiece --no extra text, small unreadable characters, random English words, logos, watermarks, cluttered background, messy typography"
+"A modern, flat, and sophisticated editorial illustration blog thumbnail with a 'Circular / Rounded Panel Split Layout' and clean geometric simplicity. The composition uses sleek rounded cards and circular panels on an off-white and soft sky blue background to neatly organize information. In the upper left panel, display the Japanese catchphrase '開発のベストプラクティス' in large, highly legible, clean Japanese lettering in deep navy that integrates naturally into the editorial design. In the adjacent and lower panels, feature simple, elegant geometric shapes—circles, rounded rectangles, and abstract flowchart nodes—rendered in a harmonious bright-tone color palette of mint, coral, cyan, and pale yellow. The overall look is modern, well-organized, and stylish with generous clean negative space. Masterpiece --no realistic 3d rendering, heavy 3d text, metallic textures, excessive glow, neon lighting, highly saturated primary colors, messy typography, extra text, small unreadable characters, random English words, logos, watermarks, cluttered background"
 
 ### NEGATIVE CONSTRAINTS REQUIREMENT
 STRICTLY append the following exclusion keywords at the very end of your prompt string:
-"masterpiece --no extra text, small unreadable characters, random English words, logos, watermarks, cluttered background, messy typography, blurry foreground"
+"masterpiece --no realistic 3d rendering, heavy 3d text, metallic textures, excessive glow, neon lighting, highly saturated primary colors, messy typography, extra text, small unreadable characters, random English words, logos, watermarks, cluttered background"
 
 OUTPUT RULES:
 - Output ONLY the single prompt string to be fed directly into the image generation model.

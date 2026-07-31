@@ -3,7 +3,7 @@ title: IT世界に溢れる「水」と「配管」のメタファー
 date: 2026-06-22
 tags: [Network, AWS]
 category: Infrastructure
-image: it-water-metaphor.webp
+image: it-water-metaphor-flatpop.webp
 ---
 
 IT用語には、日常的によく耳にする「水」や「流れ」にまつわるメタファーが数多く存在します。特にネットワークや分散システムといった、目に見えないデータの動きを扱う領域では、これらの表現が直感的な理解を助ける重要な役割を果たしています。
