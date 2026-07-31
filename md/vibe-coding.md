@@ -28,6 +28,9 @@ image: vibe-coding.webp
 
 ## バイブコーディングとは
 
+![バイブコーディングのサイクルと開発スタイルの全体像を示す概念図解](/images/vibe-coding-infographic.webp)
+
+
 まずは、バイブコーディングとはなんたるかをCodexに説明してもらう。
 
 ```

@@ -12,6 +12,9 @@ image: personal-vs-team-development-flatpop.webp
 
 本記事では、これら2つの開発スタイルの本質的な違いを多角的に比較し、それぞれがエンジニアの成長にどのように寄与するかを考察します。
 
+![個人開発とチーム開発の対比構造を示す概念図](/images/personal-vs-team-development-infographic.webp)
+
+
 ---
 
 ## 1. 意思決定と開発のスピード

@@ -92,6 +92,9 @@ Connection Drainingのほかにも、IT分野（特にデータ通信やイン�
 
 ![水道設備としてのクラウドインフラ](/images/infra-water-piping.webp)
 
+![クラウドインフラを水道設備にたとえたイメージ図解](/images/it-water-metaphor-infographic.webp)
+
+
 ---
 
 ## まとめ：ドキュメントを読むのが楽しくなる

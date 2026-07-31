@@ -24,6 +24,9 @@ timeline
 2026年3月、自律型AIコーディングエージェントのCLIツールとして注目を集めていた **Claude Code** に課金（Proプラン、月額20ドル）し、本格的な「バイブコーディング」（自然言語で指示を投げて、AIに実装を丸投げするスタイル）を開始しました。
 
 ### Claude Codeの初期設定と環境構築
+
+![Claude Codeの初期設定と環境構築のワークフロー図解](/images/ai-coding-assistant-journey-infographic.webp)
+
 インストールはHomebrewなどを用いて行います。
 
 ```sh
