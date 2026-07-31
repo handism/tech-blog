@@ -140,6 +140,9 @@ This is a dummy GET response
 
 ### プロジェクトのビルド
 
+![Spring BootアプリからDockerイメージ作成・コンテナ起動までのワークフロー図解](/images/spring-boot-api-server-infographic.webp)
+
+
 開発が完了し、リリースを行う際はDockerのイメージとしてビルドするのが昨今の流行りとなっている。プロジェクトをビルドして、Dockerイメージを作成してみる。
 
 ビルドには`gradle`を利用する。ターミナルで以下のコマンドを叩くだけ。

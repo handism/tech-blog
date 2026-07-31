@@ -28,7 +28,7 @@ image: vibe-coding.webp
 
 ## バイブコーディングとは
 
-![バイブコーディングのサイクルと開発スタイルの全体像を示す概念図解](/images/vibe-coding-infographic.webp)
+![各種AIエージェント（VSCode拡張系、IDE系、CLI系）の分類と特徴を比較する概念図解](/images/vibe-coding-infographic.webp)
 
 
 まずは、バイブコーディングとはなんたるかをCodexに説明してもらう。
