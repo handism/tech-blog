@@ -94,7 +94,10 @@ Desktop.ini
 # ==========================================
 # AI Tools & Agents
 # ==========================================
-.claude/
+# .claude/ 配下は原則除外だが、チーム共有するスキルのみ追跡対象にする。
+# git は無視されたディレクトリを走査しないため、`.claude/` ではなく `.claude/*` にする必要がある。
+.claude/*
+!.claude/skills/
 .claude.json
 .claude-pr/
 .mcp.json

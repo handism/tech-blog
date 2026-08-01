@@ -14,13 +14,9 @@
 
 ## アーキテクチャ
 
-Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub Pages 向け静的ブログ。`main` へのプッシュで GitHub Actions（`.github/workflows/deploy.yml`）が自動デプロイ。CI（`.github/workflows/ci.yml`）では lint とユニットテストを実行。
-
 ### コンテンツパイプライン
 
 コンテンツタイプは **ブログ記事**（`md/`）・**Scraps**（`scraps/`）・**学習ガイド**（`learning/`）・**AWS Patterns**（`patterns/`）の 4 種類。それぞれ独立したパイプラインを持つが、下位層を共有する。
-
-各パイプラインは `src/lib/<type>-repository.ts`（読み込み）→ `<type>-parser.ts`（Zod バリデーション）→ `post-renderer.ts`（Markdown → HTML、コンテンツ非依存で全タイプ共用）→ `<type>-server.ts`（React `cache()` で集約）→ `app/<type>/`（`generateStaticParams()` で SSG）という層構成。詳細は各ファイルを参照。
 
 以下は**コードを読んでも分からない**前提・制約：
 
@@ -64,8 +60,6 @@ Next.js 16 の App Router と SSG（`output: 'export'`）を使用した GitHub 
 
 ## コードスタイル
 
-- Prettier：行幅 100 文字、シングルクォート、インデント 2 スペース
-- TypeScript strict モード、パスエイリアス `@/*` → プロジェクトルート
 - スタイリングは Tailwind CSS 4、本文組版は Tailwind Typography
 - サイト全体で複数のデザインテーマを採用したフレキシブルなスタイリングシステムを導入：
   - テーマカタログとデフォルトテーマは `src/config/themes.ts`（`themeConfig` / `DEFAULT_THEME`）が正
