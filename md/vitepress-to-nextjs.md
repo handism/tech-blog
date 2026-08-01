@@ -3,7 +3,7 @@ title: VitePressからNext.jsへマイグレーションする
 date: 2026-02-01
 tags: [Next.js, React, Blog, AI]
 category: Frontend
-image: vitepress-to-nextjs.webp
+image: vitepress-to-nextjs-thumb.webp
 ---
 
 ## 経緯
