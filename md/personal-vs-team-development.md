@@ -12,8 +12,6 @@ image: personal-vs-team-development-thumb.webp
 
 本記事では、これら2つの開発スタイルの本質的な違いを多角的に比較し、それぞれがエンジニアの成長にどのように寄与するかを考察します。
 
-![個人開発とチーム開発の対比構造を示す概念図](/images/personal-vs-team-development-infographic.webp)
-
 
 ---
 
@@ -66,17 +64,6 @@ Gitをはじめとするバージョン管理ツールの使い方も、共同�
 - 複数人が同時に同じファイルを修正することによる「コンフリクトの解消」は日常茶飯事であり、コンフリクトを最小限に抑えるための適切なモジュール分割や細分化されたコミットが求められます。
 - CI/CDパイプラインと連携し、プルリクエストが作成された時点で自動テストが走り、ビルドが通ることを確認してからマージする仕組みが構築されます。
 
-```mermaid
-gitGraph
-  commit id: "Initial Commit"
-  branch feature-user-auth
-  checkout feature-user-auth
-  commit id: "Add Login Screen"
-  commit id: "Implement Auth Logic"
-  checkout main
-  commit id: "Fix CSS bug"
-  merge feature-user-auth id: "Merge PR"
-```
 
 ---
 
@@ -118,6 +105,9 @@ gitGraph
 ---
 
 ## まとめ：エンジニアとして成長するための両輪
+
+![個人開発とチーム開発の両輪によるエンジニアの成長を示す図解インフォグラフィック](/images/personal-vs-team-development-infographic.webp)
+
 
 個人開発とチーム開発は、どちらが優れているというものではありません。それぞれ異なる筋肉を鍛えることができる「**エンジニアの成長における両輪**」です。
 
