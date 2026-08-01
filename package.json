@@ -12,6 +12,7 @@
     "test:vrt:update": "playwright test --update-snapshots",
     "analyze": "ANALYZE=true next build",
     "gen-thumb": "bun run scripts/generate-thumbnail.ts",
+    "gen-thumb-ai": "bun run scripts/generate-thumbnail-ai.ts",
     "gen-info": "bun run scripts/generate-infographic.ts",
     "gen-infographic": "bun run scripts/generate-infographic.ts",
     "type-check": "tsc --noEmit",

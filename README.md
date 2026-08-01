@@ -125,10 +125,13 @@ bun run type-check
 ブログ記事 (`md/<slug>.md`) を対象に、Google GenAI (Gemini / Nano Banana 2 Lite `gemini-3.1-flash-lite-image`) を使用して、記事のサムネイル画像および本文内の解説用図解インフォグラフィックを自動生成・変換・自動設定するコマンドが利用できます。
 ご使用の際は、事前に `.env.local` に `GEMINI_API_KEY=<あなたのAPIキー>` を設定してください。
 
-###### 1. サムネイルの自動生成 (`generate-thumbnail.ts`)
-記事のタイトル・タグ・カテゴリ・本文を分析し、**フラットポップ調 (superflat pop-art)** のアイキャッチサムネイルを 16:9 (1024x576 / WebP形式) で自動生成し、記事フロントマターの `image` フィールドを更新します。
+###### 1. サムネイルの自動生成 (`generate-thumbnail.ts` / `generate-thumbnail-ai.ts`)
+記事のタイトル・タグ・カテゴリ・本文を分析し、**フラットポップ調 (superflat pop-art)** のアイキャッチサムネイルを 16:9 (1024x576 / WebP形式) で自動生成し、記事フロントマターの `image` フィールドを更新します (`generate-thumbnail.ts`)。
+また、sharp処理を用いずに文字・文言の生成まで画像生成AIに一任し、YouTubeサムネイル風のフラットイラスト画像を生成する別バージョン (`generate-thumbnail-ai.ts`) も利用可能です。
 ```bash
 bun run gen-thumb <slug>
+# または (AIによる文言一体型のYouTubeサムネイル風イラスト生成)
+bun run gen-thumb-ai <slug>
 # 例: bun run gen-thumb how-to-use-git
 ```
 
