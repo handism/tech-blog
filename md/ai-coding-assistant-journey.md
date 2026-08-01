@@ -3,7 +3,7 @@ title: 個人開発のAIアシスタント変遷記：Claude Code → Copilot Pr
 date: 2026-06-28
 tags: [Claude Code, GitHub Copilot, Antigravity]
 category: AI
-image: ai-coding-assistant-journey-flatpop.webp
+image: ai-coding-assistant-journey-thumb.png
 ---
 
 個人開発におけるAIコーディングアシスタントの進化スピードは凄まじく、開発スタイルもそれに合わせて激変し続けています。  
