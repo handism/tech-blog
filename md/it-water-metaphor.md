@@ -14,6 +14,9 @@ IT用語には、日常的によく耳にする「水」や「流れ」にまつ
 
 ## 1. ALBの「Connection Draining」と水のイメージ
 
+![ALBのConnection Drainingの仕組みを水道のタンクとバルブにたとえた図解インフォグラフィック](/images/it-water-metaphor-infographic.webp)
+
+
 AWSなどでEC2インスタンスやコンテナを保守・アップデートする際、あるいはオートスケーリングで台数を減らす際、いきなり対象のインスタンスを切り離すとどうなるでしょうか？
 そのインスタンスが処理している途中のリクエスト（例: ファイルアップロードや決済処理など）は強制終了してしまい、ユーザーにはエラーが返ってしまいます。
 
@@ -29,18 +32,6 @@ Connection Drainingが有効なロードバランサーは、インスタンス�
    すでにそのインスタンスに到達していて、現在処理中のリクエスト（コネクション）は、処理が完了するかタイムアウト（Deregistration Delay）に達するまで維持します。
 3. **安全な切り離し**:
    すべての処理中のコネクションがゼロになった時点で、インスタンスをロードバランサーから安全に切り離します。
-
-```mermaid
-stateDiagram-v2
-    [*] --> Active : 通常稼働中 (リクエストが自由に流入)
-    Active --> Deregistering : 1. 切り離し開始 (Deregistration)
-    state Deregistering {
-        [*] --> BlockNewRequests : 新規リクエスト遮断
-        BlockNewRequests --> DrainExisting : 2. 既存コネクションの維持 (流しきる)
-    }
-    DrainExisting --> Disconnected : 3. コネクション数ゼロで安全に切り離し
-    Disconnected --> [*]
-```
 
 
 ### 水にたとえると？
@@ -89,10 +80,6 @@ Connection Drainingのほかにも、IT分野（特にデータ通信やイン�
   上流から一気に押し寄せる大量の水を一旦プールしておき、下流のポンプ（ワーカー）が処理できる適量ずつゆっくりと流し出す仕組みです。
 * **Auto Scaling ＝ 「自動水量ポンプ調節システム」**
   水の量（アクセス数やCPU負荷）が急激に増えたら、自動でポンプの数を増やして水圧を維持し、水が減ったらポンプを止めて稼働コストを下げる仕組みです。
-
-![水道設備としてのクラウドインフラ](/images/infra-water-piping.webp)
-
-![クラウドインフラを水道設備にたとえたイメージ図解](/images/it-water-metaphor-infographic.webp)
 
 
 ---
