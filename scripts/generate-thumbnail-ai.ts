@@ -1,6 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { GoogleGenAI } from '@google/genai';
+import sharp from 'sharp';
+
+const OUTPUT_WIDTH = 1024;
+const OUTPUT_HEIGHT = 576;
 
 interface ArticleMeta {
   title: string;
@@ -240,10 +244,18 @@ async function main(): Promise<void> {
     });
   }
 
-  console.log('[3/4] 画像を保存中...');
-  const outputFilename = `${options.slug}-thumb.png`;
+  console.log('[3/4] サムネイルサイズ (1024×576) へリサイズ・WebP変換して保存中...');
+  const outputFilename = `${options.slug}-thumb.webp`;
   const outputPath = path.join(outputDir, outputFilename);
-  fs.writeFileSync(outputPath, imageBuffer);
+
+  await sharp(imageBuffer)
+    .resize(OUTPUT_WIDTH, OUTPUT_HEIGHT, {
+      fit: 'cover',
+      position: 'centre',
+      kernel: sharp.kernel.lanczos3,
+    })
+    .webp({ quality: 91, effort: 5 })
+    .toFile(outputPath);
 
   console.log(`[4/4] 保存しました: public/images/${outputFilename}`);
   updateArticleFrontmatter(mdPath, outputFilename);
