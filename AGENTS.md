@@ -11,7 +11,7 @@
 - AI 画像生成コマンド:
   - `bun run gen-thumb <slug>` : 記事（`md/<slug>.md`）のフラットポップ調サムネイル画像を生成・保存しフロントマターを自動更新（`scripts/generate-thumbnail.ts`）。
   - `bun run gen-thumb-ai <slug>` : 記事（`md/<slug>.md`）の内容をもとに、AIに文言の生成・イラスト描画まで任せて YouTube サムネイル風のフラットイラスト画像を直接生成・保存しフロントマターを自動更新（`scripts/generate-thumbnail-ai.ts`）。
-  - `bun run gen-info <slug>` （または `bun run gen-infographic <slug>`） : 記事本文を解析して最適な図解挿入位置を特定し、シンプルでクリーンな技術ドキュメント風インフォグラフィック図を生成・保存した上で Markdown 本文に自動設定・更新する（`scripts/generate-infographic.ts`）。
+  - `bun run gen-info <slug>` （または `bun run gen-infographic <slug>`） : 記事本文を解析して最適な図解挿入位置を特定し、フラットイラスト調で自然な日本語文言入りの図解インフォグラフィック画像を生成・保存した上で Markdown 本文に自動設定・更新する（`scripts/generate-infographic.ts`）。
 
 ## アーキテクチャ
 

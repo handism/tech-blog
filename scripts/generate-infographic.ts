@@ -15,7 +15,8 @@ interface InfographicPlan {
   targetLineText: string;
   reason: string;
   altText: string;
-  englishPrompt: string;
+  imagePrompt?: string;
+  englishPrompt?: string;
 }
 
 /**
@@ -174,7 +175,7 @@ async function main(): Promise<void> {
     console.log(`使用方法: bun run gen-info <slug>
 
 ブログ記事 (md/<slug>.md) の内容をAIで分析し、本文中の「いい感じの箇所（図解があると理解しやすいセクション）」を
-自動特定します。その後、生成AI (gemini-3-pro-image) を用いてシンプルでクリーンな図解インフォグラフィックを作成し、
+自動特定します。その後、生成AI (gemini-3-pro-image) を用いてフラットなイラスト調で自然な日本語文言入りの図解インフォグラフィックを作成し、
 16:9 (1024x576, WebP形式) にリサイズ・保存した上で、記事本文の該当位置にMarkdown画像リンクを設定します。
 `);
     process.exit(args.length === 0 ? 1 : 0);
@@ -200,6 +201,12 @@ async function main(): Promise<void> {
     process.exit(1);
   }
 
+  const imageModel = process.env.GEMINI_IMAGE_MODEL ?? 'gemini-3-pro-image';
+  const requestedImageSize = process.env.GEMINI_IMAGE_SIZE ?? '1K';
+  const imageSize = ['1K', '2K', '4K'].includes(requestedImageSize)
+    ? (requestedImageSize as '1K' | '2K' | '4K')
+    : '1K';
+
   const rawMarkdown = fs.readFileSync(mdPath, 'utf-8');
   const article = parseArticleFull(rawMarkdown);
   console.log(`[1/5] 記事 "md/${slug}.md" を読み込みました (タイトル: "${article.title}")`);
@@ -207,38 +214,35 @@ async function main(): Promise<void> {
   const ai = new GoogleGenAI({ apiKey });
 
   const promptBuilderQuery = `
-You are an expert technical blog visual designer and technical diagram prompt creator.
-Analyze the following Japanese blog article:
-- Title: "${article.title}"
-- Tags: ${JSON.stringify(article.tags)}
-- Category: "${article.category}"
-- Content (Markdown):
+あなたは技術ブログのビジュアルデザイナーおよび図解インフォグラフィックのプロンプト作成エキスパートです。
+以下の技術ブログ記事を分析してください：
+- タイトル: "${article.title}"
+- タグ: ${JSON.stringify(article.tags)}
+- カテゴリ: "${article.category}"
+- 本文 (Markdown):
 ${article.content.slice(0, 4000)}
 
-Your task is to:
-1. Identify the SINGLE best location in the Markdown content to insert a helpful infographic/diagram that illustrates the core concepts or workflows described in the article. Prefer inserting right AFTER a major heading (e.g. "## ...") or a key introductory paragraph.
-2. Generate ONE detailed English image generation prompt for Google GenAI (gemini-3.1-flash-lite-image) that creates a clean, simple, and modern technical infographic diagram.
-3. Provide a clear Japanese alt text for the markdown image tag.
+以下のタスクを実行してください：
+1. 本文の中で読者の理解を深めるために図解インフォグラフィックを挿入するのに最も適した箇所（見出しや主要な段落など）を1箇所だけ特定してください。できるだけ主要な見出し（例: "## ..."）や導入段落の直後を推奨します。
+2. そのセクションで解説されている中心的な概念や仕組み、ワークフローなどを解説する図解インフォグラフィックを生成AI (gemini-3-pro-image) で作成するための詳細な画像生成プロンプト (imagePrompt) を作成してください。
+3. 画像タグ用の分かりやすい日本語代替テキスト (altText) を作成してください。
 
-MANDATORY STYLE RULES FOR THE PROMPT (must be reflected in englishPrompt):
-- clean, simple, and modern minimalist technical infographic concept diagram illustrating the key architecture, workflow, or comparison from the target section
-- use simple network lines, clean arrows, well-balanced colorful nodes, professional flowchart motifs, and clear geometric shapes
-- modern minimalist palette with professional tech accent colors (e.g., muted blue, slate gray, teal, subtle orange) and generous whitespace
-- white or light off-white neutral background, clean crisp edges, high legibility, uncluttered technical illustration
-- DO NOT use pop-art style, ultra-bright saturated colors, or noisy decorative elements
-- NEVER include text, letters, characters, typography, or words in the image
-- STRICTLY append the following negative prompt keywords at the end of your prompt string:
-  "masterpiece --no pop-art, superflat, neon, ultra-bright colors, gradients, messy shading, blurry lines, text, characters, watermark, letters, words, writing"
+【画像生成プロンプト (imagePrompt) 作成時の要件】
+画像生成プロンプトには、以下の要件を必ず反映してください：
+・写実的（フォトリアル）なデザインではなく、フラットなイラストのデザインを基本とすること。
+・画像内に描画する見出し・ラベル・解説文字などの文言は、すべて自然な日本語とすること。
+・細かい構図や配色、文字の配置、モチーフなどの表現方法は、AIの自由な創造的判断に任せること。
+・対象セクションの内容を読者が視覚的に理解できるよう、記事内容に即した具体的な図解のテーマや解説内容（自然な日本語文言）をプロンプト内に指示すること。
 
-OUTPUT FORMAT:
-Return exactly ONE JSON object matching this schema (do NOT wrap in markdown code blocks if possible, output valid JSON):
+出力フォーマット：
+必ず以下のJSONスキーマに一致する1つのJSONオブジェクトのみを出力してください（Markdownコードブロックで囲まないこと）：
 {
-  "targetLineText": "The EXACT markdown heading line or paragraph text line from the article after which the image should be inserted (e.g. '## Gitの基本操作')",
+  "targetLineText": "記事内で画像を挿入する直前の行（正確なMarkdownの見出し行または段落テキスト。例: '## Gitの基本操作'）",
   "reason": "なぜここに図解を入れると分かりやすいかの理由（日本語）",
-  "altText": "画像の代替テキスト（日本語。例: 'Gitの基本操作イメージ図解'）",
-  "englishPrompt": "The English prompt string for image generation"
+  "altText": "画像の代替テキスト（日本語。例: 'Gitの基本操作の図解イメージ'）",
+  "imagePrompt": "gemini-3-pro-image に渡すための図解インフォグラフィック画像生成プロンプト（日本語）"
 }
-`;
+`.trim();
 
   console.log('[2/5] Gemini で記事本文を分析し、最適な図解挿入位置とプロンプトを構築中...');
   const textResponse = await ai.models.generateContent({
@@ -251,16 +255,26 @@ Return exactly ONE JSON object matching this schema (do NOT wrap in markdown cod
 
   const rawJsonText = textResponse.text || '{}';
   const plan = parseJsonSafe(rawJsonText);
+  const imagePrompt = plan.imagePrompt || plan.englishPrompt;
+  if (!imagePrompt) {
+    throw new Error('AIのレスポンスに画像生成プロンプト (imagePrompt) が含まれていませんでした。');
+  }
 
   console.log(`       特定された挿入位置: "${plan.targetLineText}"`);
   console.log(`       挿入の理由: ${plan.reason}`);
   console.log(`       代替テキスト: "${plan.altText}"`);
-  console.log(`       生成されたプロンプト:\n       "${plan.englishPrompt}"`);
+  console.log(`       生成されたプロンプト:\n       "${imagePrompt}"`);
 
-  console.log('[3/5] Nano Banana Pro (gemini-3-pro-image) で図解インフォグラフィックを作成中...');
+  console.log(`[3/5] ${imageModel} で図解インフォグラフィックを作成中...`);
   const interaction = await ai.interactions.create({
-    model: 'gemini-3-pro-image',
-    input: plan.englishPrompt,
+    model: imageModel,
+    input: imagePrompt,
+    response_format: {
+      type: 'image',
+      mime_type: 'image/jpeg',
+      aspect_ratio: '16:9',
+      image_size: imageSize,
+    },
   });
 
   const generatedImage = interaction.output_image;
