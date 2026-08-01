@@ -1,6 +1,6 @@
 ---
 name: aws-themed-cfn-drawio
-description: AWSアーキテクチャをCloudFormation(YAML)で設計し、そのIaCに対応するDraw.io構成図を作成する。ユーザーが指定したアーキテクチャのテーマに従って構成を作る必要があるとき、`aws-iac`サーバーの利用を求められたとき、最新ベストプラクティス反映を求められたとき、公式AWSアイコン（AWS 2026）を使った図面作成を求められたときに使う。
+description: AWSアーキテクチャをCloudFormation(YAML)で設計し、そのIaCに対応するDraw.io構成図を作成する。ユーザーが指定したアーキテクチャのテーマに従って構成を作る必要があるとき、最新ベストプラクティス反映を求められたとき、公式AWSアイコン（AWS 2026）を使った図面作成を求められたときに使う。
 ---
 
 # AWS Themed CFN + Draw.io
@@ -38,14 +38,9 @@ brew install --cask drawio
 - データ保持期間とバックアップ要件
 - 想定トラフィック（低 / 中 / 高）
 
-### 2. `aws-iac`サーバーを優先利用する
+### 2. CloudFormation YAMLを作成する
 
-`aws-iac`が利用可能なら、テンプレート骨子・パラメータ・リソース設計を取得して反映する。  
-利用不可なら、このリポジトリの `iac/` 既存テンプレートを参考に自力で生成する。
-
-### 3. CloudFormation YAMLを作成する
-
-以下を必ず満たす。
+このリポジトリの `iac/` 既存テンプレートを参考にしつつ、以下を必ず満たす。
 
 - YAMLで記述する
 - Parameters / Outputs を定義する
@@ -53,12 +48,12 @@ brew install --cask drawio
 - ユーザー指定テーマに沿った設計意図を反映する
 - コスト最適化指定がある場合は [cost-checklist.md](references/cost-checklist.md) を併用する
 
-### 4. 最新ベストプラクティスを確認する
+### 3. 最新ベストプラクティスを確認する
 
 「最新」要件がある場合、生成前に一次情報（AWS公式ドキュメント）を確認する。  
 回答では確認日を明示し、反映したポイントを箇条書きで示す。
 
-### 5. Draw.io図を作成する（mxGraph XML）
+### 4. Draw.io図を作成する（mxGraph XML）
 
 IaCのリソース構成・通信経路と1:1対応する図を `draw.io/` に作成する。
 
@@ -68,7 +63,7 @@ IaCのリソース構成・通信経路と1:1対応する図を `draw.io/` に�
 2. ない場合は [aws-shape-ids.md](references/aws-shape-ids.md) のshapeIDを参照して新規作成する
 3. [drawio-aws-2026.md](references/drawio-aws-2026.md) の構造ルールに従う
 
-### 6. draw.io CLIでSVGをエクスポートする
+### 5. draw.io CLIでSVGをエクスポートする
 
 **これは必須手順。** drawioファイル完成後、必ず以下を実行する。
 
@@ -81,7 +76,7 @@ drawio --export --format svg \
   "aws-patterns/draw.io/<name>.drawio"
 ```
 
-### 7. 整合性チェックを実施する
+### 6. 整合性チェックを実施する
 
 最低限以下を確認する。
 

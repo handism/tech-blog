@@ -27,14 +27,13 @@
 ## Workflow Contract
 
 1. アーキテクチャテーマを最優先入力として扱い、未指定時は追加確認が必要
-2. `aws-iac` サーバーが使える場合は優先利用する
-3. CloudFormationは次を必須にする
+2. CloudFormationは次を必須にする
 - Parameters/Outputs
 - least privilege IAM
 - encryption at rest
 - logs with retention
-4. 最新要件がある場合はAWS公式一次情報を確認し、確認日を明記する
-5. Draw.io図はIaCと1:1対応を担保する
+3. 最新要件がある場合はAWS公式一次情報を確認し、確認日を明記する
+4. Draw.io図はIaCと1:1対応を担保する
 6. AWSサービスは公式AWS 2026アイコンを使う
 7. IaCと図の整合性チェックを実施する
 
