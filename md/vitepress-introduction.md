@@ -1,8 +1,10 @@
 ---
 title: VitePress + GitHub Pagesでブログを自作する
-date: 2023-11-26
-tags: [Vue, VitePress, Blog]
-category: Frontend
+date: 2023-11-26T00:00:00.000Z
+tags:
+  - Vue
+  - CMS
+category: Development
 image: vitepress-introduction.webp
 ---
 

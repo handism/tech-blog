@@ -1,7 +1,8 @@
 ---
 title: アジャイル開発を学ぶ
-date: 2024-01-25
-tags: [Agile]
+date: 2024-01-25T00:00:00.000Z
+tags:
+  - DevOps
 category: IT
 image: agile-development.webp
 ---

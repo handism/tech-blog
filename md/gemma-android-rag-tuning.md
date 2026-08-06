@@ -1,8 +1,10 @@
 ---
 title: Gemma 2BでローカルなオンデバイスRAGアプリを作る
-date: 2026-06-15
-tags: [Android, AI]
-category: AI    
+date: 2026-06-15T00:00:00.000Z
+tags:
+  - OS
+  - AI
+category: AI
 image: gemma-android-rag-tuning-thumb.webp
 ---
 

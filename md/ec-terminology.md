@@ -1,8 +1,10 @@
 ---
 title: 決済・EC用語集
-date: 2024-01-27
-tags: [EC, Terminology]
-category: Business
+date: 2024-01-27T00:00:00.000Z
+tags:
+  - CMS
+  - General
+category: IT
 image: ec-terminology-flatpop.webp
 ---
 

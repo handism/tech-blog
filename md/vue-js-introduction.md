@@ -1,8 +1,9 @@
 ---
 title: Vue.jsに入門してみる
-date: 2023-11-25
-tags: [Vue]
-category: Frontend
+date: 2023-11-25T00:00:00.000Z
+tags:
+  - Vue
+category: Development
 image: new-start.webp
 ---
 

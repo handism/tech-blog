@@ -1,7 +1,8 @@
 ---
 title: 個人的によく使うGitのコマンド集
-date: 2023-11-26
-tags: [Git]
+date: 2023-11-26T00:00:00.000Z
+tags:
+  - DevOps
 category: IT
 image: how-to-use-git-thumb.webp
 ---

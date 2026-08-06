@@ -1,8 +1,9 @@
 ---
 title: Macのセットアップ時の設定メモ
-date: 2024-01-10
-tags: [Mac]
-category: OS
+date: 2024-01-10T00:00:00.000Z
+tags:
+  - OS
+category: Infrastructure
 image: falling-apples.webp
 ---
 

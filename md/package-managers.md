@@ -1,8 +1,9 @@
 ---
-title: "パッケージマネージャーがいっぱいありすぎるので整理する（2026年最新版）"
-date: "2026-08-06"
-tags: ["Node.js", "npm", "pnpm", "bun", "deno", "yarn"]
-category: "programming"
+title: パッケージマネージャーがいっぱいありすぎるので整理する（2026年最新版）
+date: '2026-08-06'
+tags:
+  - JavaScript
+category: Development
 image: package-managers-thumb.webp
 ---
 

@@ -1,8 +1,9 @@
 ---
 title: SSL/TLS証明書の知識まとめ
-date: 2026-01-27
-tags: [Certificate]
-category: Security
+date: 2026-01-27T00:00:00.000Z
+tags:
+  - AWS
+category: Infrastructure
 image: certificate-introduction.webp
 ---
 

@@ -1,8 +1,9 @@
 ---
 title: Windowsのセットアップ時の設定メモ
-date: 2023-12-30
-tags: [Windows]
-category: OS
+date: 2023-12-30T00:00:00.000Z
+tags:
+  - OS
+category: Infrastructure
 image: windows-tips-flatpop.webp
 ---
 

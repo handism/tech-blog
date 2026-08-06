@@ -1,7 +1,8 @@
 ---
 title: PostgreSQLに再入門する
-date: 2026-01-28
-tags: [PostgreSQL, DB]
+date: 2026-01-28T00:00:00.000Z
+tags:
+  - Database
 category: Infrastructure
 image: postgresql-introduction.webp
 ---

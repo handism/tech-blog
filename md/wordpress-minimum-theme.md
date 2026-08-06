@@ -1,8 +1,10 @@
 ---
 title: WordPressの最小構成のブログテーマを自作する
-date: 2024-01-09
-tags: [WordPress, Blog, PHP]
-category: Frontend
+date: 2024-01-09T00:00:00.000Z
+tags:
+  - CMS
+  - Language
+category: Development
 image: wordpress-minimum-theme-flatpop.webp
 ---
 

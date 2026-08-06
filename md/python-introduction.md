@@ -1,7 +1,8 @@
 ---
 title: Pythonに入門する
-date: 2024-01-09
-tags: [Python]
+date: 2024-01-09T00:00:00.000Z
+tags:
+  - Language
 category: IT
 image: python-character.webp
 ---

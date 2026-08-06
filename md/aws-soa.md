@@ -1,7 +1,8 @@
 ---
 title: AWS Certified SysOps Administrator Associateの対策
-date: 2024-01-08
-tags: [AWS]
+date: 2024-01-08T00:00:00.000Z
+tags:
+  - AWS
 category: Infrastructure
 image: aws-soa-flatpop.webp
 ---

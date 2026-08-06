@@ -1,8 +1,9 @@
 ---
 title: Swagger Editorに入門してみる
-date: 2023-12-14
-tags: [Swagger]
-category: Backend
+date: 2023-12-14T00:00:00.000Z
+tags:
+  - DevOps
+category: Development
 image: api-image.webp
 ---
 

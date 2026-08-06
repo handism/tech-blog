@@ -1,8 +1,9 @@
 ---
-title: "アルゴリズムで使う数学"
-date: "2026-08-06"
-tags: ["Algorithm", "Math", "Computer Science"]
-category: "programming"
+title: アルゴリズムで使う数学
+date: '2026-08-06'
+tags:
+  - CS
+category: Development
 image: math-in-algorithms-thumb.webp
 ---
 

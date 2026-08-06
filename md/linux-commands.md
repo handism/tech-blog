@@ -1,8 +1,9 @@
 ---
 title: Linux（Mac）のよく使うコマンド集
-date: 2024-01-11
-tags: [Linux, Mac]
-category: OS
+date: 2024-01-11T00:00:00.000Z
+tags:
+  - OS
+category: Infrastructure
 image: laptop-pc.webp
 ---
 

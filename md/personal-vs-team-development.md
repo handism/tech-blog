@@ -1,7 +1,8 @@
 ---
 title: 個人開発とチーム開発の違い
-date: 2026-06-24
-tags: [Development]
+date: 2026-06-24T00:00:00.000Z
+tags:
+  - General
 category: IT
 image: personal-vs-team-development-thumb.webp
 ---

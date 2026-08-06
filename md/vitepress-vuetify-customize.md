@@ -1,8 +1,9 @@
 ---
 title: VitePressブログをVuetifyでカスタマイズする
-date: 2023-12-03
-tags: [Vue, VitePress]
-category: Frontend
+date: 2023-12-03T00:00:00.000Z
+tags:
+  - Vue
+category: Development
 image: vitepress-vuetify-customize.webp
 ---
 

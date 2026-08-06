@@ -1,7 +1,8 @@
 ---
 title: AWSで非機能要件を実現するには
-date: 2024-05-21
-tags: [AWS]
+date: 2024-05-21T00:00:00.000Z
+tags:
+  - AWS
 category: Infrastructure
 image: many-clouds.webp
 ---

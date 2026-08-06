@@ -1,8 +1,9 @@
 ---
 title: CSSに入門する
-date: 2024-01-10
-tags: [CSS]
-category: Frontend
+date: 2024-01-10T00:00:00.000Z
+tags:
+  - JavaScript
+category: Development
 image: cascade-image.webp
 ---
 

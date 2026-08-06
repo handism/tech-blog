@@ -1,7 +1,8 @@
 ---
 title: IT用語集 (2026年版)
-date: 2026-05-28
-tags: [Terminology]
+date: 2026-05-28T00:00:00.000Z
+tags:
+  - General
 category: IT
 image: many-books.webp
 ---

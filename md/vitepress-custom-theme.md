@@ -1,8 +1,10 @@
 ---
 title: VitePressのカスタムテーマを自作する
-date: 2023-12-30
-tags: [Vue, VitePress, Blog]
-category: Frontend
+date: 2023-12-30T00:00:00.000Z
+tags:
+  - Vue
+  - CMS
+category: Development
 image: man-with-pc.webp
 ---
 

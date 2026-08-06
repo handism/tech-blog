@@ -1,7 +1,8 @@
 ---
 title: インフラ管理のコツ・ポイントを考える
-date: 2023-12-14
-tags: [Tips]
+date: 2023-12-14T00:00:00.000Z
+tags:
+  - General
 category: Infrastructure
 image: infrastructure-tips-thumb.webp
 ---
