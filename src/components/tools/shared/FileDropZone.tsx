@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
+import { useNotice } from '@/src/components/NoticeProvider';
 import { Upload } from 'lucide-react';
 
 interface FileDropZoneProps {
@@ -24,6 +25,7 @@ export default function FileDropZone({
   dragActiveText = 'そのままドロップ！',
   className = '',
 }: FileDropZoneProps) {
+  const { notify } = useNotice();
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -59,8 +61,9 @@ export default function FileDropZone({
     });
 
     if (!isMatch) {
-      alert(
-        `形式が正しくありません。選択されたファイルは許可されていません。 (対応形式: ${accept})`
+      notify(
+        `形式が正しくありません。選択されたファイルは許可されていません。 (対応形式: ${accept})`,
+        'error'
       );
       return false;
     }

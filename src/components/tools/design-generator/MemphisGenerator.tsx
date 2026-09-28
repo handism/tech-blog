@@ -3,6 +3,7 @@
 
 import { siteConfig } from '@/src/config/site';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { downloadUrl } from '@/src/lib/download';
 
 // =====================
 // Types
@@ -279,10 +280,7 @@ export default function MemphisGenerator() {
   const downloadPNG = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const a = document.createElement('a');
-    a.download = `memphis-${seed}.png`;
-    a.href = canvas.toDataURL('image/png');
-    a.click();
+    downloadUrl(canvas.toDataURL('image/png'), `memphis-${seed}.png`);
   };
 
   // =====================

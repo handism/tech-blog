@@ -2,6 +2,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { downloadUrl } from '@/src/lib/download';
 import {
   Download,
   Maximize2,
@@ -13,24 +14,21 @@ import {
   Trash2,
 } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
-
-interface ColorStop {
-  id: string;
-  color: string;
-  position: number; // 0 - 100
-}
-
-interface MeshPoint {
-  id: string;
-  color: string;
-  x: number; // 0 - 100
-  y: number; // 0 - 100
-  radius: number; // 10 - 100
-  opacity: number; // 0 - 1
-}
+import {
+  type ColorStop,
+  type GradientConfig,
+  type GradientType,
+  type MeshPoint,
+  type RadialShape,
+  buildGradientCss,
+  drawGradientToCanvas,
+  randomHexColor,
+  randomId,
+  toSingleLineCss,
+} from './css-gradient-utils';
 
 export default function CssGradient() {
-  const [gradientType, setGradientType] = useState<'linear' | 'radial' | 'mesh'>('linear');
+  const [gradientType, setGradientType] = useState<GradientType>('linear');
   const [isAppliedToSite, setIsAppliedToSite] = useState<boolean>(false);
   const originalBackgroundRef = useRef<string>('');
 
@@ -45,7 +43,7 @@ export default function CssGradient() {
   const [angle, setAngle] = useState<number>(135);
 
   // Radial 設定
-  const [shape, setShape] = useState<'circle' | 'ellipse'>('circle');
+  const [shape, setShape] = useState<RadialShape>('circle');
   const [posX, setPosX] = useState<number>(50);
   const [posY, setPosY] = useState<number>(50);
 
@@ -69,36 +67,18 @@ export default function CssGradient() {
     };
   }, []);
 
-  const hexToRgba = (hex: string, alpha: number) => {
-    const r = parseInt(hex.slice(1, 3), 16) || 0;
-    const g = parseInt(hex.slice(3, 5), 16) || 0;
-    const b = parseInt(hex.slice(5, 7), 16) || 0;
-    return `rgba(${r}, ${g}, ${b}, ${alpha.toFixed(2)})`;
+  const gradientConfig: GradientConfig = {
+    type: gradientType,
+    colorStops,
+    angle,
+    shape,
+    posX,
+    posY,
+    meshPoints,
   };
-
-  // CSS グラデーションコードの生成
-  const generateCssCode = () => {
-    if (gradientType === 'linear') {
-      const sortedStops = [...colorStops].sort((a, b) => a.position - b.position);
-      const stopsStr = sortedStops.map((s) => `${s.color} ${s.position}%`).join(', ');
-      return `linear-gradient(${angle}deg, ${stopsStr})`;
-    } else if (gradientType === 'radial') {
-      const sortedStops = [...colorStops].sort((a, b) => a.position - b.position);
-      const stopsStr = sortedStops.map((s) => `${s.color} ${s.position}%`).join(', ');
-      return `radial-gradient(${shape} at ${posX}% ${posY}%, ${stopsStr})`;
-    } else {
-      // Mesh: 複数の radial-gradient の重ね合わせ
-      return meshPoints
-        .map((p) => {
-          const rgba = hexToRgba(p.color, p.opacity);
-          return `radial-gradient(circle at ${p.x}% ${p.y}%, ${rgba} 0%, transparent ${p.radius}%)`;
-        })
-        .join(',\n  ');
-    }
-  };
-
-  const cssValue = generateCssCode();
-  const fullCssDeclaration = `background-image: ${cssValue.replace(/\n  /g, ' ')};`;
+  const cssValue = buildGradientCss(gradientConfig);
+  const singleLineCss = toSingleLineCss(cssValue);
+  const fullCssDeclaration = `background-image: ${singleLineCss};`;
 
   // カラーストップの追加
   const addColorStop = () => {
@@ -108,12 +88,8 @@ export default function CssGradient() {
       Math.max(0, Math.round(colorStops[colorStops.length - 1].position / 2 + 50))
     );
     const newStop: ColorStop = {
-      id: Math.random().toString(36).substring(2, 9),
-      color:
-        '#' +
-        Math.floor(Math.random() * 16777215)
-          .toString(16)
-          .padStart(6, '0'),
+      id: randomId(),
+      color: randomHexColor(),
       position: newPosition,
     };
     setColorStops([...colorStops, newStop]);
@@ -133,12 +109,8 @@ export default function CssGradient() {
   const addMeshPoint = () => {
     if (meshPoints.length >= 8) return;
     const newPoint: MeshPoint = {
-      id: Math.random().toString(36).substring(2, 9),
-      color:
-        '#' +
-        Math.floor(Math.random() * 16777215)
-          .toString(16)
-          .padStart(6, '0'),
+      id: randomId(),
+      color: randomHexColor(),
       x: Math.round(20 + Math.random() * 60),
       y: Math.round(20 + Math.random() * 60),
       radius: 60,
@@ -159,7 +131,8 @@ export default function CssGradient() {
   };
 
   const updateMeshPoint = (id: string, fields: Partial<MeshPoint>) => {
-    setMeshPoints(meshPoints.map((p) => (p.id === id ? { ...p, ...fields } : p)));
+    // ドラッグ中は mousedown 時点のクロージャから呼ばれるため、関数形式で最新の状態を更新する
+    setMeshPoints((prev) => prev.map((p) => (p.id === id ? { ...p, ...fields } : p)));
   };
 
   // サイト全体へのプレビュー適用
@@ -169,7 +142,7 @@ export default function CssGradient() {
       setIsAppliedToSite(false);
     } else {
       originalBackgroundRef.current = document.documentElement.style.backgroundImage || '';
-      document.documentElement.style.backgroundImage = cssValue.replace(/\n  /g, ' ');
+      document.documentElement.style.backgroundImage = singleLineCss;
       setIsAppliedToSite(true);
     }
   };
@@ -212,68 +185,8 @@ export default function CssGradient() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    if (gradientType === 'linear') {
-      const angleRad = (angle * Math.PI) / 180;
-      const width = canvas.width;
-      const height = canvas.height;
-
-      const length = Math.abs(width * Math.sin(angleRad)) + Math.abs(height * Math.cos(angleRad));
-      const halfLength = length / 2;
-
-      const cx = width / 2;
-      const cy = height / 2;
-
-      const x0 = cx - Math.cos(angleRad - Math.PI / 2) * halfLength;
-      const y0 = cy - Math.sin(angleRad - Math.PI / 2) * halfLength;
-      const x1 = cx + Math.cos(angleRad - Math.PI / 2) * halfLength;
-      const y1 = cy + Math.sin(angleRad - Math.PI / 2) * halfLength;
-
-      const grad = ctx.createLinearGradient(x0, y0, x1, y1);
-      colorStops.forEach((s) => {
-        grad.addColorStop(s.position / 100, s.color);
-      });
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, width, height);
-    } else if (gradientType === 'radial') {
-      const width = canvas.width;
-      const height = canvas.height;
-      const cx = (posX / 100) * width;
-      const cy = (posY / 100) * height;
-
-      const maxDist = Math.max(cx, width - cx, cy, height - cy);
-      const r1 = shape === 'circle' ? maxDist : maxDist * 1.5;
-
-      const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r1);
-      colorStops.forEach((s) => {
-        grad.addColorStop(s.position / 100, s.color);
-      });
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, width, height);
-    } else {
-      const width = canvas.width;
-      const height = canvas.height;
-
-      ctx.fillStyle = '#0a0a14';
-      ctx.fillRect(0, 0, width, height);
-
-      meshPoints.forEach((p) => {
-        const px = (p.x / 100) * width;
-        const py = (p.y / 100) * height;
-        const radius = (p.radius / 100) * Math.max(width, height);
-
-        const grad = ctx.createRadialGradient(px, py, 0, px, py, radius);
-        grad.addColorStop(0, hexToRgba(p.color, p.opacity));
-        grad.addColorStop(1, 'rgba(0,0,0,0)');
-
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, width, height);
-      });
-    }
-
-    const link = document.createElement('a');
-    link.download = `gradient-${gradientType}-${Date.now()}.png`;
-    link.href = canvas.toDataURL('image/png');
-    link.click();
+    drawGradientToCanvas(ctx, gradientConfig, canvas.width, canvas.height);
+    downloadUrl(canvas.toDataURL('image/png'), `gradient-${gradientType}-${Date.now()}.png`);
   };
 
   const activePoint = meshPoints.find((p) => p.id === activeMeshPointId) || meshPoints[0];
@@ -428,14 +341,14 @@ export default function CssGradient() {
                   CSS VARIABLE
                 </span>
                 <CopyButton
-                  value={`--gradient-custom: ${cssValue.replace(/\n  /g, ' ')};`}
+                  value={`--gradient-custom: ${singleLineCss};`}
                   label="変数コピー"
                   copiedLabel="Copied!"
                   className="p-1 px-2.5 rounded-lg border border-slate-700 bg-slate-800 text-[10px] text-slate-200 hover:text-white flex items-center gap-1 cursor-pointer transition-colors"
                 />
               </div>
               <pre className="font-mono text-[10px] text-slate-300 bg-slate-950 p-3 rounded-xl border border-slate-900 overflow-x-auto truncate select-all">
-                {`--gradient-custom: ${cssValue.replace(/\n  /g, ' ')};`}
+                {`--gradient-custom: ${singleLineCss};`}
               </pre>
             </div>
           </div>

@@ -3,12 +3,13 @@
 import { useState } from 'react';
 import { useIsClient } from './useIsClient';
 import { safeReadFromStorage, safeWriteToStorage } from '@/src/lib/storage';
+import { STORAGE_KEYS } from '@/src/config/storage-keys';
 
 type ProgressData = Record<string, Record<string, boolean>>;
 
 export function useLearningProgress() {
   const [progress, setProgress] = useState<ProgressData>(() =>
-    safeReadFromStorage<ProgressData>('learning-progress', {})
+    safeReadFromStorage<ProgressData>(STORAGE_KEYS.learningProgress, {})
   );
   const isLoaded = useIsClient();
 
@@ -25,7 +26,7 @@ export function useLearningProgress() {
     };
 
     setProgress(nextProgress);
-    safeWriteToStorage('learning-progress', nextProgress);
+    safeWriteToStorage(STORAGE_KEYS.learningProgress, nextProgress);
   };
 
   const isCompleted = (courseId: string, chapterSlug: string) => {

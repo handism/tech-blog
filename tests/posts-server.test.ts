@@ -1,7 +1,7 @@
 // tests/posts-server.test.ts
 import { describe, expect, it, vi, beforeEach } from 'vitest';
-import { getAdjacentPosts } from '@/src/lib/posts-server';
-import { readAllPostSources } from '@/src/lib/post-repository';
+import { getAdjacentPosts, getPost, getPostMetaBySlug } from '@/src/lib/posts-server';
+import { readAllPostSources, readPostSourceBySlug } from '@/src/lib/post-repository';
 
 vi.mock('@/src/lib/post-repository', () => ({
   readAllPostSources: vi.fn(),
@@ -65,6 +65,40 @@ tags: []
       const resultOldest = await getAdjacentPosts('oldest-post');
       expect(resultOldest.prevPost).toBeNull(); // 前の記事（より古い記事）は存在しない
       expect(resultOldest.nextPost?.slug).toBe('middle-post'); // 次の記事は middle-post
+    });
+  });
+
+  describe('getPost / getPostMetaBySlug', () => {
+    const raw = `---
+title: 記事
+date: 2026-06-25
+category: Dev
+tags: [Test]
+---
+## 見出し
+
+本文`;
+
+    it('全記事メタから単記事メタを引き、本文 HTML をレンダリングして返すこと', async () => {
+      vi.mocked(readAllPostSources).mockResolvedValue([{ slug: 'post-a', raw }]);
+      vi.mocked(readPostSourceBySlug).mockResolvedValue({ slug: 'post-a', raw });
+
+      const meta = await getPostMetaBySlug('post-a');
+      expect(meta?.title).toBe('記事');
+      expect(meta?.tags).toEqual(['Test']);
+
+      const post = await getPost('post-a');
+      expect(post?.title).toBe('記事');
+      expect(post?.content).toContain('本文');
+      expect(post?.toc?.map((t) => t.text)).toEqual(['見出し']);
+    });
+
+    it('存在しないスラッグでは null を返すこと', async () => {
+      vi.mocked(readAllPostSources).mockResolvedValue([{ slug: 'post-a', raw }]);
+
+      expect(await getPostMetaBySlug('missing')).toBeNull();
+      expect(await getPost('missing')).toBeNull();
+      expect(readPostSourceBySlug).not.toHaveBeenCalled();
     });
   });
 });

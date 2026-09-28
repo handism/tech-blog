@@ -2,6 +2,8 @@
 'use client';
 
 import { useState } from 'react';
+import { useNotice } from '@/src/components/NoticeProvider';
+import { downloadText } from '@/src/lib/download';
 import { ChartColumn, Clipboard, Download, Play, Plus, Trash2 } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
 
@@ -58,6 +60,7 @@ const MOCK_WORDS = [
 ];
 
 export default function JsonGenerator() {
+  const { notify } = useNotice();
   const [fields, setFields] = useState<Field[]>([
     { id: '1', key: 'id', type: 'id' },
     { id: '2', key: 'uuid', type: 'uuid' },
@@ -79,7 +82,7 @@ export default function JsonGenerator() {
   // フィールドの削除
   const removeField = (id: string) => {
     if (fields.length <= 1) {
-      alert('少なくとも1つのフィールドが必要です。');
+      notify('少なくとも1つのフィールドが必要です。', 'error');
       return;
     }
     setFields(fields.filter((f) => f.id !== id));
@@ -148,13 +151,7 @@ export default function JsonGenerator() {
 
   const handleDownload = () => {
     if (!generatedJson) return;
-    const blob = new Blob([generatedJson], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.download = `mock-data-${Date.now()}.json`;
-    a.href = url;
-    a.click();
-    URL.revokeObjectURL(url);
+    downloadText(generatedJson, `mock-data-${Date.now()}.json`, 'application/json');
   };
 
   return (

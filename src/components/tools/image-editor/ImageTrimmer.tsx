@@ -4,6 +4,8 @@
 import { siteConfig } from '@/src/config/site';
 import { Download, Maximize } from 'lucide-react';
 import React, { useState, useCallback, useEffect } from 'react';
+import { useNotice } from '@/src/components/NoticeProvider';
+import { downloadUrl } from '@/src/lib/download';
 import Cropper, { Area, Point } from 'react-easy-crop';
 import FileDropZone from '../shared/FileDropZone';
 
@@ -48,6 +50,7 @@ const getCroppedImg = async (
  * 画像トリミングツール画面。
  */
 export default function ImageTrimmer() {
+  const { notify } = useNotice();
   useEffect(() => {
     document.title = `Image Trimmer | ${siteConfig.name}`;
   }, []);
@@ -103,20 +106,18 @@ export default function ImageTrimmer() {
           </html>
         `);
         } else {
-          alert('ポップアップがブロックされています。\n設定でポップアップを許可してください。');
+          notify(
+            'ポップアップがブロックされています。\n設定でポップアップを許可してください。',
+            'error'
+          );
         }
       } else {
         // Android / PC は従来の方法で
-        const link = document.createElement('a');
-        link.download = `trimmed-image.${format}`;
-        link.href = croppedImage;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        downloadUrl(croppedImage, `trimmed-image.${format}`);
       }
     } catch (err) {
       console.error(err);
-      alert('画像の作成に失敗しました');
+      notify('画像の作成に失敗しました', 'error');
     }
   };
 

@@ -3,54 +3,54 @@
 
 import React, { useState } from 'react';
 import { Download, Upload, Trash2, CheckCircle2, AlertTriangle } from 'lucide-react';
-import { THEME_STORAGE_KEY, EFFECTS_STORAGE_KEY } from '@/src/config/themes';
-import { LAYOUT_STORAGE_KEY } from '@/src/config/layout';
+import {
+  ALL_STORAGE_KEYS,
+  STORAGE_KEY_GROUPS,
+  type StorageKeyGroup,
+  isKnownStorageKey,
+} from '@/src/config/storage-keys';
+import { downloadText } from '@/src/lib/download';
+import {
+  safeReadStringFromStorage,
+  safeRemoveFromStorage,
+  safeWriteStringToStorage,
+} from '@/src/lib/storage';
+import { useNotice } from '@/src/components/NoticeProvider';
 
 /**
  * 学習進捗や各種カスタム設定のバックアップ（JSONエクスポート）・インポート・リセット機能を提供するコンポーネント。
+ * 対象キーは `src/config/storage-keys.ts` の登録内容から自動的に決まる。
  */
 export function BackupSettings() {
+  const { notify, confirm } = useNotice();
   const [importStatus, setImportStatus] = useState<{
     type: 'success' | 'error';
     message: string;
   } | null>(null);
 
   // リセット用のチェックボックス状態
-  const [resetOptions, setResetOptions] = useState({
+  const [resetOptions, setResetOptions] = useState<Record<StorageKeyGroup, boolean>>({
     progress: true,
     uiSettings: false,
-    toolHistory: false,
+    toolData: false,
   });
 
   // エクスポート処理
   const handleExport = () => {
     try {
       const backupData: Record<string, string | null> = {};
-      const keysToExport = [
-        'learning-progress',
-        THEME_STORAGE_KEY,
-        LAYOUT_STORAGE_KEY,
-        EFFECTS_STORAGE_KEY,
-        'markdown_draft',
-        'calc_history',
-      ];
-
-      keysToExport.forEach((key) => {
-        backupData[key] = localStorage.getItem(key);
+      ALL_STORAGE_KEYS.forEach((key) => {
+        backupData[key] = safeReadStringFromStorage(key);
       });
 
-      const blob = new Blob([JSON.stringify(backupData, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `antigravity-backup-${new Date().toISOString().slice(0, 10)}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
+      downloadText(
+        JSON.stringify(backupData, null, 2),
+        `antigravity-backup-${new Date().toISOString().slice(0, 10)}.json`,
+        'application/json'
+      );
     } catch (e) {
       console.error('Export failed:', e);
-      alert('データのエクスポートに失敗しました。');
+      notify('データのエクスポートに失敗しました。', 'error');
     }
   };
 
@@ -63,16 +63,16 @@ export function BackupSettings() {
     reader.onload = (e) => {
       try {
         const text = e.target?.result as string;
-        const backupData = JSON.parse(text);
+        const backupData: unknown = JSON.parse(text);
 
-        if (typeof backupData !== 'object' || backupData === null) {
+        if (typeof backupData !== 'object' || backupData === null || Array.isArray(backupData)) {
           throw new Error('Invalid JSON format');
         }
 
-        // バリデーションと適用
+        // 登録済みのキーのみ復元する（未知のキーを localStorage に書き込まない）
         Object.entries(backupData).forEach(([key, value]) => {
-          if (value !== null && typeof value === 'string') {
-            localStorage.setItem(key, value);
+          if (isKnownStorageKey(key) && typeof value === 'string') {
+            safeWriteStringToStorage(key, value);
           }
         });
 
@@ -97,40 +97,30 @@ export function BackupSettings() {
   };
 
   // リセット処理
-  const handleReset = () => {
-    const activeOptions = Object.entries(resetOptions)
-      .filter(([_, enabled]) => enabled)
-      .map(([key]) => key);
+  const handleReset = async () => {
+    const activeGroups = (Object.keys(resetOptions) as StorageKeyGroup[]).filter(
+      (group) => resetOptions[group]
+    );
 
-    if (activeOptions.length === 0) {
-      alert('リセットする項目を選択してください。');
+    if (activeGroups.length === 0) {
+      notify('リセットする項目を選択してください。', 'error');
       return;
     }
 
-    const confirmMessage =
-      '選択したデータを本当に削除して初期化しますか？\nこの操作は取り消せません。';
-    if (!window.confirm(confirmMessage)) return;
+    const confirmed = await confirm(
+      '選択したデータを本当に削除して初期化しますか？\nこの操作は取り消せません。',
+      { confirmLabel: '削除する', destructive: true }
+    );
+    if (!confirmed) return;
 
-    try {
-      if (resetOptions.progress) {
-        localStorage.removeItem('learning-progress');
-      }
-      if (resetOptions.uiSettings) {
-        localStorage.removeItem(THEME_STORAGE_KEY);
-        localStorage.removeItem(LAYOUT_STORAGE_KEY);
-        localStorage.removeItem(EFFECTS_STORAGE_KEY);
-      }
-      if (resetOptions.toolHistory) {
-        localStorage.removeItem('markdown_draft');
-        localStorage.removeItem('calc_history');
-      }
+    activeGroups.forEach((group) => {
+      STORAGE_KEY_GROUPS[group].forEach((key) => safeRemoveFromStorage(key));
+    });
 
-      alert('選択したデータを初期化しました。');
+    notify('選択したデータを初期化しました。ページを再読み込みします...', 'success');
+    setTimeout(() => {
       window.location.reload();
-    } catch (e) {
-      console.error('Reset failed:', e);
-      alert('データのリセット中にエラーが発生しました。');
-    }
+    }, 1000);
   };
 
   return (
@@ -241,14 +231,15 @@ export function BackupSettings() {
           <label className="flex items-start gap-3 cursor-pointer text-sm">
             <input
               type="checkbox"
-              checked={resetOptions.toolHistory}
-              onChange={(e) => setResetOptions({ ...resetOptions, toolHistory: e.target.checked })}
+              checked={resetOptions.toolData}
+              onChange={(e) => setResetOptions({ ...resetOptions, toolData: e.target.checked })}
               className="mt-1 rounded border-border text-accent focus:ring-accent"
             />
             <div>
-              <span className="font-semibold text-text">ツール履歴データ</span>
+              <span className="font-semibold text-text">ツールのデータ</span>
               <span className="block text-xs text-text opacity-50 font-normal">
-                電卓の計算履歴や、マークダウンエディタの下書きテキスト
+                電卓・ポモドーロの履歴や設定、マークダウンエディタの下書き、AWS
+                構成図、キーボード配列設定
               </span>
             </div>
           </label>

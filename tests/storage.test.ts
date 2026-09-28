@@ -1,5 +1,11 @@
 import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest';
-import { safeReadFromStorage, safeWriteToStorage } from '@/src/lib/storage';
+import {
+  safeReadFromStorage,
+  safeReadStringFromStorage,
+  safeRemoveFromStorage,
+  safeWriteStringToStorage,
+  safeWriteToStorage,
+} from '@/src/lib/storage';
 
 describe('safeReadFromStorage / safeWriteToStorage', () => {
   const storageKey = 'test-storage';
@@ -9,6 +15,7 @@ describe('safeReadFromStorage / safeWriteToStorage', () => {
       localStorage: {
         getItem: vi.fn(),
         setItem: vi.fn(),
+        removeItem: vi.fn(),
       },
     });
   });
@@ -34,5 +41,29 @@ describe('safeReadFromStorage / safeWriteToStorage', () => {
 
     expect(value).toEqual({ ok: true });
     expect(setItem).toHaveBeenCalledWith(storageKey, JSON.stringify({ ok: true }));
+  });
+
+  it('reads and writes raw strings without JSON encoding', () => {
+    const getItem = vi.mocked(window.localStorage.getItem);
+    const setItem = vi.mocked(window.localStorage.setItem);
+    getItem.mockReturnValue('oled');
+
+    expect(safeReadStringFromStorage(storageKey)).toBe('oled');
+    safeWriteStringToStorage(storageKey, 'terminal');
+    expect(setItem).toHaveBeenCalledWith(storageKey, 'terminal');
+  });
+
+  it('swallows storage exceptions', () => {
+    vi.mocked(window.localStorage.getItem).mockImplementation(() => {
+      throw new Error('SecurityError');
+    });
+    vi.mocked(window.localStorage.removeItem).mockImplementation(() => {
+      throw new Error('SecurityError');
+    });
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    expect(safeReadStringFromStorage(storageKey)).toBeNull();
+    expect(() => safeRemoveFromStorage(storageKey)).not.toThrow();
+    warn.mockRestore();
   });
 });

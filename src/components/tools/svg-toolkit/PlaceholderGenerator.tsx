@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { downloadText, downloadUrl } from '@/src/lib/download';
 import { Download, RotateCw, Plus, Minus } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
 
@@ -75,13 +76,7 @@ export default function PlaceholderGenerator() {
 
   // SVG ダウンロード
   const downloadSvg = () => {
-    const blob = new Blob([svgContent], { type: 'image/svg+xml;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `placeholder-${width}x${height}.svg`;
-    link.click();
-    URL.revokeObjectURL(url);
+    downloadText(svgContent, `placeholder-${width}x${height}.svg`, 'image/svg+xml;charset=utf-8');
   };
 
   // Canvas 経由の PNG ダウンロード
@@ -97,11 +92,7 @@ export default function PlaceholderGenerator() {
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.drawImage(img, 0, 0);
-        const pngUrl = canvas.toDataURL('image/png');
-        const link = document.createElement('a');
-        link.download = `placeholder-${width}x${height}.png`;
-        link.href = pngUrl;
-        link.click();
+        downloadUrl(canvas.toDataURL('image/png'), `placeholder-${width}x${height}.png`);
       }
       URL.revokeObjectURL(url);
     };

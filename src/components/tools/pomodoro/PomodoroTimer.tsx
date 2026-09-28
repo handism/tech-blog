@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState } from 'react';
 import {
   Timer,
   Play,
@@ -17,350 +17,36 @@ import {
   Cog,
 } from 'lucide-react';
 import { useThemeDesign } from '@/src/components/ThemeDesignProvider';
-
-interface PomodoroHistoryItem {
-  id: string;
-  type: 'work' | 'break';
-  duration: number; // in minutes
-  timestamp: string; // ISO string
-  status: 'completed' | 'interrupted';
-}
+import { formatTimerTime, usePomodoroTimer } from './usePomodoroTimer';
 
 export default function PomodoroTimer() {
   const { currentTheme } = useThemeDesign();
 
-  // 設定用ステート
-  const [workTime, setWorkTime] = useState<number>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('pomodoro_work_time');
-      return saved ? Number(saved) : 25;
-    }
-    return 25;
-  });
-  const [breakTime, setBreakTime] = useState<number>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('pomodoro_break_time');
-      return saved ? Number(saved) : 5;
-    }
-    return 5;
-  });
   const [showSettings, setShowSettings] = useState<boolean>(false);
-  const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
-  const [tickSoundEnabled, setTickSoundEnabled] = useState<boolean>(false);
-
-  // タイマー状態
-  const [timeLeft, setTimeLeft] = useState<number>(() => {
-    if (typeof window !== 'undefined') {
-      const savedWork = localStorage.getItem('pomodoro_work_time');
-      const work = savedWork ? Number(savedWork) : 25;
-      return work * 60;
-    }
-    return 25 * 60;
-  });
-  const [totalDuration, setTotalDuration] = useState<number>(() => {
-    if (typeof window !== 'undefined') {
-      const savedWork = localStorage.getItem('pomodoro_work_time');
-      const work = savedWork ? Number(savedWork) : 25;
-      return work * 60;
-    }
-    return 25 * 60;
-  });
-  const [isActive, setIsActive] = useState<boolean>(false);
-  const [isWorkSession, setIsWorkSession] = useState<boolean>(true);
-  const [history, setHistory] = useState<PomodoroHistoryItem[]>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('pomodoro_history');
-      if (saved) {
-        try {
-          return JSON.parse(saved);
-        } catch {
-          // ignore
-        }
-      }
-    }
-    return [];
-  });
-
-  // Refs
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
-
-  // タイトルにカウントダウンを表示する効果
-  useEffect(() => {
-    const formatTitleTime = (seconds: number) => {
-      const m = Math.floor(seconds / 60);
-      const s = seconds % 60;
-      return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-    };
-
-    const originalTitle = document.title;
-    if (isActive) {
-      const statusLabel = isWorkSession ? '作業中' : '休憩中';
-      document.title = `(${formatTitleTime(timeLeft)}) ${statusLabel} | ${originalTitle.split(' | ').pop()}`;
-    } else {
-      document.title = originalTitle.includes('|')
-        ? originalTitle
-        : `Pomodoro Focus Timer | ${originalTitle}`;
-    }
-
-    return () => {
-      document.title = originalTitle;
-    };
-  }, [timeLeft, isActive, isWorkSession]);
-
-  // Web Audio API 音声再生
-  const playSound = useCallback(
-    (type: 'tick' | 'complete') => {
-      if (!soundEnabled && type === 'complete') return;
-      if (!tickSoundEnabled && type === 'tick') return;
-
-      try {
-        const AudioContextClass =
-          window.AudioContext ||
-          (window as typeof window & { webkitAudioContext?: typeof AudioContext })
-            .webkitAudioContext;
-        if (!AudioContextClass) return;
-        const ctx = new AudioContextClass();
-        const now = ctx.currentTime;
-
-        if (type === 'tick') {
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-
-          if (currentTheme === 'steampunk') {
-            // カチッという低めの機械式ギアの音
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(140, now);
-            gain.gain.setValueAtTime(0.03, now);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
-          } else if (currentTheme === 'terminal') {
-            // 8bit風ビープティック
-            osc.type = 'square';
-            osc.frequency.setValueAtTime(880, now);
-            gain.gain.setValueAtTime(0.006, now);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.02);
-          } else if (currentTheme === 'chalkboard') {
-            // チョークで点を書くような音
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(2200, now);
-            gain.gain.setValueAtTime(0.015, now);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
-          } else {
-            // デフォルト（モダン・ソフトな音）
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(1000, now);
-            gain.gain.setValueAtTime(0.006, now);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.02);
-          }
-
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start(now);
-          osc.stop(now + 0.08);
-        } else if (type === 'complete') {
-          if (currentTheme === 'steampunk') {
-            // レトロ真鍮ベルの音
-            const freqs = [220, 275, 330, 440];
-            freqs.forEach((f, index) => {
-              const osc = ctx.createOscillator();
-              const gain = ctx.createGain();
-              osc.type = 'triangle';
-              osc.frequency.setValueAtTime(f, now);
-              const volume = 0.12 / (index + 1);
-              gain.gain.setValueAtTime(volume, now);
-              gain.gain.exponentialRampToValueAtTime(0.001, now + 1.8);
-              osc.connect(gain);
-              gain.connect(ctx.destination);
-              osc.start(now);
-              osc.stop(now + 2.0);
-            });
-          } else if (currentTheme === 'terminal') {
-            // 8bitビープメロディ（ドミソド）
-            const playBeep = (freq: number, duration: number, delay: number) => {
-              const osc = ctx.createOscillator();
-              const gain = ctx.createGain();
-              osc.type = 'square';
-              osc.frequency.setValueAtTime(freq, now + delay);
-              gain.gain.setValueAtTime(0.08, now + delay);
-              gain.gain.exponentialRampToValueAtTime(0.001, now + delay + duration);
-              osc.connect(gain);
-              gain.connect(ctx.destination);
-              osc.start(now + delay);
-              osc.stop(now + delay + duration + 0.1);
-            };
-            playBeep(523.25, 0.12, 0); // C5
-            playBeep(659.25, 0.12, 0.15); // E5
-            playBeep(783.99, 0.12, 0.3); // G5
-            playBeep(1046.5, 0.25, 0.45); // C6
-          } else if (currentTheme === 'chalkboard') {
-            // 学校のチャイム（キーンコーンカーンコーン： Westminster Chime）
-            const notes = [
-              { f: 329.63, d: 0.6, start: 0 }, // E4
-              { f: 261.63, d: 0.6, start: 0.6 }, // C4
-              { f: 293.66, d: 0.6, start: 1.2 }, // D4
-              { f: 196.0, d: 0.8, start: 1.8 }, // G3
-            ];
-            notes.forEach((n) => {
-              const osc = ctx.createOscillator();
-              const gain = ctx.createGain();
-              osc.type = 'sine';
-              osc.frequency.setValueAtTime(n.f, now + n.start);
-              gain.gain.setValueAtTime(0.12, now + n.start);
-              gain.gain.exponentialRampToValueAtTime(0.001, now + n.start + n.d);
-              osc.connect(gain);
-              gain.connect(ctx.destination);
-              osc.start(now + n.start);
-              osc.stop(now + n.start + n.d + 0.1);
-            });
-          } else {
-            // デフォルト: 綺麗なクリスタルチャイム
-            const playChime = (freq: number, delay: number) => {
-              const osc = ctx.createOscillator();
-              const gain = ctx.createGain();
-              osc.type = 'sine';
-              osc.frequency.setValueAtTime(freq, now + delay);
-              gain.gain.setValueAtTime(0.08, now + delay);
-              gain.gain.exponentialRampToValueAtTime(0.001, now + delay + 0.8);
-              osc.connect(gain);
-              gain.connect(ctx.destination);
-              osc.start(now + delay);
-              osc.stop(now + delay + 0.9);
-            };
-            playChime(880, 0);
-            playChime(1320, 0.1);
-          }
-        }
-      } catch (e) {
-        console.warn('AudioContext execution failed', e);
-      }
-    },
-    [soundEnabled, tickSoundEnabled, currentTheme]
-  );
-
-  // セッション終了ハンドラ
-  const handleSessionComplete = useCallback(() => {
-    playSound('complete');
-
-    const newItem: PomodoroHistoryItem = {
-      id: Math.random().toString(36).substring(2, 9),
-      type: isWorkSession ? 'work' : 'break',
-      duration: isWorkSession ? workTime : breakTime,
-      timestamp: new Date().toISOString(),
-      status: 'completed',
-    };
-
-    const newHistory = [newItem, ...history].slice(0, 50);
-    setHistory(newHistory);
-    localStorage.setItem('pomodoro_history', JSON.stringify(newHistory));
-
-    // セッションの切り替え
-    setIsWorkSession(!isWorkSession);
-    const nextTime = (isWorkSession ? breakTime : workTime) * 60;
-    setTimeLeft(nextTime);
-    setTotalDuration(nextTime);
-  }, [isWorkSession, workTime, breakTime, history, playSound]);
-
-  // タイマーのカウントダウン制御（リアクティブな setTimeout 方式）
-  useEffect(() => {
-    if (!isActive) return;
-
-    const timer = setTimeout(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          setIsActive(false);
-          handleSessionComplete();
-          return 0;
-        }
-        playSound('tick');
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, [
-    isActive,
-    timeLeft,
-    isWorkSession,
+  const {
     workTime,
+    setWorkTime,
     breakTime,
+    setBreakTime,
+    soundEnabled,
+    setSoundEnabled,
+    tickSoundEnabled,
+    setTickSoundEnabled,
+    timeLeft,
+    totalDuration,
+    isActive,
+    isWorkSession,
     history,
-    playSound,
-    handleSessionComplete,
-  ]);
-
-  // タイマーのコントロール
-  const toggleTimer = () => {
-    setIsActive(!isActive);
-  };
-
-  const resetTimer = () => {
-    setIsActive(false);
-    if (timerRef.current) clearInterval(timerRef.current);
-
-    // 中断ログを保存（作業が5秒以上経過していた場合のみ）
-    const elapsed = totalDuration - timeLeft;
-    if (elapsed > 5 && timeLeft > 0) {
-      const newItem: PomodoroHistoryItem = {
-        id: Math.random().toString(36).substring(2, 9),
-        type: isWorkSession ? 'work' : 'break',
-        duration: Math.round((elapsed / 60) * 10) / 10,
-        timestamp: new Date().toISOString(),
-        status: 'interrupted',
-      };
-      const newHistory = [newItem, ...history].slice(0, 50);
-      setHistory(newHistory);
-      localStorage.setItem('pomodoro_history', JSON.stringify(newHistory));
-    }
-
-    const currentDuration = (isWorkSession ? workTime : breakTime) * 60;
-    setTimeLeft(currentDuration);
-    setTotalDuration(currentDuration);
-  };
-
-  const skipSession = () => {
-    setIsActive(false);
-    if (timerRef.current) clearInterval(timerRef.current);
-
-    // スキップされた場合は中断として記録
-    const elapsed = totalDuration - timeLeft;
-    const newItem: PomodoroHistoryItem = {
-      id: Math.random().toString(36).substring(2, 9),
-      type: isWorkSession ? 'work' : 'break',
-      duration: Math.round((elapsed / 60) * 10) / 10 || 0.1,
-      timestamp: new Date().toISOString(),
-      status: 'interrupted',
-    };
-    const newHistory = [newItem, ...history].slice(0, 50);
-    setHistory(newHistory);
-    localStorage.setItem('pomodoro_history', JSON.stringify(newHistory));
-
-    // セッションの反転
-    const nextSession = !isWorkSession;
-    setIsWorkSession(nextSession);
-    const nextDuration = (nextSession ? workTime : breakTime) * 60;
-    setTimeLeft(nextDuration);
-    setTotalDuration(nextDuration);
-  };
-
-  const clearHistory = () => {
-    setHistory([]);
-    localStorage.removeItem('pomodoro_history');
-  };
+    toggleTimer,
+    resetTimer,
+    skipSession,
+    clearHistory,
+    saveSettings: persistSettings,
+  } = usePomodoroTimer(currentTheme);
 
   const saveSettings = (w: number, b: number) => {
-    const validW = Math.max(1, Math.min(180, w));
-    const validB = Math.max(1, Math.min(60, b));
-    setWorkTime(validW);
-    setBreakTime(validB);
-    localStorage.setItem('pomodoro_work_time', validW.toString());
-    localStorage.setItem('pomodoro_break_time', validB.toString());
+    persistSettings(w, b);
     setShowSettings(false);
-
-    // タイマーが動いていない時は更新
-    if (!isActive) {
-      const nextDuration = (isWorkSession ? validW : validB) * 60;
-      setTimeLeft(nextDuration);
-      setTotalDuration(nextDuration);
-    }
   };
 
   // 進捗率（メーター用）
@@ -368,9 +54,7 @@ export default function PomodoroTimer() {
   const strokeDashoffset = 2 * Math.PI * 90 * (1 - progress);
 
   // フォーマット時間
-  const minutes = Math.floor(timeLeft / 60);
-  const seconds = timeLeft % 60;
-  const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  const formattedTime = formatTimerTime(timeLeft);
 
   // テーマに応じた特化スタイル決定用
   const isSteampunk = currentTheme === 'steampunk';

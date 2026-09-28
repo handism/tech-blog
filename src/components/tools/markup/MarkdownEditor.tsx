@@ -2,6 +2,9 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { downloadText } from '@/src/lib/download';
+import { STORAGE_KEYS } from '@/src/config/storage-keys';
+import { safeReadStringFromStorage, safeWriteStringToStorage } from '@/src/lib/storage';
 import { Download, BookOpen, Eye, Edit3, Split, ChevronRight, Printer, List } from 'lucide-react';
 import { useThemeDesign } from '@/src/components/ThemeDesignProvider';
 
@@ -151,7 +154,7 @@ export default function MarkdownEditor() {
 
   // ローカルストレージからロード
   useEffect(() => {
-    const saved = localStorage.getItem('markdown_draft');
+    const saved = safeReadStringFromStorage(STORAGE_KEYS.markdownDraft);
     const initialMarkdown = saved !== null ? saved : DEFAULT_MARKDOWN;
     const timer = setTimeout(() => {
       setMarkdown(initialMarkdown);
@@ -177,7 +180,7 @@ export default function MarkdownEditor() {
     }, 250); // 250ms debounce
 
     // 自動保存
-    localStorage.setItem('markdown_draft', markdown);
+    safeWriteStringToStorage(STORAGE_KEYS.markdownDraft, markdown);
 
     return () => {
       clearTimeout(parseTimer);
@@ -209,12 +212,7 @@ export default function MarkdownEditor() {
   };
 
   const downloadMarkdownFile = () => {
-    const blob = new Blob([markdown], { type: 'text/markdown;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `document-${Date.now()}.md`;
-    link.click();
+    downloadText(markdown, `document-${Date.now()}.md`, 'text/markdown;charset=utf-8;');
   };
 
   // 印刷/PDF化の実行

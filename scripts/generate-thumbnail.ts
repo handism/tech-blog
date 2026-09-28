@@ -2,6 +2,23 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { GoogleGenAI } from '@google/genai';
+import {
+  DEFAULT_IMAGE_MODEL,
+  DEFAULT_PLAN_MODEL,
+  type ImageSize,
+  ensureImagesDir,
+  extractJsonObject,
+  generateImage,
+  loadEnvLocal,
+  normalizeSlug,
+  readArticle,
+  readCliOption,
+  requireGeminiApiKey,
+  resolveArticlePath,
+  resolveImageConfig,
+  runMain,
+  updateArticleImage,
+} from './lib/article-gen';
 
 type SharpFactory = (typeof import('sharp'))['default'];
 
@@ -71,9 +88,9 @@ const RENDER_SCALE = 2;
 const RENDER_WIDTH = OUTPUT_WIDTH * RENDER_SCALE;
 const RENDER_HEIGHT = OUTPUT_HEIGHT * RENDER_SCALE;
 
-let PLAN_MODEL = 'gemini-3.5-flash-lite';
-let IMAGE_MODEL = 'gemini-3-pro-image';
-let IMAGE_SIZE: '1K' | '2K' | '4K' = '1K';
+let PLAN_MODEL = DEFAULT_PLAN_MODEL;
+let IMAGE_MODEL = DEFAULT_IMAGE_MODEL;
+let IMAGE_SIZE: ImageSize = '1K';
 
 // fc-scan の結果に合わせた実際の family 名。
 // ExtraBold は family 名へ含めず、fontconfig の weight で明示する。
@@ -81,13 +98,8 @@ let TITLE_FONT_FAMILY = 'LINE Seed JP App_TTF';
 let LABEL_FONT_FAMILY = 'LINE Seed JP App_TTF';
 
 function refreshRuntimeConfig(): void {
-  PLAN_MODEL = process.env.GEMINI_PLAN_MODEL ?? 'gemini-3.5-flash-lite';
-  IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL ?? 'gemini-3-pro-image';
-
-  const requestedImageSize = process.env.GEMINI_IMAGE_SIZE ?? '1K';
-  IMAGE_SIZE = ['1K', '2K', '4K'].includes(requestedImageSize)
-    ? (requestedImageSize as '1K' | '2K' | '4K')
-    : '1K';
+  PLAN_MODEL = process.env.GEMINI_PLAN_MODEL ?? DEFAULT_PLAN_MODEL;
+  ({ imageModel: IMAGE_MODEL, imageSize: IMAGE_SIZE } = resolveImageConfig());
 
   TITLE_FONT_FAMILY =
     process.env.THUMB_TITLE_FONT_FAMILY ?? 'LINE Seed JP App_TTF';
@@ -151,103 +163,6 @@ const PALETTES: Record<PaletteKey, Palette> = {
   },
 };
 
-/**
- * .env.local から環境変数を手動ロードする。
- */
-function loadEnvLocal(): void {
-  const envPath = path.resolve(process.cwd(), '.env.local');
-  if (!fs.existsSync(envPath)) return;
-
-  const content = fs.readFileSync(envPath, 'utf-8');
-  for (const line of content.split(/\r?\n/)) {
-    const trimmed = line.trim();
-    if (!trimmed || trimmed.startsWith('#')) continue;
-
-    const eqIdx = trimmed.indexOf('=');
-    if (eqIdx === -1) continue;
-
-    const key = trimmed.slice(0, eqIdx).trim();
-    let value = trimmed.slice(eqIdx + 1).trim();
-
-    if (
-      (value.startsWith('"') && value.endsWith('"')) ||
-      (value.startsWith("'") && value.endsWith("'"))
-    ) {
-      value = value.slice(1, -1);
-    }
-
-    if (!process.env[key]) process.env[key] = value;
-  }
-}
-
-/**
- * Markdown のフロントマターと本文冒頭を抽出する。
- */
-function parseArticle(rawMarkdown: string): ArticleMeta {
-  let title = '';
-  let tags: string[] = [];
-  let category = '';
-  let contentExcerpt = '';
-
-  const fmMatch = rawMarkdown.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-  if (fmMatch) {
-    const fmText = fmMatch[1];
-    for (const line of fmText.split(/\r?\n/)) {
-      const titleMatch = line.match(/^title:\s*(.+)$/);
-      if (titleMatch) title = titleMatch[1].replace(/^["']|["']$/g, '');
-
-      const tagsMatch = line.match(/^tags:\s*\[(.*)\]$/);
-      if (tagsMatch) {
-        tags = tagsMatch[1]
-          .split(',')
-          .map((value) => value.trim().replace(/^["']|["']$/g, ''))
-          .filter(Boolean);
-      }
-
-      const categoryMatch = line.match(/^category:\s*(.+)$/);
-      if (categoryMatch) {
-        category = categoryMatch[1].replace(/^["']|["']$/g, '');
-      }
-    }
-
-    contentExcerpt = rawMarkdown.slice(fmMatch[0].length).trim().slice(0, 3000);
-  } else {
-    contentExcerpt = rawMarkdown.slice(0, 3000);
-  }
-
-  return {
-    title: title || 'Tech Blog Article',
-    tags,
-    category: category || 'Tech',
-    contentExcerpt,
-  };
-}
-
-/**
- * frontmatter の image を追記または上書きする。
- */
-function updateArticleFrontmatter(filePath: string, imageFilename: string): void {
-  const content = fs.readFileSync(filePath, 'utf-8');
-  const fmMatch = content.match(/^(---\r?\n)([\s\S]*?)(\r?\n---)/);
-
-  if (!fmMatch) {
-    console.warn(
-      '警告: フロントマターが見つからなかったため、image フィールドの更新をスキップします。'
-    );
-    return;
-  }
-
-  const fmBody = fmMatch[2];
-  const nextFmBody = /^image:\s*.+$/m.test(fmBody)
-    ? fmBody.replace(/^image:\s*.+$/m, `image: ${imageFilename}`)
-    : `${fmBody}\nimage: ${imageFilename}`;
-
-  const nextContent = content.replace(fmMatch[0], `${fmMatch[1]}${nextFmBody}${fmMatch[3]}`);
-
-  fs.writeFileSync(filePath, nextContent, 'utf-8');
-  console.log(`       記事フロントマターを更新しました: image: ${imageFilename}`);
-}
-
 function escapeXml(value: string): string {
   return value
     .replace(/&/g, '&amp;')
@@ -276,12 +191,7 @@ function parseCliArgs(args: string[]): CliOptions {
   const slugArg = args.find((arg) => !arg.startsWith('--'));
   if (!slugArg) throw new Error('記事 slug を指定してください。');
 
-  const readOption = (name: string): string | undefined => {
-    const prefix = `--${name}=`;
-    return args.find((arg) => arg.startsWith(prefix))?.slice(prefix.length);
-  };
-
-  const rawLayout = readOption('layout');
+  const rawLayout = readCliOption(args, 'layout');
   const layoutOverride =
     rawLayout && LAYOUTS.includes(rawLayout as LayoutType) ? (rawLayout as LayoutType) : undefined;
 
@@ -290,12 +200,12 @@ function parseCliArgs(args: string[]): CliOptions {
   }
 
   return {
-    slug: slugArg.endsWith('.md') ? slugArg.slice(0, -3) : slugArg,
+    slug: normalizeSlug(slugArg),
     debug: args.includes('--debug'),
     reuseBg: args.includes('--reuse-bg') || args.includes('--recomposite'),
     layoutOverride,
-    catchphraseOverride: readOption('title'),
-    labelOverride: readOption('label'),
+    catchphraseOverride: readCliOption(args, 'title'),
+    labelOverride: readCliOption(args, 'label'),
   };
 }
 
@@ -497,19 +407,6 @@ function loadBackgroundCache(
   const planJson = fs.readFileSync(planPath, 'utf-8');
   const plan = JSON.parse(planJson) as ThumbnailPlan;
   return { imageBuffer, plan };
-}
-
-function extractJsonObject(text: string): string {
-  const fenced = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/i);
-  if (fenced?.[1]) return fenced[1].trim();
-
-  const firstBrace = text.indexOf('{');
-  const lastBrace = text.lastIndexOf('}');
-  if (firstBrace !== -1 && lastBrace > firstBrace) {
-    return text.slice(firstBrace, lastBrace + 1);
-  }
-
-  throw new Error(`JSON を抽出できませんでした。応答: ${text}`);
 }
 
 function isLayout(value: unknown): value is LayoutType {
@@ -1233,22 +1130,14 @@ async function main(): Promise<void> {
   loadEnvLocal();
   refreshRuntimeConfig();
   const options = parseCliArgs(args);
-  const mdPath = path.resolve(process.cwd(), 'md', `${options.slug}.md`);
-
-  if (!fs.existsSync(mdPath)) {
-    throw new Error(`記事ファイルが見つかりません: ${mdPath}`);
-  }
-
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    throw new Error('.env.local に GEMINI_API_KEY=<APIキー> を設定してください。');
-  }
+  const mdPath = resolveArticlePath(options.slug);
+  const apiKey = requireGeminiApiKey();
 
   // 必ず sharp の import より前に fontconfig を設定する。
   const sharp = await loadSharpWithLocalFonts();
 
-  const rawMarkdown = fs.readFileSync(mdPath, 'utf-8');
-  const article = parseArticle(rawMarkdown);
+  const { content, ...articleInfo } = readArticle(mdPath);
+  const article: ArticleMeta = { ...articleInfo, contentExcerpt: content.slice(0, 3000) };
   console.log(`[1/6] 記事を読み込みました: "${article.title}"`);
 
   const ai = new GoogleGenAI({ apiKey });
@@ -1280,29 +1169,16 @@ async function main(): Promise<void> {
     backgroundPrompt = buildBackgroundPrompt(plan);
 
     console.log(`[4/6] ${IMAGE_MODEL} で16:9背景画像を生成中...`);
-    const interaction = await ai.interactions.create({
+    imageBuffer = await generateImage(ai, {
       model: IMAGE_MODEL,
-      input: backgroundPrompt,
-      response_format: {
-        type: 'image',
-        mime_type: 'image/jpeg',
-        aspect_ratio: '16:9',
-        image_size: IMAGE_SIZE,
-      },
+      prompt: backgroundPrompt,
+      imageSize: IMAGE_SIZE,
     });
-
-    const generatedImage = interaction.output_image;
-    if (!generatedImage?.data) {
-      throw new Error('画像生成APIから画像データが返されませんでした。');
-    }
-
-    imageBuffer = Buffer.from(generatedImage.data, 'base64');
     saveBackgroundCache(options.slug, imageBuffer, plan);
   }
   const overlaySvg = buildOverlaySvg(plan);
 
-  const outputDir = path.resolve(process.cwd(), 'public', 'images');
-  fs.mkdirSync(outputDir, { recursive: true });
+  const outputDir = ensureImagesDir();
 
   if (options.debug) {
     await saveDebugArtifacts({
@@ -1342,12 +1218,8 @@ async function main(): Promise<void> {
     .toFile(outputPath);
 
   console.log(`[6/6] 保存しました: public/images/${outputFilename}`);
-  updateArticleFrontmatter(mdPath, outputFilename);
+  updateArticleImage(mdPath, outputFilename);
   console.log('🎉 サムネイル生成が完了しました。');
 }
 
-main().catch((error: unknown) => {
-  const message = error instanceof Error ? error.stack || error.message : String(error);
-  console.error(`\nエラーが発生しました:\n${message}`);
-  process.exit(1);
-});
+runMain(main);

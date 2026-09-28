@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect, useMemo, useRef, useId } from 'react';
+import { useState } from 'react';
+import { useNotice } from '@/src/components/NoticeProvider';
+import { downloadText } from '@/src/lib/download';
 import {
-  AlertCircle,
   ArrowRight,
   BookOpen,
   Clipboard,
@@ -13,117 +14,45 @@ import {
   Network,
   Package,
   Plus,
-  RefreshCw,
   Shield,
   Trash2,
   Zap,
 } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
-import { loadMermaid } from '@/src/lib/mermaid-loader';
 
-import { SERVICE_PRESETS, AWSNode, AWSSubgraph, AWSEdge, TEMPLATES } from './aws-diagram-data';
-import { generateMermaidCode } from './aws-diagram-utils';
+import { SERVICE_PRESETS, AWSSubgraph, AWSEdge, TEMPLATES } from './aws-diagram-data';
+import MermaidPreview from './MermaidPreview';
+import { useAwsDiagram, type TemplateKey } from './useAwsDiagram';
 
-// 動的Mermaidプレビューコンポーネント
-let mermaidInitialized = false;
+type EditorTab = 'nodes' | 'subgraphs' | 'edges' | 'templates';
 
-function MermaidPreview({ chartCode }: { chartCode: string }) {
-  const [svgHtml, setSvgHtml] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
-  const rawId = useId();
-  const uniqueId = useRef(`mermaid-${rawId.replace(/:/g, '')}`);
-
-  useEffect(() => {
-    let active = true;
-    const renderChart = async () => {
-      try {
-        if (typeof window === 'undefined') return;
-
-        const mermaidLib = await loadMermaid();
-        if (!mermaidInitialized) {
-          mermaidLib.initialize({
-            startOnLoad: false,
-            theme: 'neutral',
-            securityLevel: 'sandbox',
-            flowchart: {
-              useMaxWidth: true,
-              htmlLabels: true,
-            },
-          });
-          mermaidInitialized = true;
-        }
-
-        const { svg } = await mermaidLib.render(uniqueId.current, chartCode);
-        if (active) {
-          setSvgHtml(svg);
-          setError(null);
-        }
-      } catch (err) {
-        console.error('Mermaid render error:', err);
-        const badElement = document.getElementById(uniqueId.current);
-        if (badElement) {
-          badElement.remove();
-        }
-        if (active) {
-          const errMsg = err instanceof Error ? err.message : String(err);
-          setError(
-            errMsg || 'レンダリングエラーが発生しました。接続定義やIDの重複を確認してください。'
-          );
-        }
-      }
-    };
-
-    renderChart();
-
-    return () => {
-      active = false;
-    };
-  }, [chartCode]);
-
-  if (error) {
-    return (
-      <div className="p-4 border-2 border-border bg-card text-text rounded-xl font-mono text-xs whitespace-pre-wrap">
-        <div className="font-extrabold flex items-center gap-1.5 mb-2 text-sm text-red-500">
-          <AlertCircle className="w-4 h-4" />
-          <span>プレビュー生成エラー</span>
-        </div>
-        <p className="text-text/80 mb-3">
-          接続関係やリソースIDなどに不整合がある可能性があります。
-        </p>
-        <div className="bg-slate-950 text-red-400 p-3 rounded-lg overflow-x-auto max-h-[150px]">
-          {error}
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="w-full flex items-center justify-center p-6 bg-card border-2 border-border rounded-xl min-h-[350px] overflow-auto">
-      {svgHtml ? (
-        <div
-          className="mermaid-preview-container w-full max-w-full flex items-center justify-center"
-          dangerouslySetInnerHTML={{ __html: svgHtml }}
-        />
-      ) : (
-        <div className="flex flex-col items-center justify-center text-text/50 gap-2">
-          <RefreshCw className="w-6 h-6 animate-spin" />
-          <span className="text-xs font-bold">構成図を描画中...</span>
-        </div>
-      )}
-    </div>
-  );
-}
+const EDITOR_TABS: { id: EditorTab; label: string; icon: typeof Package }[] = [
+  { id: 'nodes', label: 'リソース', icon: Package },
+  { id: 'subgraphs', label: 'グループ', icon: Shield },
+  { id: 'edges', label: '接続線', icon: Zap },
+  { id: 'templates', label: 'テンプレート', icon: Clipboard },
+];
 
 export default function AwsDiagramGenerator() {
-  const [activeTab, setActiveTab] = useState<'nodes' | 'subgraphs' | 'edges' | 'templates'>(
-    'nodes'
-  );
+  const { notify, confirm } = useNotice();
+  const [activeTab, setActiveTab] = useState<EditorTab>('nodes');
 
-  // 状態データ
-  const [nodes, setNodes] = useState<AWSNode[]>([]);
-  const [subgraphs, setSubgraphs] = useState<AWSSubgraph[]>([]);
-  const [edges, setEdges] = useState<AWSEdge[]>([]);
-  const [direction, setDirection] = useState<'TD' | 'LR'>('TD');
+  const {
+    nodes,
+    subgraphs,
+    edges,
+    direction,
+    setDirection,
+    generatedCode,
+    loadTemplate,
+    clearAll,
+    addNode,
+    deleteNode,
+    addSubgraph,
+    deleteSubgraph,
+    addEdge,
+    deleteEdge,
+  } = useAwsDiagram();
 
   // 入力フォーム用状態
   // 1. ノード追加用
@@ -135,213 +64,70 @@ export default function AwsDiagramGenerator() {
   // 2. サブグラフ追加用
   const [sgId, setSgId] = useState('');
   const [sgName, setSgName] = useState('');
-  const [sgType, setSgType] = useState<
-    'VPC' | 'PublicSubnet' | 'PrivateSubnet' | 'ECSCluster' | 'General'
-  >('VPC');
+  const [sgType, setSgType] = useState<AWSSubgraph['type']>('VPC');
   const [sgParentId, setSgParentId] = useState('');
 
   // 3. 接続追加用
   const [edgeFrom, setEdgeFrom] = useState('');
   const [edgeTo, setEdgeTo] = useState('');
   const [edgeLabel, setEdgeLabel] = useState('');
-  const [edgeStyle, setEdgeStyle] = useState<'solid' | 'dashed' | 'bold'>('solid');
-
-  // テンプレート適用処理
-  const loadTemplate = (key: keyof typeof TEMPLATES) => {
-    const t = TEMPLATES[key];
-    setNodes(t.nodes);
-    setSubgraphs(t.subgraphs);
-    setEdges(t.edges);
-  };
-
-  // LocalStorage からの状態復元
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const saved = localStorage.getItem('handism_aws_diagram_data');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        requestAnimationFrame(() => {
-          if (parsed.nodes) setNodes(parsed.nodes);
-          if (parsed.subgraphs) setSubgraphs(parsed.subgraphs);
-          if (parsed.edges) setEdges(parsed.edges);
-          if (parsed.direction) setDirection(parsed.direction);
-        });
-      } catch (e) {
-        console.error('復元に失敗しました。デフォルトをロードします。', e);
-        requestAnimationFrame(() => {
-          loadTemplate('threeTier');
-        });
-      }
-    } else {
-      requestAnimationFrame(() => {
-        loadTemplate('threeTier'); // 初回デフォルト
-      });
-    }
-  }, []);
-
-  // 状態が変化した際の自動保存
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    if (nodes.length === 0 && subgraphs.length === 0 && edges.length === 0) return;
-
-    const data = { nodes, subgraphs, edges, direction };
-    localStorage.setItem('handism_aws_diagram_data', JSON.stringify(data));
-  }, [nodes, subgraphs, edges, direction]);
+  const [edgeStyle, setEdgeStyle] = useState<AWSEdge['style']>('solid');
 
   // 全リセット処理
-  const handleClearAll = () => {
-    if (window.confirm('現在の構成図を全てクリアしますか？')) {
-      setNodes([]);
-      setSubgraphs([]);
-      setEdges([]);
-      localStorage.removeItem('handism_aws_diagram_data');
+  const handleClearAll = async () => {
+    if (await confirm('現在の構成図を全てクリアしますか？', { destructive: true })) {
+      clearAll();
     }
   };
 
   // リソース（ノード）の追加
   const handleAddNode = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!nodeName.trim()) {
-      alert('表示名を入力してください。');
+    const result = addNode({ id: nodeId, name: nodeName, type: nodeType, subgraphId: nodeSubId });
+    if (!result.ok) {
+      notify(result.error, 'error');
       return;
     }
-
-    let cleanId = nodeId.trim().replace(/[^a-zA-Z0-9_]/g, '');
-    if (!cleanId) {
-      const count = nodes.filter((n) => n.type === nodeType).length + 1;
-      cleanId = `${nodeType.toLowerCase()}_${count}`;
-
-      let uniqueId = cleanId;
-      let suffix = 1;
-      while (nodes.some((n) => n.id === uniqueId) || subgraphs.some((s) => s.id === uniqueId)) {
-        uniqueId = `${cleanId}_${suffix}`;
-        suffix++;
-      }
-      cleanId = uniqueId;
-    } else {
-      if (nodes.some((n) => n.id === cleanId) || subgraphs.some((s) => s.id === cleanId)) {
-        alert('そのIDは既に使われています。一意のIDを指定してください。');
-        return;
-      }
-    }
-
-    const newNode: AWSNode = {
-      id: cleanId,
-      name: nodeName.trim(),
-      type: nodeType,
-      subgraphId: nodeSubId || undefined,
-    };
-
-    setNodes([...nodes, newNode]);
-    // リセット
     setNodeId('');
     setNodeName('');
     setNodeSubId('');
   };
 
-  // リソース（ノード）の削除
-  const handleDeleteNode = (id: string) => {
-    setNodes(nodes.filter((n) => n.id !== id));
-    // 依存する接続線も削除
-    setEdges(edges.filter((e) => e.from !== id && e.to !== id));
-  };
-
   // グループ（サブグラフ）の追加
   const handleAddSubgraph = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!sgId.trim() || !sgName.trim()) {
-      alert('グループIDとグループ名を入力してください。');
+    const result = addSubgraph({ id: sgId, name: sgName, type: sgType, parentId: sgParentId });
+    if (!result.ok) {
+      notify(result.error, 'error');
       return;
     }
-
-    const cleanId = sgId.trim().replace(/[^a-zA-Z0-9_]/g, '');
-    if (subgraphs.some((s) => s.id === cleanId) || nodes.some((n) => n.id === cleanId)) {
-      alert('そのIDは既に使われています。一意のIDを指定してください。');
-      return;
-    }
-
-    const newSubgraph: AWSSubgraph = {
-      id: cleanId,
-      name: sgName.trim(),
-      type: sgType,
-      parentId: sgParentId || undefined,
-    };
-
-    setSubgraphs([...subgraphs, newSubgraph]);
-    // リセット
     setSgId('');
     setSgName('');
     setSgParentId('');
   };
 
-  // グループ（サブグラフ）の削除
-  const handleDeleteSubgraph = (id: string) => {
-    setSubgraphs(subgraphs.filter((s) => s.id !== id));
-    // 削除されたグループに所属していたノードをルートレベルへ移動
-    setNodes(nodes.map((n) => (n.subgraphId === id ? { ...n, subgraphId: undefined } : n)));
-    // 削除されたグループを親に持っていたサブグラフをルートレベルへ移動
-    setSubgraphs((prev) =>
-      prev.map((s) => (s.parentId === id ? { ...s, parentId: undefined } : s))
-    );
-  };
-
   // 接続（エッジ）の追加
   const handleAddEdge = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!edgeFrom || !edgeTo) {
-      alert('送信元と送信先のリソースを選択してください。');
+    const result = addEdge({ from: edgeFrom, to: edgeTo, label: edgeLabel, style: edgeStyle });
+    if (!result.ok) {
+      notify(result.error, 'error');
       return;
     }
-    if (edgeFrom === edgeTo) {
-      alert('自身には接続できません。');
-      return;
-    }
-
-    const newEdge: AWSEdge = {
-      id: `edge_${Date.now()}_${Math.floor(Math.random() * 1000)}`,
-      from: edgeFrom,
-      to: edgeTo,
-      label: edgeLabel.trim() || undefined,
-      style: edgeStyle,
-    };
-
-    setEdges([...edges, newEdge]);
-    // リセット
     setEdgeLabel('');
   };
 
-  // 接続（エッジ）の削除
-  const handleDeleteEdge = (id: string) => {
-    setEdges(edges.filter((e) => e.id !== id));
-  };
-
-  // Mermaid DSL 生成ロジック
-  const generatedCode = useMemo(() => {
-    return generateMermaidCode({ nodes, subgraphs, edges, direction });
-  }, [nodes, subgraphs, edges, direction]);
-
   // SVGダウンロード処理
   const handleDownloadSvg = () => {
-    const previewDiv = document.querySelector('.mermaid-preview-container svg');
-    if (!previewDiv) {
-      alert('構成図プレビューがまだ表示されていません。');
+    const previewSvg = document.querySelector('.mermaid-preview-container svg');
+    if (!previewSvg) {
+      notify('構成図プレビューがまだ表示されていません。', 'error');
       return;
     }
 
-    const svgString = new XMLSerializer().serializeToString(previewDiv);
-    const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
-    const svgUrl = URL.createObjectURL(svgBlob);
-    const downloadLink = document.createElement('a');
-    downloadLink.href = svgUrl;
-    downloadLink.download = `aws-architecture-diagram.svg`;
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
-    URL.revokeObjectURL(svgUrl);
+    const svgString = new XMLSerializer().serializeToString(previewSvg);
+    downloadText(svgString, 'aws-architecture-diagram.svg', 'image/svg+xml;charset=utf-8');
   };
-
-  // ID自動作成用（useEffectを廃止し、handleAddNode側とUIプレースホルダー側で処理）
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -350,46 +136,19 @@ export default function AwsDiagramGenerator() {
         <div className="theme-card p-5 md:p-6">
           {/* タブヘッダー */}
           <div className="flex border-b-2 border-border mb-5 overflow-x-auto scrollbar-none gap-2">
-            <button
-              onClick={() => setActiveTab('nodes')}
-              className={`pb-2 text-xs md:text-sm font-extrabold whitespace-nowrap border-b-3 transition-colors ${
-                activeTab === 'nodes'
-                  ? 'border-accent text-accent'
-                  : 'border-transparent text-text/60 hover:text-text'
-              }`}
-            >
-              <Package className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> リソース
-            </button>
-            <button
-              onClick={() => setActiveTab('subgraphs')}
-              className={`pb-2 text-xs md:text-sm font-extrabold whitespace-nowrap border-b-3 transition-colors ${
-                activeTab === 'subgraphs'
-                  ? 'border-accent text-accent'
-                  : 'border-transparent text-text/60 hover:text-text'
-              }`}
-            >
-              <Shield className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> グループ
-            </button>
-            <button
-              onClick={() => setActiveTab('edges')}
-              className={`pb-2 text-xs md:text-sm font-extrabold whitespace-nowrap border-b-3 transition-colors ${
-                activeTab === 'edges'
-                  ? 'border-accent text-accent'
-                  : 'border-transparent text-text/60 hover:text-text'
-              }`}
-            >
-              <Zap className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> 接続線
-            </button>
-            <button
-              onClick={() => setActiveTab('templates')}
-              className={`pb-2 text-xs md:text-sm font-extrabold whitespace-nowrap border-b-3 transition-colors ${
-                activeTab === 'templates'
-                  ? 'border-accent text-accent'
-                  : 'border-transparent text-text/60 hover:text-text'
-              }`}
-            >
-              <Clipboard className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> テンプレート
-            </button>
+            {EDITOR_TABS.map(({ id, label, icon: Icon }) => (
+              <button
+                key={id}
+                onClick={() => setActiveTab(id)}
+                className={`pb-2 text-xs md:text-sm font-extrabold whitespace-nowrap border-b-3 transition-colors ${
+                  activeTab === id
+                    ? 'border-accent text-accent'
+                    : 'border-transparent text-text/60 hover:text-text'
+                }`}
+              >
+                <Icon className="w-4 h-4 inline-block align-[-0.15em] mr-1" /> {label}
+              </button>
+            ))}
           </div>
 
           {/* 各タブのコンテンツ */}
@@ -516,7 +275,7 @@ export default function AwsDiagramGenerator() {
                             </div>
                           </div>
                           <button
-                            onClick={() => handleDeleteNode(node.id)}
+                            onClick={() => deleteNode(node.id)}
                             className="text-text/40 hover:text-red-500 p-1 transition-colors"
                             title="リソースを削除"
                           >
@@ -641,7 +400,7 @@ export default function AwsDiagramGenerator() {
                             </div>
                           </div>
                           <button
-                            onClick={() => handleDeleteSubgraph(sg.id)}
+                            onClick={() => deleteSubgraph(sg.id)}
                             className="text-text/40 hover:text-red-500 p-1 transition-colors"
                             title="グループを削除"
                           >
@@ -781,7 +540,7 @@ export default function AwsDiagramGenerator() {
                             </span>
                           </div>
                           <button
-                            onClick={() => handleDeleteEdge(edge.id)}
+                            onClick={() => deleteEdge(edge.id)}
                             className="text-text/40 hover:text-red-500 p-1 transition-colors"
                             title="接続を削除"
                           >
@@ -811,13 +570,13 @@ export default function AwsDiagramGenerator() {
                   <div
                     key={key}
                     className="border-2 border-border rounded-xl p-4 bg-secondary/20 hover:bg-secondary/40 transition-colors cursor-pointer group"
-                    onClick={() => {
+                    onClick={async () => {
                       if (
-                        window.confirm(
+                        await confirm(
                           `${t.name}のテンプレートをロードしますか？（現在の編集データは上書きされます）`
                         )
                       ) {
-                        loadTemplate(key as keyof typeof TEMPLATES);
+                        loadTemplate(key as TemplateKey);
                       }
                     }}
                   >

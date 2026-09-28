@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo, useCallback } from 'react';
+import { downloadText } from '@/src/lib/download';
 import { Blend, Download, Layers, RefreshCw, Sliders, Waves } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
 
@@ -255,15 +256,7 @@ ${paths}
 
   // ダウンロード
   const handleDownload = () => {
-    const blob = new Blob([svgString], { type: 'image/svg+xml' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${mode}-${seed}.svg`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    downloadText(svgString, `${mode}-${seed}.svg`, 'image/svg+xml');
   };
 
   return (

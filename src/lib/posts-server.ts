@@ -3,7 +3,6 @@ import { createPostMeta, parsePostSource } from '@/src/lib/post-parser';
 import { readAllPostSources, readPostSourceBySlug } from '@/src/lib/post-repository';
 import { renderPostMarkdown } from '@/src/lib/post-renderer';
 import type { Post, PostMeta, PostSummary } from '@/src/types/post';
-import { isVisibleInEnv } from '@/src/lib/utils';
 import { processMetadataList } from '@/src/lib/server-utils';
 import { cache } from 'react';
 
@@ -20,52 +19,67 @@ export function toPostSummary({
 }
 
 /**
- * スラッグからソースを読み込み、メタ情報と本文を返す内部ヘルパー。
+ * 全記事のメタ情報を生成する（下書き除外・日付降順）。
+ * 本文のプレーンテキスト化・検索用トークナイズを伴うため、記事数に比例して重い。
  */
-const _loadAndParseMeta = cache(async function _loadAndParseMeta(
-  slug: string
-): Promise<{ meta: PostMeta; content: string } | null> {
-  const source = await readPostSourceBySlug(slug);
-  if (!source) return null;
-  const { data, content } = parsePostSource(source.raw);
-  return { meta: await createPostMeta(slug, data, content), content };
-});
-
-/**
- * 全記事のメタ情報を取得（一覧用）。
- */
-export const getAllPostMeta = cache(async function getAllPostMeta(): Promise<PostMeta[]> {
+async function loadAllPostMeta(): Promise<PostMeta[]> {
   const sources = await readAllPostSources();
   return await processMetadataList(sources, async (slug, raw) => {
     const { data, content } = parsePostSource(raw);
     return await createPostMeta(slug, data, content);
   });
+}
+
+/**
+ * 本番ビルド時のプロセス内キャッシュ。
+ * React の `cache()` はレンダリング（ページ）単位でしか効かないため、SSG で全記事ページを生成すると
+ * ページごとに全記事の解析が走り O(記事数²) になる。ビルド中は記事ファイルが変わらないので
+ * プロセス内で 1 度だけ解析して使い回す。開発環境ではファイル変更を反映するためキャッシュしない。
+ */
+let allPostMetaPromise: Promise<PostMeta[]> | null = null;
+
+/**
+ * 全記事のメタ情報を取得（一覧用）。
+ */
+export const getAllPostMeta = cache(async function getAllPostMeta(): Promise<PostMeta[]> {
+  if (process.env.NODE_ENV !== 'production') return loadAllPostMeta();
+
+  allPostMetaPromise ??= loadAllPostMeta().catch((error: unknown) => {
+    allPostMetaPromise = null;
+    throw error;
+  });
+  return allPostMetaPromise;
 });
 
 /**
  * 単記事のメタ情報のみを取得（メタデータ生成用）。
+ * 全記事メタ（キャッシュ済み）から引くため、記事単体の再解析は行わない。
+ * 本番環境では下書き記事は null を返す。
  */
 export const getPostMetaBySlug = cache(async function getPostMetaBySlug(
   slug: string
 ): Promise<PostMeta | null> {
-  const parsed = await _loadAndParseMeta(slug);
-  return parsed?.meta ?? null;
+  const posts = await getAllPostMeta();
+  return posts.find((p) => p.slug === slug) ?? null;
 });
 
 /**
  * 単記事取得（詳細ページ用）- サーバー側のみ
+ * メタ情報は全記事メタから引き、本文 HTML のレンダリングのみ行う。
+ * 本番ビルド時は draft: true の記事は全記事メタに含まれないため null を返す。
  */
 export const getPost = cache(async function getPost(slug: string): Promise<Post | null> {
-  const parsed = await _loadAndParseMeta(slug);
-  if (!parsed) return null;
+  const meta = await getPostMetaBySlug(slug);
+  if (!meta) return null;
 
-  // 本番ビルド時は draft: true の記事へのアクセスを拒否する
-  if (!isVisibleInEnv(parsed.meta)) return null;
+  const source = await readPostSourceBySlug(slug);
+  if (!source) return null;
 
-  const { html: htmlContent, toc } = await renderPostMarkdown(parsed.content);
+  const { content } = parsePostSource(source.raw);
+  const { html: htmlContent, toc } = await renderPostMarkdown(content);
 
   return {
-    ...parsed.meta,
+    ...meta,
     content: htmlContent,
     toc,
   };

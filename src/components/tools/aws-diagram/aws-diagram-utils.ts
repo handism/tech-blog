@@ -104,3 +104,63 @@ export function generateMermaidCode({
 
   return code;
 }
+
+/**
+ * Mermaid の ID として使える文字（英数字・アンダースコア）のみを残す。
+ */
+export function sanitizeDiagramId(raw: string): string {
+  return raw.trim().replace(/[^a-zA-Z0-9_]/g, '');
+}
+
+/**
+ * ID がリソース・グループのいずれかで既に使われているかを判定する。
+ */
+export function isDiagramIdTaken(id: string, nodes: AWSNode[], subgraphs: AWSSubgraph[]): boolean {
+  return nodes.some((n) => n.id === id) || subgraphs.some((s) => s.id === id);
+}
+
+/**
+ * サービスタイプから重複しないリソース ID を自動採番する（例: `ec2_2`, `ec2_2_1`）。
+ */
+export function generateNodeId(type: string, nodes: AWSNode[], subgraphs: AWSSubgraph[]): string {
+  const count = nodes.filter((n) => n.type === type).length + 1;
+  const baseId = `${type.toLowerCase()}_${count}`;
+
+  let uniqueId = baseId;
+  let suffix = 1;
+  while (isDiagramIdTaken(uniqueId, nodes, subgraphs)) {
+    uniqueId = `${baseId}_${suffix}`;
+    suffix++;
+  }
+  return uniqueId;
+}
+
+/**
+ * リソースを削除し、そのリソースに接続していた接続線も取り除く。
+ */
+export function removeNode(
+  id: string,
+  nodes: AWSNode[],
+  edges: AWSEdge[]
+): { nodes: AWSNode[]; edges: AWSEdge[] } {
+  return {
+    nodes: nodes.filter((n) => n.id !== id),
+    edges: edges.filter((e) => e.from !== id && e.to !== id),
+  };
+}
+
+/**
+ * グループを削除し、所属していたリソース・子グループをルートレベルへ移動する。
+ */
+export function removeSubgraph(
+  id: string,
+  nodes: AWSNode[],
+  subgraphs: AWSSubgraph[]
+): { nodes: AWSNode[]; subgraphs: AWSSubgraph[] } {
+  return {
+    nodes: nodes.map((n) => (n.subgraphId === id ? { ...n, subgraphId: undefined } : n)),
+    subgraphs: subgraphs
+      .filter((s) => s.id !== id)
+      .map((s) => (s.parentId === id ? { ...s, parentId: undefined } : s)),
+  };
+}

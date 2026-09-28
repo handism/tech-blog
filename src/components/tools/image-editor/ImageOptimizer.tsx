@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useNotice } from '@/src/components/NoticeProvider';
+import { downloadUrl } from '@/src/lib/download';
 import { Download, Image as ImageIcon, RefreshCw, Settings, Trash2 } from 'lucide-react';
 import FileDropZone from '../shared/FileDropZone';
 
@@ -21,6 +23,7 @@ type OptimizedState = {
 };
 
 export default function ImageOptimizer() {
+  const { notify } = useNotice();
   const [image, setImage] = useState<ImageState | null>(null);
   const [optimized, setOptimized] = useState<OptimizedState | null>(null);
   const [format, setFormat] = useState<'image/webp' | 'image/jpeg' | 'image/png'>('image/webp');
@@ -32,7 +35,7 @@ export default function ImageOptimizer() {
   // ファイル読み込み処理
   const handleFile = (file: File) => {
     if (!file.type.startsWith('image/')) {
-      alert('画像ファイルを選択してください。');
+      notify('画像ファイルを選択してください。', 'error');
       return;
     }
 
@@ -155,10 +158,7 @@ export default function ImageOptimizer() {
     const ext = format === 'image/webp' ? 'webp' : format === 'image/jpeg' ? 'jpg' : 'png';
     const originalName =
       image.file.name.substring(0, image.file.name.lastIndexOf('.')) || image.file.name;
-    const a = document.createElement('a');
-    a.download = `${originalName}-opt.${ext}`;
-    a.href = optimized.previewUrl;
-    a.click();
+    downloadUrl(optimized.previewUrl, `${originalName}-opt.${ext}`);
   };
 
   return (

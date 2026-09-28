@@ -26,6 +26,38 @@ export interface GenerateFlexboxGridCodeParams {
   itemStyles: Record<number, ItemStyle>;
 }
 
+/** コンテナ（親要素）側のレイアウト設定 */
+export type LayoutSettings = Omit<
+  GenerateFlexboxGridCodeParams,
+  'layoutMode' | 'codeFormat' | 'itemCount' | 'itemStyles'
+>;
+
+export const DEFAULT_LAYOUT_SETTINGS: LayoutSettings = {
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  justifyContent: 'flex-start',
+  alignItems: 'stretch',
+  alignContent: 'stretch',
+  flexGap: 16,
+  gridCols: 'repeat(3, 1fr)',
+  gridRows: 'auto',
+  justifyItems: 'stretch',
+  alignItemsGrid: 'stretch',
+  gridGap: 16,
+};
+
+export const DEFAULT_ITEM_COUNT = 4;
+
+export function createItemStyle(id: number): ItemStyle {
+  return { id, flexGrow: 0, flexShrink: 1, alignSelf: 'auto', gridColumn: 'auto', gridRow: 'auto' };
+}
+
+export function createItemStyles(count: number): Record<number, ItemStyle> {
+  return Object.fromEntries(
+    Array.from({ length: count }, (_, i) => [i + 1, createItemStyle(i + 1)])
+  );
+}
+
 /**
  * Flexbox / Grid の設定から CSS または Tailwind CSS のコード文字列を生成します。
  */

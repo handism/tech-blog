@@ -15,6 +15,7 @@ import {
   layoutConfig,
 } from '@/src/config/layout';
 import { useIsClient } from '@/src/hooks/useIsClient';
+import { safeReadStringFromStorage, safeWriteStringToStorage } from '@/src/lib/storage';
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 interface ThemeDesignContextValue {
@@ -55,7 +56,7 @@ export function ThemeDesignProvider({ children }: { children: React.ReactNode })
         try {
           // テーマの復元
           // まず LocalStorage に保存されている設定を優先する
-          const savedTheme = localStorage.getItem(THEME_STORAGE_KEY) as ThemeId | null;
+          const savedTheme = safeReadStringFromStorage(THEME_STORAGE_KEY) as ThemeId | null;
           if (savedTheme && themeConfig.some((t) => t.id === savedTheme)) {
             setCurrentTheme(savedTheme);
           } else {
@@ -68,7 +69,7 @@ export function ThemeDesignProvider({ children }: { children: React.ReactNode })
 
           // レイアウトの復元
           // まず LocalStorage に保存されている設定を優先する
-          const savedLayout = localStorage.getItem(LAYOUT_STORAGE_KEY) as LayoutId | null;
+          const savedLayout = safeReadStringFromStorage(LAYOUT_STORAGE_KEY) as LayoutId | null;
           if (savedLayout && layoutConfig.some((l) => l.id === savedLayout)) {
             setCurrentLayout(savedLayout);
           } else {
@@ -82,7 +83,7 @@ export function ThemeDesignProvider({ children }: { children: React.ReactNode })
           }
 
           // エフェクト設定の復元
-          const savedEffects = localStorage.getItem(EFFECTS_STORAGE_KEY);
+          const savedEffects = safeReadStringFromStorage(EFFECTS_STORAGE_KEY);
           if (savedEffects !== null) {
             setEffectsEnabledState(savedEffects === 'true');
           } else {
@@ -115,31 +116,19 @@ export function ThemeDesignProvider({ children }: { children: React.ReactNode })
 
   const setTheme = useCallback((themeId: ThemeId) => {
     setCurrentTheme(themeId);
-    try {
-      localStorage.setItem(THEME_STORAGE_KEY, themeId);
-    } catch {
-      // ignore
-    }
+    safeWriteStringToStorage(THEME_STORAGE_KEY, themeId);
     document.documentElement.setAttribute('data-theme', themeId);
   }, []);
 
   const setLayout = useCallback((layoutId: LayoutId) => {
     setCurrentLayout(layoutId);
-    try {
-      localStorage.setItem(LAYOUT_STORAGE_KEY, layoutId);
-    } catch {
-      // ignore
-    }
+    safeWriteStringToStorage(LAYOUT_STORAGE_KEY, layoutId);
     document.documentElement.setAttribute('data-layout', layoutId);
   }, []);
 
   const setEffectsEnabled = useCallback((enabled: boolean) => {
     setEffectsEnabledState(enabled);
-    try {
-      localStorage.setItem(EFFECTS_STORAGE_KEY, String(enabled));
-    } catch {
-      // ignore
-    }
+    safeWriteStringToStorage(EFFECTS_STORAGE_KEY, String(enabled));
     document.documentElement.setAttribute('data-effects', enabled ? 'enabled' : 'disabled');
   }, []);
 

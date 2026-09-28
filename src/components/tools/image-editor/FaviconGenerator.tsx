@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { downloadBlob, downloadUrl } from '@/src/lib/download';
 import { Clipboard, Download, Sparkles, Upload } from 'lucide-react';
 import JSZip from 'jszip';
 import CopyButton from '@/src/components/CopyButton';
@@ -71,10 +72,7 @@ export default function FaviconGenerator() {
   };
 
   const downloadSingleIcon = (filename: string, dataUrl: string) => {
-    const a = document.createElement('a');
-    a.href = dataUrl;
-    a.download = filename;
-    a.click();
+    downloadUrl(dataUrl, filename);
   };
 
   const downloadAllAsZip = async () => {
@@ -110,14 +108,7 @@ export default function FaviconGenerator() {
     zip.file('site.webmanifest', JSON.stringify(manifestJson, null, 2));
 
     const content = await zip.generateAsync({ type: 'blob' });
-    const blobUrl = URL.createObjectURL(content);
-
-    const a = document.createElement('a');
-    a.href = blobUrl;
-    a.download = 'favicons_and_manifest.zip';
-    a.click();
-
-    URL.revokeObjectURL(blobUrl);
+    downloadBlob(content, 'favicons_and_manifest.zip');
   };
 
   const htmlCode = `<!-- Webブラウザ用ファビコン設定 -->

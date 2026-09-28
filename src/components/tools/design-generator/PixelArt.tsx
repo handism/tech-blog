@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { useNotice } from '@/src/components/NoticeProvider';
+import { downloadText, downloadUrl } from '@/src/lib/download';
 import {
   Download,
   Eraser,
@@ -36,6 +38,7 @@ const PRESET_COLORS = [
 type Tool = 'pencil' | 'eraser' | 'bucket';
 
 export default function PixelArt() {
+  const { confirm } = useNotice();
   const [gridSize, setGridSize] = useState<number>(16);
   const [selectedColor, setSelectedColor] = useState<string>('#ef4444');
   const [activeTool, setActiveTool] = useState<Tool>('pencil');
@@ -129,8 +132,8 @@ export default function PixelArt() {
   };
 
   // クリア
-  const handleClear = () => {
-    if (confirm('キャンバスをすべて消去しますか？')) {
+  const handleClear = async () => {
+    if (await confirm('キャンバスをすべて消去しますか？', { destructive: true })) {
       initializeGrid(gridSize);
     }
   };
@@ -148,13 +151,7 @@ export default function PixelArt() {
     }
     svg += `</svg>`;
 
-    const blob = new Blob([svg], { type: 'image/svg+xml' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `pixel_art_${gridSize}x${gridSize}.svg`;
-    a.click();
-    URL.revokeObjectURL(url);
+    downloadText(svg, `pixel_art_${gridSize}x${gridSize}.svg`, 'image/svg+xml');
   };
 
   // PNGエクスポート
@@ -182,11 +179,7 @@ export default function PixelArt() {
         }
       }
 
-      const dataUrl = canvas.toDataURL('image/png');
-      const a = document.createElement('a');
-      a.href = dataUrl;
-      a.download = `pixel_art_${gridSize}x${gridSize}.png`;
-      a.click();
+      downloadUrl(canvas.toDataURL('image/png'), `pixel_art_${gridSize}x${gridSize}.png`);
     }
   };
 
@@ -208,9 +201,12 @@ export default function PixelArt() {
                 {[16, 32, 64].map((size) => (
                   <button
                     key={size}
-                    onClick={() => {
+                    onClick={async () => {
                       if (
-                        confirm('解像度を変更すると現在の絵がリセットされます。よろしいですか？')
+                        await confirm(
+                          '解像度を変更すると現在の絵がリセットされます。よろしいですか？',
+                          { destructive: true }
+                        )
                       ) {
                         setGridSize(size);
                         initializeGrid(size);

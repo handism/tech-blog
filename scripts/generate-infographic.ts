@@ -2,14 +2,19 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { GoogleGenAI } from '@google/genai';
 import sharp from 'sharp';
-
-interface ArticleMeta {
-  title: string;
-  tags: string[];
-  category: string;
-  content: string;
-  frontmatter: string;
-}
+import {
+  DEFAULT_PLAN_MODEL,
+  ensureImagesDir,
+  extractJsonObject,
+  generateImage,
+  loadEnvLocal,
+  normalizeSlug,
+  readArticle,
+  requireGeminiApiKey,
+  resolveArticlePath,
+  resolveImageConfig,
+  runMain,
+} from './lib/article-gen';
 
 interface InfographicPlan {
   targetLineText: string;
@@ -20,84 +25,11 @@ interface InfographicPlan {
 }
 
 /**
- * .env.local から環境変数を手動で安全にロードするヘルパー。
- * 実行環境によっては Bun が .env.local を自動読み込みしないケースのフォールバック。
- */
-function loadEnvLocal(): void {
-  const envPath = path.resolve(process.cwd(), '.env.local');
-  if (fs.existsSync(envPath)) {
-    const content = fs.readFileSync(envPath, 'utf-8');
-    for (const line of content.split('\n')) {
-      const trimmed = line.trim();
-      if (!trimmed || trimmed.startsWith('#')) continue;
-      const eqIdx = trimmed.indexOf('=');
-      if (eqIdx !== -1) {
-        const key = trimmed.slice(0, eqIdx).trim();
-        let val = trimmed.slice(eqIdx + 1).trim();
-        if (
-          (val.startsWith('"') && val.endsWith('"')) ||
-          (val.startsWith("'") && val.endsWith("'"))
-        ) {
-          val = val.slice(1, -1);
-        }
-        if (!process.env[key]) {
-          process.env[key] = val;
-        }
-      }
-    }
-  }
-}
-
-/**
- * Markdown 文字列からフロントマターの主要項目および本文を抽出する。
- */
-function parseArticleFull(rawMarkdown: string): ArticleMeta {
-  let title = '';
-  let tags: string[] = [];
-  let category = '';
-  let frontmatter = '';
-  let content = rawMarkdown;
-
-  const fmMatch = rawMarkdown.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-  if (fmMatch) {
-    frontmatter = fmMatch[0];
-    const fmText = fmMatch[1];
-    for (const line of fmText.split(/\r?\n/)) {
-      const tMatch = line.match(/^title:\s*(.+)$/);
-      if (tMatch) title = tMatch[1].replace(/^["']|["']$/g, '');
-      const tagMatch = line.match(/^tags:\s*\[(.*)\]$/);
-      if (tagMatch) {
-        tags = tagMatch[1]
-          .split(',')
-          .map((s) => s.trim().replace(/^["']|["']$/g, ''))
-          .filter(Boolean);
-      }
-      const cMatch = line.match(/^category:\s*(.+)$/);
-      if (cMatch) category = cMatch[1].replace(/^["']|["']$/g, '');
-    }
-    content = rawMarkdown.slice(frontmatter.length).trim();
-  }
-
-  return {
-    title: title || 'Tech Blog Article',
-    tags,
-    category: category || 'Tech',
-    content,
-    frontmatter,
-  };
-}
-
-/**
  * AIからのJSONレスポンスを安全にパースする。
  */
-function parseJsonSafe(text: string): InfographicPlan {
-  const cleaned = text
-    .trim()
-    .replace(/^```(?:json)?\r?\n?/i, '')
-    .replace(/\r?\n?```$/i, '')
-    .trim();
+function parsePlan(text: string): InfographicPlan {
   try {
-    return JSON.parse(cleaned) as InfographicPlan;
+    return JSON.parse(extractJsonObject(text)) as InfographicPlan;
   } catch (e) {
     throw new Error(`AIからのJSONパースに失敗しました: ${text}\nエラー詳細: ${e}`);
   }
@@ -181,34 +113,14 @@ async function main(): Promise<void> {
     process.exit(args.length === 0 ? 1 : 0);
   }
 
-  let slug = args[0];
-  if (slug.endsWith('.md')) {
-    slug = slug.slice(0, -3);
-  }
-
-  const mdPath = path.resolve(process.cwd(), 'md', `${slug}.md`);
-  if (!fs.existsSync(mdPath)) {
-    console.error(`エラー: 記事ファイル "${mdPath}" が見つかりません。`);
-    process.exit(1);
-  }
+  const slug = normalizeSlug(args[0]);
+  const mdPath = resolveArticlePath(slug);
 
   loadEnvLocal();
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    console.error(
-      'エラー: GEMINI_API_KEY が設定されていません。.env.local に GEMINI_API_KEY=<あなたのAPIキー> を設定してください。'
-    );
-    process.exit(1);
-  }
+  const apiKey = requireGeminiApiKey();
+  const { imageModel, imageSize } = resolveImageConfig();
 
-  const imageModel = process.env.GEMINI_IMAGE_MODEL ?? 'gemini-3-pro-image';
-  const requestedImageSize = process.env.GEMINI_IMAGE_SIZE ?? '1K';
-  const imageSize = ['1K', '2K', '4K'].includes(requestedImageSize)
-    ? (requestedImageSize as '1K' | '2K' | '4K')
-    : '1K';
-
-  const rawMarkdown = fs.readFileSync(mdPath, 'utf-8');
-  const article = parseArticleFull(rawMarkdown);
+  const article = readArticle(mdPath);
   console.log(`[1/5] 記事 "md/${slug}.md" を読み込みました (タイトル: "${article.title}")`);
 
   const ai = new GoogleGenAI({ apiKey });
@@ -246,15 +158,14 @@ ${article.content.slice(0, 4000)}
 
   console.log('[2/5] Gemini で記事本文を分析し、最適な図解挿入位置とプロンプトを構築中...');
   const textResponse = await ai.models.generateContent({
-    model: 'gemini-3.5-flash-lite',
+    model: process.env.GEMINI_PLAN_MODEL ?? DEFAULT_PLAN_MODEL,
     contents: promptBuilderQuery,
     config: {
       responseMimeType: 'application/json',
     },
   });
 
-  const rawJsonText = textResponse.text || '{}';
-  const plan = parseJsonSafe(rawJsonText);
+  const plan = parsePlan(textResponse.text || '{}');
   const imagePrompt = plan.imagePrompt || plan.englishPrompt;
   if (!imagePrompt) {
     throw new Error('AIのレスポンスに画像生成プロンプト (imagePrompt) が含まれていませんでした。');
@@ -266,31 +177,12 @@ ${article.content.slice(0, 4000)}
   console.log(`       生成されたプロンプト:\n       "${imagePrompt}"`);
 
   console.log(`[3/5] ${imageModel} で図解インフォグラフィックを作成中...`);
-  const interaction = await ai.interactions.create({
-    model: imageModel,
-    input: imagePrompt,
-    response_format: {
-      type: 'image',
-      mime_type: 'image/jpeg',
-      aspect_ratio: '16:9',
-      image_size: imageSize,
-    },
-  });
-
-  const generatedImage = interaction.output_image;
-  if (!generatedImage || !generatedImage.data) {
-    throw new Error('画像生成APIから有効な画像データが返されませんでした。');
-  }
-
-  const imageBuffer = Buffer.from(generatedImage.data, 'base64');
+  const imageBuffer = await generateImage(ai, { model: imageModel, prompt: imagePrompt, imageSize });
 
   console.log(
     '[4/5] 画像を 16:9 (1024x576) にリサイズして WebP に変換・保存中...'
   );
-  const outputDir = path.resolve(process.cwd(), 'public', 'images');
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
-  }
+  const outputDir = ensureImagesDir();
   const outputFilename = `${slug}-infographic.webp`;
   const outputPath = path.resolve(outputDir, outputFilename);
 
@@ -306,7 +198,4 @@ ${article.content.slice(0, 4000)}
   console.log(`🎉 図解インフォグラフィックの作成と記事への設定が完了しました！`);
 }
 
-main().catch((err) => {
-  console.error('エラーが発生しました:', err);
-  process.exit(1);
-});
+runMain(main);

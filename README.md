@@ -124,6 +124,7 @@ bun run type-check
 
 ブログ記事 (`md/<slug>.md`) を対象に、Google GenAI (`gemini-3.5-flash-lite` / `gemini-3-pro-image`) を使用して、記事のサムネイル画像および本文内の解説用図解インフォグラフィックを自動生成・変換・自動設定するコマンドが利用できます。
 ご使用の際は、事前に `.env.local` に `GEMINI_API_KEY=<あなたのAPIキー>` を設定してください。
+各スクリプト共通の処理（`.env.local` の読み込み、記事フロントマターの解析・`image` 更新、画像生成 API 呼び出しなど）は `scripts/lib/article-gen.ts` にまとめています。
 
 ###### 1. サムネイルの自動生成 (`generate-thumbnail.ts` / `generate-thumbnail-ai.ts`)
 記事のタイトル・タグ・カテゴリ・本文を分析し、**フラットポップ調 (superflat pop-art)** のアイキャッチサムネイルを 16:9 (1024x576 / WebP形式) で自動生成し、記事フロントマターの `image` フィールドを更新します (`generate-thumbnail.ts`)。
@@ -183,6 +184,7 @@ AWSのアーキテクチャパターンおよびテンプレートは `patterns`
 - `themes.ts`: `themeConfig` 配列でデザインテーマ一覧を管理し、`DEFAULT_THEME` でデフォルトテーマを指定します
 - `layout.ts`: `layoutConfig` 配列で記事一覧のレイアウト（列数）を管理します
 - `tools.ts`: `toolsMenuItems` 配列でヘッダー・`/tools` で表示するツールメニュー項目を管理します
+- `storage-keys.ts`: サイト全体で使用する localStorage キーの一覧。設定画面のバックアップ（エクスポート／インポート）・リセット対象はここから自動生成されるため、localStorage を使う機能を追加したら必ず登録してください
 
 ### CSS 設定
 

@@ -2,6 +2,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useMemo } from 'react';
+import { downloadUrl } from '@/src/lib/download';
 import {
   AlertTriangle,
   Bird,
@@ -133,11 +134,7 @@ export default function UtmBuilder() {
   const downloadQrCode = () => {
     const canvas = qrCanvasRef.current;
     if (!canvas) return;
-    const url = canvas.toDataURL('image/png');
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `qrcode-utm-${Date.now()}.png`;
-    link.click();
+    downloadUrl(canvas.toDataURL('image/png'), `qrcode-utm-${Date.now()}.png`);
   };
 
   // プリセット適用

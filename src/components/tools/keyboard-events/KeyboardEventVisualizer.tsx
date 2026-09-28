@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { STORAGE_KEYS } from '@/src/config/storage-keys';
+import { safeReadStringFromStorage, safeWriteStringToStorage } from '@/src/lib/storage';
 import { Clipboard, Keyboard, ShieldAlert, Trash2 } from 'lucide-react';
 import { usKeyboardRows, jisKeyboardRows } from './keyboard-data';
 
@@ -23,7 +25,7 @@ export default function KeyboardEventVisualizer() {
   /* const visualizerRef = useRef<HTMLDivElement>(null); */
 
   useEffect(() => {
-    const savedLayout = localStorage.getItem('keyboard-layout');
+    const savedLayout = safeReadStringFromStorage(STORAGE_KEYS.keyboardLayout);
     if (savedLayout === 'jis' || savedLayout === 'us') {
       requestAnimationFrame(() => {
         setLayout(savedLayout);
@@ -33,7 +35,7 @@ export default function KeyboardEventVisualizer() {
 
   const handleLayoutChange = (newLayout: 'us' | 'jis') => {
     setLayout(newLayout);
-    localStorage.setItem('keyboard-layout', newLayout);
+    safeWriteStringToStorage(STORAGE_KEYS.keyboardLayout, newLayout);
   };
 
   useEffect(() => {

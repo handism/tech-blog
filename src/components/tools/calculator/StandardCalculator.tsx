@@ -4,7 +4,8 @@ import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { Delete, History, Keyboard, Trash2 } from 'lucide-react';
 import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 import CopyButton from '@/src/components/CopyButton';
-import { safeReadFromStorage, safeWriteToStorage } from '@/src/lib/storage';
+import { safeReadFromStorage, safeRemoveFromStorage, safeWriteToStorage } from '@/src/lib/storage';
+import { STORAGE_KEYS } from '@/src/config/storage-keys';
 
 interface HistoryItem {
   id: string;
@@ -272,7 +273,7 @@ export default function StandardCalculator() {
   const [calcState, dispatch] = useReducer(calcReducer, initialCalcState);
   const { formula, displayValue } = calcState;
   const [history, setHistory] = useState<HistoryItem[]>(() =>
-    safeReadFromStorage<HistoryItem[]>('calc_history', [])
+    safeReadFromStorage<HistoryItem[]>(STORAGE_KEYS.calcHistory, [])
   );
   const { copy } = useCopyToClipboard();
 
@@ -293,7 +294,7 @@ export default function StandardCalculator() {
 
     setHistory((prev) => {
       const newHistory = [newItem, ...prev].slice(0, 50);
-      safeWriteToStorage('calc_history', newHistory);
+      safeWriteToStorage(STORAGE_KEYS.calcHistory, newHistory);
       return newHistory;
     });
   }, [calcState.isCalculated, formula]);
@@ -559,7 +560,7 @@ export default function StandardCalculator() {
                 <button
                   onClick={() => {
                     setHistory([]);
-                    localStorage.removeItem('calc_history');
+                    safeRemoveFromStorage(STORAGE_KEYS.calcHistory);
                   }}
                   className="p-1 rounded-lg hover:bg-secondary text-text/40 hover:text-red-500 transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                   title="履歴をクリア"

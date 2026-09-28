@@ -16,6 +16,7 @@ import {
   Terminal,
   TreePine,
 } from 'lucide-react';
+import { STORAGE_KEYS } from '@/src/config/storage-keys';
 
 /**
  * デザインテーマ（スタイル全体）の定義。
@@ -191,5 +192,5 @@ export const themeConfig = [
 
 export type ThemeId = (typeof themeConfig)[number]['id'];
 export const DEFAULT_THEME: ThemeId = 'oled';
-export const THEME_STORAGE_KEY = 'design-theme';
-export const EFFECTS_STORAGE_KEY = 'effects-enabled';
+export const THEME_STORAGE_KEY = STORAGE_KEYS.theme;
+export const EFFECTS_STORAGE_KEY = STORAGE_KEYS.effects;

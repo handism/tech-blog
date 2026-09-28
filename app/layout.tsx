@@ -4,6 +4,7 @@ import './globals.css';
 import Footer from '@/src/components/Footer';
 import Header from '@/src/components/Header';
 import ScrollToTopButton from '@/src/components/ScrollToTopButton';
+import { NoticeProvider } from '@/src/components/NoticeProvider';
 import { ThemeDesignProvider } from '@/src/components/ThemeDesignProvider';
 import ThemeEffectManager from '@/src/components/ThemeEffectManager';
 import { ThemeProvider } from 'next-themes';
@@ -177,11 +178,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
           <ThemeDesignProvider>
-            <ThemeEffectManager />
-            <Header />
-            <div className="relative">{children}</div>
-            <Footer />
-            <ScrollToTopButton />
+            <NoticeProvider>
+              <ThemeEffectManager />
+              <Header />
+              <div className="relative">{children}</div>
+              <Footer />
+              <ScrollToTopButton />
+            </NoticeProvider>
           </ThemeDesignProvider>
         </ThemeProvider>
       </body>

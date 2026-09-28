@@ -3,78 +3,47 @@
 import React, { useState, useMemo } from 'react';
 import { Hand, LayoutGrid, Minus, Plus, RefreshCw, Sliders, Wrench } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
-import { generateFlexboxGridCode } from './flexbox-grid-utils';
-
-// アイテムの個別スタイル型
-interface ItemStyle {
-  id: number;
-  flexGrow: number;
-  flexShrink: number;
-  alignSelf: React.CSSProperties['alignSelf'];
-  gridColumn: string;
-  gridRow: string;
-}
+import {
+  DEFAULT_ITEM_COUNT,
+  DEFAULT_LAYOUT_SETTINGS,
+  type ItemStyle,
+  type LayoutSettings,
+  createItemStyle,
+  createItemStyles,
+  generateFlexboxGridCode,
+} from './flexbox-grid-utils';
 
 export default function FlexboxGrid() {
   const [layoutMode, setLayoutMode] = useState<'flex' | 'grid'>('flex');
-  const [itemCount, setItemCount] = useState(4);
+  const [itemCount, setItemCount] = useState(DEFAULT_ITEM_COUNT);
   const [activeItemId, setActiveItemId] = useState<number | null>(null);
 
   // 個別アイテムスタイルの状態
-  const [itemStyles, setItemStyles] = useState<Record<number, ItemStyle>>({
-    1: {
-      id: 1,
-      flexGrow: 0,
-      flexShrink: 1,
-      alignSelf: 'auto',
-      gridColumn: 'auto',
-      gridRow: 'auto',
-    },
-    2: {
-      id: 2,
-      flexGrow: 0,
-      flexShrink: 1,
-      alignSelf: 'auto',
-      gridColumn: 'auto',
-      gridRow: 'auto',
-    },
-    3: {
-      id: 3,
-      flexGrow: 0,
-      flexShrink: 1,
-      alignSelf: 'auto',
-      gridColumn: 'auto',
-      gridRow: 'auto',
-    },
-    4: {
-      id: 4,
-      flexGrow: 0,
-      flexShrink: 1,
-      alignSelf: 'auto',
-      gridColumn: 'auto',
-      gridRow: 'auto',
-    },
-  });
+  const [itemStyles, setItemStyles] = useState<Record<number, ItemStyle>>(() =>
+    createItemStyles(DEFAULT_ITEM_COUNT)
+  );
 
   // コード出力のトグル（CSS vs Tailwind CSS）
   const [codeFormat, setCodeFormat] = useState<'css' | 'tailwind'>('css');
 
-  // Flexbox設定
-  const [flexDirection, setFlexDirection] = useState<
-    'row' | 'row-reverse' | 'column' | 'column-reverse'
-  >('row');
-  const [flexWrap, setFlexWrap] = useState<'nowrap' | 'wrap' | 'wrap-reverse'>('wrap');
-  const [justifyContent, setJustifyContent] = useState('flex-start');
-  const [alignItems, setAlignItems] = useState('stretch');
-  const [alignContent, setAlignContent] = useState('stretch');
-  const [flexGap, setFlexGap] = useState(16);
-
-  // Grid設定
-  const [gridCols, setGridCols] = useState('repeat(3, 1fr)');
-  const [gridRows, setGridRows] = useState('auto');
-  const [justifyItems, setJustifyItems] = useState('stretch');
-  const [alignItemsGrid, setAlignItemsGrid] = useState('stretch');
-  const [gridGap, setGridGap] = useState(16);
+  // コンテナ（Flexbox / Grid）設定
+  const [settings, setSettings] = useState<LayoutSettings>(DEFAULT_LAYOUT_SETTINGS);
+  const updateSetting = <K extends keyof LayoutSettings>(key: K, value: LayoutSettings[K]) => {
+    setSettings((prev) => ({ ...prev, [key]: value }));
+  };
+  const {
+    flexDirection,
+    flexWrap,
+    justifyContent,
+    alignItems,
+    alignContent,
+    flexGap,
+    gridCols,
+    gridRows,
+    justifyItems,
+    alignItemsGrid,
+    gridGap,
+  } = settings;
 
   // アイテム追加
   const handleAddItem = () => {
@@ -83,14 +52,7 @@ export default function FlexboxGrid() {
     setItemCount(newId);
     setItemStyles((prev) => ({
       ...prev,
-      [newId]: {
-        id: newId,
-        flexGrow: 0,
-        flexShrink: 1,
-        alignSelf: 'auto',
-        gridColumn: 'auto',
-        gridRow: 'auto',
-      },
+      [newId]: createItemStyle(newId),
     }));
   };
 
@@ -121,93 +83,17 @@ export default function FlexboxGrid() {
 
   // すべてリセット
   const handleReset = () => {
-    setFlexDirection('row');
-    setFlexWrap('wrap');
-    setJustifyContent('flex-start');
-    setAlignItems('stretch');
-    setAlignContent('stretch');
-    setFlexGap(16);
-
-    setGridCols('repeat(3, 1fr)');
-    setGridRows('auto');
-    setJustifyItems('stretch');
-    setAlignItemsGrid('stretch');
-    setGridGap(16);
-
-    setItemCount(4);
+    setSettings(DEFAULT_LAYOUT_SETTINGS);
+    setItemCount(DEFAULT_ITEM_COUNT);
     setActiveItemId(null);
-    setItemStyles({
-      1: {
-        id: 1,
-        flexGrow: 0,
-        flexShrink: 1,
-        alignSelf: 'auto',
-        gridColumn: 'auto',
-        gridRow: 'auto',
-      },
-      2: {
-        id: 2,
-        flexGrow: 0,
-        flexShrink: 1,
-        alignSelf: 'auto',
-        gridColumn: 'auto',
-        gridRow: 'auto',
-      },
-      3: {
-        id: 3,
-        flexGrow: 0,
-        flexShrink: 1,
-        alignSelf: 'auto',
-        gridColumn: 'auto',
-        gridRow: 'auto',
-      },
-      4: {
-        id: 4,
-        flexGrow: 0,
-        flexShrink: 1,
-        alignSelf: 'auto',
-        gridColumn: 'auto',
-        gridRow: 'auto',
-      },
-    });
+    setItemStyles(createItemStyles(DEFAULT_ITEM_COUNT));
   };
 
   // --- 生成コード計算 ---
-  const generatedCode = useMemo(() => {
-    return generateFlexboxGridCode({
-      layoutMode,
-      codeFormat,
-      flexDirection,
-      flexWrap,
-      justifyContent,
-      alignItems,
-      alignContent,
-      flexGap,
-      gridCols,
-      gridRows,
-      justifyItems,
-      alignItemsGrid,
-      gridGap,
-      itemCount,
-      itemStyles,
-    });
-  }, [
-    layoutMode,
-    codeFormat,
-    flexDirection,
-    flexWrap,
-    justifyContent,
-    alignItems,
-    alignContent,
-    flexGap,
-    gridCols,
-    gridRows,
-    justifyItems,
-    alignItemsGrid,
-    gridGap,
-    itemCount,
-    itemStyles,
-  ]);
+  const generatedCode = useMemo(
+    () => generateFlexboxGridCode({ ...settings, layoutMode, codeFormat, itemCount, itemStyles }),
+    [settings, layoutMode, codeFormat, itemCount, itemStyles]
+  );
 
   return (
     <>
@@ -539,7 +425,9 @@ export default function FlexboxGrid() {
                   <span>flex-direction</span>
                   <select
                     value={flexDirection}
-                    onChange={(e) => setFlexDirection(e.target.value as typeof flexDirection)}
+                    onChange={(e) =>
+                      updateSetting('flexDirection', e.target.value as typeof flexDirection)
+                    }
                     className="w-full border-2 border-border p-2 rounded-lg bg-card focus:outline-none"
                   >
                     <option value="row">row (横並び)</option>
@@ -554,7 +442,7 @@ export default function FlexboxGrid() {
                   <span>flex-wrap</span>
                   <select
                     value={flexWrap}
-                    onChange={(e) => setFlexWrap(e.target.value as typeof flexWrap)}
+                    onChange={(e) => updateSetting('flexWrap', e.target.value as typeof flexWrap)}
                     className="w-full border-2 border-border p-2 rounded-lg bg-card focus:outline-none"
                   >
                     <option value="nowrap">nowrap (折り返さない)</option>
@@ -568,7 +456,7 @@ export default function FlexboxGrid() {
                   <span>justify-content (主軸配置)</span>
                   <select
                     value={justifyContent}
-                    onChange={(e) => setJustifyContent(e.target.value)}
+                    onChange={(e) => updateSetting('justifyContent', e.target.value)}
                     className="w-full border-2 border-border p-2 rounded-lg bg-card focus:outline-none"
                   >
                     <option value="flex-start">flex-start (左/上寄せ)</option>
@@ -585,7 +473,7 @@ export default function FlexboxGrid() {
                   <span>align-items (交差軸配置)</span>
                   <select
                     value={alignItems}
-                    onChange={(e) => setAlignItems(e.target.value)}
+                    onChange={(e) => updateSetting('alignItems', e.target.value)}
                     className="w-full border-2 border-border p-2 rounded-lg bg-card focus:outline-none"
                   >
                     <option value="stretch">stretch (引き伸ばし)</option>
@@ -602,7 +490,7 @@ export default function FlexboxGrid() {
                   <select
                     disabled={flexWrap === 'nowrap'}
                     value={alignContent}
-                    onChange={(e) => setAlignContent(e.target.value)}
+                    onChange={(e) => updateSetting('alignContent', e.target.value)}
                     className="w-full border-2 border-border p-2 rounded-lg bg-card focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <option value="stretch">stretch</option>
@@ -626,7 +514,7 @@ export default function FlexboxGrid() {
                     max="48"
                     step="4"
                     value={flexGap}
-                    onChange={(e) => setFlexGap(Number(e.target.value))}
+                    onChange={(e) => updateSetting('flexGap', Number(e.target.value))}
                     className="w-full h-2 bg-secondary rounded-lg appearance-none cursor-pointer accent-accent"
                   />
                 </div>
@@ -639,7 +527,7 @@ export default function FlexboxGrid() {
                   <span>grid-template-columns</span>
                   <select
                     value={gridCols}
-                    onChange={(e) => setGridCols(e.target.value)}
+                    onChange={(e) => updateSetting('gridCols', e.target.value)}
                     className="w-full border-2 border-border p-2 rounded-lg bg-card focus:outline-none"
                   >
                     <option value="repeat(3, 1fr)">3列均等 (3 columns)</option>
@@ -656,7 +544,7 @@ export default function FlexboxGrid() {
                   <span>grid-template-rows</span>
                   <select
                     value={gridRows}
-                    onChange={(e) => setGridRows(e.target.value)}
+                    onChange={(e) => updateSetting('gridRows', e.target.value)}
                     className="w-full border-2 border-border p-2 rounded-lg bg-card focus:outline-none"
                   >
                     <option value="auto">自動 (auto)</option>
@@ -669,7 +557,7 @@ export default function FlexboxGrid() {
                   <span>justify-items (横方向のセル内配置)</span>
                   <select
                     value={justifyItems}
-                    onChange={(e) => setJustifyItems(e.target.value)}
+                    onChange={(e) => updateSetting('justifyItems', e.target.value)}
                     className="w-full border-2 border-border p-2 rounded-lg bg-card focus:outline-none"
                   >
                     <option value="stretch">stretch (引き伸ばし)</option>
@@ -684,7 +572,7 @@ export default function FlexboxGrid() {
                   <span>align-items (縦方向のセル内配置)</span>
                   <select
                     value={alignItemsGrid}
-                    onChange={(e) => setAlignItemsGrid(e.target.value)}
+                    onChange={(e) => updateSetting('alignItemsGrid', e.target.value)}
                     className="w-full border-2 border-border p-2 rounded-lg bg-card focus:outline-none"
                   >
                     <option value="stretch">stretch (引き伸ばし)</option>
@@ -706,7 +594,7 @@ export default function FlexboxGrid() {
                     max="48"
                     step="4"
                     value={gridGap}
-                    onChange={(e) => setGridGap(Number(e.target.value))}
+                    onChange={(e) => updateSetting('gridGap', Number(e.target.value))}
                     className="w-full h-2 bg-secondary rounded-lg appearance-none cursor-pointer accent-accent"
                   />
                 </div>

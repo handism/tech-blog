@@ -12,6 +12,7 @@
   - `bun run gen-thumb <slug>` : 記事（`md/<slug>.md`）のフラットポップ調サムネイル画像を生成・保存しフロントマターを自動更新（`scripts/generate-thumbnail.ts`）。
   - `bun run gen-thumb-ai <slug>` : 記事（`md/<slug>.md`）の内容をもとに、AIに文言の生成・イラスト描画まで任せて YouTube サムネイル風のフラットイラスト画像を直接生成・保存しフロントマターを自動更新（`scripts/generate-thumbnail-ai.ts`）。
   - `bun run gen-info <slug>` （または `bun run gen-infographic <slug>`） : 記事本文を解析して最適な図解挿入位置を特定し、フラットイラスト調で自然な日本語文言入りの図解インフォグラフィック画像を生成・保存した上で Markdown 本文に自動設定・更新する（`scripts/generate-infographic.ts`）。
+  - 3 スクリプト共通の処理（`.env.local` 読み込み・gray-matter による記事解析・フロントマター `image` 更新・画像生成 API 呼び出し等）は `scripts/lib/article-gen.ts` に集約されている。`gen-thumb` は fontconfig 設定後に sharp を動的 import する必要があるため、この共通モジュールでは sharp を import しないこと。
 
 ## アーキテクチャ
 
@@ -36,6 +37,10 @@
 - `draft: true` の記事は本番ビルドから除外される。
 - 学習ガイドの `meta.json` の `icon` は Lucide アイコン名（`src/config/learning-icons.ts` の登録キー）。JSON からコンポーネントを直接持てないための間接参照で、未登録なら `book` にフォールバックする。
 
+### localStorage キー
+
+localStorage のキーは `src/config/storage-keys.ts` の `STORAGE_KEYS` が正。設定画面のバックアップ・リセット対象は `STORAGE_KEY_GROUPS` から自動生成されるため、新しく localStorage を使う際は必ずキーを登録し、いずれかのグループへ振り分けること（`tests/storage-keys.test.ts` で漏れを検出する）。インポート時は登録済みキー以外は書き込まない。
+
 ### 主要ディレクトリ
 
 ディレクトリ構成は `ls` で確認できる。以下 2 点のみ非自明：
@@ -58,6 +63,9 @@
 | `DashboardShell` / `DashboardHero` / `DashboardFilterBar` / `DashboardSection*` | `src/components/dashboard/` | Tools・学習ガイド・Scraps の一覧ページ共通レイアウト（外枠幅、ヒーローヘッダー、検索＋フィルタタブ、カテゴリ見出し、0 件表示）。一覧系ページを増やす際はここを使い、3 ページ間で見た目がずれないようにする |
 | `LearningCourseIcon` | `src/components/LearningCourseIcon.tsx` | `meta.json` の `icon` 名を Lucide アイコンとして描画する。`resolveLearningIcon()` を呼び出し側で変数に束ねると `react-hooks/static-components` に抵触するため、必ずこのコンポーネント経由で使う |
 | `CopyButton` | `src/components/CopyButton.tsx` | コピー実行＋「コピー完了」表示切り替えを内包した汎用ボタン。`src/components/tools/` 配下でクリップボードコピーが必要な箇所は個別に `useCopyToClipboard` を呼ばずこれを使う。キーボードショートカット等ボタンクリック以外からコピーを発火させたい場合のみ `useCopyToClipboard` を直接使用する |
+| `useNotice()`（`NoticeProvider`） | `src/components/NoticeProvider.tsx` | テーマに馴染むトースト通知（`notify`）と Promise を返す確認ダイアログ（`confirm`）。`window.alert` / `window.confirm` は使わずこれを使う。プロバイダはルートレイアウトに設置済み |
+| `downloadBlob()` / `downloadText()` / `downloadUrl()` | `src/lib/download.ts` | ファイルダウンロード。`<a>` 要素の生成・クリック・Object URL の解放までを内包する。個別に `createObjectURL` ＋ `<a>` を書かない |
+| `safeReadFromStorage()` ほか | `src/lib/storage.ts` | localStorage の安全なラッパー（SSR・例外時もフォールバック）。JSON 値用と、テーマ ID 等の生文字列用（`safeReadStringFromStorage` / `safeWriteStringToStorage`）がある。`localStorage` を直接呼ばない |
 
 ## コードスタイル
 

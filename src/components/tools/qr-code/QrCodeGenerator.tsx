@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { downloadUrl } from '@/src/lib/download';
 import QRCode from 'qrcode';
 
 type ErrorCorrectLevel = 'L' | 'M' | 'Q' | 'H';
@@ -51,10 +52,7 @@ export default function QrCodeGenerator() {
   const downloadQRCode = () => {
     const canvas = canvasRef.current;
     if (canvas) {
-      const link = document.createElement('a');
-      link.href = canvas.toDataURL('image/png');
-      link.download = 'qrcode.png';
-      link.click();
+      downloadUrl(canvas.toDataURL('image/png'), 'qrcode.png');
     }
   };
 
