@@ -1,7 +1,5 @@
-import { siteConfig } from '@/src/config/site';
+import { createOgImageResponse } from '@/src/lib/og-card';
 import { getAllPostMeta, getPostMetaBySlug } from '@/src/lib/posts-server';
-import { getOgFontData, getOgAvatarDataUri } from '@/src/lib/og-helpers';
-import { ImageResponse } from 'next/og';
 
 /**
  * ビルド時にすべての記事のOGPルートを事前生成する
@@ -24,144 +22,10 @@ export async function GET(request: Request, props: { params: Promise<{ slug: str
     return new Response('Not Found', { status: 404 });
   }
 
-  const [fontData, avatarUrl] = await Promise.all([getOgFontData(), getOgAvatarDataUri()]);
-
-  return new ImageResponse(
-    <div
-      style={{
-        height: '100%',
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        backgroundColor: '#09090b', // zinc-950
-        backgroundImage: 'radial-gradient(circle at 120% 120%, #10b98140 0%, #09090b 70%)',
-        border: '16px solid #10b981', // emerald-500 border
-        padding: '80px',
-        fontFamily: '"Noto Sans JP"',
-      }}
-    >
-      {/* ブログ・ヘッダー情報 */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          marginBottom: '40px',
-          gap: '16px',
-        }}
-      >
-        {}
-        <img
-          src={avatarUrl}
-          alt="avatar"
-          width={64}
-          height={64}
-          style={{
-            display: 'flex',
-            borderRadius: '50%',
-            objectFit: 'cover',
-          }}
-        />
-        <span
-          style={{
-            display: 'flex',
-            fontSize: '32px',
-            fontWeight: 700,
-            color: '#d4d4d8', // zinc-300
-            letterSpacing: '-0.02em',
-          }}
-        >
-          {siteConfig.name}
-        </span>
-      </div>
-
-      {/* 記事タイトル */}
-      <div
-        style={{
-          display: 'flex',
-          flex: 1,
-          alignItems: 'center',
-        }}
-      >
-        <h1
-          style={{
-            display: 'flex',
-            fontSize: '72px',
-            fontWeight: 700,
-            color: '#ffffff',
-            lineHeight: 1.3,
-            letterSpacing: '-0.03em',
-            margin: 0,
-          }}
-        >
-          {post.title || 'No Title'}
-        </h1>
-      </div>
-
-      {/* タグとカテゴリ */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginTop: '40px',
-        }}
-      >
-        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-          {post.category && (
-            <span
-              style={{
-                display: 'flex',
-                fontSize: '24px',
-                color: '#10b981',
-                backgroundColor: '#10b98120',
-                padding: '8px 24px',
-                borderRadius: '9999px',
-              }}
-            >
-              {post.category}
-            </span>
-          )}
-          {post.tags?.slice(0, 3).map((tag) => (
-            <span
-              key={tag}
-              style={{
-                display: 'flex',
-                fontSize: '24px',
-                color: '#a1a1aa', // zinc-400
-                backgroundColor: '#27272a', // zinc-800
-                padding: '8px 24px',
-                borderRadius: '9999px',
-              }}
-            >
-              #{tag}
-            </span>
-          ))}
-        </div>
-
-        {/* 著者名 */}
-        <div
-          style={{
-            display: 'flex',
-            fontSize: '28px',
-            color: '#e4e4e7', // zinc-200
-            fontWeight: 700,
-          }}
-        >
-          @ {siteConfig.author}
-        </div>
-      </div>
-    </div>,
-    {
-      width: 1200,
-      height: 630,
-      fonts: [
-        {
-          name: 'Noto Sans JP',
-          data: fontData,
-          style: 'normal',
-          weight: 700,
-        },
-      ],
-    }
-  );
+  return createOgImageResponse({
+    title: post.title,
+    accentColor: '#10b981', // emerald-500
+    category: post.category,
+    badges: post.tags?.slice(0, 3).map((tag) => `#${tag}`),
+  });
 }

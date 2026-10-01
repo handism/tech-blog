@@ -1,6 +1,6 @@
 // src/lib/og-helpers.ts
 /**
- * OGP 画像生成ルート（app/og/[slug]/ と app/og/aws/[slug]/）で共有する
+ * OGP 画像生成（src/lib/og-card.tsx 経由で app/og/[slug]/ と app/og/patterns/[slug]/）で共有する
  * フォント・アバター読み込みユーティリティ。
  * ビルド時にキャッシュし、同一プロセス内での重複 I/O を防ぐ。
  */

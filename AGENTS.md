@@ -67,6 +67,7 @@ localStorage のキーは `src/config/storage-keys.ts` の `STORAGE_KEYS` が正
 | `downloadBlob()` / `downloadText()` / `downloadUrl()` | `src/lib/download.ts` | ファイルダウンロード。`<a>` 要素の生成・クリック・Object URL の解放までを内包する。個別に `createObjectURL` ＋ `<a>` を書かない |
 | `hexToRgb()` / `rgbToHsl()` / `getContrastRatio()` ほか | `src/lib/color.ts` | HEX・RGB・HSL 相互変換、`rgba()` 生成、WCAG 相対輝度・コントラスト比。カラー系ツールで個別に変換関数を書かない |
 | `getPostImagePath()` / `getPostImageUrl()` | `src/lib/post-image.ts` | 記事サムネイルのパス／絶対 URL（`image` 未指定時は動的 OGP 画像）。カード・本文・OGP・JSON-LD で共通 |
+| `createOgImageResponse()` | `src/lib/og-card.tsx` | 動的 OGP 画像（1200×630）のカード描画。フォント・アバター読み込み込み。`app/og/**/route.tsx` はデータ取得＋このヘルパー呼び出しのみとし、新しいコンテンツタイプの OGP もアクセントカラー・バッジ指定で追加する |
 | `safeReadFromStorage()` ほか | `src/lib/storage.ts` | localStorage の安全なラッパー（SSR・例外時もフォールバック）。JSON 値用と、テーマ ID 等の生文字列用（`safeReadStringFromStorage` / `safeWriteStringToStorage`）がある。`localStorage` を直接呼ばない |
 
 ## コードスタイル
