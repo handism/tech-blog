@@ -1,4 +1,5 @@
 // src/components/tools/css/css-gradient-utils.ts
+import { hexToRgba } from '@/src/lib/color';
 
 export type GradientType = 'linear' | 'radial' | 'mesh';
 export type RadialShape = 'circle' | 'ellipse';
@@ -30,13 +31,6 @@ export interface GradientConfig {
 
 /** メッシュグラデーションの PNG 書き出し時の下地色 */
 const MESH_BASE_COLOR = '#0a0a14';
-
-export function hexToRgba(hex: string, alpha: number): string {
-  const r = parseInt(hex.slice(1, 3), 16) || 0;
-  const g = parseInt(hex.slice(3, 5), 16) || 0;
-  const b = parseInt(hex.slice(5, 7), 16) || 0;
-  return `rgba(${r}, ${g}, ${b}, ${alpha.toFixed(2)})`;
-}
 
 export function randomHexColor(): string {
   return (

@@ -65,6 +65,8 @@ localStorage のキーは `src/config/storage-keys.ts` の `STORAGE_KEYS` が正
 | `CopyButton` | `src/components/CopyButton.tsx` | コピー実行＋「コピー完了」表示切り替えを内包した汎用ボタン。`src/components/tools/` 配下でクリップボードコピーが必要な箇所は個別に `useCopyToClipboard` を呼ばずこれを使う。キーボードショートカット等ボタンクリック以外からコピーを発火させたい場合のみ `useCopyToClipboard` を直接使用する |
 | `useNotice()`（`NoticeProvider`） | `src/components/NoticeProvider.tsx` | テーマに馴染むトースト通知（`notify`）と Promise を返す確認ダイアログ（`confirm`）。`window.alert` / `window.confirm` は使わずこれを使う。プロバイダはルートレイアウトに設置済み |
 | `downloadBlob()` / `downloadText()` / `downloadUrl()` | `src/lib/download.ts` | ファイルダウンロード。`<a>` 要素の生成・クリック・Object URL の解放までを内包する。個別に `createObjectURL` ＋ `<a>` を書かない |
+| `hexToRgb()` / `rgbToHsl()` / `getContrastRatio()` ほか | `src/lib/color.ts` | HEX・RGB・HSL 相互変換、`rgba()` 生成、WCAG 相対輝度・コントラスト比。カラー系ツールで個別に変換関数を書かない |
+| `getPostImagePath()` / `getPostImageUrl()` | `src/lib/post-image.ts` | 記事サムネイルのパス／絶対 URL（`image` 未指定時は動的 OGP 画像）。カード・本文・OGP・JSON-LD で共通 |
 | `safeReadFromStorage()` ほか | `src/lib/storage.ts` | localStorage の安全なラッパー（SSR・例外時もフォールバック）。JSON 値用と、テーマ ID 等の生文字列用（`safeReadStringFromStorage` / `safeWriteStringToStorage`）がある。`localStorage` を直接呼ばない |
 
 ## コードスタイル

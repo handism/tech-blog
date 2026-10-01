@@ -5,6 +5,7 @@ import { ImageModal } from '@/src/components/ImageModal';
 import PostMeta from '@/src/components/PostMeta';
 import RelatedPosts from '@/src/components/RelatedPosts';
 import { siteConfig } from '@/src/config/site';
+import { getPostImagePath, getPostImageUrl } from '@/src/lib/post-image';
 import {
   getAdjacentPosts,
   getAllPostMeta,
@@ -39,9 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const description = postMeta.description;
-  const imageUrl = postMeta.image
-    ? `${siteConfig.url}/images/${postMeta.image}`
-    : `${siteConfig.url}/og/${slug}/image.png`;
+  const imageUrl = getPostImageUrl(postMeta);
 
   return {
     title: postMeta.title,
@@ -52,7 +51,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       url: `${siteConfig.url}/blog/posts/${slug}`,
       siteName: siteConfig.name,
-      images: imageUrl ? [{ url: imageUrl, width: 1200, height: 630 }] : [],
+      images: [{ url: imageUrl, width: 1200, height: 630 }],
       publishedTime: postMeta.date?.toISOString(),
       authors: [siteConfig.author],
     },
@@ -60,7 +59,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       card: 'summary_large_image',
       title: postMeta.title,
       description,
-      images: imageUrl ? [imageUrl] : [],
+      images: [imageUrl],
     },
   };
 }
@@ -97,9 +96,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.description,
-    image: post.image
-      ? `${siteConfig.url}/images/${post.image}`
-      : `${siteConfig.url}/og/${post.slug}/image.png`,
+    image: getPostImageUrl(post),
     datePublished: post.date?.toISOString(),
     author: {
       '@type': 'Person',
@@ -133,7 +130,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         {/* サムネイル画像 */}
         <div className="relative w-full aspect-video mb-6 md:mb-8 lg:mb-10 not-prose border-3 border-border rounded-2xl shadow-[5px_5px_0px_0px_var(--border)] dark:shadow-[5px_5px_0px_0px_var(--accent)] overflow-hidden">
           <Image
-            src={post.image ? `/images/${post.image}` : `/og/${post.slug}/image.png`}
+            src={getPostImagePath(post)}
             alt={post.title}
             fill
             className="object-cover"

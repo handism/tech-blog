@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest';
 import {
   type GradientConfig,
   buildGradientCss,
-  hexToRgba,
   toSingleLineCss,
 } from '@/src/components/tools/css/css-gradient-utils';
 
@@ -23,10 +22,6 @@ const baseConfig: GradientConfig = {
 };
 
 describe('css-gradient-utils', () => {
-  it('hexToRgba converts hex colors with alpha', () => {
-    expect(hexToRgba('#ff8000', 0.5)).toBe('rgba(255, 128, 0, 0.50)');
-  });
-
   it('builds linear gradients with stops sorted by position', () => {
     expect(buildGradientCss(baseConfig)).toBe('linear-gradient(90deg, #ff0000 0%, #0000ff 100%)');
   });

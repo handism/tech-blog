@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import { Layers, Sliders, Sparkles } from 'lucide-react';
 import CopyButton from '@/src/components/CopyButton';
+import { hexToRgba } from '@/src/lib/color';
 
 export default function CssGenerator() {
   const [activeTab, setActiveTab] = useState<'glass' | 'shadow'>('glass');
@@ -24,13 +25,6 @@ export default function CssGenerator() {
   const [shadowBlur, setShadowBlur] = useState(30);
   const [shadowSpread, setShadowSpread] = useState(0);
   const [shadowOffset, setShadowOffset] = useState(10);
-
-  const hexToRgba = (hex: string, alpha: number) => {
-    const r = parseInt(hex.slice(1, 3), 16) || 0;
-    const g = parseInt(hex.slice(3, 5), 16) || 0;
-    const b = parseInt(hex.slice(5, 7), 16) || 0;
-    return `rgba(${r}, ${g}, ${b}, ${alpha.toFixed(2)})`;
-  };
 
   // Glassmorphism CSS output
   const glassCss = `background: ${hexToRgba(bgColor, opacity)};
