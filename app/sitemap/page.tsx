@@ -58,7 +58,7 @@ export default async function SitemapPage() {
               {categories.map((cat) => (
                 <li key={cat}>
                   <Link
-                    href={`/blog/categories/${categoryToSlug(cat)}`}
+                    href={`/categories/${categoryToSlug(cat)}`}
                     className="hover:text-accent hover:underline"
                   >
                     {cat}
@@ -90,10 +90,7 @@ export default async function SitemapPage() {
             <ul className="space-y-2 text-text/80">
               {posts.map((post) => (
                 <li key={post.slug}>
-                  <Link
-                    href={`/blog/posts/${post.slug}`}
-                    className="hover:text-accent hover:underline"
-                  >
+                  <Link href={`/posts/${post.slug}`} className="hover:text-accent hover:underline">
                     {post.title}
                   </Link>
                 </li>

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "node scripts/download-fonts.js && node scripts/copy-pattern-assets.js && next dev",
     "build": "node scripts/download-fonts.js && node scripts/copy-pattern-assets.js && next build",
-    "start": "serve out",
+    "start": "bun run scripts/serve-out.ts",
     "lint": "eslint",
     "test:unit": "vitest run",
     "test:vrt": "playwright test",

@@ -17,7 +17,7 @@ export default function RelatedPosts({ posts }: { posts: PostSummary[] }) {
         {posts.map((post) => (
           <Link
             key={post.slug}
-            href={`/blog/posts/${post.slug}`}
+            href={`/posts/${post.slug}`}
             className="group block bg-card border border-border rounded-lg p-4 hover:shadow-md hover:border-accent/40 transition-all"
           >
             <p className="text-sm font-semibold text-text group-hover:text-accent transition-colors line-clamp-2 mb-2">

@@ -18,6 +18,7 @@ import Link from 'next/link';
 import type { AwsPattern } from '@/src/types/aws-gallery';
 import { useCopyToClipboard } from '@/src/hooks/useCopyToClipboard';
 import { getServiceBadgeStyle } from '@/src/lib/aws-gallery-helpers';
+import { withBasePath } from '@/src/lib/base-path';
 
 type Props = {
   pattern: AwsPattern;
@@ -151,7 +152,7 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
                 className="relative border-2 border-border rounded-xl overflow-hidden bg-white/90 dark:bg-neutral-900/90 p-4 cursor-zoom-in hover:border-accent group transition-colors flex items-center justify-center min-h-[220px]"
               >
                 <img
-                  src={`/patterns/${pattern.diagramFile}`}
+                  src={withBasePath(`/patterns/${pattern.diagramFile}`)}
                   alt={`${pattern.title} アーキテクチャ図`}
                   className="max-w-full max-h-[300px] object-contain transition-transform duration-300 group-hover:scale-102"
                 />
@@ -225,7 +226,7 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
 
                 {/* ダウンロードリンク */}
                 <a
-                  href={`/patterns/${pattern.templateFile}`}
+                  href={withBasePath(`/patterns/${pattern.templateFile}`)}
                   download={pattern.templateFile}
                   className="px-3 py-1.5 text-xs font-black border-2 border-border rounded-lg bg-accent text-white dark:text-neutral-900 hover:opacity-95 transition-all flex items-center gap-1.5 shadow-[2px_2px_0px_0px_var(--border)] dark:shadow-[2px_2px_0px_0px_var(--accent)]"
                 >
@@ -270,7 +271,7 @@ export default function AwsPatternDetailClient({ pattern }: Props) {
           </button>
           <div className="relative max-w-full max-h-full flex items-center justify-center">
             <img
-              src={`/patterns/${pattern.diagramFile}`}
+              src={withBasePath(`/patterns/${pattern.diagramFile}`)}
               alt={`${pattern.title} アーキテクチャ図（拡大）`}
               className="max-w-[95vw] max-h-[90vh] object-contain select-none bg-white dark:bg-neutral-900 p-6 rounded-2xl border border-white/10 shadow-2xl"
               onClick={(e) => e.stopPropagation()} // 画像クリックでは閉じない

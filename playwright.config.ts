@@ -28,8 +28,9 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npx serve -p 3000 out',
-    url: 'http://localhost:3000',
+    // basePath 配下で配信するため serve ではなく専用スクリプトを使う
+    command: 'bun run scripts/serve-out.ts 3000',
+    url: 'http://localhost:3000/tech-blog/',
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
   },

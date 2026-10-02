@@ -14,6 +14,7 @@ import remarkRehype from 'remark-rehype';
 import remarkCjkFriendly from 'remark-cjk-friendly';
 import remarkCjkFriendlyGfmStrikethrough from 'remark-cjk-friendly-gfm-strikethrough';
 import { unified } from 'unified';
+import { withBasePath } from '@/src/lib/base-path';
 import { imageSizeFromFile } from 'image-size/fromFile';
 import { visit } from 'unist-util-visit';
 import type { Element } from 'hast';
@@ -136,6 +137,22 @@ function rehypeImageSize() {
 }
 
 /**
+ * 本文中のサイトルート相対リンク・画像（`/images/foo.webp` など）に basePath を付与する Rehype プラグイン。
+ * Markdown 側は basePath を意識せずに書けるようにするため。
+ * 画像の実寸取得（public 配下のパス解決）より後に実行すること。
+ */
+function rehypeBasePath() {
+  return (tree: HastRoot) => {
+    visit(tree, 'element', (node: Element) => {
+      for (const attr of ['href', 'src'] as const) {
+        const value = node.properties?.[attr];
+        if (typeof value === 'string') node.properties[attr] = withBasePath(value);
+      }
+    });
+  };
+}
+
+/**
  * Table要素を div.table-wrapper でラップする Rehype プラグイン。
  */
 function rehypeTableWrapper() {
@@ -181,6 +198,7 @@ const processor = unified()
   .use(remarkMermaid)
   .use(remarkRehype, { allowDangerousHtml: true })
   .use(rehypeImageSize)
+  .use(rehypeBasePath)
   .use(rehypeTableWrapper)
   .use(rehypeShiki, {
     theme: 'github-dark',

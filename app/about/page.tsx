@@ -1,6 +1,7 @@
 // app/about/page.tsx
 import BlogLayout from '@/src/components/BlogLayout';
 import { getBlogViewContext } from '@/src/lib/posts-view';
+import { withBasePath } from '@/src/lib/base-path';
 import { PenSquare, Sword, Mail, Github } from 'lucide-react';
 import type { Metadata } from 'next';
 
@@ -81,7 +82,7 @@ export default async function AboutPage() {
               <div className="shrink-0">
                 <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-accent shadow-lg">
                   <img
-                    src="/images/wolf-icon.webp"
+                    src={withBasePath('/images/wolf-icon.webp')}
                     alt="狼の画像"
                     className="w-full h-full object-cover"
                     loading="lazy"

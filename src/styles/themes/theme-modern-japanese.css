@@ -166,7 +166,7 @@
 }
 
 /* 落款・スタンプ（朱肉）風カテゴリ */
-[data-theme='modern-japanese'] .post-card-meta a[href*='/blog/categories/'] {
+[data-theme='modern-japanese'] .post-card-meta a[href*='/categories/'] {
   border: 1px solid var(--color-accent) !important;
   background-color: color-mix(in srgb, var(--color-accent) 6%, transparent) !important;
   color: var(--color-accent) !important;
@@ -184,7 +184,7 @@
   transition: all 0.2s ease !important;
 }
 
-[data-theme='modern-japanese'] .post-card-meta a[href*='/blog/categories/']:hover {
+[data-theme='modern-japanese'] .post-card-meta a[href*='/categories/']:hover {
   background-color: var(--color-accent) !important;
   color: var(--color-bg) !important;
 }
@@ -223,7 +223,7 @@
   display: none !important;
 }
 
-[data-theme='modern-japanese'] .post-header .not-prose a[href*='/blog/categories/'] {
+[data-theme='modern-japanese'] .post-header .not-prose a[href*='/categories/'] {
   border: 1px solid var(--color-accent) !important;
   background-color: color-mix(in srgb, var(--color-accent) 6%, transparent) !important;
   color: var(--color-accent) !important;
@@ -234,7 +234,7 @@
 
 /* タグクラウド / タグリンクを落款風に */
 [data-theme='modern-japanese'] a.tag-link,
-[data-theme='modern-japanese'] .post-header .not-prose a[href*='/blog/tags/'] {
+[data-theme='modern-japanese'] .post-header .not-prose a[href*='/tags/'] {
   border: 1px solid var(--color-border) !important;
   background-color: transparent !important;
   color: var(--color-text) !important;
@@ -245,7 +245,7 @@
 }
 
 [data-theme='modern-japanese'] a.tag-link:hover,
-[data-theme='modern-japanese'] .post-header .not-prose a[href*='/blog/tags/']:hover {
+[data-theme='modern-japanese'] .post-header .not-prose a[href*='/tags/']:hover {
   border-color: var(--color-accent) !important;
   color: var(--color-accent) !important;
   background-color: color-mix(in srgb, var(--color-accent) 5%, transparent) !important;
@@ -362,7 +362,7 @@
 }
 
 /* 落款スタンプのリアリティ表現（わずかな傾き） */
-[data-theme='modern-japanese'] .post-card-meta a[href*='/blog/categories/'] {
+[data-theme='modern-japanese'] .post-card-meta a[href*='/categories/'] {
   transform: rotate(-1.5deg);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.08) !important;
 }

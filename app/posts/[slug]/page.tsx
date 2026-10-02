@@ -49,7 +49,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'article',
       title: postMeta.title,
       description,
-      url: `${siteConfig.url}/blog/posts/${slug}`,
+      url: `${siteConfig.url}/posts/${slug}`,
       siteName: siteConfig.name,
       images: [{ url: imageUrl, width: 1200, height: 630 }],
       publishedTime: postMeta.date?.toISOString(),
@@ -110,7 +110,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `${siteConfig.url}/blog/posts/${post.slug}`,
+      '@id': `${siteConfig.url}/posts/${post.slug}`,
     },
   };
 
@@ -150,7 +150,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           {/* 前の記事 */}
           {prevPost ? (
             <Link
-              href={`/blog/posts/${prevPost.slug}`}
+              href={`/posts/${prevPost.slug}`}
               className="block p-4 theme-card theme-card-hover"
             >
               <div className="text-xs text-text/60 mb-1 font-bold">← 前の記事</div>
@@ -163,7 +163,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           {/* 次の記事 */}
           {nextPost ? (
             <Link
-              href={`/blog/posts/${nextPost.slug}`}
+              href={`/posts/${nextPost.slug}`}
               className="block p-4 theme-card theme-card-hover md:text-right"
             >
               <div className="text-xs text-text/60 mb-1 font-bold">次の記事 →</div>

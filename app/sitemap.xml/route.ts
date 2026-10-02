@@ -24,17 +24,17 @@ export async function GET() {
   const sitemap = buildSitemapXml([
     { loc: baseUrl, lastmod: today },
     ...posts.map((post) => ({
-      loc: `${baseUrl}/blog/posts/${post.slug}`,
+      loc: `${baseUrl}/posts/${post.slug}`,
       lastmod: post.date ? post.date.toISOString().split('T')[0] : undefined,
     })),
     ...categories.map((category) => ({
-      loc: `${baseUrl}/blog/categories/${categoryToSlug(category)}`,
+      loc: `${baseUrl}/categories/${categoryToSlug(category)}`,
     })),
     ...tags.map((tag) => ({
-      loc: `${baseUrl}/blog/tags/${tagToSlug(tag)}`,
+      loc: `${baseUrl}/tags/${tagToSlug(tag)}`,
     })),
     ...Array.from({ length: Math.max(0, totalPages - 1) }, (_, i) => ({
-      loc: `${baseUrl}/blog/page/${i + 2}`,
+      loc: `${baseUrl}/page/${i + 2}`,
     })),
     { loc: `${baseUrl}/scraps`, lastmod: today },
   ]);

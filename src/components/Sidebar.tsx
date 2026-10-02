@@ -43,7 +43,7 @@ export default function Sidebar({ toc, categoryCounts, tagCounts }: SidebarProps
             {categoryCounts.map(({ category, count }) => (
               <li key={category}>
                 <Link
-                  href={`/blog/categories/${categoryToSlug(category)}`}
+                  href={`/categories/${categoryToSlug(category)}`}
                   className="flex justify-between items-center text-text/80 hover:text-accent hover:translate-x-1 transition-all duration-200"
                 >
                   <span>{category}</span>

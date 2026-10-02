@@ -48,7 +48,7 @@ export default function PostMeta({
       )}
       {/* カテゴリ */}
       <Link
-        href={`/blog/categories/${categoryToSlug(post.category)}`}
+        href={`/categories/${categoryToSlug(post.category)}`}
         className="text-text/80 hover:text-accent hover:underline inline-flex items-center gap-1.5"
       >
         <Folder className="h-4 w-4" />

@@ -1,4 +1,4 @@
-// app/blog/page/[page]/page.tsx
+// app/page/[page]/page.tsx
 import PostListPage from '@/src/components/PostListPage';
 import { siteConfig } from '@/src/config/site';
 import { getBlogViewContext, paginatePosts } from '@/src/lib/posts-view';

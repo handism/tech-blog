@@ -300,25 +300,25 @@ html[data-theme='chalkboard'] .dark .post-card-item .post-card-content {
 }
 
 /* メタ情報（日付・カテゴリ）のテキスト色を強制上書き（タグは背景があるので除外） */
-html[data-theme='chalkboard'].dark .post-card-item .post-card-meta *:not(a[href^='/blog/tags/']),
-html[data-theme='chalkboard'] .dark .post-card-item .post-card-meta *:not(a[href^='/blog/tags/']) {
+html[data-theme='chalkboard'].dark .post-card-item .post-card-meta *:not(a[href*='/tags/']),
+html[data-theme='chalkboard'] .dark .post-card-item .post-card-meta *:not(a[href*='/tags/']) {
   color: #4a4a4a !important;
 }
 
 /* カテゴリリンクのホバー色 */
-html[data-theme='chalkboard'].dark .post-card-item .post-card-meta a[href^='/blog/categories/']:hover,
-html[data-theme='chalkboard'] .dark .post-card-item .post-card-meta a[href^='/blog/categories/']:hover {
+html[data-theme='chalkboard'].dark .post-card-item .post-card-meta a[href*='/categories/']:hover,
+html[data-theme='chalkboard'] .dark .post-card-item .post-card-meta a[href*='/categories/']:hover {
   color: #c44545 !important;
 }
 
 /* タグリンク（TagLink）はサイドバーのタグと配色を合わせる */
-html[data-theme='chalkboard'].dark .post-card-item .post-card-meta a[href^='/blog/tags/'],
-html[data-theme='chalkboard'] .dark .post-card-item .post-card-meta a[href^='/blog/tags/'] {
+html[data-theme='chalkboard'].dark .post-card-item .post-card-meta a[href*='/tags/'],
+html[data-theme='chalkboard'] .dark .post-card-item .post-card-meta a[href*='/tags/'] {
   color: #f0ece0 !important;
 }
 
-html[data-theme='chalkboard'].dark .post-card-item .post-card-meta a[href^='/blog/tags/']:hover,
-html[data-theme='chalkboard'] .dark .post-card-item .post-card-meta a[href^='/blog/tags/']:hover {
+html[data-theme='chalkboard'].dark .post-card-item .post-card-meta a[href*='/tags/']:hover,
+html[data-theme='chalkboard'] .dark .post-card-item .post-card-meta a[href*='/tags/']:hover {
   color: #f0e68c !important;
 }
 

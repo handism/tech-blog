@@ -3,6 +3,7 @@
 
 import { createPostSearcher, searchPostsWithMatches } from '@/src/lib/client-search';
 import { tokenizeForSearch } from '@/src/lib/text-tokenizer';
+import { withBasePath } from '@/src/lib/base-path';
 import type { RangeTuple } from 'fuse.js';
 import type { PostMeta } from '@/src/types/post';
 import Link from 'next/link';
@@ -56,7 +57,7 @@ export default function SearchBox() {
     if (posts.length > 0 || isLoading) return;
     setIsLoading(true);
     try {
-      const res = await fetch('/search.json');
+      const res = await fetch(withBasePath('/search.json'));
       setPosts(await res.json());
     } catch (e) {
       console.error('Failed to fetch search index:', e);
@@ -127,7 +128,7 @@ export default function SearchBox() {
       if (selectedIndex >= 0 && selectedIndex < results.length) {
         e.preventDefault();
         const selectedPost = results[selectedIndex].post;
-        router.push(`/blog/posts/${selectedPost.slug}`);
+        router.push(`/posts/${selectedPost.slug}`);
         setQuery('');
         e.currentTarget.blur();
       }
@@ -199,7 +200,7 @@ export default function SearchBox() {
                   }`}
                   onMouseEnter={() => setSelectedIndex(index)}
                 >
-                  <Link href={`/blog/posts/${post.slug}`} className="hover:underline block">
+                  <Link href={`/posts/${post.slug}`} className="hover:underline block">
                     <span className="font-bold">{highlightText(post.title, titleIndices)}</span>{' '}
                     <span className="text-xs text-text/60 font-semibold">
                       [{highlightText(post.category, categoryIndices)}]

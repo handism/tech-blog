@@ -4,12 +4,14 @@ import { siteConfig } from '@/src/config/site';
 import { getPostImagePath, getPostImageUrl } from '@/src/lib/post-image';
 
 describe('getPostImagePath', () => {
-  it('image 指定があれば /images/ 配下を返す', () => {
-    expect(getPostImagePath({ slug: 'foo', image: 'foo.webp' })).toBe('/images/foo.webp');
+  it('image 指定があれば /images/ 配下を basePath 付きで返す', () => {
+    expect(getPostImagePath({ slug: 'foo', image: 'foo.webp' })).toBe(
+      `${siteConfig.basePath}/images/foo.webp`
+    );
   });
 
-  it('image 未指定なら動的 OGP 画像を返す', () => {
-    expect(getPostImagePath({ slug: 'foo' })).toBe('/og/foo/image.png');
+  it('image 未指定なら動的 OGP 画像を basePath 付きで返す', () => {
+    expect(getPostImagePath({ slug: 'foo' })).toBe(`${siteConfig.basePath}/og/foo/image.png`);
   });
 });
 

@@ -1,12 +1,13 @@
 import bundleAnalyzer from '@next/bundle-analyzer';
 import type { NextConfig } from 'next';
+import { siteConfig } from './src/config/site';
 
 /**
  * Next.js の設定。
  */
 const nextConfig: NextConfig = {
-  /* config options here */
   output: 'export',
+  basePath: siteConfig.basePath,
   trailingSlash: true,
   images: {
     unoptimized: true, // 静的エクスポート時は必須

@@ -135,6 +135,8 @@ const fontVariables = [
  * ルートレイアウトで利用するメタデータ。
  */
 export const metadata: Metadata = {
+  // canonical 等の相対 URL を basePath 込みの絶対 URL に解決するための基準
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.name,
     template: `%s | ${siteConfig.name}`,

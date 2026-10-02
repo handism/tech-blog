@@ -1,5 +1,6 @@
 // src/components/Footer.tsx
 import { siteConfig } from '@/src/config/site';
+import { withBasePath } from '@/src/lib/base-path';
 import Link from 'next/link';
 
 interface FooterLink {
@@ -26,7 +27,11 @@ export default function Footer() {
           {footerLinks.map((link) => {
             if (link.external) {
               return (
-                <a key={link.href} href={link.href} className="hover:text-accent transition-colors">
+                <a
+                  key={link.href}
+                  href={withBasePath(link.href)}
+                  className="hover:text-accent transition-colors"
+                >
                   {link.label}
                 </a>
               );

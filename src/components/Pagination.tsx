@@ -9,7 +9,7 @@ import Link from 'next/link';
 type PaginationProps = {
   currentPage: number;
   totalPages: number;
-  /** ページ番号からURLを生成する関数。省略時はブログ用デフォルト（/ と /blog/page/N）を使用。 */
+  /** ページ番号からURLを生成する関数。省略時はブログ用デフォルト（/ と /page/N）を使用。 */
   getPageUrl?: (page: number) => string;
 };
 
@@ -35,9 +35,9 @@ export function generatePageNumbers(currentPage: number, totalPages: number): (n
 export default function Pagination({ currentPage, totalPages, getPageUrl }: PaginationProps) {
   if (totalPages <= 1) return null;
 
-  // ページ番号からURLを生成（デフォルト: 1ページ目は / それ以外は /blog/page/N）
+  // ページ番号からURLを生成（デフォルト: 1ページ目は / それ以外は /page/N）
   const resolvedGetPageUrl =
-    getPageUrl ?? ((pageNum: number) => (pageNum === 1 ? '/' : `/blog/page/${pageNum}`));
+    getPageUrl ?? ((pageNum: number) => (pageNum === 1 ? '/' : `/page/${pageNum}`));
 
   const pages = generatePageNumbers(currentPage, totalPages);
 

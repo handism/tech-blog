@@ -20,7 +20,7 @@ export default function PostCard({ post, priorityImage = false }: PostCardProps)
   return (
     <article className="group theme-card theme-card-hover overflow-hidden flex flex-col h-full">
       {/* サムネイル画像 */}
-      <Link href={`/blog/posts/${post.slug}`} className="post-card-image-link block shrink-0">
+      <Link href={`/posts/${post.slug}`} className="post-card-image-link block shrink-0">
         <div className="post-card-image-wrapper relative w-full aspect-video bg-secondary border-b-3 border-border overflow-hidden">
           <Image
             src={getPostImagePath(post)}
@@ -39,7 +39,7 @@ export default function PostCard({ post, priorityImage = false }: PostCardProps)
           {/* タイトル */}
           <h2 className="post-card-title text-2xl font-extrabold mb-3 tracking-tight group-hover:text-accent group-focus-within:text-accent transition-colors">
             <Link
-              href={`/blog/posts/${post.slug}`}
+              href={`/posts/${post.slug}`}
               className="hover:underline decoration-3 decoration-accent"
             >
               {post.title}

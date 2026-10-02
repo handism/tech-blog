@@ -6,7 +6,7 @@
 
 各コマンドは `package.json` の `scripts` を参照（パッケージマネージャは bun）。以下のみ非自明：
 
-- VRT は `out/` を `serve` で配信して実行するため、**先に `bun run build` を済ませておくこと**（対象: `tests/vrt.test.ts`、Vitest からは除外済み）。
+- VRT は `out/` を `scripts/serve-out.ts`（basePath 配下で配信するローカルサーバー）で配信して実行するため、**先に `bun run build` を済ませておくこと**（対象: `tests/vrt.test.ts`、Vitest からは除外済み）。
 - 単一テストファイルの実行は `bunx vitest run tests/post-parser.test.ts` のように指定する。
 - AI 画像生成コマンド:
   - `bun run gen-thumb <slug>` : 記事（`md/<slug>.md`）のフラットポップ調サムネイル画像を生成・保存しフロントマターを自動更新（`scripts/generate-thumbnail.ts`）。
@@ -22,6 +22,7 @@
 
 以下は**コードを読んでも分からない**前提・制約：
 
+- サイトは GitHub Pages のプロジェクトサイトとして `siteConfig.basePath`（`/tech-blog`。リポジトリ名と一致させる）配下で配信される。`next/link`・`useRouter` は basePath を自動付与するが、`<img>`・`<a>`・`fetch`・`next/image` の `src` は付与されないため、public 配下のアセットや Route Handler を参照する際は `withBasePath()` を通すこと。絶対 URL は `siteConfig.url`（basePath 込み）を基準にする。Markdown 本文中のルート相対リンク・画像は `post-renderer.ts` の `rehypeBasePath` が自動で付与するので、記事側では basePath を書かない。
 - コースの一覧は `learning/` 直下のディレクトリが正（コース ID ＝ディレクトリ名）。
 - パターンの一覧は `patterns/gallery-meta.json` が正。
 - `src/lib/text-tokenizer.ts` の簡易分かち書きは、**検索精度の一貫性のためビルド時（サーバー）とクライアントで同一ロジックを使用する**こと（kuromoji 本体には依存していない）。
@@ -54,6 +55,7 @@ localStorage のキーは `src/config/storage-keys.ts` の `STORAGE_KEYS` が正
 
 | ユーティリティ | 場所 | 備考 |
 | -------------- | ---- | ---- |
+| `withBasePath()` | `src/lib/base-path.ts` | サイトルート相対パスに basePath を付与。`<img>`・`<a>`・`fetch`・`next/image` でルート相対パスを使う際は必ず通す |
 | `createMarkdownRepository()` | `src/lib/markdown-repository.ts` | ディレクトリから `.md` を読むリポジトリのファクトリ。パストラバーサル対策込み |
 | `markdownToPlaintext()` | `src/lib/post-parser.ts` | Markdown → プレーンテキスト変換。Scraps・学習ガイドでも import して使用 |
 | `renderPostMarkdown()` | `src/lib/post-renderer.ts` | Markdown → HTML 変換。コンテンツ非依存 |

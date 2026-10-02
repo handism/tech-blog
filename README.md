@@ -32,7 +32,7 @@
 - **テーマ切り替え**：next-themes（ダークモード・15種類のテーマ切り替え対応）
 - **検索機能**：文字種ベースの簡易分かち書き（日本語トークナイズ） + Fuse.js（クライアント側全文検索）
 - **バリデーション**：Zod（frontmatter）
-- **ホスティング**：GitHub Pages
+- **ホスティング**：GitHub Pages（プロジェクトサイトとして `https://handism.github.io/tech-blog/` 配下で配信）
 - **デプロイ**：GitHub Actions（`main` ブランチへのプッシュで自動デプロイ）
 - **ユニットテスト**：Vitest
 - **ビジュアルリグレッションテスト（VRT）**：Playwright（全テーマのスクリーンショット比較）
@@ -53,6 +53,8 @@
 bun run dev
 ```
 
+サイトは `basePath`（`src/config/site.ts` の `siteConfig.basePath`、既定値 `/tech-blog`）配下で配信されるため、開発サーバーも `http://localhost:3000/tech-blog/` で開きます。
+
 ### ビルド
 
 本番ビルドを実行する場合は以下を実行します（前処理スクリプト実行後、SSGエクスポートが実行されます）。
@@ -62,7 +64,7 @@ bun run build
 bun run start
 ```
 
-SSG 出力は `out` ディレクトリに生成されます。
+SSG 出力は `out` ディレクトリに生成されます。`bun run start` は `scripts/serve-out.ts` で `out/` を basePath 配下（`http://localhost:3000/tech-blog/`）に配信します。
 
 ### バンドルサイズ分析
 

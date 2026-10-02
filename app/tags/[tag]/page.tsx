@@ -1,4 +1,4 @@
-// app/blog/tags/[tag]/page.tsx
+// app/tags/[tag]/page.tsx
 import PostListPage from '@/src/components/PostListPage';
 import { siteConfig } from '@/src/config/site';
 import { getAllTags } from '@/src/lib/post-taxonomy';
