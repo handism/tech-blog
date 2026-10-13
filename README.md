@@ -1,241 +1,99 @@
 # Handism's Tech Blog
 
-## このブログについて
+Next.js の SSG で構築し、GitHub Pages（`https://handism.github.io/tech-blog/`）で配信している技術ブログです。
 
-- **15種類の多彩なデザインテーマ**: デフォルトの **OLED** に加え、Neo-Brutalism, Glassmorphism, Minimal / Clean, Neumorphism, Claymorphism, 3D Interactive, Terminal / Matrix, Blueprint, Synthwave / Outrun, Paper / Editorial, Chalkboard, Modern Japanese, Nordic / Cozy, Steampunk といった幅広いスタイル（全15種）にリアルタイムで切り替え可能
-- **豊富なスキンカラー**: Emerald、Ocean、Sunset、Purple、Rose のアクセントカラーとダークモードを組み合わせ、自分好みの外観にカスタマイズできます
-- 見出しフォントに **Lexend** および **Space Grotesk** を採用した、テックブログらしい力強いタイポグラフィ
-- 触っていて気持ちいい **ダイナミックなアクション**: テーマごとの世界観に合わせて、ホバーやクリック時のインタラクションが最適化されています
-- SSG（静的サイト生成）に対応しているので軽快に動作するはず
-- サムネイル画像にも対応。比率は 16:9 がおすすめ
-- サイドバーありの 2 カラムレイアウトで、レスポンシブレイアウトに対応
-- 記事のデータソースは `Markdown ファイル` に対応
-- ヘッダーの Tools メニューから利用できるブラウザ完結型の便利ツール（Toolkit 形式・全19種＋外部2種）を内蔵
-  - **🎨 画像 ＆ グラフィック (3種)**: Image Studio (WebP変換・トリミング・favicon), SVG Toolkit (プレビュー・波形生成・CSS変換・ダミー画像), UI & Graphic Generator (Neo-Brutalism・メンフィス背景・ドット絵)
-  - **🔄 データ変換 ＆ テキスト (3種)**: Data & JSON Toolkit (JSON/YAML/CSV/SQL変換・整形), Crypto & ID Generator (Base64・ハッシュ・JWT・UUID・パスワード), Text Studio (ケース変換・文字カウント・不可視文字検出・Lorem Ipsum・Diff)
-  - **🛠️ 開発者向けツール (13種)**: Markup & Markdown Editor, URL & Web Utilities, Code Helper (正規表現・Curl・HTML to JSX), Developer Calculator (電卓・進数変換・アスペクト比), CSS & Layout Toolkit (CSS/Flexbox/Gridシミュレーター), AWS Architecture Diagram Generator, Git Utilities, Web & Network Utilities, Time & Schedule Utilities, Color Utilities (コード変換・コントラスト), QR Code Generator, Keyboard Event Visualizer, Pomodoro Focus Timer
-  - **🧖 外部ツール (2種)**: Sauna Itta, Sauna Simulator
-- About・プライバシーポリシー・HTML Sitemap・RSS フィードページを提供
-- **Scraps**（`/scraps`）：Twitter/Mastodon 感覚で日々の気づきやエラー解決ログを短く残せる技術メモ欄。Tools / 学習ガイドと共通のダッシュボードレイアウト（ヒーローヘッダー＋キーワード検索＋タグフィルタ）でカード表示されます。`scraps/` ディレクトリに Markdown を置くだけで公開される
-- **学習ガイド**（`/learning`）：Docker、GitHub、Webセキュリティ、API設計、Linux & Bash、ネットワークの基本、CI/CDパイプライン、システムデザイン、Gitアドバンスド、AWSクラウド、フロントエンドテスト、モダンCSS、データベース、Next.js、パフォーマンス、React Hooks、TypeScript などの各種仕組みを順序立てて（タイムライン状のロードマップ形式で）学べる体系的な学習コンテンツ。Mermaid.jsによる動的な図解ダイアグラム表示に対応しているほか、LocalStorageを利用した読了進捗管理（進捗率・完了チェック）や、各チャプターの末尾で挑戦できるインタラクティブな「理解度クイズ」機能を搭載しています。
-- **AWS Patterns**（`/patterns`）：AWSのベストプラクティスに沿って設計された、22種類の実践的な CloudFormation テンプレート（IaC）とアーキテクチャ図（Draw.io）のギャラリーカタログ。ShikiによるYAMLコードプレビュー・コピー・ダウンロードや、SVG構成図を画面いっぱいに拡大表示するインタラクティブなライトボックス、デプロイ用CLIコマンド生成機能を備えています。
+## 主な機能
 
+- **ブログ記事**（`md/`）：Markdown で執筆。カテゴリ・タグ・全文検索・RSS・Sitemap・OGP 画像の自動生成に対応
+- **Scraps**（`/scraps`）：日々の気づきやエラー解決ログを短く残す技術メモ
+- **学習ガイド**（`/learning`）：Docker・TypeScript・AWS など 17 コースをロードマップ形式で学べる。Mermaid 図解・読了進捗管理・理解度クイズ付き
+- **AWS Patterns**（`/patterns`）：CloudFormation テンプレートと Draw.io 構成図 22 種のギャラリー。コードプレビュー・ダウンロード・デプロイコマンド生成付き
+- **Tools**（`/tools`）：ブラウザ完結型の開発者向けツール 19 種（画像・SVG・JSON/YAML 変換・暗号/ID 生成・テキスト・CSS・Git・色・QR コードなど）
+- **15 種類のデザインテーマ**：OLED（デフォルト）、Neo-Brutalism、Glassmorphism、Terminal、Synthwave、Modern Japanese などをリアルタイムに切り替え可能
 
 ## 技術スタック
 
-- **フロントエンド**：Next.js 16 + React 19
-- **言語**：TypeScript
-- **スタイリング**：Tailwind CSS 4
-- **マークダウン処理**：Remark + rehype（HTML 変換・見出し自動リンク・スラッグ生成・TOC 生成・Mermaidダイアグラムパース）
-- **図解・ダイアグラム描画**：Mermaid.js（クライアント側での動的SVGレンダリングに対応）
-- **シンタックスハイライト**：Shiki（github-dark テーマ）
-- **テーマ切り替え**：next-themes（ダークモード・15種類のテーマ切り替え対応）
-- **検索機能**：文字種ベースの簡易分かち書き（日本語トークナイズ） + Fuse.js（クライアント側全文検索）
-- **バリデーション**：Zod（frontmatter）
-- **ホスティング**：GitHub Pages（プロジェクトサイトとして `https://handism.github.io/tech-blog/` 配下で配信）
-- **デプロイ**：GitHub Actions（`main` ブランチへのプッシュで自動デプロイ）
-- **ユニットテスト**：Vitest
-- **ビジュアルリグレッションテスト（VRT）**：Playwright（全テーマのスクリーンショット比較）
+| 用途 | 採用技術 |
+| ---- | -------- |
+| フレームワーク | Next.js 16（SSG） + React 19 + TypeScript |
+| スタイリング | Tailwind CSS 4 + Tailwind Typography |
+| Markdown | unified（remark / rehype）+ Shiki + Mermaid.js |
+| 検索 | 簡易分かち書き + Fuse.js（クライアント側全文検索） |
+| バリデーション | Zod（フロントマター） |
+| テスト | Vitest（ユニット）・Playwright（全テーマの VRT） |
+| ホスティング | GitHub Pages + GitHub Actions |
 
-## 使い方
+## 開発
 
-### 導入
-
-- 本リポジトリをクローンすればすぐに導入可能
-- ホスティングについては、必要に応じて `GitHub Pages` などの設定を行ってください
-  - `GitHub Actions` による自動デプロイには `.github/workflows/deploy.yml` を使用できます
-
-### 開発方法
-
-ローカルで動作確認する場合は以下コマンドを実行します（前処理で `scripts/download-fonts.js` および `scripts/copy-pattern-assets.js` が自動実行されます）。終了するなら Ctrl + C。
+パッケージマネージャは [bun](https://bun.sh/) です。
 
 ```bash
-bun run dev
+bun install          # 依存関係と Git フックのインストール
+bun run dev          # 開発サーバー → http://localhost:3000/tech-blog/
+bun run build        # SSG ビルド（out/ に出力）
+bun run start        # out/ を basePath 配下で配信
+bun run analyze      # バンドルサイズ分析
 ```
 
-サイトは `basePath`（`src/config/site.ts` の `siteConfig.basePath`、既定値 `/tech-blog`）配下で配信されるため、開発サーバーも `http://localhost:3000/tech-blog/` で開きます。
+サイトは `basePath`（`src/config/site.ts`、既定値 `/tech-blog`）配下で配信されます。`dev` / `build` の前処理でフォント取得（`scripts/download-fonts.js`）とパターン素材の `public/patterns/` への同期（`scripts/copy-pattern-assets.js`）が自動実行されます。
 
-### ビルド
-
-本番ビルドを実行する場合は以下を実行します（前処理スクリプト実行後、SSGエクスポートが実行されます）。
+### テスト・品質チェック
 
 ```bash
-bun run build
-bun run start
+bun run lint                               # ESLint / Prettier
+bun run type-check                         # TypeScript 型チェック
+bun run test:unit                          # Vitest
+bunx vitest run tests/post-parser.test.ts  # 単一ファイルのみ実行
+bun run test:vrt                           # Playwright VRT（事前に bun run build が必要）
+bun run test:vrt:update                    # VRT スナップショット更新
 ```
 
-SSG 出力は `out` ディレクトリに生成されます。`bun run start` は `scripts/serve-out.ts` で `out/` を basePath 配下（`http://localhost:3000/tech-blog/`）に配信します。
+コミット時は `simple-git-hooks` + `lint-staged` により、ステージ済みファイルへの `eslint --fix` と全体の型チェックが自動実行されます。
 
-### バンドルサイズ分析
+### デプロイ
 
-```bash
-bun run analyze
-```
+`main` ブランチへのプッシュで GitHub Actions（`.github/workflows/deploy.yml`）が `out/` を GitHub Pages にデプロイします。
 
-ブラウザでクライアント・サーバー・エッジのバンドルサイズを可視化するレポートが生成されます。
+## コンテンツの追加
 
-### テスト
+フロントマターの仕様は Zod スキーマが正です（ブログ：`src/lib/post-parser.ts`、Scraps：`src/lib/scrap-parser.ts`、学習ガイド：`src/lib/learning-parser.ts`）。
 
-ユニットテスト（Vitest）：
+### ブログ記事
 
-```bash
-bun run test:unit
-bunx vitest run tests/post-parser.test.ts   # 単一テストファイルの実行
-```
-
-ビジュアルリグレッションテスト（Playwright VRT）。ビルド済みの `out/` を配信して全テーマのスクリーンショットを比較するため、**事前に `bun run build` が必要**です：
-
-```bash
-bun run test:vrt          # スクリーンショット比較を実行
-bun run test:vrt:update   # スナップショットを更新
-```
-
-型チェック：
-
-```bash
-bun run type-check
-```
-
-テストファイルは `tests/` ディレクトリ以下に配置します。
-
-- `*.test.ts` → Vitest ユニットテスト（`vrt.test.ts` は除外）
-- `vrt.test.ts` → Playwright VRT（スナップショットは `tests/vrt.test.ts-snapshots/`）
-
-### 開発フローと品質保証 (Git Hooks)
-
-コミット時に自動でコード品質をチェックし、CIの破損を未然に防ぐ仕組みとして `simple-git-hooks` と `lint-staged` を導入しています。
-
-* **自動チェックの挙動**:
-  * コミット時にステージングされた `.ts`, `.tsx`, `.js`, `.jsx` ファイルに対して自動的に `eslint --fix` (コードスタイルの修正・Prettierによるフォーマット含む) が実行されます。
-  * プロジェクト全体に対して `bun run type-check` (`tsc --noEmit`) が実行され、型エラーがある場合はコミットがブロックされます。
-* **フックの設定**:
-  * `bun install` 時に自動的にフックが Git にインストールされます。
-  * 手動で再度フックを設定・更新したい場合は以下のコマンドを実行します：
-    ```bash
-    bunx simple-git-hooks
-    ```
-
-### コンテンツの追加
-
-#### ブログ記事
-
-ブログ記事は `md` ディレクトリに Markdown ファイルとして配置します。
-ファイル名の命名規則：`kebab-case.md`
-
-##### AIによるサムネイル・図解インフォグラフィック自動生成
-
-ブログ記事 (`md/<slug>.md`) を対象に、Google GenAI (`gemini-3.5-flash-lite` / `gemini-3-pro-image`) を使用して、記事のサムネイル画像および本文内の解説用図解インフォグラフィックを自動生成・変換・自動設定するコマンドが利用できます。
-ご使用の際は、事前に `.env.local` に `GEMINI_API_KEY=<あなたのAPIキー>` を設定してください。
-各スクリプト共通の処理（`.env.local` の読み込み、記事フロントマターの解析・`image` 更新、画像生成 API 呼び出しなど）は `scripts/lib/article-gen.ts` にまとめています。
-
-###### 1. サムネイルの自動生成 (`generate-thumbnail.ts` / `generate-thumbnail-ai.ts`)
-記事のタイトル・タグ・カテゴリ・本文を分析し、**フラットポップ調 (superflat pop-art)** のアイキャッチサムネイルを 16:9 (1024x576 / WebP形式) で自動生成し、記事フロントマターの `image` フィールドを更新します (`generate-thumbnail.ts`)。
-また、sharp処理を用いずに文字・文言の生成まで画像生成AIに一任し、YouTubeサムネイル風のフラットイラスト画像を生成する別バージョン (`generate-thumbnail-ai.ts`) も利用可能です。
-```bash
-bun run gen-thumb <slug>
-# または (AIによる文言一体型のYouTubeサムネイル風イラスト生成)
-bun run gen-thumb-ai <slug>
-# 例: bun run gen-thumb how-to-use-git
-```
-
-###### 2. 本文内・図解インフォグラフィックの自動生成 (`generate-infographic.ts`)
-記事本文をAIが分析して読者の理解を深める最適な図解挿入位置（セクション見出し等）を自動特定し、記事内容を解説する **フラットイラスト調で自然な日本語文言入りの図解インフォグラフィック** を 16:9 (1024x576 / WebP形式) で自動生成・保存の上、記事 Markdown 本文の該当箇所に Markdown 画像リンクを自動挿入（既存の画像タグがある場合は更新のみ実行）します。
-```bash
-bun run gen-info <slug>
-# または
-bun run gen-infographic <slug>
-# 例: bun run gen-info how-to-use-git
-```
-
-#### Scraps（技術メモ）
-
-日々の気づきやエラー解決ログなど短いメモは `scraps` ディレクトリに Markdown ファイルとして配置します。
-ファイル名の命名規則：`kebab-case.md`
-
-#### 学習ガイド
-
-学習コンテンツは `learning` ディレクトリに、コースごとのディレクトリを切って配置します。
-各フォルダ内に設定ファイルである `meta.json` と、順序付けされたMarkdownファイルを配置します。
-```text
-learning/
-  └── [course-id]/
-        ├── meta.json        # コース設定
-        ├── 01-chapter.md    # 第1章
-        └── 02-chapter.md    # 第2章
-```
-ファイル名自体は任意ですが、Frontmatterでソート順を設定します。
-
-#### AWS Patterns（アーキテクチャテンプレート）
-
-AWSのアーキテクチャパターンおよびテンプレートは `patterns` ディレクトリ内で管理します。
-1. `patterns/gallery-meta.json` に新しいパターンの設定オブジェクトを追加します。
-2. `patterns/iac/` ディレクトリ配下に CloudFormation テンプレート（`.yaml`）を配置します。
-3. `patterns/img/` ディレクトリ配下にアーキテクチャ図の画像（`.drawio.svg`。図解画像がない場合は JSON 上で `diagramFile: null` に設定）を配置します。
-
-ビルド時または開発サーバー起動時に、前処理スクリプト `scripts/copy-pattern-assets.js` によってこれらのファイルは自動的に `public/patterns/` 配下へ複製・同期されます（更新日時を比較し、変更があったファイルのみコピー）。
-
-### デプロイメント
-
-`main` ブランチへのプッシュにより、GitHub Actions ワークフローが自動実行され、`out` ディレクトリが GitHub Pages へデプロイされます。
-
-### サイト設定
-
-`src/config/` 配下に関心事ごとに設定ファイルを分割しています。
-
-- `site.ts`: サイト名・URL・著者名・ページネーションなどのサイト全体設定。サイトごとに必要な項目を変更してください
-- `themes.ts`: `themeConfig` 配列でデザインテーマ一覧を管理し、`DEFAULT_THEME` でデフォルトテーマを指定します
-- `layout.ts`: `layoutConfig` 配列で記事一覧のレイアウト（列数）を管理します
-- `tools.ts`: `toolsMenuItems` 配列でヘッダー・`/tools` で表示するツールメニュー項目を管理します
-- `storage-keys.ts`: サイト全体で使用する localStorage キーの一覧。設定画面のバックアップ（エクスポート／インポート）・リセット対象はここから自動生成されるため、localStorage を使う機能を追加したら必ず登録してください
-
-### CSS 設定
-
-- グローバルの CSS は `app/globals.css` にまとめています
-- `:focus-visible` スタイルはアクセント色で定義済みです
-- テーマは `data-theme` 属性で切り替え、対応するCSS変数がオーバーライドされる仕組みです
-
-### 記事ページ設定
-
-- md ファイルは `md` ディレクトリ内に入れてください
-- `md/template` 内に md ファイルのテンプレートが格納されているので、コピーして使用してください
-- 下書きは Frontmatter に `draft: true` を設定することで管理できます（後述）。開発環境では表示され、本番環境では自動的に除外されます。
-- また、`md/draft` などのサブディレクトリ内に配置した md ファイルもサイトには反映されません。
-- 画像は `public/images` ディレクトリ内に入れてください
-  - サムネイル画像はアスペクト比 `16:9` がおすすめ
-
-### ブログ記事 Frontmatter
-
-各フィールドは Zod によりバリデーションされます。省略・不正な値はデフォルト値にフォールバックします。
+`md/<slug>.md`（kebab-case）に配置します。ひな形は `md/template/posts.md`。画像は `public/images/` に置きます（サムネイルは 16:9 推奨）。
 
 ```yaml
 ---
-title: 記事タイトル # 省略時: "No title"
-date: YYYY-MM-DD # 省略可
-tags: [tag1, tag2] # 省略時: []
-category: カテゴリ名 # 省略時: "uncategorized"
-image: filename.webp # public/images/ 以下のファイル名（省略可）
-draft: true # true の場合、本番ビルド時に除外される（省略可）
+title: 記事タイトル   # 省略時: "No title"
+date: YYYY-MM-DD
+tags: [tag1, tag2]
+category: カテゴリ名  # 省略時: "uncategorized"
+image: filename.webp  # public/images/ 以下。省略時は動的 OGP 画像
+draft: true           # 本番ビルドから除外
 ---
 ```
 
-H1 タグは記事タイトルになるので、見出しは H2 から始めてください。
+- 見出しは H2 から始める（H1 は記事タイトル）
+- `md/draft/` などサブディレクトリ内のファイルはビルド対象外
+- コードブロックは ` ```ts:utils.ts ` のように `:ファイル名` でファイル名を表示できる。` ```mermaid ` で Mermaid 図を描画できる
 
-### Scraps Frontmatter
+#### AI による画像生成
 
-ブログ記事より軽量な構成です。`category` と `image` は不要です。
+`.env.local` に `GEMINI_API_KEY` を設定すると、Google GenAI で記事用の画像を生成し、記事へ自動設定できます。
 
-```yaml
----
-title: メモのタイトル # 省略時: "No title"
-date: YYYY-MM-DD # 省略可
-tags: [tag1, tag2] # 省略時: []
-draft: true # true の場合、本番ビルド時に除外される（省略可）
----
+```bash
+bun run gen-thumb <slug>     # フラットポップ調サムネイル（文字は sharp で合成）
+bun run gen-thumb-ai <slug>  # 文言込みで AI が描く YouTube サムネイル風イラスト
+bun run gen-info <slug>      # 本文を解析し、最適な位置に図解インフォグラフィックを挿入
 ```
 
-### 学習ガイド Frontmatter
+### Scraps
 
-各コースフォルダ内に `meta.json` を配置してコース全体を設定します：
+`scraps/<slug>.md` に配置します。フロントマターはブログ記事から `category` と `image` を除いたものです。
+
+### 学習ガイド
+
+`learning/<course-id>/` にコース設定の `meta.json` とチャプターの Markdown を配置します。
 
 ```json
 {
@@ -246,114 +104,24 @@ draft: true # true の場合、本番ビルド時に除外される（省略可�
 }
 ```
 
-`icon` には Lucide アイコン名（`src/config/learning-icons.ts` に登録されたキー）を指定します。未登録・未指定の場合は `book` にフォールバックします。
+`icon` は `src/config/learning-icons.ts` に登録された Lucide アイコン名です（未登録なら `book`）。チャプターのフロントマターでは `order`（並び順。省略時は 1）と任意の `quiz`（`question` / `options` / `correctIndex` / `explanation`）を指定します。
 
-各チャプター（Markdown）の Frontmatter：
+### AWS Patterns
 
-```yaml
----
-title: チャプタータイトル # 省略時: "No title"
-date: YYYY-MM-DD # 省略可
-order: 1 # コース内での並び順 (必須・数値)
-draft: true # true の場合、本番ビルド時に除外される（省略可）
-quiz: # 確認クイズ (省略可)
-  question: "質問文"
-  options:
-    - "選択肢1"
-    - "選択肢2"
-  correctIndex: 0
-  explanation: "解説文"
----
-```
+1. `patterns/gallery-meta.json` にパターン定義（`slug`・`title`・`description`・`category`・`templateFile`・`diagramFile`・`awsServices`）を追加
+2. `patterns/iac/` に CloudFormation テンプレート（`.yaml`）を配置
+3. `patterns/img/` に構成図（`.drawio.svg`）を配置（図がなければ `diagramFile: null`）。図の原本は `patterns/draw.io/`、エクスポート手順は `patterns/CLAUDE.md` を参照
 
+## 設定
 
-### AWS Patterns メタデータフォーマット (gallery-meta.json)
+`src/config/` に関心事ごとの設定があります。
 
-`patterns/gallery-meta.json` は全パターンの情報をオブジェクト配列として一括管理します。各オブジェクトのフォーマットは以下の通りです：
+- `site.ts`：サイト名・URL・basePath・著者・ページネーションなど
+- `themes.ts`：デザインテーマ一覧とデフォルトテーマ
+- `layout.ts`：記事一覧のレイアウト（列数）
+- `tools.ts`：Tools メニュー項目
+- `storage-keys.ts`：localStorage キー一覧（設定画面のバックアップ・リセット対象はここから自動生成）
 
-```json
-[
-  {
-    "slug": "container-orchestration",
-    "title": "Amazon ECS コンテナオーケストレーション",
-    "description": "Amazon ECS/Fargateを使用した、安全でスケーラブルなコンテナデプロイ環境のテンプレートです。",
-    "category": "Containers",
-    "templateFile": "container-orchestration.yaml",
-    "diagramFile": "container-orchestration.drawio.svg",
-    "awsServices": ["ECS", "Fargate", "VPC", "ALB"]
-  }
-]
-```
+## AI エージェント向けドキュメント
 
-
-### Markdown
-
-- **見出し**：`##`、`###`、`####`
-- **改行**：`半角スペース 2 つ`
-- **段落**：`空行`
-- **箇条書き**：`*`、`-`
-- **画像表示**：`![画像](/images/image.png)`
-- **リンク**：`[リンク文言](https://github.com/handism/)`
-- **強調**：`**強調**`
-- **区切り線**：`***`、`---`
-- **コード**：`` `コード` ``
-- **コードブロック**：
-
-````
-```言語名
-コードブロック
-```
-````
-
-ファイル名を表示したい場合は言語名の後に `:ファイル名` を付加：
-
-````
-```ts:utils.ts
-export function example() { }
-```
-````
-
-- **引用**：
-
-```
-> 引用テキスト
-```
-
-- **表**：
-
-```
-| ヘッダー1 | ヘッダー2 |
-| --------- | --------- |
-| セル1     | セル2     |
-```
-
-- **Mermaidダイアグラム (図解)**：
-
-````
-```mermaid
-graph TD
-  A[Client] -->|Docker CLI| B(Docker Daemon)
-```
-````
-
-
-## SEO・アクセシビリティ
-
-- OGP / Twitter Card をサイト全体・記事ページ・カテゴリページ・タグページで設定
-- 記事ページに JSON-LD（`BlogPosting` スキーマ）を埋め込み
-- Sitemap に記事・カテゴリ・タグページと `lastmod` を出力
-- RSS フィードに本文要約（先頭 200 文字）を `<description>` として出力
-- 検索結果でタイトル・本文スニペットに加え、マッチしたタグ・カテゴリもハイライト表示
-- キーボードナビゲーション対応（ドロップダウンメニュー・フォーカスリング）
-- `ThemeToggle` に `aria-label` を設定
-- 文字種ベースの簡易分かち書き（日本語トークナイズ）により、ビルド時とクライアントで一貫した日本語検索ヒットを実現
-- SSG（静的サイト生成）環境でありながら、ビルド時に全記事のOGP画像を自動で静的画像ファイル（PNG）として事前生成し、適切なOGPタグを付与
-
-## ドキュメント管理 ＆ AIエージェント
-
-本リポジトリでは、AI エージェント（Antigravity、Claude Code 等）向けの指示ドキュメントを配置しています。
-- **`AGENTS.md`**: エージェント共通ガイダンス
-- **`CLAUDE.md`**: Claude Code / LLM エージェント用参照（`AGENTS.md` へのシンボリックリンク）
-
-> **注意**: 新機能の追加、ルーティング変更、アーキテクチャの変更、テスト追加などの際は、`README.md` および `AGENTS.md`（`CLAUDE.md`）のドキュメントを同時に更新して最新化を保つこと。
-
+開発ルールやアーキテクチャ上の注意点は `AGENTS.md`（`CLAUDE.md` はそのシンボリックリンク）にまとめています。新機能・ルーティング・テスト・アーキテクチャの変更時は `README.md` と `AGENTS.md` を同時に更新してください。
